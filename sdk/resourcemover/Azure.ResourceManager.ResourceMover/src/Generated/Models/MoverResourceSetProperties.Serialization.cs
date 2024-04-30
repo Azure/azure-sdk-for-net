@@ -58,15 +58,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
             if (options.Format != "W" && Optional.IsDefined(Errors))
             {
-                if (Errors != null)
-                {
-                    writer.WritePropertyName("errors"u8);
-                    writer.WriteObjectValue(Errors, options);
-                }
-                else
-                {
-                    writer.WriteNull("errors");
-                }
+                writer.WritePropertyName("errors"u8);
+                writer.WriteObjectValue(Errors, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -171,7 +164,6 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        errors = null;
                         continue;
                     }
                     errors = MoveCollectionPropertiesErrors.DeserializeMoveCollectionPropertiesErrors(property.Value, options);

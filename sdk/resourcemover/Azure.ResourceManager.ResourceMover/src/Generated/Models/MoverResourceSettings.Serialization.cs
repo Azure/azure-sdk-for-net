@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
-    [PersistableModelProxy(typeof(UnknownResourceSettings))]
+    [PersistableModelProxy(typeof(UnknownMoverResourceSettings))]
     public partial class MoverResourceSettings : IUtf8JsonSerializable, IJsonModel<MoverResourceSettings>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MoverResourceSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -80,22 +80,22 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Microsoft.Compute/availabilitySets": return MoverAvailabilitySetResourceSettings.DeserializeMoverAvailabilitySetResourceSettings(element, options);
-                    case "Microsoft.Compute/diskEncryptionSets": return DiskEncryptionSetResourceSettings.DeserializeDiskEncryptionSetResourceSettings(element, options);
                     case "Microsoft.Compute/virtualMachines": return VirtualMachineResourceSettings.DeserializeVirtualMachineResourceSettings(element, options);
-                    case "Microsoft.KeyVault/vaults": return KeyVaultResourceSettings.DeserializeKeyVaultResourceSettings(element, options);
-                    case "Microsoft.Network/loadBalancers": return LoadBalancerResourceSettings.DeserializeLoadBalancerResourceSettings(element, options);
+                    case "Microsoft.Compute/availabilitySets": return MoverAvailabilitySetResourceSettings.DeserializeMoverAvailabilitySetResourceSettings(element, options);
+                    case "Microsoft.Network/virtualNetworks": return MoverVirtualNetworkResourceSettings.DeserializeMoverVirtualNetworkResourceSettings(element, options);
                     case "Microsoft.Network/networkInterfaces": return NetworkInterfaceResourceSettings.DeserializeNetworkInterfaceResourceSettings(element, options);
                     case "Microsoft.Network/networkSecurityGroups": return NetworkSecurityGroupResourceSettings.DeserializeNetworkSecurityGroupResourceSettings(element, options);
-                    case "Microsoft.Network/publicIPAddresses": return PublicIPAddressResourceSettings.DeserializePublicIPAddressResourceSettings(element, options);
-                    case "Microsoft.Network/virtualNetworks": return MoverVirtualNetworkResourceSettings.DeserializeMoverVirtualNetworkResourceSettings(element, options);
+                    case "Microsoft.Network/loadBalancers": return LoadBalancerResourceSettings.DeserializeLoadBalancerResourceSettings(element, options);
                     case "Microsoft.Sql/servers": return SqlServerResourceSettings.DeserializeSqlServerResourceSettings(element, options);
-                    case "Microsoft.Sql/servers/databases": return SqlDatabaseResourceSettings.DeserializeSqlDatabaseResourceSettings(element, options);
                     case "Microsoft.Sql/servers/elasticPools": return SqlElasticPoolResourceSettings.DeserializeSqlElasticPoolResourceSettings(element, options);
+                    case "Microsoft.Sql/servers/databases": return SqlDatabaseResourceSettings.DeserializeSqlDatabaseResourceSettings(element, options);
                     case "resourceGroups": return ResourceGroupResourceSettings.DeserializeResourceGroupResourceSettings(element, options);
+                    case "Microsoft.Network/publicIPAddresses": return PublicIPAddressResourceSettings.DeserializePublicIPAddressResourceSettings(element, options);
+                    case "Microsoft.KeyVault/vaults": return KeyVaultResourceSettings.DeserializeKeyVaultResourceSettings(element, options);
+                    case "Microsoft.Compute/diskEncryptionSets": return DiskEncryptionSetResourceSettings.DeserializeDiskEncryptionSetResourceSettings(element, options);
                 }
             }
-            return UnknownResourceSettings.DeserializeUnknownResourceSettings(element, options);
+            return UnknownMoverResourceSettings.DeserializeUnknownMoverResourceSettings(element, options);
         }
 
         BinaryData IPersistableModel<MoverResourceSettings>.Write(ModelReaderWriterOptions options)
