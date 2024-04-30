@@ -24,24 +24,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="wrappedDataEncryptionKey"> Wrapped (encrypted) form of the key represented as a byte array. </param>
         /// <param name="keyWrapMetadata"> Metadata for the wrapping provider that can be used to unwrap the wrapped client encryption key. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="rid"> A system generated property. A unique identifier. </param>
-        /// <param name="timestamp"> A system generated property that denotes the last updated timestamp of the resource. </param>
-        /// <param name="etag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
-        internal CosmosDBSqlClientEncryptionKeyProperties(string id, string encryptionAlgorithm, byte[] wrappedDataEncryptionKey, CosmosDBKeyWrapMetadata keyWrapMetadata, IDictionary<string, BinaryData> serializedAdditionalRawData, string rid, float? timestamp, ETag? etag) : base(id, encryptionAlgorithm, wrappedDataEncryptionKey, keyWrapMetadata, serializedAdditionalRawData)
+        internal CosmosDBSqlClientEncryptionKeyProperties(string id, string encryptionAlgorithm, byte[] wrappedDataEncryptionKey, CosmosDBKeyWrapMetadata keyWrapMetadata, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, encryptionAlgorithm, wrappedDataEncryptionKey, keyWrapMetadata, serializedAdditionalRawData)
         {
-            Rid = rid;
-            Timestamp = timestamp;
-            ETag = etag;
         }
-
-        /// <summary> A system generated property. A unique identifier. </summary>
-        [WirePath("_rid")]
-        public string Rid { get; }
-        /// <summary> A system generated property that denotes the last updated timestamp of the resource. </summary>
-        [WirePath("_ts")]
-        public float? Timestamp { get; }
-        /// <summary> A system generated property representing the resource etag required for optimistic concurrency control. </summary>
-        [WirePath("_etag")]
-        public ETag? ETag { get; }
     }
 }

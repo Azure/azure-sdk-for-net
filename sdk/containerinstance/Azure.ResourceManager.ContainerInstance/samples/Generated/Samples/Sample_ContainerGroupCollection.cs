@@ -6,12 +6,9 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.ContainerInstance.Models;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ContainerInstance.Samples
@@ -397,47 +394,7 @@ namespace Azure.ResourceManager.ContainerInstance.Samples
 
             // invoke the operation
             string containerGroupName = "demo1";
-            ContainerGroupData data = new ContainerGroupData(new AzureLocation("westeurope"), new ContainerInstanceContainer[]
-            {
-new ContainerInstanceContainer("accdemo","confiimage",new ContainerResourceRequirements(new ContainerResourceRequestsContent(1.5,1)))
-{
-Command =
-{
-},
-Ports =
-{
-new ContainerPort(8000)
-},
-EnvironmentVariables =
-{
-},
-SecurityContext = new ContainerSecurityContextDefinition()
-{
-IsPrivileged = false,
-Capabilities = new ContainerSecurityContextCapabilitiesDefinition()
-{
-Add =
-{
-"CAP_NET_ADMIN"
-},
-},
-},
-}
-            }, ContainerInstanceOperatingSystemType.Linux)
-            {
-                ImageRegistryCredentials =
-{
-},
-                IPAddress = new ContainerGroupIPAddress(new ContainerGroupPort[]
-            {
-new ContainerGroupPort(8000)
-{
-Protocol = ContainerGroupNetworkProtocol.Tcp,
-}
-            }, ContainerGroupIPAddressType.Public),
-                Sku = ContainerGroupSku.Confidential,
-                ConfidentialComputeCcePolicy = "eyJhbGxvd19hbGwiOiB0cnVlLCAiY29udGFpbmVycyI6IHsibGVuZ3RoIjogMCwgImVsZW1lbnRzIjogbnVsbH19",
-            };
+            ContainerGroupData data = new ContainerGroupData(new AzureLocation("westeurope"));
             ArmOperation<ContainerGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, containerGroupName, data);
             ContainerGroupResource result = lro.Value;
 
@@ -473,57 +430,7 @@ Protocol = ContainerGroupNetworkProtocol.Tcp,
 
             // invoke the operation
             string containerGroupName = "demo1";
-            ContainerGroupData data = new ContainerGroupData(new AzureLocation("eastus2"), new ContainerInstanceContainer[]
-            {
-new ContainerInstanceContainer("demo1","nginx",new ContainerResourceRequirements(new ContainerResourceRequestsContent(1.5,1)))
-{
-Command =
-{
-},
-Ports =
-{
-new ContainerPort(80)
-},
-EnvironmentVariables =
-{
-},
-}
-            }, ContainerInstanceOperatingSystemType.Linux)
-            {
-                ImageRegistryCredentials =
-{
-},
-                IPAddress = new ContainerGroupIPAddress(new ContainerGroupPort[]
-            {
-new ContainerGroupPort(80)
-{
-Protocol = ContainerGroupNetworkProtocol.Tcp,
-}
-            }, ContainerGroupIPAddressType.Private),
-                SubnetIds =
-{
-new ContainerGroupSubnetId(new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-00000000/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-rg-vnet/subnets/test-subnet"))
-},
-                Extensions =
-{
-new DeploymentExtensionSpec("kube-proxy")
-{
-ExtensionType = "kube-proxy",
-Version = "1.0",
-Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
-{
-["clusterCidr"] = "10.240.0.0/16",
-["kubeVersion"] = "v1.9.10"}),
-ProtectedSettings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
-{
-["kubeConfig"] = "<kubeconfig encoded string>"}),
-},new DeploymentExtensionSpec("vk-realtime-metrics")
-{
-ExtensionType = "realtime-metrics",
-Version = "1.0",
-}
-},
-            };
+            ContainerGroupData data = new ContainerGroupData(new AzureLocation("eastus2"));
             ArmOperation<ContainerGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, containerGroupName, data);
             ContainerGroupResource result = lro.Value;
 
@@ -559,45 +466,7 @@ Version = "1.0",
 
             // invoke the operation
             string containerGroupName = "demo1";
-            ContainerGroupData data = new ContainerGroupData(new AzureLocation("eastus2"), new ContainerInstanceContainer[]
-            {
-new ContainerInstanceContainer("demo1","nginx",new ContainerResourceRequirements(new ContainerResourceRequestsContent(1.5,1)))
-{
-Command =
-{
-},
-Ports =
-{
-new ContainerPort(80)
-},
-EnvironmentVariables =
-{
-},
-}
-            }, ContainerInstanceOperatingSystemType.Linux)
-            {
-                Identity = new ManagedServiceIdentity("UserAssigned")
-                {
-                    UserAssignedIdentities =
-{
-[new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/test-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/container-group-identity")] = new UserAssignedIdentity(),
-},
-                },
-                ImageRegistryCredentials =
-{
-},
-                IPAddress = new ContainerGroupIPAddress(new ContainerGroupPort[]
-            {
-new ContainerGroupPort(80)
-{
-Protocol = ContainerGroupNetworkProtocol.Tcp,
-}
-            }, ContainerGroupIPAddressType.Public),
-                EncryptionProperties = new ContainerGroupEncryptionProperties(new Uri("https://testkeyvault.vault.azure.net"), "test-key", "<key version>")
-                {
-                    Identity = "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/test-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/container-group-identity",
-                },
-            };
+            ContainerGroupData data = new ContainerGroupData(new AzureLocation("eastus2"));
             ArmOperation<ContainerGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, containerGroupName, data);
             ContainerGroupResource result = lro.Value;
 
@@ -633,104 +502,7 @@ Protocol = ContainerGroupNetworkProtocol.Tcp,
 
             // invoke the operation
             string containerGroupName = "demo1";
-            ContainerGroupData data = new ContainerGroupData(new AzureLocation("west us"), new ContainerInstanceContainer[]
-            {
-new ContainerInstanceContainer("demo1","nginx",new ContainerResourceRequirements(new ContainerResourceRequestsContent(1.5,1)
-{
-Gpu = new ContainerGpuResourceInfo(1,ContainerGpuSku.K80),
-}))
-{
-Command =
-{
-},
-Ports =
-{
-new ContainerPort(80)
-},
-EnvironmentVariables =
-{
-},
-VolumeMounts =
-{
-new ContainerVolumeMount("volume1","/mnt/volume1")
-{
-IsReadOnly = false,
-},new ContainerVolumeMount("volume2","/mnt/volume2")
-{
-IsReadOnly = false,
-},new ContainerVolumeMount("volume3","/mnt/volume3")
-{
-IsReadOnly = true,
-}
-},
-}
-            }, ContainerInstanceOperatingSystemType.Linux)
-            {
-                Identity = new ManagedServiceIdentity("SystemAssigned, UserAssigned")
-                {
-                    UserAssignedIdentities =
-{
-[new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/identity-name")] = new UserAssignedIdentity(),
-},
-                },
-                ImageRegistryCredentials =
-{
-},
-                IPAddress = new ContainerGroupIPAddress(new ContainerGroupPort[]
-            {
-new ContainerGroupPort(80)
-{
-Protocol = ContainerGroupNetworkProtocol.Tcp,
-}
-            }, ContainerGroupIPAddressType.Public)
-                {
-                    DnsNameLabel = "dnsnamelabel1",
-                    AutoGeneratedDomainNameLabelScope = DnsNameLabelReusePolicy.Unsecure,
-                },
-                Volumes =
-{
-new ContainerVolume("volume1")
-{
-AzureFile = new ContainerInstanceAzureFileVolume("shareName","accountName")
-{
-StorageAccountKey = "accountKey",
-},
-},new ContainerVolume("volume2")
-{
-EmptyDir = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
-{
-}),
-},new ContainerVolume("volume3")
-{
-Secret =
-{
-["secretKey1"] = "SecretValue1InBase64",
-["secretKey2"] = "SecretValue2InBase64",
-},
-}
-},
-                DiagnosticsLogAnalytics = new ContainerGroupLogAnalytics("workspaceid", "workspaceKey")
-                {
-                    LogType = ContainerGroupLogAnalyticsLogType.ContainerInsights,
-                    Metadata =
-{
-["test-key"] = "test-metadata-value",
-},
-                    WorkspaceResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/rg/providers/microsoft.operationalinsights/workspaces/workspace"),
-                },
-                SubnetIds =
-{
-new ContainerGroupSubnetId(new ResourceIdentifier("[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('vnetName'), parameters('subnetName'))]"))
-},
-                DnsConfig = new ContainerGroupDnsConfiguration(new string[]
-            {
-"1.1.1.1"
-            })
-                {
-                    SearchDomains = "cluster.local svc.cluster.local",
-                    Options = "ndots:2",
-                },
-            };
+            ContainerGroupData data = new ContainerGroupData(new AzureLocation("west us"));
             ArmOperation<ContainerGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, containerGroupName, data);
             ContainerGroupResource result = lro.Value;
 
@@ -766,21 +538,7 @@ new ContainerGroupSubnetId(new ResourceIdentifier("[resourceId('Microsoft.Networ
 
             // invoke the operation
             string containerGroupName = "demo1";
-            ContainerGroupData data = new ContainerGroupData(new AzureLocation("eastus"), new ContainerInstanceContainer[]
-            {
-new ContainerInstanceContainer("test-container-001","alpine:latest",new ContainerResourceRequirements(new ContainerResourceRequestsContent(1,1)))
-{
-Command =
-{
-"/bin/sh","-c","sleep 10"
-},
-}
-            }, ContainerInstanceOperatingSystemType.Linux)
-            {
-                RestartPolicy = ContainerGroupRestartPolicy.Never,
-                Sku = ContainerGroupSku.Standard,
-                Priority = ContainerGroupPriority.Spot,
-            };
+            ContainerGroupData data = new ContainerGroupData(new AzureLocation("eastus"));
             ArmOperation<ContainerGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, containerGroupName, data);
             ContainerGroupResource result = lro.Value;
 

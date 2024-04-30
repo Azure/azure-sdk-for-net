@@ -14,6 +14,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
+    [PersistableModelProxy(typeof(UnknownDataTransferDataSourceSink))]
     public partial class BaseCosmosDataTransferDataSourceSink : IUtf8JsonSerializable, IJsonModel<BaseCosmosDataTransferDataSourceSink>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BaseCosmosDataTransferDataSourceSink>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -82,7 +83,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             string remoteAccountName = default;
-            DataTransferComponent component = "BaseCosmosDataTransferDataSourceSink";
+            DataTransferComponent component = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +104,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new BaseCosmosDataTransferDataSourceSink(component, serializedAdditionalRawData, remoteAccountName);
+            return new Models.BaseCosmosDataTransferDataSourceSink(component, serializedAdditionalRawData, remoteAccountName);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

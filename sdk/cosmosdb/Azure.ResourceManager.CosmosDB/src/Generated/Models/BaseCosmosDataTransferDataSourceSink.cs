@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// Please note <see cref="BaseCosmosDataTransferDataSourceSink"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="CosmosCassandraDataTransferDataSourceSink"/>, <see cref="CosmosMongoDataTransferDataSourceSink"/> and <see cref="CosmosSqlDataTransferDataSourceSink"/>.
     /// </summary>
-    public partial class BaseCosmosDataTransferDataSourceSink : DataTransferDataSourceSink
+    public abstract partial class BaseCosmosDataTransferDataSourceSink : DataTransferDataSourceSink
     {
         /// <summary> Initializes a new instance of <see cref="BaseCosmosDataTransferDataSourceSink"/>. </summary>
-        public BaseCosmosDataTransferDataSourceSink()
+        protected BaseCosmosDataTransferDataSourceSink()
         {
             Component = new DataTransferComponent("BaseCosmosDataTransferDataSourceSink");
         }

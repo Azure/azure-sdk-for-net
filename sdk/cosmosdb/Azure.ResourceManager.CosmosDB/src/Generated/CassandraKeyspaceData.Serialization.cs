@@ -14,6 +14,7 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.CosmosDB.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.CosmosDB
             if (Optional.IsDefined(Resource))
             {
                 writer.WritePropertyName("resource"u8);
-                writer.WriteObjectValue(Resource, options);
+                JsonSerializer.Serialize(writer, Resource);
             }
             if (Optional.IsDefined(Options))
             {
@@ -127,7 +128,7 @@ namespace Azure.ResourceManager.CosmosDB
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            ExtendedCassandraKeyspaceResourceInfo resource = default;
+            WritableSubResource resource = default;
             CassandraKeyspacePropertiesConfig options0 = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -201,7 +202,7 @@ namespace Azure.ResourceManager.CosmosDB
                             {
                                 continue;
                             }
-                            resource = ExtendedCassandraKeyspaceResourceInfo.DeserializeExtendedCassandraKeyspaceResourceInfo(property0.Value, options);
+                            resource = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("options"u8))
@@ -365,11 +366,16 @@ namespace Azure.ResourceManager.CosmosDB
 
             builder.Append("  properties:");
             builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Resource), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ResourceId", out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    resource: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      resource: {");
+                builder.Append("        id: ");
                 builder.AppendLine(propertyOverride);
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
             }
             else
             {

@@ -25,41 +25,11 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="zones"> The zones for the container group. </param>
-        /// <param name="identity"> The identity of the container group, if configured. </param>
-        /// <param name="provisioningState"> The provisioning state of the container group. This only appears in the response. </param>
-        /// <param name="containers"> The containers within the container group. </param>
-        /// <param name="imageRegistryCredentials"> The image registry credentials by which the container group is created from. </param>
-        /// <param name="restartPolicy">
-        /// Restart policy for all containers within the container group.
-        /// - `Always` Always restart
-        /// - `OnFailure` Restart on failure
-        /// - `Never` Never restart
-        ///
-        /// </param>
-        /// <param name="ipAddress"> The IP address type of the container group. </param>
-        /// <param name="osType"> The operating system type required by the containers in the container group. </param>
-        /// <param name="volumes"> The list of volumes that can be mounted by containers in this container group. </param>
-        /// <param name="instanceView"> The instance view of the container group. Only valid in response. </param>
-        /// <param name="diagnosticsLogAnalytics"> The diagnostic information for a container group. </param>
-        /// <param name="subnetIds"> The subnet resource IDs for a container group. </param>
-        /// <param name="dnsConfig"> The DNS config information for a container group. </param>
-        /// <param name="sku"> The SKU for a container group. </param>
-        /// <param name="encryptionProperties"> The encryption properties for a container group. </param>
-        /// <param name="initContainers"> The init containers for a container group. </param>
-        /// <param name="extensions"> extensions used by virtual kubelet. </param>
-        /// <param name="confidentialComputeCcePolicy"> The properties for confidential container group. </param>
-        /// <param name="priority"> The priority of the container group. </param>
         /// <returns> A new <see cref="ContainerInstance.ContainerGroupData"/> instance for mocking. </returns>
-        public static ContainerGroupData ContainerGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, IEnumerable<string> zones = null, ManagedServiceIdentity identity = null, string provisioningState = null, IEnumerable<ContainerInstanceContainer> containers = null, IEnumerable<ContainerGroupImageRegistryCredential> imageRegistryCredentials = null, ContainerGroupRestartPolicy? restartPolicy = null, ContainerGroupIPAddress ipAddress = null, ContainerInstanceOperatingSystemType osType = default, IEnumerable<ContainerVolume> volumes = null, ContainerGroupInstanceView instanceView = null, ContainerGroupLogAnalytics diagnosticsLogAnalytics = null, IEnumerable<ContainerGroupSubnetId> subnetIds = null, ContainerGroupDnsConfiguration dnsConfig = null, ContainerGroupSku? sku = null, ContainerGroupEncryptionProperties encryptionProperties = null, IEnumerable<InitContainerDefinitionContent> initContainers = null, IEnumerable<DeploymentExtensionSpec> extensions = null, string confidentialComputeCcePolicy = null, ContainerGroupPriority? priority = null)
+        public static ContainerGroupData ContainerGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, IEnumerable<string> zones = null)
         {
             tags ??= new Dictionary<string, string>();
             zones ??= new List<string>();
-            containers ??= new List<ContainerInstanceContainer>();
-            imageRegistryCredentials ??= new List<ContainerGroupImageRegistryCredential>();
-            volumes ??= new List<ContainerVolume>();
-            subnetIds ??= new List<ContainerGroupSubnetId>();
-            initContainers ??= new List<InitContainerDefinitionContent>();
-            extensions ??= new List<DeploymentExtensionSpec>();
 
             return new ContainerGroupData(
                 id,
@@ -69,24 +39,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 tags,
                 location,
                 zones?.ToList(),
-                identity,
-                provisioningState,
-                containers?.ToList(),
-                imageRegistryCredentials?.ToList(),
-                restartPolicy,
-                ipAddress,
-                osType,
-                volumes?.ToList(),
-                instanceView,
-                diagnosticsLogAnalytics != null ? new ContainerGroupDiagnostics(diagnosticsLogAnalytics, serializedAdditionalRawData: null) : null,
-                subnetIds?.ToList(),
-                dnsConfig,
-                sku,
-                encryptionProperties,
-                initContainers?.ToList(),
-                extensions?.ToList(),
-                confidentialComputeCcePolicy != null ? new ConfidentialComputeProperties(confidentialComputeCcePolicy, serializedAdditionalRawData: null) : null,
-                priority,
                 serializedAdditionalRawData: null);
         }
 
@@ -115,92 +67,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ContainerInstanceContainer"/>. </summary>
-        /// <param name="name"> The user-provided name of the container instance. </param>
-        /// <param name="image"> The name of the image used to create the container instance. </param>
-        /// <param name="command"> The commands to execute within the container instance in exec form. </param>
-        /// <param name="ports"> The exposed ports on the container instance. </param>
-        /// <param name="environmentVariables"> The environment variables to set in the container instance. </param>
-        /// <param name="instanceView"> The instance view of the container instance. Only valid in response. </param>
-        /// <param name="resources"> The resource requirements of the container instance. </param>
-        /// <param name="volumeMounts"> The volume mounts available to the container instance. </param>
-        /// <param name="livenessProbe"> The liveness probe. </param>
-        /// <param name="readinessProbe"> The readiness probe. </param>
-        /// <param name="securityContext"> The container security properties. </param>
-        /// <returns> A new <see cref="Models.ContainerInstanceContainer"/> instance for mocking. </returns>
-        public static ContainerInstanceContainer ContainerInstanceContainer(string name = null, string image = null, IEnumerable<string> command = null, IEnumerable<ContainerPort> ports = null, IEnumerable<ContainerEnvironmentVariable> environmentVariables = null, ContainerInstanceView instanceView = null, ContainerResourceRequirements resources = null, IEnumerable<ContainerVolumeMount> volumeMounts = null, ContainerProbe livenessProbe = null, ContainerProbe readinessProbe = null, ContainerSecurityContextDefinition securityContext = null)
-        {
-            command ??= new List<string>();
-            ports ??= new List<ContainerPort>();
-            environmentVariables ??= new List<ContainerEnvironmentVariable>();
-            volumeMounts ??= new List<ContainerVolumeMount>();
-
-            return new ContainerInstanceContainer(
-                name,
-                image,
-                command?.ToList(),
-                ports?.ToList(),
-                environmentVariables?.ToList(),
-                instanceView,
-                resources,
-                volumeMounts?.ToList(),
-                livenessProbe,
-                readinessProbe,
-                securityContext,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ContainerInstanceView"/>. </summary>
-        /// <param name="restartCount"> The number of times that the container instance has been restarted. </param>
-        /// <param name="currentState"> Current container instance state. </param>
-        /// <param name="previousState"> Previous container instance state. </param>
-        /// <param name="events"> The events of the container instance. </param>
-        /// <returns> A new <see cref="Models.ContainerInstanceView"/> instance for mocking. </returns>
-        public static ContainerInstanceView ContainerInstanceView(int? restartCount = null, ContainerState currentState = null, ContainerState previousState = null, IEnumerable<ContainerEvent> events = null)
-        {
-            events ??= new List<ContainerEvent>();
-
-            return new ContainerInstanceView(restartCount, currentState, previousState, events?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ContainerState"/>. </summary>
-        /// <param name="state"> The state of the container instance. </param>
-        /// <param name="startOn"> The date-time when the container instance state started. </param>
-        /// <param name="exitCode"> The container instance exit codes correspond to those from the `docker run` command. </param>
-        /// <param name="finishOn"> The date-time when the container instance state finished. </param>
-        /// <param name="detailStatus"> The human-readable status of the container instance state. </param>
-        /// <returns> A new <see cref="Models.ContainerState"/> instance for mocking. </returns>
-        public static ContainerState ContainerState(string state = null, DateTimeOffset? startOn = null, int? exitCode = null, DateTimeOffset? finishOn = null, string detailStatus = null)
-        {
-            return new ContainerState(
-                state,
-                startOn,
-                exitCode,
-                finishOn,
-                detailStatus,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ContainerEvent"/>. </summary>
-        /// <param name="count"> The count of the event. </param>
-        /// <param name="firstTimestamp"> The date-time of the earliest logged event. </param>
-        /// <param name="lastTimestamp"> The date-time of the latest logged event. </param>
-        /// <param name="name"> The event name. </param>
-        /// <param name="message"> The event message. </param>
-        /// <param name="eventType"> The event type. </param>
-        /// <returns> A new <see cref="Models.ContainerEvent"/> instance for mocking. </returns>
-        public static ContainerEvent ContainerEvent(int? count = null, DateTimeOffset? firstTimestamp = null, DateTimeOffset? lastTimestamp = null, string name = null, string message = null, string eventType = null)
-        {
-            return new ContainerEvent(
-                count,
-                firstTimestamp,
-                lastTimestamp,
-                name,
-                message,
-                eventType,
-                serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.ContainerGroupIPAddress"/>. </summary>
         /// <param name="ports"> The list of ports exposed on the container group. </param>
         /// <param name="addressType"> Specifies if the IP is exposed to the public internet or private VNET. </param>
@@ -221,56 +87,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 autoGeneratedDomainNameLabelScope,
                 fqdn,
                 serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ContainerGroupInstanceView"/>. </summary>
-        /// <param name="events"> The events of this container group. </param>
-        /// <param name="state"> The state of the container group. Only valid in response. </param>
-        /// <returns> A new <see cref="Models.ContainerGroupInstanceView"/> instance for mocking. </returns>
-        public static ContainerGroupInstanceView ContainerGroupInstanceView(IEnumerable<ContainerEvent> events = null, string state = null)
-        {
-            events ??= new List<ContainerEvent>();
-
-            return new ContainerGroupInstanceView(events?.ToList(), state, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.InitContainerDefinitionContent"/>. </summary>
-        /// <param name="name"> The name for the init container. </param>
-        /// <param name="image"> The image of the init container. </param>
-        /// <param name="command"> The command to execute within the init container in exec form. </param>
-        /// <param name="environmentVariables"> The environment variables to set in the init container. </param>
-        /// <param name="instanceView"> The instance view of the init container. Only valid in response. </param>
-        /// <param name="volumeMounts"> The volume mounts available to the init container. </param>
-        /// <param name="securityContext"> The container security properties. </param>
-        /// <returns> A new <see cref="Models.InitContainerDefinitionContent"/> instance for mocking. </returns>
-        public static InitContainerDefinitionContent InitContainerDefinitionContent(string name = null, string image = null, IEnumerable<string> command = null, IEnumerable<ContainerEnvironmentVariable> environmentVariables = null, InitContainerPropertiesDefinitionInstanceView instanceView = null, IEnumerable<ContainerVolumeMount> volumeMounts = null, ContainerSecurityContextDefinition securityContext = null)
-        {
-            command ??= new List<string>();
-            environmentVariables ??= new List<ContainerEnvironmentVariable>();
-            volumeMounts ??= new List<ContainerVolumeMount>();
-
-            return new InitContainerDefinitionContent(
-                name,
-                image,
-                command?.ToList(),
-                environmentVariables?.ToList(),
-                instanceView,
-                volumeMounts?.ToList(),
-                securityContext,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.InitContainerPropertiesDefinitionInstanceView"/>. </summary>
-        /// <param name="restartCount"> The number of times that the init container has been restarted. </param>
-        /// <param name="currentState"> The current state of the init container. </param>
-        /// <param name="previousState"> The previous state of the init container. </param>
-        /// <param name="events"> The events of the init container. </param>
-        /// <returns> A new <see cref="Models.InitContainerPropertiesDefinitionInstanceView"/> instance for mocking. </returns>
-        public static InitContainerPropertiesDefinitionInstanceView InitContainerPropertiesDefinitionInstanceView(int? restartCount = null, ContainerState currentState = null, ContainerState previousState = null, IEnumerable<ContainerEvent> events = null)
-        {
-            events ??= new List<ContainerEvent>();
-
-            return new InitContainerPropertiesDefinitionInstanceView(restartCount, currentState, previousState, events?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerInstanceUsage"/>. </summary>
