@@ -102,11 +102,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
             return GetApplicationInsightsComponents().Get(resourceName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of WebTestResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of WebTestResources and their operations over a WebTestResource. </returns>
-        public virtual WebTestCollection GetWebTests()
+        /// <summary> Gets a collection of ApplicationInsightsWebTestResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of ApplicationInsightsWebTestResources and their operations over a ApplicationInsightsWebTestResource. </returns>
+        public virtual ApplicationInsightsWebTestCollection GetApplicationInsightsWebTests()
         {
-            return GetCachedClient(client => new WebTestCollection(client, Id));
+            return GetCachedClient(client => new ApplicationInsightsWebTestCollection(client, Id));
         }
 
         /// <summary>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="WebTestResource"/></description>
+        /// <description><see cref="ApplicationInsightsWebTestResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -135,9 +135,9 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="webTestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="webTestName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<WebTestResource>> GetWebTestAsync(string webTestName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApplicationInsightsWebTestResource>> GetApplicationInsightsWebTestAsync(string webTestName, CancellationToken cancellationToken = default)
         {
-            return await GetWebTests().GetAsync(webTestName, cancellationToken).ConfigureAwait(false);
+            return await GetApplicationInsightsWebTests().GetAsync(webTestName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="WebTestResource"/></description>
+        /// <description><see cref="ApplicationInsightsWebTestResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -166,47 +166,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="webTestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="webTestName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<WebTestResource> GetWebTest(string webTestName, CancellationToken cancellationToken = default)
+        public virtual Response<ApplicationInsightsWebTestResource> GetApplicationInsightsWebTest(string webTestName, CancellationToken cancellationToken = default)
         {
-            return GetWebTests().Get(webTestName, cancellationToken);
+            return GetApplicationInsightsWebTests().Get(webTestName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of WorkbookTemplateResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of WorkbookTemplateResources and their operations over a WorkbookTemplateResource. </returns>
-        public virtual WorkbookTemplateCollection GetWorkbookTemplates()
+        /// <summary> Gets a collection of ApplicationInsightsWorkbookTemplateResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of ApplicationInsightsWorkbookTemplateResources and their operations over a ApplicationInsightsWorkbookTemplateResource. </returns>
+        public virtual ApplicationInsightsWorkbookTemplateCollection GetApplicationInsightsWorkbookTemplates()
         {
-            return GetCachedClient(client => new WorkbookTemplateCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a single workbook template by its resourceName.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooktemplates/{resourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkbookTemplates_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkbookTemplateResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceName"> The name of the Application Insights component resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<WorkbookTemplateResource>> GetWorkbookTemplateAsync(string resourceName, CancellationToken cancellationToken = default)
-        {
-            return await GetWorkbookTemplates().GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new ApplicationInsightsWorkbookTemplateCollection(client, Id));
         }
 
         /// <summary>
@@ -226,7 +195,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="WorkbookTemplateResource"/></description>
+        /// <description><see cref="ApplicationInsightsWorkbookTemplateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -235,16 +204,47 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<WorkbookTemplateResource> GetWorkbookTemplate(string resourceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApplicationInsightsWorkbookTemplateResource>> GetApplicationInsightsWorkbookTemplateAsync(string resourceName, CancellationToken cancellationToken = default)
         {
-            return GetWorkbookTemplates().Get(resourceName, cancellationToken);
+            return await GetApplicationInsightsWorkbookTemplates().GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of WorkbookResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of WorkbookResources and their operations over a WorkbookResource. </returns>
-        public virtual WorkbookCollection GetWorkbooks()
+        /// <summary>
+        /// Get a single workbook template by its resourceName.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooktemplates/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkbookTemplates_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-20</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationInsightsWorkbookTemplateResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceName"> The name of the Application Insights component resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ApplicationInsightsWorkbookTemplateResource> GetApplicationInsightsWorkbookTemplate(string resourceName, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(client => new WorkbookCollection(client, Id));
+            return GetApplicationInsightsWorkbookTemplates().Get(resourceName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ApplicationInsightsWorkbookResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of ApplicationInsightsWorkbookResources and their operations over a ApplicationInsightsWorkbookResource. </returns>
+        public virtual ApplicationInsightsWorkbookCollection GetApplicationInsightsWorkbooks()
+        {
+            return GetCachedClient(client => new ApplicationInsightsWorkbookCollection(client, Id));
         }
 
         /// <summary>
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="WorkbookResource"/></description>
+        /// <description><see cref="ApplicationInsightsWorkbookResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -274,9 +274,9 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<WorkbookResource>> GetWorkbookAsync(string resourceName, bool? canFetchContent = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApplicationInsightsWorkbookResource>> GetApplicationInsightsWorkbookAsync(string resourceName, bool? canFetchContent = null, CancellationToken cancellationToken = default)
         {
-            return await GetWorkbooks().GetAsync(resourceName, canFetchContent, cancellationToken).ConfigureAwait(false);
+            return await GetApplicationInsightsWorkbooks().GetAsync(resourceName, canFetchContent, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="WorkbookResource"/></description>
+        /// <description><see cref="ApplicationInsightsWorkbookResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -306,9 +306,9 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<WorkbookResource> GetWorkbook(string resourceName, bool? canFetchContent = null, CancellationToken cancellationToken = default)
+        public virtual Response<ApplicationInsightsWorkbookResource> GetApplicationInsightsWorkbook(string resourceName, bool? canFetchContent = null, CancellationToken cancellationToken = default)
         {
-            return GetWorkbooks().Get(resourceName, canFetchContent, cancellationToken);
+            return GetApplicationInsightsWorkbooks().Get(resourceName, canFetchContent, cancellationToken);
         }
     }
 }
