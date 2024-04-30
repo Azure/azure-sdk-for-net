@@ -55,9 +55,9 @@ int maxBatchSize = 50;
 int numberOfMessagesDeleted = await receiver.DeleteMessagesAsync(maxBatchSize);
 ```
 
-### Delete a batch of old messages enqueued before a specific date
+### Delete a batch of messages enqueued before a specific date
 
-When you wish to delete old messages but restrict it to those enqueued before a given date, `DeleteMessagesAsync` accepts an optional parameter to specifiy the cut-off point.
+When you wish to delete the oldest messages in the entity but restrict it to only those enqueued before a given date, `DeleteMessagesAsync` accepts an optional parameter to specify the cut-off point.
 
 ```C# Snippet:ServiceBusDeleteMessagesByDate
 string connectionString = "<connection_string>";
