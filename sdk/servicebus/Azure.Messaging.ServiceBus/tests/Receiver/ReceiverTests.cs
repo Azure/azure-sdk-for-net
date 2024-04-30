@@ -472,11 +472,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             var receiver = mockReceiver.Object;
 
             mockReceiver
-                .Setup(receiver => receiver.DeleteMessagesAsync(
+                .SetupSequence(receiver => receiver.DeleteMessagesAsync(
                     It.IsAny<int>(),
                     It.IsAny<DateTimeOffset>(),
                     It.IsAny<CancellationToken>()))
-                .ReturnsAsync(expectedDeleteCount);
+                .ReturnsAsync(expectedDeleteCount)
+                .ReturnsAsync(0);
 
             // Delete with no parameters should continue to invoke the service
             // operation until the count of messages deleted is less than the
@@ -490,7 +491,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     ServiceBusReceiver.MaxDeleteMessageCount,
                     It.IsAny<DateTimeOffset>(),
                     It.IsAny<CancellationToken>()),
-                    Times.Once);
+                    Times.Exactly(2));
         }
 
         [Test]
@@ -507,7 +508,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     It.IsAny<CancellationToken>()))
                 .ReturnsAsync(ServiceBusReceiver.MaxDeleteMessageCount)
                 .ReturnsAsync(ServiceBusReceiver.MaxDeleteMessageCount)
-                .ReturnsAsync(ServiceBusReceiver.MaxDeleteMessageCount - 1);
+                .ReturnsAsync(ServiceBusReceiver.MaxDeleteMessageCount - 1)
+                .ReturnsAsync(0);
 
             // Delete with no parameters should continue to invoke the service
             // operation until the count of messages deleted is less than the
@@ -521,7 +523,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     ServiceBusReceiver.MaxDeleteMessageCount,
                     It.IsAny<DateTimeOffset>(),
                     It.IsAny<CancellationToken>()),
-                    Times.Exactly(3));
+                    Times.Exactly(4));
         }
 
         [Test]
@@ -533,11 +535,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             var receiver = mockReceiver.Object;
 
             mockReceiver
-                .Setup(receiver => receiver.DeleteMessagesAsync(
+                .SetupSequence(receiver => receiver.DeleteMessagesAsync(
                     It.IsAny<int>(),
                     It.IsAny<DateTimeOffset>(),
                     It.IsAny<CancellationToken>()))
-                .ReturnsAsync(expectedDeleteCount);
+                .ReturnsAsync(expectedDeleteCount)
+                .ReturnsAsync(0);
 
             // Purge for a date should continue to invoke the service
             // operation until the count of messages deleted is less than the
@@ -551,7 +554,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     ServiceBusReceiver.MaxDeleteMessageCount,
                     expectedDate,
                     It.IsAny<CancellationToken>()),
-                    Times.Once);
+                    Times.Exactly(2));
         }
 
         [Test]
@@ -570,7 +573,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 .ReturnsAsync(ServiceBusReceiver.MaxDeleteMessageCount)
                 .ReturnsAsync(ServiceBusReceiver.MaxDeleteMessageCount)
                 .ReturnsAsync(ServiceBusReceiver.MaxDeleteMessageCount)
-                .ReturnsAsync(ServiceBusReceiver.MaxDeleteMessageCount - 1);
+                .ReturnsAsync(ServiceBusReceiver.MaxDeleteMessageCount - 1)
+                .ReturnsAsync(0);
 
             // Delete for a date should continue to invoke the service
             // operation until the count of messages deleted is less than the
@@ -584,7 +588,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     ServiceBusReceiver.MaxDeleteMessageCount,
                     expectedDate,
                     It.IsAny<CancellationToken>()),
-                    Times.Exactly(4));
+                    Times.Exactly(5));
         }
 
         [Test]

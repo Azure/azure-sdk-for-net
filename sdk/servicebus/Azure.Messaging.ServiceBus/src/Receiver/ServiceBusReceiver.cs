@@ -692,11 +692,18 @@ namespace Azure.Messaging.ServiceBus
 
             var deleted = await DeleteMessagesAsync(MaxDeleteMessageCount, beforeEnqueueTimeUtc.Value, cancellationToken).ConfigureAwait(false);
 
-            if (deleted == MaxDeleteMessageCount)
+            // The service currently has a known bug that should be fixed before GA, where the
+            // delete operation may not delete the requested batch size in a single call, even
+            // when there are enough messages to do so.  This logic should check "deleted == MaxDeleteMessageCount"
+            // for efficiency, as should the while condition below.
+            //
+            // Until this is fixed, we'll need to loop if there were any messages deleted, which will cost an extra
+            // service call.
+            if (deleted > 0)
             {
-               var batchCount = MaxDeleteMessageCount;
+               var batchCount = deleted;
 
-               while (batchCount == MaxDeleteMessageCount)
+               while (batchCount > 0)
                {
                    batchCount = await DeleteMessagesAsync(MaxDeleteMessageCount, beforeEnqueueTimeUtc.Value, cancellationToken).ConfigureAwait(false);
                    deleted += batchCount;
