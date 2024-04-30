@@ -30,7 +30,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
             RadiologyInsightsJob radiologyInsightsJob = new RadiologyInsightsJob();
             radiologyInsightsJob.JobData = radiologyInsightsData;
             radiologyInsightsData.Configuration = CreateConfiguration();
-            var jobId = "job1714464011094";
+            var jobId = "job1714464002036";
             Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyInsights(WaitUntil.Completed, jobId, radiologyInsightsJob);
             RadiologyInsightsInferenceResult responseData = operation.Value;
             var inferences = responseData.PatientResults.First().Inferences;
