@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableComputeSubscriptionResource(subscriptionResource).GetCapacityReservationGroupsAsync(expand, null, cancellationToken); // this is important for mocking, we need to call the method with exactly same signature, otherwise we break the existing mocking code.
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetCapacityReservationGroupsAsync(expand, cancellationToken); // this is important for mocking, we need to call the method with exactly same signature, otherwise we break the existing mocking code.
         }
 
         /// <summary>
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableComputeSubscriptionResource(subscriptionResource).GetCapacityReservationGroups(expand, null, cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetCapacityReservationGroups(expand, cancellationToken);
         }
     }
 }
