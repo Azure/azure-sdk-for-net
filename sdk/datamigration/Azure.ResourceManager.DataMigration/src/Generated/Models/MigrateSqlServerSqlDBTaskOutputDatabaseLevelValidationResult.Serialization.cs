@@ -26,51 +26,6 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(MigrationId))
-            {
-                writer.WritePropertyName("migrationId"u8);
-                writer.WriteStringValue(MigrationId);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SourceDatabaseName))
-            {
-                writer.WritePropertyName("sourceDatabaseName"u8);
-                writer.WriteStringValue(SourceDatabaseName);
-            }
-            if (options.Format != "W" && Optional.IsDefined(TargetDatabaseName))
-            {
-                writer.WritePropertyName("targetDatabaseName"u8);
-                writer.WriteStringValue(TargetDatabaseName);
-            }
-            if (options.Format != "W" && Optional.IsDefined(StartedOn))
-            {
-                writer.WritePropertyName("startedOn"u8);
-                writer.WriteStringValue(StartedOn.Value, "O");
-            }
-            if (options.Format != "W" && Optional.IsDefined(EndedOn))
-            {
-                writer.WritePropertyName("endedOn"u8);
-                writer.WriteStringValue(EndedOn.Value, "O");
-            }
-            if (options.Format != "W" && Optional.IsDefined(DataIntegrityValidationResult))
-            {
-                writer.WritePropertyName("dataIntegrityValidationResult"u8);
-                writer.WriteObjectValue(DataIntegrityValidationResult, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SchemaValidationResult))
-            {
-                writer.WritePropertyName("schemaValidationResult"u8);
-                writer.WriteObjectValue(SchemaValidationResult, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(QueryAnalysisValidationResult))
-            {
-                writer.WritePropertyName("queryAnalysisValidationResult"u8);
-                writer.WriteObjectValue(QueryAnalysisValidationResult, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Status))
-            {
-                writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.Value.ToString());
-            }
             if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
@@ -116,90 +71,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            string migrationId = default;
-            string sourceDatabaseName = default;
-            string targetDatabaseName = default;
-            DateTimeOffset? startedOn = default;
-            DateTimeOffset? endedOn = default;
-            DataIntegrityValidationResult dataIntegrityValidationResult = default;
-            SchemaComparisonValidationResult schemaValidationResult = default;
-            QueryAnalysisValidationResult queryAnalysisValidationResult = default;
-            ValidationStatus? status = default;
             string id = default;
             string resultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("migrationId"u8))
-                {
-                    migrationId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("sourceDatabaseName"u8))
-                {
-                    sourceDatabaseName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("targetDatabaseName"u8))
-                {
-                    targetDatabaseName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("startedOn"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    startedOn = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (property.NameEquals("endedOn"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    endedOn = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (property.NameEquals("dataIntegrityValidationResult"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    dataIntegrityValidationResult = DataIntegrityValidationResult.DeserializeDataIntegrityValidationResult(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("schemaValidationResult"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    schemaValidationResult = SchemaComparisonValidationResult.DeserializeSchemaComparisonValidationResult(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("queryAnalysisValidationResult"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    queryAnalysisValidationResult = QueryAnalysisValidationResult.DeserializeQueryAnalysisValidationResult(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("status"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    status = new ValidationStatus(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
@@ -216,19 +93,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult(
-                id,
-                resultType,
-                serializedAdditionalRawData,
-                migrationId,
-                sourceDatabaseName,
-                targetDatabaseName,
-                startedOn,
-                endedOn,
-                dataIntegrityValidationResult,
-                schemaValidationResult,
-                queryAnalysisValidationResult,
-                status);
+            return new MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult(id, resultType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult>.Write(ModelReaderWriterOptions options)

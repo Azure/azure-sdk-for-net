@@ -38,38 +38,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Samples
             DeviceUpdatePrivateEndpointConnectionProxyResource deviceUpdatePrivateEndpointConnectionProxy = client.GetDeviceUpdatePrivateEndpointConnectionProxyResource(deviceUpdatePrivateEndpointConnectionProxyResourceId);
 
             // invoke the operation
-            DeviceUpdatePrivateEndpointConnectionProxyData data = new DeviceUpdatePrivateEndpointConnectionProxyData()
-            {
-                RemotePrivateEndpoint = new DeviceUpdateRemotePrivateEndpoint()
-                {
-                    Id = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Network/privateEndpoints/{privateEndpointConnectionProxyId}"),
-                    Location = new AzureLocation("westus2"),
-                    ImmutableSubscriptionId = "00000000-0000-0000-0000-000000000000",
-                    ImmutableResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Network/privateEndpoints/{peName}"),
-                    ManualPrivateLinkServiceConnections =
-{
-new DeviceUpdatePrivateLinkServiceConnection()
-{
-Name = "{privateEndpointConnectionProxyId}",
-GroupIds =
-{
-"DeviceUpdate"
-},
-RequestMessage = "Please approve my connection, thanks.",
-}
-},
-                    PrivateLinkServiceProxies =
-{
-new DeviceUpdatePrivateLinkServiceProxy()
-{
-Id = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Network/privateEndpoints/{privateEndpointConnectionProxyId}/privateLinkServiceProxies/{privateEndpointConnectionProxyId}"),
-GroupConnectivityInformation =
-{
-},
-}
-},
-                },
-            };
+            DeviceUpdatePrivateEndpointConnectionProxyData data = new DeviceUpdatePrivateEndpointConnectionProxyData();
             await deviceUpdatePrivateEndpointConnectionProxy.ValidateAsync(data);
 
             Console.WriteLine($"Succeeded");
@@ -166,38 +135,7 @@ GroupConnectivityInformation =
             DeviceUpdatePrivateEndpointConnectionProxyResource deviceUpdatePrivateEndpointConnectionProxy = client.GetDeviceUpdatePrivateEndpointConnectionProxyResource(deviceUpdatePrivateEndpointConnectionProxyResourceId);
 
             // invoke the operation
-            DeviceUpdatePrivateEndpointConnectionProxyData data = new DeviceUpdatePrivateEndpointConnectionProxyData()
-            {
-                RemotePrivateEndpoint = new DeviceUpdateRemotePrivateEndpoint()
-                {
-                    Id = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Network/privateEndpoints/{peName}"),
-                    Location = new AzureLocation("westus2"),
-                    ImmutableSubscriptionId = "00000000-0000-0000-0000-000000000000",
-                    ImmutableResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Network/privateEndpoints/{peName}"),
-                    ManualPrivateLinkServiceConnections =
-{
-new DeviceUpdatePrivateLinkServiceConnection()
-{
-Name = "{privateEndpointConnectionProxyId}",
-GroupIds =
-{
-"DeviceUpdate"
-},
-RequestMessage = "Please approve my connection, thanks.",
-}
-},
-                    PrivateLinkServiceProxies =
-{
-new DeviceUpdatePrivateLinkServiceProxy()
-{
-Id = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Network/privateEndpoints/{privateEndpointConnectionProxyId}/privateLinkServiceProxies/{privateEndpointConnectionProxyId}"),
-GroupConnectivityInformation =
-{
-},
-}
-},
-                },
-            };
+            DeviceUpdatePrivateEndpointConnectionProxyData data = new DeviceUpdatePrivateEndpointConnectionProxyData();
             ArmOperation<DeviceUpdatePrivateEndpointConnectionProxyResource> lro = await deviceUpdatePrivateEndpointConnectionProxy.UpdateAsync(WaitUntil.Completed, data);
             DeviceUpdatePrivateEndpointConnectionProxyResource result = lro.Value;
 

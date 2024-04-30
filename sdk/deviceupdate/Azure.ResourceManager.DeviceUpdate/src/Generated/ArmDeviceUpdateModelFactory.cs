@@ -167,11 +167,8 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection proxy resource. </param>
-        /// <param name="eTag"> ETag from NRP. </param>
-        /// <param name="remotePrivateEndpoint"> Remote private endpoint details. </param>
-        /// <param name="status"> Operation status. </param>
         /// <returns> A new <see cref="DeviceUpdate.DeviceUpdatePrivateEndpointConnectionProxyData"/> instance for mocking. </returns>
-        public static DeviceUpdatePrivateEndpointConnectionProxyData DeviceUpdatePrivateEndpointConnectionProxyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DeviceUpdatePrivateEndpointConnectionProxyProvisioningState? provisioningState = null, string eTag = null, DeviceUpdateRemotePrivateEndpoint remotePrivateEndpoint = null, string status = null)
+        public static DeviceUpdatePrivateEndpointConnectionProxyData DeviceUpdatePrivateEndpointConnectionProxyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DeviceUpdatePrivateEndpointConnectionProxyProvisioningState? provisioningState = null)
         {
             return new DeviceUpdatePrivateEndpointConnectionProxyData(
                 id,
@@ -179,49 +176,6 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 resourceType,
                 systemData,
                 provisioningState,
-                eTag,
-                remotePrivateEndpoint,
-                status,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.GroupConnectivityInformation"/>. </summary>
-        /// <param name="groupId"> Group ID. </param>
-        /// <param name="memberName"> Member name. </param>
-        /// <param name="customerVisibleFqdns"> List of customer visible FQDNs. </param>
-        /// <param name="internalFqdn"> Internal FQDN. </param>
-        /// <param name="redirectMapId"> Redirect map ID. </param>
-        /// <param name="privateLinkServiceArmRegion"> PrivateLinkService ARM region. </param>
-        /// <returns> A new <see cref="Models.GroupConnectivityInformation"/> instance for mocking. </returns>
-        public static GroupConnectivityInformation GroupConnectivityInformation(string groupId = null, string memberName = null, IEnumerable<string> customerVisibleFqdns = null, string internalFqdn = null, string redirectMapId = null, AzureLocation? privateLinkServiceArmRegion = null)
-        {
-            customerVisibleFqdns ??= new List<string>();
-
-            return new GroupConnectivityInformation(
-                groupId,
-                memberName,
-                customerVisibleFqdns?.ToList(),
-                internalFqdn,
-                redirectMapId,
-                privateLinkServiceArmRegion,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DeviceUpdatePrivateEndpointConnectionDetails"/>. </summary>
-        /// <param name="id"> Connection details ID. </param>
-        /// <param name="privateIPAddress"> Private IP address. </param>
-        /// <param name="linkIdentifier"> Link ID. </param>
-        /// <param name="groupId"> Group ID. </param>
-        /// <param name="memberName"> Member name. </param>
-        /// <returns> A new <see cref="Models.DeviceUpdatePrivateEndpointConnectionDetails"/> instance for mocking. </returns>
-        public static DeviceUpdatePrivateEndpointConnectionDetails DeviceUpdatePrivateEndpointConnectionDetails(string id = null, string privateIPAddress = null, string linkIdentifier = null, string groupId = null, string memberName = null)
-        {
-            return new DeviceUpdatePrivateEndpointConnectionDetails(
-                id,
-                privateIPAddress,
-                linkIdentifier,
-                groupId,
-                memberName,
                 serializedAdditionalRawData: null);
         }
     }

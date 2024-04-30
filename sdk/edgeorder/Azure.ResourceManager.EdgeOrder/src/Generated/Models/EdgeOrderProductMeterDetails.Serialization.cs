@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    [PersistableModelProxy(typeof(UnknownMeterDetails))]
+    [PersistableModelProxy(typeof(UnknownEdgeOrderProductMeterDetails))]
     public partial class EdgeOrderProductMeterDetails : IUtf8JsonSerializable, IJsonModel<EdgeOrderProductMeterDetails>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeOrderProductMeterDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     case "Purchase": return PurchaseMeterDetails.DeserializePurchaseMeterDetails(element, options);
                 }
             }
-            return UnknownMeterDetails.DeserializeUnknownMeterDetails(element, options);
+            return UnknownEdgeOrderProductMeterDetails.DeserializeUnknownEdgeOrderProductMeterDetails(element, options);
         }
 
         BinaryData IPersistableModel<EdgeOrderProductMeterDetails>.Write(ModelReaderWriterOptions options)
