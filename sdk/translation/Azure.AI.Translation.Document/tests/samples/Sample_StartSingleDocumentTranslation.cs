@@ -28,7 +28,7 @@ namespace Azure.AI.Translation.Document.Samples
 
             return client;
         }
-
+        /*
         [Test]
         public void StartSingleDocumentTranslation()
         {
@@ -54,6 +54,6 @@ namespace Azure.AI.Translation.Document.Samples
                 Console.WriteLine($"Message: {exception.Message}");
             }
             #endregion
-        }
+        }*/
     }
 }

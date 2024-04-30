@@ -118,9 +118,9 @@ namespace Azure.AI.Translation.Document
             Argument.AssertNotNull(targetLanguage, nameof(targetLanguage));
             Argument.AssertNotNull(documentTranslateContent, nameof(documentTranslateContent));
 
-            using RequestContent content = documentTranslateContent.ToRequestContent();
+            using MultipartFormDataRequestContent content = documentTranslateContent.ToMultipartRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await DocumentTranslateAsync(targetLanguage, content, sourceLanguage, category, allowFallback, context).ConfigureAwait(false);
+            Response response = await DocumentTranslateAsync(targetLanguage, content, content.ContentType, sourceLanguage, category, allowFallback, context).ConfigureAwait(false);
             return Response.FromValue(response.Content, response);
         }
 
@@ -154,9 +154,9 @@ namespace Azure.AI.Translation.Document
             Argument.AssertNotNull(targetLanguage, nameof(targetLanguage));
             Argument.AssertNotNull(documentTranslateContent, nameof(documentTranslateContent));
 
-            using RequestContent content = documentTranslateContent.ToRequestContent();
+            using MultipartFormDataRequestContent content = documentTranslateContent.ToMultipartRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = DocumentTranslate(targetLanguage, content, sourceLanguage, category, allowFallback, context);
+            Response response = DocumentTranslate(targetLanguage, content, content.ContentType, sourceLanguage, category, allowFallback, context);
             return Response.FromValue(response.Content, response);
         }
 
@@ -181,6 +181,7 @@ namespace Azure.AI.Translation.Document
         /// For example if you want to translate the document in German language, then use targetLanguage=de
         /// </param>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType"> Content Type as multipart/form-data. Allowed values: "multipart/form-data". </param>
         /// <param name="sourceLanguage">
         /// Specifies source language of the input document.
         /// If this parameter isn't specified, automatic language detection is applied to determine the source language.
@@ -199,8 +200,8 @@ namespace Azure.AI.Translation.Document
         /// <exception cref="ArgumentNullException"> <paramref name="targetLanguage"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/SingleDocumentTranslationClient.xml" path="doc/members/member[@name='DocumentTranslateAsync(string,RequestContent,string,string,bool?,RequestContext)']/*" />
-        public virtual async Task<Response> DocumentTranslateAsync(string targetLanguage, RequestContent content, string sourceLanguage = null, string category = null, bool? allowFallback = null, RequestContext context = null)
+        /// <include file="Docs/SingleDocumentTranslationClient.xml" path="doc/members/member[@name='DocumentTranslateAsync(string,RequestContent,string,string,string,bool?,RequestContext)']/*" />
+        public virtual async Task<Response> DocumentTranslateAsync(string targetLanguage, RequestContent content, string contentType, string sourceLanguage = null, string category = null, bool? allowFallback = null, RequestContext context = null)
         {
             Argument.AssertNotNull(targetLanguage, nameof(targetLanguage));
             Argument.AssertNotNull(content, nameof(content));
@@ -209,7 +210,7 @@ namespace Azure.AI.Translation.Document
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDocumentTranslateRequest(targetLanguage, content, sourceLanguage, category, allowFallback, context);
+                using HttpMessage message = CreateDocumentTranslateRequest(targetLanguage, content, contentType, sourceLanguage, category, allowFallback, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -240,6 +241,7 @@ namespace Azure.AI.Translation.Document
         /// For example if you want to translate the document in German language, then use targetLanguage=de
         /// </param>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType"> Content Type as multipart/form-data. Allowed values: "multipart/form-data". </param>
         /// <param name="sourceLanguage">
         /// Specifies source language of the input document.
         /// If this parameter isn't specified, automatic language detection is applied to determine the source language.
@@ -258,8 +260,8 @@ namespace Azure.AI.Translation.Document
         /// <exception cref="ArgumentNullException"> <paramref name="targetLanguage"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/SingleDocumentTranslationClient.xml" path="doc/members/member[@name='DocumentTranslate(string,RequestContent,string,string,bool?,RequestContext)']/*" />
-        public virtual Response DocumentTranslate(string targetLanguage, RequestContent content, string sourceLanguage = null, string category = null, bool? allowFallback = null, RequestContext context = null)
+        /// <include file="Docs/SingleDocumentTranslationClient.xml" path="doc/members/member[@name='DocumentTranslate(string,RequestContent,string,string,string,bool?,RequestContext)']/*" />
+        public virtual Response DocumentTranslate(string targetLanguage, RequestContent content, string contentType, string sourceLanguage = null, string category = null, bool? allowFallback = null, RequestContext context = null)
         {
             Argument.AssertNotNull(targetLanguage, nameof(targetLanguage));
             Argument.AssertNotNull(content, nameof(content));
@@ -268,7 +270,7 @@ namespace Azure.AI.Translation.Document
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDocumentTranslateRequest(targetLanguage, content, sourceLanguage, category, allowFallback, context);
+                using HttpMessage message = CreateDocumentTranslateRequest(targetLanguage, content, contentType, sourceLanguage, category, allowFallback, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -276,6 +278,36 @@ namespace Azure.AI.Translation.Document
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        internal HttpMessage CreateDocumentTranslateRequest(string targetLanguage, RequestContent content, string contentType, string sourceLanguage, string category, bool? allowFallback, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/translator", false);
+            uri.AppendPath("/document:translate", false);
+            uri.AppendQuery("targetLanguage", targetLanguage, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (sourceLanguage != null)
+            {
+                uri.AppendQuery("sourceLanguage", sourceLanguage, true);
+            }
+            if (category != null)
+            {
+                uri.AppendQuery("category", category, true);
+            }
+            if (allowFallback != null)
+            {
+                uri.AppendQuery("allowFallback", allowFallback.Value, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/octet-stream");
+            request.Headers.Add("content-type", contentType);
+            request.Content = content;
+            return message;
         }
 
         private static RequestContext DefaultRequestContext = new RequestContext();

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace Azure.AI.Translation.Document
@@ -64,9 +65,9 @@ namespace Azure.AI.Translation.Document
         /// <param name="document"> Document to be translated in the form. </param>
         /// <param name="glossary"> Glossary-translation memory will be used during translation in the form. </param>
         /// <returns> A new <see cref="Document.DocumentTranslateContent"/> instance for mocking. </returns>
-        public static DocumentTranslateContent DocumentTranslateContent(BinaryData document = null, IEnumerable<BinaryData> glossary = null)
+        public static DocumentTranslateContent DocumentTranslateContent(Stream document = null, IEnumerable<Stream> glossary = null)
         {
-            glossary ??= new List<BinaryData>();
+            glossary ??= new List<Stream>();
 
             return new DocumentTranslateContent(document, glossary?.ToList(), serializedAdditionalRawData: null);
         }

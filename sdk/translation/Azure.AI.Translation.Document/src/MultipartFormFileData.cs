@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Azure.Core;
 
 namespace Azure.AI.Translation.Document
@@ -18,7 +19,7 @@ namespace Azure.AI.Translation.Document
         /// <param name="name">Name of the file</param>
         /// <param name="content">Content of the file.</param>
         /// <param name="contentType">Content type of the file.</param>
-        public MultipartFormFileData(string name, BinaryData content, string contentType) : this(name, content, contentType, null)
+        public MultipartFormFileData(string name, Stream content, string contentType) : this(name, content, contentType, null)
         { }
 
         /// <summary>
@@ -28,7 +29,7 @@ namespace Azure.AI.Translation.Document
         /// <param name="content">Content of the file.</param>
         /// <param name="contentType">Content type of the file.</param>
         /// <param name="headers">Optional headers appended to the file.</param>
-        public MultipartFormFileData(string name, BinaryData content, string contentType, IDictionary<string, string> headers)
+        public MultipartFormFileData(string name, Stream content, string contentType, IDictionary<string, string> headers)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(content, nameof(content));
@@ -46,7 +47,7 @@ namespace Azure.AI.Translation.Document
         /// <summary>
         /// File content.
         /// </summary>
-        public BinaryData Content { get; }
+        public Stream Content { get; }
 
         /// <summary>
         /// File content type.

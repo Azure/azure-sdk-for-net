@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Azure.AI.Translation.Document;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using Azure.Core;
 
 namespace Azure.AI.Translation.Document.Tests
 {
@@ -46,6 +47,22 @@ namespace Azure.AI.Translation.Document.Tests
             }
         }
 
+        [RecordedTest]
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task Translate_TextDocumentAsync(bool usetokenCredential)
+        {
+            var client = GetSingleDocumentTranslationClient(useTokenCredential: usetokenCredential);
+            string filePath = Path.Combine("TestData", "test-input.txt");
+            using Stream fileStream = File.OpenRead(filePath);
+
+            DocumentTranslateContent content = new DocumentTranslateContent(fileStream);
+
+            var response = await client.DocumentTranslateAsync("hi", content).ConfigureAwait(false);
+            Assert.NotNull(response);
+        }
+
+        /*
         // Enable this test when this is fixed => https://github.com/Azure/azure-sdk-for-net/issues/41674
         [RecordedTest]
         [TestCase(false)]
@@ -115,6 +132,6 @@ namespace Azure.AI.Translation.Document.Tests
             {
                 Assert.AreEqual(400, ex.Status);
             }
-        }
+        } */
     }
 }

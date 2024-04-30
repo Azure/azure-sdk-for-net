@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Azure.AI.Translation.Document
 {
@@ -45,66 +46,9 @@ namespace Azure.AI.Translation.Document
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DocumentTranslateContent"/>. </summary>
-        /// <param name="document"> Document to be translated in the form. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="document"/> is null. </exception>
-        public DocumentTranslateContent(BinaryData document)
-        {
-            Argument.AssertNotNull(document, nameof(document));
-
-            Document = document;
-            Glossary = new ChangeTrackingList<BinaryData>();
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DocumentTranslateContent"/>. </summary>
-        /// <param name="document"> Document to be translated in the form. </param>
-        /// <param name="glossary"> Glossary-translation memory will be used during translation in the form. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentTranslateContent(BinaryData document, IList<BinaryData> glossary, IDictionary<string, BinaryData> serializedAdditionalRawData)
-        {
-            Document = document;
-            Glossary = glossary;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
         /// <summary> Initializes a new instance of <see cref="DocumentTranslateContent"/> for deserialization. </summary>
         internal DocumentTranslateContent()
         {
         }
-
-        /// <summary>
-        /// Document to be translated in the form
-        /// <para>
-        /// To assign a byte[] to this property use <see cref="BinaryData.FromBytes(byte[])"/>.
-        /// The byte[] will be serialized to a Base64 encoded string.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromBytes(new byte[] { 1, 2, 3 })</term>
-        /// <description>Creates a payload of "AQID".</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData Document { get; }
-        /// <summary>
-        /// Glossary-translation memory will be used during translation in the form.
-        /// <para>
-        /// To assign a byte[] to the element of this property use <see cref="BinaryData.FromBytes(byte[])"/>.
-        /// The byte[] will be serialized to a Base64 encoded string.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromBytes(new byte[] { 1, 2, 3 })</term>
-        /// <description>Creates a payload of "AQID".</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public IList<BinaryData> Glossary { get; }
     }
 }

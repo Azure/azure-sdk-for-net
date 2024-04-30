@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -26,9 +27,9 @@ namespace Azure.AI.Translation.Document.Samples
 
             using RequestContent content = RequestContent.Create(new
             {
-                document = new object(),
+                document = File.OpenRead("<filePath>"),
             });
-            Response response = client.DocumentTranslate("<targetLanguage>", content);
+            Response response = client.DocumentTranslate("<targetLanguage>", content, "multipart/form-data");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -44,9 +45,9 @@ namespace Azure.AI.Translation.Document.Samples
 
             using RequestContent content = RequestContent.Create(new
             {
-                document = new object(),
+                document = File.OpenRead("<filePath>"),
             });
-            Response response = await client.DocumentTranslateAsync("<targetLanguage>", content);
+            Response response = await client.DocumentTranslateAsync("<targetLanguage>", content, "multipart/form-data");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -60,7 +61,7 @@ namespace Azure.AI.Translation.Document.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             SingleDocumentTranslationClient client = new SingleDocumentTranslationClient(endpoint, credential);
 
-            DocumentTranslateContent documentTranslateContent = new DocumentTranslateContent(BinaryData.FromObjectAsJson(new object()));
+            DocumentTranslateContent documentTranslateContent = new DocumentTranslateContent((Stream)null);
             Response<BinaryData> response = client.DocumentTranslate("<targetLanguage>", documentTranslateContent);
         }
 
@@ -72,7 +73,7 @@ namespace Azure.AI.Translation.Document.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             SingleDocumentTranslationClient client = new SingleDocumentTranslationClient(endpoint, credential);
 
-            DocumentTranslateContent documentTranslateContent = new DocumentTranslateContent(BinaryData.FromObjectAsJson(new object()));
+            DocumentTranslateContent documentTranslateContent = new DocumentTranslateContent((Stream)null);
             Response<BinaryData> response = await client.DocumentTranslateAsync("<targetLanguage>", documentTranslateContent);
         }
 
@@ -86,13 +87,13 @@ namespace Azure.AI.Translation.Document.Samples
 
             using RequestContent content = RequestContent.Create(new
             {
-                document = new object(),
+                document = File.OpenRead("<filePath>"),
                 glossary = new object[]
             {
-new object()
+File.OpenRead("<filePath>")
             },
             });
-            Response response = client.DocumentTranslate("<targetLanguage>", content, sourceLanguage: "<sourceLanguage>", category: "<category>", allowFallback: true);
+            Response response = client.DocumentTranslate("<targetLanguage>", content, "multipart/form-data", sourceLanguage: "<sourceLanguage>", category: "<category>", allowFallback: true);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -108,13 +109,13 @@ new object()
 
             using RequestContent content = RequestContent.Create(new
             {
-                document = new object(),
+                document = File.OpenRead("<filePath>"),
                 glossary = new object[]
             {
-new object()
+File.OpenRead("<filePath>")
             },
             });
-            Response response = await client.DocumentTranslateAsync("<targetLanguage>", content, sourceLanguage: "<sourceLanguage>", category: "<category>", allowFallback: true);
+            Response response = await client.DocumentTranslateAsync("<targetLanguage>", content, "multipart/form-data", sourceLanguage: "<sourceLanguage>", category: "<category>", allowFallback: true);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -128,9 +129,9 @@ new object()
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             SingleDocumentTranslationClient client = new SingleDocumentTranslationClient(endpoint, credential);
 
-            DocumentTranslateContent documentTranslateContent = new DocumentTranslateContent(BinaryData.FromObjectAsJson(new object()))
+            DocumentTranslateContent documentTranslateContent = new DocumentTranslateContent((Stream)null)
             {
-                Glossary = { BinaryData.FromObjectAsJson(new object()) },
+                Glossary = { null },
             };
             Response<BinaryData> response = client.DocumentTranslate("<targetLanguage>", documentTranslateContent, sourceLanguage: "<sourceLanguage>", category: "<category>", allowFallback: true);
         }
@@ -143,9 +144,9 @@ new object()
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             SingleDocumentTranslationClient client = new SingleDocumentTranslationClient(endpoint, credential);
 
-            DocumentTranslateContent documentTranslateContent = new DocumentTranslateContent(BinaryData.FromObjectAsJson(new object()))
+            DocumentTranslateContent documentTranslateContent = new DocumentTranslateContent((Stream)null)
             {
-                Glossary = { BinaryData.FromObjectAsJson(new object()) },
+                Glossary = { null },
             };
             Response<BinaryData> response = await client.DocumentTranslateAsync("<targetLanguage>", documentTranslateContent, sourceLanguage: "<sourceLanguage>", category: "<category>", allowFallback: true);
         }

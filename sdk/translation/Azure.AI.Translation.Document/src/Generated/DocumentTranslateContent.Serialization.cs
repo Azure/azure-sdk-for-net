@@ -7,7 +7,7 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
+using System.IO;
 using System.Text.Json;
 using Azure.Core;
 
@@ -27,7 +27,14 @@ namespace Azure.AI.Translation.Document
 
             writer.WriteStartObject();
             writer.WritePropertyName("document"u8);
-            writer.WriteBase64StringValue(Document.ToArray(), "D");
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(global::System.BinaryData.FromStream(Document));
+#else
+            using (JsonDocument document = JsonDocument.Parse(BinaryData.FromStream(Document)))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             if (Optional.IsCollectionDefined(Glossary))
             {
                 writer.WritePropertyName("glossary"u8);
@@ -39,7 +46,14 @@ namespace Azure.AI.Translation.Document
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteBase64StringValue(item.ToArray(), "D");
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(global::System.BinaryData.FromStream(item));
+#else
+                    using (JsonDocument document = JsonDocument.Parse(BinaryData.FromStream(item)))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndArray();
             }
@@ -73,53 +87,19 @@ namespace Azure.AI.Translation.Document
             return DeserializeDocumentTranslateContent(document.RootElement, options);
         }
 
-        internal static DocumentTranslateContent DeserializeDocumentTranslateContent(JsonElement element, ModelReaderWriterOptions options = null)
+        private BinaryData SerializeMultipart(ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
-            if (element.ValueKind == JsonValueKind.Null)
+            using MultipartFormDataRequestContent content = ToMultipartRequestContent();
+            using MemoryStream stream = new MemoryStream();
+            content.WriteTo(stream);
+            if (stream.Position > int.MaxValue)
             {
-                return null;
+                return BinaryData.FromStream(stream);
             }
-            BinaryData document = default;
-            IList<BinaryData> glossary = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            else
             {
-                if (property.NameEquals("document"u8))
-                {
-                    document = BinaryData.FromBytes(property.Value.GetBytesFromBase64("D"));
-                    continue;
-                }
-                if (property.NameEquals("glossary"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<BinaryData> array = new List<BinaryData>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(BinaryData.FromBytes(item.GetBytesFromBase64("D")));
-                        }
-                    }
-                    glossary = array;
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new DocumentTranslateContent(document, glossary ?? new ChangeTrackingList<BinaryData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DocumentTranslateContent>.Write(ModelReaderWriterOptions options)
@@ -130,6 +110,8 @@ namespace Azure.AI.Translation.Document
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "MFD":
+                    return SerializeMultipart(options);
                 default:
                     throw new FormatException($"The model {nameof(DocumentTranslateContent)} does not support writing '{options.Format}' format.");
             }
@@ -151,7 +133,7 @@ namespace Azure.AI.Translation.Document
             }
         }
 
-        string IPersistableModel<DocumentTranslateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DocumentTranslateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "MFD";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
