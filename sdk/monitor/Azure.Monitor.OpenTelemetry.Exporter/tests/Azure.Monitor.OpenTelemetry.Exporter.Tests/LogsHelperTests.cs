@@ -271,7 +271,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 builder.AddFilter(typeof(LogsHelperTests).FullName, LogLevel.Trace);
             });
 
-            ActivitySource src = new ActivitySource(nameof(ValidateSamplingRatio));
+            using ActivitySource src = new ActivitySource(nameof(ValidateSamplingRatio));
             using var tracerProvider = Sdk.CreateTracerProviderBuilder()
                 .AddSource(nameof(ValidateSamplingRatio))
                 .Build();
