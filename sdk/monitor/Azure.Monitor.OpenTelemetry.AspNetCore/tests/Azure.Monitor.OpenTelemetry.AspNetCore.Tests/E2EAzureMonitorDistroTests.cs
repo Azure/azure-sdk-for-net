@@ -81,15 +81,18 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
         }
 
         [Theory]
-        [InlineData(true)]
-        [InlineData(false)]
-        public void ValidateLogFilteringProcessorIsAddedToLoggerProvider(bool disableLogSampling)
+        [InlineData(true, 1.0f)]
+        [InlineData(false, 1.0f)]
+        [InlineData(false, 0.5f)]
+        [InlineData(true, 0.5f)]
+        public void ValidateLogFilteringProcessorIsAddedToLoggerProvider(bool disableLogSampling, float sampleRatio)
         {
             var sv = new ServiceCollection();
             sv.AddOpenTelemetry().UseAzureMonitor(o =>
             {
                 o.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000";
                 o.DisableTraceBasedSamplingForLogs = disableLogSampling;
+                o.SamplingRatio = sampleRatio;
             });
 
             var sp = sv.BuildServiceProvider();
@@ -104,15 +107,21 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
 
             var logProcessor = firstProcessor?.GetType().GetField("Value", BindingFlags.Instance | BindingFlags.Public)?.GetValue(firstProcessor);
 
+            var exporter = logProcessor?.GetType().GetProperty("Exporter", BindingFlags.Instance | BindingFlags.NonPublic)?.GetMethod?.Invoke(logProcessor, null);
+
+            var sampleRate = exporter?.GetType()?.GetField("_sampleRate", BindingFlags.Instance | BindingFlags.NonPublic)?.GetValue(exporter);
+
             if (!disableLogSampling)
             {
                 Assert.True(logProcessor is LogFilteringProcessor);
                 Assert.True(logProcessor is BatchLogRecordExportProcessor);
+                Assert.Equal(sampleRatio * 100, sampleRate);
             }
             else
             {
                 Assert.True(logProcessor is not LogFilteringProcessor);
                 Assert.True(logProcessor is BatchLogRecordExportProcessor);
+                Assert.Equal(100f, sampleRate);
             }
         }
 
