@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.Blueprint
             {
                 switch (discriminator.GetString())
                 {
-                    case "policyAssignment": return PolicyAssignmentArtifact.DeserializePolicyAssignmentArtifact(element, options);
-                    case "roleAssignment": return RoleAssignmentArtifact.DeserializeRoleAssignmentArtifact(element, options);
                     case "template": return TemplateArtifact.DeserializeTemplateArtifact(element, options);
+                    case "roleAssignment": return RoleAssignmentArtifact.DeserializeRoleAssignmentArtifact(element, options);
+                    case "policyAssignment": return PolicyAssignmentArtifact.DeserializePolicyAssignmentArtifact(element, options);
                 }
             }
             return UnknownArtifact.DeserializeUnknownArtifact(element, options);
