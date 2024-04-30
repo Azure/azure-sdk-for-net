@@ -15,8 +15,9 @@ namespace Azure.AI.Translation.Document.Tests
 {
     public class SingleDocumentTranslationClientLiveTests : RecordedTestBase<DocumentTranslationTestEnvironment>
     {
-        public SingleDocumentTranslationClientLiveTests(bool isAsync): base(isAsync, RecordedTestMode.Live)
-        //: base(isAsync)
+        public SingleDocumentTranslationClientLiveTests(bool isAsync)
+        //: base(isAsync, RecordedTestMode.Live)
+        : base(isAsync)
         {
             SanitizedHeaders.Add("Ocp-Apim-Subscription-Key");
         }
@@ -47,22 +48,6 @@ namespace Azure.AI.Translation.Document.Tests
             }
         }
 
-        [RecordedTest]
-        [TestCase(false)]
-        [TestCase(true)]
-        public async Task Translate_TextDocumentAsync(bool usetokenCredential)
-        {
-            var client = GetSingleDocumentTranslationClient(useTokenCredential: usetokenCredential);
-            string filePath = Path.Combine("TestData", "test-input.txt");
-            using Stream fileStream = File.OpenRead(filePath);
-
-            DocumentTranslateContent content = new DocumentTranslateContent(fileStream);
-
-            var response = await client.DocumentTranslateAsync("hi", content).ConfigureAwait(false);
-            Assert.NotNull(response);
-        }
-
-        /*
         // Enable this test when this is fixed => https://github.com/Azure/azure-sdk-for-net/issues/41674
         [RecordedTest]
         [TestCase(false)]
@@ -73,8 +58,9 @@ namespace Azure.AI.Translation.Document.Tests
             string filePath = Path.Combine("TestData", "test-input.txt");
             using Stream fileStream = File.OpenRead(filePath);
 
-            var sourceDocument = new MultipartFormFileData(Path.GetFileName(filePath), BinaryData.FromStream(fileStream), "text/html");
-            var response = await client.DocumentTranslateAsync("hi", sourceDocument).ConfigureAwait(false);
+            var sourceDocument = new MultipartFormFileData(Path.GetFileName(filePath), fileStream, "text/html");
+            DocumentTranslateContent content = new DocumentTranslateContent(sourceDocument);
+            var response = await client.DocumentTranslateAsync("hi", content).ConfigureAwait(false);
             var requestString = File.ReadAllText(filePath);
             var responseString = Encoding.UTF8.GetString(response.Value.ToArray());
             Assert.AreNotEqual(requestString, responseString);
@@ -89,16 +75,17 @@ namespace Azure.AI.Translation.Document.Tests
             var client = GetSingleDocumentTranslationClient(useTokenCredential: usetokenCredential);
             string filePath = Path.Combine("TestData", "test-input.txt");
             using Stream fileStream = File.OpenRead(filePath);
+            var sourceDocument = new MultipartFormFileData(Path.GetFileName(filePath), fileStream, "text/html");
 
-            var sourceDocument = new MultipartFormFileData(Path.GetFileName(filePath), BinaryData.FromStream(fileStream), "text/html");
             filePath = Path.Combine("TestData", "test-glossary.csv");
             using Stream glossaryStream = File.OpenRead(filePath);
             var sourceGlossaries = new List<MultipartFormFileData>()
             {
-                new(Path.GetFileName(filePath), BinaryData.FromStream(glossaryStream), "text/csv")
+                new(Path.GetFileName(filePath), glossaryStream, "text/csv")
             };
+            DocumentTranslateContent content = new DocumentTranslateContent(sourceDocument, sourceGlossaries, null);
 
-            var response = await client.DocumentTranslateAsync("hi", sourceDocument, sourceGlossaries).ConfigureAwait(false);
+            var response = await client.DocumentTranslateAsync("hi", content).ConfigureAwait(false);
 
             var outputString = Encoding.UTF8.GetString(response.Value.ToArray());
 
@@ -114,24 +101,25 @@ namespace Azure.AI.Translation.Document.Tests
             var client = GetSingleDocumentTranslationClient(useTokenCredential: usetokenCredential);
             string filePath = Path.Combine("TestData", "test-input.txt");
             using Stream fileStream = File.OpenRead(filePath);
+            var sourceDocument = new MultipartFormFileData(Path.GetFileName(filePath), fileStream, "text/html");
 
-            var sourceDocument = new MultipartFormFileData(Path.GetFileName(filePath), BinaryData.FromStream(fileStream), "text/html");
             filePath = Path.Combine("TestData", "test-glossary.csv");
             using Stream glossaryStream = File.OpenRead(filePath);
             var sourceGlossaries = new List<MultipartFormFileData>()
             {
-                new(Path.GetFileName(filePath), BinaryData.FromStream(glossaryStream), "text/csv"),
-                new(Path.GetFileName(filePath), BinaryData.FromStream(glossaryStream), "text/csv")
+                new(Path.GetFileName(filePath), glossaryStream, "text/csv"),
+                new(Path.GetFileName(filePath), glossaryStream, "text/csv")
             };
+            DocumentTranslateContent content = new DocumentTranslateContent(sourceDocument, sourceGlossaries, null);
 
             try
             {
-                var response = await client.DocumentTranslateAsync("hi", sourceDocument, sourceGlossaries).ConfigureAwait(false);
+                var response = await client.DocumentTranslateAsync("hi", content).ConfigureAwait(false);
             }
             catch (RequestFailedException ex)
             {
                 Assert.AreEqual(400, ex.Status);
             }
-        } */
+        }
     }
 }

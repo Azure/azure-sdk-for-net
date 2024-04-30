@@ -112,7 +112,6 @@ namespace Azure.AI.Translation.Document
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetLanguage"/> or <paramref name="documentTranslateContent"/> is null. </exception>
         /// <remarks> Use this API to submit a single translation request to the Document Translation Service. </remarks>
-        /// <include file="Docs/SingleDocumentTranslationClient.xml" path="doc/members/member[@name='DocumentTranslateAsync(string,DocumentTranslateContent,string,string,bool?,CancellationToken)']/*" />
         public virtual async Task<Response<BinaryData>> DocumentTranslateAsync(string targetLanguage, DocumentTranslateContent documentTranslateContent, string sourceLanguage = null, string category = null, bool? allowFallback = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(targetLanguage, nameof(targetLanguage));
@@ -148,7 +147,6 @@ namespace Azure.AI.Translation.Document
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetLanguage"/> or <paramref name="documentTranslateContent"/> is null. </exception>
         /// <remarks> Use this API to submit a single translation request to the Document Translation Service. </remarks>
-        /// <include file="Docs/SingleDocumentTranslationClient.xml" path="doc/members/member[@name='DocumentTranslate(string,DocumentTranslateContent,string,string,bool?,CancellationToken)']/*" />
         public virtual Response<BinaryData> DocumentTranslate(string targetLanguage, DocumentTranslateContent documentTranslateContent, string sourceLanguage = null, string category = null, bool? allowFallback = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(targetLanguage, nameof(targetLanguage));
@@ -200,7 +198,6 @@ namespace Azure.AI.Translation.Document
         /// <exception cref="ArgumentNullException"> <paramref name="targetLanguage"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/SingleDocumentTranslationClient.xml" path="doc/members/member[@name='DocumentTranslateAsync(string,RequestContent,string,string,string,bool?,RequestContext)']/*" />
         public virtual async Task<Response> DocumentTranslateAsync(string targetLanguage, RequestContent content, string contentType, string sourceLanguage = null, string category = null, bool? allowFallback = null, RequestContext context = null)
         {
             Argument.AssertNotNull(targetLanguage, nameof(targetLanguage));
@@ -260,7 +257,6 @@ namespace Azure.AI.Translation.Document
         /// <exception cref="ArgumentNullException"> <paramref name="targetLanguage"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/SingleDocumentTranslationClient.xml" path="doc/members/member[@name='DocumentTranslate(string,RequestContent,string,string,string,bool?,RequestContext)']/*" />
         public virtual Response DocumentTranslate(string targetLanguage, RequestContent content, string contentType, string sourceLanguage = null, string category = null, bool? allowFallback = null, RequestContext context = null)
         {
             Argument.AssertNotNull(targetLanguage, nameof(targetLanguage));

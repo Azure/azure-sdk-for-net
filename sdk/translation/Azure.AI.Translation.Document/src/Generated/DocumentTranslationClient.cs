@@ -59,7 +59,6 @@ namespace Azure.AI.Translation.Document
         /// Returns the translation status for a specific document based on the request Id
         /// and document Id.
         /// </remarks>
-        /// <include file="Docs/DocumentTranslationClient.xml" path="doc/members/member[@name='GetDocumentStatusAsync(Guid,Guid,CancellationToken)']/*" />
         public virtual async Task<Response<DocumentStatusResult>> GetDocumentStatusAsync(Guid id, Guid documentId, CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -75,7 +74,6 @@ namespace Azure.AI.Translation.Document
         /// Returns the translation status for a specific document based on the request Id
         /// and document Id.
         /// </remarks>
-        /// <include file="Docs/DocumentTranslationClient.xml" path="doc/members/member[@name='GetDocumentStatus(Guid,Guid,CancellationToken)']/*" />
         public virtual Response<DocumentStatusResult> GetDocumentStatus(Guid id, Guid documentId, CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -103,7 +101,6 @@ namespace Azure.AI.Translation.Document
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/DocumentTranslationClient.xml" path="doc/members/member[@name='GetDocumentStatusAsync(Guid,Guid,RequestContext)']/*" />
         public virtual async Task<Response> GetDocumentStatusAsync(Guid id, Guid documentId, RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("DocumentTranslationClient.GetDocumentStatus");
@@ -140,7 +137,6 @@ namespace Azure.AI.Translation.Document
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/DocumentTranslationClient.xml" path="doc/members/member[@name='GetDocumentStatus(Guid,Guid,RequestContext)']/*" />
         public virtual Response GetDocumentStatus(Guid id, Guid documentId, RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("DocumentTranslationClient.GetDocumentStatus");
@@ -166,7 +162,6 @@ namespace Azure.AI.Translation.Document
         /// overall request status, as well as the status for documents that are being
         /// translated as part of that request.
         /// </remarks>
-        /// <include file="Docs/DocumentTranslationClient.xml" path="doc/members/member[@name='GetTranslationStatusAsync(Guid,CancellationToken)']/*" />
         public virtual async Task<Response<TranslationStatusResult>> GetTranslationStatusAsync(Guid id, CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -183,7 +178,6 @@ namespace Azure.AI.Translation.Document
         /// overall request status, as well as the status for documents that are being
         /// translated as part of that request.
         /// </remarks>
-        /// <include file="Docs/DocumentTranslationClient.xml" path="doc/members/member[@name='GetTranslationStatus(Guid,CancellationToken)']/*" />
         public virtual Response<TranslationStatusResult> GetTranslationStatus(Guid id, CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -210,7 +204,6 @@ namespace Azure.AI.Translation.Document
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/DocumentTranslationClient.xml" path="doc/members/member[@name='GetTranslationStatusAsync(Guid,RequestContext)']/*" />
         public virtual async Task<Response> GetTranslationStatusAsync(Guid id, RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("DocumentTranslationClient.GetTranslationStatus");
@@ -246,7 +239,6 @@ namespace Azure.AI.Translation.Document
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/DocumentTranslationClient.xml" path="doc/members/member[@name='GetTranslationStatus(Guid,RequestContext)']/*" />
         public virtual Response GetTranslationStatus(Guid id, RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("DocumentTranslationClient.GetTranslationStatus");
@@ -276,7 +268,6 @@ namespace Azure.AI.Translation.Document
         /// All pending documents will be cancelled if
         /// possible.
         /// </remarks>
-        /// <include file="Docs/DocumentTranslationClient.xml" path="doc/members/member[@name='CancelTranslationAsync(Guid,CancellationToken)']/*" />
         public virtual async Task<Response<TranslationStatusResult>> CancelTranslationAsync(Guid id, CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -297,7 +288,6 @@ namespace Azure.AI.Translation.Document
         /// All pending documents will be cancelled if
         /// possible.
         /// </remarks>
-        /// <include file="Docs/DocumentTranslationClient.xml" path="doc/members/member[@name='CancelTranslation(Guid,CancellationToken)']/*" />
         public virtual Response<TranslationStatusResult> CancelTranslation(Guid id, CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -324,7 +314,6 @@ namespace Azure.AI.Translation.Document
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/DocumentTranslationClient.xml" path="doc/members/member[@name='CancelTranslationAsync(Guid,RequestContext)']/*" />
         public virtual async Task<Response> CancelTranslationAsync(Guid id, RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("DocumentTranslationClient.CancelTranslation");
@@ -360,7 +349,6 @@ namespace Azure.AI.Translation.Document
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/DocumentTranslationClient.xml" path="doc/members/member[@name='CancelTranslation(Guid,RequestContext)']/*" />
         public virtual Response CancelTranslation(Guid id, RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("DocumentTranslationClient.CancelTranslation");
@@ -386,7 +374,6 @@ namespace Azure.AI.Translation.Document
         /// The list includes the common file extension, as well as the
         /// content-type if using the upload API.
         /// </remarks>
-        /// <include file="Docs/DocumentTranslationClient.xml" path="doc/members/member[@name='GetSupportedFormatsAsync(FileFormatType?,CancellationToken)']/*" />
         public virtual async Task<Response<SupportedFileFormats>> GetSupportedFormatsAsync(FileFormatType? type = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -403,7 +390,6 @@ namespace Azure.AI.Translation.Document
         /// The list includes the common file extension, as well as the
         /// content-type if using the upload API.
         /// </remarks>
-        /// <include file="Docs/DocumentTranslationClient.xml" path="doc/members/member[@name='GetSupportedFormats(FileFormatType?,CancellationToken)']/*" />
         public virtual Response<SupportedFileFormats> GetSupportedFormats(FileFormatType? type = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -430,7 +416,6 @@ namespace Azure.AI.Translation.Document
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/DocumentTranslationClient.xml" path="doc/members/member[@name='GetSupportedFormatsAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetSupportedFormatsAsync(string type, RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("DocumentTranslationClient.GetSupportedFormats");
@@ -466,7 +451,6 @@ namespace Azure.AI.Translation.Document
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/DocumentTranslationClient.xml" path="doc/members/member[@name='GetSupportedFormats(string,RequestContext)']/*" />
         public virtual Response GetSupportedFormats(string type, RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("DocumentTranslationClient.GetSupportedFormats");
@@ -578,7 +562,6 @@ namespace Azure.AI.Translation.Document
         /// This reduces the risk of the client making assumptions about
         /// the data returned.
         /// </remarks>
-        /// <include file="Docs/DocumentTranslationClient.xml" path="doc/members/member[@name='GetDocumentsStatusAsync(Guid,int?,int?,int?,IEnumerable{Guid},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,IEnumerable{string},CancellationToken)']/*" />
         public virtual AsyncPageable<DocumentStatusResult> GetDocumentsStatusAsync(Guid id, int? maxCount = null, int? skip = null, int? maxpagesize = null, IEnumerable<Guid> ids = null, IEnumerable<string> statuses = null, DateTimeOffset? createdDateTimeUtcStart = null, DateTimeOffset? createdDateTimeUtcEnd = null, IEnumerable<string> orderBy = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
@@ -682,7 +665,6 @@ namespace Azure.AI.Translation.Document
         /// This reduces the risk of the client making assumptions about
         /// the data returned.
         /// </remarks>
-        /// <include file="Docs/DocumentTranslationClient.xml" path="doc/members/member[@name='GetDocumentsStatus(Guid,int?,int?,int?,IEnumerable{Guid},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,IEnumerable{string},CancellationToken)']/*" />
         public virtual Pageable<DocumentStatusResult> GetDocumentsStatus(Guid id, int? maxCount = null, int? skip = null, int? maxpagesize = null, IEnumerable<Guid> ids = null, IEnumerable<string> statuses = null, DateTimeOffset? createdDateTimeUtcStart = null, DateTimeOffset? createdDateTimeUtcEnd = null, IEnumerable<string> orderBy = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
@@ -754,7 +736,6 @@ namespace Azure.AI.Translation.Document
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/DocumentTranslationClient.xml" path="doc/members/member[@name='GetDocumentsStatusAsync(Guid,int?,int?,int?,IEnumerable{Guid},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,IEnumerable{string},RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetDocumentsStatusAsync(Guid id, int? maxCount, int? skip, int? maxpagesize, IEnumerable<Guid> ids, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> orderBy, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDocumentsStatusRequest(id, maxCount, skip, maxpagesize, ids, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderBy, context);
@@ -825,7 +806,6 @@ namespace Azure.AI.Translation.Document
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/DocumentTranslationClient.xml" path="doc/members/member[@name='GetDocumentsStatus(Guid,int?,int?,int?,IEnumerable{Guid},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,IEnumerable{string},RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetDocumentsStatus(Guid id, int? maxCount, int? skip, int? maxpagesize, IEnumerable<Guid> ids, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> orderBy, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDocumentsStatusRequest(id, maxCount, skip, maxpagesize, ids, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderBy, context);
@@ -859,7 +839,6 @@ namespace Azure.AI.Translation.Document
         /// destination, it will be overwritten. The targetUrl for each target language
         /// must be unique.
         /// </remarks>
-        /// <include file="Docs/DocumentTranslationClient.xml" path="doc/members/member[@name='StartTranslationAsync(WaitUntil,StartTranslationDetails,CancellationToken)']/*" />
         public virtual async Task<Operation> StartTranslationAsync(WaitUntil waitUntil, StartTranslationDetails startTranslationDetails, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(startTranslationDetails, nameof(startTranslationDetails));
@@ -895,7 +874,6 @@ namespace Azure.AI.Translation.Document
         /// destination, it will be overwritten. The targetUrl for each target language
         /// must be unique.
         /// </remarks>
-        /// <include file="Docs/DocumentTranslationClient.xml" path="doc/members/member[@name='StartTranslation(WaitUntil,StartTranslationDetails,CancellationToken)']/*" />
         public virtual Operation StartTranslation(WaitUntil waitUntil, StartTranslationDetails startTranslationDetails, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(startTranslationDetails, nameof(startTranslationDetails));
@@ -926,7 +904,6 @@ namespace Azure.AI.Translation.Document
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/DocumentTranslationClient.xml" path="doc/members/member[@name='StartTranslationAsync(WaitUntil,RequestContent,RequestContext)']/*" />
         public virtual async Task<Operation> StartTranslationAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -966,7 +943,6 @@ namespace Azure.AI.Translation.Document
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/DocumentTranslationClient.xml" path="doc/members/member[@name='StartTranslation(WaitUntil,RequestContent,RequestContext)']/*" />
         public virtual Operation StartTranslation(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
