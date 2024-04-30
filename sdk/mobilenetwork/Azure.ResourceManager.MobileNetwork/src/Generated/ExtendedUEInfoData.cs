@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="properties">
         /// Extended UE Information Properties.
         /// Please note <see cref="ExtendedUEInfoProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="UEInfo4G"/> and <see cref="UEInfo5G"/>.
+        /// The available derived classes include <see cref="UEInfo5G"/> and <see cref="UEInfo4G"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public ExtendedUEInfoData(ExtendedUEInfoProperties properties)
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="properties">
         /// Extended UE Information Properties.
         /// Please note <see cref="ExtendedUEInfoProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="UEInfo4G"/> and <see cref="UEInfo5G"/>.
+        /// The available derived classes include <see cref="UEInfo5G"/> and <see cref="UEInfo4G"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ExtendedUEInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExtendedUEInfoProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <summary>
         /// Extended UE Information Properties.
         /// Please note <see cref="ExtendedUEInfoProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="UEInfo4G"/> and <see cref="UEInfo5G"/>.
+        /// The available derived classes include <see cref="UEInfo5G"/> and <see cref="UEInfo4G"/>.
         /// </summary>
         public ExtendedUEInfoProperties Properties { get; set; }
     }

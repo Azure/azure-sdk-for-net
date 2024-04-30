@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    [PersistableModelProxy(typeof(UnknownRuleCondition))]
+    [PersistableModelProxy(typeof(UnknownAlertRuleCondition))]
     public partial class AlertRuleCondition : IUtf8JsonSerializable, IJsonModel<AlertRuleCondition>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AlertRuleCondition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -75,12 +75,12 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "Microsoft.Azure.Management.Insights.Models.ThresholdRuleCondition": return ThresholdRuleCondition.DeserializeThresholdRuleCondition(element, options);
                     case "Microsoft.Azure.Management.Insights.Models.LocationThresholdRuleCondition": return LocationThresholdRuleCondition.DeserializeLocationThresholdRuleCondition(element, options);
                     case "Microsoft.Azure.Management.Insights.Models.ManagementEventRuleCondition": return ManagementEventRuleCondition.DeserializeManagementEventRuleCondition(element, options);
-                    case "Microsoft.Azure.Management.Insights.Models.ThresholdRuleCondition": return ThresholdRuleCondition.DeserializeThresholdRuleCondition(element, options);
                 }
             }
-            return UnknownRuleCondition.DeserializeUnknownRuleCondition(element, options);
+            return UnknownAlertRuleCondition.DeserializeUnknownAlertRuleCondition(element, options);
         }
 
         BinaryData IPersistableModel<AlertRuleCondition>.Write(ModelReaderWriterOptions options)

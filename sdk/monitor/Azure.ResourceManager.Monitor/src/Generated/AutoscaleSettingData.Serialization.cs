@@ -94,15 +94,8 @@ namespace Azure.ResourceManager.Monitor
             }
             if (Optional.IsDefined(PredictiveAutoscalePolicy))
             {
-                if (PredictiveAutoscalePolicy != null)
-                {
-                    writer.WritePropertyName("predictiveAutoscalePolicy"u8);
-                    writer.WriteObjectValue(PredictiveAutoscalePolicy, options);
-                }
-                else
-                {
-                    writer.WriteNull("predictiveAutoscalePolicy");
-                }
+                writer.WritePropertyName("predictiveAutoscalePolicy"u8);
+                writer.WriteObjectValue(PredictiveAutoscalePolicy, options);
             }
             if (Optional.IsDefined(AutoscaleSettingName))
             {
@@ -265,7 +258,6 @@ namespace Azure.ResourceManager.Monitor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                predictiveAutoscalePolicy = null;
                                 continue;
                             }
                             predictiveAutoscalePolicy = PredictiveAutoscalePolicy.DeserializePredictiveAutoscalePolicy(property0.Value, options);

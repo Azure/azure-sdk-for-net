@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MigrationDiscoverySap.Models
 {
-    [PersistableModelProxy(typeof(UnknownPerformanceData))]
+    [PersistableModelProxy(typeof(UnknownPerformanceDetail))]
     public partial class PerformanceDetail : IUtf8JsonSerializable, IJsonModel<PerformanceDetail>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PerformanceDetail>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
                     case "Native": return NativePerformanceDetail.DeserializeNativePerformanceDetail(element, options);
                 }
             }
-            return UnknownPerformanceData.DeserializeUnknownPerformanceData(element, options);
+            return UnknownPerformanceDetail.DeserializeUnknownPerformanceDetail(element, options);
         }
 
         BinaryData IPersistableModel<PerformanceDetail>.Write(ModelReaderWriterOptions options)

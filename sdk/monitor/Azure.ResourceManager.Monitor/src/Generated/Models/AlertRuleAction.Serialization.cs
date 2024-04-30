@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    [PersistableModelProxy(typeof(UnknownRuleAction))]
+    [PersistableModelProxy(typeof(UnknownAlertRuleAction))]
     public partial class AlertRuleAction : IUtf8JsonSerializable, IJsonModel<AlertRuleAction>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AlertRuleAction>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     case "Microsoft.Azure.Management.Insights.Models.RuleWebhookAction": return RuleWebhookAction.DeserializeRuleWebhookAction(element, options);
                 }
             }
-            return UnknownRuleAction.DeserializeUnknownRuleAction(element, options);
+            return UnknownAlertRuleAction.DeserializeUnknownAlertRuleAction(element, options);
         }
 
         BinaryData IPersistableModel<AlertRuleAction>.Write(ModelReaderWriterOptions options)

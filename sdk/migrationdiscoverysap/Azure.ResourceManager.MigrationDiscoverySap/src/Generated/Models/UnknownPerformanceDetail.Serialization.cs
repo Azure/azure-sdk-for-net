@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MigrationDiscoverySap.Models
 {
-    internal partial class UnknownPerformanceData : IUtf8JsonSerializable, IJsonModel<PerformanceDetail>
+    internal partial class UnknownPerformanceDetail : IUtf8JsonSerializable, IJsonModel<PerformanceDetail>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PerformanceDetail>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             return DeserializePerformanceDetail(document.RootElement, options);
         }
 
-        internal static UnknownPerformanceData DeserializeUnknownPerformanceData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UnknownPerformanceDetail DeserializeUnknownPerformanceDetail(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownPerformanceData(dataSource, serializedAdditionalRawData);
+            return new UnknownPerformanceDetail(dataSource, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PerformanceDetail>.Write(ModelReaderWriterOptions options)
