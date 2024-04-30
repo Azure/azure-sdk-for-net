@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
@@ -8,9 +11,6 @@ using Azure.Core;
 
 namespace Azure.AI.Translation.Document
 {
-    [CodeGenSuppress("ToMultipartRequestContent")]
-    [CodeGenSuppress(".Write", typeof(Utf8JsonWriter), typeof(ModelReaderWriterOptions))]
-    [CodeGenSuppress("DeserializeDocumentTranslateContent", typeof(JsonElement), typeof(ModelReaderWriterOptions))]
     public partial class DocumentTranslateContent : IUtf8JsonSerializable, IJsonModel<DocumentTranslateContent>
     {
         internal virtual MultipartFormDataRequestContent ToMultipartRequestContent()
@@ -27,7 +27,7 @@ namespace Azure.AI.Translation.Document
             return content;
         }
 
-        void IJsonModel<DocumentTranslateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void global::System.ClientModel.Primitives.IJsonModel<global::Azure.AI.Translation.Document.DocumentTranslateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DocumentTranslateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
