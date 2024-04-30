@@ -8,7 +8,7 @@ trigger:
     - release/*
   paths:
     include:
-    - sdk/extensions/wcf
+    - sdk/extension-wcf
 
 pr:
   branches:
@@ -19,13 +19,12 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/extensions/wcf
+    - sdk/extension-wcf
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
-    SDKType: wcf
-    ServiceDirectory: extensions/wcf
+    ServiceDirectory: extension-wcf
     ArtifactName: packages
     Artifacts:
     - name: Microsoft.CoreWCF.Azure.StorageQueues

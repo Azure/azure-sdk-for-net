@@ -16,8 +16,4 @@
   <ItemGroup Condition="'$(SDKType)' == 'client'">
     <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)**/*.csproj" Exclude="$(MSBuildThisFileDirectory)wcf/**/*.csproj" />
   </ItemGroup>
-
-  <ItemGroup Condition="'$(SDKType)' == 'wcf'">
-    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)wcf/**/*.csproj" />
-  </ItemGroup>
 </Project>
