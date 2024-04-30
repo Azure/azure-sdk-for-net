@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="condition">
         /// the condition that results in the alert rule being activated.
         /// Please note <see cref="AlertRuleCondition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="LocationThresholdRuleCondition"/>, <see cref="ManagementEventRuleCondition"/> and <see cref="ThresholdRuleCondition"/>.
+        /// The available derived classes include <see cref="ThresholdRuleCondition"/>, <see cref="LocationThresholdRuleCondition"/> and <see cref="ManagementEventRuleCondition"/>.
         /// </param>
         /// <param name="action">
         /// action that is performed when the alert rule becomes active, and when an alert condition is resolved.
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="condition">
         /// the condition that results in the alert rule being activated.
         /// Please note <see cref="AlertRuleCondition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="LocationThresholdRuleCondition"/>, <see cref="ManagementEventRuleCondition"/> and <see cref="ThresholdRuleCondition"/>.
+        /// The available derived classes include <see cref="ThresholdRuleCondition"/>, <see cref="LocationThresholdRuleCondition"/> and <see cref="ManagementEventRuleCondition"/>.
         /// </param>
         /// <param name="action">
         /// action that is performed when the alert rule becomes active, and when an alert condition is resolved.
@@ -800,7 +800,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="criteria">
         /// defines the specific alert criteria information.
         /// Please note <see cref="MetricAlertCriteria"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MetricAlertMultipleResourceMultipleMetricCriteria"/>, <see cref="MetricAlertSingleResourceMultipleMetricCriteria"/> and <see cref="WebtestLocationAvailabilityCriteria"/>.
+        /// The available derived classes include <see cref="MetricAlertSingleResourceMultipleMetricCriteria"/>, <see cref="WebtestLocationAvailabilityCriteria"/> and <see cref="MetricAlertMultipleResourceMultipleMetricCriteria"/>.
         /// </param>
         /// <param name="isAutoMitigateEnabled"> the flag that indicates whether the alert should be auto resolved or not. The default is true. </param>
         /// <param name="actions"> the array of actions that are performed when the alert rule becomes active, and when an alert condition is resolved. </param>
@@ -849,7 +849,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="criteria">
         /// defines the specific alert criteria information.
         /// Please note <see cref="MetricAlertCriteria"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MetricAlertMultipleResourceMultipleMetricCriteria"/>, <see cref="MetricAlertSingleResourceMultipleMetricCriteria"/> and <see cref="WebtestLocationAvailabilityCriteria"/>.
+        /// The available derived classes include <see cref="MetricAlertSingleResourceMultipleMetricCriteria"/>, <see cref="WebtestLocationAvailabilityCriteria"/> and <see cref="MetricAlertMultipleResourceMultipleMetricCriteria"/>.
         /// </param>
         /// <param name="isAutoMitigateEnabled"> the flag that indicates whether the alert should be auto resolved or not. The default is true. </param>
         /// <param name="actions"> the array of actions that are performed when the alert rule becomes active, and when an alert condition is resolved. </param>

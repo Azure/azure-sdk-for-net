@@ -10,19 +10,19 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> Unknown version of RuleAction. </summary>
-    internal partial class UnknownRuleAction : AlertRuleAction
+    /// <summary> Unknown version of AlertRuleAction. </summary>
+    internal partial class UnknownAlertRuleAction : AlertRuleAction
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownRuleAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownAlertRuleAction"/>. </summary>
         /// <param name="odataType"> specifies the type of the action. There are two types of actions: RuleEmailAction and RuleWebhookAction. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownRuleAction(string odataType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(odataType, serializedAdditionalRawData)
+        internal UnknownAlertRuleAction(string odataType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(odataType, serializedAdditionalRawData)
         {
             OdataType = odataType ?? "Unknown";
         }
 
-        /// <summary> Initializes a new instance of <see cref="UnknownRuleAction"/> for deserialization. </summary>
-        internal UnknownRuleAction()
+        /// <summary> Initializes a new instance of <see cref="UnknownAlertRuleAction"/> for deserialization. </summary>
+        internal UnknownAlertRuleAction()
         {
         }
     }
