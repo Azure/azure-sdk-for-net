@@ -2,9 +2,11 @@
 
 ## 1.0.0 (2024-04-29)
 
+This package is the first stable release of the Application Insights management library.
+
 ### Features Added
 
-- General availability release.
+- Upgraded api-version tag from 'package-2022-12-09-only' to 'package-2024-04-25-only'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/1fea23ac36b111293dc3efc30f725e9ebb790f7f/specification/applicationinsights/resource-manager/readme.md.
 
 ## 1.0.0-beta.5 (2024-03-23)
 
