@@ -58,10 +58,10 @@ namespace System.ClientModel.Tests.Options
             Assert.Throws<InvalidOperationException>(() => options.RequestIdHeaderName = "other header");
 
             options.LoggedHeaderNames.Add("Shouldn't be added");
-            MyHeadersToLog.Add("Shouldn't impact logged header names");
+            Assert.Throws<NotSupportedException>(() => MyHeadersToLog.Add("Shouldn't impact logged header names"));
 
             options.LoggedQueryParameters.Add("Shouldn't be added");
-            MyQueryParametersToLog.Add("Shouldn't impact logged queries");
+            Assert.Throws<NotSupportedException>(() => MyQueryParametersToLog.Add("Shouldn't impact logged queries"));
 
             Assert.AreEqual(2, options.LoggedHeaderNames.Count);
             Assert.AreEqual(2, options.LoggedQueryParameters.Count);
