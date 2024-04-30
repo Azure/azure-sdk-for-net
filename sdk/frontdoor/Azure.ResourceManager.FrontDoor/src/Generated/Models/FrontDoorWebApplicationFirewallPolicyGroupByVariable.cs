@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.FrontDoor.Models
 {
     /// <summary> Describes the variables available to group the rate limit requests. </summary>
-    public partial class GroupByVariable
+    public partial class FrontDoorWebApplicationFirewallPolicyGroupByVariable
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,28 +45,28 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="GroupByVariable"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorWebApplicationFirewallPolicyGroupByVariable"/>. </summary>
         /// <param name="variableName"> Describes the supported variable for group by. </param>
-        public GroupByVariable(VariableName variableName)
+        public FrontDoorWebApplicationFirewallPolicyGroupByVariable(FrontDoorWebApplicationFirewallPolicyGroupByVariableName variableName)
         {
             VariableName = variableName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="GroupByVariable"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorWebApplicationFirewallPolicyGroupByVariable"/>. </summary>
         /// <param name="variableName"> Describes the supported variable for group by. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GroupByVariable(VariableName variableName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FrontDoorWebApplicationFirewallPolicyGroupByVariable(FrontDoorWebApplicationFirewallPolicyGroupByVariableName variableName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VariableName = variableName;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="GroupByVariable"/> for deserialization. </summary>
-        internal GroupByVariable()
+        /// <summary> Initializes a new instance of <see cref="FrontDoorWebApplicationFirewallPolicyGroupByVariable"/> for deserialization. </summary>
+        internal FrontDoorWebApplicationFirewallPolicyGroupByVariable()
         {
         }
 
         /// <summary> Describes the supported variable for group by. </summary>
-        public VariableName VariableName { get; set; }
+        public FrontDoorWebApplicationFirewallPolicyGroupByVariableName VariableName { get; set; }
     }
 }

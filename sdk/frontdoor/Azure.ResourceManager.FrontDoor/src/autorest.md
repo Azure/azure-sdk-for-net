@@ -97,6 +97,8 @@ rename-mapping:
   TimeseriesDataPoint: FrontDoorTimeSeriesDataPoint
   TimeseriesInfo: FrontDoorTimeSeriesInfo
   TimeseriesType: FrontDoorTimeSeriesType
+  VariableName: FrontDoorWebApplicationFirewallPolicyGroupByVariableName
+  GroupByVariable: FrontDoorWebApplicationFirewallPolicyGroupByVariable
 
 format-by-name-rules:
   'tenantId': 'uuid'

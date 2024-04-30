@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             WebApplicationRuleType ruleType = default;
             int? rateLimitDurationInMinutes = default;
             int? rateLimitThreshold = default;
-            IList<GroupByVariable> groupBy = default;
+            IList<FrontDoorWebApplicationFirewallPolicyGroupByVariable> groupBy = default;
             IList<WebApplicationRuleMatchCondition> matchConditions = default;
             RuleMatchActionType action = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -168,10 +168,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     {
                         continue;
                     }
-                    List<GroupByVariable> array = new List<GroupByVariable>();
+                    List<FrontDoorWebApplicationFirewallPolicyGroupByVariable> array = new List<FrontDoorWebApplicationFirewallPolicyGroupByVariable>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GroupByVariable.DeserializeGroupByVariable(item, options));
+                        array.Add(FrontDoorWebApplicationFirewallPolicyGroupByVariable.DeserializeFrontDoorWebApplicationFirewallPolicyGroupByVariable(item, options));
                     }
                     groupBy = array;
                     continue;
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 ruleType,
                 rateLimitDurationInMinutes,
                 rateLimitThreshold,
-                groupBy ?? new ChangeTrackingList<GroupByVariable>(),
+                groupBy ?? new ChangeTrackingList<FrontDoorWebApplicationFirewallPolicyGroupByVariable>(),
                 matchConditions,
                 action,
                 serializedAdditionalRawData);
