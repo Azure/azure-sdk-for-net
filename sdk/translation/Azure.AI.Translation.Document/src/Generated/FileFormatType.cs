@@ -25,9 +25,9 @@ namespace Azure.AI.Translation.Document
         private const string DocumentValue = "document";
         private const string GlossaryValue = "glossary";
 
-        /// <summary> document. </summary>
+        /// <summary> Document type file format. </summary>
         public static FileFormatType Document { get; } = new FileFormatType(DocumentValue);
-        /// <summary> glossary. </summary>
+        /// <summary> Glossary type file format. </summary>
         public static FileFormatType Glossary { get; } = new FileFormatType(GlossaryValue);
         /// <summary> Determines if two <see cref="FileFormatType"/> values are the same. </summary>
         public static bool operator ==(FileFormatType left, FileFormatType right) => left.Equals(right);

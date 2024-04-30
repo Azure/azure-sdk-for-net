@@ -306,7 +306,7 @@ namespace Azure.AI.Translation.Document
                 statuses: statusList,
                 createdDateTimeUtcStart: options?.CreatedAfter,
                 createdDateTimeUtcEnd: options?.CreatedBefore,
-                orderBy: orderByList,
+                orderby: orderByList,
                 cancellationToken: cancellationToken);
         }
 
@@ -327,7 +327,7 @@ namespace Azure.AI.Translation.Document
                 statuses: statusList,
                 createdDateTimeUtcStart: options?.CreatedAfter,
                 createdDateTimeUtcEnd: options?.CreatedBefore,
-                orderBy: orderByList,
+                orderby: orderByList,
                 cancellationToken: cancellationToken);
         }
 

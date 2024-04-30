@@ -512,7 +512,7 @@ namespace Azure.AI.Translation.Document
         /// <param name="statuses"> Statuses to use in filtering. </param>
         /// <param name="createdDateTimeUtcStart"> the start datetime to get items after. </param>
         /// <param name="createdDateTimeUtcEnd"> the end datetime to get items before. </param>
-        /// <param name="orderBy"> the sorting query for the collection (ex: 'CreatedDateTimeUtc asc','CreatedDateTimeUtc desc'). </param>
+        /// <param name="orderby"> the sorting query for the collection (ex: 'CreatedDateTimeUtc asc','CreatedDateTimeUtc desc'). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks>
         /// Returns the status for all documents in a batch document translation request.
@@ -539,8 +539,8 @@ namespace Azure.AI.Translation.Document
         /// more items to be returned), @nextLink will contain the link to the next page.
         ///
         ///
-        /// orderBy query parameter can be used to sort the returned list (ex
-        /// "orderBy=createdDateTimeUtc asc" or "orderBy=createdDateTimeUtc
+        /// orderby query parameter can be used to sort the returned list (ex
+        /// "orderby=createdDateTimeUtc asc" or "orderby=createdDateTimeUtc
         /// desc").
         /// The default sorting is descending by createdDateTimeUtc.
         /// Some query
@@ -562,11 +562,11 @@ namespace Azure.AI.Translation.Document
         /// This reduces the risk of the client making assumptions about
         /// the data returned.
         /// </remarks>
-        public virtual AsyncPageable<DocumentStatusResult> GetDocumentsStatusAsync(Guid id, int? maxCount = null, int? skip = null, int? maxpagesize = null, IEnumerable<Guid> ids = null, IEnumerable<string> statuses = null, DateTimeOffset? createdDateTimeUtcStart = null, DateTimeOffset? createdDateTimeUtcEnd = null, IEnumerable<string> orderBy = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DocumentStatusResult> GetDocumentsStatusAsync(Guid id, int? maxCount = null, int? skip = null, int? maxpagesize = null, IEnumerable<Guid> ids = null, IEnumerable<string> statuses = null, DateTimeOffset? createdDateTimeUtcStart = null, DateTimeOffset? createdDateTimeUtcEnd = null, IEnumerable<string> orderby = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDocumentsStatusRequest(id, maxCount, skip, maxpagesize, ids, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderBy, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDocumentsStatusNextPageRequest(nextLink, id, maxCount, skip, maxpagesize, ids, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderBy, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDocumentsStatusRequest(id, maxCount, skip, maxpagesize, ids, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderby, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDocumentsStatusNextPageRequest(nextLink, id, maxCount, skip, maxpagesize, ids, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderby, context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DocumentStatusResult.DeserializeDocumentStatusResult(e), ClientDiagnostics, _pipeline, "DocumentTranslationClient.GetDocumentsStatus", "value", "nextLink", context);
         }
 
@@ -615,7 +615,7 @@ namespace Azure.AI.Translation.Document
         /// <param name="statuses"> Statuses to use in filtering. </param>
         /// <param name="createdDateTimeUtcStart"> the start datetime to get items after. </param>
         /// <param name="createdDateTimeUtcEnd"> the end datetime to get items before. </param>
-        /// <param name="orderBy"> the sorting query for the collection (ex: 'CreatedDateTimeUtc asc','CreatedDateTimeUtc desc'). </param>
+        /// <param name="orderby"> the sorting query for the collection (ex: 'CreatedDateTimeUtc asc','CreatedDateTimeUtc desc'). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks>
         /// Returns the status for all documents in a batch document translation request.
@@ -642,8 +642,8 @@ namespace Azure.AI.Translation.Document
         /// more items to be returned), @nextLink will contain the link to the next page.
         ///
         ///
-        /// orderBy query parameter can be used to sort the returned list (ex
-        /// "orderBy=createdDateTimeUtc asc" or "orderBy=createdDateTimeUtc
+        /// orderby query parameter can be used to sort the returned list (ex
+        /// "orderby=createdDateTimeUtc asc" or "orderby=createdDateTimeUtc
         /// desc").
         /// The default sorting is descending by createdDateTimeUtc.
         /// Some query
@@ -665,11 +665,11 @@ namespace Azure.AI.Translation.Document
         /// This reduces the risk of the client making assumptions about
         /// the data returned.
         /// </remarks>
-        public virtual Pageable<DocumentStatusResult> GetDocumentsStatus(Guid id, int? maxCount = null, int? skip = null, int? maxpagesize = null, IEnumerable<Guid> ids = null, IEnumerable<string> statuses = null, DateTimeOffset? createdDateTimeUtcStart = null, DateTimeOffset? createdDateTimeUtcEnd = null, IEnumerable<string> orderBy = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<DocumentStatusResult> GetDocumentsStatus(Guid id, int? maxCount = null, int? skip = null, int? maxpagesize = null, IEnumerable<Guid> ids = null, IEnumerable<string> statuses = null, DateTimeOffset? createdDateTimeUtcStart = null, DateTimeOffset? createdDateTimeUtcEnd = null, IEnumerable<string> orderby = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDocumentsStatusRequest(id, maxCount, skip, maxpagesize, ids, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderBy, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDocumentsStatusNextPageRequest(nextLink, id, maxCount, skip, maxpagesize, ids, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderBy, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDocumentsStatusRequest(id, maxCount, skip, maxpagesize, ids, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderby, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDocumentsStatusNextPageRequest(nextLink, id, maxCount, skip, maxpagesize, ids, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderby, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DocumentStatusResult.DeserializeDocumentStatusResult(e), ClientDiagnostics, _pipeline, "DocumentTranslationClient.GetDocumentsStatus", "value", "nextLink", context);
         }
 
@@ -732,14 +732,14 @@ namespace Azure.AI.Translation.Document
         /// <param name="statuses"> Statuses to use in filtering. </param>
         /// <param name="createdDateTimeUtcStart"> the start datetime to get items after. </param>
         /// <param name="createdDateTimeUtcEnd"> the end datetime to get items before. </param>
-        /// <param name="orderBy"> the sorting query for the collection (ex: 'CreatedDateTimeUtc asc','CreatedDateTimeUtc desc'). </param>
+        /// <param name="orderby"> the sorting query for the collection (ex: 'CreatedDateTimeUtc asc','CreatedDateTimeUtc desc'). </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        public virtual AsyncPageable<BinaryData> GetDocumentsStatusAsync(Guid id, int? maxCount, int? skip, int? maxpagesize, IEnumerable<Guid> ids, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> orderBy, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetDocumentsStatusAsync(Guid id, int? maxCount, int? skip, int? maxpagesize, IEnumerable<Guid> ids, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> orderby, RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDocumentsStatusRequest(id, maxCount, skip, maxpagesize, ids, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderBy, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDocumentsStatusNextPageRequest(nextLink, id, maxCount, skip, maxpagesize, ids, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderBy, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDocumentsStatusRequest(id, maxCount, skip, maxpagesize, ids, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderby, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDocumentsStatusNextPageRequest(nextLink, id, maxCount, skip, maxpagesize, ids, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderby, context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DocumentTranslationClient.GetDocumentsStatus", "value", "nextLink", context);
         }
 
@@ -802,14 +802,14 @@ namespace Azure.AI.Translation.Document
         /// <param name="statuses"> Statuses to use in filtering. </param>
         /// <param name="createdDateTimeUtcStart"> the start datetime to get items after. </param>
         /// <param name="createdDateTimeUtcEnd"> the end datetime to get items before. </param>
-        /// <param name="orderBy"> the sorting query for the collection (ex: 'CreatedDateTimeUtc asc','CreatedDateTimeUtc desc'). </param>
+        /// <param name="orderby"> the sorting query for the collection (ex: 'CreatedDateTimeUtc asc','CreatedDateTimeUtc desc'). </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        public virtual Pageable<BinaryData> GetDocumentsStatus(Guid id, int? maxCount, int? skip, int? maxpagesize, IEnumerable<Guid> ids, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> orderBy, RequestContext context)
+        public virtual Pageable<BinaryData> GetDocumentsStatus(Guid id, int? maxCount, int? skip, int? maxpagesize, IEnumerable<Guid> ids, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> orderby, RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDocumentsStatusRequest(id, maxCount, skip, maxpagesize, ids, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderBy, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDocumentsStatusNextPageRequest(nextLink, id, maxCount, skip, maxpagesize, ids, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderBy, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDocumentsStatusRequest(id, maxCount, skip, maxpagesize, ids, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderby, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDocumentsStatusNextPageRequest(nextLink, id, maxCount, skip, maxpagesize, ids, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderby, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DocumentTranslationClient.GetDocumentsStatus", "value", "nextLink", context);
         }
 
@@ -978,7 +978,7 @@ namespace Azure.AI.Translation.Document
             return message;
         }
 
-        internal HttpMessage CreateGetTranslationsStatusRequest(int? maxCount, int? skip, int? maxpagesize, IEnumerable<Guid> ids, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> orderBy, RequestContext context)
+        internal HttpMessage CreateGetTranslationsStatusRequest(int? maxCount, int? skip, int? maxpagesize, IEnumerable<Guid> ids, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> orderby, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1016,9 +1016,9 @@ namespace Azure.AI.Translation.Document
             {
                 uri.AppendQuery("createdDateTimeUtcEnd", createdDateTimeUtcEnd.Value, "O", true);
             }
-            if (orderBy != null && !(orderBy is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            if (orderby != null && !(orderby is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
             {
-                uri.AppendQueryDelimited("orderBy", orderBy, ",", true);
+                uri.AppendQueryDelimited("orderby", orderby, ",", true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1075,7 +1075,7 @@ namespace Azure.AI.Translation.Document
             return message;
         }
 
-        internal HttpMessage CreateGetDocumentsStatusRequest(Guid id, int? maxCount, int? skip, int? maxpagesize, IEnumerable<Guid> ids, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> orderBy, RequestContext context)
+        internal HttpMessage CreateGetDocumentsStatusRequest(Guid id, int? maxCount, int? skip, int? maxpagesize, IEnumerable<Guid> ids, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> orderby, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1115,9 +1115,9 @@ namespace Azure.AI.Translation.Document
             {
                 uri.AppendQuery("createdDateTimeUtcEnd", createdDateTimeUtcEnd.Value, "O", true);
             }
-            if (orderBy != null && !(orderBy is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            if (orderby != null && !(orderby is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
             {
-                uri.AppendQueryDelimited("orderBy", orderBy, ",", true);
+                uri.AppendQueryDelimited("orderby", orderby, ",", true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1143,7 +1143,7 @@ namespace Azure.AI.Translation.Document
             return message;
         }
 
-        internal HttpMessage CreateGetTranslationsStatusNextPageRequest(string nextLink, int? maxCount, int? skip, int? maxpagesize, IEnumerable<Guid> ids, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> orderBy, RequestContext context)
+        internal HttpMessage CreateGetTranslationsStatusNextPageRequest(string nextLink, int? maxCount, int? skip, int? maxpagesize, IEnumerable<Guid> ids, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> orderby, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1157,7 +1157,7 @@ namespace Azure.AI.Translation.Document
             return message;
         }
 
-        internal HttpMessage CreateGetDocumentsStatusNextPageRequest(string nextLink, Guid id, int? maxCount, int? skip, int? maxpagesize, IEnumerable<Guid> ids, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> orderBy, RequestContext context)
+        internal HttpMessage CreateGetDocumentsStatusNextPageRequest(string nextLink, Guid id, int? maxCount, int? skip, int? maxpagesize, IEnumerable<Guid> ids, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> orderby, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
