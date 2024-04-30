@@ -35,7 +35,7 @@ namespace Azure.Identity
         /// </summary>
         /// <param name="tenantId">The tenant ID for the service connection.</param>
         /// <param name="clientId">The client ID for the service connection.</param>
-        /// <param name="serviceConnectionId">The service connection ID.</param>
+        /// <param name="serviceConnectionId">The service connection ID, as found in the querystring's resourceId key.</param>
         /// <param name="options">An instance of <see cref="AzurePipelinesServiceConnectionCredentialOptions"/>.</param>
         /// <exception cref="System.ArgumentNullException">When <paramref name="tenantId"/>, <paramref name="clientId"/>, or <paramref name="serviceConnectionId"/> is null.</exception>
         public AzurePipelinesServiceConnectionCredential(string tenantId, string clientId, string serviceConnectionId, AzurePipelinesServiceConnectionCredentialOptions options = default)
