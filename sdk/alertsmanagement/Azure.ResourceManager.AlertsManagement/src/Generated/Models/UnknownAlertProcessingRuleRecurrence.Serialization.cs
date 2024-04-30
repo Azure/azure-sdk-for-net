@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    internal partial class UnknownRecurrence : IUtf8JsonSerializable, IJsonModel<AlertProcessingRuleRecurrence>
+    internal partial class UnknownAlertProcessingRuleRecurrence : IUtf8JsonSerializable, IJsonModel<AlertProcessingRuleRecurrence>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AlertProcessingRuleRecurrence>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             return DeserializeAlertProcessingRuleRecurrence(document.RootElement, options);
         }
 
-        internal static UnknownRecurrence DeserializeUnknownRecurrence(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UnknownAlertProcessingRuleRecurrence DeserializeUnknownAlertProcessingRuleRecurrence(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownRecurrence(recurrenceType, startTime, endTime, serializedAdditionalRawData);
+            return new UnknownAlertProcessingRuleRecurrence(recurrenceType, startTime, endTime, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AlertProcessingRuleRecurrence>.Write(ModelReaderWriterOptions options)

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ScVmm
         /// <param name="properties">
         /// Resource properties.
         /// Please note <see cref="ScVmmInventoryItemProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CloudInventoryItem"/>, <see cref="VirtualMachineInventoryItem"/>, <see cref="VirtualMachineTemplateInventoryItem"/> and <see cref="VirtualNetworkInventoryItem"/>.
+        /// The available derived classes include <see cref="CloudInventoryItem"/>, <see cref="VirtualNetworkInventoryItem"/>, <see cref="VirtualMachineTemplateInventoryItem"/> and <see cref="VirtualMachineInventoryItem"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public ScVmmInventoryItemData(ScVmmInventoryItemProperties properties)
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ScVmm
         /// <param name="properties">
         /// Resource properties.
         /// Please note <see cref="ScVmmInventoryItemProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CloudInventoryItem"/>, <see cref="VirtualMachineInventoryItem"/>, <see cref="VirtualMachineTemplateInventoryItem"/> and <see cref="VirtualNetworkInventoryItem"/>.
+        /// The available derived classes include <see cref="CloudInventoryItem"/>, <see cref="VirtualNetworkInventoryItem"/>, <see cref="VirtualMachineTemplateInventoryItem"/> and <see cref="VirtualMachineInventoryItem"/>.
         /// </param>
         /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ScVmm
         /// <summary>
         /// Resource properties.
         /// Please note <see cref="ScVmmInventoryItemProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CloudInventoryItem"/>, <see cref="VirtualMachineInventoryItem"/>, <see cref="VirtualMachineTemplateInventoryItem"/> and <see cref="VirtualNetworkInventoryItem"/>.
+        /// The available derived classes include <see cref="CloudInventoryItem"/>, <see cref="VirtualNetworkInventoryItem"/>, <see cref="VirtualMachineTemplateInventoryItem"/> and <see cref="VirtualMachineInventoryItem"/>.
         /// </summary>
         public ScVmmInventoryItemProperties Properties { get; set; }
         /// <summary> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </summary>

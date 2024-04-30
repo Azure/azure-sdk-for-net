@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ScVmm.Models
 {
-    [PersistableModelProxy(typeof(UnknownInventoryItemProperties))]
+    [PersistableModelProxy(typeof(UnknownScVmmInventoryItemProperties))]
     public partial class ScVmmInventoryItemProperties : IUtf8JsonSerializable, IJsonModel<ScVmmInventoryItemProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScVmmInventoryItemProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -91,12 +91,12 @@ namespace Azure.ResourceManager.ScVmm.Models
                 switch (discriminator.GetString())
                 {
                     case "Cloud": return CloudInventoryItem.DeserializeCloudInventoryItem(element, options);
-                    case "VirtualMachine": return VirtualMachineInventoryItem.DeserializeVirtualMachineInventoryItem(element, options);
-                    case "VirtualMachineTemplate": return VirtualMachineTemplateInventoryItem.DeserializeVirtualMachineTemplateInventoryItem(element, options);
                     case "VirtualNetwork": return VirtualNetworkInventoryItem.DeserializeVirtualNetworkInventoryItem(element, options);
+                    case "VirtualMachineTemplate": return VirtualMachineTemplateInventoryItem.DeserializeVirtualMachineTemplateInventoryItem(element, options);
+                    case "VirtualMachine": return VirtualMachineInventoryItem.DeserializeVirtualMachineInventoryItem(element, options);
                 }
             }
-            return UnknownInventoryItemProperties.DeserializeUnknownInventoryItemProperties(element, options);
+            return UnknownScVmmInventoryItemProperties.DeserializeUnknownScVmmInventoryItemProperties(element, options);
         }
 
         BinaryData IPersistableModel<ScVmmInventoryItemProperties>.Write(ModelReaderWriterOptions options)

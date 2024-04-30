@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    [PersistableModelProxy(typeof(UnknownRecurrence))]
+    [PersistableModelProxy(typeof(UnknownAlertProcessingRuleRecurrence))]
     public partial class AlertProcessingRuleRecurrence : IUtf8JsonSerializable, IJsonModel<AlertProcessingRuleRecurrence>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AlertProcessingRuleRecurrence>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -81,11 +81,11 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 switch (discriminator.GetString())
                 {
                     case "Daily": return DailyRecurrence.DeserializeDailyRecurrence(element, options);
-                    case "Monthly": return AlertProcessingRuleMonthlyRecurrence.DeserializeAlertProcessingRuleMonthlyRecurrence(element, options);
                     case "Weekly": return AlertProcessingRuleWeeklyRecurrence.DeserializeAlertProcessingRuleWeeklyRecurrence(element, options);
+                    case "Monthly": return AlertProcessingRuleMonthlyRecurrence.DeserializeAlertProcessingRuleMonthlyRecurrence(element, options);
                 }
             }
-            return UnknownRecurrence.DeserializeUnknownRecurrence(element, options);
+            return UnknownAlertProcessingRuleRecurrence.DeserializeUnknownAlertProcessingRuleRecurrence(element, options);
         }
 
         BinaryData IPersistableModel<AlertProcessingRuleRecurrence>.Write(ModelReaderWriterOptions options)

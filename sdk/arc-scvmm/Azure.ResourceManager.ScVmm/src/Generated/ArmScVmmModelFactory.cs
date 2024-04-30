@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.ScVmm.Models
         /// <param name="properties">
         /// Resource properties.
         /// Please note <see cref="Models.ScVmmInventoryItemProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.CloudInventoryItem"/>, <see cref="Models.VirtualMachineInventoryItem"/>, <see cref="Models.VirtualMachineTemplateInventoryItem"/> and <see cref="Models.VirtualNetworkInventoryItem"/>.
+        /// The available derived classes include <see cref="Models.CloudInventoryItem"/>, <see cref="Models.VirtualNetworkInventoryItem"/>, <see cref="Models.VirtualMachineTemplateInventoryItem"/> and <see cref="Models.VirtualMachineInventoryItem"/>.
         /// </param>
         /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
         /// <returns> A new <see cref="ScVmm.ScVmmInventoryItemData"/> instance for mocking. </returns>
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.ScVmm.Models
         /// <returns> A new <see cref="Models.ScVmmInventoryItemProperties"/> instance for mocking. </returns>
         public static ScVmmInventoryItemProperties ScVmmInventoryItemProperties(string inventoryType = null, string managedResourceId = null, string uuid = null, string inventoryItemName = null, ScVmmProvisioningState? provisioningState = null)
         {
-            return new UnknownInventoryItemProperties(
+            return new UnknownScVmmInventoryItemProperties(
                 inventoryType == null ? default : new ScVmmInventoryType(inventoryType),
                 managedResourceId,
                 uuid,

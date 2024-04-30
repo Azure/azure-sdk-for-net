@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary>
     /// The action of the probe.
     /// Please note <see cref="AppInstanceProbeAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AppInstanceExecAction"/>, <see cref="AppInstanceHttpGetAction"/> and <see cref="AppInstanceTcpSocketAction"/>.
+    /// The available derived classes include <see cref="AppInstanceHttpGetAction"/>, <see cref="AppInstanceExecAction"/> and <see cref="AppInstanceTcpSocketAction"/>.
     /// </summary>
     public abstract partial class AppInstanceProbeAction
     {

@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    internal partial class UnknownCustomPersistentDiskProperties : IUtf8JsonSerializable, IJsonModel<AppCustomPersistentDiskProperties>
+    internal partial class UnknownAppCustomPersistentDiskProperties : IUtf8JsonSerializable, IJsonModel<AppCustomPersistentDiskProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppCustomPersistentDiskProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return DeserializeAppCustomPersistentDiskProperties(document.RootElement, options);
         }
 
-        internal static UnknownCustomPersistentDiskProperties DeserializeUnknownCustomPersistentDiskProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UnknownAppCustomPersistentDiskProperties DeserializeUnknownAppCustomPersistentDiskProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownCustomPersistentDiskProperties(type, mountPath, readOnly, mountOptions ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new UnknownAppCustomPersistentDiskProperties(type, mountPath, readOnly, mountOptions ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppCustomPersistentDiskProperties>.Write(ModelReaderWriterOptions options)

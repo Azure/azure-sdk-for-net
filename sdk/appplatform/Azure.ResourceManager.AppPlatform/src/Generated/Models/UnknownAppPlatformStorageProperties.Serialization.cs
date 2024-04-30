@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    internal partial class UnknownStorageProperties : IUtf8JsonSerializable, IJsonModel<AppPlatformStorageProperties>
+    internal partial class UnknownAppPlatformStorageProperties : IUtf8JsonSerializable, IJsonModel<AppPlatformStorageProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformStorageProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return DeserializeAppPlatformStorageProperties(document.RootElement, options);
         }
 
-        internal static UnknownStorageProperties DeserializeUnknownStorageProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UnknownAppPlatformStorageProperties DeserializeUnknownAppPlatformStorageProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownStorageProperties(storageType, serializedAdditionalRawData);
+            return new UnknownAppPlatformStorageProperties(storageType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformStorageProperties>.Write(ModelReaderWriterOptions options)

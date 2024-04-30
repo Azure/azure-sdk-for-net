@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    [PersistableModelProxy(typeof(UnknownCertificateProperties))]
+    [PersistableModelProxy(typeof(UnknownAppPlatformCertificateProperties))]
     public partial class AppPlatformCertificateProperties : IUtf8JsonSerializable, IJsonModel<AppPlatformCertificateProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformCertificateProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -115,11 +115,11 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "ContentCertificate": return AppPlatformContentCertificateProperties.DeserializeAppPlatformContentCertificateProperties(element, options);
                     case "KeyVaultCertificate": return AppPlatformKeyVaultCertificateProperties.DeserializeAppPlatformKeyVaultCertificateProperties(element, options);
+                    case "ContentCertificate": return AppPlatformContentCertificateProperties.DeserializeAppPlatformContentCertificateProperties(element, options);
                 }
             }
-            return UnknownCertificateProperties.DeserializeUnknownCertificateProperties(element, options);
+            return UnknownAppPlatformCertificateProperties.DeserializeUnknownAppPlatformCertificateProperties(element, options);
         }
 
         BinaryData IPersistableModel<AppPlatformCertificateProperties>.Write(ModelReaderWriterOptions options)
