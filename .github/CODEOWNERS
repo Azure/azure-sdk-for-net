@@ -954,7 +954,7 @@
 # PRLabel: %Self Help
 /sdk/selfhelp/Azure.ResourceManager.*/                             @siddiavinashmsft @archerzz @ArcturusZhang @ArthurMa1978
 
-# ServiceLabel: %Self Help
+# ServiceLabel: %Self Help %Mgmt
 # ServiceOwners:                                                   @siddiavinashmsft
 
 # PRLabel: %Spring App Discovery
