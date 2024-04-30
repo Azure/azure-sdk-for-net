@@ -7,6 +7,7 @@
 
 using System;
 using System.Threading.Tasks;
+using System.Xml;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ServiceFabricManagedClusters.Models;
@@ -168,7 +169,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
 },
                     },
                     ForceRestart = false,
-                    RollingUpgradeMonitoringPolicy = new RollingUpgradeMonitoringPolicy(PolicyViolationCompensationAction.Rollback, TimeSpan.Parse("00:02:00"), TimeSpan.Parse("00:05:00"), TimeSpan.Parse("00:10:00"), TimeSpan.Parse("01:00:00"), TimeSpan.Parse("00:15:00")),
+                    RollingUpgradeMonitoringPolicy = new RollingUpgradeMonitoringPolicy(PolicyViolationCompensationAction.Rollback, XmlConvert.ToTimeSpan("00:02:00"), XmlConvert.ToTimeSpan("00:05:00"), XmlConvert.ToTimeSpan("00:10:00"), XmlConvert.ToTimeSpan("01:00:00"), XmlConvert.ToTimeSpan("00:15:00")),
                     InstanceCloseDelayDurationInSeconds = 600,
                     UpgradeMode = RollingUpgradeMode.UnmonitoredAuto,
                     UpgradeReplicaSetCheckTimeout = 3600,

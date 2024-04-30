@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    internal partial class UnknownTargetServiceBase : IUtf8JsonSerializable, IJsonModel<TargetServiceBaseInfo>
+    internal partial class UnknownTargetServiceBaseInfo : IUtf8JsonSerializable, IJsonModel<TargetServiceBaseInfo>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TargetServiceBaseInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             return DeserializeTargetServiceBaseInfo(document.RootElement, options);
         }
 
-        internal static UnknownTargetServiceBase DeserializeUnknownTargetServiceBase(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UnknownTargetServiceBaseInfo DeserializeUnknownTargetServiceBaseInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownTargetServiceBase(type, serializedAdditionalRawData);
+            return new UnknownTargetServiceBaseInfo(type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TargetServiceBaseInfo>.Write(ModelReaderWriterOptions options)

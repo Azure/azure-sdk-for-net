@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    internal partial class UnknownAzureResourcePropertiesBase : IUtf8JsonSerializable, IJsonModel<AzureResourceBaseProperties>
+    internal partial class UnknownAzureResourceBaseProperties : IUtf8JsonSerializable, IJsonModel<AzureResourceBaseProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureResourceBaseProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             return DeserializeAzureResourceBaseProperties(document.RootElement, options);
         }
 
-        internal static UnknownAzureResourcePropertiesBase DeserializeUnknownAzureResourcePropertiesBase(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UnknownAzureResourceBaseProperties DeserializeUnknownAzureResourceBaseProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownAzureResourcePropertiesBase(type, serializedAdditionalRawData);
+            return new UnknownAzureResourceBaseProperties(type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureResourceBaseProperties>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="secretInfo">
         /// Password or key vault secret for secret auth.
         /// Please note <see cref="SecretBaseInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="KeyVaultSecretReferenceSecretInfo"/>, <see cref="KeyVaultSecretUriSecretInfo"/> and <see cref="RawValueSecretInfo"/>.
+        /// The available derived classes include <see cref="RawValueSecretInfo"/>, <see cref="KeyVaultSecretReferenceSecretInfo"/> and <see cref="KeyVaultSecretUriSecretInfo"/>.
         /// </param>
         internal SecretAuthInfo(LinkerAuthType authType, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, SecretBaseInfo secretInfo) : base(authType, serializedAdditionalRawData)
         {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <summary>
         /// Password or key vault secret for secret auth.
         /// Please note <see cref="SecretBaseInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="KeyVaultSecretReferenceSecretInfo"/>, <see cref="KeyVaultSecretUriSecretInfo"/> and <see cref="RawValueSecretInfo"/>.
+        /// The available derived classes include <see cref="RawValueSecretInfo"/>, <see cref="KeyVaultSecretReferenceSecretInfo"/> and <see cref="KeyVaultSecretUriSecretInfo"/>.
         /// </summary>
         public SecretBaseInfo SecretInfo { get; set; }
     }

@@ -33,15 +33,8 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             }
             if (Optional.IsDefined(ResourceProperties))
             {
-                if (ResourceProperties != null)
-                {
-                    writer.WritePropertyName("resourceProperties"u8);
-                    writer.WriteObjectValue(ResourceProperties, options);
-                }
-                else
-                {
-                    writer.WriteNull("resourceProperties");
-                }
+                writer.WritePropertyName("resourceProperties"u8);
+                writer.WriteObjectValue(ResourceProperties, options);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(TargetServiceType.ToString());
@@ -103,7 +96,6 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        resourceProperties = null;
                         continue;
                     }
                     resourceProperties = AzureResourceBaseProperties.DeserializeAzureResourceBaseProperties(property.Value, options);
