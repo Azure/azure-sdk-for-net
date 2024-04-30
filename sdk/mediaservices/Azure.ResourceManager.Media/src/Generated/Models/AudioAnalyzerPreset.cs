@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.Media.Models
     /// Please note <see cref="AudioAnalyzerPreset"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="VideoAnalyzerPreset"/>.
     /// </summary>
-    public partial class AudioAnalyzerPreset : MediaTransformPreset
+    public abstract partial class AudioAnalyzerPreset : MediaTransformPreset
     {
         /// <summary> Initializes a new instance of <see cref="AudioAnalyzerPreset"/>. </summary>
-        public AudioAnalyzerPreset()
+        protected AudioAnalyzerPreset()
         {
             ExperimentalOptions = new ChangeTrackingDictionary<string, string>();
             OdataType = "#Microsoft.Media.AudioAnalyzerPreset";

@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.Media.Models
     /// Please note <see cref="MediaAudioBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AacAudio"/> and <see cref="DDAudio"/>.
     /// </summary>
-    public partial class MediaAudioBase : MediaCodecBase
+    public abstract partial class MediaAudioBase : MediaCodecBase
     {
         /// <summary> Initializes a new instance of <see cref="MediaAudioBase"/>. </summary>
-        public MediaAudioBase()
+        protected MediaAudioBase()
         {
             OdataType = "#Microsoft.Media.Audio";
         }

@@ -13,6 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
+    [PersistableModelProxy(typeof(UnknownMediaCodecBase))]
     public partial class MediaVideoBase : IUtf8JsonSerializable, IJsonModel<MediaVideoBase>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaVideoBase>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -90,17 +91,17 @@ namespace Azure.ResourceManager.Media.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "#Microsoft.Media.H264Video": return H264Video.DeserializeH264Video(element, options);
                     case "#Microsoft.Media.H265Video": return H265Video.DeserializeH265Video(element, options);
-                    case "#Microsoft.Media.Image": return MediaImageBase.DeserializeMediaImageBase(element, options);
                     case "#Microsoft.Media.JpgImage": return JpgImage.DeserializeJpgImage(element, options);
                     case "#Microsoft.Media.PngImage": return PngImage.DeserializePngImage(element, options);
+                    case "#Microsoft.Media.Image": return MediaImageBase.DeserializeMediaImageBase(element, options);
+                    case "#Microsoft.Media.H264Video": return H264Video.DeserializeH264Video(element, options);
                 }
             }
             TimeSpan? keyFrameInterval = default;
             InputVideoStretchMode? stretchMode = default;
             VideoSyncMode? syncMode = default;
-            string odataType = "#Microsoft.Media.Video";
+            string odataType = default;
             string label = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -149,7 +150,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MediaVideoBase(
+            return new Models.MediaVideoBase(
                 odataType,
                 label,
                 serializedAdditionalRawData,

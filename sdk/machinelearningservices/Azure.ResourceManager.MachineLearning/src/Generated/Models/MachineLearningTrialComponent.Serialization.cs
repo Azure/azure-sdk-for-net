@@ -42,15 +42,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStringValue(Command);
             if (Optional.IsDefined(Distribution))
             {
-                if (Distribution != null)
-                {
-                    writer.WritePropertyName("distribution"u8);
-                    writer.WriteObjectValue(Distribution, options);
-                }
-                else
-                {
-                    writer.WriteNull("distribution");
-                }
+                writer.WritePropertyName("distribution"u8);
+                writer.WriteObjectValue(Distribution, options);
             }
             writer.WritePropertyName("environmentId"u8);
             writer.WriteStringValue(EnvironmentId);
@@ -144,7 +137,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        distribution = null;
                         continue;
                     }
                     distribution = MachineLearningDistributionConfiguration.DeserializeMachineLearningDistributionConfiguration(property.Value, options);

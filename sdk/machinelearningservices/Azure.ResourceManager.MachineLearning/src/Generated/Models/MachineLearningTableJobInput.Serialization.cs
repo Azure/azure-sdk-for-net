@@ -26,13 +26,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Mode))
-            {
-                writer.WritePropertyName("mode"u8);
-                writer.WriteStringValue(Mode.Value.ToString());
-            }
-            writer.WritePropertyName("uri"u8);
-            writer.WriteStringValue(Uri.AbsoluteUri);
             if (Optional.IsDefined(Description))
             {
                 if (Description != null)
@@ -85,28 +78,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            MachineLearningInputDeliveryMode? mode = default;
-            Uri uri = default;
             string description = default;
             JobInputType jobInputType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("mode"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    mode = new MachineLearningInputDeliveryMode(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("uri"u8))
-                {
-                    uri = new Uri(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("description"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -128,7 +105,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MachineLearningTableJobInput(description, jobInputType, serializedAdditionalRawData, mode, uri);
+            return new MachineLearningTableJobInput(description, jobInputType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningTableJobInput>.Write(ModelReaderWriterOptions options)

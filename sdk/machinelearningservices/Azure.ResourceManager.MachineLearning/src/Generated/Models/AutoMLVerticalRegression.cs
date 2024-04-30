@@ -20,8 +20,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             Argument.AssertNotNull(trainingData, nameof(trainingData));
 
-            CvSplitColumnNames = new ChangeTrackingList<string>();
-            SearchSpace = new ChangeTrackingList<TableParameterSubspace>();
             TaskType = TaskType.Regression;
         }
 
@@ -36,47 +34,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="primaryMetric"> Primary metric for regression task. </param>
         /// <param name="trainingSettings"> Inputs for training phase for an AutoML Job. </param>
-        /// <param name="cvSplitColumnNames"> Columns to use for CVSplit data. </param>
-        /// <param name="featurizationSettings"> Featurization inputs needed for AutoML job. </param>
-        /// <param name="fixedParameters"> Model/training parameters that will remain constant throughout training. </param>
-        /// <param name="limitSettings"> Execution constraints for AutoMLJob. </param>
-        /// <param name="nCrossValidations">
-        /// Number of cross validation folds to be applied on training dataset
-        /// when validation dataset is not provided.
-        /// Please note <see cref="Models.NCrossValidations"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AutoNCrossValidations"/> and <see cref="CustomNCrossValidations"/>.
-        /// </param>
-        /// <param name="searchSpace"> Search space for sampling different combinations of models and their hyperparameters. </param>
-        /// <param name="sweepSettings"> Settings for model sweeping and hyperparameter tuning. </param>
-        /// <param name="testData"> Test data input. </param>
-        /// <param name="testDataSize">
-        /// The fraction of test dataset that needs to be set aside for validation purpose.
-        /// Values between (0.0 , 1.0)
-        /// Applied when validation dataset is not provided.
-        /// </param>
-        /// <param name="validationData"> Validation data inputs. </param>
-        /// <param name="validationDataSize">
-        /// The fraction of training dataset that needs to be set aside for validation purpose.
-        /// Values between (0.0 , 1.0)
-        /// Applied when validation dataset is not provided.
-        /// </param>
-        /// <param name="weightColumnName"> The name of the sample weight column. Automated ML supports a weighted column as an input, causing rows in the data to be weighted up or down. </param>
-        internal AutoMLVerticalRegression(MachineLearningLogVerbosity? logVerbosity, string targetColumnName, TaskType taskType, MachineLearningTableJobInput trainingData, IDictionary<string, BinaryData> serializedAdditionalRawData, AutoMLVerticalRegressionPrimaryMetric? primaryMetric, RegressionTrainingSettings trainingSettings, IList<string> cvSplitColumnNames, TableVerticalFeaturizationSettings featurizationSettings, TableFixedParameters fixedParameters, TableVerticalLimitSettings limitSettings, NCrossValidations nCrossValidations, IList<TableParameterSubspace> searchSpace, TableSweepSettings sweepSettings, MachineLearningTableJobInput testData, double? testDataSize, MachineLearningTableJobInput validationData, double? validationDataSize, string weightColumnName) : base(logVerbosity, targetColumnName, taskType, trainingData, serializedAdditionalRawData)
+        internal AutoMLVerticalRegression(MachineLearningLogVerbosity? logVerbosity, string targetColumnName, TaskType taskType, MachineLearningTableJobInput trainingData, IDictionary<string, BinaryData> serializedAdditionalRawData, AutoMLVerticalRegressionPrimaryMetric? primaryMetric, RegressionTrainingSettings trainingSettings) : base(logVerbosity, targetColumnName, taskType, trainingData, serializedAdditionalRawData)
         {
             PrimaryMetric = primaryMetric;
             TrainingSettings = trainingSettings;
-            CvSplitColumnNames = cvSplitColumnNames;
-            FeaturizationSettings = featurizationSettings;
-            FixedParameters = fixedParameters;
-            LimitSettings = limitSettings;
-            NCrossValidations = nCrossValidations;
-            SearchSpace = searchSpace;
-            SweepSettings = sweepSettings;
-            TestData = testData;
-            TestDataSize = testDataSize;
-            ValidationData = validationData;
-            ValidationDataSize = validationDataSize;
-            WeightColumnName = weightColumnName;
             TaskType = taskType;
         }
 
@@ -89,42 +50,5 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public AutoMLVerticalRegressionPrimaryMetric? PrimaryMetric { get; set; }
         /// <summary> Inputs for training phase for an AutoML Job. </summary>
         public RegressionTrainingSettings TrainingSettings { get; set; }
-        /// <summary> Columns to use for CVSplit data. </summary>
-        public IList<string> CvSplitColumnNames { get; set; }
-        /// <summary> Featurization inputs needed for AutoML job. </summary>
-        public TableVerticalFeaturizationSettings FeaturizationSettings { get; set; }
-        /// <summary> Model/training parameters that will remain constant throughout training. </summary>
-        public TableFixedParameters FixedParameters { get; set; }
-        /// <summary> Execution constraints for AutoMLJob. </summary>
-        public TableVerticalLimitSettings LimitSettings { get; set; }
-        /// <summary>
-        /// Number of cross validation folds to be applied on training dataset
-        /// when validation dataset is not provided.
-        /// Please note <see cref="Models.NCrossValidations"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AutoNCrossValidations"/> and <see cref="CustomNCrossValidations"/>.
-        /// </summary>
-        public NCrossValidations NCrossValidations { get; set; }
-        /// <summary> Search space for sampling different combinations of models and their hyperparameters. </summary>
-        public IList<TableParameterSubspace> SearchSpace { get; set; }
-        /// <summary> Settings for model sweeping and hyperparameter tuning. </summary>
-        public TableSweepSettings SweepSettings { get; set; }
-        /// <summary> Test data input. </summary>
-        public MachineLearningTableJobInput TestData { get; set; }
-        /// <summary>
-        /// The fraction of test dataset that needs to be set aside for validation purpose.
-        /// Values between (0.0 , 1.0)
-        /// Applied when validation dataset is not provided.
-        /// </summary>
-        public double? TestDataSize { get; set; }
-        /// <summary> Validation data inputs. </summary>
-        public MachineLearningTableJobInput ValidationData { get; set; }
-        /// <summary>
-        /// The fraction of training dataset that needs to be set aside for validation purpose.
-        /// Values between (0.0 , 1.0)
-        /// Applied when validation dataset is not provided.
-        /// </summary>
-        public double? ValidationDataSize { get; set; }
-        /// <summary> The name of the sample weight column. Automated ML supports a weighted column as an input, causing rows in the data to be weighted up or down. </summary>
-        public string WeightColumnName { get; set; }
     }
 }

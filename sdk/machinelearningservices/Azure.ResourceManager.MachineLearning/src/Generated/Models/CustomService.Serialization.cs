@@ -49,15 +49,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(Docker))
             {
-                if (Docker != null)
-                {
-                    writer.WritePropertyName("docker"u8);
-                    writer.WriteObjectValue(Docker, options);
-                }
-                else
-                {
-                    writer.WriteNull("docker");
-                }
+                writer.WritePropertyName("docker"u8);
+                writer.WriteObjectValue(Docker, options);
             }
             if (Optional.IsCollectionDefined(Endpoints))
             {
@@ -156,7 +149,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        docker = null;
                         continue;
                     }
                     docker = DockerSetting.DeserializeDockerSetting(property.Value, options);

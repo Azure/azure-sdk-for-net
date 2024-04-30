@@ -7,6 +7,7 @@
 
 using System;
 using System.Threading.Tasks;
+using System.Xml;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Maintenance.Models;
@@ -366,7 +367,7 @@ namespace Azure.ResourceManager.Maintenance.Samples
                 Visibility = MaintenanceConfigurationVisibility.Custom,
                 StartOn = DateTimeOffset.Parse("2020-04-30 08:00"),
                 ExpireOn = DateTimeOffset.Parse("9999-12-31 00:00"),
-                Duration = TimeSpan.Parse("05:00"),
+                Duration = XmlConvert.ToTimeSpan("05:00"),
                 TimeZone = "Pacific Standard Time",
                 RecurEvery = "Day",
             };

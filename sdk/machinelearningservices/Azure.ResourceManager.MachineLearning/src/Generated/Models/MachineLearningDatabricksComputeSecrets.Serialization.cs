@@ -26,11 +26,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DatabricksAccessToken))
-            {
-                writer.WritePropertyName("databricksAccessToken"u8);
-                writer.WriteStringValue(DatabricksAccessToken);
-            }
             writer.WritePropertyName("computeType"u8);
             writer.WriteStringValue(ComputeType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -71,17 +66,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            string databricksAccessToken = default;
             ComputeType computeType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("databricksAccessToken"u8))
-                {
-                    databricksAccessToken = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("computeType"u8))
                 {
                     computeType = new ComputeType(property.Value.GetString());
@@ -93,7 +82,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MachineLearningDatabricksComputeSecrets(computeType, serializedAdditionalRawData, databricksAccessToken);
+            return new MachineLearningDatabricksComputeSecrets(computeType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningDatabricksComputeSecrets>.Write(ModelReaderWriterOptions options)

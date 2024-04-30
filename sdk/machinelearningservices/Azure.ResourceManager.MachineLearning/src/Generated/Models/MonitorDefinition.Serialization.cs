@@ -28,29 +28,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AlertNotificationSetting))
             {
-                if (AlertNotificationSetting != null)
-                {
-                    writer.WritePropertyName("alertNotificationSetting"u8);
-                    writer.WriteObjectValue(AlertNotificationSetting, options);
-                }
-                else
-                {
-                    writer.WriteNull("alertNotificationSetting");
-                }
+                writer.WritePropertyName("alertNotificationSetting"u8);
+                writer.WriteObjectValue(AlertNotificationSetting, options);
             }
             writer.WritePropertyName("computeConfiguration"u8);
             writer.WriteObjectValue(ComputeConfiguration, options);
             if (Optional.IsDefined(MonitoringTarget))
             {
-                if (MonitoringTarget != null)
-                {
-                    writer.WritePropertyName("monitoringTarget"u8);
-                    writer.WriteObjectValue(MonitoringTarget, options);
-                }
-                else
-                {
-                    writer.WriteNull("monitoringTarget");
-                }
+                writer.WritePropertyName("monitoringTarget"u8);
+                writer.WriteObjectValue(MonitoringTarget, options);
             }
             writer.WritePropertyName("signals"u8);
             writer.WriteStartObject();
@@ -110,7 +96,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        alertNotificationSetting = null;
                         continue;
                     }
                     alertNotificationSetting = MonitoringAlertNotificationSettingsBase.DeserializeMonitoringAlertNotificationSettingsBase(property.Value, options);
@@ -125,7 +110,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        monitoringTarget = null;
                         continue;
                     }
                     monitoringTarget = MonitoringTarget.DeserializeMonitoringTarget(property.Value, options);

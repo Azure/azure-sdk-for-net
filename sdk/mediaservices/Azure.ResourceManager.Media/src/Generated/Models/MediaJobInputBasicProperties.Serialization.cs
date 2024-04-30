@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    [PersistableModelProxy(typeof(UnknownJobInput))]
+    [PersistableModelProxy(typeof(UnknownMediaJobInputBasicProperties))]
     public partial class MediaJobInputBasicProperties : IUtf8JsonSerializable, IJsonModel<MediaJobInputBasicProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaJobInputBasicProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -71,13 +71,13 @@ namespace Azure.ResourceManager.Media.Models
                 switch (discriminator.GetString())
                 {
                     case "#Microsoft.Media.JobInputAsset": return MediaJobInputAsset.DeserializeMediaJobInputAsset(element, options);
-                    case "#Microsoft.Media.JobInputClip": return MediaJobInputClip.DeserializeMediaJobInputClip(element, options);
                     case "#Microsoft.Media.JobInputHttp": return MediaJobInputHttp.DeserializeMediaJobInputHttp(element, options);
+                    case "#Microsoft.Media.JobInputClip": return MediaJobInputClip.DeserializeMediaJobInputClip(element, options);
                     case "#Microsoft.Media.JobInputs": return MediaJobInputs.DeserializeMediaJobInputs(element, options);
                     case "#Microsoft.Media.JobInputSequence": return MediaJobInputSequence.DeserializeMediaJobInputSequence(element, options);
                 }
             }
-            return UnknownJobInput.DeserializeUnknownJobInput(element, options);
+            return UnknownMediaJobInputBasicProperties.DeserializeUnknownMediaJobInputBasicProperties(element, options);
         }
 
         BinaryData IPersistableModel<MediaJobInputBasicProperties>.Write(ModelReaderWriterOptions options)

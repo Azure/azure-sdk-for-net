@@ -35,15 +35,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteEndArray();
             if (Optional.IsDefined(ProductionData))
             {
-                if (ProductionData != null)
-                {
-                    writer.WritePropertyName("productionData"u8);
-                    writer.WriteObjectValue(ProductionData, options);
-                }
-                else
-                {
-                    writer.WriteNull("productionData");
-                }
+                writer.WritePropertyName("productionData"u8);
+                writer.WriteObjectValue(ProductionData, options);
             }
             writer.WritePropertyName("samplingRate"u8);
             writer.WriteNumberValue(SamplingRate);
@@ -134,7 +127,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        productionData = null;
                         continue;
                     }
                     productionData = MonitoringInputDataBase.DeserializeMonitoringInputDataBase(property.Value, options);

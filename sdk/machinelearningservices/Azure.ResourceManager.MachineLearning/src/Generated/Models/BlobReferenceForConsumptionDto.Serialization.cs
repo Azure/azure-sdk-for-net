@@ -40,15 +40,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(Credential))
             {
-                if (Credential != null)
-                {
-                    writer.WritePropertyName("credential"u8);
-                    writer.WriteObjectValue(Credential, options);
-                }
-                else
-                {
-                    writer.WriteNull("credential");
-                }
+                writer.WritePropertyName("credential"u8);
+                writer.WriteObjectValue(Credential, options);
             }
             if (Optional.IsDefined(StorageAccountArmId))
             {
@@ -121,7 +114,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        credential = null;
                         continue;
                     }
                     credential = PendingUploadCredentialDto.DeserializePendingUploadCredentialDto(property.Value, options);

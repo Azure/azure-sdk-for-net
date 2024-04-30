@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    [PersistableModelProxy(typeof(UnknownAssetReferenceBase))]
+    [PersistableModelProxy(typeof(UnknownMachineLearningAssetReferenceBase))]
     public partial class MachineLearningAssetReferenceBase : IUtf8JsonSerializable, IJsonModel<MachineLearningAssetReferenceBase>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningAssetReferenceBase>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "DataPath": return MachineLearningDataPathAssetReference.DeserializeMachineLearningDataPathAssetReference(element, options);
                     case "Id": return MachineLearningIdAssetReference.DeserializeMachineLearningIdAssetReference(element, options);
+                    case "DataPath": return MachineLearningDataPathAssetReference.DeserializeMachineLearningDataPathAssetReference(element, options);
                     case "OutputPath": return MachineLearningOutputPathAssetReference.DeserializeMachineLearningOutputPathAssetReference(element, options);
                 }
             }
-            return UnknownAssetReferenceBase.DeserializeUnknownAssetReferenceBase(element, options);
+            return UnknownMachineLearningAssetReferenceBase.DeserializeUnknownMachineLearningAssetReferenceBase(element, options);
         }
 
         BinaryData IPersistableModel<MachineLearningAssetReferenceBase>.Write(ModelReaderWriterOptions options)

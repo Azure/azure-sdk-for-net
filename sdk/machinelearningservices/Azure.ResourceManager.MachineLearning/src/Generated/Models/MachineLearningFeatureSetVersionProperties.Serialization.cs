@@ -45,15 +45,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(MaterializationSettings))
             {
-                if (MaterializationSettings != null)
-                {
-                    writer.WritePropertyName("materializationSettings"u8);
-                    writer.WriteObjectValue(MaterializationSettings, options);
-                }
-                else
-                {
-                    writer.WriteNull("materializationSettings");
-                }
+                writer.WritePropertyName("materializationSettings"u8);
+                writer.WriteObjectValue(MaterializationSettings, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -62,15 +55,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(Specification))
             {
-                if (Specification != null)
-                {
-                    writer.WritePropertyName("specification"u8);
-                    writer.WriteObjectValue(Specification, options);
-                }
-                else
-                {
-                    writer.WriteNull("specification");
-                }
+                writer.WritePropertyName("specification"u8);
+                writer.WriteObjectValue(Specification, options);
             }
             if (Optional.IsDefined(Stage))
             {
@@ -86,15 +72,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(AutoDeleteSetting))
             {
-                if (AutoDeleteSetting != null)
-                {
-                    writer.WritePropertyName("autoDeleteSetting"u8);
-                    writer.WriteObjectValue(AutoDeleteSetting, options);
-                }
-                else
-                {
-                    writer.WriteNull("autoDeleteSetting");
-                }
+                writer.WritePropertyName("autoDeleteSetting"u8);
+                writer.WriteObjectValue(AutoDeleteSetting, options);
             }
             if (Optional.IsDefined(IsAnonymous))
             {
@@ -226,7 +205,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        materializationSettings = null;
                         continue;
                     }
                     materializationSettings = MaterializationSettings.DeserializeMaterializationSettings(property.Value, options);
@@ -245,7 +223,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        specification = null;
                         continue;
                     }
                     specification = FeaturesetSpecification.DeserializeFeaturesetSpecification(property.Value, options);
@@ -265,7 +242,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        autoDeleteSetting = null;
                         continue;
                     }
                     autoDeleteSetting = AutoDeleteSetting.DeserializeAutoDeleteSetting(property.Value, options);

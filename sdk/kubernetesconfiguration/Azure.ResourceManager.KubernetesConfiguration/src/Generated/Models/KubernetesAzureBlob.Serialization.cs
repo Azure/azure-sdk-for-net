@@ -76,15 +76,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
             if (Optional.IsDefined(ServicePrincipal))
             {
-                if (ServicePrincipal != null)
-                {
-                    writer.WritePropertyName("servicePrincipal"u8);
-                    writer.WriteObjectValue(ServicePrincipal, options);
-                }
-                else
-                {
-                    writer.WriteNull("servicePrincipal");
-                }
+                writer.WritePropertyName("servicePrincipal"u8);
+                writer.WriteObjectValue(ServicePrincipal, options);
             }
             if (Optional.IsDefined(AccountKey))
             {
@@ -112,15 +105,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
             if (Optional.IsDefined(ManagedIdentity))
             {
-                if (ManagedIdentity != null)
-                {
-                    writer.WritePropertyName("managedIdentity"u8);
-                    writer.WriteObjectValue(ManagedIdentity, options);
-                }
-                else
-                {
-                    writer.WriteNull("managedIdentity");
-                }
+                writer.WritePropertyName("managedIdentity"u8);
+                writer.WriteObjectValue(ManagedIdentity, options);
             }
             if (Optional.IsDefined(LocalAuthRef))
             {
@@ -229,7 +215,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        servicePrincipal = null;
                         continue;
                     }
                     servicePrincipal = KubernetesServicePrincipal.DeserializeKubernetesServicePrincipal(property.Value, options);
@@ -259,7 +244,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        managedIdentity = null;
                         continue;
                     }
                     managedIdentity = KubernetesAzureBlobManagedIdentity.DeserializeKubernetesAzureBlobManagedIdentity(property.Value, options);

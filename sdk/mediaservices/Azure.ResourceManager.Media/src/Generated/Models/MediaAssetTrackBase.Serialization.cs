@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    [PersistableModelProxy(typeof(UnknownTrackBase))]
+    [PersistableModelProxy(typeof(UnknownMediaAssetTrackBase))]
     public partial class MediaAssetTrackBase : IUtf8JsonSerializable, IJsonModel<MediaAssetTrackBase>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaAssetTrackBase>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -71,11 +71,11 @@ namespace Azure.ResourceManager.Media.Models
                 switch (discriminator.GetString())
                 {
                     case "#Microsoft.Media.AudioTrack": return AudioTrack.DeserializeAudioTrack(element, options);
-                    case "#Microsoft.Media.TextTrack": return TextTrack.DeserializeTextTrack(element, options);
                     case "#Microsoft.Media.VideoTrack": return VideoTrack.DeserializeVideoTrack(element, options);
+                    case "#Microsoft.Media.TextTrack": return TextTrack.DeserializeTextTrack(element, options);
                 }
             }
-            return UnknownTrackBase.DeserializeUnknownTrackBase(element, options);
+            return UnknownMediaAssetTrackBase.DeserializeUnknownMediaAssetTrackBase(element, options);
         }
 
         BinaryData IPersistableModel<MediaAssetTrackBase>.Write(ModelReaderWriterOptions options)

@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    [PersistableModelProxy(typeof(UnknownNodes))]
+    [PersistableModelProxy(typeof(UnknownJobNodes))]
     public partial class JobNodes : IUtf8JsonSerializable, IJsonModel<JobNodes>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JobNodes>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     case "All": return JobAllNodes.DeserializeJobAllNodes(element, options);
                 }
             }
-            return UnknownNodes.DeserializeUnknownNodes(element, options);
+            return UnknownJobNodes.DeserializeUnknownJobNodes(element, options);
         }
 
         BinaryData IPersistableModel<JobNodes>.Write(ModelReaderWriterOptions options)

@@ -28,15 +28,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(NotificationSetting))
             {
-                if (NotificationSetting != null)
-                {
-                    writer.WritePropertyName("notificationSetting"u8);
-                    writer.WriteObjectValue(NotificationSetting, options);
-                }
-                else
-                {
-                    writer.WriteNull("notificationSetting");
-                }
+                writer.WritePropertyName("notificationSetting"u8);
+                writer.WriteObjectValue(NotificationSetting, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -85,7 +78,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        notificationSetting = null;
                         continue;
                     }
                     notificationSetting = PartialNotificationSetting.DeserializePartialNotificationSetting(property.Value, options);

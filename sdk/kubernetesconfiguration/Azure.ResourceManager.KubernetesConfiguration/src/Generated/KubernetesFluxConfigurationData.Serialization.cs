@@ -72,39 +72,18 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             }
             if (Optional.IsDefined(GitRepository))
             {
-                if (GitRepository != null)
-                {
-                    writer.WritePropertyName("gitRepository"u8);
-                    writer.WriteObjectValue(GitRepository, options);
-                }
-                else
-                {
-                    writer.WriteNull("gitRepository");
-                }
+                writer.WritePropertyName("gitRepository"u8);
+                writer.WriteObjectValue(GitRepository, options);
             }
             if (Optional.IsDefined(Bucket))
             {
-                if (Bucket != null)
-                {
-                    writer.WritePropertyName("bucket"u8);
-                    writer.WriteObjectValue(Bucket, options);
-                }
-                else
-                {
-                    writer.WriteNull("bucket");
-                }
+                writer.WritePropertyName("bucket"u8);
+                writer.WriteObjectValue(Bucket, options);
             }
             if (Optional.IsDefined(AzureBlob))
             {
-                if (AzureBlob != null)
-                {
-                    writer.WritePropertyName("azureBlob"u8);
-                    writer.WriteObjectValue(AzureBlob, options);
-                }
-                else
-                {
-                    writer.WriteNull("azureBlob");
-                }
+                writer.WritePropertyName("azureBlob"u8);
+                writer.WriteObjectValue(AzureBlob, options);
             }
             if (Optional.IsCollectionDefined(Kustomizations))
             {
@@ -362,7 +341,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                gitRepository = null;
                                 continue;
                             }
                             gitRepository = KubernetesGitRepository.DeserializeKubernetesGitRepository(property0.Value, options);
@@ -372,7 +350,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                bucket = null;
                                 continue;
                             }
                             bucket = KubernetesBucket.DeserializeKubernetesBucket(property0.Value, options);
@@ -382,7 +359,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                azureBlob = null;
                                 continue;
                             }
                             azureBlob = KubernetesAzureBlob.DeserializeKubernetesAzureBlob(property0.Value, options);

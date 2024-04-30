@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    [PersistableModelProxy(typeof(UnknownWebhook))]
+    [PersistableModelProxy(typeof(UnknownMachineLearningWebhook))]
     public partial class MachineLearningWebhook : IUtf8JsonSerializable, IJsonModel<MachineLearningWebhook>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningWebhook>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     case "AzureDevOps": return AzureDevOpsWebhook.DeserializeAzureDevOpsWebhook(element, options);
                 }
             }
-            return UnknownWebhook.DeserializeUnknownWebhook(element, options);
+            return UnknownMachineLearningWebhook.DeserializeUnknownMachineLearningWebhook(element, options);
         }
 
         BinaryData IPersistableModel<MachineLearningWebhook>.Write(ModelReaderWriterOptions options)

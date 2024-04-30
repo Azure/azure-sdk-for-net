@@ -7,10 +7,8 @@
 
 using System;
 using System.Threading.Tasks;
-using System.Xml;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.MachineLearning.Models;
 
 namespace Azure.ResourceManager.MachineLearning.Samples
 {
@@ -515,43 +513,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
 
             // invoke the operation
             string computeName = "compute123";
-            MachineLearningComputeData data = new MachineLearningComputeData(new AzureLocation("eastus"))
-            {
-                Properties = new MachineLearningKubernetesCompute()
-                {
-                    Properties = new MachineLearningKubernetesProperties()
-                    {
-                        Namespace = "default",
-                        DefaultInstanceType = "defaultInstanceType",
-                        InstanceTypes =
-{
-["defaultInstanceType"] = new MachineLearningInstanceTypeSchema()
-{
-NodeSelector =
-{
-},
-Resources = new MachineLearningInstanceTypeSchemaResources()
-{
-Requests =
-{
-["cpu"] = "1",
-["memory"] = "4Gi",
-["nvidia.com/gpu"] = null,
-},
-Limits =
-{
-["cpu"] = "1",
-["memory"] = "4Gi",
-["nvidia.com/gpu"] = null,
-},
-},
-},
-},
-                    },
-                    Description = "some compute",
-                    ResourceId = new ResourceIdentifier("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourcegroups/testrg123/providers/Microsoft.ContainerService/managedClusters/compute123-56826-c9b00420020b2"),
-                },
-            };
+            MachineLearningComputeData data = new MachineLearningComputeData(new AzureLocation("eastus"));
             ArmOperation<MachineLearningComputeResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, computeName, data);
             MachineLearningComputeResource result = lro.Value;
 
@@ -588,27 +550,7 @@ Limits =
 
             // invoke the operation
             string computeName = "compute123";
-            MachineLearningComputeData data = new MachineLearningComputeData(new AzureLocation("eastus"))
-            {
-                Properties = new AmlCompute()
-                {
-                    Properties = new AmlComputeProperties()
-                    {
-                        OSType = MachineLearningOSType.Windows,
-                        VmSize = "STANDARD_NC6",
-                        VmPriority = MachineLearningVmPriority.Dedicated,
-                        VirtualMachineImageId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.Compute/galleries/myImageGallery/images/myImageDefinition/versions/0.0.1",
-                        IsolatedNetwork = false,
-                        ScaleSettings = new AmlComputeScaleSettings(1)
-                        {
-                            MinNodeCount = 0,
-                            NodeIdleTimeBeforeScaleDown = XmlConvert.ToTimeSpan("PT5M"),
-                        },
-                        RemoteLoginPortPublicAccess = MachineLearningRemoteLoginPortPublicAccess.NotSpecified,
-                        EnableNodePublicIP = true,
-                    },
-                },
-            };
+            MachineLearningComputeData data = new MachineLearningComputeData(new AzureLocation("eastus"));
             ArmOperation<MachineLearningComputeResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, computeName, data);
             MachineLearningComputeResource result = lro.Value;
 
@@ -645,10 +587,7 @@ Limits =
 
             // invoke the operation
             string computeName = "compute123";
-            MachineLearningComputeData data = new MachineLearningComputeData(new AzureLocation("eastus"))
-            {
-                Properties = new MachineLearningDataFactoryCompute(),
-            };
+            MachineLearningComputeData data = new MachineLearningComputeData(new AzureLocation("eastus"));
             ArmOperation<MachineLearningComputeResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, computeName, data);
             MachineLearningComputeResource result = lro.Value;
 
@@ -685,10 +624,7 @@ Limits =
 
             // invoke the operation
             string computeName = "compute123";
-            MachineLearningComputeData data = new MachineLearningComputeData(new AzureLocation("eastus"))
-            {
-                Properties = new MachineLearningAksCompute(),
-            };
+            MachineLearningComputeData data = new MachineLearningComputeData(new AzureLocation("eastus"));
             ArmOperation<MachineLearningComputeResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, computeName, data);
             MachineLearningComputeResource result = lro.Value;
 
@@ -725,70 +661,7 @@ Limits =
 
             // invoke the operation
             string computeName = "compute123";
-            MachineLearningComputeData data = new MachineLearningComputeData(new AzureLocation("eastus"))
-            {
-                Properties = new MachineLearningComputeInstance()
-                {
-                    Properties = new MachineLearningComputeInstanceProperties()
-                    {
-                        VmSize = "STANDARD_NC6",
-                        SubnetId = new ResourceIdentifier("test-subnet-resource-id"),
-                        ApplicationSharingPolicy = MachineLearningApplicationSharingPolicy.Personal,
-                        MlflowAutologger = MachineLearningFlowAutoLogger.Enabled,
-                        SshSettings = new MachineLearningComputeInstanceSshSettings()
-                        {
-                            SshPublicAccess = MachineLearningSshPublicAccess.Disabled,
-                        },
-                        CustomServices =
-{
-new CustomService()
-{
-Name = "rstudio-workbench",
-Image = new ImageSetting()
-{
-ImageType = ImageType.Docker,
-Reference = "ghcr.io/azure/rstudio-workbench:latest",
-},
-EnvironmentVariables =
-{
-["RSP_LICENSE"] = new EnvironmentVariable()
-{
-VariableType = EnvironmentVariableType.Local,
-Value = "XXXX-XXXX-XXXX-XXXX-XXXX-XXXX-XXXX",
-},
-},
-Docker = new DockerSetting()
-{
-Privileged = true,
-},
-Endpoints =
-{
-new ContainerEndpoint()
-{
-Protocol = ContainerCommunicationProtocol.Http,
-Name = "connect",
-Target = 8787,
-Published = 4444,
-HostIP = null,
-}
-},
-Volumes =
-{
-new VolumeDefinition()
-{
-DefinitionType = VolumeDefinitionType.Bind,
-ReadOnly = true,
-Source = "/mnt/azureuser/",
-Target = "/home/testuser/",
-}
-},
-}
-},
-                        ComputeInstanceAuthorizationType = MachineLearningComputeInstanceAuthorizationType.Personal,
-                        PersonalComputeInstanceAssignedUser = new MachineLearningComputeInstanceAssignedUser("00000000-0000-0000-0000-000000000000", Guid.Parse("00000000-0000-0000-0000-000000000000")),
-                    },
-                },
-            };
+            MachineLearningComputeData data = new MachineLearningComputeData(new AzureLocation("eastus"));
             ArmOperation<MachineLearningComputeResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, computeName, data);
             MachineLearningComputeResource result = lro.Value;
 
@@ -825,23 +698,7 @@ Target = "/home/testuser/",
 
             // invoke the operation
             string computeName = "compute123";
-            MachineLearningComputeData data = new MachineLearningComputeData(new AzureLocation("eastus"))
-            {
-                Properties = new MachineLearningComputeInstance()
-                {
-                    Properties = new MachineLearningComputeInstanceProperties()
-                    {
-                        VmSize = "STANDARD_NC6",
-                        ApplicationSharingPolicy = MachineLearningApplicationSharingPolicy.Personal,
-                        SshSettings = new MachineLearningComputeInstanceSshSettings()
-                        {
-                            SshPublicAccess = MachineLearningSshPublicAccess.Disabled,
-                        },
-                        ComputeInstanceAuthorizationType = MachineLearningComputeInstanceAuthorizationType.Personal,
-                        PersonalComputeInstanceAssignedUser = new MachineLearningComputeInstanceAssignedUser("00000000-0000-0000-0000-000000000000", Guid.Parse("00000000-0000-0000-0000-000000000000")),
-                    },
-                },
-            };
+            MachineLearningComputeData data = new MachineLearningComputeData(new AzureLocation("eastus"));
             ArmOperation<MachineLearningComputeResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, computeName, data);
             MachineLearningComputeResource result = lro.Value;
 
@@ -878,16 +735,7 @@ Target = "/home/testuser/",
 
             // invoke the operation
             string computeName = "compute123";
-            MachineLearningComputeData data = new MachineLearningComputeData(new AzureLocation("eastus"))
-            {
-                Properties = new MachineLearningComputeInstance()
-                {
-                    Properties = new MachineLearningComputeInstanceProperties()
-                    {
-                        VmSize = "STANDARD_NC6",
-                    },
-                },
-            };
+            MachineLearningComputeData data = new MachineLearningComputeData(new AzureLocation("eastus"));
             ArmOperation<MachineLearningComputeResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, computeName, data);
             MachineLearningComputeResource result = lro.Value;
 
@@ -924,21 +772,7 @@ Target = "/home/testuser/",
 
             // invoke the operation
             string computeName = "compute123";
-            MachineLearningComputeData data = new MachineLearningComputeData(new AzureLocation("eastus"))
-            {
-                Properties = new AmlCompute()
-                {
-                    Properties = new AmlComputeProperties()
-                    {
-                        ScaleSettings = new AmlComputeScaleSettings(4)
-                        {
-                            MinNodeCount = 4,
-                            NodeIdleTimeBeforeScaleDown = XmlConvert.ToTimeSpan("PT5M"),
-                        },
-                    },
-                    Description = "some compute",
-                },
-            };
+            MachineLearningComputeData data = new MachineLearningComputeData(new AzureLocation("eastus"));
             ArmOperation<MachineLearningComputeResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, computeName, data);
             MachineLearningComputeResource result = lro.Value;
 
@@ -975,18 +809,7 @@ Target = "/home/testuser/",
 
             // invoke the operation
             string computeName = "compute123";
-            MachineLearningComputeData data = new MachineLearningComputeData(new AzureLocation("eastus"))
-            {
-                Properties = new MachineLearningAksCompute()
-                {
-                    Properties = new MachineLearningAksComputeProperties()
-                    {
-                        AgentCount = 4,
-                    },
-                    Description = "some compute",
-                    ResourceId = new ResourceIdentifier("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourcegroups/testrg123/providers/Microsoft.ContainerService/managedClusters/compute123-56826-c9b00420020b2"),
-                },
-            };
+            MachineLearningComputeData data = new MachineLearningComputeData(new AzureLocation("eastus"));
             ArmOperation<MachineLearningComputeResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, computeName, data);
             MachineLearningComputeResource result = lro.Value;
 

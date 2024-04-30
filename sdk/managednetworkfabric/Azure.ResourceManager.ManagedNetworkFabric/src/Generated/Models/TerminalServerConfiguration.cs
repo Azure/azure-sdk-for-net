@@ -25,28 +25,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="serialNumber"> Serial Number of Terminal server. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="networkDeviceId"> ARM Resource ID used for the NetworkDevice. </param>
-        /// <param name="primaryIPv4Prefix"> IPv4 Address Prefix. </param>
-        /// <param name="primaryIPv6Prefix"> IPv6 Address Prefix. </param>
-        /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix. </param>
-        /// <param name="secondaryIPv6Prefix"> Secondary IPv6 Address Prefix. </param>
-        internal TerminalServerConfiguration(string username, string password, string serialNumber, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier networkDeviceId, string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix) : base(username, password, serialNumber, serializedAdditionalRawData)
+        internal TerminalServerConfiguration(string username, string password, string serialNumber, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier networkDeviceId) : base(username, password, serialNumber, serializedAdditionalRawData)
         {
             NetworkDeviceId = networkDeviceId;
-            PrimaryIPv4Prefix = primaryIPv4Prefix;
-            PrimaryIPv6Prefix = primaryIPv6Prefix;
-            SecondaryIPv4Prefix = secondaryIPv4Prefix;
-            SecondaryIPv6Prefix = secondaryIPv6Prefix;
         }
 
         /// <summary> ARM Resource ID used for the NetworkDevice. </summary>
         public ResourceIdentifier NetworkDeviceId { get; }
-        /// <summary> IPv4 Address Prefix. </summary>
-        public string PrimaryIPv4Prefix { get; set; }
-        /// <summary> IPv6 Address Prefix. </summary>
-        public string PrimaryIPv6Prefix { get; set; }
-        /// <summary> Secondary IPv4 Address Prefix. </summary>
-        public string SecondaryIPv4Prefix { get; set; }
-        /// <summary> Secondary IPv6 Address Prefix. </summary>
-        public string SecondaryIPv6Prefix { get; set; }
     }
 }

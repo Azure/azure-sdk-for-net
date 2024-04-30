@@ -28,15 +28,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(EarlyTermination))
             {
-                if (EarlyTermination != null)
-                {
-                    writer.WritePropertyName("earlyTermination"u8);
-                    writer.WriteObjectValue(EarlyTermination, options);
-                }
-                else
-                {
-                    writer.WriteNull("earlyTermination");
-                }
+                writer.WritePropertyName("earlyTermination"u8);
+                writer.WriteObjectValue(EarlyTermination, options);
             }
             if (Optional.IsCollectionDefined(Inputs))
             {
@@ -83,15 +76,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(QueueSettings))
             {
-                if (QueueSettings != null)
-                {
-                    writer.WritePropertyName("queueSettings"u8);
-                    writer.WriteObjectValue(QueueSettings, options);
-                }
-                else
-                {
-                    writer.WriteNull("queueSettings");
-                }
+                writer.WritePropertyName("queueSettings"u8);
+                writer.WriteObjectValue(QueueSettings, options);
             }
             writer.WritePropertyName("samplingAlgorithm"u8);
             writer.WriteObjectValue(SamplingAlgorithm, options);
@@ -149,15 +135,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(Identity))
             {
-                if (Identity != null)
-                {
-                    writer.WritePropertyName("identity"u8);
-                    writer.WriteObjectValue(Identity, options);
-                }
-                else
-                {
-                    writer.WriteNull("identity");
-                }
+                writer.WritePropertyName("identity"u8);
+                writer.WriteObjectValue(Identity, options);
             }
             if (Optional.IsDefined(IsArchived))
             {
@@ -168,15 +147,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStringValue(JobType.ToString());
             if (Optional.IsDefined(NotificationSetting))
             {
-                if (NotificationSetting != null)
-                {
-                    writer.WritePropertyName("notificationSetting"u8);
-                    writer.WriteObjectValue(NotificationSetting, options);
-                }
-                else
-                {
-                    writer.WriteNull("notificationSetting");
-                }
+                writer.WritePropertyName("notificationSetting"u8);
+                writer.WriteObjectValue(NotificationSetting, options);
             }
             if (Optional.IsCollectionDefined(SecretsConfiguration))
             {
@@ -336,7 +308,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        earlyTermination = null;
                         continue;
                     }
                     earlyTermination = MachineLearningEarlyTerminationPolicy.DeserializeMachineLearningEarlyTerminationPolicy(property.Value, options);
@@ -390,7 +361,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        queueSettings = null;
                         continue;
                     }
                     queueSettings = JobQueueSettings.DeserializeJobQueueSettings(property.Value, options);
@@ -450,7 +420,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        identity = null;
                         continue;
                     }
                     identity = MachineLearningIdentityConfiguration.DeserializeMachineLearningIdentityConfiguration(property.Value, options);
@@ -474,7 +443,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        notificationSetting = null;
                         continue;
                     }
                     notificationSetting = NotificationSetting.DeserializeNotificationSetting(property.Value, options);

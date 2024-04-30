@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.Media.Models
     /// Please note <see cref="VideoTrackDescriptor"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="SelectVideoTrackByAttribute"/> and <see cref="SelectVideoTrackById"/>.
     /// </summary>
-    public partial class VideoTrackDescriptor : TrackDescriptor
+    public abstract partial class VideoTrackDescriptor : TrackDescriptor
     {
         /// <summary> Initializes a new instance of <see cref="VideoTrackDescriptor"/>. </summary>
-        public VideoTrackDescriptor()
+        protected VideoTrackDescriptor()
         {
             OdataType = "#Microsoft.Media.VideoTrackDescriptor";
         }

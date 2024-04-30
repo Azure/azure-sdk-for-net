@@ -28,15 +28,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(BaseEnvironmentSource))
             {
-                if (BaseEnvironmentSource != null)
-                {
-                    writer.WritePropertyName("baseEnvironmentSource"u8);
-                    writer.WriteObjectValue(BaseEnvironmentSource, options);
-                }
-                else
-                {
-                    writer.WriteNull("baseEnvironmentSource");
-                }
+                writer.WritePropertyName("baseEnvironmentSource"u8);
+                writer.WriteObjectValue(BaseEnvironmentSource, options);
             }
             if (options.Format != "W" && Optional.IsDefined(BuildId))
             {
@@ -75,15 +68,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (options.Format != "W" && Optional.IsDefined(InferencingServer))
             {
-                if (InferencingServer != null)
-                {
-                    writer.WritePropertyName("inferencingServer"u8);
-                    writer.WriteObjectValue(InferencingServer, options);
-                }
-                else
-                {
-                    writer.WriteNull("inferencingServer");
-                }
+                writer.WritePropertyName("inferencingServer"u8);
+                writer.WriteObjectValue(InferencingServer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Inputs))
             {
@@ -116,15 +102,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (options.Format != "W" && Optional.IsDefined(ModelConfiguration))
             {
-                if (ModelConfiguration != null)
-                {
-                    writer.WritePropertyName("modelConfiguration"u8);
-                    writer.WriteObjectValue(ModelConfiguration, options);
-                }
-                else
-                {
-                    writer.WriteNull("modelConfiguration");
-                }
+                writer.WritePropertyName("modelConfiguration"u8);
+                writer.WriteObjectValue(ModelConfiguration, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Tags))
             {
@@ -212,7 +191,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        baseEnvironmentSource = null;
                         continue;
                     }
                     baseEnvironmentSource = BaseEnvironmentSource.DeserializeBaseEnvironmentSource(property.Value, options);
@@ -256,7 +234,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        inferencingServer = null;
                         continue;
                     }
                     inferencingServer = InferencingServer.DeserializeInferencingServer(property.Value, options);
@@ -291,7 +268,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        modelConfiguration = null;
                         continue;
                     }
                     modelConfiguration = ModelConfiguration.DeserializeModelConfiguration(property.Value, options);

@@ -13,6 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
+    [PersistableModelProxy(typeof(UnknownMediaJobInputBasicProperties))]
     public partial class MediaJobInputClip : IUtf8JsonSerializable, IJsonModel<MediaJobInputClip>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaJobInputClip>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.Media.Models
             ClipTime end = default;
             string label = default;
             IList<MediaJobInputDefinition> inputDefinitions = default;
-            string odataType = "#Microsoft.Media.JobInputClip";
+            string odataType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -181,7 +182,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MediaJobInputClip(
+            return new Models.MediaJobInputClip(
                 odataType,
                 serializedAdditionalRawData,
                 files ?? new ChangeTrackingList<string>(),

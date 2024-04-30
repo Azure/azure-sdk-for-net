@@ -33,15 +33,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(DataCollector))
             {
-                if (DataCollector != null)
-                {
-                    writer.WritePropertyName("dataCollector"u8);
-                    writer.WriteObjectValue(DataCollector, options);
-                }
-                else
-                {
-                    writer.WriteNull("dataCollector");
-                }
+                writer.WritePropertyName("dataCollector"u8);
+                writer.WriteObjectValue(DataCollector, options);
             }
             if (Optional.IsDefined(EgressPublicNetworkAccess))
             {
@@ -64,15 +57,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(LivenessProbe))
             {
-                if (LivenessProbe != null)
-                {
-                    writer.WritePropertyName("livenessProbe"u8);
-                    writer.WriteObjectValue(LivenessProbe, options);
-                }
-                else
-                {
-                    writer.WriteNull("livenessProbe");
-                }
+                writer.WritePropertyName("livenessProbe"u8);
+                writer.WriteObjectValue(LivenessProbe, options);
             }
             if (Optional.IsDefined(Model))
             {
@@ -105,51 +91,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(ReadinessProbe))
             {
-                if (ReadinessProbe != null)
-                {
-                    writer.WritePropertyName("readinessProbe"u8);
-                    writer.WriteObjectValue(ReadinessProbe, options);
-                }
-                else
-                {
-                    writer.WriteNull("readinessProbe");
-                }
+                writer.WritePropertyName("readinessProbe"u8);
+                writer.WriteObjectValue(ReadinessProbe, options);
             }
             if (Optional.IsDefined(RequestSettings))
             {
-                if (RequestSettings != null)
-                {
-                    writer.WritePropertyName("requestSettings"u8);
-                    writer.WriteObjectValue(RequestSettings, options);
-                }
-                else
-                {
-                    writer.WriteNull("requestSettings");
-                }
+                writer.WritePropertyName("requestSettings"u8);
+                writer.WriteObjectValue(RequestSettings, options);
             }
             if (Optional.IsDefined(ScaleSettings))
             {
-                if (ScaleSettings != null)
-                {
-                    writer.WritePropertyName("scaleSettings"u8);
-                    writer.WriteObjectValue(ScaleSettings, options);
-                }
-                else
-                {
-                    writer.WriteNull("scaleSettings");
-                }
+                writer.WritePropertyName("scaleSettings"u8);
+                writer.WriteObjectValue(ScaleSettings, options);
             }
             if (Optional.IsDefined(CodeConfiguration))
             {
-                if (CodeConfiguration != null)
-                {
-                    writer.WritePropertyName("codeConfiguration"u8);
-                    writer.WriteObjectValue(CodeConfiguration, options);
-                }
-                else
-                {
-                    writer.WriteNull("codeConfiguration");
-                }
+                writer.WritePropertyName("codeConfiguration"u8);
+                writer.WriteObjectValue(CodeConfiguration, options);
             }
             if (Optional.IsDefined(Description))
             {
@@ -283,7 +241,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        dataCollector = null;
                         continue;
                     }
                     dataCollector = DataCollector.DeserializeDataCollector(property.Value, options);
@@ -317,7 +274,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        livenessProbe = null;
                         continue;
                     }
                     livenessProbe = MachineLearningProbeSettings.DeserializeMachineLearningProbeSettings(property.Value, options);
@@ -356,7 +312,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        readinessProbe = null;
                         continue;
                     }
                     readinessProbe = MachineLearningProbeSettings.DeserializeMachineLearningProbeSettings(property.Value, options);
@@ -366,7 +321,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        requestSettings = null;
                         continue;
                     }
                     requestSettings = MachineLearningOnlineRequestSettings.DeserializeMachineLearningOnlineRequestSettings(property.Value, options);
@@ -376,7 +330,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        scaleSettings = null;
                         continue;
                     }
                     scaleSettings = MachineLearningOnlineScaleSettings.DeserializeMachineLearningOnlineScaleSettings(property.Value, options);
@@ -386,7 +339,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        codeConfiguration = null;
                         continue;
                     }
                     codeConfiguration = MachineLearningCodeConfiguration.DeserializeMachineLearningCodeConfiguration(property.Value, options);

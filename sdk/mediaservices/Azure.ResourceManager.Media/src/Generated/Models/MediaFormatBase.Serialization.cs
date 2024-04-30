@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    [PersistableModelProxy(typeof(UnknownFormat))]
+    [PersistableModelProxy(typeof(UnknownMediaFormatBase))]
     public partial class MediaFormatBase : IUtf8JsonSerializable, IJsonModel<MediaFormatBase>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaFormatBase>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -72,15 +72,15 @@ namespace Azure.ResourceManager.Media.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "#Microsoft.Media.ImageFormat": return OutputImageFileFormat.DeserializeOutputImageFileFormat(element, options);
                     case "#Microsoft.Media.JpgFormat": return JpgFormat.DeserializeJpgFormat(element, options);
-                    case "#Microsoft.Media.Mp4Format": return Mp4Format.DeserializeMp4Format(element, options);
-                    case "#Microsoft.Media.MultiBitrateFormat": return MultiBitrateFormat.DeserializeMultiBitrateFormat(element, options);
                     case "#Microsoft.Media.PngFormat": return PngFormat.DeserializePngFormat(element, options);
+                    case "#Microsoft.Media.ImageFormat": return OutputImageFileFormat.DeserializeOutputImageFileFormat(element, options);
+                    case "#Microsoft.Media.Mp4Format": return Mp4Format.DeserializeMp4Format(element, options);
                     case "#Microsoft.Media.TransportStreamFormat": return TransportStreamFormat.DeserializeTransportStreamFormat(element, options);
+                    case "#Microsoft.Media.MultiBitrateFormat": return MultiBitrateFormat.DeserializeMultiBitrateFormat(element, options);
                 }
             }
-            return UnknownFormat.DeserializeUnknownFormat(element, options);
+            return UnknownMediaFormatBase.DeserializeUnknownMediaFormatBase(element, options);
         }
 
         BinaryData IPersistableModel<MediaFormatBase>.Write(ModelReaderWriterOptions options)

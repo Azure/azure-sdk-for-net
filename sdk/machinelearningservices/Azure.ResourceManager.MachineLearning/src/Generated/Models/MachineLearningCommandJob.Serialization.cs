@@ -28,15 +28,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AutologgerSettings))
             {
-                if (AutologgerSettings != null)
-                {
-                    writer.WritePropertyName("autologgerSettings"u8);
-                    writer.WriteObjectValue(AutologgerSettings, options);
-                }
-                else
-                {
-                    writer.WriteNull("autologgerSettings");
-                }
+                writer.WritePropertyName("autologgerSettings"u8);
+                writer.WriteObjectValue(AutologgerSettings, options);
             }
             if (Optional.IsDefined(CodeId))
             {
@@ -54,15 +47,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStringValue(Command);
             if (Optional.IsDefined(Distribution))
             {
-                if (Distribution != null)
-                {
-                    writer.WritePropertyName("distribution"u8);
-                    writer.WriteObjectValue(Distribution, options);
-                }
-                else
-                {
-                    writer.WriteNull("distribution");
-                }
+                writer.WritePropertyName("distribution"u8);
+                writer.WriteObjectValue(Distribution, options);
             }
             writer.WritePropertyName("environmentId"u8);
             writer.WriteStringValue(EnvironmentId);
@@ -104,15 +90,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(Limits))
             {
-                if (Limits != null)
-                {
-                    writer.WritePropertyName("limits"u8);
-                    writer.WriteObjectValue(Limits, options);
-                }
-                else
-                {
-                    writer.WriteNull("limits");
-                }
+                writer.WritePropertyName("limits"u8);
+                writer.WriteObjectValue(Limits, options);
             }
             if (Optional.IsCollectionDefined(Outputs))
             {
@@ -134,34 +113,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (options.Format != "W" && Optional.IsDefined(Parameters))
             {
-                if (Parameters != null)
-                {
-                    writer.WritePropertyName("parameters"u8);
+                writer.WritePropertyName("parameters"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Parameters);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(Parameters))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-                else
+                using (JsonDocument document = JsonDocument.Parse(Parameters))
                 {
-                    writer.WriteNull("parameters");
+                    JsonSerializer.Serialize(writer, document.RootElement);
                 }
+#endif
             }
             if (Optional.IsDefined(QueueSettings))
             {
-                if (QueueSettings != null)
-                {
-                    writer.WritePropertyName("queueSettings"u8);
-                    writer.WriteObjectValue(QueueSettings, options);
-                }
-                else
-                {
-                    writer.WriteNull("queueSettings");
-                }
+                writer.WritePropertyName("queueSettings"u8);
+                writer.WriteObjectValue(QueueSettings, options);
             }
             if (Optional.IsDefined(Resources))
             {
@@ -211,15 +176,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(Identity))
             {
-                if (Identity != null)
-                {
-                    writer.WritePropertyName("identity"u8);
-                    writer.WriteObjectValue(Identity, options);
-                }
-                else
-                {
-                    writer.WriteNull("identity");
-                }
+                writer.WritePropertyName("identity"u8);
+                writer.WriteObjectValue(Identity, options);
             }
             if (Optional.IsDefined(IsArchived))
             {
@@ -230,15 +188,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStringValue(JobType.ToString());
             if (Optional.IsDefined(NotificationSetting))
             {
-                if (NotificationSetting != null)
-                {
-                    writer.WritePropertyName("notificationSetting"u8);
-                    writer.WriteObjectValue(NotificationSetting, options);
-                }
-                else
-                {
-                    writer.WriteNull("notificationSetting");
-                }
+                writer.WritePropertyName("notificationSetting"u8);
+                writer.WriteObjectValue(NotificationSetting, options);
             }
             if (Optional.IsCollectionDefined(SecretsConfiguration))
             {
@@ -401,7 +352,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        autologgerSettings = null;
                         continue;
                     }
                     autologgerSettings = AutologgerSettings.DeserializeAutologgerSettings(property.Value, options);
@@ -426,7 +376,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        distribution = null;
                         continue;
                     }
                     distribution = MachineLearningDistributionConfiguration.DeserializeMachineLearningDistributionConfiguration(property.Value, options);
@@ -471,7 +420,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        limits = null;
                         continue;
                     }
                     limits = MachineLearningCommandJobLimits.DeserializeMachineLearningCommandJobLimits(property.Value, options);
@@ -496,7 +444,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        parameters = null;
                         continue;
                     }
                     parameters = BinaryData.FromString(property.Value.GetRawText());
@@ -506,7 +453,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        queueSettings = null;
                         continue;
                     }
                     queueSettings = JobQueueSettings.DeserializeJobQueueSettings(property.Value, options);
@@ -560,7 +506,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        identity = null;
                         continue;
                     }
                     identity = MachineLearningIdentityConfiguration.DeserializeMachineLearningIdentityConfiguration(property.Value, options);
@@ -584,7 +529,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        notificationSetting = null;
                         continue;
                     }
                     notificationSetting = NotificationSetting.DeserializeNotificationSetting(property.Value, options);

@@ -13,6 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
+    [PersistableModelProxy(typeof(UnknownMediaCodecBase))]
     public partial class MediaAudioBase : IUtf8JsonSerializable, IJsonModel<MediaAudioBase>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaAudioBase>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.Media.Models
             int? channels = default;
             int? samplingRate = default;
             int? bitrate = default;
-            string odataType = "#Microsoft.Media.Audio";
+            string odataType = default;
             string label = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -146,7 +147,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MediaAudioBase(
+            return new Models.MediaAudioBase(
                 odataType,
                 label,
                 serializedAdditionalRawData,

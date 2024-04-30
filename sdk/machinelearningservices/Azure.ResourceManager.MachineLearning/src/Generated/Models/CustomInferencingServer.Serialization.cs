@@ -28,15 +28,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(InferenceConfiguration))
             {
-                if (InferenceConfiguration != null)
-                {
-                    writer.WritePropertyName("inferenceConfiguration"u8);
-                    writer.WriteObjectValue(InferenceConfiguration, options);
-                }
-                else
-                {
-                    writer.WriteNull("inferenceConfiguration");
-                }
+                writer.WritePropertyName("inferenceConfiguration"u8);
+                writer.WriteObjectValue(InferenceConfiguration, options);
             }
             writer.WritePropertyName("serverType"u8);
             writer.WriteStringValue(ServerType.ToString());
@@ -88,7 +81,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        inferenceConfiguration = null;
                         continue;
                     }
                     inferenceConfiguration = OnlineInferenceConfiguration.DeserializeOnlineInferenceConfiguration(property.Value, options);

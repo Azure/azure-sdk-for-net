@@ -13,6 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
+    [PersistableModelProxy(typeof(UnknownTrackDescriptor))]
     public partial class VideoTrackDescriptor : IUtf8JsonSerializable, IJsonModel<VideoTrackDescriptor>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VideoTrackDescriptor>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.Media.Models
                     case "#Microsoft.Media.SelectVideoTrackById": return SelectVideoTrackById.DeserializeSelectVideoTrackById(element, options);
                 }
             }
-            string odataType = "#Microsoft.Media.VideoTrackDescriptor";
+            string odataType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -90,7 +91,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new VideoTrackDescriptor(odataType, serializedAdditionalRawData);
+            return new Models.VideoTrackDescriptor(odataType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VideoTrackDescriptor>.Write(ModelReaderWriterOptions options)

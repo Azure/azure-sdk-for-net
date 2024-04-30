@@ -76,15 +76,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(FeatureWindow))
             {
-                if (FeatureWindow != null)
-                {
-                    writer.WritePropertyName("featureWindow"u8);
-                    writer.WriteObjectValue(FeatureWindow, options);
-                }
-                else
-                {
-                    writer.WriteNull("featureWindow");
-                }
+                writer.WritePropertyName("featureWindow"u8);
+                writer.WriteObjectValue(FeatureWindow, options);
             }
             if (Optional.IsDefined(JobId))
             {
@@ -221,7 +214,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        featureWindow = null;
                         continue;
                     }
                     featureWindow = FeatureWindow.DeserializeFeatureWindow(property.Value, options);

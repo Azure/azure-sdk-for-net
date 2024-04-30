@@ -30,15 +30,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStringValue(Metric.ToString());
             if (Optional.IsDefined(Threshold))
             {
-                if (Threshold != null)
-                {
-                    writer.WritePropertyName("threshold"u8);
-                    writer.WriteObjectValue(Threshold, options);
-                }
-                else
-                {
-                    writer.WriteNull("threshold");
-                }
+                writer.WritePropertyName("threshold"u8);
+                writer.WriteObjectValue(Threshold, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -93,7 +86,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        threshold = null;
                         continue;
                     }
                     threshold = MonitoringThreshold.DeserializeMonitoringThreshold(property.Value, options);

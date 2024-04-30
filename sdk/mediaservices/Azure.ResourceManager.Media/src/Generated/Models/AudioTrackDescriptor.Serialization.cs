@@ -13,6 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
+    [PersistableModelProxy(typeof(UnknownTrackDescriptor))]
     public partial class AudioTrackDescriptor : IUtf8JsonSerializable, IJsonModel<AudioTrackDescriptor>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AudioTrackDescriptor>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             ChannelMapping? channelMapping = default;
-            string odataType = "#Microsoft.Media.AudioTrackDescriptor";
+            string odataType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +106,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AudioTrackDescriptor(odataType, serializedAdditionalRawData, channelMapping);
+            return new Models.AudioTrackDescriptor(odataType, serializedAdditionalRawData, channelMapping);
         }
 
         BinaryData IPersistableModel<AudioTrackDescriptor>.Write(ModelReaderWriterOptions options)

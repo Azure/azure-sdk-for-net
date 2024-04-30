@@ -28,27 +28,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ContainerResourceLimits))
             {
-                if (ContainerResourceLimits != null)
-                {
-                    writer.WritePropertyName("containerResourceLimits"u8);
-                    writer.WriteObjectValue(ContainerResourceLimits, options);
-                }
-                else
-                {
-                    writer.WriteNull("containerResourceLimits");
-                }
+                writer.WritePropertyName("containerResourceLimits"u8);
+                writer.WriteObjectValue(ContainerResourceLimits, options);
             }
             if (Optional.IsDefined(ContainerResourceRequests))
             {
-                if (ContainerResourceRequests != null)
-                {
-                    writer.WritePropertyName("containerResourceRequests"u8);
-                    writer.WriteObjectValue(ContainerResourceRequests, options);
-                }
-                else
-                {
-                    writer.WriteNull("containerResourceRequests");
-                }
+                writer.WritePropertyName("containerResourceRequests"u8);
+                writer.WriteObjectValue(ContainerResourceRequests, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -98,7 +84,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        containerResourceLimits = null;
                         continue;
                     }
                     containerResourceLimits = MachineLearningContainerResourceSettings.DeserializeMachineLearningContainerResourceSettings(property.Value, options);
@@ -108,7 +93,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        containerResourceRequests = null;
                         continue;
                     }
                     containerResourceRequests = MachineLearningContainerResourceSettings.DeserializeMachineLearningContainerResourceSettings(property.Value, options);

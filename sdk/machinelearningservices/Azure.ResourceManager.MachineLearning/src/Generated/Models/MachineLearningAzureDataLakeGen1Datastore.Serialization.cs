@@ -33,45 +33,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("storeName"u8);
             writer.WriteStringValue(StoreName);
-            if (Optional.IsDefined(ResourceGroup))
-            {
-                if (ResourceGroup != null)
-                {
-                    writer.WritePropertyName("resourceGroup"u8);
-                    writer.WriteStringValue(ResourceGroup);
-                }
-                else
-                {
-                    writer.WriteNull("resourceGroup");
-                }
-            }
-            if (Optional.IsDefined(SubscriptionId))
-            {
-                if (SubscriptionId != null)
-                {
-                    writer.WritePropertyName("subscriptionId"u8);
-                    writer.WriteStringValue(SubscriptionId);
-                }
-                else
-                {
-                    writer.WriteNull("subscriptionId");
-                }
-            }
             writer.WritePropertyName("credentials"u8);
             writer.WriteObjectValue(Credentials, options);
             writer.WritePropertyName("datastoreType"u8);
             writer.WriteStringValue(DatastoreType.ToString());
             if (Optional.IsDefined(IntellectualProperty))
             {
-                if (IntellectualProperty != null)
-                {
-                    writer.WritePropertyName("intellectualProperty"u8);
-                    writer.WriteObjectValue(IntellectualProperty, options);
-                }
-                else
-                {
-                    writer.WriteNull("intellectualProperty");
-                }
+                writer.WritePropertyName("intellectualProperty"u8);
+                writer.WriteObjectValue(IntellectualProperty, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IsDefault))
             {
@@ -166,8 +135,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             MachineLearningServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity = default;
             string storeName = default;
-            string resourceGroup = default;
-            string subscriptionId = default;
             MachineLearningDatastoreCredentials credentials = default;
             DatastoreType datastoreType = default;
             IntellectualProperty intellectualProperty = default;
@@ -193,26 +160,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     storeName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceGroup"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        resourceGroup = null;
-                        continue;
-                    }
-                    resourceGroup = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("subscriptionId"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        subscriptionId = null;
-                        continue;
-                    }
-                    subscriptionId = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("credentials"u8))
                 {
                     credentials = MachineLearningDatastoreCredentials.DeserializeMachineLearningDatastoreCredentials(property.Value, options);
@@ -227,7 +174,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        intellectualProperty = null;
                         continue;
                     }
                     intellectualProperty = IntellectualProperty.DeserializeIntellectualProperty(property.Value, options);
@@ -298,9 +244,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 intellectualProperty,
                 isDefault,
                 serviceDataAccessAuthIdentity,
-                storeName,
-                resourceGroup,
-                subscriptionId);
+                storeName);
         }
 
         BinaryData IPersistableModel<MachineLearningAzureDataLakeGen1Datastore>.Write(ModelReaderWriterOptions options)

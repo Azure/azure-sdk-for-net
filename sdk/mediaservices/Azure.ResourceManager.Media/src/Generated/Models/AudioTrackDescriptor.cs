@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.Media.Models
     /// Please note <see cref="AudioTrackDescriptor"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="SelectAudioTrackByAttribute"/> and <see cref="SelectAudioTrackById"/>.
     /// </summary>
-    public partial class AudioTrackDescriptor : TrackDescriptor
+    public abstract partial class AudioTrackDescriptor : TrackDescriptor
     {
         /// <summary> Initializes a new instance of <see cref="AudioTrackDescriptor"/>. </summary>
-        public AudioTrackDescriptor()
+        protected AudioTrackDescriptor()
         {
             OdataType = "#Microsoft.Media.AudioTrackDescriptor";
         }

@@ -28,15 +28,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(BlobReferenceForConsumption))
             {
-                if (BlobReferenceForConsumption != null)
-                {
-                    writer.WritePropertyName("blobReferenceForConsumption"u8);
-                    writer.WriteObjectValue(BlobReferenceForConsumption, options);
-                }
-                else
-                {
-                    writer.WriteNull("blobReferenceForConsumption");
-                }
+                writer.WritePropertyName("blobReferenceForConsumption"u8);
+                writer.WriteObjectValue(BlobReferenceForConsumption, options);
             }
             if (Optional.IsDefined(PendingUploadId))
             {
@@ -104,7 +97,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        blobReferenceForConsumption = null;
                         continue;
                     }
                     blobReferenceForConsumption = BlobReferenceForConsumptionDto.DeserializeBlobReferenceForConsumptionDto(property.Value, options);

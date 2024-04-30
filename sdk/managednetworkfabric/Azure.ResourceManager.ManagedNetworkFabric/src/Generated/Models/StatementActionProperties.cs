@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -77,8 +78,29 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Action type. Example: Permit | Deny | Continue. </summary>
         public RoutePolicyActionType ActionType { get; set; }
         /// <summary> IP Community Properties. </summary>
-        public ActionIPCommunityProperties IPCommunityProperties { get; set; }
+        internal ActionIPCommunityProperties IPCommunityProperties { get; set; }
+        /// <summary> List of IP Community resource IDs. </summary>
+        public IList<ResourceIdentifier> AddIPCommunityIds
+        {
+            get
+            {
+                if (IPCommunityProperties is null)
+                    IPCommunityProperties = new ActionIPCommunityProperties();
+                return IPCommunityProperties.AddIPCommunityIds;
+            }
+        }
+
         /// <summary> IP Extended Community Properties. </summary>
-        public ActionIPExtendedCommunityProperties IPExtendedCommunityProperties { get; set; }
+        internal ActionIPExtendedCommunityProperties IPExtendedCommunityProperties { get; set; }
+        /// <summary> List of IP Extended Community resource IDs. </summary>
+        public IList<ResourceIdentifier> AddIPExtendedCommunityIds
+        {
+            get
+            {
+                if (IPExtendedCommunityProperties is null)
+                    IPExtendedCommunityProperties = new ActionIPExtendedCommunityProperties();
+                return IPExtendedCommunityProperties.AddIPExtendedCommunityIds;
+            }
+        }
     }
 }

@@ -106,27 +106,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(TargetLags))
             {
-                if (TargetLags != null)
-                {
-                    writer.WritePropertyName("targetLags"u8);
-                    writer.WriteObjectValue(TargetLags, options);
-                }
-                else
-                {
-                    writer.WriteNull("targetLags");
-                }
+                writer.WritePropertyName("targetLags"u8);
+                writer.WriteObjectValue(TargetLags, options);
             }
             if (Optional.IsDefined(TargetRollingWindowSize))
             {
-                if (TargetRollingWindowSize != null)
-                {
-                    writer.WritePropertyName("targetRollingWindowSize"u8);
-                    writer.WriteObjectValue(TargetRollingWindowSize, options);
-                }
-                else
-                {
-                    writer.WriteNull("targetRollingWindowSize");
-                }
+                writer.WritePropertyName("targetRollingWindowSize"u8);
+                writer.WriteObjectValue(TargetRollingWindowSize, options);
             }
             if (Optional.IsDefined(TimeColumnName))
             {
@@ -312,7 +298,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        targetLags = null;
                         continue;
                     }
                     targetLags = TargetLags.DeserializeTargetLags(property.Value, options);
@@ -322,7 +307,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        targetRollingWindowSize = null;
                         continue;
                     }
                     targetRollingWindowSize = TargetRollingWindowSize.DeserializeTargetRollingWindowSize(property.Value, options);

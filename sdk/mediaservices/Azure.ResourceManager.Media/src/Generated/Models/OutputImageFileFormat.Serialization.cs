@@ -13,6 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
+    [PersistableModelProxy(typeof(UnknownMediaFormatBase))]
     public partial class OutputImageFileFormat : IUtf8JsonSerializable, IJsonModel<OutputImageFileFormat>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OutputImageFileFormat>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.Media.Models
                     case "#Microsoft.Media.PngFormat": return PngFormat.DeserializePngFormat(element, options);
                 }
             }
-            string odataType = "#Microsoft.Media.ImageFormat";
+            string odataType = default;
             string filenamePattern = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -98,7 +99,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new OutputImageFileFormat(odataType, filenamePattern, serializedAdditionalRawData);
+            return new Models.OutputImageFileFormat(odataType, filenamePattern, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OutputImageFileFormat>.Write(ModelReaderWriterOptions options)

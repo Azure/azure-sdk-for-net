@@ -28,15 +28,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(EmailNotificationSetting))
             {
-                if (EmailNotificationSetting != null)
-                {
-                    writer.WritePropertyName("emailNotificationSetting"u8);
-                    writer.WriteObjectValue(EmailNotificationSetting, options);
-                }
-                else
-                {
-                    writer.WriteNull("emailNotificationSetting");
-                }
+                writer.WritePropertyName("emailNotificationSetting"u8);
+                writer.WriteObjectValue(EmailNotificationSetting, options);
             }
             writer.WritePropertyName("alertNotificationType"u8);
             writer.WriteStringValue(AlertNotificationType.ToString());
@@ -88,7 +81,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        emailNotificationSetting = null;
                         continue;
                     }
                     emailNotificationSetting = NotificationSetting.DeserializeNotificationSetting(property.Value, options);

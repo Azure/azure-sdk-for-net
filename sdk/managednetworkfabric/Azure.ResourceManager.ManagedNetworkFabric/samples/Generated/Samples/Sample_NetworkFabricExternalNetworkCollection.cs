@@ -88,16 +88,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
                 },
                 OptionAProperties = new ExternalNetworkOptionAProperties()
                 {
-                    Mtu = 1500,
-                    VlanId = 1001,
-                    PeerAsn = 65047,
-                    BfdConfiguration = new BfdConfiguration()
-                    {
-                        IntervalInMilliSeconds = 300,
-                        Multiplier = 15,
-                    },
-                    IngressAclId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/accessControlLists/example-acl"),
-                    EgressAclId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/accessControlLists/example-acl"),
                     PrimaryIPv4Prefix = "10.1.1.0/30",
                     PrimaryIPv6Prefix = "3FFE:FFFF:0:CD30::a0/126",
                     SecondaryIPv4Prefix = "10.1.1.4/30",

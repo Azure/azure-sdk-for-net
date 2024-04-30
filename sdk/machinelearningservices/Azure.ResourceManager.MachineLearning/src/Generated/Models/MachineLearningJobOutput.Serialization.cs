@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    [PersistableModelProxy(typeof(UnknownJobOutput))]
+    [PersistableModelProxy(typeof(UnknownMachineLearningJobOutput))]
     public partial class MachineLearningJobOutput : IUtf8JsonSerializable, IJsonModel<MachineLearningJobOutput>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningJobOutput>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     case "uri_folder": return MachineLearningUriFolderJobOutput.DeserializeMachineLearningUriFolderJobOutput(element, options);
                 }
             }
-            return UnknownJobOutput.DeserializeUnknownJobOutput(element, options);
+            return UnknownMachineLearningJobOutput.DeserializeUnknownMachineLearningJobOutput(element, options);
         }
 
         BinaryData IPersistableModel<MachineLearningJobOutput>.Write(ModelReaderWriterOptions options)

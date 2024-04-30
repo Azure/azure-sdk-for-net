@@ -36,20 +36,8 @@ namespace Azure.ResourceManager.MachineLearning
             }
             if (Optional.IsDefined(Sku))
             {
-                if (Sku != null)
-                {
-                    writer.WritePropertyName("sku"u8);
-                    writer.WriteObjectValue(Sku, options);
-                }
-                else
-                {
-                    writer.WriteNull("sku");
-                }
-            }
-            if (Optional.IsDefined(Properties))
-            {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                writer.WritePropertyName("sku"u8);
+                writer.WriteObjectValue(Sku, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -124,7 +112,6 @@ namespace Azure.ResourceManager.MachineLearning
             }
             ManagedServiceIdentity identity = default;
             MachineLearningSku sku = default;
-            MachineLearningComputeProperties properties = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -149,19 +136,9 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        sku = null;
                         continue;
                     }
                     sku = MachineLearningSku.DeserializeMachineLearningSku(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    properties = MachineLearningComputeProperties.DeserializeMachineLearningComputeProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -222,7 +199,6 @@ namespace Azure.ResourceManager.MachineLearning
                 location,
                 identity,
                 sku,
-                properties,
                 serializedAdditionalRawData);
         }
 

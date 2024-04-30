@@ -92,15 +92,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(StackEnsembleSettings))
             {
-                if (StackEnsembleSettings != null)
-                {
-                    writer.WritePropertyName("stackEnsembleSettings"u8);
-                    writer.WriteObjectValue(StackEnsembleSettings, options);
-                }
-                else
-                {
-                    writer.WriteNull("stackEnsembleSettings");
-                }
+                writer.WritePropertyName("stackEnsembleSettings"u8);
+                writer.WriteObjectValue(StackEnsembleSettings, options);
             }
             if (Optional.IsDefined(TrainingMode))
             {
@@ -247,7 +240,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        stackEnsembleSettings = null;
                         continue;
                     }
                     stackEnsembleSettings = MachineLearningStackEnsembleSettings.DeserializeMachineLearningStackEnsembleSettings(property.Value, options);

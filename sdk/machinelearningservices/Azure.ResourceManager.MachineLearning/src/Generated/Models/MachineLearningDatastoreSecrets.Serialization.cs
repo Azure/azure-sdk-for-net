@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    [PersistableModelProxy(typeof(UnknownDatastoreSecrets))]
+    [PersistableModelProxy(typeof(UnknownMachineLearningDatastoreSecrets))]
     public partial class MachineLearningDatastoreSecrets : IUtf8JsonSerializable, IJsonModel<MachineLearningDatastoreSecrets>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningDatastoreSecrets>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     case "ServicePrincipal": return MachineLearningServicePrincipalDatastoreSecrets.DeserializeMachineLearningServicePrincipalDatastoreSecrets(element, options);
                 }
             }
-            return UnknownDatastoreSecrets.DeserializeUnknownDatastoreSecrets(element, options);
+            return UnknownMachineLearningDatastoreSecrets.DeserializeUnknownMachineLearningDatastoreSecrets(element, options);
         }
 
         BinaryData IPersistableModel<MachineLearningDatastoreSecrets>.Write(ModelReaderWriterOptions options)

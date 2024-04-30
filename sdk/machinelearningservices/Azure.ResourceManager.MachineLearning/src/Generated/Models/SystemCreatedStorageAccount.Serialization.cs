@@ -33,15 +33,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(ArmResourceIdentifier))
             {
-                if (ArmResourceIdentifier != null)
-                {
-                    writer.WritePropertyName("armResourceId"u8);
-                    writer.WriteObjectValue(ArmResourceIdentifier, options);
-                }
-                else
-                {
-                    writer.WriteNull("armResourceId");
-                }
+                writer.WritePropertyName("armResourceId"u8);
+                writer.WriteObjectValue(ArmResourceIdentifier, options);
             }
             if (Optional.IsDefined(StorageAccountHnsEnabled))
             {
@@ -132,7 +125,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        armResourceId = null;
                         continue;
                     }
                     armResourceId = Models.ArmResourceId.DeserializeArmResourceId(property.Value, options);

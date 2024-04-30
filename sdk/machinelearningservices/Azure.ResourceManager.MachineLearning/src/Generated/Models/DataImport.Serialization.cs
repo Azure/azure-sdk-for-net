@@ -40,15 +40,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(Source))
             {
-                if (Source != null)
-                {
-                    writer.WritePropertyName("source"u8);
-                    writer.WriteObjectValue(Source, options);
-                }
-                else
-                {
-                    writer.WriteNull("source");
-                }
+                writer.WritePropertyName("source"u8);
+                writer.WriteObjectValue(Source, options);
             }
             writer.WritePropertyName("dataType"u8);
             writer.WriteStringValue(DataType.ToString());
@@ -56,15 +49,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStringValue(DataUri.AbsoluteUri);
             if (Optional.IsDefined(IntellectualProperty))
             {
-                if (IntellectualProperty != null)
-                {
-                    writer.WritePropertyName("intellectualProperty"u8);
-                    writer.WriteObjectValue(IntellectualProperty, options);
-                }
-                else
-                {
-                    writer.WriteNull("intellectualProperty");
-                }
+                writer.WritePropertyName("intellectualProperty"u8);
+                writer.WriteObjectValue(IntellectualProperty, options);
             }
             if (Optional.IsDefined(Stage))
             {
@@ -80,15 +66,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(AutoDeleteSetting))
             {
-                if (AutoDeleteSetting != null)
-                {
-                    writer.WritePropertyName("autoDeleteSetting"u8);
-                    writer.WriteObjectValue(AutoDeleteSetting, options);
-                }
-                else
-                {
-                    writer.WriteNull("autoDeleteSetting");
-                }
+                writer.WritePropertyName("autoDeleteSetting"u8);
+                writer.WriteObjectValue(AutoDeleteSetting, options);
             }
             if (Optional.IsDefined(IsAnonymous))
             {
@@ -216,7 +195,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        source = null;
                         continue;
                     }
                     source = DataImportSource.DeserializeDataImportSource(property.Value, options);
@@ -236,7 +214,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        intellectualProperty = null;
                         continue;
                     }
                     intellectualProperty = IntellectualProperty.DeserializeIntellectualProperty(property.Value, options);
@@ -256,7 +233,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        autoDeleteSetting = null;
                         continue;
                     }
                     autoDeleteSetting = AutoDeleteSetting.DeserializeAutoDeleteSetting(property.Value, options);

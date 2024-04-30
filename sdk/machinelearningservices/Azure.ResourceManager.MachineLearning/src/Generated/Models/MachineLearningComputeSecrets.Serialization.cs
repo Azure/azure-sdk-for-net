@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    [PersistableModelProxy(typeof(UnknownComputeSecrets))]
+    [PersistableModelProxy(typeof(UnknownMachineLearningComputeSecrets))]
     public partial class MachineLearningComputeSecrets : IUtf8JsonSerializable, IJsonModel<MachineLearningComputeSecrets>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningComputeSecrets>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -71,11 +71,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 switch (discriminator.GetString())
                 {
                     case "AKS": return MachineLearningAksComputeSecrets.DeserializeMachineLearningAksComputeSecrets(element, options);
-                    case "Databricks": return MachineLearningDatabricksComputeSecrets.DeserializeMachineLearningDatabricksComputeSecrets(element, options);
                     case "VirtualMachine": return MachineLearningVirtualMachineSecrets.DeserializeMachineLearningVirtualMachineSecrets(element, options);
+                    case "Databricks": return MachineLearningDatabricksComputeSecrets.DeserializeMachineLearningDatabricksComputeSecrets(element, options);
                 }
             }
-            return UnknownComputeSecrets.DeserializeUnknownComputeSecrets(element, options);
+            return UnknownMachineLearningComputeSecrets.DeserializeUnknownMachineLearningComputeSecrets(element, options);
         }
 
         BinaryData IPersistableModel<MachineLearningComputeSecrets>.Write(ModelReaderWriterOptions options)

@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Media.Models
     /// Please note <see cref="MediaImageBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="JpgImage"/> and <see cref="PngImage"/>.
     /// </summary>
-    public partial class MediaImageBase : MediaVideoBase
+    public abstract partial class MediaImageBase : MediaVideoBase
     {
         /// <summary> Initializes a new instance of <see cref="MediaImageBase"/>. </summary>
         /// <param name="start"> The position in the input video from where to start generating thumbnails. The value can be in ISO 8601 format (For example, PT05S to start at 5 seconds), or a frame count (For example, 10 to start at the 10th frame), or a relative value to stream duration (For example, 10% to start at 10% of stream duration). Also supports a macro {Best}, which tells the encoder to select the best thumbnail from the first few seconds of the video and will only produce one thumbnail, no matter what other settings are for Step and Range. The default value is macro {Best}. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="start"/> is null. </exception>
-        public MediaImageBase(string start)
+        protected MediaImageBase(string start)
         {
             Argument.AssertNotNull(start, nameof(start));
 

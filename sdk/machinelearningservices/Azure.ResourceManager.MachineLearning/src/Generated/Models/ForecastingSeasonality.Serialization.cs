@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    [PersistableModelProxy(typeof(UnknownSeasonality))]
+    [PersistableModelProxy(typeof(UnknownForecastingSeasonality))]
     public partial class ForecastingSeasonality : IUtf8JsonSerializable, IJsonModel<ForecastingSeasonality>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ForecastingSeasonality>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     case "Custom": return CustomSeasonality.DeserializeCustomSeasonality(element, options);
                 }
             }
-            return UnknownSeasonality.DeserializeUnknownSeasonality(element, options);
+            return UnknownForecastingSeasonality.DeserializeUnknownForecastingSeasonality(element, options);
         }
 
         BinaryData IPersistableModel<ForecastingSeasonality>.Write(ModelReaderWriterOptions options)

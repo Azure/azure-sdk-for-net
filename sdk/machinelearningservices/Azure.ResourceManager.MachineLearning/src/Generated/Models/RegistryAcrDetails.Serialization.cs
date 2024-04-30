@@ -28,27 +28,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SystemCreatedAcrAccount))
             {
-                if (SystemCreatedAcrAccount != null)
-                {
-                    writer.WritePropertyName("systemCreatedAcrAccount"u8);
-                    writer.WriteObjectValue(SystemCreatedAcrAccount, options);
-                }
-                else
-                {
-                    writer.WriteNull("systemCreatedAcrAccount");
-                }
+                writer.WritePropertyName("systemCreatedAcrAccount"u8);
+                writer.WriteObjectValue(SystemCreatedAcrAccount, options);
             }
             if (Optional.IsDefined(UserCreatedAcrAccount))
             {
-                if (UserCreatedAcrAccount != null)
-                {
-                    writer.WritePropertyName("userCreatedAcrAccount"u8);
-                    writer.WriteObjectValue(UserCreatedAcrAccount, options);
-                }
-                else
-                {
-                    writer.WriteNull("userCreatedAcrAccount");
-                }
+                writer.WritePropertyName("userCreatedAcrAccount"u8);
+                writer.WriteObjectValue(UserCreatedAcrAccount, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -98,7 +84,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        systemCreatedAcrAccount = null;
                         continue;
                     }
                     systemCreatedAcrAccount = SystemCreatedAcrAccount.DeserializeSystemCreatedAcrAccount(property.Value, options);
@@ -108,7 +93,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        userCreatedAcrAccount = null;
                         continue;
                     }
                     userCreatedAcrAccount = UserCreatedAcrAccount.DeserializeUserCreatedAcrAccount(property.Value, options);

@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.Media.Models
     /// Please note <see cref="MediaJobInputClip"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="MediaJobInputAsset"/> and <see cref="MediaJobInputHttp"/>.
     /// </summary>
-    public partial class MediaJobInputClip : MediaJobInputBasicProperties
+    public abstract partial class MediaJobInputClip : MediaJobInputBasicProperties
     {
         /// <summary> Initializes a new instance of <see cref="MediaJobInputClip"/>. </summary>
-        public MediaJobInputClip()
+        protected MediaJobInputClip()
         {
             Files = new ChangeTrackingList<string>();
             InputDefinitions = new ChangeTrackingList<MediaJobInputDefinition>();
