@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Storage.Models
 {
     public partial class LeaseContainerResponse : IUtf8JsonSerializable, IJsonModel<LeaseContainerResponse>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LeaseContainerResponse>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LeaseContainerResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LeaseContainerResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static LeaseContainerResponse DeserializeLeaseContainerResponse(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -112,15 +112,16 @@ namespace Azure.ResourceManager.Storage.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LeaseId), out propertyOverride);
-            if (Optional.IsDefined(LeaseId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  leaseId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LeaseId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  leaseId: ");
                     if (LeaseId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -134,15 +135,16 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LeaseTimeSeconds), out propertyOverride);
-            if (Optional.IsDefined(LeaseTimeSeconds) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  leaseTimeSeconds: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LeaseTimeSeconds))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  leaseTimeSeconds: ");
                     if (LeaseTimeSeconds.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

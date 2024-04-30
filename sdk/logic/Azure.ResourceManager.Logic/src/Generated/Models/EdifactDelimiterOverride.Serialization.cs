@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Logic.Models
 {
     public partial class EdifactDelimiterOverride : IUtf8JsonSerializable, IJsonModel<EdifactDelimiterOverride>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdifactDelimiterOverride>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdifactDelimiterOverride>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EdifactDelimiterOverride>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static EdifactDelimiterOverride DeserializeEdifactDelimiterOverride(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

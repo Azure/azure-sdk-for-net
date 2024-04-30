@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Synapse.Models
 {
     public partial class SynapseWorkspacePatch : IUtf8JsonSerializable, IJsonModel<SynapseWorkspacePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseWorkspacePatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseWorkspacePatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SynapseWorkspacePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseWorkspacePatch DeserializeSynapseWorkspacePatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

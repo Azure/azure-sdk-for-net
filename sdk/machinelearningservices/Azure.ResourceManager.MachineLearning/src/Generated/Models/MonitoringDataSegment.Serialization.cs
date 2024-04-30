@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class MonitoringDataSegment : IUtf8JsonSerializable, IJsonModel<MonitoringDataSegment>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitoringDataSegment>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitoringDataSegment>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MonitoringDataSegment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MonitoringDataSegment DeserializeMonitoringDataSegment(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

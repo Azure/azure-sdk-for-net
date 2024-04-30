@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppContainers
 {
     public partial class ContainerAppSourceControlData : IUtf8JsonSerializable, IJsonModel<ContainerAppSourceControlData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppSourceControlData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppSourceControlData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerAppSourceControlData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppContainers
 
         internal static ContainerAppSourceControlData DeserializeContainerAppSourceControlData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

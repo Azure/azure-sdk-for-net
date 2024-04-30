@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
 {
     internal partial class DebugSetting : IUtf8JsonSerializable, IJsonModel<DebugSetting>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DebugSetting>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DebugSetting>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DebugSetting>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static DebugSetting DeserializeDebugSetting(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -101,15 +101,16 @@ namespace Azure.ResourceManager.Resources.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DetailLevel), out propertyOverride);
-            if (Optional.IsDefined(DetailLevel) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  detailLevel: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DetailLevel))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  detailLevel: ");
                     if (DetailLevel.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

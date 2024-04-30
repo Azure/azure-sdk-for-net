@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Datadog.Models
 {
     internal partial class LinkedResourceListResponse : IUtf8JsonSerializable, IJsonModel<LinkedResourceListResponse>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LinkedResourceListResponse>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LinkedResourceListResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LinkedResourceListResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Datadog.Models
 
         internal static LinkedResourceListResponse DeserializeLinkedResourceListResponse(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

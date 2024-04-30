@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     public partial class ApplicationInsightsComponentAvailableFeatures : IUtf8JsonSerializable, IJsonModel<ApplicationInsightsComponentAvailableFeatures>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationInsightsComponentAvailableFeatures>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationInsightsComponentAvailableFeatures>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ApplicationInsightsComponentAvailableFeatures>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         internal static ApplicationInsightsComponentAvailableFeatures DeserializeApplicationInsightsComponentAvailableFeatures(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -116,17 +116,18 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Result), out propertyOverride);
-            if (Optional.IsCollectionDefined(Result) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Result.Any() || hasPropertyOverride)
+                builder.Append("  Result: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Result))
                 {
-                    builder.Append("  Result: ");
-                    if (hasPropertyOverride)
+                    if (Result.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  Result: ");
                         builder.AppendLine("[");
                         foreach (var item in Result)
                         {

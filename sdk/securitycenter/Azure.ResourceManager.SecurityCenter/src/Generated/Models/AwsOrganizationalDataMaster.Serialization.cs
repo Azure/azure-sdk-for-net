@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     public partial class AwsOrganizationalDataMaster : IUtf8JsonSerializable, IJsonModel<AwsOrganizationalDataMaster>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AwsOrganizationalDataMaster>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AwsOrganizationalDataMaster>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AwsOrganizationalDataMaster>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static AwsOrganizationalDataMaster DeserializeAwsOrganizationalDataMaster(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
 {
     public partial class AppPlatformServiceRegistryInstance : IUtf8JsonSerializable, IJsonModel<AppPlatformServiceRegistryInstance>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformServiceRegistryInstance>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformServiceRegistryInstance>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AppPlatformServiceRegistryInstance>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformServiceRegistryInstance DeserializeAppPlatformServiceRegistryInstance(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

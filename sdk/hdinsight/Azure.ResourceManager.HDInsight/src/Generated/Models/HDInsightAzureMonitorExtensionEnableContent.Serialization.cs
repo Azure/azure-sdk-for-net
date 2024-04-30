@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HDInsight.Models
 {
     public partial class HDInsightAzureMonitorExtensionEnableContent : IUtf8JsonSerializable, IJsonModel<HDInsightAzureMonitorExtensionEnableContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HDInsightAzureMonitorExtensionEnableContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HDInsightAzureMonitorExtensionEnableContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HDInsightAzureMonitorExtensionEnableContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         internal static HDInsightAzureMonitorExtensionEnableContent DeserializeHDInsightAzureMonitorExtensionEnableContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

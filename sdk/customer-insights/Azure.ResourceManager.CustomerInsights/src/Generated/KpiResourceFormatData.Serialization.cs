@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CustomerInsights
 {
     public partial class KpiResourceFormatData : IUtf8JsonSerializable, IJsonModel<KpiResourceFormatData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KpiResourceFormatData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KpiResourceFormatData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<KpiResourceFormatData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.CustomerInsights
 
         internal static KpiResourceFormatData DeserializeKpiResourceFormatData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.Communication.JobRouter
 {
     internal partial class UnknownExceptionAction : IUtf8JsonSerializable, IJsonModel<ExceptionAction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExceptionAction>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExceptionAction>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ExceptionAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -65,7 +65,7 @@ namespace Azure.Communication.JobRouter
 
         internal static UnknownExceptionAction DeserializeUnknownExceptionAction(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -139,7 +139,7 @@ namespace Azure.Communication.JobRouter
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue<ExceptionAction>(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
     public partial class TrinoTelemetryConfig : IUtf8JsonSerializable, IJsonModel<TrinoTelemetryConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TrinoTelemetryConfig>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TrinoTelemetryConfig>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<TrinoTelemetryConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
 
         internal static TrinoTelemetryConfig DeserializeTrinoTelemetryConfig(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

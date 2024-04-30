@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Communication
 {
     public partial class CommunicationDomainResourceData : IUtf8JsonSerializable, IJsonModel<CommunicationDomainResourceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CommunicationDomainResourceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CommunicationDomainResourceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CommunicationDomainResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Communication
 
         internal static CommunicationDomainResourceData DeserializeCommunicationDomainResourceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

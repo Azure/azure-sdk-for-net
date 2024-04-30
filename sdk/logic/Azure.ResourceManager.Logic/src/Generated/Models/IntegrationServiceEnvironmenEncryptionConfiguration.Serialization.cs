@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Logic.Models
 {
     internal partial class IntegrationServiceEnvironmenEncryptionConfiguration : IUtf8JsonSerializable, IJsonModel<IntegrationServiceEnvironmenEncryptionConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IntegrationServiceEnvironmenEncryptionConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IntegrationServiceEnvironmenEncryptionConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<IntegrationServiceEnvironmenEncryptionConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static IntegrationServiceEnvironmenEncryptionConfiguration DeserializeIntegrationServiceEnvironmenEncryptionConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Hci.Models
 {
     public partial class IPConfigurationProperties : IUtf8JsonSerializable, IJsonModel<IPConfigurationProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IPConfigurationProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IPConfigurationProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<IPConfigurationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         internal static IPConfigurationProperties DeserializeIPConfigurationProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

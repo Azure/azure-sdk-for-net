@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class ApiManagementNamedValueCreateOrUpdateContent : IUtf8JsonSerializable, IJsonModel<ApiManagementNamedValueCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementNamedValueCreateOrUpdateContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementNamedValueCreateOrUpdateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ApiManagementNamedValueCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static ApiManagementNamedValueCreateOrUpdateContent DeserializeApiManagementNamedValueCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

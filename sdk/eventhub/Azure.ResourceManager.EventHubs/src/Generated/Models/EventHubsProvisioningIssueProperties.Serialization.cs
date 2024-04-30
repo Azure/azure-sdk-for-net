@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 {
     public partial class EventHubsProvisioningIssueProperties : IUtf8JsonSerializable, IJsonModel<EventHubsProvisioningIssueProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventHubsProvisioningIssueProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventHubsProvisioningIssueProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EventHubsProvisioningIssueProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         internal static EventHubsProvisioningIssueProperties DeserializeEventHubsProvisioningIssueProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -112,15 +112,16 @@ namespace Azure.ResourceManager.EventHubs.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IssueType), out propertyOverride);
-            if (Optional.IsDefined(IssueType) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  issueType: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IssueType))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  issueType: ");
                     if (IssueType.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -134,15 +135,16 @@ namespace Azure.ResourceManager.EventHubs.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Description), out propertyOverride);
-            if (Optional.IsDefined(Description) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  description: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Description))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  description: ");
                     if (Description.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

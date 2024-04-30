@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     public partial class PortGroupProperties : IUtf8JsonSerializable, IJsonModel<PortGroupProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PortGroupProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PortGroupProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PortGroupProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         internal static PortGroupProperties DeserializePortGroupProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

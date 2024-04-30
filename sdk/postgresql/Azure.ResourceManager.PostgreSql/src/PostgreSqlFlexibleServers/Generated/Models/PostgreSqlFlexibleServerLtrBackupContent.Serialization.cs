@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     public partial class PostgreSqlFlexibleServerLtrBackupContent : IUtf8JsonSerializable, IJsonModel<PostgreSqlFlexibleServerLtrBackupContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlFlexibleServerLtrBackupContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlFlexibleServerLtrBackupContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PostgreSqlFlexibleServerLtrBackupContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         internal static PostgreSqlFlexibleServerLtrBackupContent DeserializePostgreSqlFlexibleServerLtrBackupContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

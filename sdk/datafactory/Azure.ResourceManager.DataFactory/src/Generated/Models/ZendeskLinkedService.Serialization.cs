@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class ZendeskLinkedService : IUtf8JsonSerializable, IJsonModel<ZendeskLinkedService>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ZendeskLinkedService>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ZendeskLinkedService>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ZendeskLinkedService>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static ZendeskLinkedService DeserializeZendeskLinkedService(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

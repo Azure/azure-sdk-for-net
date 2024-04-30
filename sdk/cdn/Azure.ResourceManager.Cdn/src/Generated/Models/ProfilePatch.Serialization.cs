@@ -10,12 +10,13 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
     public partial class ProfilePatch : IUtf8JsonSerializable, IJsonModel<ProfilePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProfilePatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProfilePatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ProfilePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -37,12 +38,22 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 writer.WriteEndObject();
             }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                JsonSerializer.Serialize(writer, Identity);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(OriginResponseTimeoutSeconds))
             {
                 writer.WritePropertyName("originResponseTimeoutSeconds"u8);
                 writer.WriteNumberValue(OriginResponseTimeoutSeconds.Value);
+            }
+            if (Optional.IsDefined(LogScrubbing))
+            {
+                writer.WritePropertyName("logScrubbing"u8);
+                writer.WriteObjectValue(LogScrubbing, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -77,14 +88,16 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static ProfilePatch DeserializeProfilePatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IDictionary<string, string> tags = default;
+            ManagedServiceIdentity identity = default;
             int? originResponseTimeoutSeconds = default;
+            ProfileLogScrubbing logScrubbing = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,6 +114,15 @@ namespace Azure.ResourceManager.Cdn.Models
                         dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -121,6 +143,15 @@ namespace Azure.ResourceManager.Cdn.Models
                             originResponseTimeoutSeconds = property0.Value.GetInt32();
                             continue;
                         }
+                        if (property0.NameEquals("logScrubbing"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            logScrubbing = ProfileLogScrubbing.DeserializeProfileLogScrubbing(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -130,7 +161,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ProfilePatch(tags ?? new ChangeTrackingDictionary<string, string>(), originResponseTimeoutSeconds, serializedAdditionalRawData);
+            return new ProfilePatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, originResponseTimeoutSeconds, logScrubbing, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProfilePatch>.Write(ModelReaderWriterOptions options)

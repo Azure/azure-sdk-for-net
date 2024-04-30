@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     public partial class GcpDefenderForServersInfo : IUtf8JsonSerializable, IJsonModel<GcpDefenderForServersInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GcpDefenderForServersInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GcpDefenderForServersInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<GcpDefenderForServersInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static GcpDefenderForServersInfo DeserializeGcpDefenderForServersInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

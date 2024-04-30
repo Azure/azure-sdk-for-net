@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 {
     internal partial class CosmosDBAccountCapacity : IUtf8JsonSerializable, IJsonModel<CosmosDBAccountCapacity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBAccountCapacity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBAccountCapacity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CosmosDBAccountCapacity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static CosmosDBAccountCapacity DeserializeCosmosDBAccountCapacity(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -105,15 +105,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TotalThroughputLimit), out propertyOverride);
-            if (Optional.IsDefined(TotalThroughputLimit) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  totalThroughputLimit: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TotalThroughputLimit))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  totalThroughputLimit: ");
                     builder.AppendLine($"{TotalThroughputLimit.Value}");
                 }
             }

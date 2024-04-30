@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 {
     internal partial class ArmTemplateList : IUtf8JsonSerializable, IJsonModel<ArmTemplateList>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArmTemplateList>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArmTemplateList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ArmTemplateList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static ArmTemplateList DeserializeArmTemplateList(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MySql.Models
 {
     internal partial class MySqlVirtualNetworkRuleListResult : IUtf8JsonSerializable, IJsonModel<MySqlVirtualNetworkRuleListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlVirtualNetworkRuleListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlVirtualNetworkRuleListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MySqlVirtualNetworkRuleListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.MySql.Models
 
         internal static MySqlVirtualNetworkRuleListResult DeserializeMySqlVirtualNetworkRuleListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

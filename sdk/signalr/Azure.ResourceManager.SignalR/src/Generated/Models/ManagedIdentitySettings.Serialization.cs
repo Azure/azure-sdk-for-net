@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SignalR.Models
 {
     internal partial class ManagedIdentitySettings : IUtf8JsonSerializable, IJsonModel<ManagedIdentitySettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedIdentitySettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedIdentitySettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagedIdentitySettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SignalR.Models
 
         internal static ManagedIdentitySettings DeserializeManagedIdentitySettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -101,15 +101,16 @@ namespace Azure.ResourceManager.SignalR.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Resource), out propertyOverride);
-            if (Optional.IsDefined(Resource) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  resource: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Resource))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  resource: ");
                     if (Resource.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

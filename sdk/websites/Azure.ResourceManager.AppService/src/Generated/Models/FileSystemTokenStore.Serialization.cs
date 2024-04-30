@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal partial class FileSystemTokenStore : IUtf8JsonSerializable, IJsonModel<FileSystemTokenStore>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FileSystemTokenStore>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FileSystemTokenStore>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FileSystemTokenStore>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static FileSystemTokenStore DeserializeFileSystemTokenStore(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -101,15 +101,16 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Directory), out propertyOverride);
-            if (Optional.IsDefined(Directory) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  directory: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Directory))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  directory: ");
                     if (Directory.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Blueprint.Models
 {
     public partial class AssignmentStatus : IUtf8JsonSerializable, IJsonModel<AssignmentStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AssignmentStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AssignmentStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AssignmentStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Blueprint.Models
 
         internal static AssignmentStatus DeserializeAssignmentStatus(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

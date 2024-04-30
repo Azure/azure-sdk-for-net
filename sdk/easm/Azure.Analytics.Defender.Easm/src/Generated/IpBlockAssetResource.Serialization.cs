@@ -15,7 +15,7 @@ namespace Azure.Analytics.Defender.Easm
 {
     public partial class IpBlockAssetResource : IUtf8JsonSerializable, IJsonModel<IpBlockAssetResource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IpBlockAssetResource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IpBlockAssetResource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<IpBlockAssetResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -137,7 +137,7 @@ namespace Azure.Analytics.Defender.Easm
 
         internal static IpBlockAssetResource DeserializeIpBlockAssetResource(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -343,7 +343,7 @@ namespace Azure.Analytics.Defender.Easm
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

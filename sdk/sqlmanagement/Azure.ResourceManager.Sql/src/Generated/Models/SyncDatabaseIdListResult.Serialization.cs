@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sql.Models
 {
     internal partial class SyncDatabaseIdListResult : IUtf8JsonSerializable, IJsonModel<SyncDatabaseIdListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SyncDatabaseIdListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SyncDatabaseIdListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SyncDatabaseIdListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static SyncDatabaseIdListResult DeserializeSyncDatabaseIdListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -128,17 +128,18 @@ namespace Azure.ResourceManager.Sql.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Value), out propertyOverride);
-            if (Optional.IsCollectionDefined(Value) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Value.Any() || hasPropertyOverride)
+                builder.Append("  value: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Value))
                 {
-                    builder.Append("  value: ");
-                    if (hasPropertyOverride)
+                    if (Value.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  value: ");
                         builder.AppendLine("[");
                         foreach (var item in Value)
                         {
@@ -150,15 +151,16 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NextLink), out propertyOverride);
-            if (Optional.IsDefined(NextLink) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  nextLink: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NextLink))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  nextLink: ");
                     if (NextLink.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

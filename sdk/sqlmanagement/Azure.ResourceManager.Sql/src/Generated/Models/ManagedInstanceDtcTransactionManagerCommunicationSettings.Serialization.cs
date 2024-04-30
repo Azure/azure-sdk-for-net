@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
 {
     public partial class ManagedInstanceDtcTransactionManagerCommunicationSettings : IUtf8JsonSerializable, IJsonModel<ManagedInstanceDtcTransactionManagerCommunicationSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedInstanceDtcTransactionManagerCommunicationSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedInstanceDtcTransactionManagerCommunicationSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagedInstanceDtcTransactionManagerCommunicationSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static ManagedInstanceDtcTransactionManagerCommunicationSettings DeserializeManagedInstanceDtcTransactionManagerCommunicationSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -131,45 +131,48 @@ namespace Azure.ResourceManager.Sql.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowInboundEnabled), out propertyOverride);
-            if (Optional.IsDefined(AllowInboundEnabled) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  allowInboundEnabled: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AllowInboundEnabled))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  allowInboundEnabled: ");
                     var boolValue = AllowInboundEnabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowOutboundEnabled), out propertyOverride);
-            if (Optional.IsDefined(AllowOutboundEnabled) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  allowOutboundEnabled: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AllowOutboundEnabled))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  allowOutboundEnabled: ");
                     var boolValue = AllowOutboundEnabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Authentication), out propertyOverride);
-            if (Optional.IsDefined(Authentication) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  authentication: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Authentication))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  authentication: ");
                     if (Authentication.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

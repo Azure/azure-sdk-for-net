@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     public partial class MipSensitivityLabel : IUtf8JsonSerializable, IJsonModel<MipSensitivityLabel>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MipSensitivityLabel>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MipSensitivityLabel>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MipSensitivityLabel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static MipSensitivityLabel DeserializeMipSensitivityLabel(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

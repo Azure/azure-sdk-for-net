@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SignalR.Models
 {
     internal partial class SignalRCorsSettings : IUtf8JsonSerializable, IJsonModel<SignalRCorsSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SignalRCorsSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SignalRCorsSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SignalRCorsSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.SignalR.Models
 
         internal static SignalRCorsSettings DeserializeSignalRCorsSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -116,17 +116,18 @@ namespace Azure.ResourceManager.SignalR.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowedOrigins), out propertyOverride);
-            if (Optional.IsCollectionDefined(AllowedOrigins) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (AllowedOrigins.Any() || hasPropertyOverride)
+                builder.Append("  allowedOrigins: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AllowedOrigins))
                 {
-                    builder.Append("  allowedOrigins: ");
-                    if (hasPropertyOverride)
+                    if (AllowedOrigins.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  allowedOrigins: ");
                         builder.AppendLine("[");
                         foreach (var item in AllowedOrigins)
                         {

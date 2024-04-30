@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Workloads.Models
 {
     public partial class ThreeTierConfiguration : IUtf8JsonSerializable, IJsonModel<ThreeTierConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ThreeTierConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ThreeTierConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ThreeTierConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static ThreeTierConfiguration DeserializeThreeTierConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

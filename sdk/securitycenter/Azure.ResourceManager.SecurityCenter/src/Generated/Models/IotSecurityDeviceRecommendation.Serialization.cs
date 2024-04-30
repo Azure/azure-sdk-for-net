@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     public partial class IotSecurityDeviceRecommendation : IUtf8JsonSerializable, IJsonModel<IotSecurityDeviceRecommendation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IotSecurityDeviceRecommendation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IotSecurityDeviceRecommendation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<IotSecurityDeviceRecommendation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static IotSecurityDeviceRecommendation DeserializeIotSecurityDeviceRecommendation(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

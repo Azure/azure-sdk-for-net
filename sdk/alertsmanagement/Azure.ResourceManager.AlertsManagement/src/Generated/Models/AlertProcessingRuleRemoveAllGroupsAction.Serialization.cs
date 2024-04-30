@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 {
     public partial class AlertProcessingRuleRemoveAllGroupsAction : IUtf8JsonSerializable, IJsonModel<AlertProcessingRuleRemoveAllGroupsAction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AlertProcessingRuleRemoveAllGroupsAction>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AlertProcessingRuleRemoveAllGroupsAction>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AlertProcessingRuleRemoveAllGroupsAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         internal static AlertProcessingRuleRemoveAllGroupsAction DeserializeAlertProcessingRuleRemoveAllGroupsAction(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

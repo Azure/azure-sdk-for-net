@@ -88,7 +88,9 @@ namespace Azure.ResourceManager.ServiceBus
             try
             {
                 var response = await _serviceBusPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ServiceBusArmOperation<ServiceBusPrivateEndpointConnectionResource>(Response.FromValue(new ServiceBusPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()));
+                var uri = _serviceBusPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ServiceBusArmOperation<ServiceBusPrivateEndpointConnectionResource>(Response.FromValue(new ServiceBusPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -137,7 +139,9 @@ namespace Azure.ResourceManager.ServiceBus
             try
             {
                 var response = _serviceBusPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken);
-                var operation = new ServiceBusArmOperation<ServiceBusPrivateEndpointConnectionResource>(Response.FromValue(new ServiceBusPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()));
+                var uri = _serviceBusPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ServiceBusArmOperation<ServiceBusPrivateEndpointConnectionResource>(Response.FromValue(new ServiceBusPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

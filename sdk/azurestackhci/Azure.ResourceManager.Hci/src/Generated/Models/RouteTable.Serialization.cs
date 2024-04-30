@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Hci.Models
 {
     public partial class RouteTable : IUtf8JsonSerializable, IJsonModel<RouteTable>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RouteTable>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RouteTable>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RouteTable>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         internal static RouteTable DeserializeRouteTable(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

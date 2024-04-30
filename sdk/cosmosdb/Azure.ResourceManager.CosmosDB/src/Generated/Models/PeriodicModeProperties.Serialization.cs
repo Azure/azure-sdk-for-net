@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 {
     public partial class PeriodicModeProperties : IUtf8JsonSerializable, IJsonModel<PeriodicModeProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PeriodicModeProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PeriodicModeProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PeriodicModeProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static PeriodicModeProperties DeserializePeriodicModeProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -135,43 +135,46 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BackupIntervalInMinutes), out propertyOverride);
-            if (Optional.IsDefined(BackupIntervalInMinutes) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  backupIntervalInMinutes: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BackupIntervalInMinutes))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  backupIntervalInMinutes: ");
                     builder.AppendLine($"{BackupIntervalInMinutes.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BackupRetentionIntervalInHours), out propertyOverride);
-            if (Optional.IsDefined(BackupRetentionIntervalInHours) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  backupRetentionIntervalInHours: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BackupRetentionIntervalInHours))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  backupRetentionIntervalInHours: ");
                     builder.AppendLine($"{BackupRetentionIntervalInHours.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BackupStorageRedundancy), out propertyOverride);
-            if (Optional.IsDefined(BackupStorageRedundancy) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  backupStorageRedundancy: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BackupStorageRedundancy))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  backupStorageRedundancy: ");
                     builder.AppendLine($"'{BackupStorageRedundancy.Value.ToString()}'");
                 }
             }

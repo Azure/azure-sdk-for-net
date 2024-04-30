@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class HybridConnectionData : IUtf8JsonSerializable, IJsonModel<HybridConnectionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridConnectionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridConnectionData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HybridConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.AppService
 
         internal static HybridConnectionData DeserializeHybridConnectionData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -275,15 +275,16 @@ namespace Azure.ResourceManager.AppService
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  name: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  name: ");
                     if (Name.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -297,15 +298,16 @@ namespace Azure.ResourceManager.AppService
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
-            if (Optional.IsDefined(Kind) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  kind: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Kind))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  kind: ");
                     if (Kind.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -319,29 +321,31 @@ namespace Azure.ResourceManager.AppService
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  id: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  id: ");
                     builder.AppendLine($"'{Id.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
-            if (Optional.IsDefined(SystemData) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  systemData: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  systemData: ");
                     builder.AppendLine($"'{SystemData.ToString()}'");
                 }
             }
@@ -349,15 +353,16 @@ namespace Azure.ResourceManager.AppService
             builder.Append("  properties:");
             builder.AppendLine(" {");
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceBusNamespace), out propertyOverride);
-            if (Optional.IsDefined(ServiceBusNamespace) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    serviceBusNamespace: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ServiceBusNamespace))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    serviceBusNamespace: ");
                     if (ServiceBusNamespace.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -371,15 +376,16 @@ namespace Azure.ResourceManager.AppService
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RelayName), out propertyOverride);
-            if (Optional.IsDefined(RelayName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    relayName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RelayName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    relayName: ");
                     if (RelayName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -393,29 +399,31 @@ namespace Azure.ResourceManager.AppService
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RelayArmId), out propertyOverride);
-            if (Optional.IsDefined(RelayArmId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    relayArmUri: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RelayArmId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    relayArmUri: ");
                     builder.AppendLine($"'{RelayArmId.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Hostname), out propertyOverride);
-            if (Optional.IsDefined(Hostname) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    hostname: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Hostname))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    hostname: ");
                     if (Hostname.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -429,29 +437,31 @@ namespace Azure.ResourceManager.AppService
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Port), out propertyOverride);
-            if (Optional.IsDefined(Port) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    port: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Port))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    port: ");
                     builder.AppendLine($"{Port.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SendKeyName), out propertyOverride);
-            if (Optional.IsDefined(SendKeyName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    sendKeyName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SendKeyName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    sendKeyName: ");
                     if (SendKeyName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -465,15 +475,16 @@ namespace Azure.ResourceManager.AppService
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SendKeyValue), out propertyOverride);
-            if (Optional.IsDefined(SendKeyValue) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    sendKeyValue: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SendKeyValue))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    sendKeyValue: ");
                     if (SendKeyValue.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -487,15 +498,16 @@ namespace Azure.ResourceManager.AppService
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceBusSuffix), out propertyOverride);
-            if (Optional.IsDefined(ServiceBusSuffix) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    serviceBusSuffix: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ServiceBusSuffix))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    serviceBusSuffix: ");
                     if (ServiceBusSuffix.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

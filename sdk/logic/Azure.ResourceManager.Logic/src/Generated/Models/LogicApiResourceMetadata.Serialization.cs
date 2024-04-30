@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Logic.Models
 {
     public partial class LogicApiResourceMetadata : IUtf8JsonSerializable, IJsonModel<LogicApiResourceMetadata>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogicApiResourceMetadata>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogicApiResourceMetadata>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LogicApiResourceMetadata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static LogicApiResourceMetadata DeserializeLogicApiResourceMetadata(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

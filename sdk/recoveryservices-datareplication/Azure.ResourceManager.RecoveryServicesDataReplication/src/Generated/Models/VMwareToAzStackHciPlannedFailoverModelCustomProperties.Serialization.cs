@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
     public partial class VMwareToAzStackHciPlannedFailoverModelCustomProperties : IUtf8JsonSerializable, IJsonModel<VMwareToAzStackHciPlannedFailoverModelCustomProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VMwareToAzStackHciPlannedFailoverModelCustomProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VMwareToAzStackHciPlannedFailoverModelCustomProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VMwareToAzStackHciPlannedFailoverModelCustomProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 
         internal static VMwareToAzStackHciPlannedFailoverModelCustomProperties DeserializeVMwareToAzStackHciPlannedFailoverModelCustomProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

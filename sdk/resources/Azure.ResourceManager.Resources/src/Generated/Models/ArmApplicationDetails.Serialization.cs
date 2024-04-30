@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
 {
     public partial class ArmApplicationDetails : IUtf8JsonSerializable, IJsonModel<ArmApplicationDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArmApplicationDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArmApplicationDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ArmApplicationDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ArmApplicationDetails DeserializeArmApplicationDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -131,29 +131,31 @@ namespace Azure.ResourceManager.Resources.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ObjectId), out propertyOverride);
-            if (Optional.IsDefined(ObjectId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  oid: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ObjectId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  oid: ");
                     builder.AppendLine($"'{ObjectId.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Puid), out propertyOverride);
-            if (Optional.IsDefined(Puid) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  puid: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Puid))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  puid: ");
                     if (Puid.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -167,15 +169,16 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApplicationId), out propertyOverride);
-            if (Optional.IsDefined(ApplicationId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  applicationId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ApplicationId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  applicationId: ");
                     builder.AppendLine($"'{ApplicationId.Value.ToString()}'");
                 }
             }

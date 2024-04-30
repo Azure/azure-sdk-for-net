@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Storage.Models
 {
     public partial class StorageRoutingPreference : IUtf8JsonSerializable, IJsonModel<StorageRoutingPreference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageRoutingPreference>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageRoutingPreference>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StorageRoutingPreference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static StorageRoutingPreference DeserializeStorageRoutingPreference(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -135,44 +135,47 @@ namespace Azure.ResourceManager.Storage.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RoutingChoice), out propertyOverride);
-            if (Optional.IsDefined(RoutingChoice) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  routingChoice: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RoutingChoice))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  routingChoice: ");
                     builder.AppendLine($"'{RoutingChoice.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsMicrosoftEndpointsPublished), out propertyOverride);
-            if (Optional.IsDefined(IsMicrosoftEndpointsPublished) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  publishMicrosoftEndpoints: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsMicrosoftEndpointsPublished))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  publishMicrosoftEndpoints: ");
                     var boolValue = IsMicrosoftEndpointsPublished.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsInternetEndpointsPublished), out propertyOverride);
-            if (Optional.IsDefined(IsInternetEndpointsPublished) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  publishInternetEndpoints: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsInternetEndpointsPublished))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  publishInternetEndpoints: ");
                     var boolValue = IsInternetEndpointsPublished.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }

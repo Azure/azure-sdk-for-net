@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.BotService.Models
 {
     public partial class FacebookChannel : IUtf8JsonSerializable, IJsonModel<FacebookChannel>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FacebookChannel>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FacebookChannel>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FacebookChannel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static FacebookChannel DeserializeFacebookChannel(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

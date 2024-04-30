@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 {
     public partial class CosmosSqlDataTransferDataSourceSink : IUtf8JsonSerializable, IJsonModel<CosmosSqlDataTransferDataSourceSink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosSqlDataTransferDataSourceSink>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosSqlDataTransferDataSourceSink>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CosmosSqlDataTransferDataSourceSink>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static CosmosSqlDataTransferDataSourceSink DeserializeCosmosSqlDataTransferDataSourceSink(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -125,15 +125,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DatabaseName), out propertyOverride);
-            if (Optional.IsDefined(DatabaseName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  databaseName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DatabaseName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  databaseName: ");
                     if (DatabaseName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -147,15 +148,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContainerName), out propertyOverride);
-            if (Optional.IsDefined(ContainerName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  containerName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ContainerName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  containerName: ");
                     if (ContainerName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -169,15 +171,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RemoteAccountName), out propertyOverride);
-            if (Optional.IsDefined(RemoteAccountName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  remoteAccountName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RemoteAccountName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  remoteAccountName: ");
                     if (RemoteAccountName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -191,13 +194,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Component), out propertyOverride);
-            builder.Append("  component: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.Append("  component: ");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
+                builder.Append("  component: ");
                 builder.AppendLine($"'{Component.ToString()}'");
             }
 

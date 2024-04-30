@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class ApiManagementServiceBackupRestoreContent : IUtf8JsonSerializable, IJsonModel<ApiManagementServiceBackupRestoreContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementServiceBackupRestoreContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementServiceBackupRestoreContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ApiManagementServiceBackupRestoreContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static ApiManagementServiceBackupRestoreContent DeserializeApiManagementServiceBackupRestoreContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

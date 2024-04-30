@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Storage.Models
 {
     public partial class GeoReplicationStatistics : IUtf8JsonSerializable, IJsonModel<GeoReplicationStatistics>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GeoReplicationStatistics>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GeoReplicationStatistics>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<GeoReplicationStatistics>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static GeoReplicationStatistics DeserializeGeoReplicationStatistics(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -135,44 +135,47 @@ namespace Azure.ResourceManager.Storage.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
-            if (Optional.IsDefined(Status) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  status: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Status))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  status: ");
                     builder.AppendLine($"'{Status.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastSyncOn), out propertyOverride);
-            if (Optional.IsDefined(LastSyncOn) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  lastSyncTime: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LastSyncOn))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  lastSyncTime: ");
                     var formattedDateTimeString = TypeFormatters.ToString(LastSyncOn.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CanFailover), out propertyOverride);
-            if (Optional.IsDefined(CanFailover) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  canFailover: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CanFailover))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  canFailover: ");
                     var boolValue = CanFailover.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }

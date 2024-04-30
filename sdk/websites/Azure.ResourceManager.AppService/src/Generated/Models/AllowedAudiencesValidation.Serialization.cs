@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal partial class AllowedAudiencesValidation : IUtf8JsonSerializable, IJsonModel<AllowedAudiencesValidation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AllowedAudiencesValidation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AllowedAudiencesValidation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AllowedAudiencesValidation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AllowedAudiencesValidation DeserializeAllowedAudiencesValidation(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -116,17 +116,18 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowedAudiences), out propertyOverride);
-            if (Optional.IsCollectionDefined(AllowedAudiences) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (AllowedAudiences.Any() || hasPropertyOverride)
+                builder.Append("  allowedAudiences: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AllowedAudiences))
                 {
-                    builder.Append("  allowedAudiences: ");
-                    if (hasPropertyOverride)
+                    if (AllowedAudiences.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  allowedAudiences: ");
                         builder.AppendLine("[");
                         foreach (var item in AllowedAudiences)
                         {

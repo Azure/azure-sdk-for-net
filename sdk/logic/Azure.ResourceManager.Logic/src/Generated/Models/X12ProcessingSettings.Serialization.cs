@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Logic.Models
 {
     public partial class X12ProcessingSettings : IUtf8JsonSerializable, IJsonModel<X12ProcessingSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<X12ProcessingSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<X12ProcessingSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<X12ProcessingSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static X12ProcessingSettings DeserializeX12ProcessingSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

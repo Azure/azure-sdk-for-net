@@ -15,7 +15,7 @@ namespace Azure.Communication.JobRouter
 {
     internal partial class UnknownJobMatchingMode : IUtf8JsonSerializable, IJsonModel<JobMatchingMode>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JobMatchingMode>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JobMatchingMode>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<JobMatchingMode>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -60,7 +60,7 @@ namespace Azure.Communication.JobRouter
 
         internal static UnknownJobMatchingMode DeserializeUnknownJobMatchingMode(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -128,7 +128,7 @@ namespace Azure.Communication.JobRouter
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue<JobMatchingMode>(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

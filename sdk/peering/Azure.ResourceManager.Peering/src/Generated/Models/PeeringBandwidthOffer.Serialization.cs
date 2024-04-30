@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Peering.Models
 {
     public partial class PeeringBandwidthOffer : IUtf8JsonSerializable, IJsonModel<PeeringBandwidthOffer>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PeeringBandwidthOffer>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PeeringBandwidthOffer>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PeeringBandwidthOffer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Peering.Models
 
         internal static PeeringBandwidthOffer DeserializePeeringBandwidthOffer(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Resources.Models
 {
     public partial class ArmDeploymentScriptManagedIdentity : IUtf8JsonSerializable, IJsonModel<ArmDeploymentScriptManagedIdentity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArmDeploymentScriptManagedIdentity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArmDeploymentScriptManagedIdentity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ArmDeploymentScriptManagedIdentity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ArmDeploymentScriptManagedIdentity DeserializeArmDeploymentScriptManagedIdentity(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -148,45 +148,48 @@ namespace Azure.ResourceManager.Resources.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IdentityType), out propertyOverride);
-            if (Optional.IsDefined(IdentityType) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  type: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IdentityType))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  type: ");
                     builder.AppendLine($"'{IdentityType.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TenantId), out propertyOverride);
-            if (Optional.IsDefined(TenantId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  tenantId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TenantId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  tenantId: ");
                     builder.AppendLine($"'{TenantId.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UserAssignedIdentities), out propertyOverride);
-            if (Optional.IsCollectionDefined(UserAssignedIdentities) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (UserAssignedIdentities.Any() || hasPropertyOverride)
+                builder.Append("  userAssignedIdentities: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(UserAssignedIdentities))
                 {
-                    builder.Append("  userAssignedIdentities: ");
-                    if (hasPropertyOverride)
+                    if (UserAssignedIdentities.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  userAssignedIdentities: ");
                         builder.AppendLine("{");
                         foreach (var item in UserAssignedIdentities)
                         {

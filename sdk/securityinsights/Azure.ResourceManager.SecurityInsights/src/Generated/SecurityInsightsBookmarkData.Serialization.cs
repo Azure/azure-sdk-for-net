@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityInsights
 {
     public partial class SecurityInsightsBookmarkData : IUtf8JsonSerializable, IJsonModel<SecurityInsightsBookmarkData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsBookmarkData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsBookmarkData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SecurityInsightsBookmarkData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.SecurityInsights
 
         internal static SecurityInsightsBookmarkData DeserializeSecurityInsightsBookmarkData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

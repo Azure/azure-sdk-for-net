@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 {
     public partial class CommitmentCost : IUtf8JsonSerializable, IJsonModel<CommitmentCost>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CommitmentCost>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CommitmentCost>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CommitmentCost>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         internal static CommitmentCost DeserializeCommitmentCost(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -112,15 +112,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CommitmentMeterId), out propertyOverride);
-            if (Optional.IsDefined(CommitmentMeterId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  commitmentMeterId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CommitmentMeterId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  commitmentMeterId: ");
                     if (CommitmentMeterId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -134,15 +135,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OverageMeterId), out propertyOverride);
-            if (Optional.IsDefined(OverageMeterId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  overageMeterId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(OverageMeterId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  overageMeterId: ");
                     if (OverageMeterId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

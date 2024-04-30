@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class TldLegalAgreement : IUtf8JsonSerializable, IJsonModel<TldLegalAgreement>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TldLegalAgreement>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TldLegalAgreement>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<TldLegalAgreement>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static TldLegalAgreement DeserializeTldLegalAgreement(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -129,15 +129,16 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AgreementKey), out propertyOverride);
-            if (Optional.IsDefined(AgreementKey) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  agreementKey: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AgreementKey))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  agreementKey: ");
                     if (AgreementKey.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -151,15 +152,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Title), out propertyOverride);
-            if (Optional.IsDefined(Title) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  title: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Title))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  title: ");
                     if (Title.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -173,15 +175,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Content), out propertyOverride);
-            if (Optional.IsDefined(Content) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  content: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Content))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  content: ");
                     if (Content.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -195,15 +198,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Uri), out propertyOverride);
-            if (Optional.IsDefined(Uri) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  url: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Uri))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  url: ");
                     builder.AppendLine($"'{Uri.AbsoluteUri}'");
                 }
             }

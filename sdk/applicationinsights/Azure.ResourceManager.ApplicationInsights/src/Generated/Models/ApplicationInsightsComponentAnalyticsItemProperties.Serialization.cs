@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     internal partial class ApplicationInsightsComponentAnalyticsItemProperties : IUtf8JsonSerializable, IJsonModel<ApplicationInsightsComponentAnalyticsItemProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationInsightsComponentAnalyticsItemProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationInsightsComponentAnalyticsItemProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ApplicationInsightsComponentAnalyticsItemProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         internal static ApplicationInsightsComponentAnalyticsItemProperties DeserializeApplicationInsightsComponentAnalyticsItemProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -101,15 +101,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FunctionAlias), out propertyOverride);
-            if (Optional.IsDefined(FunctionAlias) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  functionAlias: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FunctionAlias))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  functionAlias: ");
                     if (FunctionAlias.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class PaypalObjectDataset : IUtf8JsonSerializable, IJsonModel<PaypalObjectDataset>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PaypalObjectDataset>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PaypalObjectDataset>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PaypalObjectDataset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static PaypalObjectDataset DeserializePaypalObjectDataset(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

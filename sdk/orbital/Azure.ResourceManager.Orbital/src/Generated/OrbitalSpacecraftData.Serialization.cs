@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Orbital
 {
     public partial class OrbitalSpacecraftData : IUtf8JsonSerializable, IJsonModel<OrbitalSpacecraftData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OrbitalSpacecraftData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OrbitalSpacecraftData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<OrbitalSpacecraftData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Orbital
 
         internal static OrbitalSpacecraftData DeserializeOrbitalSpacecraftData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

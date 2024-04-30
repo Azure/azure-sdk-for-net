@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 {
     public partial class CognitiveServicesSkuChangeInfo : IUtf8JsonSerializable, IJsonModel<CognitiveServicesSkuChangeInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CognitiveServicesSkuChangeInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CognitiveServicesSkuChangeInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CognitiveServicesSkuChangeInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         internal static CognitiveServicesSkuChangeInfo DeserializeCognitiveServicesSkuChangeInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -135,43 +135,46 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CountOfDowngrades), out propertyOverride);
-            if (Optional.IsDefined(CountOfDowngrades) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  countOfDowngrades: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CountOfDowngrades))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  countOfDowngrades: ");
                     builder.AppendLine($"'{CountOfDowngrades.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CountOfUpgradesAfterDowngrades), out propertyOverride);
-            if (Optional.IsDefined(CountOfUpgradesAfterDowngrades) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  countOfUpgradesAfterDowngrades: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CountOfUpgradesAfterDowngrades))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  countOfUpgradesAfterDowngrades: ");
                     builder.AppendLine($"'{CountOfUpgradesAfterDowngrades.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastChangedOn), out propertyOverride);
-            if (Optional.IsDefined(LastChangedOn) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  lastChangeDate: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LastChangedOn))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  lastChangeDate: ");
                     var formattedDateTimeString = TypeFormatters.ToString(LastChangedOn.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Redis.Models
 {
     public partial class RedisPatchScheduleSetting : IUtf8JsonSerializable, IJsonModel<RedisPatchScheduleSetting>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisPatchScheduleSetting>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisPatchScheduleSetting>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RedisPatchScheduleSetting>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Redis.Models
 
         internal static RedisPatchScheduleSetting DeserializeRedisPatchScheduleSetting(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -121,37 +121,40 @@ namespace Azure.ResourceManager.Redis.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DayOfWeek), out propertyOverride);
-            builder.Append("  dayOfWeek: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.Append("  dayOfWeek: ");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
+                builder.Append("  dayOfWeek: ");
                 builder.AppendLine($"'{DayOfWeek.ToSerialString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartHourUtc), out propertyOverride);
-            builder.Append("  startHourUtc: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.Append("  startHourUtc: ");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
+                builder.Append("  startHourUtc: ");
                 builder.AppendLine($"{StartHourUtc}");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaintenanceWindow), out propertyOverride);
-            if (Optional.IsDefined(MaintenanceWindow) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  maintenanceWindow: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaintenanceWindow))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  maintenanceWindow: ");
                     var formattedTimeSpan = TypeFormatters.ToString(MaintenanceWindow.Value, "P");
                     builder.AppendLine($"'{formattedTimeSpan}'");
                 }

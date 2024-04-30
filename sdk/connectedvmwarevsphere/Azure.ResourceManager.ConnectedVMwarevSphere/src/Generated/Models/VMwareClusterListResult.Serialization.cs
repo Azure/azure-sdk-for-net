@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
     internal partial class VMwareClusterListResult : IUtf8JsonSerializable, IJsonModel<VMwareClusterListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VMwareClusterListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VMwareClusterListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VMwareClusterListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 
         internal static VMwareClusterListResult DeserializeVMwareClusterListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
     public partial class ClusterInstanceViewResult : IUtf8JsonSerializable, IJsonModel<ClusterInstanceViewResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterInstanceViewResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterInstanceViewResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ClusterInstanceViewResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
 
         internal static ClusterInstanceViewResult DeserializeClusterInstanceViewResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

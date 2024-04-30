@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class SynapseNotebookActivity : IUtf8JsonSerializable, IJsonModel<SynapseNotebookActivity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseNotebookActivity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseNotebookActivity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SynapseNotebookActivity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SynapseNotebookActivity DeserializeSynapseNotebookActivity(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

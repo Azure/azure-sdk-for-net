@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class NetezzaLinkedService : IUtf8JsonSerializable, IJsonModel<NetezzaLinkedService>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetezzaLinkedService>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetezzaLinkedService>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetezzaLinkedService>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static NetezzaLinkedService DeserializeNetezzaLinkedService(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

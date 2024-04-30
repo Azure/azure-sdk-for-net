@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
 {
     public partial class DynatraceAccountInfo : IUtf8JsonSerializable, IJsonModel<DynatraceAccountInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DynatraceAccountInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DynatraceAccountInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DynatraceAccountInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
 
         internal static DynatraceAccountInfo DeserializeDynatraceAccountInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

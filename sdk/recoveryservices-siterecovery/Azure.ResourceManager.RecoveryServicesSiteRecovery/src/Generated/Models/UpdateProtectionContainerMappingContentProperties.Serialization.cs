@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     internal partial class UpdateProtectionContainerMappingContentProperties : IUtf8JsonSerializable, IJsonModel<UpdateProtectionContainerMappingContentProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UpdateProtectionContainerMappingContentProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UpdateProtectionContainerMappingContentProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<UpdateProtectionContainerMappingContentProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         internal static UpdateProtectionContainerMappingContentProperties DeserializeUpdateProtectionContainerMappingContentProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

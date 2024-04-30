@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Kusto.Models
 {
     public partial class KustoAttachedDatabaseConfigurationNameAvailabilityContent : IUtf8JsonSerializable, IJsonModel<KustoAttachedDatabaseConfigurationNameAvailabilityContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KustoAttachedDatabaseConfigurationNameAvailabilityContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KustoAttachedDatabaseConfigurationNameAvailabilityContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<KustoAttachedDatabaseConfigurationNameAvailabilityContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Kusto.Models
 
         internal static KustoAttachedDatabaseConfigurationNameAvailabilityContent DeserializeKustoAttachedDatabaseConfigurationNameAvailabilityContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class WebAppNetworkTrace : IUtf8JsonSerializable, IJsonModel<WebAppNetworkTrace>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebAppNetworkTrace>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebAppNetworkTrace>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<WebAppNetworkTrace>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static WebAppNetworkTrace DeserializeWebAppNetworkTrace(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -123,15 +123,16 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Path), out propertyOverride);
-            if (Optional.IsDefined(Path) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  path: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Path))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  path: ");
                     if (Path.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -145,15 +146,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
-            if (Optional.IsDefined(Status) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  status: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Status))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  status: ");
                     if (Status.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -167,15 +169,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Message), out propertyOverride);
-            if (Optional.IsDefined(Message) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  message: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Message))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  message: ");
                     if (Message.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

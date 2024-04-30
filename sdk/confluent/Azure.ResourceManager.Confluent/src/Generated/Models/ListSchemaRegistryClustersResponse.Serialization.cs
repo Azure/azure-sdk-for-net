@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Confluent.Models
 {
     internal partial class ListSchemaRegistryClustersResponse : IUtf8JsonSerializable, IJsonModel<ListSchemaRegistryClustersResponse>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ListSchemaRegistryClustersResponse>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ListSchemaRegistryClustersResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ListSchemaRegistryClustersResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Confluent.Models
 
         internal static ListSchemaRegistryClustersResponse DeserializeListSchemaRegistryClustersResponse(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

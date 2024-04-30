@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
 {
     public partial class BuildpackBindingLaunchProperties : IUtf8JsonSerializable, IJsonModel<BuildpackBindingLaunchProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BuildpackBindingLaunchProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BuildpackBindingLaunchProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BuildpackBindingLaunchProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static BuildpackBindingLaunchProperties DeserializeBuildpackBindingLaunchProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

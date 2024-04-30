@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class LongTermRetentionBackupData : IUtf8JsonSerializable, IJsonModel<LongTermRetentionBackupData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LongTermRetentionBackupData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LongTermRetentionBackupData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LongTermRetentionBackupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Sql
 
         internal static LongTermRetentionBackupData DeserializeLongTermRetentionBackupData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -312,15 +312,16 @@ namespace Azure.ResourceManager.Sql
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  name: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  name: ");
                     if (Name.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -334,29 +335,31 @@ namespace Azure.ResourceManager.Sql
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  id: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  id: ");
                     builder.AppendLine($"'{Id.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
-            if (Optional.IsDefined(SystemData) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  systemData: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  systemData: ");
                     builder.AppendLine($"'{SystemData.ToString()}'");
                 }
             }
@@ -364,15 +367,16 @@ namespace Azure.ResourceManager.Sql
             builder.Append("  properties:");
             builder.AppendLine(" {");
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServerName), out propertyOverride);
-            if (Optional.IsDefined(ServerName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    serverName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ServerName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    serverName: ");
                     if (ServerName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -386,30 +390,32 @@ namespace Azure.ResourceManager.Sql
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServerCreateOn), out propertyOverride);
-            if (Optional.IsDefined(ServerCreateOn) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    serverCreateTime: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ServerCreateOn))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    serverCreateTime: ");
                     var formattedDateTimeString = TypeFormatters.ToString(ServerCreateOn.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DatabaseName), out propertyOverride);
-            if (Optional.IsDefined(DatabaseName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    databaseName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DatabaseName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    databaseName: ");
                     if (DatabaseName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -423,103 +429,110 @@ namespace Azure.ResourceManager.Sql
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DatabaseDeletedOn), out propertyOverride);
-            if (Optional.IsDefined(DatabaseDeletedOn) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    databaseDeletionTime: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DatabaseDeletedOn))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    databaseDeletionTime: ");
                     var formattedDateTimeString = TypeFormatters.ToString(DatabaseDeletedOn.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BackupOn), out propertyOverride);
-            if (Optional.IsDefined(BackupOn) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    backupTime: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BackupOn))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    backupTime: ");
                     var formattedDateTimeString = TypeFormatters.ToString(BackupOn.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BackupExpireOn), out propertyOverride);
-            if (Optional.IsDefined(BackupExpireOn) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    backupExpirationTime: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BackupExpireOn))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    backupExpirationTime: ");
                     var formattedDateTimeString = TypeFormatters.ToString(BackupExpireOn.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BackupStorageRedundancy), out propertyOverride);
-            if (Optional.IsDefined(BackupStorageRedundancy) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    backupStorageRedundancy: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BackupStorageRedundancy))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    backupStorageRedundancy: ");
                     builder.AppendLine($"'{BackupStorageRedundancy.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestedBackupStorageRedundancy), out propertyOverride);
-            if (Optional.IsDefined(RequestedBackupStorageRedundancy) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    requestedBackupStorageRedundancy: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RequestedBackupStorageRedundancy))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    requestedBackupStorageRedundancy: ");
                     builder.AppendLine($"'{RequestedBackupStorageRedundancy.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsBackupImmutable), out propertyOverride);
-            if (Optional.IsDefined(IsBackupImmutable) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    isBackupImmutable: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsBackupImmutable))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    isBackupImmutable: ");
                     var boolValue = IsBackupImmutable.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BackupStorageAccessTier), out propertyOverride);
-            if (Optional.IsDefined(BackupStorageAccessTier) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    backupStorageAccessTier: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BackupStorageAccessTier))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    backupStorageAccessTier: ");
                     builder.AppendLine($"'{BackupStorageAccessTier.Value.ToString()}'");
                 }
             }

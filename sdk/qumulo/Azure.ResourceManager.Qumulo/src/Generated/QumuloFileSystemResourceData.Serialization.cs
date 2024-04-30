@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Qumulo
 {
     public partial class QumuloFileSystemResourceData : IUtf8JsonSerializable, IJsonModel<QumuloFileSystemResourceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QumuloFileSystemResourceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QumuloFileSystemResourceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<QumuloFileSystemResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Qumulo
 
         internal static QumuloFileSystemResourceData DeserializeQumuloFileSystemResourceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

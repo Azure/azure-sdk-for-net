@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 {
     public partial class OperationalInsightsPrivateLinkScopedResourceInfo : IUtf8JsonSerializable, IJsonModel<OperationalInsightsPrivateLinkScopedResourceInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OperationalInsightsPrivateLinkScopedResourceInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OperationalInsightsPrivateLinkScopedResourceInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<OperationalInsightsPrivateLinkScopedResourceInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         internal static OperationalInsightsPrivateLinkScopedResourceInfo DeserializeOperationalInsightsPrivateLinkScopedResourceInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -116,29 +116,31 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceId), out propertyOverride);
-            if (Optional.IsDefined(ResourceId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  resourceId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ResourceId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  resourceId: ");
                     builder.AppendLine($"'{ResourceId.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScopeId), out propertyOverride);
-            if (Optional.IsDefined(ScopeId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  scopeId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ScopeId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  scopeId: ");
                     if (ScopeId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 {
     internal partial class ProvisionedClusterLoadBalancerProfile : IUtf8JsonSerializable, IJsonModel<ProvisionedClusterLoadBalancerProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProvisionedClusterLoadBalancerProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProvisionedClusterLoadBalancerProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ProvisionedClusterLoadBalancerProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         internal static ProvisionedClusterLoadBalancerProfile DeserializeProvisionedClusterLoadBalancerProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

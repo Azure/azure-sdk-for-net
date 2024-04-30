@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class ClientRegistration : IUtf8JsonSerializable, IJsonModel<ClientRegistration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClientRegistration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClientRegistration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ClientRegistration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static ClientRegistration DeserializeClientRegistration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -112,15 +112,16 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientId), out propertyOverride);
-            if (Optional.IsDefined(ClientId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  clientId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ClientId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  clientId: ");
                     if (ClientId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -134,15 +135,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientSecretSettingName), out propertyOverride);
-            if (Optional.IsDefined(ClientSecretSettingName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  clientSecretSettingName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ClientSecretSettingName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  clientSecretSettingName: ");
                     if (ClientSecretSettingName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

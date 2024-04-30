@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 {
     public partial class ExtendedErrorInfo : IUtf8JsonSerializable, IJsonModel<ExtendedErrorInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExtendedErrorInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExtendedErrorInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ExtendedErrorInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static ExtendedErrorInfo DeserializeExtendedErrorInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

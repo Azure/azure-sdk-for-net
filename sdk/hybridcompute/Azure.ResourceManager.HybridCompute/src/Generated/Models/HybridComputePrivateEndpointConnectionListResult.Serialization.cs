@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 {
     internal partial class HybridComputePrivateEndpointConnectionListResult : IUtf8JsonSerializable, IJsonModel<HybridComputePrivateEndpointConnectionListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridComputePrivateEndpointConnectionListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridComputePrivateEndpointConnectionListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HybridComputePrivateEndpointConnectionListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         internal static HybridComputePrivateEndpointConnectionListResult DeserializeHybridComputePrivateEndpointConnectionListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

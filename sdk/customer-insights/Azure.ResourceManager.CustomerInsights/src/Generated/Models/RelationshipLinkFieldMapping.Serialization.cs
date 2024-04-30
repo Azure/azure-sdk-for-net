@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 {
     public partial class RelationshipLinkFieldMapping : IUtf8JsonSerializable, IJsonModel<RelationshipLinkFieldMapping>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RelationshipLinkFieldMapping>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RelationshipLinkFieldMapping>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RelationshipLinkFieldMapping>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         internal static RelationshipLinkFieldMapping DeserializeRelationshipLinkFieldMapping(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.AI.OpenAI.Assistants
 {
     internal partial class InternalRunStepFunctionToolCallDetails : IUtf8JsonSerializable, IJsonModel<InternalRunStepFunctionToolCallDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InternalRunStepFunctionToolCallDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InternalRunStepFunctionToolCallDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<InternalRunStepFunctionToolCallDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -71,7 +71,7 @@ namespace Azure.AI.OpenAI.Assistants
 
         internal static InternalRunStepFunctionToolCallDetails DeserializeInternalRunStepFunctionToolCallDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -156,7 +156,7 @@ namespace Azure.AI.OpenAI.Assistants
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

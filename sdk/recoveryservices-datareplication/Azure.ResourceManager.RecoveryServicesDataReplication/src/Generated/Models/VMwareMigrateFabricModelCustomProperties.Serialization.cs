@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
     public partial class VMwareMigrateFabricModelCustomProperties : IUtf8JsonSerializable, IJsonModel<VMwareMigrateFabricModelCustomProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VMwareMigrateFabricModelCustomProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VMwareMigrateFabricModelCustomProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VMwareMigrateFabricModelCustomProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 
         internal static VMwareMigrateFabricModelCustomProperties DeserializeVMwareMigrateFabricModelCustomProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DigitalTwins
 {
     public partial class DigitalTwinsPrivateEndpointConnectionData : IUtf8JsonSerializable, IJsonModel<DigitalTwinsPrivateEndpointConnectionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DigitalTwinsPrivateEndpointConnectionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DigitalTwinsPrivateEndpointConnectionData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DigitalTwinsPrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DigitalTwins
 
         internal static DigitalTwinsPrivateEndpointConnectionData DeserializeDigitalTwinsPrivateEndpointConnectionData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

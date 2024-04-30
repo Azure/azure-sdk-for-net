@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
 {
     public partial class CloudHsmClusterData : IUtf8JsonSerializable, IJsonModel<CloudHsmClusterData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CloudHsmClusterData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CloudHsmClusterData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CloudHsmClusterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
 
         internal static CloudHsmClusterData DeserializeCloudHsmClusterData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

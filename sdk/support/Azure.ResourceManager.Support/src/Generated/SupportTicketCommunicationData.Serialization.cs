@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Support
 {
     public partial class SupportTicketCommunicationData : IUtf8JsonSerializable, IJsonModel<SupportTicketCommunicationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SupportTicketCommunicationData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SupportTicketCommunicationData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SupportTicketCommunicationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -65,16 +65,10 @@ namespace Azure.ResourceManager.Support
                 writer.WritePropertyName("sender"u8);
                 writer.WriteStringValue(Sender);
             }
-            if (Optional.IsDefined(Subject))
-            {
-                writer.WritePropertyName("subject"u8);
-                writer.WriteStringValue(Subject);
-            }
-            if (Optional.IsDefined(Body))
-            {
-                writer.WritePropertyName("body"u8);
-                writer.WriteStringValue(Body);
-            }
+            writer.WritePropertyName("subject"u8);
+            writer.WriteStringValue(Subject);
+            writer.WritePropertyName("body"u8);
+            writer.WriteStringValue(Body);
             if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdDate"u8);
@@ -113,7 +107,7 @@ namespace Azure.ResourceManager.Support
 
         internal static SupportTicketCommunicationData DeserializeSupportTicketCommunicationData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

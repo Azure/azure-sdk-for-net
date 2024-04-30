@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class MachineLearningDiagnoseResultValue : IUtf8JsonSerializable, IJsonModel<MachineLearningDiagnoseResultValue>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningDiagnoseResultValue>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningDiagnoseResultValue>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MachineLearningDiagnoseResultValue>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningDiagnoseResultValue DeserializeMachineLearningDiagnoseResultValue(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

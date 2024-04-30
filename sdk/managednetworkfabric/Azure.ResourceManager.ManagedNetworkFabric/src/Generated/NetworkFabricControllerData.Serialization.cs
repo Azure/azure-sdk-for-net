@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     public partial class NetworkFabricControllerData : IUtf8JsonSerializable, IJsonModel<NetworkFabricControllerData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkFabricControllerData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkFabricControllerData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetworkFabricControllerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
         internal static NetworkFabricControllerData DeserializeNetworkFabricControllerData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

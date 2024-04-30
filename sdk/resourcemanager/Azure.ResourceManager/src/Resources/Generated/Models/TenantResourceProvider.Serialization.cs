@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Resources.Models
 {
     public partial class TenantResourceProvider : IUtf8JsonSerializable, IJsonModel<TenantResourceProvider>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TenantResourceProvider>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TenantResourceProvider>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<TenantResourceProvider>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static TenantResourceProvider DeserializeTenantResourceProvider(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -127,15 +127,16 @@ namespace Azure.ResourceManager.Resources.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Namespace), out propertyOverride);
-            if (Optional.IsDefined(Namespace) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  namespace: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Namespace))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  namespace: ");
                     if (Namespace.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -149,17 +150,18 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceTypes), out propertyOverride);
-            if (Optional.IsCollectionDefined(ResourceTypes) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (ResourceTypes.Any() || hasPropertyOverride)
+                builder.Append("  resourceTypes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ResourceTypes))
                 {
-                    builder.Append("  resourceTypes: ");
-                    if (hasPropertyOverride)
+                    if (ResourceTypes.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  resourceTypes: ");
                         builder.AppendLine("[");
                         foreach (var item in ResourceTypes)
                         {

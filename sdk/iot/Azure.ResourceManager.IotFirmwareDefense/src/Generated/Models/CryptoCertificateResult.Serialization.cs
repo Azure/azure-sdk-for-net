@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
     public partial class CryptoCertificateResult : IUtf8JsonSerializable, IJsonModel<CryptoCertificateResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CryptoCertificateResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CryptoCertificateResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CryptoCertificateResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
 
         internal static CryptoCertificateResult DeserializeCryptoCertificateResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
 {
     public partial class AvailabilityZoneMappings : IUtf8JsonSerializable, IJsonModel<AvailabilityZoneMappings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvailabilityZoneMappings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvailabilityZoneMappings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AvailabilityZoneMappings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static AvailabilityZoneMappings DeserializeAvailabilityZoneMappings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -112,15 +112,16 @@ namespace Azure.ResourceManager.Resources.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LogicalZone), out propertyOverride);
-            if (Optional.IsDefined(LogicalZone) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  logicalZone: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LogicalZone))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  logicalZone: ");
                     if (LogicalZone.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -134,15 +135,16 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PhysicalZone), out propertyOverride);
-            if (Optional.IsDefined(PhysicalZone) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  physicalZone: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PhysicalZone))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  physicalZone: ");
                     if (PhysicalZone.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

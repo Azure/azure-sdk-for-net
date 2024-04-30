@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 {
     internal partial class ControlPlaneNodePatchConfiguration : IUtf8JsonSerializable, IJsonModel<ControlPlaneNodePatchConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ControlPlaneNodePatchConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ControlPlaneNodePatchConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ControlPlaneNodePatchConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         internal static ControlPlaneNodePatchConfiguration DeserializeControlPlaneNodePatchConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

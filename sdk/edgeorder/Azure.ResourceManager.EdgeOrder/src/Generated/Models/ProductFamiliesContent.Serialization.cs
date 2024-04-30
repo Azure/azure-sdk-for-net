@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 {
     public partial class ProductFamiliesContent : IUtf8JsonSerializable, IJsonModel<ProductFamiliesContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProductFamiliesContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProductFamiliesContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ProductFamiliesContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         internal static ProductFamiliesContent DeserializeProductFamiliesContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

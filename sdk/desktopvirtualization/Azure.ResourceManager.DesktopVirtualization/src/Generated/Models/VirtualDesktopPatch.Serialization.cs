@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     public partial class VirtualDesktopPatch : IUtf8JsonSerializable, IJsonModel<VirtualDesktopPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualDesktopPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualDesktopPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VirtualDesktopPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         internal static VirtualDesktopPatch DeserializeVirtualDesktopPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

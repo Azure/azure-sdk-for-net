@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class FunctionSecrets : IUtf8JsonSerializable, IJsonModel<FunctionSecrets>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FunctionSecrets>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FunctionSecrets>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FunctionSecrets>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static FunctionSecrets DeserializeFunctionSecrets(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -116,15 +116,16 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Key), out propertyOverride);
-            if (Optional.IsDefined(Key) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  key: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Key))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  key: ");
                     if (Key.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -138,15 +139,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TriggerUri), out propertyOverride);
-            if (Optional.IsDefined(TriggerUri) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  trigger_url: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TriggerUri))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  trigger_url: ");
                     builder.AppendLine($"'{TriggerUri.AbsoluteUri}'");
                 }
             }

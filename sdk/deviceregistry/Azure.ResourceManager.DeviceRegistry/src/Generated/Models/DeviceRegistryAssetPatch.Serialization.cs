@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
 {
     public partial class DeviceRegistryAssetPatch : IUtf8JsonSerializable, IJsonModel<DeviceRegistryAssetPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeviceRegistryAssetPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeviceRegistryAssetPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DeviceRegistryAssetPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
 
         internal static DeviceRegistryAssetPatch DeserializeDeviceRegistryAssetPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

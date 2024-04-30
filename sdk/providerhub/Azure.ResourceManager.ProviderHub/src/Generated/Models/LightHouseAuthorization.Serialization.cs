@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 {
     public partial class LightHouseAuthorization : IUtf8JsonSerializable, IJsonModel<LightHouseAuthorization>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LightHouseAuthorization>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LightHouseAuthorization>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LightHouseAuthorization>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static LightHouseAuthorization DeserializeLightHouseAuthorization(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

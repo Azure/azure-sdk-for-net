@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppPlatform
 {
     public partial class AppPlatformServiceData : IUtf8JsonSerializable, IJsonModel<AppPlatformServiceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformServiceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformServiceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AppPlatformServiceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppPlatform
 
         internal static AppPlatformServiceData DeserializeAppPlatformServiceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
 {
     public partial class PredefinedTagCount : IUtf8JsonSerializable, IJsonModel<PredefinedTagCount>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PredefinedTagCount>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PredefinedTagCount>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PredefinedTagCount>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static PredefinedTagCount DeserializePredefinedTagCount(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -116,15 +116,16 @@ namespace Azure.ResourceManager.Resources.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PredefinedTagCountType), out propertyOverride);
-            if (Optional.IsDefined(PredefinedTagCountType) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  type: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PredefinedTagCountType))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  type: ");
                     if (PredefinedTagCountType.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -138,15 +139,16 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Value), out propertyOverride);
-            if (Optional.IsDefined(Value) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  value: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Value))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  value: ");
                     builder.AppendLine($"{Value.Value}");
                 }
             }

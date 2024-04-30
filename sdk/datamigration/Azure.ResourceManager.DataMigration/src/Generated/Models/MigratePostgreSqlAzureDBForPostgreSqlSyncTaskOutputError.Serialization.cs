@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     public partial class MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputError : IUtf8JsonSerializable, IJsonModel<MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputError>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputError>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputError>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputError DeserializeMigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputError(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

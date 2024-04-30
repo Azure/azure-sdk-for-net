@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.StoragePool.Models
 {
     public partial class OutboundEndpointDetail : IUtf8JsonSerializable, IJsonModel<OutboundEndpointDetail>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OutboundEndpointDetail>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OutboundEndpointDetail>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<OutboundEndpointDetail>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.StoragePool.Models
 
         internal static OutboundEndpointDetail DeserializeOutboundEndpointDetail(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

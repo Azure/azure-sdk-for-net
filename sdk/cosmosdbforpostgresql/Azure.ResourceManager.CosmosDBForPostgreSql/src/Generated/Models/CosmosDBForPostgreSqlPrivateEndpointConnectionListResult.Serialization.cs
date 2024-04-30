@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 {
     internal partial class CosmosDBForPostgreSqlPrivateEndpointConnectionListResult : IUtf8JsonSerializable, IJsonModel<CosmosDBForPostgreSqlPrivateEndpointConnectionListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBForPostgreSqlPrivateEndpointConnectionListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBForPostgreSqlPrivateEndpointConnectionListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CosmosDBForPostgreSqlPrivateEndpointConnectionListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 
         internal static CosmosDBForPostgreSqlPrivateEndpointConnectionListResult DeserializeCosmosDBForPostgreSqlPrivateEndpointConnectionListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

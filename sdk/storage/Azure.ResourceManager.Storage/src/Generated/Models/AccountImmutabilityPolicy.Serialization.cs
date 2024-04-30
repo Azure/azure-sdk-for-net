@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Storage.Models
 {
     public partial class AccountImmutabilityPolicy : IUtf8JsonSerializable, IJsonModel<AccountImmutabilityPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AccountImmutabilityPolicy>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AccountImmutabilityPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AccountImmutabilityPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static AccountImmutabilityPolicy DeserializeAccountImmutabilityPolicy(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -135,43 +135,46 @@ namespace Azure.ResourceManager.Storage.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ImmutabilityPeriodSinceCreationInDays), out propertyOverride);
-            if (Optional.IsDefined(ImmutabilityPeriodSinceCreationInDays) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  immutabilityPeriodSinceCreationInDays: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ImmutabilityPeriodSinceCreationInDays))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  immutabilityPeriodSinceCreationInDays: ");
                     builder.AppendLine($"{ImmutabilityPeriodSinceCreationInDays.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(State), out propertyOverride);
-            if (Optional.IsDefined(State) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  state: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(State))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  state: ");
                     builder.AppendLine($"'{State.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowProtectedAppendWrites), out propertyOverride);
-            if (Optional.IsDefined(AllowProtectedAppendWrites) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  allowProtectedAppendWrites: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AllowProtectedAppendWrites))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  allowProtectedAppendWrites: ");
                     var boolValue = AllowProtectedAppendWrites.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.BotService.Models
 {
     public partial class WebChatChannel : IUtf8JsonSerializable, IJsonModel<WebChatChannel>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebChatChannel>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebChatChannel>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<WebChatChannel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static WebChatChannel DeserializeWebChatChannel(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

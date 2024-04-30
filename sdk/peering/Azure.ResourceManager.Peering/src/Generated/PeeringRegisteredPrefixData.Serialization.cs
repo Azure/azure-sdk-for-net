@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Peering
 {
     public partial class PeeringRegisteredPrefixData : IUtf8JsonSerializable, IJsonModel<PeeringRegisteredPrefixData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PeeringRegisteredPrefixData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PeeringRegisteredPrefixData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PeeringRegisteredPrefixData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Peering
 
         internal static PeeringRegisteredPrefixData DeserializePeeringRegisteredPrefixData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

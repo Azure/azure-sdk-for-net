@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 {
     internal partial class AutoUpgradePolicyResourceInfo : IUtf8JsonSerializable, IJsonModel<AutoUpgradePolicyResourceInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutoUpgradePolicyResourceInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutoUpgradePolicyResourceInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AutoUpgradePolicyResourceInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static AutoUpgradePolicyResourceInfo DeserializeAutoUpgradePolicyResourceInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -105,15 +105,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ThroughputPolicy), out propertyOverride);
-            if (Optional.IsDefined(ThroughputPolicy) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  throughputPolicy: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ThroughputPolicy))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  throughputPolicy: ");
                     BicepSerializationHelpers.AppendChildObject(builder, ThroughputPolicy, options, 2, false, "  throughputPolicy: ");
                 }
             }

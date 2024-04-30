@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
     public partial class HyperVToAzStackHciPolicyModelCustomProperties : IUtf8JsonSerializable, IJsonModel<HyperVToAzStackHciPolicyModelCustomProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HyperVToAzStackHciPolicyModelCustomProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HyperVToAzStackHciPolicyModelCustomProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HyperVToAzStackHciPolicyModelCustomProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 
         internal static HyperVToAzStackHciPolicyModelCustomProperties DeserializeHyperVToAzStackHciPolicyModelCustomProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
 {
     public partial class ManagedDatabaseRestoreDetailBackupSetProperties : IUtf8JsonSerializable, IJsonModel<ManagedDatabaseRestoreDetailBackupSetProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedDatabaseRestoreDetailBackupSetProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedDatabaseRestoreDetailBackupSetProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagedDatabaseRestoreDetailBackupSetProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static ManagedDatabaseRestoreDetailBackupSetProperties DeserializeManagedDatabaseRestoreDetailBackupSetProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -179,15 +179,16 @@ namespace Azure.ResourceManager.Sql.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
-            if (Optional.IsDefined(Status) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  status: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Status))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  status: ");
                     if (Status.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -201,15 +202,16 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FirstStripeName), out propertyOverride);
-            if (Optional.IsDefined(FirstStripeName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  firstStripeName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FirstStripeName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  firstStripeName: ");
                     if (FirstStripeName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -223,58 +225,62 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NumberOfStripes), out propertyOverride);
-            if (Optional.IsDefined(NumberOfStripes) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  numberOfStripes: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NumberOfStripes))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  numberOfStripes: ");
                     builder.AppendLine($"{NumberOfStripes.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BackupSizeInMB), out propertyOverride);
-            if (Optional.IsDefined(BackupSizeInMB) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  backupSizeMB: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BackupSizeInMB))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  backupSizeMB: ");
                     builder.AppendLine($"{BackupSizeInMB.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RestoreStartedOn), out propertyOverride);
-            if (Optional.IsDefined(RestoreStartedOn) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  restoreStartedTimestampUtc: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RestoreStartedOn))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  restoreStartedTimestampUtc: ");
                     var formattedDateTimeString = TypeFormatters.ToString(RestoreStartedOn.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RestoreFinishedOn), out propertyOverride);
-            if (Optional.IsDefined(RestoreFinishedOn) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  restoreFinishedTimestampUtc: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RestoreFinishedOn))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  restoreFinishedTimestampUtc: ");
                     var formattedDateTimeString = TypeFormatters.ToString(RestoreFinishedOn.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }

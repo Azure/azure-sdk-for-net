@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HybridCompute
 {
     public partial class HybridComputePrivateLinkResourceData : IUtf8JsonSerializable, IJsonModel<HybridComputePrivateLinkResourceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridComputePrivateLinkResourceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridComputePrivateLinkResourceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HybridComputePrivateLinkResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.HybridCompute
 
         internal static HybridComputePrivateLinkResourceData DeserializeHybridComputePrivateLinkResourceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

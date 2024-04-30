@@ -15,7 +15,7 @@ namespace Azure.AI.OpenAI.Assistants
 {
     public partial class MessageTextFilePathAnnotation : IUtf8JsonSerializable, IJsonModel<MessageTextFilePathAnnotation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MessageTextFilePathAnnotation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MessageTextFilePathAnnotation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MessageTextFilePathAnnotation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.AI.OpenAI.Assistants
 
         internal static MessageTextFilePathAnnotation DeserializeMessageTextFilePathAnnotation(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -166,7 +166,7 @@ namespace Azure.AI.OpenAI.Assistants
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

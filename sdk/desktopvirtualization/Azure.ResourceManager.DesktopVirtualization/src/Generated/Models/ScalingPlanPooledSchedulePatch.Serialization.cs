@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     public partial class ScalingPlanPooledSchedulePatch : IUtf8JsonSerializable, IJsonModel<ScalingPlanPooledSchedulePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScalingPlanPooledSchedulePatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScalingPlanPooledSchedulePatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ScalingPlanPooledSchedulePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         internal static ScalingPlanPooledSchedulePatch DeserializeScalingPlanPooledSchedulePatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

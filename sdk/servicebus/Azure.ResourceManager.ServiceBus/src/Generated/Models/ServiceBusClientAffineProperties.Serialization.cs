@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
 {
     public partial class ServiceBusClientAffineProperties : IUtf8JsonSerializable, IJsonModel<ServiceBusClientAffineProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceBusClientAffineProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceBusClientAffineProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ServiceBusClientAffineProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         internal static ServiceBusClientAffineProperties DeserializeServiceBusClientAffineProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -131,15 +131,16 @@ namespace Azure.ResourceManager.ServiceBus.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientId), out propertyOverride);
-            if (Optional.IsDefined(ClientId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  clientId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ClientId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  clientId: ");
                     if (ClientId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -153,30 +154,32 @@ namespace Azure.ResourceManager.ServiceBus.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsDurable), out propertyOverride);
-            if (Optional.IsDefined(IsDurable) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  isDurable: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsDurable))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  isDurable: ");
                     var boolValue = IsDurable.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsShared), out propertyOverride);
-            if (Optional.IsDefined(IsShared) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  isShared: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsShared))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  isShared: ");
                     var boolValue = IsShared.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }

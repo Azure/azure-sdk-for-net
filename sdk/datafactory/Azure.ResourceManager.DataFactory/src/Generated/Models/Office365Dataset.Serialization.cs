@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class Office365Dataset : IUtf8JsonSerializable, IJsonModel<Office365Dataset>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Office365Dataset>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Office365Dataset>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<Office365Dataset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static Office365Dataset DeserializeOffice365Dataset(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

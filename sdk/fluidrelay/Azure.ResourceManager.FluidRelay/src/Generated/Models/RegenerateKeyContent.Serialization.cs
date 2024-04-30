@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
 {
     public partial class RegenerateKeyContent : IUtf8JsonSerializable, IJsonModel<RegenerateKeyContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RegenerateKeyContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RegenerateKeyContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RegenerateKeyContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
 
         internal static RegenerateKeyContent DeserializeRegenerateKeyContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

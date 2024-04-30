@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -37,6 +36,18 @@ namespace Azure.ResourceManager.SelfHelp
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateCreateRequestUri(string scope, string troubleshooterName, TroubleshooterResourceData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Help/troubleshooters/", false);
+            uri.AppendPath(troubleshooterName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateRequest(string scope, string troubleshooterName, TroubleshooterResourceData data)
         {
             var message = _pipeline.CreateMessage();
@@ -53,7 +64,7 @@ namespace Azure.ResourceManager.SelfHelp
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -117,6 +128,18 @@ namespace Azure.ResourceManager.SelfHelp
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string scope, string troubleshooterName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Help/troubleshooters/", false);
+            uri.AppendPath(troubleshooterName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string scope, string troubleshooterName)
@@ -195,6 +218,19 @@ namespace Azure.ResourceManager.SelfHelp
             }
         }
 
+        internal RequestUriBuilder CreateContinueRequestUri(string scope, string troubleshooterName, ContinueRequestBody continueRequestBody)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Help/troubleshooters/", false);
+            uri.AppendPath(troubleshooterName, true);
+            uri.AppendPath("/continue", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateContinueRequest(string scope, string troubleshooterName, ContinueRequestBody continueRequestBody)
         {
             var message = _pipeline.CreateMessage();
@@ -214,7 +250,7 @@ namespace Azure.ResourceManager.SelfHelp
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(continueRequestBody, new ModelReaderWriterOptions("W"));
+                content.JsonWriter.WriteObjectValue(continueRequestBody, ModelSerializationExtensions.WireOptions);
                 request.Content = content;
             }
             _userAgent.Apply(message);
@@ -265,6 +301,19 @@ namespace Azure.ResourceManager.SelfHelp
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateEndRequestUri(string scope, string troubleshooterName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Help/troubleshooters/", false);
+            uri.AppendPath(troubleshooterName, true);
+            uri.AppendPath("/end", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateEndRequest(string scope, string troubleshooterName)
@@ -328,6 +377,19 @@ namespace Azure.ResourceManager.SelfHelp
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateRestartRequestUri(string scope, string troubleshooterName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Help/troubleshooters/", false);
+            uri.AppendPath(troubleshooterName, true);
+            uri.AppendPath("/restart", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateRestartRequest(string scope, string troubleshooterName)

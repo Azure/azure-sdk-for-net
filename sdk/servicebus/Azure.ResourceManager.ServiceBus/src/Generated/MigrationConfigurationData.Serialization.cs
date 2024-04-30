@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ServiceBus
 {
     public partial class MigrationConfigurationData : IUtf8JsonSerializable, IJsonModel<MigrationConfigurationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrationConfigurationData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrationConfigurationData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MigrationConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ServiceBus
 
         internal static MigrationConfigurationData DeserializeMigrationConfigurationData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -243,15 +243,16 @@ namespace Azure.ResourceManager.ServiceBus
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  name: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  name: ");
                     if (Name.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -265,43 +266,46 @@ namespace Azure.ResourceManager.ServiceBus
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
-            if (Optional.IsDefined(Location) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  location: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Location))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  location: ");
                     builder.AppendLine($"'{Location.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  id: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  id: ");
                     builder.AppendLine($"'{Id.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
-            if (Optional.IsDefined(SystemData) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  systemData: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  systemData: ");
                     builder.AppendLine($"'{SystemData.ToString()}'");
                 }
             }
@@ -309,15 +313,16 @@ namespace Azure.ResourceManager.ServiceBus
             builder.Append("  properties:");
             builder.AppendLine(" {");
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
-            if (Optional.IsDefined(ProvisioningState) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    provisioningState: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisioningState))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    provisioningState: ");
                     if (ProvisioningState.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -331,43 +336,46 @@ namespace Azure.ResourceManager.ServiceBus
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PendingReplicationOperationsCount), out propertyOverride);
-            if (Optional.IsDefined(PendingReplicationOperationsCount) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    pendingReplicationOperationsCount: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PendingReplicationOperationsCount))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    pendingReplicationOperationsCount: ");
                     builder.AppendLine($"'{PendingReplicationOperationsCount.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TargetServiceBusNamespace), out propertyOverride);
-            if (Optional.IsDefined(TargetServiceBusNamespace) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    targetNamespace: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TargetServiceBusNamespace))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    targetNamespace: ");
                     builder.AppendLine($"'{TargetServiceBusNamespace.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PostMigrationName), out propertyOverride);
-            if (Optional.IsDefined(PostMigrationName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    postMigrationName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PostMigrationName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    postMigrationName: ");
                     if (PostMigrationName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -381,15 +389,16 @@ namespace Azure.ResourceManager.ServiceBus
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MigrationState), out propertyOverride);
-            if (Optional.IsDefined(MigrationState) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    migrationState: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MigrationState))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    migrationState: ");
                     if (MigrationState.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

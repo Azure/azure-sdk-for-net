@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class SqlServerBlobAuditingPolicyData : IUtf8JsonSerializable, IJsonModel<SqlServerBlobAuditingPolicyData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlServerBlobAuditingPolicyData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlServerBlobAuditingPolicyData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SqlServerBlobAuditingPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Sql
 
         internal static SqlServerBlobAuditingPolicyData DeserializeSqlServerBlobAuditingPolicyData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -339,15 +339,16 @@ namespace Azure.ResourceManager.Sql
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  name: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  name: ");
                     if (Name.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -361,29 +362,31 @@ namespace Azure.ResourceManager.Sql
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  id: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  id: ");
                     builder.AppendLine($"'{Id.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
-            if (Optional.IsDefined(SystemData) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  systemData: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  systemData: ");
                     builder.AppendLine($"'{SystemData.ToString()}'");
                 }
             }
@@ -391,46 +394,49 @@ namespace Azure.ResourceManager.Sql
             builder.Append("  properties:");
             builder.AppendLine(" {");
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsDevopsAuditEnabled), out propertyOverride);
-            if (Optional.IsDefined(IsDevopsAuditEnabled) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    isDevopsAuditEnabled: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsDevopsAuditEnabled))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    isDevopsAuditEnabled: ");
                     var boolValue = IsDevopsAuditEnabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RetentionDays), out propertyOverride);
-            if (Optional.IsDefined(RetentionDays) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    retentionDays: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RetentionDays))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    retentionDays: ");
                     builder.AppendLine($"{RetentionDays.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AuditActionsAndGroups), out propertyOverride);
-            if (Optional.IsCollectionDefined(AuditActionsAndGroups) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (AuditActionsAndGroups.Any() || hasPropertyOverride)
+                builder.Append("    auditActionsAndGroups: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AuditActionsAndGroups))
                 {
-                    builder.Append("    auditActionsAndGroups: ");
-                    if (hasPropertyOverride)
+                    if (AuditActionsAndGroups.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("    auditActionsAndGroups: ");
                         builder.AppendLine("[");
                         foreach (var item in AuditActionsAndGroups)
                         {
@@ -455,88 +461,94 @@ namespace Azure.ResourceManager.Sql
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsStorageSecondaryKeyInUse), out propertyOverride);
-            if (Optional.IsDefined(IsStorageSecondaryKeyInUse) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    isStorageSecondaryKeyInUse: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsStorageSecondaryKeyInUse))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    isStorageSecondaryKeyInUse: ");
                     var boolValue = IsStorageSecondaryKeyInUse.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsAzureMonitorTargetEnabled), out propertyOverride);
-            if (Optional.IsDefined(IsAzureMonitorTargetEnabled) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    isAzureMonitorTargetEnabled: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsAzureMonitorTargetEnabled))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    isAzureMonitorTargetEnabled: ");
                     var boolValue = IsAzureMonitorTargetEnabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(QueueDelayMs), out propertyOverride);
-            if (Optional.IsDefined(QueueDelayMs) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    queueDelayMs: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(QueueDelayMs))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    queueDelayMs: ");
                     builder.AppendLine($"{QueueDelayMs.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsManagedIdentityInUse), out propertyOverride);
-            if (Optional.IsDefined(IsManagedIdentityInUse) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    isManagedIdentityInUse: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsManagedIdentityInUse))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    isManagedIdentityInUse: ");
                     var boolValue = IsManagedIdentityInUse.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(State), out propertyOverride);
-            if (Optional.IsDefined(State) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    state: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(State))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    state: ");
                     builder.AppendLine($"'{State.Value.ToSerialString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageEndpoint), out propertyOverride);
-            if (Optional.IsDefined(StorageEndpoint) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    storageEndpoint: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StorageEndpoint))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    storageEndpoint: ");
                     if (StorageEndpoint.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -550,15 +562,16 @@ namespace Azure.ResourceManager.Sql
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageAccountAccessKey), out propertyOverride);
-            if (Optional.IsDefined(StorageAccountAccessKey) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    storageAccountAccessKey: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StorageAccountAccessKey))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    storageAccountAccessKey: ");
                     if (StorageAccountAccessKey.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -572,15 +585,16 @@ namespace Azure.ResourceManager.Sql
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageAccountSubscriptionId), out propertyOverride);
-            if (Optional.IsDefined(StorageAccountSubscriptionId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    storageAccountSubscriptionId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StorageAccountSubscriptionId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    storageAccountSubscriptionId: ");
                     builder.AppendLine($"'{StorageAccountSubscriptionId.Value.ToString()}'");
                 }
             }

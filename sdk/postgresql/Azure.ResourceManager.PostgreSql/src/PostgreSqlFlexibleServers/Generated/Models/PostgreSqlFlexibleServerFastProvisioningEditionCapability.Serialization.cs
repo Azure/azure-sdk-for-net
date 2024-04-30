@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     public partial class PostgreSqlFlexibleServerFastProvisioningEditionCapability : IUtf8JsonSerializable, IJsonModel<PostgreSqlFlexibleServerFastProvisioningEditionCapability>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlFlexibleServerFastProvisioningEditionCapability>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlFlexibleServerFastProvisioningEditionCapability>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PostgreSqlFlexibleServerFastProvisioningEditionCapability>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         internal static PostgreSqlFlexibleServerFastProvisioningEditionCapability DeserializePostgreSqlFlexibleServerFastProvisioningEditionCapability(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -187,15 +187,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedTier), out propertyOverride);
-            if (Optional.IsDefined(SupportedTier) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  supportedTier: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SupportedTier))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  supportedTier: ");
                     if (SupportedTier.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -209,15 +210,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedSku), out propertyOverride);
-            if (Optional.IsDefined(SupportedSku) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  supportedSku: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SupportedSku))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  supportedSku: ");
                     if (SupportedSku.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -231,29 +233,31 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedStorageGb), out propertyOverride);
-            if (Optional.IsDefined(SupportedStorageGb) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  supportedStorageGb: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SupportedStorageGb))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  supportedStorageGb: ");
                     builder.AppendLine($"'{SupportedStorageGb.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedServerVersions), out propertyOverride);
-            if (Optional.IsDefined(SupportedServerVersions) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  supportedServerVersions: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SupportedServerVersions))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  supportedServerVersions: ");
                     if (SupportedServerVersions.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -267,43 +271,46 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServerCount), out propertyOverride);
-            if (Optional.IsDefined(ServerCount) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  serverCount: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ServerCount))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  serverCount: ");
                     builder.AppendLine($"{ServerCount.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CapabilityStatus), out propertyOverride);
-            if (Optional.IsDefined(CapabilityStatus) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  status: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CapabilityStatus))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  status: ");
                     builder.AppendLine($"'{CapabilityStatus.Value.ToSerialString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Reason), out propertyOverride);
-            if (Optional.IsDefined(Reason) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  reason: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Reason))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  reason: ");
                     if (Reason.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

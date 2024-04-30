@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     internal partial class UploadOciDriverTaskInput : IUtf8JsonSerializable, IJsonModel<UploadOciDriverTaskInput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UploadOciDriverTaskInput>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UploadOciDriverTaskInput>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<UploadOciDriverTaskInput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static UploadOciDriverTaskInput DeserializeUploadOciDriverTaskInput(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

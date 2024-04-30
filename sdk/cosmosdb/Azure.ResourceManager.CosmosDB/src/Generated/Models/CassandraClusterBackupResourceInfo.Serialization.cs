@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 {
     public partial class CassandraClusterBackupResourceInfo : IUtf8JsonSerializable, IJsonModel<CassandraClusterBackupResourceInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CassandraClusterBackupResourceInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CassandraClusterBackupResourceInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CassandraClusterBackupResourceInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static CassandraClusterBackupResourceInfo DeserializeCassandraClusterBackupResourceInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -167,15 +167,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BackupId), out propertyOverride);
-            if (Optional.IsDefined(BackupId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  backupId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BackupId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  backupId: ");
                     if (BackupId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -189,59 +190,63 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BackupState), out propertyOverride);
-            if (Optional.IsDefined(BackupState) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  backupState: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BackupState))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  backupState: ");
                     builder.AppendLine($"'{BackupState.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BackupStartTimestamp), out propertyOverride);
-            if (Optional.IsDefined(BackupStartTimestamp) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  backupStartTimestamp: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BackupStartTimestamp))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  backupStartTimestamp: ");
                     var formattedDateTimeString = TypeFormatters.ToString(BackupStartTimestamp.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BackupStopTimestamp), out propertyOverride);
-            if (Optional.IsDefined(BackupStopTimestamp) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  backupStopTimestamp: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BackupStopTimestamp))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  backupStopTimestamp: ");
                     var formattedDateTimeString = TypeFormatters.ToString(BackupStopTimestamp.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BackupExpiryTimestamp), out propertyOverride);
-            if (Optional.IsDefined(BackupExpiryTimestamp) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  backupExpiryTimestamp: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BackupExpiryTimestamp))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  backupExpiryTimestamp: ");
                     var formattedDateTimeString = TypeFormatters.ToString(BackupExpiryTimestamp.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }

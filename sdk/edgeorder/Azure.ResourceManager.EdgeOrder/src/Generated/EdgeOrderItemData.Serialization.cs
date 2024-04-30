@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.EdgeOrder
 {
     public partial class EdgeOrderItemData : IUtf8JsonSerializable, IJsonModel<EdgeOrderItemData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeOrderItemData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeOrderItemData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EdgeOrderItemData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.EdgeOrder
 
         internal static EdgeOrderItemData DeserializeEdgeOrderItemData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

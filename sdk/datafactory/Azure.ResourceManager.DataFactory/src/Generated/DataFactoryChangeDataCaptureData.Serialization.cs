@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataFactory
 {
     public partial class DataFactoryChangeDataCaptureData : IUtf8JsonSerializable, IJsonModel<DataFactoryChangeDataCaptureData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFactoryChangeDataCaptureData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFactoryChangeDataCaptureData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataFactoryChangeDataCaptureData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataFactory
 
         internal static DataFactoryChangeDataCaptureData DeserializeDataFactoryChangeDataCaptureData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

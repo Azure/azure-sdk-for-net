@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 {
     internal partial class SecretList : IUtf8JsonSerializable, IJsonModel<SecretList>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecretList>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecretList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SecretList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static SecretList DeserializeSecretList(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

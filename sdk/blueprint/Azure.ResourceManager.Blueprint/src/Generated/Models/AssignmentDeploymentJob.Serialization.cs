@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Blueprint.Models
 {
     public partial class AssignmentDeploymentJob : IUtf8JsonSerializable, IJsonModel<AssignmentDeploymentJob>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AssignmentDeploymentJob>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AssignmentDeploymentJob>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AssignmentDeploymentJob>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Blueprint.Models
 
         internal static AssignmentDeploymentJob DeserializeAssignmentDeploymentJob(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

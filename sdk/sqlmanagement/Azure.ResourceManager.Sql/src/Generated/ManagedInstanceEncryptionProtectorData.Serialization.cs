@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class ManagedInstanceEncryptionProtectorData : IUtf8JsonSerializable, IJsonModel<ManagedInstanceEncryptionProtectorData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedInstanceEncryptionProtectorData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedInstanceEncryptionProtectorData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagedInstanceEncryptionProtectorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Sql
 
         internal static ManagedInstanceEncryptionProtectorData DeserializeManagedInstanceEncryptionProtectorData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -244,15 +244,16 @@ namespace Azure.ResourceManager.Sql
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  name: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  name: ");
                     if (Name.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -266,15 +267,16 @@ namespace Azure.ResourceManager.Sql
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
-            if (Optional.IsDefined(Kind) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  kind: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Kind))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  kind: ");
                     if (Kind.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -288,29 +290,31 @@ namespace Azure.ResourceManager.Sql
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  id: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  id: ");
                     builder.AppendLine($"'{Id.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
-            if (Optional.IsDefined(SystemData) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  systemData: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  systemData: ");
                     builder.AppendLine($"'{SystemData.ToString()}'");
                 }
             }
@@ -318,15 +322,16 @@ namespace Azure.ResourceManager.Sql
             builder.Append("  properties:");
             builder.AppendLine(" {");
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServerKeyName), out propertyOverride);
-            if (Optional.IsDefined(ServerKeyName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    serverKeyName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ServerKeyName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    serverKeyName: ");
                     if (ServerKeyName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -340,43 +345,46 @@ namespace Azure.ResourceManager.Sql
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServerKeyType), out propertyOverride);
-            if (Optional.IsDefined(ServerKeyType) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    serverKeyType: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ServerKeyType))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    serverKeyType: ");
                     builder.AppendLine($"'{ServerKeyType.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Uri), out propertyOverride);
-            if (Optional.IsDefined(Uri) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    uri: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Uri))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    uri: ");
                     builder.AppendLine($"'{Uri.AbsoluteUri}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Thumbprint), out propertyOverride);
-            if (Optional.IsDefined(Thumbprint) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    thumbprint: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Thumbprint))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    thumbprint: ");
                     if (Thumbprint.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -390,15 +398,16 @@ namespace Azure.ResourceManager.Sql
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsAutoRotationEnabled), out propertyOverride);
-            if (Optional.IsDefined(IsAutoRotationEnabled) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    autoRotationEnabled: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsAutoRotationEnabled))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    autoRotationEnabled: ");
                     var boolValue = IsAutoRotationEnabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }

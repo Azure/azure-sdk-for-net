@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     public partial class VmWorkloadSapHanaDBInstanceProtectedItem : IUtf8JsonSerializable, IJsonModel<VmWorkloadSapHanaDBInstanceProtectedItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VmWorkloadSapHanaDBInstanceProtectedItem>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VmWorkloadSapHanaDBInstanceProtectedItem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VmWorkloadSapHanaDBInstanceProtectedItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static VmWorkloadSapHanaDBInstanceProtectedItem DeserializeVmWorkloadSapHanaDBInstanceProtectedItem(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

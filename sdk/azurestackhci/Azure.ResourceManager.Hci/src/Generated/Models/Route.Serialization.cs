@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Hci.Models
 {
     public partial class Route : IUtf8JsonSerializable, IJsonModel<Route>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Route>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Route>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<Route>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         internal static Route DeserializeRoute(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

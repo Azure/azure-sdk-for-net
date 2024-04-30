@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network
 {
     public partial class PrivateEndpointData : IUtf8JsonSerializable, IJsonModel<PrivateEndpointData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrivateEndpointData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrivateEndpointData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PrivateEndpointData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Network
 
         internal static PrivateEndpointData DeserializePrivateEndpointData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

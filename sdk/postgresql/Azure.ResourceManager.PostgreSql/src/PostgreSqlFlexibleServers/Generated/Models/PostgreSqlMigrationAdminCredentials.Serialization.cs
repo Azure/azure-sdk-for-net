@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     public partial class PostgreSqlMigrationAdminCredentials : IUtf8JsonSerializable, IJsonModel<PostgreSqlMigrationAdminCredentials>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlMigrationAdminCredentials>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlMigrationAdminCredentials>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PostgreSqlMigrationAdminCredentials>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         internal static PostgreSqlMigrationAdminCredentials DeserializePostgreSqlMigrationAdminCredentials(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -106,15 +106,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourceServerPassword), out propertyOverride);
-            if (Optional.IsDefined(SourceServerPassword) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  sourceServerPassword: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SourceServerPassword))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  sourceServerPassword: ");
                     if (SourceServerPassword.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -128,15 +129,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TargetServerPassword), out propertyOverride);
-            if (Optional.IsDefined(TargetServerPassword) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  targetServerPassword: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TargetServerPassword))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  targetServerPassword: ");
                     if (TargetServerPassword.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

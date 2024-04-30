@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Storage.Models
 {
     public partial class GetServiceSasResult : IUtf8JsonSerializable, IJsonModel<GetServiceSasResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GetServiceSasResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GetServiceSasResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<GetServiceSasResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static GetServiceSasResult DeserializeGetServiceSasResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -101,15 +101,16 @@ namespace Azure.ResourceManager.Storage.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceSasToken), out propertyOverride);
-            if (Optional.IsDefined(ServiceSasToken) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  serviceSasToken: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ServiceSasToken))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  serviceSasToken: ");
                     if (ServiceSasToken.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

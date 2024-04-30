@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class AutoApprovedPrivateLinkService : IUtf8JsonSerializable, IJsonModel<AutoApprovedPrivateLinkService>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutoApprovedPrivateLinkService>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutoApprovedPrivateLinkService>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AutoApprovedPrivateLinkService>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static AutoApprovedPrivateLinkService DeserializeAutoApprovedPrivateLinkService(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

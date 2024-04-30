@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network
 {
     public partial class DscpConfigurationData : IUtf8JsonSerializable, IJsonModel<DscpConfigurationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DscpConfigurationData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DscpConfigurationData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DscpConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Network
 
         internal static DscpConfigurationData DeserializeDscpConfigurationData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Kusto.Models
 {
     public partial class KustoReadOnlyFollowingDatabase : IUtf8JsonSerializable, IJsonModel<KustoReadOnlyFollowingDatabase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KustoReadOnlyFollowingDatabase>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KustoReadOnlyFollowingDatabase>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<KustoReadOnlyFollowingDatabase>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Kusto.Models
 
         internal static KustoReadOnlyFollowingDatabase DeserializeKustoReadOnlyFollowingDatabase(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

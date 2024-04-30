@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 {
     public partial class AllSavingsBenefitDetails : IUtf8JsonSerializable, IJsonModel<AllSavingsBenefitDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AllSavingsBenefitDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AllSavingsBenefitDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AllSavingsBenefitDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         internal static AllSavingsBenefitDetails DeserializeAllSavingsBenefitDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

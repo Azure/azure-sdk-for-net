@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal partial class WebAppEnabledConfig : IUtf8JsonSerializable, IJsonModel<WebAppEnabledConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebAppEnabledConfig>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebAppEnabledConfig>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<WebAppEnabledConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static WebAppEnabledConfig DeserializeWebAppEnabledConfig(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -105,15 +105,16 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Enabled), out propertyOverride);
-            if (Optional.IsDefined(Enabled) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  enabled: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Enabled))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  enabled: ");
                     var boolValue = Enabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }

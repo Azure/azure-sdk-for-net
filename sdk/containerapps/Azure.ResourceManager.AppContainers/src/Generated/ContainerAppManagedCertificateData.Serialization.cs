@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppContainers
 {
     public partial class ContainerAppManagedCertificateData : IUtf8JsonSerializable, IJsonModel<ContainerAppManagedCertificateData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppManagedCertificateData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppManagedCertificateData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerAppManagedCertificateData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppContainers
 
         internal static ContainerAppManagedCertificateData DeserializeContainerAppManagedCertificateData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

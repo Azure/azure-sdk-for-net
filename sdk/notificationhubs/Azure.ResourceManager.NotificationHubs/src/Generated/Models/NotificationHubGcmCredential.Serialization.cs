@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
 {
     public partial class NotificationHubGcmCredential : IUtf8JsonSerializable, IJsonModel<NotificationHubGcmCredential>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NotificationHubGcmCredential>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NotificationHubGcmCredential>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NotificationHubGcmCredential>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
 
         internal static NotificationHubGcmCredential DeserializeNotificationHubGcmCredential(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

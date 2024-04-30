@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 {
     public partial class AzureCoreArmTemplateDeployMappingRuleProfile : IUtf8JsonSerializable, IJsonModel<AzureCoreArmTemplateDeployMappingRuleProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureCoreArmTemplateDeployMappingRuleProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureCoreArmTemplateDeployMappingRuleProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AzureCoreArmTemplateDeployMappingRuleProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         internal static AzureCoreArmTemplateDeployMappingRuleProfile DeserializeAzureCoreArmTemplateDeployMappingRuleProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal partial class AppServiceBlobStorageTokenStore : IUtf8JsonSerializable, IJsonModel<AppServiceBlobStorageTokenStore>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServiceBlobStorageTokenStore>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServiceBlobStorageTokenStore>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AppServiceBlobStorageTokenStore>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceBlobStorageTokenStore DeserializeAppServiceBlobStorageTokenStore(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -101,15 +101,16 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SasUrlSettingName), out propertyOverride);
-            if (Optional.IsDefined(SasUrlSettingName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  sasUrlSettingName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SasUrlSettingName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  sasUrlSettingName: ");
                     if (SasUrlSettingName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

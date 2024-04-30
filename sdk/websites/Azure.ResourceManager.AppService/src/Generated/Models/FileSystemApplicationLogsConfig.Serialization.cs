@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal partial class FileSystemApplicationLogsConfig : IUtf8JsonSerializable, IJsonModel<FileSystemApplicationLogsConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FileSystemApplicationLogsConfig>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FileSystemApplicationLogsConfig>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FileSystemApplicationLogsConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static FileSystemApplicationLogsConfig DeserializeFileSystemApplicationLogsConfig(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -105,15 +105,16 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Level), out propertyOverride);
-            if (Optional.IsDefined(Level) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  level: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Level))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  level: ");
                     builder.AppendLine($"'{Level.Value.ToSerialString()}'");
                 }
             }

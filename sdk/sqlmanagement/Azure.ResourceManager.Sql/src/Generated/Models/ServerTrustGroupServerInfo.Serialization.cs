@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
 {
     public partial class ServerTrustGroupServerInfo : IUtf8JsonSerializable, IJsonModel<ServerTrustGroupServerInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServerTrustGroupServerInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServerTrustGroupServerInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ServerTrustGroupServerInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static ServerTrustGroupServerInfo DeserializeServerTrustGroupServerInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -98,15 +98,16 @@ namespace Azure.ResourceManager.Sql.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServerId), out propertyOverride);
-            if (Optional.IsDefined(ServerId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  serverId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ServerId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  serverId: ");
                     builder.AppendLine($"'{ServerId.ToString()}'");
                 }
             }

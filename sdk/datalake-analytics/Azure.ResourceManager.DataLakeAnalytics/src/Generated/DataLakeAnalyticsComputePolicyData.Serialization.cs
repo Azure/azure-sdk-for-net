@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
 {
     public partial class DataLakeAnalyticsComputePolicyData : IUtf8JsonSerializable, IJsonModel<DataLakeAnalyticsComputePolicyData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataLakeAnalyticsComputePolicyData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataLakeAnalyticsComputePolicyData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataLakeAnalyticsComputePolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
 
         internal static DataLakeAnalyticsComputePolicyData DeserializeDataLakeAnalyticsComputePolicyData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

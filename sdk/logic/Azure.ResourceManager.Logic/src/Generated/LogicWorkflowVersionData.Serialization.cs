@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Logic
 {
     public partial class LogicWorkflowVersionData : IUtf8JsonSerializable, IJsonModel<LogicWorkflowVersionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogicWorkflowVersionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogicWorkflowVersionData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LogicWorkflowVersionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Logic
 
         internal static LogicWorkflowVersionData DeserializeLogicWorkflowVersionData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

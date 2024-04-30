@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 {
     public partial class TopicRegenerateKeyContent : IUtf8JsonSerializable, IJsonModel<TopicRegenerateKeyContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TopicRegenerateKeyContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TopicRegenerateKeyContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<TopicRegenerateKeyContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static TopicRegenerateKeyContent DeserializeTopicRegenerateKeyContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

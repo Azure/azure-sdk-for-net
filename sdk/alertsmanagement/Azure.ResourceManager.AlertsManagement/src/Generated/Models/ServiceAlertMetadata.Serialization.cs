@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 {
     public partial class ServiceAlertMetadata : IUtf8JsonSerializable, IJsonModel<ServiceAlertMetadata>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceAlertMetadata>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceAlertMetadata>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ServiceAlertMetadata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         internal static ServiceAlertMetadata DeserializeServiceAlertMetadata(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

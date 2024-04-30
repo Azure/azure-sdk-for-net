@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Marketplace.Models
 {
     public partial class PrivateStoreOfferResult : IUtf8JsonSerializable, IJsonModel<PrivateStoreOfferResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrivateStoreOfferResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrivateStoreOfferResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PrivateStoreOfferResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Marketplace.Models
 
         internal static PrivateStoreOfferResult DeserializePrivateStoreOfferResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

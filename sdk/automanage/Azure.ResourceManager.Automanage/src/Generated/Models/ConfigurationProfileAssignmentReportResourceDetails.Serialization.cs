@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Automanage.Models
 {
     public partial class ConfigurationProfileAssignmentReportResourceDetails : IUtf8JsonSerializable, IJsonModel<ConfigurationProfileAssignmentReportResourceDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConfigurationProfileAssignmentReportResourceDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConfigurationProfileAssignmentReportResourceDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ConfigurationProfileAssignmentReportResourceDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Automanage.Models
 
         internal static ConfigurationProfileAssignmentReportResourceDetails DeserializeConfigurationProfileAssignmentReportResourceDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

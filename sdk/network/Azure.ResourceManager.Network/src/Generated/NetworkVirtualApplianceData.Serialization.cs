@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network
 {
     public partial class NetworkVirtualApplianceData : IUtf8JsonSerializable, IJsonModel<NetworkVirtualApplianceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkVirtualApplianceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkVirtualApplianceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetworkVirtualApplianceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -132,6 +132,11 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(NetworkProfile))
+            {
+                writer.WritePropertyName("networkProfile"u8);
+                writer.WriteObjectValue(NetworkProfile, options);
+            }
             if (Optional.IsCollectionDefined(AdditionalNics))
             {
                 writer.WritePropertyName("additionalNics"u8);
@@ -235,7 +240,7 @@ namespace Azure.ResourceManager.Network
 
         internal static NetworkVirtualApplianceData DeserializeNetworkVirtualApplianceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -257,6 +262,7 @@ namespace Azure.ResourceManager.Network
             long? virtualApplianceAsn = default;
             string sshPublicKey = default;
             IReadOnlyList<VirtualApplianceNicProperties> virtualApplianceNics = default;
+            NetworkVirtualAppliancePropertiesFormatNetworkProfile networkProfile = default;
             IList<VirtualApplianceAdditionalNicProperties> additionalNics = default;
             IList<WritableSubResource> internetIngressPublicIPs = default;
             IReadOnlyList<WritableSubResource> virtualApplianceSites = default;
@@ -427,6 +433,15 @@ namespace Azure.ResourceManager.Network
                             virtualApplianceNics = array;
                             continue;
                         }
+                        if (property0.NameEquals("networkProfile"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            networkProfile = NetworkVirtualAppliancePropertiesFormatNetworkProfile.DeserializeNetworkVirtualAppliancePropertiesFormatNetworkProfile(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("additionalNics"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -556,6 +571,7 @@ namespace Azure.ResourceManager.Network
                 virtualApplianceAsn,
                 sshPublicKey,
                 virtualApplianceNics ?? new ChangeTrackingList<VirtualApplianceNicProperties>(),
+                networkProfile,
                 additionalNics ?? new ChangeTrackingList<VirtualApplianceAdditionalNicProperties>(),
                 internetIngressPublicIPs ?? new ChangeTrackingList<WritableSubResource>(),
                 virtualApplianceSites ?? new ChangeTrackingList<WritableSubResource>(),

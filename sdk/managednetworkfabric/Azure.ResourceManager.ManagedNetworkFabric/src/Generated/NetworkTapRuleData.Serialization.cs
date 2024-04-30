@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     public partial class NetworkTapRuleData : IUtf8JsonSerializable, IJsonModel<NetworkTapRuleData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkTapRuleData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkTapRuleData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetworkTapRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
         internal static NetworkTapRuleData DeserializeNetworkTapRuleData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

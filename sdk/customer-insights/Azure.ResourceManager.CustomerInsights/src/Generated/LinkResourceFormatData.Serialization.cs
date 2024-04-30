@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CustomerInsights
 {
     public partial class LinkResourceFormatData : IUtf8JsonSerializable, IJsonModel<LinkResourceFormatData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LinkResourceFormatData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LinkResourceFormatData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LinkResourceFormatData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.CustomerInsights
 
         internal static LinkResourceFormatData DeserializeLinkResourceFormatData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

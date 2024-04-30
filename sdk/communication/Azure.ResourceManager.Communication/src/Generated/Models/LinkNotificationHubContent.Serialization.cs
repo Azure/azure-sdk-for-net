@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Communication.Models
 {
     public partial class LinkNotificationHubContent : IUtf8JsonSerializable, IJsonModel<LinkNotificationHubContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LinkNotificationHubContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LinkNotificationHubContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LinkNotificationHubContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Communication.Models
 
         internal static LinkNotificationHubContent DeserializeLinkNotificationHubContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

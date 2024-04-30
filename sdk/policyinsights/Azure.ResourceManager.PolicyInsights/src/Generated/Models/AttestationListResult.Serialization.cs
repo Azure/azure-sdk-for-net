@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 {
     internal partial class AttestationListResult : IUtf8JsonSerializable, IJsonModel<AttestationListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AttestationListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AttestationListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AttestationListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 
         internal static AttestationListResult DeserializeAttestationListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

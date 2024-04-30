@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Purview
 {
     public partial class PurviewPrivateLinkResourceData : IUtf8JsonSerializable, IJsonModel<PurviewPrivateLinkResourceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PurviewPrivateLinkResourceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PurviewPrivateLinkResourceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PurviewPrivateLinkResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Purview
 
         internal static PurviewPrivateLinkResourceData DeserializePurviewPrivateLinkResourceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

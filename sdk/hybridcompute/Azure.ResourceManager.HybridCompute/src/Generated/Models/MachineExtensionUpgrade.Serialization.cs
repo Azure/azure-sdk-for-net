@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 {
     public partial class MachineExtensionUpgrade : IUtf8JsonSerializable, IJsonModel<MachineExtensionUpgrade>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineExtensionUpgrade>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineExtensionUpgrade>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MachineExtensionUpgrade>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         internal static MachineExtensionUpgrade DeserializeMachineExtensionUpgrade(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

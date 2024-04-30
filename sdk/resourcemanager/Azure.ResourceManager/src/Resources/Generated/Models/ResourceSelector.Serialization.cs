@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Resources.Models
 {
     public partial class ResourceSelector : IUtf8JsonSerializable, IJsonModel<ResourceSelector>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceSelector>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceSelector>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ResourceSelector>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ResourceSelector DeserializeResourceSelector(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -127,15 +127,16 @@ namespace Azure.ResourceManager.Resources.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  name: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  name: ");
                     if (Name.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -149,17 +150,18 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Selectors), out propertyOverride);
-            if (Optional.IsCollectionDefined(Selectors) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Selectors.Any() || hasPropertyOverride)
+                builder.Append("  selectors: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Selectors))
                 {
-                    builder.Append("  selectors: ");
-                    if (hasPropertyOverride)
+                    if (Selectors.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  selectors: ");
                         builder.AppendLine("[");
                         foreach (var item in Selectors)
                         {

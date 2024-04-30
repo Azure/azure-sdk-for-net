@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
 {
     internal partial class ArmApplicationBillingDetails : IUtf8JsonSerializable, IJsonModel<ArmApplicationBillingDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArmApplicationBillingDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArmApplicationBillingDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ArmApplicationBillingDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ArmApplicationBillingDetails DeserializeArmApplicationBillingDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -101,15 +101,16 @@ namespace Azure.ResourceManager.Resources.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceUsageId), out propertyOverride);
-            if (Optional.IsDefined(ResourceUsageId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  resourceUsageId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ResourceUsageId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  resourceUsageId: ");
                     if (ResourceUsageId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

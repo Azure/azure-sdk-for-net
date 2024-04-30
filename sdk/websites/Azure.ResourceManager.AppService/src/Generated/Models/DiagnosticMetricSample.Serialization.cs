@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class DiagnosticMetricSample : IUtf8JsonSerializable, IJsonModel<DiagnosticMetricSample>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiagnosticMetricSample>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiagnosticMetricSample>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DiagnosticMetricSample>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static DiagnosticMetricSample DeserializeDiagnosticMetricSample(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -183,30 +183,32 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Timestamp), out propertyOverride);
-            if (Optional.IsDefined(Timestamp) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  timestamp: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Timestamp))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  timestamp: ");
                     var formattedDateTimeString = TypeFormatters.ToString(Timestamp.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RoleInstance), out propertyOverride);
-            if (Optional.IsDefined(RoleInstance) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  roleInstance: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RoleInstance))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  roleInstance: ");
                     if (RoleInstance.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -220,57 +222,61 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Total), out propertyOverride);
-            if (Optional.IsDefined(Total) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  total: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Total))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  total: ");
                     builder.AppendLine($"'{Total.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Maximum), out propertyOverride);
-            if (Optional.IsDefined(Maximum) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  maximum: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Maximum))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  maximum: ");
                     builder.AppendLine($"'{Maximum.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Minimum), out propertyOverride);
-            if (Optional.IsDefined(Minimum) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  minimum: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Minimum))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  minimum: ");
                     builder.AppendLine($"'{Minimum.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsAggregated), out propertyOverride);
-            if (Optional.IsDefined(IsAggregated) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  isAggregated: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsAggregated))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  isAggregated: ");
                     var boolValue = IsAggregated.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }

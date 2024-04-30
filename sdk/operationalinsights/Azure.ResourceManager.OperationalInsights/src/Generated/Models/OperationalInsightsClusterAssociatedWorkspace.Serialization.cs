@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 {
     public partial class OperationalInsightsClusterAssociatedWorkspace : IUtf8JsonSerializable, IJsonModel<OperationalInsightsClusterAssociatedWorkspace>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OperationalInsightsClusterAssociatedWorkspace>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OperationalInsightsClusterAssociatedWorkspace>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<OperationalInsightsClusterAssociatedWorkspace>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         internal static OperationalInsightsClusterAssociatedWorkspace DeserializeOperationalInsightsClusterAssociatedWorkspace(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -146,29 +146,31 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WorkspaceId), out propertyOverride);
-            if (Optional.IsDefined(WorkspaceId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  workspaceId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(WorkspaceId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  workspaceId: ");
                     builder.AppendLine($"'{WorkspaceId.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WorkspaceName), out propertyOverride);
-            if (Optional.IsDefined(WorkspaceName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  workspaceName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(WorkspaceName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  workspaceName: ");
                     if (WorkspaceName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -182,29 +184,31 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceId), out propertyOverride);
-            if (Optional.IsDefined(ResourceId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  resourceId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ResourceId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  resourceId: ");
                     builder.AppendLine($"'{ResourceId.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AssociatedOn), out propertyOverride);
-            if (Optional.IsDefined(AssociatedOn) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  associateDate: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AssociatedOn))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  associateDate: ");
                     var formattedDateTimeString = TypeFormatters.ToString(AssociatedOn.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }

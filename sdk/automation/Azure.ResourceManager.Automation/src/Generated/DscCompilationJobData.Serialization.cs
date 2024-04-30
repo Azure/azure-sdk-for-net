@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Automation
 {
     public partial class DscCompilationJobData : IUtf8JsonSerializable, IJsonModel<DscCompilationJobData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DscCompilationJobData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DscCompilationJobData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DscCompilationJobData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Automation
 
         internal static DscCompilationJobData DeserializeDscCompilationJobData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Chaos
 {
     public partial class ChaosExperimentData : IUtf8JsonSerializable, IJsonModel<ChaosExperimentData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChaosExperimentData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChaosExperimentData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ChaosExperimentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Chaos
 
         internal static ChaosExperimentData DeserializeChaosExperimentData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

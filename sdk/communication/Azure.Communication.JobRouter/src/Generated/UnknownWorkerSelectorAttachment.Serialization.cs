@@ -15,7 +15,7 @@ namespace Azure.Communication.JobRouter
 {
     internal partial class UnknownWorkerSelectorAttachment : IUtf8JsonSerializable, IJsonModel<WorkerSelectorAttachment>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkerSelectorAttachment>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkerSelectorAttachment>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<WorkerSelectorAttachment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -60,7 +60,7 @@ namespace Azure.Communication.JobRouter
 
         internal static UnknownWorkerSelectorAttachment DeserializeUnknownWorkerSelectorAttachment(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -128,7 +128,7 @@ namespace Azure.Communication.JobRouter
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue<WorkerSelectorAttachment>(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

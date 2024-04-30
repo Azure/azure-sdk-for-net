@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 {
     public partial class RecoveryServicesVaultProperties : IUtf8JsonSerializable, IJsonModel<RecoveryServicesVaultProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RecoveryServicesVaultProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RecoveryServicesVaultProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RecoveryServicesVaultProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         internal static RecoveryServicesVaultProperties DeserializeRecoveryServicesVaultProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

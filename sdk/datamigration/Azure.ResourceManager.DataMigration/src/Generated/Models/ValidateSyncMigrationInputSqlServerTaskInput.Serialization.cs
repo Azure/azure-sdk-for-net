@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     public partial class ValidateSyncMigrationInputSqlServerTaskInput : IUtf8JsonSerializable, IJsonModel<ValidateSyncMigrationInputSqlServerTaskInput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ValidateSyncMigrationInputSqlServerTaskInput>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ValidateSyncMigrationInputSqlServerTaskInput>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ValidateSyncMigrationInputSqlServerTaskInput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static ValidateSyncMigrationInputSqlServerTaskInput DeserializeValidateSyncMigrationInputSqlServerTaskInput(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

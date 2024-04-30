@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ScVmm.Models
 {
     public partial class ScVmmAvailabilitySetItem : IUtf8JsonSerializable, IJsonModel<ScVmmAvailabilitySetItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScVmmAvailabilitySetItem>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScVmmAvailabilitySetItem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ScVmmAvailabilitySetItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ScVmm.Models
 
         internal static ScVmmAvailabilitySetItem DeserializeScVmmAvailabilitySetItem(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

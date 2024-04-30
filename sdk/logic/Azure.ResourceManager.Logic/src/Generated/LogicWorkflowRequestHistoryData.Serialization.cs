@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Logic
 {
     public partial class LogicWorkflowRequestHistoryData : IUtf8JsonSerializable, IJsonModel<LogicWorkflowRequestHistoryData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogicWorkflowRequestHistoryData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogicWorkflowRequestHistoryData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LogicWorkflowRequestHistoryData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Logic
 
         internal static LogicWorkflowRequestHistoryData DeserializeLogicWorkflowRequestHistoryData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

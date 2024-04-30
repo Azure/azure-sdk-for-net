@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 {
     public partial class ExtendedCosmosDBSqlStoredProcedureResourceInfo : IUtf8JsonSerializable, IJsonModel<ExtendedCosmosDBSqlStoredProcedureResourceInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExtendedCosmosDBSqlStoredProcedureResourceInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExtendedCosmosDBSqlStoredProcedureResourceInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ExtendedCosmosDBSqlStoredProcedureResourceInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static ExtendedCosmosDBSqlStoredProcedureResourceInfo DeserializeExtendedCosmosDBSqlStoredProcedureResourceInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -156,15 +156,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Rid), out propertyOverride);
-            if (Optional.IsDefined(Rid) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  _rid: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Rid))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  _rid: ");
                     if (Rid.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -178,43 +179,46 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Timestamp), out propertyOverride);
-            if (Optional.IsDefined(Timestamp) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  _ts: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Timestamp))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  _ts: ");
                     builder.AppendLine($"'{Timestamp.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ETag), out propertyOverride);
-            if (Optional.IsDefined(ETag) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  _etag: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ETag))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  _etag: ");
                     builder.AppendLine($"'{ETag.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StoredProcedureName), out propertyOverride);
-            if (Optional.IsDefined(StoredProcedureName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  id: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StoredProcedureName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  id: ");
                     if (StoredProcedureName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -228,15 +232,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Body), out propertyOverride);
-            if (Optional.IsDefined(Body) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  body: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Body))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  body: ");
                     if (Body.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

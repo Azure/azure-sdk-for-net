@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
 {
     public partial class JobStepOutput : IUtf8JsonSerializable, IJsonModel<JobStepOutput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JobStepOutput>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JobStepOutput>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<JobStepOutput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static JobStepOutput DeserializeJobStepOutput(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -183,43 +183,46 @@ namespace Azure.ResourceManager.Sql.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OutputType), out propertyOverride);
-            if (Optional.IsDefined(OutputType) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  type: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(OutputType))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  type: ");
                     builder.AppendLine($"'{OutputType.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SubscriptionId), out propertyOverride);
-            if (Optional.IsDefined(SubscriptionId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  subscriptionId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SubscriptionId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  subscriptionId: ");
                     builder.AppendLine($"'{SubscriptionId.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceGroupName), out propertyOverride);
-            if (Optional.IsDefined(ResourceGroupName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  resourceGroupName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ResourceGroupName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  resourceGroupName: ");
                     if (ResourceGroupName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -233,15 +236,16 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServerName), out propertyOverride);
-            if (Optional.IsDefined(ServerName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  serverName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ServerName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  serverName: ");
                     if (ServerName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -255,15 +259,16 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DatabaseName), out propertyOverride);
-            if (Optional.IsDefined(DatabaseName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  databaseName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DatabaseName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  databaseName: ");
                     if (DatabaseName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -277,15 +282,16 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SchemaName), out propertyOverride);
-            if (Optional.IsDefined(SchemaName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  schemaName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SchemaName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  schemaName: ");
                     if (SchemaName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -299,15 +305,16 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TableName), out propertyOverride);
-            if (Optional.IsDefined(TableName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  tableName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TableName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  tableName: ");
                     if (TableName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -321,15 +328,16 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Credential), out propertyOverride);
-            if (Optional.IsDefined(Credential) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  credential: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Credential))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  credential: ");
                     if (Credential.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

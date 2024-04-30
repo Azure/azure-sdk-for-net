@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class HiveSource : IUtf8JsonSerializable, IJsonModel<HiveSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HiveSource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HiveSource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HiveSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static HiveSource DeserializeHiveSource(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

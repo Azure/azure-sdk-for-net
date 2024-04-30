@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class OpenIdConnectLogin : IUtf8JsonSerializable, IJsonModel<OpenIdConnectLogin>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OpenIdConnectLogin>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OpenIdConnectLogin>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<OpenIdConnectLogin>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static OpenIdConnectLogin DeserializeOpenIdConnectLogin(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -127,15 +127,16 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NameClaimType), out propertyOverride);
-            if (Optional.IsDefined(NameClaimType) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  nameClaimType: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NameClaimType))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  nameClaimType: ");
                     if (NameClaimType.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -149,17 +150,18 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Scopes), out propertyOverride);
-            if (Optional.IsCollectionDefined(Scopes) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Scopes.Any() || hasPropertyOverride)
+                builder.Append("  scopes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Scopes))
                 {
-                    builder.Append("  scopes: ");
-                    if (hasPropertyOverride)
+                    if (Scopes.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  scopes: ");
                         builder.AppendLine("[");
                         foreach (var item in Scopes)
                         {

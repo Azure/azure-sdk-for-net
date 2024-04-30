@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Sql.Models
 {
     public partial class CreateDatabaseRestorePointDefinition : IUtf8JsonSerializable, IJsonModel<CreateDatabaseRestorePointDefinition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CreateDatabaseRestorePointDefinition>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CreateDatabaseRestorePointDefinition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CreateDatabaseRestorePointDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static CreateDatabaseRestorePointDefinition DeserializeCreateDatabaseRestorePointDefinition(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

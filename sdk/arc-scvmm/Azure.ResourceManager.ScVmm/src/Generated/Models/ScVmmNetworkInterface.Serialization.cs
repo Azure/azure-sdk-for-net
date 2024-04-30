@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ScVmm.Models
 {
     public partial class ScVmmNetworkInterface : IUtf8JsonSerializable, IJsonModel<ScVmmNetworkInterface>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScVmmNetworkInterface>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScVmmNetworkInterface>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ScVmmNetworkInterface>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ScVmm.Models
 
         internal static ScVmmNetworkInterface DeserializeScVmmNetworkInterface(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

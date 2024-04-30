@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Monitor.Models
 {
     public partial class PlatformTelemetryDataSource : IUtf8JsonSerializable, IJsonModel<PlatformTelemetryDataSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PlatformTelemetryDataSource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PlatformTelemetryDataSource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PlatformTelemetryDataSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static PlatformTelemetryDataSource DeserializePlatformTelemetryDataSource(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Automation
 {
     public partial class AutomationCredentialData : IUtf8JsonSerializable, IJsonModel<AutomationCredentialData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationCredentialData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationCredentialData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AutomationCredentialData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Automation
 
         internal static AutomationCredentialData DeserializeAutomationCredentialData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

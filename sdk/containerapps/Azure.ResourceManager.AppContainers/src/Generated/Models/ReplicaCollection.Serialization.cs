@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 {
     internal partial class ReplicaCollection : IUtf8JsonSerializable, IJsonModel<ReplicaCollection>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReplicaCollection>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReplicaCollection>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ReplicaCollection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ReplicaCollection DeserializeReplicaCollection(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

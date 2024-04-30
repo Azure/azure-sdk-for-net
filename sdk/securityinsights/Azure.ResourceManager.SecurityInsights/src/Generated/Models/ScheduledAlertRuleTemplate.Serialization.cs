@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 {
     public partial class ScheduledAlertRuleTemplate : IUtf8JsonSerializable, IJsonModel<ScheduledAlertRuleTemplate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScheduledAlertRuleTemplate>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScheduledAlertRuleTemplate>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ScheduledAlertRuleTemplate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static ScheduledAlertRuleTemplate DeserializeScheduledAlertRuleTemplate(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

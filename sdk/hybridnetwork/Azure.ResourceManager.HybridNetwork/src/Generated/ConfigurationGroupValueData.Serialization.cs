@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HybridNetwork
 {
     public partial class ConfigurationGroupValueData : IUtf8JsonSerializable, IJsonModel<ConfigurationGroupValueData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConfigurationGroupValueData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConfigurationGroupValueData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ConfigurationGroupValueData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.HybridNetwork
 
         internal static ConfigurationGroupValueData DeserializeConfigurationGroupValueData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

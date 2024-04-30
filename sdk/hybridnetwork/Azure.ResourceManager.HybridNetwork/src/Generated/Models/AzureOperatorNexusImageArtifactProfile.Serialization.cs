@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 {
     public partial class AzureOperatorNexusImageArtifactProfile : IUtf8JsonSerializable, IJsonModel<AzureOperatorNexusImageArtifactProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureOperatorNexusImageArtifactProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureOperatorNexusImageArtifactProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AzureOperatorNexusImageArtifactProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         internal static AzureOperatorNexusImageArtifactProfile DeserializeAzureOperatorNexusImageArtifactProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

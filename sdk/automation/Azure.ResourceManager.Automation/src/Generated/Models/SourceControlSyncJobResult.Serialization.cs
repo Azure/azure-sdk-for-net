@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Automation.Models
 {
     public partial class SourceControlSyncJobResult : IUtf8JsonSerializable, IJsonModel<SourceControlSyncJobResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SourceControlSyncJobResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SourceControlSyncJobResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SourceControlSyncJobResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Automation.Models
 
         internal static SourceControlSyncJobResult DeserializeSourceControlSyncJobResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

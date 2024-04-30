@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 {
     public partial class DevTestLabEnvironmentDeployment : IUtf8JsonSerializable, IJsonModel<DevTestLabEnvironmentDeployment>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevTestLabEnvironmentDeployment>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevTestLabEnvironmentDeployment>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DevTestLabEnvironmentDeployment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static DevTestLabEnvironmentDeployment DeserializeDevTestLabEnvironmentDeployment(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

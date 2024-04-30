@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class SsisObjectMetadataStatusResult : IUtf8JsonSerializable, IJsonModel<SsisObjectMetadataStatusResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SsisObjectMetadataStatusResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SsisObjectMetadataStatusResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SsisObjectMetadataStatusResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SsisObjectMetadataStatusResult DeserializeSsisObjectMetadataStatusResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

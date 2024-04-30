@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Workloads.Models
 {
     public partial class CentralServerFullResourceNames : IUtf8JsonSerializable, IJsonModel<CentralServerFullResourceNames>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CentralServerFullResourceNames>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CentralServerFullResourceNames>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CentralServerFullResourceNames>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static CentralServerFullResourceNames DeserializeCentralServerFullResourceNames(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

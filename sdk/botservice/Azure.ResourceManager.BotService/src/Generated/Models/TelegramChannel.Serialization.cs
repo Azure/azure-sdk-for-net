@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.BotService.Models
 {
     public partial class TelegramChannel : IUtf8JsonSerializable, IJsonModel<TelegramChannel>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TelegramChannel>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TelegramChannel>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<TelegramChannel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static TelegramChannel DeserializeTelegramChannel(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
