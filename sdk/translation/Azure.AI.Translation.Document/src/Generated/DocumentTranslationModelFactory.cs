@@ -60,16 +60,5 @@ namespace Azure.AI.Translation.Document
                 type,
                 serializedAdditionalRawData: null);
         }
-
-        /// <summary> Initializes a new instance of <see cref="Document.DocumentTranslateContent"/>. </summary>
-        /// <param name="document"> Document to be translated in the form. </param>
-        /// <param name="glossary"> Glossary-translation memory will be used during translation in the form. </param>
-        /// <returns> A new <see cref="Document.DocumentTranslateContent"/> instance for mocking. </returns>
-        public static DocumentTranslateContent DocumentTranslateContent(Stream document = null, IEnumerable<Stream> glossary = null)
-        {
-            glossary ??= new List<Stream>();
-
-            return new DocumentTranslateContent(document, glossary?.ToList(), serializedAdditionalRawData: null);
-        }
     }
 }
