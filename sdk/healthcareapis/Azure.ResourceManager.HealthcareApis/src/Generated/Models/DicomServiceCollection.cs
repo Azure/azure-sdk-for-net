@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <summary> Initializes a new instance of <see cref="DicomServiceCollection"/>. </summary>
         internal DicomServiceCollection()
         {
-            Value = new ChangeTrackingList<DicomServiceData>();
+            Value = new ChangeTrackingList<DicomService>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DicomServiceCollection"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of Dicom Services. </param>
         /// <param name="value"> The list of Dicom Services. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DicomServiceCollection(string nextLink, IReadOnlyList<DicomServiceData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DicomServiceCollection(string nextLink, IReadOnlyList<DicomService> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
@@ -65,6 +65,6 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <summary> The link used to get the next page of Dicom Services. </summary>
         public string NextLink { get; }
         /// <summary> The list of Dicom Services. </summary>
-        public IReadOnlyList<DicomServiceData> Value { get; }
+        public IReadOnlyList<DicomService> Value { get; }
     }
 }

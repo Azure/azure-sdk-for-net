@@ -9,30 +9,22 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.ResourceManager.HealthcareApis.Models;
 
 namespace Azure.ResourceManager.HealthcareApis
 {
-    internal class HealthcareApisIotConnectorOperationSource : IOperationSource<HealthcareApisIotConnectorResource>
+    internal class HealthcareApisIotConnectorOperationSource : IOperationSource<HealthcareApisIotConnector>
     {
-        private readonly ArmClient _client;
-
-        internal HealthcareApisIotConnectorOperationSource(ArmClient client)
-        {
-            _client = client;
-        }
-
-        HealthcareApisIotConnectorResource IOperationSource<HealthcareApisIotConnectorResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        HealthcareApisIotConnector IOperationSource<HealthcareApisIotConnector>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            var data = HealthcareApisIotConnectorData.DeserializeHealthcareApisIotConnectorData(document.RootElement);
-            return new HealthcareApisIotConnectorResource(_client, data);
+            return HealthcareApisIotConnector.DeserializeHealthcareApisIotConnector(document.RootElement);
         }
 
-        async ValueTask<HealthcareApisIotConnectorResource> IOperationSource<HealthcareApisIotConnectorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<HealthcareApisIotConnector> IOperationSource<HealthcareApisIotConnector>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = HealthcareApisIotConnectorData.DeserializeHealthcareApisIotConnectorData(document.RootElement);
-            return new HealthcareApisIotConnectorResource(_client, data);
+            return HealthcareApisIotConnector.DeserializeHealthcareApisIotConnector(document.RootElement);
         }
     }
 }

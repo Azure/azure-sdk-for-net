@@ -10,34 +10,27 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.HealthcareApis.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.HealthcareApis
+namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    public partial class DicomServiceData : IUtf8JsonSerializable, IJsonModel<DicomServiceData>
+    public partial class DicomService : IUtf8JsonSerializable, IJsonModel<DicomService>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DicomServiceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DicomService>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<DicomServiceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DicomService>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DicomServiceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DicomService>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DicomServiceData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DicomService)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
-                writer.WritePropertyName("identity"u8);
-                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                JsonSerializer.Serialize(writer, Identity, serializeOptions);
-            }
-            if (Optional.IsDefined(ETag))
-            {
-                writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag.Value.ToString());
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -49,28 +42,6 @@ namespace Azure.ResourceManager.HealthcareApis
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
-            }
-            writer.WritePropertyName("location"u8);
-            writer.WriteStringValue(Location);
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ResourceType);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
-            {
-                writer.WritePropertyName("systemData"u8);
-                JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -148,19 +119,19 @@ namespace Azure.ResourceManager.HealthcareApis
             writer.WriteEndObject();
         }
 
-        DicomServiceData IJsonModel<DicomServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DicomService IJsonModel<DicomService>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DicomServiceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DicomService>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DicomServiceData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DicomService)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDicomServiceData(document.RootElement, options);
+            return DeserializeDicomService(document.RootElement, options);
         }
 
-        internal static DicomServiceData DeserializeDicomServiceData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static DicomService DeserializeDicomService(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -168,14 +139,8 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 return null;
             }
-            ManagedServiceIdentity identity = default;
-            ETag? etag = default;
-            IDictionary<string, string> tags = default;
-            AzureLocation location = default;
-            ResourceIdentifier id = default;
-            string name = default;
-            ResourceType type = default;
             SystemData systemData = default;
+            IDictionary<string, string> tags = default;
             HealthcareApisProvisioningState? provisioningState = default;
             DicomServiceAuthenticationConfiguration authenticationConfiguration = default;
             DicomServiceCorsConfiguration corsConfiguration = default;
@@ -190,23 +155,13 @@ namespace Azure.ResourceManager.HealthcareApis
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"u8))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
-                    continue;
-                }
-                if (property.NameEquals("etag"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    etag = new ETag(property.Value.GetString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -221,35 +176,6 @@ namespace Azure.ResourceManager.HealthcareApis
                         dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("location"u8))
-                {
-                    location = new AzureLocation(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("id"u8))
-                {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -365,13 +291,10 @@ namespace Azure.ResourceManager.HealthcareApis
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DicomServiceData(
-                id,
-                name,
-                type,
-                systemData,
+            return new DicomService(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
+                serializedAdditionalRawData,
+                systemData,
                 provisioningState,
                 authenticationConfiguration,
                 corsConfiguration,
@@ -381,41 +304,38 @@ namespace Azure.ResourceManager.HealthcareApis
                 eventState,
                 encryption,
                 storageConfiguration,
-                enableDataPartitions,
-                identity,
-                etag,
-                serializedAdditionalRawData);
+                enableDataPartitions);
         }
 
-        BinaryData IPersistableModel<DicomServiceData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DicomService>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DicomServiceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DicomService>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DicomServiceData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DicomService)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DicomServiceData IPersistableModel<DicomServiceData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DicomService IPersistableModel<DicomService>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DicomServiceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DicomService>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeDicomServiceData(document.RootElement, options);
+                        return DeserializeDicomService(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DicomServiceData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DicomService)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DicomServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DicomService>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

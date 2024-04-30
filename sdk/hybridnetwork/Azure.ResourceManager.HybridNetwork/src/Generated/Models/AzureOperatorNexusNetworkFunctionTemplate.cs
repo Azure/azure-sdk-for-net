@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="networkFunctionApplications">
         /// Network function applications.
         /// Please note <see cref="AzureOperatorNexusNetworkFunctionApplication"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureOperatorNexusNetworkFunctionArmTemplateApplication"/> and <see cref="AzureOperatorNexusNetworkFunctionImageApplication"/>.
+        /// The available derived classes include <see cref="AzureOperatorNexusNetworkFunctionImageApplication"/> and <see cref="AzureOperatorNexusNetworkFunctionArmTemplateApplication"/>.
         /// </param>
         internal AzureOperatorNexusNetworkFunctionTemplate(VirtualNetworkFunctionNfviType nfviType, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<AzureOperatorNexusNetworkFunctionApplication> networkFunctionApplications) : base(nfviType, serializedAdditionalRawData)
         {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <summary>
         /// Network function applications.
         /// Please note <see cref="AzureOperatorNexusNetworkFunctionApplication"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureOperatorNexusNetworkFunctionArmTemplateApplication"/> and <see cref="AzureOperatorNexusNetworkFunctionImageApplication"/>.
+        /// The available derived classes include <see cref="AzureOperatorNexusNetworkFunctionImageApplication"/> and <see cref="AzureOperatorNexusNetworkFunctionArmTemplateApplication"/>.
         /// </summary>
         public IList<AzureOperatorNexusNetworkFunctionApplication> NetworkFunctionApplications { get; }
     }

@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="properties">
         /// Network function properties.
         /// Please note <see cref="NetworkFunctionPropertiesFormat"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="NetworkFunctionValueWithoutSecrets"/> and <see cref="NetworkFunctionValueWithSecrets"/>.
+        /// The available derived classes include <see cref="NetworkFunctionValueWithSecrets"/> and <see cref="NetworkFunctionValueWithoutSecrets"/>.
         /// </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="identity"> The managed identity of the network function. </param>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <summary>
         /// Network function properties.
         /// Please note <see cref="NetworkFunctionPropertiesFormat"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="NetworkFunctionValueWithoutSecrets"/> and <see cref="NetworkFunctionValueWithSecrets"/>.
+        /// The available derived classes include <see cref="NetworkFunctionValueWithSecrets"/> and <see cref="NetworkFunctionValueWithoutSecrets"/>.
         /// </summary>
         public NetworkFunctionPropertiesFormat Properties { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>

@@ -96,15 +96,8 @@ namespace Azure.ResourceManager.FrontDoor
             }
             if (options.Format != "W" && Optional.IsDefined(CustomHttpsConfiguration))
             {
-                if (CustomHttpsConfiguration != null)
-                {
-                    writer.WritePropertyName("customHttpsConfiguration"u8);
-                    writer.WriteObjectValue(CustomHttpsConfiguration, options);
-                }
-                else
-                {
-                    writer.WriteNull("customHttpsConfiguration");
-                }
+                writer.WritePropertyName("customHttpsConfiguration"u8);
+                writer.WriteObjectValue(CustomHttpsConfiguration, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -257,7 +250,6 @@ namespace Azure.ResourceManager.FrontDoor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                customHttpsConfiguration = null;
                                 continue;
                             }
                             customHttpsConfiguration = CustomHttpsConfiguration.DeserializeCustomHttpsConfiguration(property0.Value, options);

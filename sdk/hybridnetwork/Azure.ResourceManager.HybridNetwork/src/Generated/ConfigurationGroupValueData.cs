@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="properties">
         /// Hybrid configuration group value properties.
         /// Please note <see cref="ConfigurationGroupValuePropertiesFormat"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ConfigurationValueWithoutSecrets"/> and <see cref="ConfigurationValueWithSecrets"/>.
+        /// The available derived classes include <see cref="ConfigurationValueWithSecrets"/> and <see cref="ConfigurationValueWithoutSecrets"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ConfigurationGroupValueData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ConfigurationGroupValuePropertiesFormat properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <summary>
         /// Hybrid configuration group value properties.
         /// Please note <see cref="ConfigurationGroupValuePropertiesFormat"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ConfigurationValueWithoutSecrets"/> and <see cref="ConfigurationValueWithSecrets"/>.
+        /// The available derived classes include <see cref="ConfigurationValueWithSecrets"/> and <see cref="ConfigurationValueWithoutSecrets"/>.
         /// </summary>
         public ConfigurationGroupValuePropertiesFormat Properties { get; set; }
     }

@@ -63,15 +63,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
             if (Optional.IsDefined(Component))
             {
-                if (Component != null)
-                {
-                    writer.WritePropertyName("component"u8);
-                    writer.WriteObjectValue(Component, options);
-                }
-                else
-                {
-                    writer.WriteNull("component");
-                }
+                writer.WritePropertyName("component"u8);
+                writer.WriteObjectValue(Component, options);
             }
             if (Optional.IsDefined(Severity))
             {
@@ -264,7 +257,6 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                component = null;
                                 continue;
                             }
                             component = CveComponent.DeserializeCveComponent(property0.Value, options);

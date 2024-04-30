@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.HealthcareApis.Mocking
     {
         private ClientDiagnostics _healthcareApisServiceServicesClientDiagnostics;
         private ServicesRestOperations _healthcareApisServiceServicesRestClient;
-        private ClientDiagnostics _healthcareApisWorkspaceWorkspacesClientDiagnostics;
-        private WorkspacesRestOperations _healthcareApisWorkspaceWorkspacesRestClient;
+        private ClientDiagnostics _workspacesClientDiagnostics;
+        private WorkspacesRestOperations _workspacesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableHealthcareApisSubscriptionResource"/> class for mocking. </summary>
         protected MockableHealthcareApisSubscriptionResource()
@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.HealthcareApis.Mocking
 
         private ClientDiagnostics HealthcareApisServiceServicesClientDiagnostics => _healthcareApisServiceServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HealthcareApis", HealthcareApisServiceResource.ResourceType.Namespace, Diagnostics);
         private ServicesRestOperations HealthcareApisServiceServicesRestClient => _healthcareApisServiceServicesRestClient ??= new ServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(HealthcareApisServiceResource.ResourceType));
-        private ClientDiagnostics HealthcareApisWorkspaceWorkspacesClientDiagnostics => _healthcareApisWorkspaceWorkspacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HealthcareApis", HealthcareApisWorkspaceResource.ResourceType.Namespace, Diagnostics);
-        private WorkspacesRestOperations HealthcareApisWorkspaceWorkspacesRestClient => _healthcareApisWorkspaceWorkspacesRestClient ??= new WorkspacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(HealthcareApisWorkspaceResource.ResourceType));
+        private ClientDiagnostics WorkspacesClientDiagnostics => _workspacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HealthcareApis", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private WorkspacesRestOperations WorkspacesRestClient => _workspacesRestClient ??= new WorkspacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -205,19 +205,15 @@ namespace Azure.ResourceManager.HealthcareApis.Mocking
         /// <term>Default Api Version</term>
         /// <description>2024-03-31</description>
         /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthcareApisWorkspaceResource"/></description>
-        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HealthcareApisWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<HealthcareApisWorkspaceResource> GetHealthcareApisWorkspacesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="HealthcareApisWorkspace"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HealthcareApisWorkspace> GetWorkspacesBySubscriptionAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => HealthcareApisWorkspaceWorkspacesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HealthcareApisWorkspaceWorkspacesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HealthcareApisWorkspaceResource(Client, HealthcareApisWorkspaceData.DeserializeHealthcareApisWorkspaceData(e)), HealthcareApisWorkspaceWorkspacesClientDiagnostics, Pipeline, "MockableHealthcareApisSubscriptionResource.GetHealthcareApisWorkspaces", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => WorkspacesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => WorkspacesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => HealthcareApisWorkspace.DeserializeHealthcareApisWorkspace(e), WorkspacesClientDiagnostics, Pipeline, "MockableHealthcareApisSubscriptionResource.GetWorkspacesBySubscription", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -235,19 +231,15 @@ namespace Azure.ResourceManager.HealthcareApis.Mocking
         /// <term>Default Api Version</term>
         /// <description>2024-03-31</description>
         /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthcareApisWorkspaceResource"/></description>
-        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HealthcareApisWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<HealthcareApisWorkspaceResource> GetHealthcareApisWorkspaces(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HealthcareApisWorkspace"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HealthcareApisWorkspace> GetWorkspacesBySubscription(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => HealthcareApisWorkspaceWorkspacesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HealthcareApisWorkspaceWorkspacesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HealthcareApisWorkspaceResource(Client, HealthcareApisWorkspaceData.DeserializeHealthcareApisWorkspaceData(e)), HealthcareApisWorkspaceWorkspacesClientDiagnostics, Pipeline, "MockableHealthcareApisSubscriptionResource.GetHealthcareApisWorkspaces", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => WorkspacesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => WorkspacesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => HealthcareApisWorkspace.DeserializeHealthcareApisWorkspace(e), WorkspacesClientDiagnostics, Pipeline, "MockableHealthcareApisSubscriptionResource.GetWorkspacesBySubscription", "value", "nextLink", cancellationToken);
         }
     }
 }

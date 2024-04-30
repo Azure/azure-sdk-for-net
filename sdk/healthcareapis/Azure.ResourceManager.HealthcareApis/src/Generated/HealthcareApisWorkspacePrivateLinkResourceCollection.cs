@@ -14,18 +14,20 @@ using System.Threading.Tasks;
 using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.HealthcareApis
 {
     /// <summary>
     /// A class representing a collection of <see cref="HealthcareApisWorkspacePrivateLinkResource"/> and their operations.
-    /// Each <see cref="HealthcareApisWorkspacePrivateLinkResource"/> in the collection will belong to the same instance of <see cref="HealthcareApisWorkspaceResource"/>.
-    /// To get a <see cref="HealthcareApisWorkspacePrivateLinkResourceCollection"/> instance call the GetHealthcareApisWorkspacePrivateLinkResources method from an instance of <see cref="HealthcareApisWorkspaceResource"/>.
+    /// Each <see cref="HealthcareApisWorkspacePrivateLinkResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="HealthcareApisWorkspacePrivateLinkResourceCollection"/> instance call the GetHealthcareApisWorkspacePrivateLinkResources method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class HealthcareApisWorkspacePrivateLinkResourceCollection : ArmCollection, IEnumerable<HealthcareApisWorkspacePrivateLinkResource>, IAsyncEnumerable<HealthcareApisWorkspacePrivateLinkResource>
     {
         private readonly ClientDiagnostics _healthcareApisWorkspacePrivateLinkResourceWorkspacePrivateLinkResourcesClientDiagnostics;
         private readonly WorkspacePrivateLinkResourcesRestOperations _healthcareApisWorkspacePrivateLinkResourceWorkspacePrivateLinkResourcesRestClient;
+        private readonly string _workspaceName;
 
         /// <summary> Initializes a new instance of the <see cref="HealthcareApisWorkspacePrivateLinkResourceCollection"/> class for mocking. </summary>
         protected HealthcareApisWorkspacePrivateLinkResourceCollection()
@@ -35,8 +37,12 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <summary> Initializes a new instance of the <see cref="HealthcareApisWorkspacePrivateLinkResourceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal HealthcareApisWorkspacePrivateLinkResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        /// <param name="workspaceName"> The name of workspace resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        internal HealthcareApisWorkspacePrivateLinkResourceCollection(ArmClient client, ResourceIdentifier id, string workspaceName) : base(client, id)
         {
+            _workspaceName = workspaceName;
             _healthcareApisWorkspacePrivateLinkResourceWorkspacePrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HealthcareApis", HealthcareApisWorkspacePrivateLinkResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(HealthcareApisWorkspacePrivateLinkResource.ResourceType, out string healthcareApisWorkspacePrivateLinkResourceWorkspacePrivateLinkResourcesApiVersion);
             _healthcareApisWorkspacePrivateLinkResourceWorkspacePrivateLinkResourcesRestClient = new WorkspacePrivateLinkResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, healthcareApisWorkspacePrivateLinkResourceWorkspacePrivateLinkResourcesApiVersion);
@@ -47,8 +53,8 @@ namespace Azure.ResourceManager.HealthcareApis
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != HealthcareApisWorkspaceResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, HealthcareApisWorkspaceResource.ResourceType), nameof(id));
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -84,7 +90,7 @@ namespace Azure.ResourceManager.HealthcareApis
             scope.Start();
             try
             {
-                var response = await _healthcareApisWorkspacePrivateLinkResourceWorkspacePrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupName, cancellationToken).ConfigureAwait(false);
+                var response = await _healthcareApisWorkspacePrivateLinkResourceWorkspacePrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName, groupName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new HealthcareApisWorkspacePrivateLinkResource(Client, response.Value), response.GetRawResponse());
@@ -129,7 +135,7 @@ namespace Azure.ResourceManager.HealthcareApis
             scope.Start();
             try
             {
-                var response = _healthcareApisWorkspacePrivateLinkResourceWorkspacePrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupName, cancellationToken);
+                var response = _healthcareApisWorkspacePrivateLinkResourceWorkspacePrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName, groupName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new HealthcareApisWorkspacePrivateLinkResource(Client, response.Value), response.GetRawResponse());
@@ -166,7 +172,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <returns> An async collection of <see cref="HealthcareApisWorkspacePrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HealthcareApisWorkspacePrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _healthcareApisWorkspacePrivateLinkResourceWorkspacePrivateLinkResourcesRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _healthcareApisWorkspacePrivateLinkResourceWorkspacePrivateLinkResourcesRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new HealthcareApisWorkspacePrivateLinkResource(Client, HealthcareApisPrivateLinkResourceData.DeserializeHealthcareApisPrivateLinkResourceData(e)), _healthcareApisWorkspacePrivateLinkResourceWorkspacePrivateLinkResourcesClientDiagnostics, Pipeline, "HealthcareApisWorkspacePrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
         }
 
@@ -195,7 +201,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <returns> A collection of <see cref="HealthcareApisWorkspacePrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HealthcareApisWorkspacePrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _healthcareApisWorkspacePrivateLinkResourceWorkspacePrivateLinkResourcesRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _healthcareApisWorkspacePrivateLinkResourceWorkspacePrivateLinkResourcesRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new HealthcareApisWorkspacePrivateLinkResource(Client, HealthcareApisPrivateLinkResourceData.DeserializeHealthcareApisPrivateLinkResourceData(e)), _healthcareApisWorkspacePrivateLinkResourceWorkspacePrivateLinkResourcesClientDiagnostics, Pipeline, "HealthcareApisWorkspacePrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
         }
 
@@ -232,7 +238,7 @@ namespace Azure.ResourceManager.HealthcareApis
             scope.Start();
             try
             {
-                var response = await _healthcareApisWorkspacePrivateLinkResourceWorkspacePrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _healthcareApisWorkspacePrivateLinkResourceWorkspacePrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName, groupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -275,7 +281,7 @@ namespace Azure.ResourceManager.HealthcareApis
             scope.Start();
             try
             {
-                var response = _healthcareApisWorkspacePrivateLinkResourceWorkspacePrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupName, cancellationToken: cancellationToken);
+                var response = _healthcareApisWorkspacePrivateLinkResourceWorkspacePrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName, groupName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -318,7 +324,7 @@ namespace Azure.ResourceManager.HealthcareApis
             scope.Start();
             try
             {
-                var response = await _healthcareApisWorkspacePrivateLinkResourceWorkspacePrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _healthcareApisWorkspacePrivateLinkResourceWorkspacePrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName, groupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<HealthcareApisWorkspacePrivateLinkResource>(response.GetRawResponse());
                 return Response.FromValue(new HealthcareApisWorkspacePrivateLinkResource(Client, response.Value), response.GetRawResponse());
@@ -363,7 +369,7 @@ namespace Azure.ResourceManager.HealthcareApis
             scope.Start();
             try
             {
-                var response = _healthcareApisWorkspacePrivateLinkResourceWorkspacePrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupName, cancellationToken: cancellationToken);
+                var response = _healthcareApisWorkspacePrivateLinkResourceWorkspacePrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName, groupName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<HealthcareApisWorkspacePrivateLinkResource>(response.GetRawResponse());
                 return Response.FromValue(new HealthcareApisWorkspacePrivateLinkResource(Client, response.Value), response.GetRawResponse());

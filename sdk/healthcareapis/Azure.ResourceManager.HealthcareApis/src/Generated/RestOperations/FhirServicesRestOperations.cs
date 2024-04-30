@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<Models.FhirServiceCollection>> ListByWorkspaceAsync(string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        public async Task<Response<FhirServiceCollection>> ListByWorkspaceAsync(string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 case 200:
                     {
-                        Models.FhirServiceCollection value = default;
+                        FhirServiceCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Models.FhirServiceCollection.DeserializeFhirServiceCollection(document.RootElement);
+                        value = FhirServiceCollection.DeserializeFhirServiceCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<Models.FhirServiceCollection> ListByWorkspace(string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        public Response<FhirServiceCollection> ListByWorkspace(string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -120,9 +120,9 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 case 200:
                     {
-                        Models.FhirServiceCollection value = default;
+                        FhirServiceCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Models.FhirServiceCollection.DeserializeFhirServiceCollection(document.RootElement);
+                        value = FhirServiceCollection.DeserializeFhirServiceCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="fhirServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="fhirServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<FhirServiceData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string fhirServiceName, CancellationToken cancellationToken = default)
+        public async Task<Response<FhirService>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string fhirServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -189,13 +189,11 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 case 200:
                     {
-                        FhirServiceData value = default;
+                        FhirService value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = FhirServiceData.DeserializeFhirServiceData(document.RootElement);
+                        value = FhirService.DeserializeFhirService(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((FhirServiceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -209,7 +207,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="fhirServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="fhirServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<FhirServiceData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string fhirServiceName, CancellationToken cancellationToken = default)
+        public Response<FhirService> Get(string subscriptionId, string resourceGroupName, string workspaceName, string fhirServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -222,19 +220,17 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 case 200:
                     {
-                        FhirServiceData value = default;
+                        FhirService value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = FhirServiceData.DeserializeFhirServiceData(document.RootElement);
+                        value = FhirService.DeserializeFhirService(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((FhirServiceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string fhirServiceName, FhirServiceData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string fhirServiceName, FhirService fhirservice)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -250,7 +246,7 @@ namespace Azure.ResourceManager.HealthcareApis
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string fhirServiceName, FhirServiceData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string fhirServiceName, FhirService fhirservice)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -270,7 +266,7 @@ namespace Azure.ResourceManager.HealthcareApis
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(fhirservice, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -281,19 +277,19 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="resourceGroupName"> The name of the resource group that contains the service instance. </param>
         /// <param name="workspaceName"> The name of workspace resource. </param>
         /// <param name="fhirServiceName"> The name of FHIR Service resource. </param>
-        /// <param name="data"> The parameters for creating or updating a Fhir Service resource. </param>
+        /// <param name="fhirservice"> The parameters for creating or updating a Fhir Service resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="fhirServiceName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="fhirServiceName"/> or <paramref name="fhirservice"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="fhirServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string fhirServiceName, FhirServiceData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string fhirServiceName, FhirService fhirservice, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
             Argument.AssertNotNullOrEmpty(fhirServiceName, nameof(fhirServiceName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(fhirservice, nameof(fhirservice));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, workspaceName, fhirServiceName, data);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, workspaceName, fhirServiceName, fhirservice);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -311,19 +307,19 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="resourceGroupName"> The name of the resource group that contains the service instance. </param>
         /// <param name="workspaceName"> The name of workspace resource. </param>
         /// <param name="fhirServiceName"> The name of FHIR Service resource. </param>
-        /// <param name="data"> The parameters for creating or updating a Fhir Service resource. </param>
+        /// <param name="fhirservice"> The parameters for creating or updating a Fhir Service resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="fhirServiceName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="fhirServiceName"/> or <paramref name="fhirservice"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="fhirServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string fhirServiceName, FhirServiceData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string fhirServiceName, FhirService fhirservice, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
             Argument.AssertNotNullOrEmpty(fhirServiceName, nameof(fhirServiceName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(fhirservice, nameof(fhirservice));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, workspaceName, fhirServiceName, data);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, workspaceName, fhirServiceName, fhirservice);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -336,7 +332,7 @@ namespace Azure.ResourceManager.HealthcareApis
             }
         }
 
-        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string fhirServiceName, FhirServicePatch patch)
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string fhirServiceName, FhirServicePatchResource fhirservicePatchResource)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -352,7 +348,7 @@ namespace Azure.ResourceManager.HealthcareApis
             return uri;
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string fhirServiceName, FhirServicePatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string fhirServiceName, FhirServicePatchResource fhirservicePatchResource)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -372,7 +368,7 @@ namespace Azure.ResourceManager.HealthcareApis
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(fhirservicePatchResource, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -383,19 +379,19 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="resourceGroupName"> The name of the resource group that contains the service instance. </param>
         /// <param name="workspaceName"> The name of workspace resource. </param>
         /// <param name="fhirServiceName"> The name of FHIR Service resource. </param>
-        /// <param name="patch"> The parameters for updating a Fhir Service. </param>
+        /// <param name="fhirservicePatchResource"> The parameters for updating a Fhir Service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="fhirServiceName"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="fhirServiceName"/> or <paramref name="fhirservicePatchResource"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="fhirServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string fhirServiceName, FhirServicePatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string fhirServiceName, FhirServicePatchResource fhirservicePatchResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
             Argument.AssertNotNullOrEmpty(fhirServiceName, nameof(fhirServiceName));
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(fhirservicePatchResource, nameof(fhirservicePatchResource));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, workspaceName, fhirServiceName, patch);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, workspaceName, fhirServiceName, fhirservicePatchResource);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -412,19 +408,19 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="resourceGroupName"> The name of the resource group that contains the service instance. </param>
         /// <param name="workspaceName"> The name of workspace resource. </param>
         /// <param name="fhirServiceName"> The name of FHIR Service resource. </param>
-        /// <param name="patch"> The parameters for updating a Fhir Service. </param>
+        /// <param name="fhirservicePatchResource"> The parameters for updating a Fhir Service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="fhirServiceName"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="fhirServiceName"/> or <paramref name="fhirservicePatchResource"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="fhirServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string workspaceName, string fhirServiceName, FhirServicePatch patch, CancellationToken cancellationToken = default)
+        public Response Update(string subscriptionId, string resourceGroupName, string workspaceName, string fhirServiceName, FhirServicePatchResource fhirservicePatchResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
             Argument.AssertNotNullOrEmpty(fhirServiceName, nameof(fhirServiceName));
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(fhirservicePatchResource, nameof(fhirservicePatchResource));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, workspaceName, fhirServiceName, patch);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, workspaceName, fhirServiceName, fhirservicePatchResource);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -560,7 +556,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<Models.FhirServiceCollection>> ListByWorkspaceNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        public async Task<Response<FhirServiceCollection>> ListByWorkspaceNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -573,9 +569,9 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 case 200:
                     {
-                        Models.FhirServiceCollection value = default;
+                        FhirServiceCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Models.FhirServiceCollection.DeserializeFhirServiceCollection(document.RootElement);
+                        value = FhirServiceCollection.DeserializeFhirServiceCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -591,7 +587,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<Models.FhirServiceCollection> ListByWorkspaceNextPage(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        public Response<FhirServiceCollection> ListByWorkspaceNextPage(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -604,9 +600,9 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 case 200:
                     {
-                        Models.FhirServiceCollection value = default;
+                        FhirServiceCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Models.FhirServiceCollection.DeserializeFhirServiceCollection(document.RootElement);
+                        value = FhirServiceCollection.DeserializeFhirServiceCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

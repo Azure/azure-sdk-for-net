@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    public partial class HealthcareApisWorkspacePatch : IUtf8JsonSerializable, IJsonModel<HealthcareApisWorkspacePatch>
+    public partial class DicomServicePatchResource : IUtf8JsonSerializable, IJsonModel<DicomServicePatchResource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HealthcareApisWorkspacePatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DicomServicePatchResource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<HealthcareApisWorkspacePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DicomServicePatchResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HealthcareApisWorkspacePatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DicomServicePatchResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HealthcareApisWorkspacePatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DicomServicePatchResource)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -55,19 +55,19 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             writer.WriteEndObject();
         }
 
-        HealthcareApisWorkspacePatch IJsonModel<HealthcareApisWorkspacePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DicomServicePatchResource IJsonModel<DicomServicePatchResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HealthcareApisWorkspacePatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DicomServicePatchResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HealthcareApisWorkspacePatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DicomServicePatchResource)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeHealthcareApisWorkspacePatch(document.RootElement, options);
+            return DeserializeDicomServicePatchResource(document.RootElement, options);
         }
 
-        internal static HealthcareApisWorkspacePatch DeserializeHealthcareApisWorkspacePatch(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static DicomServicePatchResource DeserializeDicomServicePatchResource(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -100,38 +100,38 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new HealthcareApisWorkspacePatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new DicomServicePatchResource(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<HealthcareApisWorkspacePatch>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DicomServicePatchResource>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HealthcareApisWorkspacePatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DicomServicePatchResource>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HealthcareApisWorkspacePatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DicomServicePatchResource)} does not support writing '{options.Format}' format.");
             }
         }
 
-        HealthcareApisWorkspacePatch IPersistableModel<HealthcareApisWorkspacePatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DicomServicePatchResource IPersistableModel<DicomServicePatchResource>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HealthcareApisWorkspacePatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DicomServicePatchResource>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeHealthcareApisWorkspacePatch(document.RootElement, options);
+                        return DeserializeDicomServicePatchResource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HealthcareApisWorkspacePatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DicomServicePatchResource)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<HealthcareApisWorkspacePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DicomServicePatchResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
