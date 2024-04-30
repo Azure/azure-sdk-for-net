@@ -31,6 +31,11 @@ namespace Azure.Core
         /// </summary>
         public DateTimeOffset ExpiresOn { get; }
 
+        /// <summary>
+        /// Gets the time when the token should be refreshed.
+        /// </summary>
+        public DateTimeOffset? RefreshOn { get; }
+
         /// <inheritdoc />
         public override bool Equals(object? obj)
         {
