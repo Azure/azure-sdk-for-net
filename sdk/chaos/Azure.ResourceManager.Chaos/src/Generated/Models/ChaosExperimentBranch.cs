@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="actions">
         /// List of actions.
         /// Please note <see cref="ChaosExperimentAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ChaosContinuousAction"/>, <see cref="ChaosDelayAction"/> and <see cref="ChaosDiscreteAction"/>.
+        /// The available derived classes include <see cref="ChaosDelayAction"/>, <see cref="ChaosDiscreteAction"/> and <see cref="ChaosContinuousAction"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="actions"/> is null. </exception>
         public ChaosExperimentBranch(string name, IEnumerable<ChaosExperimentAction> actions)
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="actions">
         /// List of actions.
         /// Please note <see cref="ChaosExperimentAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ChaosContinuousAction"/>, <see cref="ChaosDelayAction"/> and <see cref="ChaosDiscreteAction"/>.
+        /// The available derived classes include <see cref="ChaosDelayAction"/>, <see cref="ChaosDiscreteAction"/> and <see cref="ChaosContinuousAction"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ChaosExperimentBranch(string name, IList<ChaosExperimentAction> actions, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <summary>
         /// List of actions.
         /// Please note <see cref="ChaosExperimentAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ChaosContinuousAction"/>, <see cref="ChaosDelayAction"/> and <see cref="ChaosDiscreteAction"/>.
+        /// The available derived classes include <see cref="ChaosDelayAction"/>, <see cref="ChaosDiscreteAction"/> and <see cref="ChaosContinuousAction"/>.
         /// </summary>
         public IList<ChaosExperimentAction> Actions { get; }
     }
