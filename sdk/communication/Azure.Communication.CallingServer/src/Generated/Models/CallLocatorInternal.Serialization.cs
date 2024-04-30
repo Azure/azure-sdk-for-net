@@ -15,30 +15,22 @@ namespace Azure.Communication.CallingServer
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(GroupCallId))
+            if (GroupCallId != null)
             {
                 writer.WritePropertyName("groupCallId"u8);
                 writer.WriteStringValue(GroupCallId);
             }
-            if (Optional.IsDefined(ServerCallId))
+            if (ServerCallId != null)
             {
                 writer.WritePropertyName("serverCallId"u8);
                 writer.WriteStringValue(ServerCallId);
             }
-            if (Optional.IsDefined(Kind))
+            if (Kind.HasValue)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
             writer.WriteEndObject();
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
-            return content;
         }
     }
 }

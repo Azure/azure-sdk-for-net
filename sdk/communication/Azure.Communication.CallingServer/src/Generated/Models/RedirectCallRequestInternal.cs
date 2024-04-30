@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Communication;
 
 namespace Azure.Communication.CallingServer
 {
@@ -18,8 +19,14 @@ namespace Azure.Communication.CallingServer
         /// <exception cref="ArgumentNullException"> <paramref name="incomingCallContext"/> or <paramref name="target"/> is null. </exception>
         public RedirectCallRequestInternal(string incomingCallContext, CommunicationIdentifierModel target)
         {
-            Argument.AssertNotNull(incomingCallContext, nameof(incomingCallContext));
-            Argument.AssertNotNull(target, nameof(target));
+            if (incomingCallContext == null)
+            {
+                throw new ArgumentNullException(nameof(incomingCallContext));
+            }
+            if (target == null)
+            {
+                throw new ArgumentNullException(nameof(target));
+            }
 
             IncomingCallContext = incomingCallContext;
             Target = target;

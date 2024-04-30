@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
@@ -18,7 +19,10 @@ namespace Azure.Communication.CallingServer
         /// <exception cref="ArgumentNullException"> <paramref name="callLocator"/> is null. </exception>
         public StartCallRecordingRequestInternal(CallLocatorInternal callLocator)
         {
-            Argument.AssertNotNull(callLocator, nameof(callLocator));
+            if (callLocator == null)
+            {
+                throw new ArgumentNullException(nameof(callLocator));
+            }
 
             CallLocator = callLocator;
             ChannelAffinity = new ChangeTrackingList<ChannelAffinityInternal>();

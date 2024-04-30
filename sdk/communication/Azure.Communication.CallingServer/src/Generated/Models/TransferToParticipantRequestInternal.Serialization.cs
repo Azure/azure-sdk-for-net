@@ -17,30 +17,22 @@ namespace Azure.Communication.CallingServer
             writer.WriteStartObject();
             writer.WritePropertyName("targetParticipant"u8);
             writer.WriteObjectValue(TargetParticipant);
-            if (Optional.IsDefined(TransfereeCallerId))
+            if (TransfereeCallerId != null)
             {
                 writer.WritePropertyName("transfereeCallerId"u8);
                 writer.WriteObjectValue(TransfereeCallerId);
             }
-            if (Optional.IsDefined(UserToUserInformation))
+            if (UserToUserInformation != null)
             {
                 writer.WritePropertyName("userToUserInformation"u8);
                 writer.WriteStringValue(UserToUserInformation);
             }
-            if (Optional.IsDefined(OperationContext))
+            if (OperationContext != null)
             {
                 writer.WritePropertyName("operationContext"u8);
                 writer.WriteStringValue(OperationContext);
             }
             writer.WriteEndObject();
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
-            return content;
         }
     }
 }

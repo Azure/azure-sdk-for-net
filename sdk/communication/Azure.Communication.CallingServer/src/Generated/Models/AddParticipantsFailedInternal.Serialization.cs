@@ -7,6 +7,8 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Communication;
+using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
@@ -98,14 +100,6 @@ namespace Azure.Communication.CallingServer
                 serverCallId,
                 correlationId,
                 publicEventType);
-        }
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static AddParticipantsFailedInternal FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content);
-            return DeserializeAddParticipantsFailedInternal(document.RootElement);
         }
     }
 }

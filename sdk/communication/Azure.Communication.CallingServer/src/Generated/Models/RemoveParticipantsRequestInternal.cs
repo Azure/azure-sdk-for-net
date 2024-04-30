@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Communication;
 
 namespace Azure.Communication.CallingServer
 {
@@ -19,7 +20,10 @@ namespace Azure.Communication.CallingServer
         /// <exception cref="ArgumentNullException"> <paramref name="participantsToRemove"/> is null. </exception>
         public RemoveParticipantsRequestInternal(IEnumerable<CommunicationIdentifierModel> participantsToRemove)
         {
-            Argument.AssertNotNull(participantsToRemove, nameof(participantsToRemove));
+            if (participantsToRemove == null)
+            {
+                throw new ArgumentNullException(nameof(participantsToRemove));
+            }
 
             ParticipantsToRemove = participantsToRemove.ToList();
         }

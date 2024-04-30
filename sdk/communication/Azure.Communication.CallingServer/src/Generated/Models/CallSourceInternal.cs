@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Communication;
 
 namespace Azure.Communication.CallingServer
 {
@@ -17,7 +18,10 @@ namespace Azure.Communication.CallingServer
         /// <exception cref="ArgumentNullException"> <paramref name="identifier"/> is null. </exception>
         public CallSourceInternal(CommunicationIdentifierModel identifier)
         {
-            Argument.AssertNotNull(identifier, nameof(identifier));
+            if (identifier == null)
+            {
+                throw new ArgumentNullException(nameof(identifier));
+            }
 
             Identifier = identifier;
         }

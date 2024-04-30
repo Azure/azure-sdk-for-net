@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Communication.CallingServer;
 
 namespace Azure.Communication
 {
@@ -18,7 +17,10 @@ namespace Azure.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="appId"/> is null. </exception>
         public MicrosoftTeamsAppIdentifierModel(string appId)
         {
-            Argument.AssertNotNull(appId, nameof(appId));
+            if (appId == null)
+            {
+                throw new ArgumentNullException(nameof(appId));
+            }
 
             AppId = appId;
         }

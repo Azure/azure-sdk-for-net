@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Communication.CallingServer;
 using Azure.Core;
 
 namespace Azure.Communication
@@ -16,32 +15,32 @@ namespace Azure.Communication
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (CallingServer.Optional.IsDefined(RawId))
+            if (RawId != null)
             {
                 writer.WritePropertyName("rawId"u8);
                 writer.WriteStringValue(RawId);
             }
-            if (CallingServer.Optional.IsDefined(Kind))
+            if (Kind.HasValue)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
-            if (CallingServer.Optional.IsDefined(CommunicationUser))
+            if (CommunicationUser != null)
             {
                 writer.WritePropertyName("communicationUser"u8);
                 writer.WriteObjectValue(CommunicationUser);
             }
-            if (CallingServer.Optional.IsDefined(PhoneNumber))
+            if (PhoneNumber != null)
             {
                 writer.WritePropertyName("phoneNumber"u8);
                 writer.WriteObjectValue(PhoneNumber);
             }
-            if (CallingServer.Optional.IsDefined(MicrosoftTeamsUser))
+            if (MicrosoftTeamsUser != null)
             {
                 writer.WritePropertyName("microsoftTeamsUser"u8);
                 writer.WriteObjectValue(MicrosoftTeamsUser);
             }
-            if (CallingServer.Optional.IsDefined(MicrosoftTeamsApp))
+            if (MicrosoftTeamsApp != null)
             {
                 writer.WritePropertyName("microsoftTeamsApp"u8);
                 writer.WriteObjectValue(MicrosoftTeamsApp);
@@ -121,22 +120,6 @@ namespace Azure.Communication
                 phoneNumber,
                 microsoftTeamsUser,
                 microsoftTeamsApp);
-        }
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static CommunicationIdentifierModel FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content);
-            return DeserializeCommunicationIdentifierModel(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new CallingServer.Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
-            return content;
         }
     }
 }

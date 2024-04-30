@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Communication;
 using Azure.Core;
 
 namespace Azure.Communication.CallingServer
@@ -17,35 +18,27 @@ namespace Azure.Communication.CallingServer
             writer.WriteStartObject();
             writer.WritePropertyName("playSourceInfo"u8);
             writer.WriteObjectValue(PlaySourceInfo);
-            if (Optional.IsCollectionDefined(PlayTo))
+            if (!(PlayTo is ChangeTrackingList<CommunicationIdentifierModel> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("playTo"u8);
                 writer.WriteStartArray();
                 foreach (var item in PlayTo)
                 {
-                    writer.WriteObjectValue<CommunicationIdentifierModel>(item);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PlayOptions))
+            if (PlayOptions != null)
             {
                 writer.WritePropertyName("playOptions"u8);
                 writer.WriteObjectValue(PlayOptions);
             }
-            if (Optional.IsDefined(OperationContext))
+            if (OperationContext != null)
             {
                 writer.WritePropertyName("operationContext"u8);
                 writer.WriteStringValue(OperationContext);
             }
             writer.WriteEndObject();
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
-            return content;
         }
     }
 }

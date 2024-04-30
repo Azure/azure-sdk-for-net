@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
@@ -43,14 +44,6 @@ namespace Azure.Communication.CallingServer
                 }
             }
             return new GetParticipantsResponseInternal(values ?? new ChangeTrackingList<AcsCallParticipantInternal>(), nextLink);
-        }
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static GetParticipantsResponseInternal FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content);
-            return DeserializeGetParticipantsResponseInternal(document.RootElement);
         }
     }
 }

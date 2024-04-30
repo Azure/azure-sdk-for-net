@@ -17,27 +17,27 @@ namespace Azure.Communication.CallingServer
             writer.WriteStartObject();
             writer.WritePropertyName("callLocator"u8);
             writer.WriteObjectValue(CallLocator);
-            if (Optional.IsDefined(RecordingStateCallbackUri))
+            if (RecordingStateCallbackUri != null)
             {
                 writer.WritePropertyName("recordingStateCallbackUri"u8);
                 writer.WriteStringValue(RecordingStateCallbackUri);
             }
-            if (Optional.IsDefined(RecordingContentType))
+            if (RecordingContentType.HasValue)
             {
                 writer.WritePropertyName("recordingContentType"u8);
                 writer.WriteStringValue(RecordingContentType.Value.ToString());
             }
-            if (Optional.IsDefined(RecordingChannelType))
+            if (RecordingChannelType.HasValue)
             {
                 writer.WritePropertyName("recordingChannelType"u8);
                 writer.WriteStringValue(RecordingChannelType.Value.ToString());
             }
-            if (Optional.IsDefined(RecordingFormatType))
+            if (RecordingFormatType.HasValue)
             {
                 writer.WritePropertyName("recordingFormatType"u8);
                 writer.WriteStringValue(RecordingFormatType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(ChannelAffinity))
+            if (!(ChannelAffinity is ChangeTrackingList<ChannelAffinityInternal> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("channelAffinity"u8);
                 writer.WriteStartArray();
@@ -48,14 +48,6 @@ namespace Azure.Communication.CallingServer
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
-            return content;
         }
     }
 }
