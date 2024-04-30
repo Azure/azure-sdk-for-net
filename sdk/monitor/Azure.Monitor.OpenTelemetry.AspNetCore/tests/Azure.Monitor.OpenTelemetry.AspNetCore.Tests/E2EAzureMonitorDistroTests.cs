@@ -80,42 +80,39 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             // TODO: This test needs to assert telemetry content. (ie: sample rate)
         }
 
-        [Theory(Skip = "TODO: Ordering needs to be fixed for processor in this test.")]
-        [InlineData(null)]
-        [InlineData("true")]
-        [InlineData("True")]
-        [InlineData("False")]
-        [InlineData("false")]
-        public void ValidateLogFilteringProcessorIsAddedToLoggerProvider(string enableLogSampling)
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void ValidateLogFilteringProcessorIsAddedToLoggerProvider(bool disableLogSampling)
         {
-            try
+            var sv = new ServiceCollection();
+            sv.AddOpenTelemetry().UseAzureMonitor(o =>
             {
-                Environment.SetEnvironmentVariable("OTEL_DOTNET_AZURE_MONITOR_EXPERIMENTAL_ENABLE_LOG_SAMPLING", enableLogSampling);
+                o.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000";
+                o.DisableTraceBasedSamplingForLogs = disableLogSampling;
+            });
 
-                var sv = new ServiceCollection();
-                sv.AddOpenTelemetry().UseAzureMonitor(o => o.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000");
+            var sp = sv.BuildServiceProvider();
+            var loggerProvider = sp.GetRequiredService<ILoggerProvider>();
+            var sdkProvider = typeof(OpenTelemetryLoggerProvider).GetField("Provider", BindingFlags.Instance | BindingFlags.NonPublic)?.GetValue(loggerProvider);
+            var processor = sdkProvider?.GetType().GetProperty("Processor", BindingFlags.Instance | BindingFlags.Public)?.GetMethod?.Invoke(sdkProvider, null);
 
-                var sp = sv.BuildServiceProvider();
-                var loggerProvider = sp.GetRequiredService<ILoggerProvider>();
-                var sdkProvider = typeof(OpenTelemetryLoggerProvider).GetField("Provider", BindingFlags.Instance | BindingFlags.NonPublic)?.GetValue(loggerProvider);
-                var processor = sdkProvider?.GetType().GetProperty("Processor", BindingFlags.Instance | BindingFlags.Public)?.GetMethod?.Invoke(sdkProvider, null);
+            var compositeProcessor = processor as CompositeProcessor<LogRecord>;
 
-                Assert.NotNull(processor);
+            // Filtering processor/ exporter is added first in the pipeline.
+            var firstProcessor = typeof(CompositeProcessor<LogRecord>).GetField("Head", BindingFlags.Instance | BindingFlags.NonPublic)?.GetValue(compositeProcessor);
 
-                if (enableLogSampling != null && enableLogSampling.Equals("true" , StringComparison.OrdinalIgnoreCase))
-                {
-                    Assert.True(processor is LogFilteringProcessor);
-                    Assert.True(processor is BatchLogRecordExportProcessor);
-                }
-                else
-                {
-                    Assert.True(processor is not LogFilteringProcessor);
-                    Assert.True(processor is BatchLogRecordExportProcessor);
-                }
+            var logProcessor = firstProcessor?.GetType().GetField("Value", BindingFlags.Instance | BindingFlags.Public)?.GetValue(firstProcessor);
+
+            if (!disableLogSampling)
+            {
+                Assert.True(logProcessor is LogFilteringProcessor);
+                Assert.True(logProcessor is BatchLogRecordExportProcessor);
             }
-            finally
+            else
             {
-                Environment.SetEnvironmentVariable("OTEL_DOTNET_AZURE_MONITOR_EXPERIMENTAL_ENABLE_LOG_SAMPLING", null);
+                Assert.True(logProcessor is not LogFilteringProcessor);
+                Assert.True(logProcessor is BatchLogRecordExportProcessor);
             }
         }
 

@@ -29,7 +29,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
 
             telemetryItems = new List<TelemetryItem>();
 
-            return loggerOptions.AddProcessor(new SimpleLogRecordExportProcessor(new AzureMonitorLogExporter(new MockTransmitter(telemetryItems))));
+            return loggerOptions.AddProcessor(new SimpleLogRecordExportProcessor(new AzureMonitorLogExporter(new AzureMonitorExporterOptions(), new MockTransmitter(telemetryItems))));
         }
 
         /// <summary>

@@ -29,8 +29,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
     {
         private const string SqlClientInstrumentationPackageName = "OpenTelemetry.Instrumentation.SqlClient";
 
-        private const string EnableLogSamplingEnvVar = "OTEL_DOTNET_AZURE_MONITOR_EXPERIMENTAL_ENABLE_LOG_SAMPLING";
-
         /// <summary>
         /// Configures Azure Monitor for logging, distributed tracing, and metrics.
         /// </summary>
@@ -158,18 +156,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                     {
                         var azureMonitorOptions = azureOptions.Get(Options.DefaultName);
 
-                        bool enableLogSampling = false;
-                        try
-                        {
-                            var enableLogSamplingEnvVar = Environment.GetEnvironmentVariable(EnableLogSamplingEnvVar);
-                            bool.TryParse(enableLogSamplingEnvVar, out enableLogSampling);
-                        }
-                        catch (Exception ex)
-                        {
-                            AzureMonitorAspNetCoreEventSource.Log.GetEnvironmentVariableFailed(EnableLogSamplingEnvVar, ex);
-                        }
-
-                        if (enableLogSampling)
+                        if (!azureMonitorOptions.DisableTraceBasedSamplingForLogs)
                         {
                             var azureMonitorExporterOptions = new AzureMonitorExporterOptions();
                             azureMonitorOptions.SetValueToExporterOptions(azureMonitorExporterOptions);
@@ -177,9 +164,19 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                         }
                         else
                         {
-                            loggingOptions.AddAzureMonitorLogExporter(o => azureMonitorOptions.SetValueToExporterOptions(o));
+                            loggingOptions.AddAzureMonitorLogExporter(o =>
+                            {
+                                azureMonitorOptions.SetValueToExporterOptions(o);
+
+                                // Sampling is disabled by the user.
+                                // Set the SampleRatio of log exporter to 1.0.
+                                // The value will be used by the exporter to set SampleRate on the telemetry items.
+                                o.SamplingRatio = 1.0f;
+                            });
                         }
 
+                        // Sequence of adding processors does not matter here even if the filtering processor is used.
+                        // LogRecord will pass through each processor independent of other processors in the pipeline.
                         if (azureMonitorOptions.EnableLiveMetrics)
                         {
                             loggingOptions.AddProcessor(sp =>

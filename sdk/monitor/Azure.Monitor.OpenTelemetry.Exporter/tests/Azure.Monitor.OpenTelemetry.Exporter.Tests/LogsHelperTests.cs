@@ -225,7 +225,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 roleInstance: "testRoleInstance",
                 serviceVersion: null,
                 monitorBaseData: null);
-            var telemetryItem = LogsHelper.OtelToAzureMonitorLogs(new Batch<LogRecord>(logRecords.ToArray(), logRecords.Count), logResource, "Ikey");
+            var telemetryItem = LogsHelper.OtelToAzureMonitorLogs(new Batch<LogRecord>(logRecords.ToArray(), logRecords.Count), logResource, "Ikey", 100f);
 
             Assert.Equal(type, telemetryItem[0].Data.BaseType);
             Assert.Equal("Ikey", telemetryItem[0].InstrumentationKey);

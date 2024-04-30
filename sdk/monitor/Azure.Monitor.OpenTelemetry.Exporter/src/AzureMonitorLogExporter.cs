@@ -19,18 +19,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         private readonly ITransmitter _transmitter;
         private readonly string _instrumentationKey;
         private AzureMonitorResource? _resource;
+        private readonly float _sampleRate; // This value is recorded on TelemetryItem.SampleRate.
         private bool _disposed;
 
         /// <summary>
         /// Initializes a new instance of Azure Monitor Log Exporter.
         /// </summary>
         /// <param name="options">Configuration options for the exporter.</param>
-        public AzureMonitorLogExporter(AzureMonitorExporterOptions options) : this(TransmitterFactory.Instance.Get(options))
+        public AzureMonitorLogExporter(AzureMonitorExporterOptions options) : this(options, TransmitterFactory.Instance.Get(options))
         {
         }
 
-        internal AzureMonitorLogExporter(ITransmitter transmitter)
+        internal AzureMonitorLogExporter(AzureMonitorExporterOptions options, ITransmitter transmitter)
         {
+            _sampleRate = (float)Math.Round(options.SamplingRatio * 100);
             _transmitter = transmitter;
             _instrumentationKey = transmitter.InstrumentationKey;
         }
@@ -47,7 +49,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             try
             {
-                var telemetryItems = LogsHelper.OtelToAzureMonitorLogs(batch, LogResource, _instrumentationKey);
+                var telemetryItems = LogsHelper.OtelToAzureMonitorLogs(batch, LogResource, _instrumentationKey, _sampleRate);
                 if (telemetryItems.Count > 0)
                 {
                     exportResult = _transmitter.TrackAsync(telemetryItems, TelemetryItemOrigin.AzureMonitorLogExporter, false, CancellationToken.None).EnsureCompleted();

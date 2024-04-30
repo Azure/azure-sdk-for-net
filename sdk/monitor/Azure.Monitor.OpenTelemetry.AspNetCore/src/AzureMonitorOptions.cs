@@ -59,6 +59,11 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
         public string StorageDirectory { get; set; }
 
         /// <summary>
+        /// Disables sampling for logs that are emitted within an activity context.
+        /// </summary>
+        public bool DisableTraceBasedSamplingForLogs { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="AzureMonitorOptions"/>.
         /// </summary>
         public AzureMonitorOptions()
