@@ -36,15 +36,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteEndObject();
             if (Optional.IsDefined(RequestLogging))
             {
-                if (RequestLogging != null)
-                {
-                    writer.WritePropertyName("requestLogging"u8);
-                    writer.WriteObjectValue(RequestLogging, options);
-                }
-                else
-                {
-                    writer.WriteNull("requestLogging");
-                }
+                writer.WritePropertyName("requestLogging"u8);
+                writer.WriteObjectValue(RequestLogging, options);
             }
             if (Optional.IsDefined(RollingRate))
             {
@@ -110,7 +103,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        requestLogging = null;
                         continue;
                     }
                     requestLogging = RequestLogging.DeserializeRequestLogging(property.Value, options);

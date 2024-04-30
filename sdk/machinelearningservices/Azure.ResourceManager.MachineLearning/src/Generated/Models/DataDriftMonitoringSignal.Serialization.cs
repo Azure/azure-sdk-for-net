@@ -28,15 +28,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DataSegment))
             {
-                if (DataSegment != null)
-                {
-                    writer.WritePropertyName("dataSegment"u8);
-                    writer.WriteObjectValue(DataSegment, options);
-                }
-                else
-                {
-                    writer.WriteNull("dataSegment");
-                }
+                writer.WritePropertyName("dataSegment"u8);
+                writer.WriteObjectValue(DataSegment, options);
             }
             if (Optional.IsCollectionDefined(FeatureDataTypeOverride))
             {
@@ -58,15 +51,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(Features))
             {
-                if (Features != null)
-                {
-                    writer.WritePropertyName("features"u8);
-                    writer.WriteObjectValue(Features, options);
-                }
-                else
-                {
-                    writer.WriteNull("features");
-                }
+                writer.WritePropertyName("features"u8);
+                writer.WriteObjectValue(Features, options);
             }
             writer.WritePropertyName("metricThresholds"u8);
             writer.WriteStartArray();
@@ -159,7 +145,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        dataSegment = null;
                         continue;
                     }
                     dataSegment = MonitoringDataSegment.DeserializeMonitoringDataSegment(property.Value, options);
@@ -184,7 +169,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        features = null;
                         continue;
                     }
                     features = MonitoringFeatureFilterBase.DeserializeMonitoringFeatureFilterBase(property.Value, options);

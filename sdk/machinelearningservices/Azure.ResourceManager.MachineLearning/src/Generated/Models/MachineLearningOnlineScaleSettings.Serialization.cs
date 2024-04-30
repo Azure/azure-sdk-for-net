@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    [PersistableModelProxy(typeof(UnknownOnlineScaleSettings))]
+    [PersistableModelProxy(typeof(UnknownMachineLearningOnlineScaleSettings))]
     public partial class MachineLearningOnlineScaleSettings : IUtf8JsonSerializable, IJsonModel<MachineLearningOnlineScaleSettings>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningOnlineScaleSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     case "TargetUtilization": return MachineLearningTargetUtilizationScaleSettings.DeserializeMachineLearningTargetUtilizationScaleSettings(element, options);
                 }
             }
-            return UnknownOnlineScaleSettings.DeserializeUnknownOnlineScaleSettings(element, options);
+            return UnknownMachineLearningOnlineScaleSettings.DeserializeUnknownMachineLearningOnlineScaleSettings(element, options);
         }
 
         BinaryData IPersistableModel<MachineLearningOnlineScaleSettings>.Write(ModelReaderWriterOptions options)

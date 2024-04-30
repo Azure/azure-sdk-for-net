@@ -86,15 +86,8 @@ namespace Azure.ResourceManager.LoadTesting
             }
             if (Optional.IsDefined(Encryption))
             {
-                if (Encryption != null)
-                {
-                    writer.WritePropertyName("encryption"u8);
-                    writer.WriteObjectValue(Encryption, options);
-                }
-                else
-                {
-                    writer.WriteNull("encryption");
-                }
+                writer.WritePropertyName("encryption"u8);
+                writer.WriteObjectValue(Encryption, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -235,7 +228,6 @@ namespace Azure.ResourceManager.LoadTesting
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                encryption = null;
                                 continue;
                             }
                             encryption = LoadTestingCmkEncryptionProperties.DeserializeLoadTestingCmkEncryptionProperties(property0.Value, options);

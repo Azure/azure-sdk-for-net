@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    [PersistableModelProxy(typeof(UnknownOutboundRule))]
+    [PersistableModelProxy(typeof(UnknownMachineLearningOutboundRule))]
     public partial class MachineLearningOutboundRule : IUtf8JsonSerializable, IJsonModel<MachineLearningOutboundRule>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningOutboundRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     case "ServiceTag": return ServiceTagOutboundRule.DeserializeServiceTagOutboundRule(element, options);
                 }
             }
-            return UnknownOutboundRule.DeserializeUnknownOutboundRule(element, options);
+            return UnknownMachineLearningOutboundRule.DeserializeUnknownMachineLearningOutboundRule(element, options);
         }
 
         BinaryData IPersistableModel<MachineLearningOutboundRule>.Write(ModelReaderWriterOptions options)

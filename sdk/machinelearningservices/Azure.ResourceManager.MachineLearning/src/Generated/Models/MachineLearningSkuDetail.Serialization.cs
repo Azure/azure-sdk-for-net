@@ -28,15 +28,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Capacity))
             {
-                if (Capacity != null)
-                {
-                    writer.WritePropertyName("capacity"u8);
-                    writer.WriteObjectValue(Capacity, options);
-                }
-                else
-                {
-                    writer.WriteNull("capacity");
-                }
+                writer.WritePropertyName("capacity"u8);
+                writer.WriteObjectValue(Capacity, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
@@ -52,15 +45,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(Sku))
             {
-                if (Sku != null)
-                {
-                    writer.WritePropertyName("sku"u8);
-                    writer.WriteObjectValue(Sku, options);
-                }
-                else
-                {
-                    writer.WriteNull("sku");
-                }
+                writer.WritePropertyName("sku"u8);
+                writer.WriteObjectValue(Sku, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -111,7 +97,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        capacity = null;
                         continue;
                     }
                     capacity = MachineLearningSkuCapacity.DeserializeMachineLearningSkuCapacity(property.Value, options);
@@ -131,7 +116,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        sku = null;
                         continue;
                     }
                     sku = MachineLearningSkuSetting.DeserializeMachineLearningSkuSetting(property.Value, options);

@@ -48,15 +48,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
             if (Optional.IsDefined(AppliedBy))
             {
-                if (AppliedBy != null)
-                {
-                    writer.WritePropertyName("appliedBy"u8);
-                    writer.WriteObjectValue(AppliedBy, options);
-                }
-                else
-                {
-                    writer.WriteNull("appliedBy");
-                }
+                writer.WritePropertyName("appliedBy"u8);
+                writer.WriteObjectValue(AppliedBy, options);
             }
             if (Optional.IsCollectionDefined(StatusConditions))
             {
@@ -77,15 +70,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
             if (Optional.IsDefined(HelmReleaseProperties))
             {
-                if (HelmReleaseProperties != null)
-                {
-                    writer.WritePropertyName("helmReleaseProperties"u8);
-                    writer.WriteObjectValue(HelmReleaseProperties, options);
-                }
-                else
-                {
-                    writer.WriteNull("helmReleaseProperties");
-                }
+                writer.WritePropertyName("helmReleaseProperties"u8);
+                writer.WriteObjectValue(HelmReleaseProperties, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -164,7 +150,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        appliedBy = null;
                         continue;
                     }
                     appliedBy = KubernetesObjectReference.DeserializeKubernetesObjectReference(property.Value, options);
@@ -189,7 +174,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        helmReleaseProperties = null;
                         continue;
                     }
                     helmReleaseProperties = HelmReleaseProperties.DeserializeHelmReleaseProperties(property.Value, options);

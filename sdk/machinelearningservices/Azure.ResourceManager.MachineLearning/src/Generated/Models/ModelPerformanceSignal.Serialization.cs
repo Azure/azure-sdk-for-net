@@ -28,15 +28,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DataSegment))
             {
-                if (DataSegment != null)
-                {
-                    writer.WritePropertyName("dataSegment"u8);
-                    writer.WriteObjectValue(DataSegment, options);
-                }
-                else
-                {
-                    writer.WriteNull("dataSegment");
-                }
+                writer.WritePropertyName("dataSegment"u8);
+                writer.WriteObjectValue(DataSegment, options);
             }
             writer.WritePropertyName("metricThreshold"u8);
             writer.WriteObjectValue(MetricThreshold, options);
@@ -127,7 +120,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        dataSegment = null;
                         continue;
                     }
                     dataSegment = MonitoringDataSegment.DeserializeMonitoringDataSegment(property.Value, options);

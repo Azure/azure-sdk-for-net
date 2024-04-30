@@ -71,27 +71,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(PrivateEndpoint))
             {
-                if (PrivateEndpoint != null)
-                {
-                    writer.WritePropertyName("privateEndpoint"u8);
-                    writer.WriteObjectValue(PrivateEndpoint, options);
-                }
-                else
-                {
-                    writer.WriteNull("privateEndpoint");
-                }
+                writer.WritePropertyName("privateEndpoint"u8);
+                writer.WriteObjectValue(PrivateEndpoint, options);
             }
             if (Optional.IsDefined(PrivateLinkServiceConnectionState))
             {
-                if (PrivateLinkServiceConnectionState != null)
-                {
-                    writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                    writer.WriteObjectValue(PrivateLinkServiceConnectionState, options);
-                }
-                else
-                {
-                    writer.WriteNull("privateLinkServiceConnectionState");
-                }
+                writer.WritePropertyName("privateLinkServiceConnectionState"u8);
+                writer.WriteObjectValue(PrivateLinkServiceConnectionState, options);
             }
             if (Optional.IsDefined(ProvisioningState))
             {
@@ -202,7 +188,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                privateEndpoint = null;
                                 continue;
                             }
                             privateEndpoint = RegistryPrivateEndpoint.DeserializeRegistryPrivateEndpoint(property0.Value, options);
@@ -212,7 +197,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                privateLinkServiceConnectionState = null;
                                 continue;
                             }
                             privateLinkServiceConnectionState = RegistryPrivateLinkServiceConnectionState.DeserializeRegistryPrivateLinkServiceConnectionState(property0.Value, options);

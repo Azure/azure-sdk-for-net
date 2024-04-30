@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    [PersistableModelProxy(typeof(UnknownDistributionConfiguration))]
+    [PersistableModelProxy(typeof(UnknownMachineLearningDistributionConfiguration))]
     public partial class MachineLearningDistributionConfiguration : IUtf8JsonSerializable, IJsonModel<MachineLearningDistributionConfiguration>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningDistributionConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     case "TensorFlow": return TensorFlowDistributionConfiguration.DeserializeTensorFlowDistributionConfiguration(element, options);
                 }
             }
-            return UnknownDistributionConfiguration.DeserializeUnknownDistributionConfiguration(element, options);
+            return UnknownMachineLearningDistributionConfiguration.DeserializeUnknownMachineLearningDistributionConfiguration(element, options);
         }
 
         BinaryData IPersistableModel<MachineLearningDistributionConfiguration>.Write(ModelReaderWriterOptions options)

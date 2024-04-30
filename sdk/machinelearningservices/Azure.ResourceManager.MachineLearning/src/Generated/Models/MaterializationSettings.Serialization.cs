@@ -28,39 +28,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Notification))
             {
-                if (Notification != null)
-                {
-                    writer.WritePropertyName("notification"u8);
-                    writer.WriteObjectValue(Notification, options);
-                }
-                else
-                {
-                    writer.WriteNull("notification");
-                }
+                writer.WritePropertyName("notification"u8);
+                writer.WriteObjectValue(Notification, options);
             }
             if (Optional.IsDefined(Resource))
             {
-                if (Resource != null)
-                {
-                    writer.WritePropertyName("resource"u8);
-                    writer.WriteObjectValue(Resource, options);
-                }
-                else
-                {
-                    writer.WriteNull("resource");
-                }
+                writer.WritePropertyName("resource"u8);
+                writer.WriteObjectValue(Resource, options);
             }
             if (Optional.IsDefined(Schedule))
             {
-                if (Schedule != null)
-                {
-                    writer.WritePropertyName("schedule"u8);
-                    writer.WriteObjectValue(Schedule, options);
-                }
-                else
-                {
-                    writer.WriteNull("schedule");
-                }
+                writer.WritePropertyName("schedule"u8);
+                writer.WriteObjectValue(Schedule, options);
             }
             if (Optional.IsCollectionDefined(SparkConfiguration))
             {
@@ -136,7 +115,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        notification = null;
                         continue;
                     }
                     notification = NotificationSetting.DeserializeNotificationSetting(property.Value, options);
@@ -146,7 +124,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        resource = null;
                         continue;
                     }
                     resource = MaterializationComputeResource.DeserializeMaterializationComputeResource(property.Value, options);
@@ -156,7 +133,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        schedule = null;
                         continue;
                     }
                     schedule = MachineLearningRecurrenceTrigger.DeserializeMachineLearningRecurrenceTrigger(property.Value, options);

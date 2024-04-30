@@ -68,15 +68,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(Identity))
             {
-                if (Identity != null)
-                {
-                    writer.WritePropertyName("identity"u8);
-                    writer.WriteObjectValue(Identity, options);
-                }
-                else
-                {
-                    writer.WriteNull("identity");
-                }
+                writer.WritePropertyName("identity"u8);
+                writer.WriteObjectValue(Identity, options);
             }
             if (Optional.IsDefined(IsArchived))
             {
@@ -87,15 +80,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStringValue(JobType.ToString());
             if (Optional.IsDefined(NotificationSetting))
             {
-                if (NotificationSetting != null)
-                {
-                    writer.WritePropertyName("notificationSetting"u8);
-                    writer.WriteObjectValue(NotificationSetting, options);
-                }
-                else
-                {
-                    writer.WriteNull("notificationSetting");
-                }
+                writer.WritePropertyName("notificationSetting"u8);
+                writer.WriteObjectValue(NotificationSetting, options);
             }
             if (Optional.IsCollectionDefined(SecretsConfiguration))
             {
@@ -228,15 +214,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "Labeling": return LabelingJobProperties.DeserializeLabelingJobProperties(element, options);
                     case "AutoML": return AutoMLJob.DeserializeAutoMLJob(element, options);
                     case "Command": return MachineLearningCommandJob.DeserializeMachineLearningCommandJob(element, options);
-                    case "Labeling": return LabelingJobProperties.DeserializeLabelingJobProperties(element, options);
                     case "Pipeline": return MachineLearningPipelineJob.DeserializeMachineLearningPipelineJob(element, options);
                     case "Spark": return SparkJob.DeserializeSparkJob(element, options);
                     case "Sweep": return MachineLearningSweepJob.DeserializeMachineLearningSweepJob(element, options);
                 }
             }
-            return UnknownJobBase.DeserializeUnknownJobBase(element, options);
+            return UnknownMachineLearningJobProperties.DeserializeUnknownMachineLearningJobProperties(element, options);
         }
 
         BinaryData IPersistableModel<MachineLearningJobProperties>.Write(ModelReaderWriterOptions options)

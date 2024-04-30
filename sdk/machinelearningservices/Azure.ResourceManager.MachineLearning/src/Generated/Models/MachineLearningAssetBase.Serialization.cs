@@ -28,15 +28,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AutoDeleteSetting))
             {
-                if (AutoDeleteSetting != null)
-                {
-                    writer.WritePropertyName("autoDeleteSetting"u8);
-                    writer.WriteObjectValue(AutoDeleteSetting, options);
-                }
-                else
-                {
-                    writer.WriteNull("autoDeleteSetting");
-                }
+                writer.WritePropertyName("autoDeleteSetting"u8);
+                writer.WriteObjectValue(AutoDeleteSetting, options);
             }
             if (Optional.IsDefined(IsAnonymous))
             {
@@ -148,7 +141,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        autoDeleteSetting = null;
                         continue;
                     }
                     autoDeleteSetting = AutoDeleteSetting.DeserializeAutoDeleteSetting(property.Value, options);

@@ -40,15 +40,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
             if (Optional.IsDefined(HelmChartRef))
             {
-                if (HelmChartRef != null)
-                {
-                    writer.WritePropertyName("helmChartRef"u8);
-                    writer.WriteObjectValue(HelmChartRef, options);
-                }
-                else
-                {
-                    writer.WriteNull("helmChartRef");
-                }
+                writer.WritePropertyName("helmChartRef"u8);
+                writer.WriteObjectValue(HelmChartRef, options);
             }
             if (Optional.IsDefined(FailureCount))
             {
@@ -147,7 +140,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        helmChartRef = null;
                         continue;
                     }
                     helmChartRef = KubernetesObjectReference.DeserializeKubernetesObjectReference(property.Value, options);

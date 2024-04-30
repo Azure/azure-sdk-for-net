@@ -112,7 +112,6 @@ Address = "2fff::",
                 },
                 StaticRouteConfiguration = new InternalNetworkStaticRouteConfiguration()
                 {
-                    Extension = StaticRouteConfigurationExtension.NoExtension,
                     BfdConfiguration = new BfdConfiguration()
                     {
                         IntervalInMilliSeconds = 300,

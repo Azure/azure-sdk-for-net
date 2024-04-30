@@ -32,15 +32,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteNumberValue(Interval);
             if (Optional.IsDefined(Schedule))
             {
-                if (Schedule != null)
-                {
-                    writer.WritePropertyName("schedule"u8);
-                    writer.WriteObjectValue(Schedule, options);
-                }
-                else
-                {
-                    writer.WriteNull("schedule");
-                }
+                writer.WritePropertyName("schedule"u8);
+                writer.WriteObjectValue(Schedule, options);
             }
             if (Optional.IsDefined(EndTime))
             {
@@ -136,7 +129,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        schedule = null;
                         continue;
                     }
                     schedule = MachineLearningRecurrenceSchedule.DeserializeMachineLearningRecurrenceSchedule(property.Value, options);

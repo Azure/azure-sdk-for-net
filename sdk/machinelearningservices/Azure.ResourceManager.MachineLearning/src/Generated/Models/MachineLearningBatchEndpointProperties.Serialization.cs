@@ -28,15 +28,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Defaults))
             {
-                if (Defaults != null)
-                {
-                    writer.WritePropertyName("defaults"u8);
-                    writer.WriteObjectValue(Defaults, options);
-                }
-                else
-                {
-                    writer.WriteNull("defaults");
-                }
+                writer.WritePropertyName("defaults"u8);
+                writer.WriteObjectValue(Defaults, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -59,15 +52,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(Keys))
             {
-                if (Keys != null)
-                {
-                    writer.WritePropertyName("keys"u8);
-                    writer.WriteObjectValue(Keys, options);
-                }
-                else
-                {
-                    writer.WriteNull("keys");
-                }
+                writer.WritePropertyName("keys"u8);
+                writer.WriteObjectValue(Keys, options);
             }
             if (Optional.IsCollectionDefined(Properties))
             {
@@ -165,7 +151,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        defaults = null;
                         continue;
                     }
                     defaults = BatchEndpointDefaults.DeserializeBatchEndpointDefaults(property.Value, options);
@@ -199,7 +184,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        keys = null;
                         continue;
                     }
                     keys = MachineLearningEndpointAuthKeys.DeserializeMachineLearningEndpointAuthKeys(property.Value, options);

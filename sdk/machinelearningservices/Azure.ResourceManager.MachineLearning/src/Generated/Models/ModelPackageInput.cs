@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="path">
         /// [Required] Location of the input.
         /// Please note <see cref="PackageInputPathBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="PackageInputPathId"/>, <see cref="PackageInputPathVersion"/> and <see cref="PackageInputPathUri"/>.
+        /// The available derived classes include <see cref="PackageInputPathId"/>, <see cref="PackageInputPathUri"/> and <see cref="PackageInputPathVersion"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="path"/> is null. </exception>
         public ModelPackageInput(PackageInputType inputType, PackageInputPathBase path)
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="path">
         /// [Required] Location of the input.
         /// Please note <see cref="PackageInputPathBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="PackageInputPathId"/>, <see cref="PackageInputPathVersion"/> and <see cref="PackageInputPathUri"/>.
+        /// The available derived classes include <see cref="PackageInputPathId"/>, <see cref="PackageInputPathUri"/> and <see cref="PackageInputPathVersion"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ModelPackageInput(PackageInputType inputType, PackageInputDeliveryMode? mode, string mountPath, PackageInputPathBase path, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary>
         /// [Required] Location of the input.
         /// Please note <see cref="PackageInputPathBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="PackageInputPathId"/>, <see cref="PackageInputPathVersion"/> and <see cref="PackageInputPathUri"/>.
+        /// The available derived classes include <see cref="PackageInputPathId"/>, <see cref="PackageInputPathUri"/> and <see cref="PackageInputPathVersion"/>.
         /// </summary>
         public PackageInputPathBase Path { get; set; }
     }

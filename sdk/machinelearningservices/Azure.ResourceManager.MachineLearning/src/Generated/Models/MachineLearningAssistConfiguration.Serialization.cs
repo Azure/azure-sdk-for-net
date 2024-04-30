@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    [PersistableModelProxy(typeof(UnknownMLAssistConfiguration))]
+    [PersistableModelProxy(typeof(UnknownMachineLearningAssistConfiguration))]
     public partial class MachineLearningAssistConfiguration : IUtf8JsonSerializable, IJsonModel<MachineLearningAssistConfiguration>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningAssistConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     case "Enabled": return MachineLearningAssistEnabledConfiguration.DeserializeMachineLearningAssistEnabledConfiguration(element, options);
                 }
             }
-            return UnknownMLAssistConfiguration.DeserializeUnknownMLAssistConfiguration(element, options);
+            return UnknownMachineLearningAssistConfiguration.DeserializeUnknownMachineLearningAssistConfiguration(element, options);
         }
 
         BinaryData IPersistableModel<MachineLearningAssistConfiguration>.Write(ModelReaderWriterOptions options)

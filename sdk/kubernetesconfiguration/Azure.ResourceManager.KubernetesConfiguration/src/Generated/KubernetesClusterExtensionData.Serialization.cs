@@ -164,15 +164,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             }
             if (options.Format != "W" && Optional.IsDefined(ErrorInfo))
             {
-                if (ErrorInfo != null)
-                {
-                    writer.WritePropertyName("errorInfo"u8);
-                    JsonSerializer.Serialize(writer, ErrorInfo);
-                }
-                else
-                {
-                    writer.WriteNull("errorInfo");
-                }
+                writer.WritePropertyName("errorInfo"u8);
+                JsonSerializer.Serialize(writer, ErrorInfo);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(CustomLocationSettings))
             {
@@ -435,7 +428,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                errorInfo = null;
                                 continue;
                             }
                             errorInfo = JsonSerializer.Deserialize<ResponseError>(property0.Value.GetRawText());

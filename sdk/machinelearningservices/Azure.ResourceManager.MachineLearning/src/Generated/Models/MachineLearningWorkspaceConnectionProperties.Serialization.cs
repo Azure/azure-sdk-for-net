@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    [PersistableModelProxy(typeof(UnknownWorkspaceConnectionPropertiesV2))]
+    [PersistableModelProxy(typeof(UnknownMachineLearningWorkspaceConnectionProperties))]
     public partial class MachineLearningWorkspaceConnectionProperties : IUtf8JsonSerializable, IJsonModel<MachineLearningWorkspaceConnectionProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningWorkspaceConnectionProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     case "UsernamePassword": return MachineLearningUsernamePasswordAuthTypeWorkspaceConnection.DeserializeMachineLearningUsernamePasswordAuthTypeWorkspaceConnection(element, options);
                 }
             }
-            return UnknownWorkspaceConnectionPropertiesV2.DeserializeUnknownWorkspaceConnectionPropertiesV2(element, options);
+            return UnknownMachineLearningWorkspaceConnectionProperties.DeserializeUnknownMachineLearningWorkspaceConnectionProperties(element, options);
         }
 
         BinaryData IPersistableModel<MachineLearningWorkspaceConnectionProperties>.Write(ModelReaderWriterOptions options)

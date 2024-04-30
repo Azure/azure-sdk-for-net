@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    [PersistableModelProxy(typeof(UnknownPreset))]
+    [PersistableModelProxy(typeof(UnknownMediaTransformPreset))]
     public partial class MediaTransformPreset : IUtf8JsonSerializable, IJsonModel<MediaTransformPreset>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaTransformPreset>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -70,13 +70,13 @@ namespace Azure.ResourceManager.Media.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "#Microsoft.Media.VideoAnalyzerPreset": return VideoAnalyzerPreset.DeserializeVideoAnalyzerPreset(element, options);
                     case "#Microsoft.Media.AudioAnalyzerPreset": return AudioAnalyzerPreset.DeserializeAudioAnalyzerPreset(element, options);
                     case "#Microsoft.Media.BuiltInStandardEncoderPreset": return BuiltInStandardEncoderPreset.DeserializeBuiltInStandardEncoderPreset(element, options);
                     case "#Microsoft.Media.StandardEncoderPreset": return StandardEncoderPreset.DeserializeStandardEncoderPreset(element, options);
-                    case "#Microsoft.Media.VideoAnalyzerPreset": return VideoAnalyzerPreset.DeserializeVideoAnalyzerPreset(element, options);
                 }
             }
-            return UnknownPreset.DeserializeUnknownPreset(element, options);
+            return UnknownMediaTransformPreset.DeserializeUnknownMediaTransformPreset(element, options);
         }
 
         BinaryData IPersistableModel<MediaTransformPreset>.Write(ModelReaderWriterOptions options)

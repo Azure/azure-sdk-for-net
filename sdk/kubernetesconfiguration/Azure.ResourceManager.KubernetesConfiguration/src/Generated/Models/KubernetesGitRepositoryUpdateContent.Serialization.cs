@@ -64,15 +64,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
             if (Optional.IsDefined(RepositoryRef))
             {
-                if (RepositoryRef != null)
-                {
-                    writer.WritePropertyName("repositoryRef"u8);
-                    writer.WriteObjectValue(RepositoryRef, options);
-                }
-                else
-                {
-                    writer.WriteNull("repositoryRef");
-                }
+                writer.WritePropertyName("repositoryRef"u8);
+                writer.WriteObjectValue(RepositoryRef, options);
             }
             if (Optional.IsDefined(SshKnownHosts))
             {
@@ -206,7 +199,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        repositoryRef = null;
                         continue;
                     }
                     repositoryRef = KubernetesGitRepositoryRef.DeserializeKubernetesGitRepositoryRef(property.Value, options);

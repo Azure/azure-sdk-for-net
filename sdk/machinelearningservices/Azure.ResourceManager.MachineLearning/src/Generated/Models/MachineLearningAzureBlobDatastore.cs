@@ -45,17 +45,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="endpoint"> Azure cloud endpoint for the storage account. </param>
         /// <param name="protocol"> Protocol used to communicate with the storage account. </param>
         /// <param name="serviceDataAccessAuthIdentity"> Indicates which identity to use to authenticate service data access to customer's storage. </param>
-        /// <param name="resourceGroup"> Azure Resource Group name. </param>
-        /// <param name="subscriptionId"> Azure Subscription Id. </param>
-        internal MachineLearningAzureBlobDatastore(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, MachineLearningDatastoreCredentials credentials, DatastoreType datastoreType, IntellectualProperty intellectualProperty, bool? isDefault, string accountName, string containerName, string endpoint, string protocol, MachineLearningServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity, string resourceGroup, string subscriptionId) : base(description, properties, tags, serializedAdditionalRawData, credentials, datastoreType, intellectualProperty, isDefault)
+        internal MachineLearningAzureBlobDatastore(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, MachineLearningDatastoreCredentials credentials, DatastoreType datastoreType, IntellectualProperty intellectualProperty, bool? isDefault, string accountName, string containerName, string endpoint, string protocol, MachineLearningServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity) : base(description, properties, tags, serializedAdditionalRawData, credentials, datastoreType, intellectualProperty, isDefault)
         {
             AccountName = accountName;
             ContainerName = containerName;
             Endpoint = endpoint;
             Protocol = protocol;
             ServiceDataAccessAuthIdentity = serviceDataAccessAuthIdentity;
-            ResourceGroup = resourceGroup;
-            SubscriptionId = subscriptionId;
             DatastoreType = datastoreType;
         }
 
@@ -74,9 +70,5 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public string Protocol { get; set; }
         /// <summary> Indicates which identity to use to authenticate service data access to customer's storage. </summary>
         public MachineLearningServiceDataAccessAuthIdentity? ServiceDataAccessAuthIdentity { get; set; }
-        /// <summary> Azure Resource Group name. </summary>
-        public string ResourceGroup { get; set; }
-        /// <summary> Azure Subscription Id. </summary>
-        public string SubscriptionId { get; set; }
     }
 }

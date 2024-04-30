@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    [PersistableModelProxy(typeof(UnknownJobLimits))]
+    [PersistableModelProxy(typeof(UnknownMachineLearningJobLimits))]
     public partial class MachineLearningJobLimits : IUtf8JsonSerializable, IJsonModel<MachineLearningJobLimits>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningJobLimits>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     case "Sweep": return MachineLearningSweepJobLimits.DeserializeMachineLearningSweepJobLimits(element, options);
                 }
             }
-            return UnknownJobLimits.DeserializeUnknownJobLimits(element, options);
+            return UnknownMachineLearningJobLimits.DeserializeUnknownMachineLearningJobLimits(element, options);
         }
 
         BinaryData IPersistableModel<MachineLearningJobLimits>.Write(ModelReaderWriterOptions options)

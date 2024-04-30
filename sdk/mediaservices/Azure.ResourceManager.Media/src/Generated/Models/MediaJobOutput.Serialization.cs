@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    [PersistableModelProxy(typeof(UnknownJobOutput))]
+    [PersistableModelProxy(typeof(UnknownMediaJobOutput))]
     public partial class MediaJobOutput : IUtf8JsonSerializable, IJsonModel<MediaJobOutput>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaJobOutput>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Media.Models
                     case "#Microsoft.Media.JobOutputAsset": return MediaJobOutputAsset.DeserializeMediaJobOutputAsset(element, options);
                 }
             }
-            return UnknownJobOutput.DeserializeUnknownJobOutput(element, options);
+            return UnknownMediaJobOutput.DeserializeUnknownMediaJobOutput(element, options);
         }
 
         BinaryData IPersistableModel<MediaJobOutput>.Write(ModelReaderWriterOptions options)

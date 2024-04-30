@@ -31,15 +31,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStringValue(DatastoreType.ToString());
             if (Optional.IsDefined(IntellectualProperty))
             {
-                if (IntellectualProperty != null)
-                {
-                    writer.WritePropertyName("intellectualProperty"u8);
-                    writer.WriteObjectValue(IntellectualProperty, options);
-                }
-                else
-                {
-                    writer.WriteNull("intellectualProperty");
-                }
+                writer.WritePropertyName("intellectualProperty"u8);
+                writer.WriteObjectValue(IntellectualProperty, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IsDefault))
             {
@@ -144,7 +137,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     case "OneLake": return OneLakeDatastore.DeserializeOneLakeDatastore(element, options);
                 }
             }
-            return UnknownDatastore.DeserializeUnknownDatastore(element, options);
+            return UnknownMachineLearningDatastoreProperties.DeserializeUnknownMachineLearningDatastoreProperties(element, options);
         }
 
         BinaryData IPersistableModel<MachineLearningDatastoreProperties>.Write(ModelReaderWriterOptions options)

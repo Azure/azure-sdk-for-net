@@ -31,15 +31,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStringValue(DataUri.AbsoluteUri);
             if (Optional.IsDefined(IntellectualProperty))
             {
-                if (IntellectualProperty != null)
-                {
-                    writer.WritePropertyName("intellectualProperty"u8);
-                    writer.WriteObjectValue(IntellectualProperty, options);
-                }
-                else
-                {
-                    writer.WriteNull("intellectualProperty");
-                }
+                writer.WritePropertyName("intellectualProperty"u8);
+                writer.WriteObjectValue(IntellectualProperty, options);
             }
             if (Optional.IsDefined(Stage))
             {
@@ -55,15 +48,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(AutoDeleteSetting))
             {
-                if (AutoDeleteSetting != null)
-                {
-                    writer.WritePropertyName("autoDeleteSetting"u8);
-                    writer.WriteObjectValue(AutoDeleteSetting, options);
-                }
-                else
-                {
-                    writer.WriteNull("autoDeleteSetting");
-                }
+                writer.WritePropertyName("autoDeleteSetting"u8);
+                writer.WriteObjectValue(AutoDeleteSetting, options);
             }
             if (Optional.IsDefined(IsAnonymous))
             {
@@ -165,12 +151,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "uri_folder": return DataImport.DeserializeDataImport(element, options);
                     case "mltable": return MachineLearningTable.DeserializeMachineLearningTable(element, options);
                     case "uri_file": return MachineLearningUriFileDataVersion.DeserializeMachineLearningUriFileDataVersion(element, options);
                     case "uri_folder": return MachineLearningUriFolderDataVersion.DeserializeMachineLearningUriFolderDataVersion(element, options);
                 }
             }
-            return UnknownDataVersionBase.DeserializeUnknownDataVersionBase(element, options);
+            return UnknownMachineLearningDataVersionProperties.DeserializeUnknownMachineLearningDataVersionProperties(element, options);
         }
 
         BinaryData IPersistableModel<MachineLearningDataVersionProperties>.Write(ModelReaderWriterOptions options)

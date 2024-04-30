@@ -28,15 +28,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ComponentId))
             {
-                if (ComponentId != null)
-                {
-                    writer.WritePropertyName("componentId"u8);
-                    writer.WriteObjectValue(ComponentId, options);
-                }
-                else
-                {
-                    writer.WriteNull("componentId");
-                }
+                writer.WritePropertyName("componentId"u8);
+                writer.WriteObjectValue(ComponentId, options);
             }
             if (Optional.IsDefined(Description))
             {
@@ -139,7 +132,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        componentId = null;
                         continue;
                     }
                     componentId = MachineLearningIdAssetReference.DeserializeMachineLearningIdAssetReference(property.Value, options);
