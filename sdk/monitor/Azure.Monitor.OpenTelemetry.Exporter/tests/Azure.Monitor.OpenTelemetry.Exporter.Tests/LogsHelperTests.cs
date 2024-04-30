@@ -3,16 +3,17 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
-using Azure.Core;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
-
+using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
 using Microsoft.Extensions.Logging;
 
 using OpenTelemetry;
 using OpenTelemetry.Logs;
-
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 using Xunit;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
@@ -231,6 +232,79 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal("Ikey", telemetryItem[0].InstrumentationKey);
             Assert.Equal(logResource.RoleName, telemetryItem[0].Tags[ContextTagKeys.AiCloudRole.ToString()]);
             Assert.Equal(logResource.RoleInstance, telemetryItem[0].Tags[ContextTagKeys.AiCloudRoleInstance.ToString()]);
+        }
+
+        [Theory]
+        [InlineData("ExceptionData", 1.0f, true, true)]
+        [InlineData("ExceptionData", 1.0f, false, true)]
+        [InlineData("ExceptionData", .50f, true, true)]
+        [InlineData("ExceptionData", .50f, false, true)]
+        [InlineData("MessageData", 1.0f, true, true)]
+        [InlineData("MessageData", 1.0f, false, true)]
+        [InlineData("MessageData", .50f, true, true)]
+        [InlineData("MessageData", .50f, false, true)]
+        [InlineData("ExceptionData", 1.0f, true, false)]
+        [InlineData("ExceptionData", 1.0f, false, false)]
+        [InlineData("ExceptionData", .50f, true, false)]
+        [InlineData("ExceptionData", .50f, false, false)]
+        [InlineData("MessageData", 1.0f, true, false)]
+        [InlineData("MessageData", 1.0f, false, false)]
+        [InlineData("MessageData", .50f, true, false)]
+        [InlineData("MessageData", .50f, false, false)]
+        public void ValidateSamplingRatio(string telemetryType, float samplingRatio, bool isDistro, bool logEmittedWithinActivityContext)
+        {
+            List<TelemetryItem>? telemetryItems = null;
+            var options = new AzureMonitorExporterOptions();
+            options.SamplingRatio = samplingRatio;
+
+            ResourceBuilder resourceBuilder = ResourceBuilder.CreateDefault().Clear().AddAttributes(new[] { new KeyValuePair<string, object>("telemetry.distro.name", "Azure.Monitor.OpenTelemetry.AspNetCore") });
+            using var loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder.AddOpenTelemetry(options =>
+                {
+                    if (isDistro)
+                    {
+                        options.SetResourceBuilder(resourceBuilder);
+                    }
+                    options.AddAzureMonitorLogExporterForTest(o => o.SamplingRatio = samplingRatio, out telemetryItems);
+                });
+                builder.AddFilter(typeof(LogsHelperTests).FullName, LogLevel.Trace);
+            });
+
+            ActivitySource src = new ActivitySource(nameof(ValidateSamplingRatio));
+            using var tracerProvider = Sdk.CreateTracerProviderBuilder()
+                .AddSource(nameof(ValidateSamplingRatio))
+                .Build();
+
+            if (logEmittedWithinActivityContext)
+            {
+                var activity = src.StartActivity("Test");
+            }
+
+            var logger = loggerFactory.CreateLogger<LogsHelperTests>();
+
+            if (telemetryType == "MessageData")
+            {
+                logger.LogInformation("This is a test log");
+            }
+            else
+            {
+                logger.LogWarning(new Exception("Test Exception"), "Test Exception");
+            }
+
+            Assert.NotNull(telemetryItems);
+            Assert.Equal(telemetryType, telemetryItems[0].Data.BaseType);
+            if (samplingRatio != 1.0f && isDistro && logEmittedWithinActivityContext)
+            {
+                Assert.Equal((float)Math.Round(options.SamplingRatio * 100), telemetryItems[0].SampleRate);
+            }
+            else
+            {
+                Assert.Null(telemetryItems[0].SampleRate);
+            }
+
+            // Reset isDistro
+            SdkVersionUtils.IsDistro = false;
         }
 
         [Theory]
