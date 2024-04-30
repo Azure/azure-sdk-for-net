@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <summary> Initializes a new instance of <see cref="WorkspaceList"/>. </summary>
         internal WorkspaceList()
         {
-            Value = new ChangeTrackingList<HealthcareApisWorkspaceData>();
+            Value = new ChangeTrackingList<HealthcareApisWorkspace>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkspaceList"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page. </param>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkspaceList(string nextLink, IReadOnlyList<HealthcareApisWorkspaceData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WorkspaceList(string nextLink, IReadOnlyList<HealthcareApisWorkspace> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
@@ -65,6 +65,6 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <summary> The link used to get the next page. </summary>
         public string NextLink { get; }
         /// <summary> Collection of resources. </summary>
-        public IReadOnlyList<HealthcareApisWorkspaceData> Value { get; }
+        public IReadOnlyList<HealthcareApisWorkspace> Value { get; }
     }
 }

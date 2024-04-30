@@ -10,29 +10,22 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    public partial class FhirServicePatch : IUtf8JsonSerializable, IJsonModel<FhirServicePatch>
+    public partial class IotConnectorPatchResource : IUtf8JsonSerializable, IJsonModel<IotConnectorPatchResource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FhirServicePatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IotConnectorPatchResource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<FhirServicePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<IotConnectorPatchResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FhirServicePatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<IotConnectorPatchResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FhirServicePatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(IotConnectorPatchResource)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
-            {
-                writer.WritePropertyName("identity"u8);
-                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                JsonSerializer.Serialize(writer, Identity, serializeOptions);
-            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -62,19 +55,19 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             writer.WriteEndObject();
         }
 
-        FhirServicePatch IJsonModel<FhirServicePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        IotConnectorPatchResource IJsonModel<IotConnectorPatchResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FhirServicePatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<IotConnectorPatchResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FhirServicePatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(IotConnectorPatchResource)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeFhirServicePatch(document.RootElement, options);
+            return DeserializeIotConnectorPatchResource(document.RootElement, options);
         }
 
-        internal static FhirServicePatch DeserializeFhirServicePatch(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static IotConnectorPatchResource DeserializeIotConnectorPatchResource(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -82,22 +75,11 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             {
                 return null;
             }
-            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
-                    continue;
-                }
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -118,38 +100,38 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new FhirServicePatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, identity);
+            return new IotConnectorPatchResource(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<FhirServicePatch>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<IotConnectorPatchResource>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FhirServicePatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<IotConnectorPatchResource>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FhirServicePatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotConnectorPatchResource)} does not support writing '{options.Format}' format.");
             }
         }
 
-        FhirServicePatch IPersistableModel<FhirServicePatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        IotConnectorPatchResource IPersistableModel<IotConnectorPatchResource>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FhirServicePatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<IotConnectorPatchResource>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeFhirServicePatch(document.RootElement, options);
+                        return DeserializeIotConnectorPatchResource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FhirServicePatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotConnectorPatchResource)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<FhirServicePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<IotConnectorPatchResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

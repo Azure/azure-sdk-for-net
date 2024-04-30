@@ -7,65 +7,24 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.HealthcareApis.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.HealthcareApis
+namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    /// <summary>
-    /// A class representing the FhirService data model.
-    /// The description of Fhir Service
-    /// </summary>
-    public partial class FhirServiceData : TrackedResourceData
+    /// <summary> The description of Fhir Service. </summary>
+    public partial class FhirService : TaggedResource
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
-        /// <summary> Initializes a new instance of <see cref="FhirServiceData"/>. </summary>
-        /// <param name="location"> The location. </param>
-        public FhirServiceData(AzureLocation location) : base(location)
+        /// <summary> Initializes a new instance of <see cref="FhirService"/>. </summary>
+        public FhirService()
         {
             PrivateEndpointConnections = new ChangeTrackingList<HealthcareApisPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="FhirServiceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> Initializes a new instance of <see cref="FhirService"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="kind"> The kind of the service. </param>
+        /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="acrConfiguration"> Fhir Service Azure container registry configuration. </param>
         /// <param name="authenticationConfiguration"> Fhir Service authentication configuration. </param>
@@ -78,12 +37,10 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="importConfiguration"> Fhir Service import configuration. </param>
         /// <param name="implementationGuidesConfiguration"> Implementation Guides configuration. </param>
         /// <param name="encryption"> The encryption settings of the FHIR service. </param>
-        /// <param name="identity"> Setting indicating whether the service has a managed identity associated with it. </param>
-        /// <param name="etag"> An etag associated with the resource, used for optimistic concurrency when editing it. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FhirServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, FhirServiceKind? kind, HealthcareApisProvisioningState? provisioningState, FhirServiceAcrConfiguration acrConfiguration, FhirServiceAuthenticationConfiguration authenticationConfiguration, FhirServiceCorsConfiguration corsConfiguration, FhirServiceExportConfiguration exportConfiguration, IReadOnlyList<HealthcareApisPrivateEndpointConnectionData> privateEndpointConnections, HealthcareApisPublicNetworkAccess? publicNetworkAccess, FhirServiceEventState? eventState, FhirServiceResourceVersionPolicyConfiguration resourceVersionPolicyConfiguration, FhirServiceImportConfiguration importConfiguration, ImplementationGuidesConfiguration implementationGuidesConfiguration, Encryption encryption, ManagedServiceIdentity identity, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal FhirService(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, FhirServiceKind? kind, SystemData systemData, HealthcareApisProvisioningState? provisioningState, FhirServiceAcrConfiguration acrConfiguration, FhirServiceAuthenticationConfiguration authenticationConfiguration, FhirServiceCorsConfiguration corsConfiguration, FhirServiceExportConfiguration exportConfiguration, IReadOnlyList<HealthcareApisPrivateEndpointConnectionData> privateEndpointConnections, HealthcareApisPublicNetworkAccess? publicNetworkAccess, FhirServiceEventState? eventState, FhirServiceResourceVersionPolicyConfiguration resourceVersionPolicyConfiguration, FhirServiceImportConfiguration importConfiguration, ImplementationGuidesConfiguration implementationGuidesConfiguration, Encryption encryption) : base(tags, serializedAdditionalRawData)
         {
             Kind = kind;
+            SystemData = systemData;
             ProvisioningState = provisioningState;
             AcrConfiguration = acrConfiguration;
             AuthenticationConfiguration = authenticationConfiguration;
@@ -96,18 +53,12 @@ namespace Azure.ResourceManager.HealthcareApis
             ImportConfiguration = importConfiguration;
             ImplementationGuidesConfiguration = implementationGuidesConfiguration;
             Encryption = encryption;
-            Identity = identity;
-            ETag = etag;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="FhirServiceData"/> for deserialization. </summary>
-        internal FhirServiceData()
-        {
         }
 
         /// <summary> The kind of the service. </summary>
         public FhirServiceKind? Kind { get; set; }
+        /// <summary> Metadata pertaining to creation and last modification of the resource. </summary>
+        public SystemData SystemData { get; }
         /// <summary> The provisioning state. </summary>
         public HealthcareApisProvisioningState? ProvisioningState { get; }
         /// <summary> Fhir Service Azure container registry configuration. </summary>
@@ -167,10 +118,5 @@ namespace Azure.ResourceManager.HealthcareApis
                 Encryption.KeyEncryptionKeyUri = value;
             }
         }
-
-        /// <summary> Setting indicating whether the service has a managed identity associated with it. </summary>
-        public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> An etag associated with the resource, used for optimistic concurrency when editing it. </summary>
-        public ETag? ETag { get; set; }
     }
 }

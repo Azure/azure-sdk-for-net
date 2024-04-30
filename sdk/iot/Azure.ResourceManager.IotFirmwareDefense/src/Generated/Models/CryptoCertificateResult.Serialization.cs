@@ -75,27 +75,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
             if (Optional.IsDefined(Subject))
             {
-                if (Subject != null)
-                {
-                    writer.WritePropertyName("subject"u8);
-                    writer.WriteObjectValue(Subject, options);
-                }
-                else
-                {
-                    writer.WriteNull("subject");
-                }
+                writer.WritePropertyName("subject"u8);
+                writer.WriteObjectValue(Subject, options);
             }
             if (Optional.IsDefined(Issuer))
             {
-                if (Issuer != null)
-                {
-                    writer.WritePropertyName("issuer"u8);
-                    writer.WriteObjectValue(Issuer, options);
-                }
-                else
-                {
-                    writer.WriteNull("issuer");
-                }
+                writer.WritePropertyName("issuer"u8);
+                writer.WriteObjectValue(Issuer, options);
             }
             if (Optional.IsDefined(IssuedOn))
             {
@@ -241,15 +227,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
             if (Optional.IsDefined(PairedKey))
             {
-                if (PairedKey != null)
-                {
-                    writer.WritePropertyName("pairedKey"u8);
-                    writer.WriteObjectValue(PairedKey, options);
-                }
-                else
-                {
-                    writer.WriteNull("pairedKey");
-                }
+                writer.WritePropertyName("pairedKey"u8);
+                writer.WriteObjectValue(PairedKey, options);
             }
             if (Optional.IsDefined(IsExpired))
             {
@@ -423,7 +402,6 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                subject = null;
                                 continue;
                             }
                             subject = CryptoCertificateEntity.DeserializeCryptoCertificateEntity(property0.Value, options);
@@ -433,7 +411,6 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                issuer = null;
                                 continue;
                             }
                             issuer = CryptoCertificateEntity.DeserializeCryptoCertificateEntity(property0.Value, options);
@@ -561,7 +538,6 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                pairedKey = null;
                                 continue;
                             }
                             pairedKey = CryptoPairedKey.DeserializeCryptoPairedKey(property0.Value, options);

@@ -26,26 +26,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Count))
-            {
-                writer.WritePropertyName("count"u8);
-                writer.WriteNumberValue(Count.Value);
-            }
-            if (Optional.IsDefined(VmSize))
-            {
-                writer.WritePropertyName("vmSize"u8);
-                writer.WriteStringValue(VmSize);
-            }
-            if (options.Format != "W" && Optional.IsDefined(KubernetesVersion))
-            {
-                writer.WritePropertyName("kubernetesVersion"u8);
-                writer.WriteStringValue(KubernetesVersion);
-            }
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
             if (Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
@@ -135,10 +115,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            int? count = default;
-            string vmSize = default;
-            string kubernetesVersion = default;
-            string name = default;
             HybridContainerServiceOSType? osType = default;
             HybridContainerServiceOSSku? ossku = default;
             IDictionary<string, string> nodeLabels = default;
@@ -151,30 +127,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("count"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    count = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("vmSize"u8))
-                {
-                    vmSize = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("kubernetesVersion"u8))
-                {
-                    kubernetesVersion = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("osType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -272,11 +224,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 minCount,
                 enableAutoScaling,
                 maxPods,
-                serializedAdditionalRawData,
-                count,
-                vmSize,
-                kubernetesVersion,
-                name);
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridContainerServiceNamedAgentPoolProfile>.Write(ModelReaderWriterOptions options)

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 return null;
             }
             string nextLink = default;
-            IReadOnlyList<HealthcareApisWorkspaceData> value = default;
+            IReadOnlyList<HealthcareApisWorkspace> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     {
                         continue;
                     }
-                    List<HealthcareApisWorkspaceData> array = new List<HealthcareApisWorkspaceData>();
+                    List<HealthcareApisWorkspace> array = new List<HealthcareApisWorkspace>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HealthcareApisWorkspaceData.DeserializeHealthcareApisWorkspaceData(item, options));
+                        array.Add(HealthcareApisWorkspace.DeserializeHealthcareApisWorkspace(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new WorkspaceList(nextLink, value ?? new ChangeTrackingList<HealthcareApisWorkspaceData>(), serializedAdditionalRawData);
+            return new WorkspaceList(nextLink, value ?? new ChangeTrackingList<HealthcareApisWorkspace>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkspaceList>.Write(ModelReaderWriterOptions options)

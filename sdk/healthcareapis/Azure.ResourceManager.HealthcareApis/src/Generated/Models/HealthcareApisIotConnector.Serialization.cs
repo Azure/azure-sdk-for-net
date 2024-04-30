@@ -10,34 +10,27 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.HealthcareApis.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.HealthcareApis
+namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    public partial class HealthcareApisIotConnectorData : IUtf8JsonSerializable, IJsonModel<HealthcareApisIotConnectorData>
+    public partial class HealthcareApisIotConnector : IUtf8JsonSerializable, IJsonModel<HealthcareApisIotConnector>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HealthcareApisIotConnectorData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HealthcareApisIotConnector>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<HealthcareApisIotConnectorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HealthcareApisIotConnector>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HealthcareApisIotConnectorData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HealthcareApisIotConnector>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HealthcareApisIotConnectorData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HealthcareApisIotConnector)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
-                writer.WritePropertyName("identity"u8);
-                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                JsonSerializer.Serialize(writer, Identity, serializeOptions);
-            }
-            if (Optional.IsDefined(ETag))
-            {
-                writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag.Value.ToString());
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -49,28 +42,6 @@ namespace Azure.ResourceManager.HealthcareApis
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
-            }
-            writer.WritePropertyName("location"u8);
-            writer.WriteStringValue(Location);
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ResourceType);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
-            {
-                writer.WritePropertyName("systemData"u8);
-                JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -108,19 +79,19 @@ namespace Azure.ResourceManager.HealthcareApis
             writer.WriteEndObject();
         }
 
-        HealthcareApisIotConnectorData IJsonModel<HealthcareApisIotConnectorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        HealthcareApisIotConnector IJsonModel<HealthcareApisIotConnector>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HealthcareApisIotConnectorData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HealthcareApisIotConnector>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HealthcareApisIotConnectorData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HealthcareApisIotConnector)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeHealthcareApisIotConnectorData(document.RootElement, options);
+            return DeserializeHealthcareApisIotConnector(document.RootElement, options);
         }
 
-        internal static HealthcareApisIotConnectorData DeserializeHealthcareApisIotConnectorData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static HealthcareApisIotConnector DeserializeHealthcareApisIotConnector(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -128,14 +99,8 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 return null;
             }
-            ManagedServiceIdentity identity = default;
-            ETag? etag = default;
-            IDictionary<string, string> tags = default;
-            AzureLocation location = default;
-            ResourceIdentifier id = default;
-            string name = default;
-            ResourceType type = default;
             SystemData systemData = default;
+            IDictionary<string, string> tags = default;
             HealthcareApisProvisioningState? provisioningState = default;
             HealthcareApisIotConnectorEventHubIngestionConfiguration ingestionEndpointConfiguration = default;
             HealthcareApisIotMappingProperties deviceMapping = default;
@@ -143,23 +108,13 @@ namespace Azure.ResourceManager.HealthcareApis
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"u8))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
-                    continue;
-                }
-                if (property.NameEquals("etag"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    etag = new ETag(property.Value.GetString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -174,35 +129,6 @@ namespace Azure.ResourceManager.HealthcareApis
                         dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("location"u8))
-                {
-                    location = new AzureLocation(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("id"u8))
-                {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -250,50 +176,44 @@ namespace Azure.ResourceManager.HealthcareApis
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new HealthcareApisIotConnectorData(
-                id,
-                name,
-                type,
-                systemData,
+            return new HealthcareApisIotConnector(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
+                serializedAdditionalRawData,
+                systemData,
                 provisioningState,
                 ingestionEndpointConfiguration,
-                deviceMapping,
-                identity,
-                etag,
-                serializedAdditionalRawData);
+                deviceMapping);
         }
 
-        BinaryData IPersistableModel<HealthcareApisIotConnectorData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<HealthcareApisIotConnector>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HealthcareApisIotConnectorData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HealthcareApisIotConnector>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HealthcareApisIotConnectorData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HealthcareApisIotConnector)} does not support writing '{options.Format}' format.");
             }
         }
 
-        HealthcareApisIotConnectorData IPersistableModel<HealthcareApisIotConnectorData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        HealthcareApisIotConnector IPersistableModel<HealthcareApisIotConnector>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HealthcareApisIotConnectorData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HealthcareApisIotConnector>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeHealthcareApisIotConnectorData(document.RootElement, options);
+                        return DeserializeHealthcareApisIotConnector(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HealthcareApisIotConnectorData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HealthcareApisIotConnector)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<HealthcareApisIotConnectorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HealthcareApisIotConnector>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

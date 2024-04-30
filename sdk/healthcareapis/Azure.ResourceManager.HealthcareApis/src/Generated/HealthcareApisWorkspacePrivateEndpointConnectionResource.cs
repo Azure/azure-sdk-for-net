@@ -11,6 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.HealthcareApis
 {
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.HealthcareApis
     /// A Class representing a HealthcareApisWorkspacePrivateEndpointConnection along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HealthcareApisWorkspacePrivateEndpointConnectionResource"/>
     /// from an instance of <see cref="ArmClient"/> using the GetHealthcareApisWorkspacePrivateEndpointConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="HealthcareApisWorkspaceResource"/> using the GetHealthcareApisWorkspacePrivateEndpointConnection method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetHealthcareApisWorkspacePrivateEndpointConnection method.
     /// </summary>
     public partial class HealthcareApisWorkspacePrivateEndpointConnectionResource : ArmResource
     {
