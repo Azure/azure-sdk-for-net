@@ -90,7 +90,7 @@ namespace System.ClientModel.Tests.Internal
 
             PipelineMessage message = pipeline.CreateMessage();
             message.Request.Method = "GET";
-            message.Request.Uri = new Uri("http://example.com/");
+            message.Request.Uri = uri;
             message.Request.Headers.Add("Custom-Header", "Value");
             message.Request.Headers.Add("Date", "3/28/2024");
             message.Request.Content = BinaryContent.Create(new BinaryData(requestContent));
