@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    [PersistableModelProxy(typeof(UnknownSoftwareConfiguration))]
+    [PersistableModelProxy(typeof(UnknownSapSoftwareConfiguration))]
     public partial class SapSoftwareConfiguration : IUtf8JsonSerializable, IJsonModel<SapSoftwareConfiguration>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapSoftwareConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "External": return ExternalInstallationSoftwareConfiguration.DeserializeExternalInstallationSoftwareConfiguration(element, options);
-                    case "SAPInstallWithoutOSConfig": return SapInstallWithoutOSConfigSoftwareConfiguration.DeserializeSapInstallWithoutOSConfigSoftwareConfiguration(element, options);
                     case "ServiceInitiated": return ServiceInitiatedSoftwareConfiguration.DeserializeServiceInitiatedSoftwareConfiguration(element, options);
+                    case "SAPInstallWithoutOSConfig": return SapInstallWithoutOSConfigSoftwareConfiguration.DeserializeSapInstallWithoutOSConfigSoftwareConfiguration(element, options);
+                    case "External": return ExternalInstallationSoftwareConfiguration.DeserializeExternalInstallationSoftwareConfiguration(element, options);
                 }
             }
-            return UnknownSoftwareConfiguration.DeserializeUnknownSoftwareConfiguration(element, options);
+            return UnknownSapSoftwareConfiguration.DeserializeUnknownSapSoftwareConfiguration(element, options);
         }
 
         BinaryData IPersistableModel<SapSoftwareConfiguration>.Write(ModelReaderWriterOptions options)

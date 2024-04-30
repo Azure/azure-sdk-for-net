@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    internal partial class UnknownSoftwareConfiguration : IUtf8JsonSerializable, IJsonModel<SapSoftwareConfiguration>
+    internal partial class UnknownSapSoftwareConfiguration : IUtf8JsonSerializable, IJsonModel<SapSoftwareConfiguration>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapSoftwareConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Workloads.Models
             return DeserializeSapSoftwareConfiguration(document.RootElement, options);
         }
 
-        internal static UnknownSoftwareConfiguration DeserializeUnknownSoftwareConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UnknownSapSoftwareConfiguration DeserializeUnknownSapSoftwareConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownSoftwareConfiguration(softwareInstallationType, serializedAdditionalRawData);
+            return new UnknownSapSoftwareConfiguration(softwareInstallationType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SapSoftwareConfiguration>.Write(ModelReaderWriterOptions options)

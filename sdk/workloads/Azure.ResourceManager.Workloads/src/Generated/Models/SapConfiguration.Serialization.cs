@@ -70,9 +70,9 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "Discovery": return DiscoveryConfiguration.DeserializeDiscoveryConfiguration(element, options);
                     case "Deployment": return DeploymentConfiguration.DeserializeDeploymentConfiguration(element, options);
                     case "DeploymentWithOSConfig": return DeploymentWithOSConfiguration.DeserializeDeploymentWithOSConfiguration(element, options);
-                    case "Discovery": return DiscoveryConfiguration.DeserializeDiscoveryConfiguration(element, options);
                 }
             }
             return UnknownSapConfiguration.DeserializeUnknownSapConfiguration(element, options);
