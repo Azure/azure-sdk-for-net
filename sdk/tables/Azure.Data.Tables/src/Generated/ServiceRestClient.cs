@@ -56,7 +56,7 @@ namespace Azure.Data.Tables
             request.Headers.Add("x-ms-version", _version);
             request.Headers.Add("Accept", "application/xml");
             request.Headers.Add("Content-Type", "application/xml");
-            var content = new XmlWriterContent();
+            var content = new XmlWriterRequestContent();
             content.XmlWriter.WriteObjectValue(tableServiceProperties, "StorageServiceProperties");
             request.Content = content;
             return message;
