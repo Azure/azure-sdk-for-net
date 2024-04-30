@@ -59,27 +59,13 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
             if (Optional.IsDefined(ResourceSettings))
             {
-                if (ResourceSettings != null)
-                {
-                    writer.WritePropertyName("resourceSettings"u8);
-                    writer.WriteObjectValue(ResourceSettings, options);
-                }
-                else
-                {
-                    writer.WriteNull("resourceSettings");
-                }
+                writer.WritePropertyName("resourceSettings"u8);
+                writer.WriteObjectValue(ResourceSettings, options);
             }
             if (options.Format != "W" && Optional.IsDefined(SourceResourceSettings))
             {
-                if (SourceResourceSettings != null)
-                {
-                    writer.WritePropertyName("sourceResourceSettings"u8);
-                    writer.WriteObjectValue(SourceResourceSettings, options);
-                }
-                else
-                {
-                    writer.WriteNull("sourceResourceSettings");
-                }
+                writer.WritePropertyName("sourceResourceSettings"u8);
+                writer.WriteObjectValue(SourceResourceSettings, options);
             }
             if (options.Format != "W" && Optional.IsDefined(MoveStatus))
             {
@@ -113,15 +99,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
             if (options.Format != "W" && Optional.IsDefined(Errors))
             {
-                if (Errors != null)
-                {
-                    writer.WritePropertyName("errors"u8);
-                    writer.WriteObjectValue(Errors, options);
-                }
-                else
-                {
-                    writer.WriteNull("errors");
-                }
+                writer.WritePropertyName("errors"u8);
+                writer.WriteObjectValue(Errors, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -214,7 +193,6 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        resourceSettings = null;
                         continue;
                     }
                     resourceSettings = MoverResourceSettings.DeserializeMoverResourceSettings(property.Value, options);
@@ -224,7 +202,6 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        sourceResourceSettings = null;
                         continue;
                     }
                     sourceResourceSettings = MoverResourceSettings.DeserializeMoverResourceSettings(property.Value, options);
@@ -280,7 +257,6 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        errors = null;
                         continue;
                     }
                     errors = MoveResourcePropertiesErrors.DeserializeMoveResourcePropertiesErrors(property.Value, options);

@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
-    internal partial class UnknownResourceSettings : IUtf8JsonSerializable, IJsonModel<MoverResourceSettings>
+    internal partial class UnknownMoverResourceSettings : IUtf8JsonSerializable, IJsonModel<MoverResourceSettings>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MoverResourceSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             return DeserializeMoverResourceSettings(document.RootElement, options);
         }
 
-        internal static UnknownResourceSettings DeserializeUnknownResourceSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UnknownMoverResourceSettings DeserializeUnknownMoverResourceSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownResourceSettings(resourceType, targetResourceName, targetResourceGroupName, serializedAdditionalRawData);
+            return new UnknownMoverResourceSettings(resourceType, targetResourceName, targetResourceGroupName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MoverResourceSettings>.Write(ModelReaderWriterOptions options)

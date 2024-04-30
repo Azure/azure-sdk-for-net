@@ -64,15 +64,8 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             }
             if (Optional.IsDefined(Parent))
             {
-                if (Parent != null)
-                {
-                    writer.WritePropertyName("parent"u8);
-                    writer.WriteObjectValue(Parent, options);
-                }
-                else
-                {
-                    writer.WriteNull("parent");
-                }
+                writer.WritePropertyName("parent"u8);
+                writer.WriteObjectValue(Parent, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -170,7 +163,6 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                parent = null;
                                 continue;
                             }
                             parent = DescendantParentGroupInfo.DeserializeDescendantParentGroupInfo(property0.Value, options);
