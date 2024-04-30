@@ -1168,6 +1168,35 @@ namespace Azure.ResourceManager.FrontDoor.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorValidateCustomDomainResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorValidateCustomDomainResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class FrontDoorWebApplicationFirewallPolicyGroupByVariable : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyGroupByVariable>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyGroupByVariable>
+    {
+        public FrontDoorWebApplicationFirewallPolicyGroupByVariable(Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyGroupByVariableName variableName) { }
+        public Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyGroupByVariableName VariableName { get { throw null; } set { } }
+        Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyGroupByVariable System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyGroupByVariable>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyGroupByVariable>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyGroupByVariable System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyGroupByVariable>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyGroupByVariable>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyGroupByVariable>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct FrontDoorWebApplicationFirewallPolicyGroupByVariableName : System.IEquatable<Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyGroupByVariableName>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public FrontDoorWebApplicationFirewallPolicyGroupByVariableName(string value) { throw null; }
+        public static Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyGroupByVariableName GeoLocation { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyGroupByVariableName None { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyGroupByVariableName SocketAddr { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyGroupByVariableName other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyGroupByVariableName left, Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyGroupByVariableName right) { throw null; }
+        public static implicit operator Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyGroupByVariableName (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyGroupByVariableName left, Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyGroupByVariableName right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct FrontDoorWebApplicationFirewallPolicyMode : System.IEquatable<Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyMode>
     {
@@ -1282,16 +1311,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static implicit operator Azure.ResourceManager.FrontDoor.Models.FrontendEndpointCustomHttpsProvisioningSubstate (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.FrontDoor.Models.FrontendEndpointCustomHttpsProvisioningSubstate left, Azure.ResourceManager.FrontDoor.Models.FrontendEndpointCustomHttpsProvisioningSubstate right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class GroupByVariable : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.GroupByVariable>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.Models.GroupByVariable>
-    {
-        public GroupByVariable(Azure.ResourceManager.FrontDoor.Models.VariableName variableName) { }
-        public Azure.ResourceManager.FrontDoor.Models.VariableName VariableName { get { throw null; } set { } }
-        Azure.ResourceManager.FrontDoor.Models.GroupByVariable System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.GroupByVariable>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.GroupByVariable>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.FrontDoor.Models.GroupByVariable System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.Models.GroupByVariable>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.Models.GroupByVariable>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.Models.GroupByVariable>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct HealthProbeEnabled : System.IEquatable<Azure.ResourceManager.FrontDoor.Models.HealthProbeEnabled>
@@ -1932,31 +1951,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static bool operator !=(Azure.ResourceManager.FrontDoor.Models.SessionAffinityEnabledState left, Azure.ResourceManager.FrontDoor.Models.SessionAffinityEnabledState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct VariableName : System.IEquatable<Azure.ResourceManager.FrontDoor.Models.VariableName>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public VariableName(string value) { throw null; }
-        public static Azure.ResourceManager.FrontDoor.Models.VariableName GeoLocation { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.VariableName None { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.VariableName SocketAddr { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.FrontDoor.Models.VariableName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.VariableName left, Azure.ResourceManager.FrontDoor.Models.VariableName right) { throw null; }
-        public static implicit operator Azure.ResourceManager.FrontDoor.Models.VariableName (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.FrontDoor.Models.VariableName left, Azure.ResourceManager.FrontDoor.Models.VariableName right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class WebApplicationCustomRule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.Models.WebApplicationCustomRule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.Models.WebApplicationCustomRule>
     {
         public WebApplicationCustomRule(int priority, Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleType ruleType, System.Collections.Generic.IEnumerable<Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchCondition> matchConditions, Azure.ResourceManager.FrontDoor.Models.RuleMatchActionType action) { }
         public Azure.ResourceManager.FrontDoor.Models.RuleMatchActionType Action { get { throw null; } set { } }
         public Azure.ResourceManager.FrontDoor.Models.CustomRuleEnabledState? EnabledState { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.FrontDoor.Models.GroupByVariable> GroupBy { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyGroupByVariable> GroupBy { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchCondition> MatchConditions { get { throw null; } }
         public string Name { get { throw null; } set { } }
         public int Priority { get { throw null; } set { } }
