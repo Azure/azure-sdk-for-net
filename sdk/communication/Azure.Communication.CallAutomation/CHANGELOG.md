@@ -5,8 +5,8 @@
 ### Features Added
  
 - Support for Bring Your Own Storage recording option
-- Support for PauseOnStart Recording Option 
-- Support for Recording state change with Recording Kind
+- Support for PauseOnStart recording option 
+- Support for Recording state change with new recording kind's
  
 ### Other Changes
  
