@@ -104,7 +104,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 Tags[ContextTagKeys.AiOperationParentId.ToString()] = logRecord.SpanId.ToHexString();
             }
 
-            if (sampleRate != 100f)
+            if (sampleRate != 100f && SdkVersionUtils.IsDistro)
             {
                 SampleRate = sampleRate;
             }
