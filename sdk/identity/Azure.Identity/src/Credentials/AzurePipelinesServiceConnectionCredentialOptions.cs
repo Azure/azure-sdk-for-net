@@ -16,6 +16,11 @@ namespace Azure.Identity
         internal MsalConfidentialClient MsalClient { get; set; }
 
         /// <summary>
+        /// The security token used by the running build.
+        /// </summary>
+        internal string SystemAccessToken { get; set; } = Environment.GetEnvironmentVariable("SYSTEM_ACCESSTOKEN");
+
+        /// <summary>
         /// The URI of the TFS collection or Azure DevOps organization.
         /// </summary>
         public string CollectionUri { get; set; } = Environment.GetEnvironmentVariable("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI");
@@ -29,11 +34,6 @@ namespace Azure.Identity
         /// A string-based identifier for a single pipeline run.
         /// </summary>
         public string PlanId { get; set; } = Environment.GetEnvironmentVariable("SYSTEM_PLANID");
-
-        /// <summary>
-        /// The security token used by the running build.
-        /// </summary>
-        public string SystemAccessToken { internal get; set; } = Environment.GetEnvironmentVariable("SYSTEM_ACCESSTOKEN");
 
         /// <summary>
         /// The ID of the project that this build belongs to.

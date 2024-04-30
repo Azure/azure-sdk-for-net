@@ -93,7 +93,6 @@ namespace Azure.Identity
         public bool DisableInstanceDiscovery { get { throw null; } set { } }
         public string JobId { get { throw null; } set { } }
         public string PlanId { get { throw null; } set { } }
-        public string SystemAccessToken { set { } }
         public string TeamProjectId { get { throw null; } set { } }
         public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } set { } }
     }
