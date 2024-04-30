@@ -14,7 +14,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    internal partial class UnknownServiceResourceProperties : IUtf8JsonSerializable, IJsonModel<CosmosDBServiceProperties>
+    internal partial class UnknownCosmosDBServiceProperties : IUtf8JsonSerializable, IJsonModel<CosmosDBServiceProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBServiceProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             return DeserializeCosmosDBServiceProperties(document.RootElement, options);
         }
 
-        internal static UnknownServiceResourceProperties DeserializeUnknownServiceResourceProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UnknownCosmosDBServiceProperties DeserializeUnknownCosmosDBServiceProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new UnknownServiceResourceProperties(
+            return new UnknownCosmosDBServiceProperties(
                 creationTime,
                 instanceSize,
                 instanceCount,

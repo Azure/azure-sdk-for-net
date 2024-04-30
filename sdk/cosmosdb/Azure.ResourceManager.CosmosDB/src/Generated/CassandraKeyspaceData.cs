@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.CosmosDB.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
@@ -64,11 +65,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="resource"></param>
+        /// <param name="resource"> Gets or sets the resource. </param>
         /// <param name="options"></param>
         /// <param name="identity"> Identity for the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CassandraKeyspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedCassandraKeyspaceResourceInfo resource, CassandraKeyspacePropertiesConfig options, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal CassandraKeyspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, WritableSubResource resource, CassandraKeyspacePropertiesConfig options, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Resource = resource;
             Options = options;
@@ -82,8 +83,20 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Gets or sets the resource. </summary>
-        [WirePath("properties.resource")]
-        public ExtendedCassandraKeyspaceResourceInfo Resource { get; set; }
+        internal WritableSubResource Resource { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.resource.id")]
+        public ResourceIdentifier ResourceId
+        {
+            get => Resource is null ? default : Resource.Id;
+            set
+            {
+                if (Resource is null)
+                    Resource = new WritableSubResource();
+                Resource.Id = value;
+            }
+        }
+
         /// <summary> Gets or sets the options. </summary>
         [WirePath("properties.options")]
         public CassandraKeyspacePropertiesConfig Options { get; set; }

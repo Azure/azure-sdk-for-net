@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ContainerInstance.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerInstance
@@ -37,11 +36,6 @@ namespace Azure.ResourceManager.ContainerInstance
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(Identity))
-            {
-                writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -76,118 +70,6 @@ namespace Azure.ResourceManager.ContainerInstance
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState);
-            }
-            writer.WritePropertyName("containers"u8);
-            writer.WriteStartArray();
-            foreach (var item in Containers)
-            {
-                writer.WriteObjectValue(item, options);
-            }
-            writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(ImageRegistryCredentials))
-            {
-                writer.WritePropertyName("imageRegistryCredentials"u8);
-                writer.WriteStartArray();
-                foreach (var item in ImageRegistryCredentials)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(RestartPolicy))
-            {
-                writer.WritePropertyName("restartPolicy"u8);
-                writer.WriteStringValue(RestartPolicy.Value.ToString());
-            }
-            if (Optional.IsDefined(IPAddress))
-            {
-                writer.WritePropertyName("ipAddress"u8);
-                writer.WriteObjectValue(IPAddress, options);
-            }
-            writer.WritePropertyName("osType"u8);
-            writer.WriteStringValue(OSType.ToString());
-            if (Optional.IsCollectionDefined(Volumes))
-            {
-                writer.WritePropertyName("volumes"u8);
-                writer.WriteStartArray();
-                foreach (var item in Volumes)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsDefined(InstanceView))
-            {
-                writer.WritePropertyName("instanceView"u8);
-                writer.WriteObjectValue(InstanceView, options);
-            }
-            if (Optional.IsDefined(Diagnostics))
-            {
-                writer.WritePropertyName("diagnostics"u8);
-                writer.WriteObjectValue(Diagnostics, options);
-            }
-            if (Optional.IsCollectionDefined(SubnetIds))
-            {
-                writer.WritePropertyName("subnetIds"u8);
-                writer.WriteStartArray();
-                foreach (var item in SubnetIds)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(DnsConfig))
-            {
-                writer.WritePropertyName("dnsConfig"u8);
-                writer.WriteObjectValue(DnsConfig, options);
-            }
-            if (Optional.IsDefined(Sku))
-            {
-                writer.WritePropertyName("sku"u8);
-                writer.WriteStringValue(Sku.Value.ToString());
-            }
-            if (Optional.IsDefined(EncryptionProperties))
-            {
-                writer.WritePropertyName("encryptionProperties"u8);
-                writer.WriteObjectValue(EncryptionProperties, options);
-            }
-            if (Optional.IsCollectionDefined(InitContainers))
-            {
-                writer.WritePropertyName("initContainers"u8);
-                writer.WriteStartArray();
-                foreach (var item in InitContainers)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(Extensions))
-            {
-                writer.WritePropertyName("extensions"u8);
-                writer.WriteStartArray();
-                foreach (var item in Extensions)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(ConfidentialComputeProperties))
-            {
-                writer.WritePropertyName("confidentialComputeProperties"u8);
-                writer.WriteObjectValue(ConfidentialComputeProperties, options);
-            }
-            if (Optional.IsDefined(Priority))
-            {
-                writer.WritePropertyName("priority"u8);
-                writer.WriteStringValue(Priority.Value.ToString());
-            }
-            writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -227,30 +109,12 @@ namespace Azure.ResourceManager.ContainerInstance
                 return null;
             }
             IList<string> zones = default;
-            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            string provisioningState = default;
-            IList<ContainerInstanceContainer> containers = default;
-            IList<ContainerGroupImageRegistryCredential> imageRegistryCredentials = default;
-            ContainerGroupRestartPolicy? restartPolicy = default;
-            ContainerGroupIPAddress ipAddress = default;
-            ContainerInstanceOperatingSystemType osType = default;
-            IList<ContainerVolume> volumes = default;
-            ContainerGroupInstanceView instanceView = default;
-            ContainerGroupDiagnostics diagnostics = default;
-            IList<ContainerGroupSubnetId> subnetIds = default;
-            ContainerGroupDnsConfiguration dnsConfig = default;
-            ContainerGroupSku? sku = default;
-            ContainerGroupEncryptionProperties encryptionProperties = default;
-            IList<InitContainerDefinitionContent> initContainers = default;
-            IList<DeploymentExtensionSpec> extensions = default;
-            ConfidentialComputeProperties confidentialComputeProperties = default;
-            ContainerGroupPriority? priority = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -267,15 +131,6 @@ namespace Azure.ResourceManager.ContainerInstance
                         array.Add(item.GetString());
                     }
                     zones = array;
-                    continue;
-                }
-                if (property.NameEquals("identity"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -321,189 +176,6 @@ namespace Azure.ResourceManager.ContainerInstance
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            provisioningState = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("containers"u8))
-                        {
-                            List<ContainerInstanceContainer> array = new List<ContainerInstanceContainer>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ContainerInstanceContainer.DeserializeContainerInstanceContainer(item, options));
-                            }
-                            containers = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("imageRegistryCredentials"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<ContainerGroupImageRegistryCredential> array = new List<ContainerGroupImageRegistryCredential>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ContainerGroupImageRegistryCredential.DeserializeContainerGroupImageRegistryCredential(item, options));
-                            }
-                            imageRegistryCredentials = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("restartPolicy"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            restartPolicy = new ContainerGroupRestartPolicy(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("ipAddress"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            ipAddress = ContainerGroupIPAddress.DeserializeContainerGroupIPAddress(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("osType"u8))
-                        {
-                            osType = new ContainerInstanceOperatingSystemType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("volumes"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<ContainerVolume> array = new List<ContainerVolume>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ContainerVolume.DeserializeContainerVolume(item, options));
-                            }
-                            volumes = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("instanceView"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            instanceView = ContainerGroupInstanceView.DeserializeContainerGroupInstanceView(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("diagnostics"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            diagnostics = ContainerGroupDiagnostics.DeserializeContainerGroupDiagnostics(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("subnetIds"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<ContainerGroupSubnetId> array = new List<ContainerGroupSubnetId>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ContainerGroupSubnetId.DeserializeContainerGroupSubnetId(item, options));
-                            }
-                            subnetIds = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("dnsConfig"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            dnsConfig = ContainerGroupDnsConfiguration.DeserializeContainerGroupDnsConfiguration(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("sku"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            sku = new ContainerGroupSku(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("encryptionProperties"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            encryptionProperties = ContainerGroupEncryptionProperties.DeserializeContainerGroupEncryptionProperties(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("initContainers"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<InitContainerDefinitionContent> array = new List<InitContainerDefinitionContent>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(InitContainerDefinitionContent.DeserializeInitContainerDefinitionContent(item, options));
-                            }
-                            initContainers = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("extensions"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<DeploymentExtensionSpec> array = new List<DeploymentExtensionSpec>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(DeploymentExtensionSpec.DeserializeDeploymentExtensionSpec(item, options));
-                            }
-                            extensions = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("confidentialComputeProperties"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            confidentialComputeProperties = ConfidentialComputeProperties.DeserializeConfidentialComputeProperties(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("priority"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            priority = new ContainerGroupPriority(property0.Value.GetString());
-                            continue;
-                        }
-                    }
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -518,24 +190,6 @@ namespace Azure.ResourceManager.ContainerInstance
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 zones ?? new ChangeTrackingList<string>(),
-                identity,
-                provisioningState,
-                containers,
-                imageRegistryCredentials ?? new ChangeTrackingList<ContainerGroupImageRegistryCredential>(),
-                restartPolicy,
-                ipAddress,
-                osType,
-                volumes ?? new ChangeTrackingList<ContainerVolume>(),
-                instanceView,
-                diagnostics,
-                subnetIds ?? new ChangeTrackingList<ContainerGroupSubnetId>(),
-                dnsConfig,
-                sku,
-                encryptionProperties,
-                initContainers ?? new ChangeTrackingList<InitContainerDefinitionContent>(),
-                extensions ?? new ChangeTrackingList<DeploymentExtensionSpec>(),
-                confidentialComputeProperties,
-                priority,
                 serializedAdditionalRawData);
         }
 

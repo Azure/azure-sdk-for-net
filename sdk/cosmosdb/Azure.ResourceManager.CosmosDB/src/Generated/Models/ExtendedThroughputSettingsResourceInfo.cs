@@ -26,24 +26,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="instantMaximumThroughput"> The offer throughput value to instantly scale up without triggering splits. </param>
         /// <param name="softAllowedMaximumThroughput"> The maximum throughput value or the maximum maxThroughput value (for autoscale) that can be specified. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="rid"> A system generated property. A unique identifier. </param>
-        /// <param name="timestamp"> A system generated property that denotes the last updated timestamp of the resource. </param>
-        /// <param name="etag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
-        internal ExtendedThroughputSettingsResourceInfo(int? throughput, AutoscaleSettingsResourceInfo autoscaleSettings, string minimumThroughput, string offerReplacePending, string instantMaximumThroughput, string softAllowedMaximumThroughput, IDictionary<string, BinaryData> serializedAdditionalRawData, string rid, float? timestamp, ETag? etag) : base(throughput, autoscaleSettings, minimumThroughput, offerReplacePending, instantMaximumThroughput, softAllowedMaximumThroughput, serializedAdditionalRawData)
+        internal ExtendedThroughputSettingsResourceInfo(int? throughput, AutoscaleSettingsResourceInfo autoscaleSettings, string minimumThroughput, string offerReplacePending, string instantMaximumThroughput, string softAllowedMaximumThroughput, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(throughput, autoscaleSettings, minimumThroughput, offerReplacePending, instantMaximumThroughput, softAllowedMaximumThroughput, serializedAdditionalRawData)
         {
-            Rid = rid;
-            Timestamp = timestamp;
-            ETag = etag;
         }
-
-        /// <summary> A system generated property. A unique identifier. </summary>
-        [WirePath("_rid")]
-        public string Rid { get; }
-        /// <summary> A system generated property that denotes the last updated timestamp of the resource. </summary>
-        [WirePath("_ts")]
-        public float? Timestamp { get; }
-        /// <summary> A system generated property representing the resource etag required for optimistic concurrency control. </summary>
-        [WirePath("_etag")]
-        public ETag? ETag { get; }
     }
 }

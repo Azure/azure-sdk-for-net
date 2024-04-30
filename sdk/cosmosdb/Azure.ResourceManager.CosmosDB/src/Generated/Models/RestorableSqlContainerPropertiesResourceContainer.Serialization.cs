@@ -33,21 +33,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("_self"u8);
                 writer.WriteStringValue(Self);
             }
-            if (options.Format != "W" && Optional.IsDefined(Rid))
-            {
-                writer.WritePropertyName("_rid"u8);
-                writer.WriteStringValue(Rid);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Timestamp))
-            {
-                writer.WritePropertyName("_ts"u8);
-                writer.WriteNumberValue(Timestamp.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ETag))
-            {
-                writer.WritePropertyName("_etag"u8);
-                writer.WriteStringValue(ETag.Value.ToString());
-            }
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(ContainerName);
             if (Optional.IsDefined(IndexingPolicy))
@@ -149,9 +134,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             string self = default;
-            string rid = default;
-            float? ts = default;
-            ETag? etag = default;
             string id = default;
             CosmosDBIndexingPolicy indexingPolicy = default;
             CosmosDBContainerPartitionKey partitionKey = default;
@@ -171,29 +153,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 if (property.NameEquals("_self"u8))
                 {
                     self = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("_rid"u8))
-                {
-                    rid = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("_ts"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    ts = property.Value.GetSingle();
-                    continue;
-                }
-                if (property.NameEquals("_etag"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -325,10 +284,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 materializedViewDefinition,
                 computedProperties ?? new ChangeTrackingList<ComputedProperty>(),
                 serializedAdditionalRawData,
-                self,
-                rid,
-                ts,
-                etag);
+                self);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -362,59 +318,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         builder.AppendLine($"'{Self}'");
                     }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Rid), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  _rid: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Rid))
-                {
-                    builder.Append("  _rid: ");
-                    if (Rid.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Rid}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Rid}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Timestamp), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  _ts: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Timestamp))
-                {
-                    builder.Append("  _ts: ");
-                    builder.AppendLine($"'{Timestamp.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ETag), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  _etag: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ETag))
-                {
-                    builder.Append("  _etag: ");
-                    builder.AppendLine($"'{ETag.Value.ToString()}'");
                 }
             }
 
