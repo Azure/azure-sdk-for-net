@@ -806,9 +806,6 @@
 # AzureSdkOwners:                                                  @ShivangiReja
 # ServiceOwners:                                                   @arv100kri @bleroy @tjacobhi
 
-# ServiceLabel: %SelfHelp
-# ServiceOwners:                                                   @siddiavinashmsft @sahilpwr
-
 # PRLabel: %Service Bus
 /sdk/servicebus/                                                   @JoshLove-msft @jsquire @m-redding
 
@@ -953,6 +950,10 @@
 
 # ServiceLabel: %Recovery Services Backup %Mgmt
 # ServiceOwners:                                                   @Daya-Patil
+
+# ServiceLabel: %Self Help
+# ServiceOwners:                                                   @siddiavinashmsft
+/sdk/selfhelp/Azure.ResourceManager.*/                             @siddiavinashmsft @archerzz @ArcturusZhang @ArthurMa1978
 
 # PRLabel: %Spring App Discovery
 /sdk/springappdiscovery/Azure.ResourceManager.*/                   @sunkun99 @archerzz @ArcturusZhang @ArthurMa1978
