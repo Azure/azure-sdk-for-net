@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    internal partial class UnknownPartition : IUtf8JsonSerializable, IJsonModel<ManagedServicePartitionScheme>
+    internal partial class UnknownManagedServicePartitionScheme : IUtf8JsonSerializable, IJsonModel<ManagedServicePartitionScheme>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedServicePartitionScheme>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return DeserializeManagedServicePartitionScheme(document.RootElement, options);
         }
 
-        internal static UnknownPartition DeserializeUnknownPartition(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UnknownManagedServicePartitionScheme DeserializeUnknownManagedServicePartitionScheme(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownPartition(partitionScheme, serializedAdditionalRawData);
+            return new UnknownManagedServicePartitionScheme(partitionScheme, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedServicePartitionScheme>.Write(ModelReaderWriterOptions options)

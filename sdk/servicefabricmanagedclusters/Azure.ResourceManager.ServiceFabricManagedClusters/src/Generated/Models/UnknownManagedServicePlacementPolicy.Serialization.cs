@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    internal partial class UnknownServicePlacementPolicy : IUtf8JsonSerializable, IJsonModel<ManagedServicePlacementPolicy>
+    internal partial class UnknownManagedServicePlacementPolicy : IUtf8JsonSerializable, IJsonModel<ManagedServicePlacementPolicy>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedServicePlacementPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return DeserializeManagedServicePlacementPolicy(document.RootElement, options);
         }
 
-        internal static UnknownServicePlacementPolicy DeserializeUnknownServicePlacementPolicy(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UnknownManagedServicePlacementPolicy DeserializeUnknownManagedServicePlacementPolicy(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownServicePlacementPolicy(type, serializedAdditionalRawData);
+            return new UnknownManagedServicePlacementPolicy(type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedServicePlacementPolicy>.Write(ModelReaderWriterOptions options)

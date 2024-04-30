@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    [PersistableModelProxy(typeof(UnknownServicePlacementPolicy))]
+    [PersistableModelProxy(typeof(UnknownManagedServicePlacementPolicy))]
     public partial class ManagedServicePlacementPolicy : IUtf8JsonSerializable, IJsonModel<ManagedServicePlacementPolicy>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedServicePlacementPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     case "RequiredDomainDistribution": return ServicePlacementRequireDomainDistributionPolicy.DeserializeServicePlacementRequireDomainDistributionPolicy(element, options);
                 }
             }
-            return UnknownServicePlacementPolicy.DeserializeUnknownServicePlacementPolicy(element, options);
+            return UnknownManagedServicePlacementPolicy.DeserializeUnknownManagedServicePlacementPolicy(element, options);
         }
 
         BinaryData IPersistableModel<ManagedServicePlacementPolicy>.Write(ModelReaderWriterOptions options)

@@ -72,27 +72,13 @@ namespace Azure.ResourceManager.ServiceLinker
             }
             if (Optional.IsDefined(VnetSolution))
             {
-                if (VnetSolution != null)
-                {
-                    writer.WritePropertyName("vNetSolution"u8);
-                    writer.WriteObjectValue(VnetSolution, options);
-                }
-                else
-                {
-                    writer.WriteNull("vNetSolution");
-                }
+                writer.WritePropertyName("vNetSolution"u8);
+                writer.WriteObjectValue(VnetSolution, options);
             }
             if (Optional.IsDefined(SecretStore))
             {
-                if (SecretStore != null)
-                {
-                    writer.WritePropertyName("secretStore"u8);
-                    writer.WriteObjectValue(SecretStore, options);
-                }
-                else
-                {
-                    writer.WriteNull("secretStore");
-                }
+                writer.WritePropertyName("secretStore"u8);
+                writer.WriteObjectValue(SecretStore, options);
             }
             if (Optional.IsDefined(Scope))
             {
@@ -229,7 +215,6 @@ namespace Azure.ResourceManager.ServiceLinker
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                vnetSolution = null;
                                 continue;
                             }
                             vnetSolution = VnetSolution.DeserializeVnetSolution(property0.Value, options);
@@ -239,7 +224,6 @@ namespace Azure.ResourceManager.ServiceLinker
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                secretStore = null;
                                 continue;
                             }
                             secretStore = LinkerSecretStore.DeserializeLinkerSecretStore(property0.Value, options);

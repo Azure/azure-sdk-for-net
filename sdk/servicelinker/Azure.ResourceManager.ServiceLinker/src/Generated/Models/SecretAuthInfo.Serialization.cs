@@ -40,15 +40,8 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             }
             if (Optional.IsDefined(SecretInfo))
             {
-                if (SecretInfo != null)
-                {
-                    writer.WritePropertyName("secretInfo"u8);
-                    writer.WriteObjectValue(SecretInfo, options);
-                }
-                else
-                {
-                    writer.WriteNull("secretInfo");
-                }
+                writer.WritePropertyName("secretInfo"u8);
+                writer.WriteObjectValue(SecretInfo, options);
             }
             writer.WritePropertyName("authType"u8);
             writer.WriteStringValue(AuthType.ToString());
@@ -111,7 +104,6 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        secretInfo = null;
                         continue;
                     }
                     secretInfo = SecretBaseInfo.DeserializeSecretBaseInfo(property.Value, options);
