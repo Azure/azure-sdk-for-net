@@ -70,7 +70,7 @@ namespace Azure.Messaging.EventHubs.Tests
             position.EnqueuedTime = DateTimeOffset.Parse("2015-10-27T12:00:00Z");
 
             var filter = AmqpFilter.BuildFilterExpression(position);
-            Assert.That(filter, Contains.Substring(AmqpFilter.SequenceNumberName), "The sequence number should have precedence over the enqueued time for filtering.");
+            Assert.That(filter, Contains.Substring(AmqpFilter.OffsetName), "The offset should have precedence over the enqueued time for filtering.");
             Assert.That(filter, Contains.Substring(offset.ToString()), "The sequence number value should be present in the filter.");
         }
 
