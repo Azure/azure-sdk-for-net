@@ -149,4 +149,4 @@ For more information see the [Code of Conduct FAQ][coc_faq] or contact [opencode
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [coc_contact]: mailto:opencode@microsoft.com
 [corewcf_repo]: https://github.com/CoreWCF/samples/
-[wcf_docs]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/extensions/wcf/Microsoft.WCF.Azure.StorageQueues
+[wcf_docs]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/extension-wcf/Microsoft.WCF.Azure.StorageQueues
