@@ -62,26 +62,14 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection proxy resource. </param>
-        /// <param name="eTag"> ETag from NRP. </param>
-        /// <param name="remotePrivateEndpoint"> Remote private endpoint details. </param>
-        /// <param name="status"> Operation status. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeviceUpdatePrivateEndpointConnectionProxyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DeviceUpdatePrivateEndpointConnectionProxyProvisioningState? provisioningState, string eTag, DeviceUpdateRemotePrivateEndpoint remotePrivateEndpoint, string status, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal DeviceUpdatePrivateEndpointConnectionProxyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DeviceUpdatePrivateEndpointConnectionProxyProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
-            ETag = eTag;
-            RemotePrivateEndpoint = remotePrivateEndpoint;
-            Status = status;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The provisioning state of the private endpoint connection proxy resource. </summary>
         public DeviceUpdatePrivateEndpointConnectionProxyProvisioningState? ProvisioningState { get; }
-        /// <summary> ETag from NRP. </summary>
-        public string ETag { get; }
-        /// <summary> Remote private endpoint details. </summary>
-        public DeviceUpdateRemotePrivateEndpoint RemotePrivateEndpoint { get; set; }
-        /// <summary> Operation status. </summary>
-        public string Status { get; set; }
     }
 }

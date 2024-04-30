@@ -14,7 +14,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    internal partial class UnknownApplicationGroupPolicy : IUtf8JsonSerializable, IJsonModel<EventHubsApplicationGroupPolicy>
+    internal partial class UnknownEventHubsApplicationGroupPolicy : IUtf8JsonSerializable, IJsonModel<EventHubsApplicationGroupPolicy>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventHubsApplicationGroupPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             return DeserializeEventHubsApplicationGroupPolicy(document.RootElement, options);
         }
 
-        internal static UnknownApplicationGroupPolicy DeserializeUnknownApplicationGroupPolicy(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UnknownEventHubsApplicationGroupPolicy DeserializeUnknownEventHubsApplicationGroupPolicy(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownApplicationGroupPolicy(name, type, serializedAdditionalRawData);
+            return new UnknownEventHubsApplicationGroupPolicy(name, type, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

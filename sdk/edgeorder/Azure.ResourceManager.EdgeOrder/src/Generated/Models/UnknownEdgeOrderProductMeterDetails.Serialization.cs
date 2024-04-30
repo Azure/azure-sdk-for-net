@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    internal partial class UnknownMeterDetails : IUtf8JsonSerializable, IJsonModel<EdgeOrderProductMeterDetails>
+    internal partial class UnknownEdgeOrderProductMeterDetails : IUtf8JsonSerializable, IJsonModel<EdgeOrderProductMeterDetails>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeOrderProductMeterDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return DeserializeEdgeOrderProductMeterDetails(document.RootElement, options);
         }
 
-        internal static UnknownMeterDetails DeserializeUnknownMeterDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UnknownEdgeOrderProductMeterDetails DeserializeUnknownEdgeOrderProductMeterDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownMeterDetails(billingType, multiplier, chargingType, serializedAdditionalRawData);
+            return new UnknownEdgeOrderProductMeterDetails(billingType, multiplier, chargingType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeOrderProductMeterDetails>.Write(ModelReaderWriterOptions options)

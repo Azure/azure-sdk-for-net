@@ -53,15 +53,8 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             }
             if (Optional.IsDefined(Properties))
             {
-                if (Properties != null)
-                {
-                    writer.WritePropertyName("properties"u8);
-                    writer.WriteObjectValue(Properties, options);
-                }
-                else
-                {
-                    writer.WriteNull("properties");
-                }
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -137,7 +130,6 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        properties = null;
                         continue;
                     }
                     properties = DigitalTwinsPatchProperties.DeserializeDigitalTwinsPatchProperties(property.Value, options);
