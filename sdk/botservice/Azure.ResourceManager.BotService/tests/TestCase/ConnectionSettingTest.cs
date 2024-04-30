@@ -22,7 +22,6 @@ namespace Azure.ResourceManager.BotService.Tests
 
         [TestCase]
         [RecordedTest]
-        [LiveOnly(Reason = "https://github.com/Azure/azure-sdk-for-net/issues/43404")]
         public async Task CreateOrUpdate()
         {
             //1.Create
@@ -81,7 +80,6 @@ namespace Azure.ResourceManager.BotService.Tests
 
         [TestCase]
         [RecordedTest]
-        [LiveOnly(Reason = "https://github.com/Azure/azure-sdk-for-net/issues/43404")]
         public async Task ListTest()
         {
             //Create
