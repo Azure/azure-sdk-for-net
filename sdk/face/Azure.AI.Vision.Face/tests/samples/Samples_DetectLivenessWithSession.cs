@@ -12,7 +12,7 @@ namespace Azure.AI.Vision.Face.Samples
     {
         [RecordedTest]
         [TestCase("", true)]
-        //[TestCase("", false)]
+        //[TestCase("", false)] // Use this case to create a new session and perform liveness detection with liveness SDK
         //[TestCase("cc3fc6b7-33bd-4137-9e8d-eb83e150c525", false)] // Replace session id with your session which sent underlying liveness request with
         public async Task SessionSample_DetectLivenessSession(string sessionId, bool deleteSession)
         {

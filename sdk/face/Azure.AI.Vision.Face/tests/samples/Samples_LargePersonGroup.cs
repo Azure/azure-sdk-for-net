@@ -3,6 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.AI.Vision.Face.Tests;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -10,25 +11,41 @@ namespace Azure.AI.Vision.Face.Samples
 {
     public partial class FaceSamples
     {
-        private static Uri TestImage = new("https://raw.githubusercontent.com/Azure-Samples/cognitive-services-sample-data-files/master/Face/images/detection1.jpg");
-
         [RecordedTest]
         public async Task LargePersonGroupSample()
         {
             var administrationClient = CreateAdministrationClient();
             var groupId = "lpg_family1";
-/*
+
             await administrationClient.CreateLargePersonGroupAsync(groupId, "Family 1", userData: "A sweet family", recognitionModel: FaceRecognitionModel.Recognition04);
 
-            var createPersonResponse1 = await administrationClient.CreateLargePersonGroupPersonAsync(groupId, "Bill", userData: "Dad");
-            var personId1 = createPersonResponse1.Value.PersonId;
-            await administrationClient.AddLargePersonGroupPersonFaceFromUrlAsync(groupId, personId1, TestImage);
-*/
-            var op = await administrationClient.TrainLargePersonGroupAsync(WaitUntil.Started, groupId);
-            Console.WriteLine("=================================================");
-            Console.WriteLine(op.GetRawResponse());
-            var s = await op.UpdateStatusAsync();
-            Console.WriteLine(s.Content);
+            var createPerson1Response = await administrationClient.CreateLargePersonGroupPersonAsync(groupId, "Bill", userData: "Dad");
+            var dadPersonId = createPerson1Response.Value.PersonId;
+            await administrationClient.AddLargePersonGroupPersonFaceFromUrlAsync(groupId, dadPersonId, new Uri(FaceTestConstant.UrlFamily1Dad1Image), userData: "Dad-1", detectionModel: FaceDetectionModel.Detection03);
+            await administrationClient.AddLargePersonGroupPersonFaceFromUrlAsync(groupId, dadPersonId, new Uri(FaceTestConstant.UrlFamily1Dad2Image), userData: "Dad-2", detectionModel: FaceDetectionModel.Detection03);
+
+            var createPerson2Response = await administrationClient.CreateLargePersonGroupPersonAsync(groupId, "Clare", userData: "Mom");
+            var momPersonId = createPerson2Response.Value.PersonId;
+            await administrationClient.AddLargePersonGroupPersonFaceFromUrlAsync(groupId, momPersonId, new Uri(FaceTestConstant.UrlFamily1Mom1Image), userData: "Mom-1", detectionModel: FaceDetectionModel.Detection03);
+            await administrationClient.AddLargePersonGroupPersonFaceFromUrlAsync(groupId, momPersonId, new Uri(FaceTestConstant.UrlFamily1Mom2Image), userData: "Mom-2", detectionModel: FaceDetectionModel.Detection03);
+
+            var createPerson3Response = await administrationClient.CreateLargePersonGroupPersonAsync(groupId, "Ron", userData: "Son");
+            var sonPersonId = createPerson3Response.Value.PersonId;
+            await administrationClient.AddLargePersonGroupPersonFaceFromUrlAsync(groupId, sonPersonId, new Uri(FaceTestConstant.UrlFamily1Son1Image), userData: "Son-1", detectionModel: FaceDetectionModel.Detection03);
+            await administrationClient.AddLargePersonGroupPersonFaceFromUrlAsync(groupId, sonPersonId, new Uri(FaceTestConstant.UrlFamily1Son2Image), userData: "Son-2", detectionModel: FaceDetectionModel.Detection03);
+
+            var operation = await administrationClient.TrainLargePersonGroupAsync(WaitUntil.Completed, groupId);
+            await operation.WaitForCompletionResponseAsync();
+
+            var faceClient = CreateClient();
+            var detectResponse = await faceClient.DetectFromUrlAsync(new Uri(FaceTestConstant.UrlFamily1Dad3Image), FaceDetectionModel.Detection03, FaceRecognitionModel.Recognition04, true);
+            var faceId = detectResponse.Value[0].FaceId.Value;
+
+            var verifyDadResponse = await faceClient.VerifyFromLargePersonGroupAsync(faceId, groupId, dadPersonId);
+            Console.WriteLine($"Is the detected face Bill? {verifyDadResponse.Value.IsIdentical} ({verifyDadResponse.Value.Confidence})");
+
+            var verifyMomResponse = await faceClient.VerifyFromLargePersonGroupAsync(faceId, groupId, momPersonId);
+            Console.WriteLine($"Is the detected face Clare? {verifyMomResponse.Value.IsIdentical} ({verifyMomResponse.Value.Confidence})");
         }
     }
 }

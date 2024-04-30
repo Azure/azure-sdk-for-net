@@ -1,9 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using Azure.AI.Vision.Face;
 using Azure.AI.Vision.Face.Tests;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 
 namespace Azure.AI.Vision.Face.Samples
 {
@@ -11,8 +13,6 @@ namespace Azure.AI.Vision.Face.Samples
     [AsyncOnly]
     public partial class FaceSamples : RecordedTestBase<FaceTestEnvironment>
     {
-        public const string LocalSampleImage = "face-sample.jpg";
-
         public FaceSamples(bool isAsync) : base(isAsync, RecordedTestMode.Live)
         {
         }
@@ -61,6 +61,16 @@ namespace Azure.AI.Vision.Face.Samples
             var sessionClient = new FaceSessionClient(endpoint, credential);
             #endregion
             return sessionClient;
+        }
+
+        public FaceClient CreateClientWithAzureDefaultCredential()
+        {
+            #region Snippet:CreateFaceClientWithDefaultAzureCredential
+            Uri endpoint = new Uri("<your endpoint>");
+            DefaultAzureCredential credential = new DefaultAzureCredential();
+            var client = new FaceClient(endpoint, credential);
+            #endregion
+            return client;
         }
     }
 }

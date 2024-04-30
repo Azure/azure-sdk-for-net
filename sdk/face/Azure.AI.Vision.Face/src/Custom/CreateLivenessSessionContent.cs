@@ -6,9 +6,9 @@ namespace Azure.AI.Vision.Face
     /// <summary> Request for creating liveness session. </summary>
     public partial class CreateLivenessSessionContent
     {
-        internal CreateLivenessSessionParametersForMultipart ToMultipartContent()
+        internal CreateLivenessSessionContentForMultipart ToMultipartContent()
         {
-            return new CreateLivenessSessionParametersForMultipart(
+            return new CreateLivenessSessionContentForMultipart(
                 LivenessOperationMode,
                 SendResultsToClient,
                 DeviceCorrelationIdSetInClient,

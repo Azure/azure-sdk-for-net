@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.Vision.Face;
@@ -15,7 +16,14 @@ namespace Azure.AI.Vision.Face.Tests
 {
     public class FaceSessionClientTests : RecordedTestBase<FaceTestEnvironment>
     {
-        private List<string> _createdLivenessSessionIds = new();
+        internal enum SessionType {
+            Liveness,
+            LivenessWithVerify
+        }
+
+        // Pre-generated random device correlation id
+        private const string DeviceCorrelationId = "11902120-3636-1876-4916-073bdc0f9b12";
+        private List<(SessionType, string)> _createdSessions = new();
         public FaceSessionClientTests(bool isAsync) : base(isAsync)
         {
             SanitizedHeaders.Add("Ocp-Apim-Subscription-Key");
@@ -40,76 +48,93 @@ namespace Azure.AI.Vision.Face.Tests
         [TearDown]
         protected async Task Cleanup()
         {
-            var client = CreateSessionClient(nonRecordingClient: true);
-
-            foreach (var sessionId in _createdLivenessSessionIds)
-            {
-                await client.DeleteLivenessSessionAsync(sessionId);
-            }
-
-            _createdLivenessSessionIds.Clear();
-        }
-
-        protected async Task<IEnumerable<string>> PrepareLivenessSession(int count, bool addToCreatedList = true)
-        {
             if (Mode == RecordedTestMode.Playback)
             {
-                return Enumerable.Empty<string>();
+                _createdSessions.Clear();
+                return;
             }
 
             var client = CreateSessionClient(nonRecordingClient: true);
-            var testRandom = new TestRandom(Mode);
-            var result = new List<string>();
 
-            for (int i = 0; i < count; i++)
+            foreach (var (type, sessionId) in _createdSessions)
             {
-                var createContent = new CreateLivenessSessionContent(LivenessOperationMode.Passive)
+                if (type == SessionType.Liveness)
                 {
-                    DeviceCorrelationId = testRandom.NewGuid().ToString(),
-                };
-
-                var createResponse = await client.CreateLivenessSessionAsync(createContent);
-                result.Add(createResponse.Value.SessionId);
-
-                if (addToCreatedList)
+                    await client.DeleteLivenessSessionAsync(sessionId);
+                }
+                else if (type == SessionType.LivenessWithVerify)
                 {
-                    _createdLivenessSessionIds.Add(createResponse.Value.SessionId);
+                    await client.DeleteLivenessWithVerifySessionAsync(sessionId);
                 }
             }
 
-            return result;
+            _createdSessions.Clear();
+        }
+
+        protected void AssertAuditEntry(LivenessSessionAuditEntry auditEntry, string sessionId)
+        {
+            Assert.IsNotNull(auditEntry.Id);
+            Assert.IsNotNull(auditEntry.RequestId);
+            Assert.IsNotNull(auditEntry.ReceivedDateTime);
+            Assert.IsNotNull(auditEntry.Digest);
+            Assert.AreEqual(auditEntry.SessionId, sessionId);
+
+            Assert.IsNotNull(auditEntry.Request.Url);
+            Assert.IsNotNull(auditEntry.Request.Method);
+            Assert.IsNotNull(auditEntry.Request.ContentLength);
+            Assert.IsNotNull(auditEntry.Request.ContentType);
+
+            Assert.IsNotNull(auditEntry.Response.StatusCode);
+            Assert.IsNotNull(auditEntry.Response.LatencyInMilliseconds);
+
+            Assert.IsNotNull(auditEntry.Response.Body.LivenessDecision);
+            Assert.IsNotNull(auditEntry.Response.Body.Target.FaceRectangle.Top);
+            Assert.IsNotNull(auditEntry.Response.Body.Target.FaceRectangle.Left);
+            Assert.IsNotNull(auditEntry.Response.Body.Target.FaceRectangle.Width);
+            Assert.IsNotNull(auditEntry.Response.Body.Target.FaceRectangle.Height);
+            Assert.IsNotNull(auditEntry.Response.Body.Target.FileName);
+            Assert.IsNotNull(auditEntry.Response.Body.Target.TimeOffsetWithinFile);
+            Assert.IsNotNull(auditEntry.Response.Body.Target.ImageType);
+        }
+
+        #region LivenessSession
+        protected async Task<CreateLivenessSessionResult> CreateLivenessSession(bool nonRecordingClient = false)
+        {
+            var client = CreateSessionClient(nonRecordingClient: nonRecordingClient);
+
+            var createContent = new CreateLivenessSessionContent(LivenessOperationMode.Passive)
+            {
+                DeviceCorrelationId = DeviceCorrelationId,
+            };
+
+            var createResponse = await client.CreateLivenessSessionAsync(createContent);
+            _createdSessions.Add((SessionType.Liveness, createResponse.Value.SessionId));
+
+            return createResponse.Value;
         }
 
         [RecordedTest]
         public async Task TestCreateLivenessSession()
         {
-            var deviceCorrelationId = new TestRandom(Mode).NewGuid().ToString();
             var client = CreateSessionClient();
 
-            var createContent = new CreateLivenessSessionContent(LivenessOperationMode.Passive)
-            {
-                DeviceCorrelationId = deviceCorrelationId,
-            };
+            var createResult = await CreateLivenessSession();
 
-            var createResponse = await client.CreateLivenessSessionAsync(createContent);
-            var sessionId = createResponse.Value.SessionId;
+            Assert.IsNotNull(createResult.SessionId);
+            Assert.IsNotNull(createResult.AuthToken);
 
-            if (Mode != RecordedTestMode.Playback)
-            {
-                _createdLivenessSessionIds.Add(sessionId);
-            }
-
-            Assert.IsNotNull(sessionId);
-            Assert.IsNotNull(createResponse.Value.AuthToken);
-
-            var getResponse = await client.GetLivenessSessionResultAsync(sessionId);
-            Assert.AreEqual(deviceCorrelationId, getResponse.Value.DeviceCorrelationId);
+            var getResponse = await client.GetLivenessSessionResultAsync(createResult.SessionId);
+            Assert.AreEqual(DeviceCorrelationId, getResponse.Value.DeviceCorrelationId);
         }
 
         [RecordedTest]
         public async Task TestListLivenessSessions()
         {
-            await PrepareLivenessSession(2);
+            if (Mode != RecordedTestMode.Playback)
+            {
+                await CreateLivenessSession(nonRecordingClient: true);
+                await CreateLivenessSession(nonRecordingClient: true);
+            }
 
             var client = CreateSessionClient();
 
@@ -128,7 +153,7 @@ namespace Azure.AI.Vision.Face.Tests
         }
 
         [PlaybackOnly("Requiring other components to send underlying liveness request.")]
-        [TestCase("4a4c21a2-38b4-4765-a895-eaed10f77c11")]
+        [TestCase("4c0e611b-0ccb-4a0a-bec1-25008a329651")]
         public async Task TestGetSessionResult(string sessionId)
         {
             var client = CreateSessionClient();
@@ -144,31 +169,11 @@ namespace Azure.AI.Vision.Face.Tests
             Assert.IsNotNull(session.SessionExpired);
             Assert.AreEqual(FaceSessionStatus.ResultAvailable, session.Status);
 
-            Assert.IsNotNull(session.Result.Id);
-            Assert.AreEqual(session.Result.SessionId, sessionId);
-            Assert.IsNotNull(session.Result.RequestId);
-            Assert.IsNotNull(session.Result.ReceivedDateTime);
-            Assert.IsNotNull(session.Result.Digest);
-
-            Assert.IsNotNull(session.Result.Request.Url);
-            Assert.IsNotNull(session.Result.Request.Method);
-            Assert.IsNotNull(session.Result.Request.ContentLength);
-            Assert.IsNotNull(session.Result.Request.ContentType);
-
-            Assert.IsNotNull(session.Result.Response.StatusCode);
-            Assert.IsNotNull(session.Result.Response.LatencyInMilliseconds);
-            Assert.IsNotNull(session.Result.Response.Body.LivenessDecision);
-            Assert.IsNotNull(session.Result.Response.Body.Target.FaceRectangle.Top);
-            Assert.IsNotNull(session.Result.Response.Body.Target.FaceRectangle.Left);
-            Assert.IsNotNull(session.Result.Response.Body.Target.FaceRectangle.Width);
-            Assert.IsNotNull(session.Result.Response.Body.Target.FaceRectangle.Height);
-            Assert.IsNotNull(session.Result.Response.Body.Target.FileName);
-            Assert.IsNotNull(session.Result.Response.Body.Target.TimeOffsetWithinFile);
-            Assert.IsNotNull(session.Result.Response.Body.Target.ImageType);
+            AssertAuditEntry(session.Result, sessionId);
         }
 
         [PlaybackOnly("Requiring other components to send underlying liveness request.")]
-        [TestCase("4a4c21a2-38b4-4765-a895-eaed10f77c11")]
+        [TestCase("4c0e611b-0ccb-4a0a-bec1-25008a329651")]
         public async Task TestGetSessionAuditEntries(string sessionId)
         {
             var client = CreateSessionClient();
@@ -176,38 +181,155 @@ namespace Azure.AI.Vision.Face.Tests
 
             foreach (var auditEntry in response.Value)
             {
-                Assert.IsNotNull(auditEntry.Id);
-                Assert.AreEqual(sessionId, auditEntry.SessionId);
-                Assert.IsNotNull(auditEntry.RequestId);
-                Assert.IsNotNull(auditEntry.ReceivedDateTime);
-                Assert.IsNotNull(auditEntry.Digest);
-
-                Assert.IsNotNull(auditEntry.Request.Url);
-                Assert.IsNotNull(auditEntry.Request.Method);
-                Assert.IsNotNull(auditEntry.Request.ContentLength);
-                Assert.IsNotNull(auditEntry.Request.ContentType);
-
-                Assert.IsNotNull(auditEntry.Response.StatusCode);
-                Assert.IsNotNull(auditEntry.Response.LatencyInMilliseconds);
-                Assert.IsNotNull(auditEntry.Response.Body.LivenessDecision);
-                Assert.IsNotNull(auditEntry.Response.Body.ModelVersionUsed);
-                Assert.IsNotNull(auditEntry.Response.Body.Target.FaceRectangle.Top);
-                Assert.IsNotNull(auditEntry.Response.Body.Target.FaceRectangle.Left);
-                Assert.IsNotNull(auditEntry.Response.Body.Target.FaceRectangle.Width);
-                Assert.IsNotNull(auditEntry.Response.Body.Target.FaceRectangle.Height);
-                Assert.IsNotNull(auditEntry.Response.Body.Target.FileName);
-                Assert.IsNotNull(auditEntry.Response.Body.Target.TimeOffsetWithinFile);
-                Assert.IsNotNull(auditEntry.Response.Body.Target.ImageType);
+                AssertAuditEntry(auditEntry, sessionId);
             }
         }
 
         [RecordedTest]
         public async Task TestDeleteLivenessSessions()
         {
-            var sessions = await PrepareLivenessSession(1, false);
+            var result = await CreateLivenessSession();
 
             var client = CreateSessionClient();
-            await client.DeleteLivenessSessionAsync(sessions.First());
+            await client.DeleteLivenessSessionAsync(result.SessionId);
+            _createdSessions.RemoveAll(s => s.Item2 == result.SessionId);
         }
+        #endregion
+
+        #region LivenessWithVerifySession
+        protected async Task<CreateLivenessWithVerifySessionResult> CreateLivenessWithSession(bool withVerifyImage, bool nonRecordingClient = false)
+        {
+            var client = CreateSessionClient(nonRecordingClient: nonRecordingClient);
+
+            var createContent = new CreateLivenessSessionContent(LivenessOperationMode.Passive)
+            {
+                DeviceCorrelationId = DeviceCorrelationId,
+            };
+
+            Response<CreateLivenessWithVerifySessionResult> createResponse = null;
+
+            if (withVerifyImage)
+            {
+                using var fileStream = new FileStream(FaceTestConstant.LocalSampleImage, FileMode.Open, FileAccess.Read);
+                createResponse = await client.CreateLivenessWithVerifySessionAsync(createContent, fileStream);
+            }
+            else
+            {
+                createResponse = await client.CreateLivenessWithVerifySessionAsync(createContent, null);
+            }
+
+            _createdSessions.Add((SessionType.LivenessWithVerify, createResponse.Value.SessionId));
+
+            return createResponse.Value;
+        }
+
+        protected void AssertVerifyResult(LivenessWithVerifyOutputs verifyResult)
+        {
+            Assert.IsNotNull(verifyResult.IsIdentical);
+            Assert.IsNotNull(verifyResult.MatchConfidence);
+            Assert.IsNotNull(verifyResult.VerifyImage.FaceRectangle.Top);
+            Assert.IsNotNull(verifyResult.VerifyImage.FaceRectangle.Left);
+            Assert.IsNotNull(verifyResult.VerifyImage.FaceRectangle.Width);
+            Assert.IsNotNull(verifyResult.VerifyImage.FaceRectangle.Height);
+            Assert.IsNotNull(verifyResult.VerifyImage.QualityForRecognition);
+        }
+
+        [LiveOnly] // "Unable to playback multipart request.
+        [RecordedTest]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task TestCreateLivenessWithVerifySession(bool withVerifyImage)
+        {
+            var client = CreateSessionClient();
+
+            var createResult = await CreateLivenessWithSession(withVerifyImage);
+
+            Assert.IsNotNull(createResult.SessionId);
+            Assert.IsNotNull(createResult.AuthToken);
+
+            if (withVerifyImage)
+            {
+                Assert.IsNotNull(createResult.VerifyImage);
+                Assert.IsNotNull(createResult.VerifyImage.FaceRectangle.Top);
+                Assert.IsNotNull(createResult.VerifyImage.FaceRectangle.Left);
+                Assert.IsNotNull(createResult.VerifyImage.FaceRectangle.Width);
+                Assert.IsNotNull(createResult.VerifyImage.FaceRectangle.Height);
+                Assert.IsNotNull(createResult.VerifyImage.QualityForRecognition);
+            }
+
+            var getResponse = await client.GetLivenessWithVerifySessionResultAsync(createResult.SessionId);
+            Assert.AreEqual(DeviceCorrelationId, getResponse.Value.DeviceCorrelationId);
+        }
+
+        [RecordedTest]
+        public async Task TestListLivenessWithVerifySessions()
+        {
+            if (Mode != RecordedTestMode.Playback)
+            {
+                await CreateLivenessWithSession(true, nonRecordingClient: true);
+                await CreateLivenessWithSession(false, nonRecordingClient: true);
+            }
+
+            var client = CreateSessionClient();
+
+            var listResponse = await client.GetLivenessWithVerifySessionsAsync();
+            var sessionList = listResponse.Value;
+            Assert.GreaterOrEqual(sessionList.Count, 2);
+            Assert.Greater(sessionList[1].Id, sessionList[0].Id);
+
+            foreach (var session in sessionList)
+            {
+                Assert.IsNotNull(session.CreatedDateTime);
+                Assert.IsNotNull(session.DeviceCorrelationId);
+                Assert.IsTrue(session.AuthTokenTimeToLiveInSeconds >= 60);
+                Assert.IsTrue(session.AuthTokenTimeToLiveInSeconds <= 86400);
+            }
+        }
+
+        [PlaybackOnly("Requiring other components to send underlying liveness request.")]
+        [TestCase("f643ad07-eb1e-44af-946f-87d44b7304be")]
+        public async Task TestGetLivenessWithVerifySessionResult(string sessionId)
+        {
+            var client = CreateSessionClient();
+            var response = await client.GetLivenessWithVerifySessionResultAsync(sessionId);
+            var session = response.Value;
+
+            Assert.AreEqual(sessionId, session.Id);
+            Assert.IsNotNull(session.CreatedDateTime);
+            Assert.IsNotNull(session.DeviceCorrelationId);
+            Assert.IsTrue(session.AuthTokenTimeToLiveInSeconds >= 60);
+            Assert.IsTrue(session.AuthTokenTimeToLiveInSeconds <= 86400);
+            Assert.IsNotNull(session.SessionStartDateTime);
+            Assert.IsNotNull(session.SessionExpired);
+            Assert.AreEqual(FaceSessionStatus.ResultAvailable, session.Status);
+
+            AssertAuditEntry(session.Result, sessionId);
+            AssertVerifyResult(session.Result.Response.Body.VerifyResult);
+        }
+
+        [PlaybackOnly("Requiring other components to send underlying liveness request.")]
+        [TestCase("f643ad07-eb1e-44af-946f-87d44b7304be")]
+        public async Task TestGetLivenessWithVerifySessionAuditEntries(string sessionId)
+        {
+            var client = CreateSessionClient();
+            var response = await client.GetLivenessWithVerifySessionAuditEntriesAsync(sessionId);
+
+            foreach (var auditEntry in response.Value)
+            {
+                AssertAuditEntry(auditEntry, sessionId);
+                AssertVerifyResult(auditEntry.Response.Body.VerifyResult);
+            }
+        }
+
+        [RecordedTest]
+        public async Task TestDeleteLivenessWithVerifySessions()
+        {
+            var result = await CreateLivenessWithSession(false);
+
+            var client = CreateSessionClient();
+            await client.DeleteLivenessWithVerifySessionAsync(result.SessionId);
+            _createdSessions.RemoveAll(s => s.Item2 == result.SessionId);
+        }
+        #endregion
     }
 }

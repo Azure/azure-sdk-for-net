@@ -1,4 +1,4 @@
-# Detect liveness in faces with session
+# Detect liveness with face verification with session
 
 This sample demonstrates how to create a liveness session and query the liveness detection result. For more information about the liveness solution, see the [service documentation][face_liveness].
 
@@ -22,12 +22,12 @@ var sessionClient = new FaceSessionClient(endpoint, credential);
 Before you can detect liveness in a face, you need to create a liveness detection session with Azure AI Face Service. The service creates a liveness-session and responds back with a session-authorization-token.
 
 ```C# Snippet:CreateLivenessSession
-var livenessSessionCreationContent = new LivenessSessionCreationContent(LivenessOperationMode.Passive) {
+var createContent = new CreateLivenessSessionContent(LivenessOperationMode.Passive) {
     SendResultsToClient = true,
     DeviceCorrelationId = Guid.NewGuid().ToString(),
 };
 
-var createResponse = await sessionClient.CreateLivenessSessionAsync(livenessSessionCreationContent);
+var createResponse = await sessionClient.CreateLivenessSessionAsync(createContent);
 
 sessionId = createResponse.Value.SessionId;
 Console.WriteLine($"Session created, SessionId: {sessionId}");

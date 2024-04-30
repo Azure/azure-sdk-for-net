@@ -4,6 +4,7 @@
 using System;
 using System.IO;
 using System.Threading.Tasks;
+using Azure.AI.Vision.Face.Tests;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -13,6 +14,8 @@ namespace Azure.AI.Vision.Face.Samples
     {
         [RecordedTest]
         [TestCase("", true)]
+        //[TestCase("", false)] // Use this case to create a new session and perform liveness detection with liveness SDK
+        //[TestCase("cc3fc6b7-33bd-4137-9e8d-eb83e150c525", false)] // Replace session id with your session which sent underlying liveness request with
         public async Task SessionSample_DetectLivenessWithVerifySession(string sessionId, bool deleteSession)
         {
             var sessionClient = CreateSessionClient();
@@ -25,7 +28,7 @@ namespace Azure.AI.Vision.Face.Samples
                     DeviceCorrelationId = Guid.NewGuid().ToString(),
                 };
 
-                using var fileStream = new FileStream(LocalSampleImage, FileMode.Open, FileAccess.Read);
+                using var fileStream = new FileStream(FaceTestConstant.LocalSampleImage, FileMode.Open, FileAccess.Read);
 
                 var createResponse = await sessionClient.CreateLivenessWithVerifySessionAsync(parameters, fileStream);
 
