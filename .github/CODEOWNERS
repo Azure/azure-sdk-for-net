@@ -806,6 +806,9 @@
 # AzureSdkOwners:                                                  @ShivangiReja
 # ServiceOwners:                                                   @arv100kri @bleroy @tjacobhi
 
+# ServiceLabel: %SelfHelp
+# ServiceOwners:                                                   @siddiavinashmsft @sahilpwr
+
 # PRLabel: %Service Bus
 /sdk/servicebus/                                                   @JoshLove-msft @jsquire @m-redding
 
