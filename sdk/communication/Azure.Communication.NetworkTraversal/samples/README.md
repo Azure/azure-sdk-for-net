@@ -20,8 +20,3 @@ This client library allows for the following operations:
 
  You can find samples for each of these functions below.
  - Fetch relay information [synchronously][sample_relay] or [asynchronously][sample_relay_async]
-
-<!-- LINKS -->
-[sample_relay]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/communication/Azure.Communication.NetworkTraversal/samples/Sample1_CommunicationRelayClient.md
-[sample_relay_async]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/communication/Azure.Communication.NetworkTraversal/samples/Sample1_CommunicationRelayClientAsync.md
-
