@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    [PersistableModelProxy(typeof(UnknownAlertsMetaDataProperties))]
+    [PersistableModelProxy(typeof(UnknownServiceAlertMetadataProperties))]
     public partial class ServiceAlertMetadataProperties : IUtf8JsonSerializable, IJsonModel<ServiceAlertMetadataProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceAlertMetadataProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     case "MonitorServiceList": return MonitorServiceList.DeserializeMonitorServiceList(element, options);
                 }
             }
-            return UnknownAlertsMetaDataProperties.DeserializeUnknownAlertsMetaDataProperties(element, options);
+            return UnknownServiceAlertMetadataProperties.DeserializeUnknownServiceAlertMetadataProperties(element, options);
         }
 
         BinaryData IPersistableModel<ServiceAlertMetadataProperties>.Write(ModelReaderWriterOptions options)

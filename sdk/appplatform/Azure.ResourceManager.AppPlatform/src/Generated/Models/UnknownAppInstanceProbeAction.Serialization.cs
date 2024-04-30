@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    internal partial class UnknownProbeAction : IUtf8JsonSerializable, IJsonModel<AppInstanceProbeAction>
+    internal partial class UnknownAppInstanceProbeAction : IUtf8JsonSerializable, IJsonModel<AppInstanceProbeAction>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppInstanceProbeAction>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return DeserializeAppInstanceProbeAction(document.RootElement, options);
         }
 
-        internal static UnknownProbeAction DeserializeUnknownProbeAction(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UnknownAppInstanceProbeAction DeserializeUnknownAppInstanceProbeAction(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownProbeAction(type, serializedAdditionalRawData);
+            return new UnknownAppInstanceProbeAction(type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppInstanceProbeAction>.Write(ModelReaderWriterOptions options)

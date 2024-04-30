@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    internal partial class UnknownAction : IUtf8JsonSerializable, IJsonModel<AlertProcessingRuleAction>
+    internal partial class UnknownAlertProcessingRuleAction : IUtf8JsonSerializable, IJsonModel<AlertProcessingRuleAction>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AlertProcessingRuleAction>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             return DeserializeAlertProcessingRuleAction(document.RootElement, options);
         }
 
-        internal static UnknownAction DeserializeUnknownAction(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UnknownAlertProcessingRuleAction DeserializeUnknownAlertProcessingRuleAction(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownAction(actionType, serializedAdditionalRawData);
+            return new UnknownAlertProcessingRuleAction(actionType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AlertProcessingRuleAction>.Write(ModelReaderWriterOptions options)

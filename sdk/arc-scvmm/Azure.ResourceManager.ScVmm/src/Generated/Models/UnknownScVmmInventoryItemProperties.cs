@@ -10,23 +10,23 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ScVmm.Models
 {
-    /// <summary> Unknown version of InventoryItemProperties. </summary>
-    internal partial class UnknownInventoryItemProperties : ScVmmInventoryItemProperties
+    /// <summary> Unknown version of ScVmmInventoryItemProperties. </summary>
+    internal partial class UnknownScVmmInventoryItemProperties : ScVmmInventoryItemProperties
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownInventoryItemProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownScVmmInventoryItemProperties"/>. </summary>
         /// <param name="inventoryType"> They inventory type. </param>
         /// <param name="managedResourceId"> Gets the tracked resource id corresponding to the inventory resource. </param>
         /// <param name="uuid"> Gets the UUID (which is assigned by VMM) for the inventory item. </param>
         /// <param name="inventoryItemName"> Gets the Managed Object name in VMM for the inventory item. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownInventoryItemProperties(ScVmmInventoryType inventoryType, string managedResourceId, string uuid, string inventoryItemName, ScVmmProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(inventoryType, managedResourceId, uuid, inventoryItemName, provisioningState, serializedAdditionalRawData)
+        internal UnknownScVmmInventoryItemProperties(ScVmmInventoryType inventoryType, string managedResourceId, string uuid, string inventoryItemName, ScVmmProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(inventoryType, managedResourceId, uuid, inventoryItemName, provisioningState, serializedAdditionalRawData)
         {
             InventoryType = inventoryType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="UnknownInventoryItemProperties"/> for deserialization. </summary>
-        internal UnknownInventoryItemProperties()
+        /// <summary> Initializes a new instance of <see cref="UnknownScVmmInventoryItemProperties"/> for deserialization. </summary>
+        internal UnknownScVmmInventoryItemProperties()
         {
         }
     }

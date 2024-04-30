@@ -13,6 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
+    [PersistableModelProxy(typeof(UnknownAppPlatformUserSourceInfo))]
     public partial class AppPlatformUploadedUserSourceInfo : IUtf8JsonSerializable, IJsonModel<AppPlatformUploadedUserSourceInfo>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformUploadedUserSourceInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -81,12 +82,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 switch (discriminator.GetString())
                 {
                     case "Jar": return JarUploadedUserSourceInfo.DeserializeJarUploadedUserSourceInfo(element, options);
-                    case "NetCoreZip": return NetCoreZipUploadedUserSourceInfo.DeserializeNetCoreZipUploadedUserSourceInfo(element, options);
                     case "Source": return SourceUploadedUserSourceInfo.DeserializeSourceUploadedUserSourceInfo(element, options);
+                    case "NetCoreZip": return NetCoreZipUploadedUserSourceInfo.DeserializeNetCoreZipUploadedUserSourceInfo(element, options);
                 }
             }
             string relativePath = default;
-            string type = "UploadedUserSourceInfo";
+            string type = default;
             string version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AppPlatformUploadedUserSourceInfo(type, version, serializedAdditionalRawData, relativePath);
+            return new Models.AppPlatformUploadedUserSourceInfo(type, version, serializedAdditionalRawData, relativePath);
         }
 
         BinaryData IPersistableModel<AppPlatformUploadedUserSourceInfo>.Write(ModelReaderWriterOptions options)

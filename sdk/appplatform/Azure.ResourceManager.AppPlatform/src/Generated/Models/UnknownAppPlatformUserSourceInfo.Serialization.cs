@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    internal partial class UnknownUserSourceInfo : IUtf8JsonSerializable, IJsonModel<AppPlatformUserSourceInfo>
+    internal partial class UnknownAppPlatformUserSourceInfo : IUtf8JsonSerializable, IJsonModel<AppPlatformUserSourceInfo>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformUserSourceInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return DeserializeAppPlatformUserSourceInfo(document.RootElement, options);
         }
 
-        internal static UnknownUserSourceInfo DeserializeUnknownUserSourceInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UnknownAppPlatformUserSourceInfo DeserializeUnknownAppPlatformUserSourceInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownUserSourceInfo(type, version, serializedAdditionalRawData);
+            return new UnknownAppPlatformUserSourceInfo(type, version, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformUserSourceInfo>.Write(ModelReaderWriterOptions options)

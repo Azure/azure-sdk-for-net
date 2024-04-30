@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="properties">
         /// Properties of the certificate resource payload.
         /// Please note <see cref="AppPlatformCertificateProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AppPlatformContentCertificateProperties"/> and <see cref="AppPlatformKeyVaultCertificateProperties"/>.
+        /// The available derived classes include <see cref="AppPlatformKeyVaultCertificateProperties"/> and <see cref="AppPlatformContentCertificateProperties"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AppPlatformCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AppPlatformCertificateProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <summary>
         /// Properties of the certificate resource payload.
         /// Please note <see cref="AppPlatformCertificateProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AppPlatformContentCertificateProperties"/> and <see cref="AppPlatformKeyVaultCertificateProperties"/>.
+        /// The available derived classes include <see cref="AppPlatformKeyVaultCertificateProperties"/> and <see cref="AppPlatformContentCertificateProperties"/>.
         /// </summary>
         public AppPlatformCertificateProperties Properties { get; set; }
     }
