@@ -273,8 +273,8 @@ namespace Azure.AI.Translation.Text
         public TextTranslationClient(Azure.Core.TokenCredential credential, Azure.AI.Translation.Text.TextTranslationClientOptions options = null) { }
         public TextTranslationClient(Azure.Core.TokenCredential credential, string resourceId, string region = "global", Azure.AI.Translation.Text.TextTranslationClientOptions options = null) { }
         public TextTranslationClient(Azure.Core.TokenCredential credential, System.Uri endpoint, Azure.AI.Translation.Text.TextTranslationClientOptions options = null) { }
-        protected TextTranslationClient(System.Uri endpoint) { }
-        protected TextTranslationClient(System.Uri endpoint, Azure.AI.Translation.Text.TextTranslationClientOptions options) { }
+        public TextTranslationClient(System.Uri endpoint) { }
+        public TextTranslationClient(System.Uri endpoint, Azure.AI.Translation.Text.TextTranslationClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.BreakSentenceItem>> FindSentenceBoundaries(System.Collections.Generic.IEnumerable<string> content, System.Guid clientTraceId = default(System.Guid), string language = null, string script = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.BreakSentenceItem>> FindSentenceBoundaries(string text, System.Guid clientTraceId = default(System.Guid), string language = null, string script = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

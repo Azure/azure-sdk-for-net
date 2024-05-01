@@ -74,6 +74,7 @@ namespace Azure.AI.Translation.Text
         /// If the resource has not been modified, the service will return status code 304 and an empty response body.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/TextTranslationClient.xml" path="doc/members/member[@name='GetSupportedLanguagesAsync(string,string,string,ETag?,CancellationToken)']/*" />
         public virtual async Task<Response<GetSupportedLanguagesResult>> GetSupportedLanguagesAsync(string clientTraceId = null, string scope = null, string acceptLanguage = null, ETag? ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -103,6 +104,7 @@ namespace Azure.AI.Translation.Text
         /// If the resource has not been modified, the service will return status code 304 and an empty response body.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/TextTranslationClient.xml" path="doc/members/member[@name='GetSupportedLanguages(string,string,string,ETag?,CancellationToken)']/*" />
         public virtual Response<GetSupportedLanguagesResult> GetSupportedLanguages(string clientTraceId = null, string scope = null, string acceptLanguage = null, ETag? ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -148,6 +150,7 @@ namespace Azure.AI.Translation.Text
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/TextTranslationClient.xml" path="doc/members/member[@name='GetSupportedLanguagesAsync(string,string,string,ETag?,RequestContext)']/*" />
         public virtual async Task<Response> GetSupportedLanguagesAsync(string clientTraceId, string scope, string acceptLanguage, ETag? ifNoneMatch, RequestContext context)
         {
             using var scope0 = ClientDiagnostics.CreateScope("TextTranslationClient.GetSupportedLanguages");
@@ -202,6 +205,7 @@ namespace Azure.AI.Translation.Text
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/TextTranslationClient.xml" path="doc/members/member[@name='GetSupportedLanguages(string,string,string,ETag?,RequestContext)']/*" />
         public virtual Response GetSupportedLanguages(string clientTraceId, string scope, string acceptLanguage, ETag? ifNoneMatch, RequestContext context)
         {
             using var scope0 = ClientDiagnostics.CreateScope("TextTranslationClient.GetSupportedLanguages");
