@@ -82,7 +82,7 @@ namespace Azure.Communication.CallAutomation
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<BaseDialog>(this);
             return content;
         }
     }

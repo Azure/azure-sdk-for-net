@@ -112,15 +112,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Key1), out propertyOverride);
-            if (Optional.IsDefined(Key1) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  key1: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Key1))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  key1: ");
                     if (Key1.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -134,15 +135,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Key2), out propertyOverride);
-            if (Optional.IsDefined(Key2) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  key2: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Key2))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  key2: ");
                     if (Key2.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

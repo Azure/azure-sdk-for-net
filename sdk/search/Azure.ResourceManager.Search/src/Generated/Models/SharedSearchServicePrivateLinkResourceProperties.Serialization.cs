@@ -179,29 +179,31 @@ namespace Azure.ResourceManager.Search.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateLinkResourceId), out propertyOverride);
-            if (Optional.IsDefined(PrivateLinkResourceId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  privateLinkResourceId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PrivateLinkResourceId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  privateLinkResourceId: ");
                     builder.AppendLine($"'{PrivateLinkResourceId.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GroupId), out propertyOverride);
-            if (Optional.IsDefined(GroupId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  groupId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(GroupId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  groupId: ");
                     if (GroupId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -215,15 +217,16 @@ namespace Azure.ResourceManager.Search.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestMessage), out propertyOverride);
-            if (Optional.IsDefined(RequestMessage) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  requestMessage: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RequestMessage))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  requestMessage: ");
                     if (RequestMessage.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -237,43 +240,46 @@ namespace Azure.ResourceManager.Search.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceRegion), out propertyOverride);
-            if (Optional.IsDefined(ResourceRegion) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  resourceRegion: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ResourceRegion))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  resourceRegion: ");
                     builder.AppendLine($"'{ResourceRegion.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SharedPrivateLinkResourceStatus), out propertyOverride);
-            if (Optional.IsDefined(SharedPrivateLinkResourceStatus) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  status: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SharedPrivateLinkResourceStatus))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  status: ");
                     builder.AppendLine($"'{SharedPrivateLinkResourceStatus.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SharedPrivateLinkResourceProvisioningState), out propertyOverride);
-            if (Optional.IsDefined(SharedPrivateLinkResourceProvisioningState) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  provisioningState: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SharedPrivateLinkResourceProvisioningState))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  provisioningState: ");
                     builder.AppendLine($"'{SharedPrivateLinkResourceProvisioningState.Value.ToString()}'");
                 }
             }

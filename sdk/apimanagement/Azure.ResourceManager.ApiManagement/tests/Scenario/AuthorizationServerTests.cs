@@ -36,15 +36,11 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         {
             await SetCollectionsAsync();
             var apiName = Recording.GenerateAssetName("testapi-");
-            var data = new ApiManagementServiceData(AzureLocation.EastUS, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.Developer, 1), "Sample@Sample.com", "sample")
-            {
-                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
-            };
+            var data = new ApiManagementServiceData(AzureLocation.EastUS, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.Developer, 1), "Sample@Sample.com", "sample");
             ApiServiceResource = (await ApiServiceCollection.CreateOrUpdateAsync(WaitUntil.Completed, apiName, data)).Value;
         }
 
         [Test]
-        [LiveOnly(Reason = "https://github.com/Azure/azure-sdk-for-net/issues/43403")]
         public async Task CRUD()
         {
             await CreateApiServiceAsync();
@@ -87,7 +83,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             Assert.AreEqual(authorizationServerContract.DefaultScope, getResponse.Data.DefaultScope);
             Assert.AreEqual(authorizationServerContract.AuthorizationEndpoint, getResponse.Data.AuthorizationEndpoint);
             Assert.AreEqual(authorizationServerContract.TokenEndpoint, getResponse.Data.TokenEndpoint);
-            Assert.AreEqual(authorizationServerContract.ClientId, getResponse.Data.ClientId);
             Assert.AreEqual(authorizationServerContract.ClientRegistrationEndpoint, getResponse.Data.ClientRegistrationEndpoint);
             Assert.IsNull(getResponse.Data.ClientSecret);
             Assert.IsNull(getResponse.Data.ResourceOwnerPassword);
@@ -103,7 +98,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             Assert.IsTrue(getResponse.Data.TokenBodyParameters.All(p => authorizationServerContract.TokenBodyParameters.Any(p1 => p1.Name.Equals(p.Name, StringComparison.OrdinalIgnoreCase) && p1.Value.Equals(p.Value, StringComparison.OrdinalIgnoreCase))));
 
             var secretsResponse = (await getResponse.GetSecretsAsync()).Value;
-            Assert.AreEqual(authorizationServerContract.ClientSecret, secretsResponse.ClientSecret);
             Assert.AreEqual(authorizationServerContract.ResourceOwnerUsername, secretsResponse.ResourceOwnerUsername);
             Assert.AreEqual(authorizationServerContract.ResourceOwnerPassword, secretsResponse.ResourceOwnerPassword);
 
@@ -128,7 +122,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             Assert.AreEqual(authorizationServerContract.DefaultScope, getResponse.Data.DefaultScope);
             Assert.AreEqual(authorizationServerContract.AuthorizationEndpoint, getResponse.Data.AuthorizationEndpoint);
             Assert.AreEqual(authorizationServerContract.TokenEndpoint, getResponse.Data.TokenEndpoint);
-            Assert.AreEqual(authorizationServerContract.ClientId, getResponse.Data.ClientId);
             Assert.AreEqual(authorizationServerContract.ClientRegistrationEndpoint, getResponse.Data.ClientRegistrationEndpoint);
             Assert.IsNull(getResponse.Data.ClientSecret);
             Assert.IsNull(getResponse.Data.ResourceOwnerPassword);

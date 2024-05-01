@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.StorageMover
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageMover.JobDefinitionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageMover.JobDefinitionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class JobDefinitionResource : Azure.ResourceManager.ArmResource
+    public partial class JobDefinitionResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageMover.JobDefinitionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageMover.JobDefinitionData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected JobDefinitionResource() { }
@@ -58,6 +58,11 @@ namespace Azure.ResourceManager.StorageMover
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageMover.Models.JobRunResourceId>> StartJobAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.StorageMover.Models.JobRunResourceId> StopJob(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageMover.Models.JobRunResourceId>> StopJobAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.StorageMover.JobDefinitionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageMover.JobDefinitionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageMover.JobDefinitionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.StorageMover.JobDefinitionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageMover.JobDefinitionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageMover.JobDefinitionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageMover.JobDefinitionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.StorageMover.JobDefinitionResource> Update(Azure.ResourceManager.StorageMover.Models.JobDefinitionPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageMover.JobDefinitionResource>> UpdateAsync(Azure.ResourceManager.StorageMover.Models.JobDefinitionPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -113,7 +118,7 @@ namespace Azure.ResourceManager.StorageMover
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageMover.JobRunData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageMover.JobRunData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class JobRunResource : Azure.ResourceManager.ArmResource
+    public partial class JobRunResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageMover.JobRunData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageMover.JobRunData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected JobRunResource() { }
@@ -122,6 +127,11 @@ namespace Azure.ResourceManager.StorageMover
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string storageMoverName, string projectName, string jobDefinitionName, string jobRunName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.StorageMover.JobRunResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageMover.JobRunResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.StorageMover.JobRunData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageMover.JobRunData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageMover.JobRunData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.StorageMover.JobRunData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageMover.JobRunData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageMover.JobRunData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageMover.JobRunData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class StorageMoverAgentCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.StorageMover.StorageMoverAgentResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.StorageMover.StorageMoverAgentResource>, System.Collections.IEnumerable
     {
@@ -161,7 +171,7 @@ namespace Azure.ResourceManager.StorageMover
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageMover.StorageMoverAgentData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageMover.StorageMoverAgentData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class StorageMoverAgentResource : Azure.ResourceManager.ArmResource
+    public partial class StorageMoverAgentResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageMover.StorageMoverAgentData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageMover.StorageMoverAgentData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected StorageMoverAgentResource() { }
@@ -172,6 +182,11 @@ namespace Azure.ResourceManager.StorageMover
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.StorageMover.StorageMoverAgentResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageMover.StorageMoverAgentResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.StorageMover.StorageMoverAgentData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageMover.StorageMoverAgentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageMover.StorageMoverAgentData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.StorageMover.StorageMoverAgentData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageMover.StorageMoverAgentData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageMover.StorageMoverAgentData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageMover.StorageMoverAgentData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.StorageMover.StorageMoverAgentResource> Update(Azure.ResourceManager.StorageMover.Models.StorageMoverAgentPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageMover.StorageMoverAgentResource>> UpdateAsync(Azure.ResourceManager.StorageMover.Models.StorageMoverAgentPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -230,7 +245,7 @@ namespace Azure.ResourceManager.StorageMover
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageMover.StorageMoverEndpointData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageMover.StorageMoverEndpointData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class StorageMoverEndpointResource : Azure.ResourceManager.ArmResource
+    public partial class StorageMoverEndpointResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageMover.StorageMoverEndpointData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageMover.StorageMoverEndpointData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected StorageMoverEndpointResource() { }
@@ -241,6 +256,11 @@ namespace Azure.ResourceManager.StorageMover
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.StorageMover.StorageMoverEndpointResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageMover.StorageMoverEndpointResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.StorageMover.StorageMoverEndpointData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageMover.StorageMoverEndpointData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageMover.StorageMoverEndpointData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.StorageMover.StorageMoverEndpointData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageMover.StorageMoverEndpointData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageMover.StorageMoverEndpointData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageMover.StorageMoverEndpointData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.StorageMover.StorageMoverEndpointResource> Update(Azure.ResourceManager.StorageMover.Models.StorageMoverEndpointPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageMover.StorageMoverEndpointResource>> UpdateAsync(Azure.ResourceManager.StorageMover.Models.StorageMoverEndpointPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -286,7 +306,7 @@ namespace Azure.ResourceManager.StorageMover
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageMover.StorageMoverProjectData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageMover.StorageMoverProjectData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class StorageMoverProjectResource : Azure.ResourceManager.ArmResource
+    public partial class StorageMoverProjectResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageMover.StorageMoverProjectData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageMover.StorageMoverProjectData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected StorageMoverProjectResource() { }
@@ -300,10 +320,15 @@ namespace Azure.ResourceManager.StorageMover
         public virtual Azure.Response<Azure.ResourceManager.StorageMover.JobDefinitionResource> GetJobDefinition(string jobDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageMover.JobDefinitionResource>> GetJobDefinitionAsync(string jobDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.StorageMover.JobDefinitionCollection GetJobDefinitions() { throw null; }
+        Azure.ResourceManager.StorageMover.StorageMoverProjectData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageMover.StorageMoverProjectData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageMover.StorageMoverProjectData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.StorageMover.StorageMoverProjectData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageMover.StorageMoverProjectData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageMover.StorageMoverProjectData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageMover.StorageMoverProjectData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.StorageMover.StorageMoverProjectResource> Update(Azure.ResourceManager.StorageMover.Models.StorageMoverProjectPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageMover.StorageMoverProjectResource>> UpdateAsync(Azure.ResourceManager.StorageMover.Models.StorageMoverProjectPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class StorageMoverResource : Azure.ResourceManager.ArmResource
+    public partial class StorageMoverResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageMover.StorageMoverData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageMover.StorageMoverData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected StorageMoverResource() { }
@@ -329,6 +354,11 @@ namespace Azure.ResourceManager.StorageMover
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageMover.StorageMoverResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.StorageMover.StorageMoverResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageMover.StorageMoverResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.StorageMover.StorageMoverData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageMover.StorageMoverData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageMover.StorageMoverData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.StorageMover.StorageMoverData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageMover.StorageMoverData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageMover.StorageMoverData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageMover.StorageMoverData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.StorageMover.StorageMoverResource> Update(Azure.ResourceManager.StorageMover.Models.StorageMoverPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageMover.StorageMoverResource>> UpdateAsync(Azure.ResourceManager.StorageMover.Models.StorageMoverPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

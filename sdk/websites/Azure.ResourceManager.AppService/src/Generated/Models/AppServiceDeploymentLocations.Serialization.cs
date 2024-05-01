@@ -166,17 +166,18 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Locations), out propertyOverride);
-            if (Optional.IsCollectionDefined(Locations) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Locations.Any() || hasPropertyOverride)
+                builder.Append("  locations: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Locations))
                 {
-                    builder.Append("  locations: ");
-                    if (hasPropertyOverride)
+                    if (Locations.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  locations: ");
                         builder.AppendLine("[");
                         foreach (var item in Locations)
                         {
@@ -188,17 +189,18 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HostingEnvironments), out propertyOverride);
-            if (Optional.IsCollectionDefined(HostingEnvironments) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (HostingEnvironments.Any() || hasPropertyOverride)
+                builder.Append("  hostingEnvironments: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(HostingEnvironments))
                 {
-                    builder.Append("  hostingEnvironments: ");
-                    if (hasPropertyOverride)
+                    if (HostingEnvironments.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  hostingEnvironments: ");
                         builder.AppendLine("[");
                         foreach (var item in HostingEnvironments)
                         {
@@ -210,17 +212,18 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HostingEnvironmentDeploymentInfos), out propertyOverride);
-            if (Optional.IsCollectionDefined(HostingEnvironmentDeploymentInfos) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (HostingEnvironmentDeploymentInfos.Any() || hasPropertyOverride)
+                builder.Append("  hostingEnvironmentDeploymentInfos: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(HostingEnvironmentDeploymentInfos))
                 {
-                    builder.Append("  hostingEnvironmentDeploymentInfos: ");
-                    if (hasPropertyOverride)
+                    if (HostingEnvironmentDeploymentInfos.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  hostingEnvironmentDeploymentInfos: ");
                         builder.AppendLine("[");
                         foreach (var item in HostingEnvironmentDeploymentInfos)
                         {
