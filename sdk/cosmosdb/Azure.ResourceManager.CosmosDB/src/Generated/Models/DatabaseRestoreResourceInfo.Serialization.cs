@@ -127,15 +127,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DatabaseName), out propertyOverride);
-            if (Optional.IsDefined(DatabaseName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  databaseName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DatabaseName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  databaseName: ");
                     if (DatabaseName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -149,17 +150,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CollectionNames), out propertyOverride);
-            if (Optional.IsCollectionDefined(CollectionNames) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (CollectionNames.Any() || hasPropertyOverride)
+                builder.Append("  collectionNames: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(CollectionNames))
                 {
-                    builder.Append("  collectionNames: ");
-                    if (hasPropertyOverride)
+                    if (CollectionNames.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  collectionNames: ");
                         builder.AppendLine("[");
                         foreach (var item in CollectionNames)
                         {

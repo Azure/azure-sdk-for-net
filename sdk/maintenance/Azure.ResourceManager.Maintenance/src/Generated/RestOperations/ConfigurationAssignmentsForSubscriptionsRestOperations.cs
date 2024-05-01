@@ -32,8 +32,20 @@ namespace Azure.ResourceManager.Maintenance
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-09-01-preview";
+            _apiVersion = apiVersion ?? "2023-10-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string configurationAssignmentName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Maintenance/configurationAssignments/", false);
+            uri.AppendPath(configurationAssignmentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string configurationAssignmentName)
@@ -55,7 +67,7 @@ namespace Azure.ResourceManager.Maintenance
         }
 
         /// <summary> Get configuration assignment for resource.. </summary>
-        /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="configurationAssignmentName"/> is null. </exception>
@@ -82,7 +94,7 @@ namespace Azure.ResourceManager.Maintenance
         }
 
         /// <summary> Get configuration assignment for resource.. </summary>
-        /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="configurationAssignmentName"/> is null. </exception>
@@ -108,6 +120,18 @@ namespace Azure.ResourceManager.Maintenance
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Maintenance/configurationAssignments/", false);
+            uri.AppendPath(configurationAssignmentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data)
         {
             var message = _pipeline.CreateMessage();
@@ -131,7 +155,7 @@ namespace Azure.ResourceManager.Maintenance
         }
 
         /// <summary> Register configuration for resource. </summary>
-        /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
         /// <param name="data"> The configurationAssignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -161,7 +185,7 @@ namespace Azure.ResourceManager.Maintenance
         }
 
         /// <summary> Register configuration for resource. </summary>
-        /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
         /// <param name="data"> The configurationAssignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -190,6 +214,18 @@ namespace Azure.ResourceManager.Maintenance
             }
         }
 
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Maintenance/configurationAssignments/", false);
+            uri.AppendPath(configurationAssignmentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data)
         {
             var message = _pipeline.CreateMessage();
@@ -213,7 +249,7 @@ namespace Azure.ResourceManager.Maintenance
         }
 
         /// <summary> Register configuration for resource. </summary>
-        /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
         /// <param name="data"> The configurationAssignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -242,7 +278,7 @@ namespace Azure.ResourceManager.Maintenance
         }
 
         /// <summary> Register configuration for resource. </summary>
-        /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
         /// <param name="data"> The configurationAssignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -270,6 +306,18 @@ namespace Azure.ResourceManager.Maintenance
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string configurationAssignmentName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Maintenance/configurationAssignments/", false);
+            uri.AppendPath(configurationAssignmentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string configurationAssignmentName)
         {
             var message = _pipeline.CreateMessage();
@@ -289,7 +337,7 @@ namespace Azure.ResourceManager.Maintenance
         }
 
         /// <summary> Unregister configuration for resource. </summary>
-        /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="configurationAssignmentName"> Unique configuration assignment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="configurationAssignmentName"/> is null. </exception>
@@ -318,7 +366,7 @@ namespace Azure.ResourceManager.Maintenance
         }
 
         /// <summary> Unregister configuration for resource. </summary>
-        /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="configurationAssignmentName"> Unique configuration assignment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="configurationAssignmentName"/> is null. </exception>

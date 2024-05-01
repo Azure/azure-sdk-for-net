@@ -37,6 +37,25 @@ namespace Azure.ResourceManager.MachineLearning
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string skip)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MachineLearningServices/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/computes", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (skip != null)
+            {
+                uri.AppendQuery("$skip", skip, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string workspaceName, string skip)
         {
             var message = _pipeline.CreateMessage();
@@ -120,6 +139,22 @@ namespace Azure.ResourceManager.MachineLearning
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string computeName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MachineLearningServices/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/computes/", false);
+            uri.AppendPath(computeName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string workspaceName, string computeName)
@@ -210,6 +245,22 @@ namespace Azure.ResourceManager.MachineLearning
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string computeName, MachineLearningComputeData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MachineLearningServices/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/computes/", false);
+            uri.AppendPath(computeName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string computeName, MachineLearningComputeData data)
         {
             var message = _pipeline.CreateMessage();
@@ -294,6 +345,22 @@ namespace Azure.ResourceManager.MachineLearning
             }
         }
 
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string computeName, MachineLearningComputePatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MachineLearningServices/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/computes/", false);
+            uri.AppendPath(computeName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string computeName, MachineLearningComputePatch patch)
         {
             var message = _pipeline.CreateMessage();
@@ -376,6 +443,23 @@ namespace Azure.ResourceManager.MachineLearning
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string computeName, MachineLearningUnderlyingResourceAction underlyingResourceAction)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MachineLearningServices/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/computes/", false);
+            uri.AppendPath(computeName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("underlyingResourceAction", underlyingResourceAction.ToString(), true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string workspaceName, string computeName, MachineLearningUnderlyingResourceAction underlyingResourceAction)
         {
             var message = _pipeline.CreateMessage();
@@ -455,6 +539,23 @@ namespace Azure.ResourceManager.MachineLearning
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateCustomServicesRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string computeName, IEnumerable<CustomService> customServices)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MachineLearningServices/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/computes/", false);
+            uri.AppendPath(computeName, true);
+            uri.AppendPath("/customServices", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateCustomServicesRequest(string subscriptionId, string resourceGroupName, string workspaceName, string computeName, IEnumerable<CustomService> customServices)
@@ -545,6 +646,23 @@ namespace Azure.ResourceManager.MachineLearning
             }
         }
 
+        internal RequestUriBuilder CreateListNodesRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string computeName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MachineLearningServices/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/computes/", false);
+            uri.AppendPath(computeName, true);
+            uri.AppendPath("/listNodes", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListNodesRequest(string subscriptionId, string resourceGroupName, string workspaceName, string computeName)
         {
             var message = _pipeline.CreateMessage();
@@ -628,6 +746,23 @@ namespace Azure.ResourceManager.MachineLearning
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListKeysRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string computeName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MachineLearningServices/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/computes/", false);
+            uri.AppendPath(computeName, true);
+            uri.AppendPath("/listKeys", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListKeysRequest(string subscriptionId, string resourceGroupName, string workspaceName, string computeName)
@@ -715,6 +850,23 @@ namespace Azure.ResourceManager.MachineLearning
             }
         }
 
+        internal RequestUriBuilder CreateStartRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string computeName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MachineLearningServices/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/computes/", false);
+            uri.AppendPath(computeName, true);
+            uri.AppendPath("/start", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateStartRequest(string subscriptionId, string resourceGroupName, string workspaceName, string computeName)
         {
             var message = _pipeline.CreateMessage();
@@ -788,6 +940,23 @@ namespace Azure.ResourceManager.MachineLearning
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateStopRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string computeName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MachineLearningServices/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/computes/", false);
+            uri.AppendPath(computeName, true);
+            uri.AppendPath("/stop", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateStopRequest(string subscriptionId, string resourceGroupName, string workspaceName, string computeName)
@@ -865,6 +1034,23 @@ namespace Azure.ResourceManager.MachineLearning
             }
         }
 
+        internal RequestUriBuilder CreateRestartRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string computeName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MachineLearningServices/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/computes/", false);
+            uri.AppendPath(computeName, true);
+            uri.AppendPath("/restart", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateRestartRequest(string subscriptionId, string resourceGroupName, string workspaceName, string computeName)
         {
             var message = _pipeline.CreateMessage();
@@ -938,6 +1124,23 @@ namespace Azure.ResourceManager.MachineLearning
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateIdleShutdownSettingRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string computeName, IdleShutdownSetting idleShutdownSetting)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MachineLearningServices/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/computes/", false);
+            uri.AppendPath(computeName, true);
+            uri.AppendPath("/updateIdleShutdownSetting", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateIdleShutdownSettingRequest(string subscriptionId, string resourceGroupName, string workspaceName, string computeName, IdleShutdownSetting idleShutdownSetting)
@@ -1023,6 +1226,14 @@ namespace Azure.ResourceManager.MachineLearning
             }
         }
 
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string skip)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string skip)
         {
             var message = _pipeline.CreateMessage();
@@ -1099,6 +1310,14 @@ namespace Azure.ResourceManager.MachineLearning
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNodesNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string computeName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNodesNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string computeName)

@@ -611,15 +611,16 @@ namespace Azure.ResourceManager.Redis
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  name: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  name: ");
                     if (Name.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -633,28 +634,30 @@ namespace Azure.ResourceManager.Redis
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
-            builder.Append("  location: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.Append("  location: ");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
+                builder.Append("  location: ");
                 builder.AppendLine($"'{Location.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);
-            if (Optional.IsCollectionDefined(Tags) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Tags.Any() || hasPropertyOverride)
+                builder.Append("  tags: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Tags))
                 {
-                    builder.Append("  tags: ");
-                    if (hasPropertyOverride)
+                    if (Tags.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  tags: ");
                         builder.AppendLine("{");
                         foreach (var item in Tags)
                         {
@@ -680,17 +683,18 @@ namespace Azure.ResourceManager.Redis
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Zones), out propertyOverride);
-            if (Optional.IsCollectionDefined(Zones) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Zones.Any() || hasPropertyOverride)
+                builder.Append("  zones: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Zones))
                 {
-                    builder.Append("  zones: ");
-                    if (hasPropertyOverride)
+                    if (Zones.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  zones: ");
                         builder.AppendLine("[");
                         foreach (var item in Zones)
                         {
@@ -715,43 +719,46 @@ namespace Azure.ResourceManager.Redis
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Identity), out propertyOverride);
-            if (Optional.IsDefined(Identity) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  identity: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Identity))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  identity: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Identity, options, 2, false, "  identity: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  id: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  id: ");
                     builder.AppendLine($"'{Id.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
-            if (Optional.IsDefined(SystemData) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  systemData: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  systemData: ");
                     builder.AppendLine($"'{SystemData.ToString()}'");
                 }
             }
@@ -759,29 +766,31 @@ namespace Azure.ResourceManager.Redis
             builder.Append("  properties:");
             builder.AppendLine(" {");
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RedisConfiguration), out propertyOverride);
-            if (Optional.IsDefined(RedisConfiguration) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    redisConfiguration: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RedisConfiguration))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    redisConfiguration: ");
                     BicepSerializationHelpers.AppendChildObject(builder, RedisConfiguration, options, 4, false, "    redisConfiguration: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RedisVersion), out propertyOverride);
-            if (Optional.IsDefined(RedisVersion) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    redisVersion: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RedisVersion))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    redisVersion: ");
                     if (RedisVersion.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -795,60 +804,64 @@ namespace Azure.ResourceManager.Redis
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnableNonSslPort), out propertyOverride);
-            if (Optional.IsDefined(EnableNonSslPort) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    enableNonSslPort: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EnableNonSslPort))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    enableNonSslPort: ");
                     var boolValue = EnableNonSslPort.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReplicasPerMaster), out propertyOverride);
-            if (Optional.IsDefined(ReplicasPerMaster) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    replicasPerMaster: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ReplicasPerMaster))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    replicasPerMaster: ");
                     builder.AppendLine($"{ReplicasPerMaster.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReplicasPerPrimary), out propertyOverride);
-            if (Optional.IsDefined(ReplicasPerPrimary) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    replicasPerPrimary: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ReplicasPerPrimary))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    replicasPerPrimary: ");
                     builder.AppendLine($"{ReplicasPerPrimary.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TenantSettings), out propertyOverride);
-            if (Optional.IsCollectionDefined(TenantSettings) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (TenantSettings.Any() || hasPropertyOverride)
+                builder.Append("    tenantSettings: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(TenantSettings))
                 {
-                    builder.Append("    tenantSettings: ");
-                    if (hasPropertyOverride)
+                    if (TenantSettings.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("    tenantSettings: ");
                         builder.AppendLine("{");
                         foreach (var item in TenantSettings)
                         {
@@ -874,127 +887,136 @@ namespace Azure.ResourceManager.Redis
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ShardCount), out propertyOverride);
-            if (Optional.IsDefined(ShardCount) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    shardCount: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ShardCount))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    shardCount: ");
                     builder.AppendLine($"{ShardCount.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinimumTlsVersion), out propertyOverride);
-            if (Optional.IsDefined(MinimumTlsVersion) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    minimumTlsVersion: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MinimumTlsVersion))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    minimumTlsVersion: ");
                     builder.AppendLine($"'{MinimumTlsVersion.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PublicNetworkAccess), out propertyOverride);
-            if (Optional.IsDefined(PublicNetworkAccess) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    publicNetworkAccess: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PublicNetworkAccess))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    publicNetworkAccess: ");
                     builder.AppendLine($"'{PublicNetworkAccess.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UpdateChannel), out propertyOverride);
-            if (Optional.IsDefined(UpdateChannel) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    updateChannel: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UpdateChannel))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    updateChannel: ");
                     builder.AppendLine($"'{UpdateChannel.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Sku), out propertyOverride);
-            if (Optional.IsDefined(Sku) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    sku: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Sku))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    sku: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Sku, options, 4, false, "    sku: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SubnetId), out propertyOverride);
-            if (Optional.IsDefined(SubnetId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    subnetId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SubnetId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    subnetId: ");
                     builder.AppendLine($"'{SubnetId.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StaticIP), out propertyOverride);
-            if (Optional.IsDefined(StaticIP) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    staticIP: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StaticIP))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    staticIP: ");
                     builder.AppendLine($"'{StaticIP.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
-            if (Optional.IsDefined(ProvisioningState) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    provisioningState: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisioningState))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    provisioningState: ");
                     builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HostName), out propertyOverride);
-            if (Optional.IsDefined(HostName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    hostName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(HostName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    hostName: ");
                     if (HostName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -1008,59 +1030,63 @@ namespace Azure.ResourceManager.Redis
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Port), out propertyOverride);
-            if (Optional.IsDefined(Port) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    port: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Port))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    port: ");
                     builder.AppendLine($"{Port.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SslPort), out propertyOverride);
-            if (Optional.IsDefined(SslPort) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    sslPort: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SslPort))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    sslPort: ");
                     builder.AppendLine($"{SslPort.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AccessKeys), out propertyOverride);
-            if (Optional.IsDefined(AccessKeys) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    accessKeys: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AccessKeys))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    accessKeys: ");
                     BicepSerializationHelpers.AppendChildObject(builder, AccessKeys, options, 4, false, "    accessKeys: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LinkedServers), out propertyOverride);
-            if (Optional.IsCollectionDefined(LinkedServers) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (LinkedServers.Any() || hasPropertyOverride)
+                builder.Append("    linkedServers: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(LinkedServers))
                 {
-                    builder.Append("    linkedServers: ");
-                    if (hasPropertyOverride)
+                    if (LinkedServers.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("    linkedServers: ");
                         builder.AppendLine("[");
                         foreach (var item in LinkedServers)
                         {
@@ -1072,17 +1098,18 @@ namespace Azure.ResourceManager.Redis
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Instances), out propertyOverride);
-            if (Optional.IsCollectionDefined(Instances) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Instances.Any() || hasPropertyOverride)
+                builder.Append("    instances: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Instances))
                 {
-                    builder.Append("    instances: ");
-                    if (hasPropertyOverride)
+                    if (Instances.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("    instances: ");
                         builder.AppendLine("[");
                         foreach (var item in Instances)
                         {
@@ -1094,17 +1121,18 @@ namespace Azure.ResourceManager.Redis
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateEndpointConnections), out propertyOverride);
-            if (Optional.IsCollectionDefined(PrivateEndpointConnections) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (PrivateEndpointConnections.Any() || hasPropertyOverride)
+                builder.Append("    privateEndpointConnections: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(PrivateEndpointConnections))
                 {
-                    builder.Append("    privateEndpointConnections: ");
-                    if (hasPropertyOverride)
+                    if (PrivateEndpointConnections.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("    privateEndpointConnections: ");
                         builder.AppendLine("[");
                         foreach (var item in PrivateEndpointConnections)
                         {

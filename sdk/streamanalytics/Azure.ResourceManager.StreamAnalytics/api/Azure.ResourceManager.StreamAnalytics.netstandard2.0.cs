@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StreamAnalytics.StreamAnalyticsClusterData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StreamAnalytics.StreamAnalyticsClusterData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class StreamAnalyticsClusterResource : Azure.ResourceManager.ArmResource
+    public partial class StreamAnalyticsClusterResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StreamAnalytics.StreamAnalyticsClusterData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StreamAnalytics.StreamAnalyticsClusterData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected StreamAnalyticsClusterResource() { }
@@ -51,6 +51,11 @@ namespace Azure.ResourceManager.StreamAnalytics
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StreamAnalytics.StreamAnalyticsClusterResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.StreamAnalytics.StreamAnalyticsClusterResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StreamAnalytics.StreamAnalyticsClusterResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.StreamAnalytics.StreamAnalyticsClusterData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StreamAnalytics.StreamAnalyticsClusterData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StreamAnalytics.StreamAnalyticsClusterData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.StreamAnalytics.StreamAnalyticsClusterData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StreamAnalytics.StreamAnalyticsClusterData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StreamAnalytics.StreamAnalyticsClusterData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StreamAnalytics.StreamAnalyticsClusterData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StreamAnalytics.StreamAnalyticsClusterResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.StreamAnalytics.StreamAnalyticsClusterData data, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StreamAnalytics.StreamAnalyticsClusterResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.StreamAnalytics.StreamAnalyticsClusterData data, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -114,7 +119,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StreamAnalytics.StreamAnalyticsPrivateEndpointData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StreamAnalytics.StreamAnalyticsPrivateEndpointData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class StreamAnalyticsPrivateEndpointResource : Azure.ResourceManager.ArmResource
+    public partial class StreamAnalyticsPrivateEndpointResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StreamAnalytics.StreamAnalyticsPrivateEndpointData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StreamAnalytics.StreamAnalyticsPrivateEndpointData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected StreamAnalyticsPrivateEndpointResource() { }
@@ -125,6 +130,11 @@ namespace Azure.ResourceManager.StreamAnalytics
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.StreamAnalytics.StreamAnalyticsPrivateEndpointResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StreamAnalytics.StreamAnalyticsPrivateEndpointResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.StreamAnalytics.StreamAnalyticsPrivateEndpointData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StreamAnalytics.StreamAnalyticsPrivateEndpointData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StreamAnalytics.StreamAnalyticsPrivateEndpointData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.StreamAnalytics.StreamAnalyticsPrivateEndpointData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StreamAnalytics.StreamAnalyticsPrivateEndpointData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StreamAnalytics.StreamAnalyticsPrivateEndpointData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StreamAnalytics.StreamAnalyticsPrivateEndpointData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StreamAnalytics.StreamAnalyticsPrivateEndpointResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.StreamAnalytics.StreamAnalyticsPrivateEndpointData data, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StreamAnalytics.StreamAnalyticsPrivateEndpointResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.StreamAnalytics.StreamAnalyticsPrivateEndpointData data, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -206,7 +216,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StreamAnalytics.StreamingJobFunctionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StreamAnalytics.StreamingJobFunctionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class StreamingJobFunctionResource : Azure.ResourceManager.ArmResource
+    public partial class StreamingJobFunctionResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StreamAnalytics.StreamingJobFunctionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StreamAnalytics.StreamingJobFunctionData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected StreamingJobFunctionResource() { }
@@ -219,6 +229,11 @@ namespace Azure.ResourceManager.StreamAnalytics
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StreamAnalytics.StreamingJobFunctionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.StreamAnalytics.StreamingJobFunctionResource> RetrieveDefaultDefinition(Azure.ResourceManager.StreamAnalytics.Models.FunctionRetrieveDefaultDefinitionContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StreamAnalytics.StreamingJobFunctionResource>> RetrieveDefaultDefinitionAsync(Azure.ResourceManager.StreamAnalytics.Models.FunctionRetrieveDefaultDefinitionContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.StreamAnalytics.StreamingJobFunctionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StreamAnalytics.StreamingJobFunctionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StreamAnalytics.StreamingJobFunctionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.StreamAnalytics.StreamingJobFunctionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StreamAnalytics.StreamingJobFunctionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StreamAnalytics.StreamingJobFunctionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StreamAnalytics.StreamingJobFunctionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsResourceTestStatus> Test(Azure.WaitUntil waitUntil, Azure.ResourceManager.StreamAnalytics.StreamingJobFunctionData data = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsResourceTestStatus>> TestAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.StreamAnalytics.StreamingJobFunctionData data = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.StreamAnalytics.StreamingJobFunctionResource> Update(Azure.ResourceManager.StreamAnalytics.StreamingJobFunctionData data, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -251,7 +266,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StreamAnalytics.StreamingJobInputData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StreamAnalytics.StreamingJobInputData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class StreamingJobInputResource : Azure.ResourceManager.ArmResource
+    public partial class StreamingJobInputResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StreamAnalytics.StreamingJobInputData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StreamAnalytics.StreamingJobInputData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected StreamingJobInputResource() { }
@@ -262,6 +277,11 @@ namespace Azure.ResourceManager.StreamAnalytics
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.StreamAnalytics.StreamingJobInputResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StreamAnalytics.StreamingJobInputResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.StreamAnalytics.StreamingJobInputData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StreamAnalytics.StreamingJobInputData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StreamAnalytics.StreamingJobInputData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.StreamAnalytics.StreamingJobInputData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StreamAnalytics.StreamingJobInputData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StreamAnalytics.StreamingJobInputData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StreamAnalytics.StreamingJobInputData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsResourceTestStatus> Test(Azure.WaitUntil waitUntil, Azure.ResourceManager.StreamAnalytics.StreamingJobInputData input = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsResourceTestStatus>> TestAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.StreamAnalytics.StreamingJobInputData input = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.StreamAnalytics.StreamingJobInputResource> Update(Azure.ResourceManager.StreamAnalytics.StreamingJobInputData input, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -304,7 +324,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StreamAnalytics.StreamingJobOutputData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StreamAnalytics.StreamingJobOutputData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class StreamingJobOutputResource : Azure.ResourceManager.ArmResource
+    public partial class StreamingJobOutputResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StreamAnalytics.StreamingJobOutputData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StreamAnalytics.StreamingJobOutputData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected StreamingJobOutputResource() { }
@@ -315,12 +335,17 @@ namespace Azure.ResourceManager.StreamAnalytics
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.StreamAnalytics.StreamingJobOutputResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StreamAnalytics.StreamingJobOutputResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.StreamAnalytics.StreamingJobOutputData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StreamAnalytics.StreamingJobOutputData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StreamAnalytics.StreamingJobOutputData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.StreamAnalytics.StreamingJobOutputData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StreamAnalytics.StreamingJobOutputData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StreamAnalytics.StreamingJobOutputData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StreamAnalytics.StreamingJobOutputData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsResourceTestStatus> Test(Azure.WaitUntil waitUntil, Azure.ResourceManager.StreamAnalytics.StreamingJobOutputData data = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsResourceTestStatus>> TestAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.StreamAnalytics.StreamingJobOutputData data = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.StreamAnalytics.StreamingJobOutputResource> Update(Azure.ResourceManager.StreamAnalytics.StreamingJobOutputData data, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StreamAnalytics.StreamingJobOutputResource>> UpdateAsync(Azure.ResourceManager.StreamAnalytics.StreamingJobOutputData data, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class StreamingJobResource : Azure.ResourceManager.ArmResource
+    public partial class StreamingJobResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StreamAnalytics.StreamingJobData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StreamAnalytics.StreamingJobData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected StreamingJobResource() { }
@@ -355,6 +380,11 @@ namespace Azure.ResourceManager.StreamAnalytics
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> StartAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.StreamAnalytics.Models.StartStreamingJobContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Stop(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> StopAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.StreamAnalytics.StreamingJobData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StreamAnalytics.StreamingJobData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StreamAnalytics.StreamingJobData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.StreamAnalytics.StreamingJobData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StreamAnalytics.StreamingJobData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StreamAnalytics.StreamingJobData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StreamAnalytics.StreamingJobData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.StreamAnalytics.StreamingJobResource> Update(Azure.ResourceManager.StreamAnalytics.StreamingJobData data, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StreamAnalytics.StreamingJobResource>> UpdateAsync(Azure.ResourceManager.StreamAnalytics.StreamingJobData data, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -383,7 +413,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StreamAnalytics.StreamingJobTransformationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StreamAnalytics.StreamingJobTransformationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class StreamingJobTransformationResource : Azure.ResourceManager.ArmResource
+    public partial class StreamingJobTransformationResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StreamAnalytics.StreamingJobTransformationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StreamAnalytics.StreamingJobTransformationData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected StreamingJobTransformationResource() { }
@@ -392,6 +422,11 @@ namespace Azure.ResourceManager.StreamAnalytics
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string jobName, string transformationName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.StreamAnalytics.StreamingJobTransformationResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StreamAnalytics.StreamingJobTransformationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.StreamAnalytics.StreamingJobTransformationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StreamAnalytics.StreamingJobTransformationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StreamAnalytics.StreamingJobTransformationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.StreamAnalytics.StreamingJobTransformationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StreamAnalytics.StreamingJobTransformationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StreamAnalytics.StreamingJobTransformationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StreamAnalytics.StreamingJobTransformationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.StreamAnalytics.StreamingJobTransformationResource> Update(Azure.ResourceManager.StreamAnalytics.StreamingJobTransformationData data, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StreamAnalytics.StreamingJobTransformationResource>> UpdateAsync(Azure.ResourceManager.StreamAnalytics.StreamingJobTransformationData data, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

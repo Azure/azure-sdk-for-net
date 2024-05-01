@@ -32,8 +32,23 @@ namespace Azure.ResourceManager.Cdn
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-06-01";
+            _apiVersion = apiVersion ?? "2024-02-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListByProfileRequestUri(string subscriptionId, string resourceGroupName, string profileName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
+            uri.AppendPath(profileName, true);
+            uri.AppendPath("/ruleSets", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByProfileRequest(string subscriptionId, string resourceGroupName, string profileName)
@@ -113,6 +128,22 @@ namespace Azure.ResourceManager.Cdn
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string profileName, string ruleSetName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
+            uri.AppendPath(profileName, true);
+            uri.AppendPath("/ruleSets/", false);
+            uri.AppendPath(ruleSetName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string profileName, string ruleSetName)
@@ -203,6 +234,22 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string profileName, string ruleSetName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
+            uri.AppendPath(profileName, true);
+            uri.AppendPath("/ruleSets/", false);
+            uri.AppendPath(ruleSetName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string profileName, string ruleSetName)
         {
             var message = _pipeline.CreateMessage();
@@ -289,6 +336,22 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string profileName, string ruleSetName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
+            uri.AppendPath(profileName, true);
+            uri.AppendPath("/ruleSets/", false);
+            uri.AppendPath(ruleSetName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string profileName, string ruleSetName)
         {
             var message = _pipeline.CreateMessage();
@@ -367,6 +430,23 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
+        internal RequestUriBuilder CreateListResourceUsageRequestUri(string subscriptionId, string resourceGroupName, string profileName, string ruleSetName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
+            uri.AppendPath(profileName, true);
+            uri.AppendPath("/ruleSets/", false);
+            uri.AppendPath(ruleSetName, true);
+            uri.AppendPath("/usages", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListResourceUsageRequest(string subscriptionId, string resourceGroupName, string profileName, string ruleSetName)
         {
             var message = _pipeline.CreateMessage();
@@ -390,7 +470,7 @@ namespace Azure.ResourceManager.Cdn
             return message;
         }
 
-        /// <summary> Checks the quota and actual usage of the given AzureFrontDoor rule set under the given CDN profile. </summary>
+        /// <summary> Checks the quota and actual usage of endpoints under the given Azure Front Door profile.. </summary>
         /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. </param>
@@ -421,7 +501,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Checks the quota and actual usage of the given AzureFrontDoor rule set under the given CDN profile. </summary>
+        /// <summary> Checks the quota and actual usage of endpoints under the given Azure Front Door profile.. </summary>
         /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. </param>
@@ -450,6 +530,14 @@ namespace Azure.ResourceManager.Cdn
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByProfileNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string profileName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByProfileNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string profileName)
@@ -528,6 +616,14 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
+        internal RequestUriBuilder CreateListResourceUsageNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string profileName, string ruleSetName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListResourceUsageNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string profileName, string ruleSetName)
         {
             var message = _pipeline.CreateMessage();
@@ -542,7 +638,7 @@ namespace Azure.ResourceManager.Cdn
             return message;
         }
 
-        /// <summary> Checks the quota and actual usage of the given AzureFrontDoor rule set under the given CDN profile. </summary>
+        /// <summary> Checks the quota and actual usage of endpoints under the given Azure Front Door profile.. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
@@ -575,7 +671,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Checks the quota and actual usage of the given AzureFrontDoor rule set under the given CDN profile. </summary>
+        /// <summary> Checks the quota and actual usage of endpoints under the given Azure Front Door profile.. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>

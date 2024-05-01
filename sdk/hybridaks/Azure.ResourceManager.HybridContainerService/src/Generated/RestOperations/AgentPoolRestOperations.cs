@@ -36,6 +36,18 @@ namespace Azure.ResourceManager.HybridContainerService
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string connectedClusterResourceUri, string agentPoolName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(connectedClusterResourceUri, false);
+            uri.AppendPath("/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default/agentPools/", false);
+            uri.AppendPath(agentPoolName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string connectedClusterResourceUri, string agentPoolName)
         {
             var message = _pipeline.CreateMessage();
@@ -112,6 +124,18 @@ namespace Azure.ResourceManager.HybridContainerService
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string connectedClusterResourceUri, string agentPoolName, HybridContainerServiceAgentPoolData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(connectedClusterResourceUri, false);
+            uri.AppendPath("/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default/agentPools/", false);
+            uri.AppendPath(agentPoolName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string connectedClusterResourceUri, string agentPoolName, HybridContainerServiceAgentPoolData data)
         {
             var message = _pipeline.CreateMessage();
@@ -184,6 +208,18 @@ namespace Azure.ResourceManager.HybridContainerService
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string connectedClusterResourceUri, string agentPoolName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(connectedClusterResourceUri, false);
+            uri.AppendPath("/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default/agentPools/", false);
+            uri.AppendPath(agentPoolName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string connectedClusterResourceUri, string agentPoolName)
         {
             var message = _pipeline.CreateMessage();
@@ -246,6 +282,17 @@ namespace Azure.ResourceManager.HybridContainerService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByProvisionedClusterRequestUri(string connectedClusterResourceUri)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(connectedClusterResourceUri, false);
+            uri.AppendPath("/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default/agentPools", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByProvisionedClusterRequest(string connectedClusterResourceUri)
@@ -311,6 +358,14 @@ namespace Azure.ResourceManager.HybridContainerService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByProvisionedClusterNextPageRequestUri(string nextLink, string connectedClusterResourceUri)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByProvisionedClusterNextPageRequest(string nextLink, string connectedClusterResourceUri)
