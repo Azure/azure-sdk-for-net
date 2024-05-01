@@ -155,6 +155,7 @@ namespace Azure.Storage.Files.Shares
             string shareName,
             ShareClientOptions options)
         {
+            Argument.AssertNotNullOrWhiteSpace(shareName, nameof(shareName));
             options ??= new ShareClientOptions();
             var conn = StorageConnectionString.Parse(connectionString);
             ShareUriBuilder uriBuilder = new ShareUriBuilder(conn.FileEndpoint) { ShareName = shareName };
@@ -369,6 +370,7 @@ namespace Azure.Storage.Files.Shares
             Uri shareUri,
             ShareClientConfiguration clientConfiguration)
         {
+            Argument.AssertNotNull(shareUri, nameof(shareUri));
             _uri = shareUri;
             _clientConfiguration = clientConfiguration;
             _shareRestClient = BuildShareRestClient(shareUri);

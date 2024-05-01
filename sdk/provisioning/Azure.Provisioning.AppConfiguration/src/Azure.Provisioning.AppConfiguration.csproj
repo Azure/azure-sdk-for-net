@@ -5,7 +5,6 @@
     <Version>0.1.0</Version>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <Nullable>enable</Nullable>
-    <NoWarn>$(NoWarn);AZC0001</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

@@ -8,7 +8,6 @@
         <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
         <NoWarn>$(NoWarn);
             SA1636;<!-- Some code was copied, we can't change the license header -->
-            AZC0001;<!-- Namespace -->
             CS0618; <!-- Obsolete APIs -->
             CS1591; <!-- XML docs -->
         </NoWarn>

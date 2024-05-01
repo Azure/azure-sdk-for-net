@@ -7,9 +7,7 @@ using Microsoft.AspNetCore.DataProtection.Internal;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 
-#pragma warning disable AZC0001
 namespace Microsoft.AspNetCore.DataProtection
-#pragma warning restore AZC0001
 {
     /// <summary>
     /// This type is a copy of https://github.com/dotnet/aspnetcore/blob/e1bf38ccaf2a98f95e48bf22b8b76d996a0c33ea/src/DataProtection/DataProtection/test/TypeForwardingActivatorTests.cs

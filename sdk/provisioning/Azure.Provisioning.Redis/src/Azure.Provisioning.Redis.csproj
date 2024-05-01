@@ -4,7 +4,6 @@
     <Description>Azure.Provisioning.Redis simplifies declarative resource provisioning in .NET for Azure Redis.</Description>
     <Version>0.1.0</Version>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <NoWarn>$(NoWarn);AZC0001</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

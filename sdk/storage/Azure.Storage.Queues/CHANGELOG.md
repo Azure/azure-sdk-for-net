@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed bug where `QueueClient` did not throw an exception on empty/null queue names when constructing a client.
 
 ### Other Changes
 

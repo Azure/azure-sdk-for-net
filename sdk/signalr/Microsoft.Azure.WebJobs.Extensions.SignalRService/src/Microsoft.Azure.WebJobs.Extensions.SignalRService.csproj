@@ -8,7 +8,7 @@
     <ApiCompatVersion>1.13.0</ApiCompatVersion>
     <SignAssembly>true</SignAssembly>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
-    <NoWarn>$(NoWarn);CS1591;AZC0001;AZC0107;</NoWarn>
+    <NoWarn>$(NoWarn);CS1591;AZC0107;</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

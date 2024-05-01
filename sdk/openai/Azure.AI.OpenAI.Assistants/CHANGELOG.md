@@ -1,5 +1,15 @@
 # Release History
 
+## 1.0.0-beta.5 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.0.0-beta.4 (2024-04-30)
 
 This small, out-of-band version addresses a couple of critical blocking bugs. It does not yet include any of the latest

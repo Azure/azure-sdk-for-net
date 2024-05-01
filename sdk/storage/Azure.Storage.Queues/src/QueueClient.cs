@@ -192,6 +192,7 @@ namespace Azure.Storage.Queues
         /// </param>
         public QueueClient(string connectionString, string queueName, QueueClientOptions options)
         {
+            Argument.AssertNotNullOrEmpty(queueName, nameof(queueName));
             StorageConnectionString conn = StorageConnectionString.Parse(connectionString);
             QueueUriBuilder uriBuilder = new QueueUriBuilder(conn.QueueEndpoint)
             {
