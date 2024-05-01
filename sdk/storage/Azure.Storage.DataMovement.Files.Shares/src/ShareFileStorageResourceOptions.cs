@@ -94,6 +94,8 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         /// <summary>
         /// The file system attributes for this file.
+        ///
+        /// By default preserves the File Attributes from the source.
         /// </summary>
         public DataTransferProperty<NtfsFileAttributes?> FileAttributes { get; set; }
 
@@ -104,16 +106,22 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         /// <summary>
         /// The creation time of the file.
+        ///
+        /// By default preserves the File Created On Time from the source.
         /// </summary>
         public DataTransferProperty<DateTimeOffset?> FileCreatedOn { get; set; }
 
         /// <summary>
         /// The last write time of the file.
+        ///
+        /// By default preserves the File Last Written On Time from the source.
         /// </summary>
         public DataTransferProperty<DateTimeOffset?> FileLastWrittenOn { get; set; }
 
         /// <summary>
         /// The change time of the file.
+        ///
+        /// By default preserves the File Changed On Time from the source.
         /// </summary>
         public DataTransferProperty<DateTimeOffset?> FileChangedOn { get; set; }
 
@@ -121,6 +129,8 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// Optional. Defines custom metadata to set on the destination resource.
         ///
         /// Applies to upload and copy transfers.
+        ///
+        /// Preserves Metadata from the source by default.
         /// </summary>
 #pragma warning disable CA2227 // Collection properties should be readonly
         public DataTransferProperty<Metadata> DirectoryMetadata { get; set; }
@@ -130,6 +140,8 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// Optional. Defines custom metadata to set on the destination resource.
         ///
         /// Applies to upload and copy transfers.
+        ///
+        /// Preserves Metdata from the source by default.
         /// </summary>
 #pragma warning disable CA2227 // Collection properties should be readonly
         public DataTransferProperty<Metadata> FileMetadata { get; set; }
