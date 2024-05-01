@@ -970,7 +970,8 @@
 /eng/mgmt/                                                         @ArthurMa1978 @m-nash
 
 # Add owners for notifications for specific pipelines
-/eng/pipelines/aggregate-reports.yml                               @jsquire @maririos @pallavit
+/eng/pipelines/aggregate-reports.yml                               @jsquire @pallavit
+/eng/common/pipelines/codeowners-linter.yml                        @jsquire @pallavit
 /sdk/eventhub/tests.data.yml                                       @serkantkaraca @sjkwak
 /sdk/servicebus/tests.data.yml                                     @shankarsama @EldertGrootenboer
 
