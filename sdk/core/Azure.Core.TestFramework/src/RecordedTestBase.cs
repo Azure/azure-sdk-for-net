@@ -120,7 +120,13 @@ namespace Azure.Core.TestFramework
         /// The list of <see cref="BodyKeySanitizer"/> to use while sanitizing request and response bodies. This is similar to
         /// <see cref="JsonPathSanitizers"/>, but provides additional features such as regex matching, and customizing the sanitization replacement.
         /// </summary>
-        public List<BodyKeySanitizer> BodyKeySanitizers { get; } = new();
+        public List<BodyKeySanitizer> BodyKeySanitizers { get; } = new()
+        {
+            new BodyKeySanitizer(Guid.Empty.ToString())
+            {
+                JsonPath = "$..keyVaultClientId"
+            }
+        };
 
         /// <summary>
         /// The list of <see cref="BodyRegexSanitizer"/> to use while sanitizing request and response bodies. This allows you to specify a
@@ -344,7 +350,7 @@ namespace Azure.Core.TestFramework
             // "AZSDK3440",
             // // "AZSDK3441",
             // // "AZSDK3442",
-            "AZSDK3443", // $..tenantId
+            // "AZSDK3443", // $..tenantId
             // "AZSDK3444",
             // "AZSDK3445",
             // "AZSDK3446",
@@ -397,7 +403,7 @@ namespace Azure.Core.TestFramework
             "AZSDK3493", // $..name
             "AZSDK3494", // $..friendlyName
             // "AZSDK3495",
-            // "AZSDK3496",
+            "AZSDK3496", // $..resourceLocation
             // // "AZSDK4000",
             // "AZSDK4001",
             // "AZSDK4003",
