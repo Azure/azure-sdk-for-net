@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- The default service version is now "V7_6_Preview_1".
+
 ## 4.6.0 (2024-02-14)
 
 Changes from both the last release and the last beta include:

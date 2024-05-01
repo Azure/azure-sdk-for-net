@@ -28,7 +28,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public BackupRestoreRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string apiVersion = "7.5")
+        public BackupRestoreRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string apiVersion = "7.6-preview.1")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -95,6 +95,75 @@ namespace Azure.Security.KeyVault.Administration
             using var message = CreateFullBackupRequest(vaultBaseUrl, azureStorageBlobContainerUri);
             _pipeline.Send(message, cancellationToken);
             var headers = new AzureSecurityKeyVaultAdministrationFullBackupHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreatePreFullBackupRequest(string vaultBaseUrl, PreBackupOperationParameters preBackupOperationParameters)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendPath("/prebackup", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            if (preBackupOperationParameters != null)
+            {
+                request.Headers.Add("Content-Type", "application/json");
+                var content = new Utf8JsonRequestContent();
+                content.JsonWriter.WriteObjectValue(preBackupOperationParameters);
+                request.Content = content;
+            }
+            return message;
+        }
+
+        /// <summary> Pre-backup operation for checking whether the customer can perform a full backup operation. </summary>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="preBackupOperationParameters"> Optional parameters to validate prior to performing a full backup operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/> is null. </exception>
+        public async Task<ResponseWithHeaders<AzureSecurityKeyVaultAdministrationPreFullBackupHeaders>> PreFullBackupAsync(string vaultBaseUrl, PreBackupOperationParameters preBackupOperationParameters = null, CancellationToken cancellationToken = default)
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+
+            using var message = CreatePreFullBackupRequest(vaultBaseUrl, preBackupOperationParameters);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new AzureSecurityKeyVaultAdministrationPreFullBackupHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Pre-backup operation for checking whether the customer can perform a full backup operation. </summary>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="preBackupOperationParameters"> Optional parameters to validate prior to performing a full backup operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/> is null. </exception>
+        public ResponseWithHeaders<AzureSecurityKeyVaultAdministrationPreFullBackupHeaders> PreFullBackup(string vaultBaseUrl, PreBackupOperationParameters preBackupOperationParameters = null, CancellationToken cancellationToken = default)
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+
+            using var message = CreatePreFullBackupRequest(vaultBaseUrl, preBackupOperationParameters);
+            _pipeline.Send(message, cancellationToken);
+            var headers = new AzureSecurityKeyVaultAdministrationPreFullBackupHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 202:
@@ -179,6 +248,75 @@ namespace Azure.Security.KeyVault.Administration
                         value = FullBackupDetailsInternal.DeserializeFullBackupDetailsInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreatePreFullRestoreOperationRequest(string vaultBaseUrl, PreRestoreOperationParameters preRestoreOperationParameters)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendPath("/prerestore", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            if (preRestoreOperationParameters != null)
+            {
+                request.Headers.Add("Content-Type", "application/json");
+                var content = new Utf8JsonRequestContent();
+                content.JsonWriter.WriteObjectValue(preRestoreOperationParameters);
+                request.Content = content;
+            }
+            return message;
+        }
+
+        /// <summary> Pre-restore operation for checking whether the customer can perform a full restore operation. </summary>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="preRestoreOperationParameters"> Optional pre restore parameters to validate prior to performing a full restore operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/> is null. </exception>
+        public async Task<ResponseWithHeaders<AzureSecurityKeyVaultAdministrationPreFullRestoreOperationHeaders>> PreFullRestoreOperationAsync(string vaultBaseUrl, PreRestoreOperationParameters preRestoreOperationParameters = null, CancellationToken cancellationToken = default)
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+
+            using var message = CreatePreFullRestoreOperationRequest(vaultBaseUrl, preRestoreOperationParameters);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new AzureSecurityKeyVaultAdministrationPreFullRestoreOperationHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Pre-restore operation for checking whether the customer can perform a full restore operation. </summary>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="preRestoreOperationParameters"> Optional pre restore parameters to validate prior to performing a full restore operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/> is null. </exception>
+        public ResponseWithHeaders<AzureSecurityKeyVaultAdministrationPreFullRestoreOperationHeaders> PreFullRestoreOperation(string vaultBaseUrl, PreRestoreOperationParameters preRestoreOperationParameters = null, CancellationToken cancellationToken = default)
+        {
+            if (vaultBaseUrl == null)
+            {
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+
+            using var message = CreatePreFullRestoreOperationRequest(vaultBaseUrl, preRestoreOperationParameters);
+            _pipeline.Send(message, cancellationToken);
+            var headers = new AzureSecurityKeyVaultAdministrationPreFullRestoreOperationHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
