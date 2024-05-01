@@ -158,18 +158,18 @@ namespace Azure.Core.TestFramework
                 {
                     GroupForReplace = "group"
                 },
-                new BodyRegexSanitizer("(?<=<UserDelegationKey>).*?(?:<Value>)(?<group>.*)(?:</Value>)", SanitizeValue)
+                new BodyRegexSanitizer("(?<=<UserDelegationKey>).*?(?:<Value>)(?<group>.*)(?:</Value>)", "Kg==")
                 {
                     GroupForReplace = "group"
                 },
-                new BodyRegexSanitizer("(?<=<UserDelegationKey>).*?(?:<SignedTid>)(?<group>.*)(?:</SignedTid>)", SanitizeValue)
-                {
-                    GroupForReplace = "group"
-                },
-                new BodyRegexSanitizer("(?<=<UserDelegationKey>).*?(?:<SignedOid>)(?<group>.*)(?:</SignedOid>)", SanitizeValue)
-                {
-                    GroupForReplace = "group"
-                },
+                // new BodyRegexSanitizer("(?<=<UserDelegationKey>).*?(?:<SignedTid>)(?<group>.*)(?:</SignedTid>)", SanitizeValue)
+                // {
+                //     GroupForReplace = "group"
+                // },
+                // new BodyRegexSanitizer("(?<=<UserDelegationKey>).*?(?:<SignedOid>)(?<group>.*)(?:</SignedOid>)", SanitizeValue)
+                // {
+                //     GroupForReplace = "group"
+                // },
                 new BodyRegexSanitizer("(?:Password=)(?<group>.*?)(?:;)", SanitizeValue)
                 {
                     GroupForReplace = "group"
@@ -257,10 +257,10 @@ namespace Azure.Core.TestFramework
             // "AZSDK1004",
             // "AZSDK1005",
             // "AZSDK1006",
-            "AZSDK1007",
+            "AZSDK1007", // SAS URL - this is added separately in BodyRegexSanitizers
             // "AZSDK2001",
             // "AZSDK2002",
-            "AZSDK2003",
+            "AZSDK2003", // Location header
             // "AZSDK2004",
             // "AZSDK2005",
             // "AZSDK2006",
@@ -291,7 +291,7 @@ namespace Azure.Core.TestFramework
             // "AZSDK3002",
             // "AZSDK3003",
             // "AZSDK3004",
-            // "AZSDK3005",
+            "AZSDK3005", // User Delegation Key - needs to use Base64 replacement
             // "AZSDK3006",
             // "AZSDK3007",
             // "AZSDK3008",
@@ -326,7 +326,7 @@ namespace Azure.Core.TestFramework
             // "AZSDK3420",
             // "AZSDK3421",
             // "AZSDK3422",
-            "AZSDK3423",
+            "AZSDK3423", // $..source
             // "AZSDK3424",
             // "AZSDK3425",
             // "AZSDK3426",
@@ -344,7 +344,7 @@ namespace Azure.Core.TestFramework
             // "AZSDK3440",
             // // "AZSDK3441",
             // // "AZSDK3442",
-            // "AZSDK3443",
+            "AZSDK3443", // $..tenantId
             // "AZSDK3444",
             // "AZSDK3445",
             // "AZSDK3446",
@@ -391,7 +391,7 @@ namespace Azure.Core.TestFramework
             // "AZSDK3487",
             // "AZSDK3488",
             // "AZSDK3489",
-            // "AZSDK3490",
+            "AZSDK3490", // $..etag
             // "AZSDK3491",
             // "AZSDK3492",
             "AZSDK3493", // $..name
