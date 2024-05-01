@@ -49,7 +49,9 @@ namespace Azure.Messaging.ServiceBus.Tests
             {
                 batch ??= await sender.CreateMessageBatchAsync();
 
-                while ((numberOfMessages > 0) && (batch.TryAddMessage(new ServiceBusMessage(Guid.NewGuid().ToString()))))
+                while ((numberOfMessages > 0)
+                    && (batch.TryAddMessage(new ServiceBusMessage(Guid.NewGuid().ToString())))
+                    && (batch.Count < 4000))
                 {
                     --numberOfMessages;
                 }
