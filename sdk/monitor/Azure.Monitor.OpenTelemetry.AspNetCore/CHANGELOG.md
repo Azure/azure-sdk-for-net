@@ -4,6 +4,9 @@
 
 ### Features Added
 
+* Logs emitted within an Activity context will now be sampled by default based on the `SamplingRatio` configured for Traces. To disable this sampling set `DisableTraceBasedSamplingForLogs` to `true`.
+  ([#43793](https://github.com/Azure/azure-sdk-for-net/pull/43793))
+
 ### Breaking Changes
 
 ### Bugs Fixed
