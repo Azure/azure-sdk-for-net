@@ -165,6 +165,11 @@ namespace Azure.ResourceManager.EventHubs
                 writer.WritePropertyName("alternateName"u8);
                 writer.WriteStringValue(AlternateName);
             }
+            if (Optional.IsDefined(GeoDataReplication))
+            {
+                writer.WritePropertyName("geoDataReplication"u8);
+                writer.WriteObjectValue(GeoDataReplication, options);
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -229,6 +234,7 @@ namespace Azure.ResourceManager.EventHubs
             IList<EventHubsPrivateEndpointConnectionData> privateEndpointConnections = default;
             bool? disableLocalAuth = default;
             string alternateName = default;
+            NamespaceGeoDataReplicationProperties geoDataReplication = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -441,6 +447,15 @@ namespace Azure.ResourceManager.EventHubs
                             alternateName = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("geoDataReplication"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            geoDataReplication = NamespaceGeoDataReplicationProperties.DeserializeNamespaceGeoDataReplicationProperties(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -476,6 +491,7 @@ namespace Azure.ResourceManager.EventHubs
                 privateEndpointConnections ?? new ChangeTrackingList<EventHubsPrivateEndpointConnectionData>(),
                 disableLocalAuth,
                 alternateName,
+                geoDataReplication,
                 serializedAdditionalRawData);
         }
 
@@ -930,6 +946,21 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         builder.AppendLine($"'{AlternateName}'");
                     }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GeoDataReplication), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    geoDataReplication: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(GeoDataReplication))
+                {
+                    builder.Append("    geoDataReplication: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, GeoDataReplication, options, 4, false, "    geoDataReplication: ");
                 }
             }
 
