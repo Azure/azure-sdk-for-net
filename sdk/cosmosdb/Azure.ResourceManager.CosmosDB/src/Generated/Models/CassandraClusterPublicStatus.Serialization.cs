@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 {
     public partial class CassandraClusterPublicStatus : IUtf8JsonSerializable, IJsonModel<CassandraClusterPublicStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CassandraClusterPublicStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CassandraClusterPublicStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CassandraClusterPublicStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static CassandraClusterPublicStatus DeserializeCassandraClusterPublicStatus(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -202,45 +202,48 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ETag), out propertyOverride);
-            if (Optional.IsDefined(ETag) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  eTag: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ETag))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  eTag: ");
                     builder.AppendLine($"'{ETag.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReaperStatus), out propertyOverride);
-            if (Optional.IsDefined(ReaperStatus) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  reaperStatus: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ReaperStatus))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  reaperStatus: ");
                     BicepSerializationHelpers.AppendChildObject(builder, ReaperStatus, options, 2, false, "  reaperStatus: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConnectionErrors), out propertyOverride);
-            if (Optional.IsCollectionDefined(ConnectionErrors) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (ConnectionErrors.Any() || hasPropertyOverride)
+                builder.Append("  connectionErrors: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ConnectionErrors))
                 {
-                    builder.Append("  connectionErrors: ");
-                    if (hasPropertyOverride)
+                    if (ConnectionErrors.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  connectionErrors: ");
                         builder.AppendLine("[");
                         foreach (var item in ConnectionErrors)
                         {
@@ -252,17 +255,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Errors), out propertyOverride);
-            if (Optional.IsCollectionDefined(Errors) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Errors.Any() || hasPropertyOverride)
+                builder.Append("  errors: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Errors))
                 {
-                    builder.Append("  errors: ");
-                    if (hasPropertyOverride)
+                    if (Errors.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  errors: ");
                         builder.AppendLine("[");
                         foreach (var item in Errors)
                         {
@@ -274,17 +278,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DataCenters), out propertyOverride);
-            if (Optional.IsCollectionDefined(DataCenters) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (DataCenters.Any() || hasPropertyOverride)
+                builder.Append("  dataCenters: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(DataCenters))
                 {
-                    builder.Append("  dataCenters: ");
-                    if (hasPropertyOverride)
+                    if (DataCenters.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  dataCenters: ");
                         builder.AppendLine("[");
                         foreach (var item in DataCenters)
                         {

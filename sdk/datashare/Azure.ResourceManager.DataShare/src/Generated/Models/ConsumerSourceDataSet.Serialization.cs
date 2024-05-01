@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataShare.Models
 {
     public partial class ConsumerSourceDataSet : IUtf8JsonSerializable, IJsonModel<ConsumerSourceDataSet>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumerSourceDataSet>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumerSourceDataSet>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ConsumerSourceDataSet>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DataShare.Models
 
         internal static ConsumerSourceDataSet DeserializeConsumerSourceDataSet(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

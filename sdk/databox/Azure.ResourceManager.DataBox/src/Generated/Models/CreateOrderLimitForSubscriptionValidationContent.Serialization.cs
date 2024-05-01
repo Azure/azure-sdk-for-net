@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataBox.Models
 {
     public partial class CreateOrderLimitForSubscriptionValidationContent : IUtf8JsonSerializable, IJsonModel<CreateOrderLimitForSubscriptionValidationContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CreateOrderLimitForSubscriptionValidationContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CreateOrderLimitForSubscriptionValidationContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CreateOrderLimitForSubscriptionValidationContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static CreateOrderLimitForSubscriptionValidationContent DeserializeCreateOrderLimitForSubscriptionValidationContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

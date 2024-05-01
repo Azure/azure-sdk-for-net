@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Confluent.Models
 {
     public partial class AccessInvitationListResult : IUtf8JsonSerializable, IJsonModel<AccessInvitationListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AccessInvitationListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AccessInvitationListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AccessInvitationListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Confluent.Models
 
         internal static AccessInvitationListResult DeserializeAccessInvitationListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

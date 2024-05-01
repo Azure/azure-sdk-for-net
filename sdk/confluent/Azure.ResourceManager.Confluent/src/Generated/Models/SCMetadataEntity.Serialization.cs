@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Confluent.Models
 {
     public partial class SCMetadataEntity : IUtf8JsonSerializable, IJsonModel<SCMetadataEntity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SCMetadataEntity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SCMetadataEntity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SCMetadataEntity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Confluent.Models
 
         internal static SCMetadataEntity DeserializeSCMetadataEntity(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

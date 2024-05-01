@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network
 {
     public partial class ApplicationGatewayData : IUtf8JsonSerializable, IJsonModel<ApplicationGatewayData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationGatewayData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationGatewayData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ApplicationGatewayData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.Network
 
         internal static ApplicationGatewayData DeserializeApplicationGatewayData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

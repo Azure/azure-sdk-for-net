@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
 {
     public partial class ServiceBusCorrelationFilter : IUtf8JsonSerializable, IJsonModel<ServiceBusCorrelationFilter>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceBusCorrelationFilter>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceBusCorrelationFilter>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ServiceBusCorrelationFilter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         internal static ServiceBusCorrelationFilter DeserializeServiceBusCorrelationFilter(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -243,17 +243,18 @@ namespace Azure.ResourceManager.ServiceBus.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApplicationProperties), out propertyOverride);
-            if (Optional.IsCollectionDefined(ApplicationProperties) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (ApplicationProperties.Any() || hasPropertyOverride)
+                builder.Append("  properties: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ApplicationProperties))
                 {
-                    builder.Append("  properties: ");
-                    if (hasPropertyOverride)
+                    if (ApplicationProperties.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  properties: ");
                         builder.AppendLine("{");
                         foreach (var item in ApplicationProperties)
                         {
@@ -271,15 +272,16 @@ namespace Azure.ResourceManager.ServiceBus.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CorrelationId), out propertyOverride);
-            if (Optional.IsDefined(CorrelationId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  correlationId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CorrelationId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  correlationId: ");
                     if (CorrelationId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -293,15 +295,16 @@ namespace Azure.ResourceManager.ServiceBus.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MessageId), out propertyOverride);
-            if (Optional.IsDefined(MessageId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  messageId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MessageId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  messageId: ");
                     if (MessageId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -315,15 +318,16 @@ namespace Azure.ResourceManager.ServiceBus.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SendTo), out propertyOverride);
-            if (Optional.IsDefined(SendTo) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  to: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SendTo))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  to: ");
                     if (SendTo.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -337,15 +341,16 @@ namespace Azure.ResourceManager.ServiceBus.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReplyTo), out propertyOverride);
-            if (Optional.IsDefined(ReplyTo) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  replyTo: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ReplyTo))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  replyTo: ");
                     if (ReplyTo.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -359,15 +364,16 @@ namespace Azure.ResourceManager.ServiceBus.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Subject), out propertyOverride);
-            if (Optional.IsDefined(Subject) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  label: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Subject))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  label: ");
                     if (Subject.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -381,15 +387,16 @@ namespace Azure.ResourceManager.ServiceBus.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SessionId), out propertyOverride);
-            if (Optional.IsDefined(SessionId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  sessionId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SessionId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  sessionId: ");
                     if (SessionId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -403,15 +410,16 @@ namespace Azure.ResourceManager.ServiceBus.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReplyToSessionId), out propertyOverride);
-            if (Optional.IsDefined(ReplyToSessionId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  replyToSessionId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ReplyToSessionId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  replyToSessionId: ");
                     if (ReplyToSessionId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -425,15 +433,16 @@ namespace Azure.ResourceManager.ServiceBus.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContentType), out propertyOverride);
-            if (Optional.IsDefined(ContentType) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  contentType: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ContentType))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  contentType: ");
                     if (ContentType.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -447,15 +456,16 @@ namespace Azure.ResourceManager.ServiceBus.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequiresPreprocessing), out propertyOverride);
-            if (Optional.IsDefined(RequiresPreprocessing) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  requiresPreprocessing: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RequiresPreprocessing))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  requiresPreprocessing: ");
                     var boolValue = RequiresPreprocessing.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }

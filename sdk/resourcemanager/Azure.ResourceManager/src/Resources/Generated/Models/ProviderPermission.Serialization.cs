@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
 {
     public partial class ProviderPermission : IUtf8JsonSerializable, IJsonModel<ProviderPermission>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProviderPermission>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProviderPermission>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ProviderPermission>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ProviderPermission DeserializeProviderPermission(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -146,15 +146,16 @@ namespace Azure.ResourceManager.Resources.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApplicationId), out propertyOverride);
-            if (Optional.IsDefined(ApplicationId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  applicationId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ApplicationId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  applicationId: ");
                     if (ApplicationId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -168,43 +169,46 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RoleDefinition), out propertyOverride);
-            if (Optional.IsDefined(RoleDefinition) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  roleDefinition: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RoleDefinition))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  roleDefinition: ");
                     BicepSerializationHelpers.AppendChildObject(builder, RoleDefinition, options, 2, false, "  roleDefinition: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ManagedByRoleDefinition), out propertyOverride);
-            if (Optional.IsDefined(ManagedByRoleDefinition) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  managedByRoleDefinition: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ManagedByRoleDefinition))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  managedByRoleDefinition: ");
                     BicepSerializationHelpers.AppendChildObject(builder, ManagedByRoleDefinition, options, 2, false, "  managedByRoleDefinition: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProviderAuthorizationConsentState), out propertyOverride);
-            if (Optional.IsDefined(ProviderAuthorizationConsentState) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  providerAuthorizationConsentState: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProviderAuthorizationConsentState))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  providerAuthorizationConsentState: ");
                     builder.AppendLine($"'{ProviderAuthorizationConsentState.Value.ToString()}'");
                 }
             }

@@ -61,11 +61,11 @@ namespace Azure.IoT.TimeSeriesInsights
             return DeserializeUnknownVariable(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<TimeSeriesVariable>(this);
             return content;
         }
     }

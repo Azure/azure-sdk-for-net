@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Consumption.Models
 {
     internal partial class MarketplacesListResult : IUtf8JsonSerializable, IJsonModel<MarketplacesListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MarketplacesListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MarketplacesListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MarketplacesListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Consumption.Models
 
         internal static MarketplacesListResult DeserializeMarketplacesListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

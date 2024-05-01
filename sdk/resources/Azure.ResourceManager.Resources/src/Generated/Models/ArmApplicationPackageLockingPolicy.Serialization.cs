@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Resources.Models
 {
     public partial class ArmApplicationPackageLockingPolicy : IUtf8JsonSerializable, IJsonModel<ArmApplicationPackageLockingPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArmApplicationPackageLockingPolicy>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArmApplicationPackageLockingPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ArmApplicationPackageLockingPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ArmApplicationPackageLockingPolicy DeserializeArmApplicationPackageLockingPolicy(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -141,17 +141,18 @@ namespace Azure.ResourceManager.Resources.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowedActions), out propertyOverride);
-            if (Optional.IsCollectionDefined(AllowedActions) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (AllowedActions.Any() || hasPropertyOverride)
+                builder.Append("  allowedActions: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AllowedActions))
                 {
-                    builder.Append("  allowedActions: ");
-                    if (hasPropertyOverride)
+                    if (AllowedActions.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  allowedActions: ");
                         builder.AppendLine("[");
                         foreach (var item in AllowedActions)
                         {
@@ -176,17 +177,18 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowedDataActions), out propertyOverride);
-            if (Optional.IsCollectionDefined(AllowedDataActions) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (AllowedDataActions.Any() || hasPropertyOverride)
+                builder.Append("  allowedDataActions: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AllowedDataActions))
                 {
-                    builder.Append("  allowedDataActions: ");
-                    if (hasPropertyOverride)
+                    if (AllowedDataActions.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  allowedDataActions: ");
                         builder.AppendLine("[");
                         foreach (var item in AllowedDataActions)
                         {

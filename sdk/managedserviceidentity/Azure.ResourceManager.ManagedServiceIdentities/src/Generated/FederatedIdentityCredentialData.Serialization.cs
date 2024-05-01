@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
 {
     public partial class FederatedIdentityCredentialData : IUtf8JsonSerializable, IJsonModel<FederatedIdentityCredentialData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FederatedIdentityCredentialData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FederatedIdentityCredentialData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FederatedIdentityCredentialData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
 
         internal static FederatedIdentityCredentialData DeserializeFederatedIdentityCredentialData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -214,15 +214,16 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  name: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  name: ");
                     if (Name.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -236,29 +237,31 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  id: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  id: ");
                     builder.AppendLine($"'{Id.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
-            if (Optional.IsDefined(SystemData) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  systemData: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  systemData: ");
                     builder.AppendLine($"'{SystemData.ToString()}'");
                 }
             }
@@ -266,29 +269,31 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             builder.Append("  properties:");
             builder.AppendLine(" {");
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IssuerUri), out propertyOverride);
-            if (Optional.IsDefined(IssuerUri) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    issuer: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IssuerUri))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    issuer: ");
                     builder.AppendLine($"'{IssuerUri.AbsoluteUri}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Subject), out propertyOverride);
-            if (Optional.IsDefined(Subject) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    subject: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Subject))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    subject: ");
                     if (Subject.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -302,17 +307,18 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Audiences), out propertyOverride);
-            if (Optional.IsCollectionDefined(Audiences) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Audiences.Any() || hasPropertyOverride)
+                builder.Append("    audiences: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Audiences))
                 {
-                    builder.Append("    audiences: ");
-                    if (hasPropertyOverride)
+                    if (Audiences.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("    audiences: ");
                         builder.AppendLine("[");
                         foreach (var item in Audiences)
                         {

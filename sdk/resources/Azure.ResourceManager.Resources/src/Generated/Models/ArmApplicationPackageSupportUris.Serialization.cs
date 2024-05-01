@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
 {
     public partial class ArmApplicationPackageSupportUris : IUtf8JsonSerializable, IJsonModel<ArmApplicationPackageSupportUris>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArmApplicationPackageSupportUris>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArmApplicationPackageSupportUris>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ArmApplicationPackageSupportUris>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ArmApplicationPackageSupportUris DeserializeArmApplicationPackageSupportUris(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -120,29 +120,31 @@ namespace Azure.ResourceManager.Resources.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AzurePublicCloudUri), out propertyOverride);
-            if (Optional.IsDefined(AzurePublicCloudUri) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  publicAzure: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AzurePublicCloudUri))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  publicAzure: ");
                     builder.AppendLine($"'{AzurePublicCloudUri.AbsoluteUri}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AzureGovernmentUri), out propertyOverride);
-            if (Optional.IsDefined(AzureGovernmentUri) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  governmentCloud: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AzureGovernmentUri))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  governmentCloud: ");
                     builder.AppendLine($"'{AzureGovernmentUri.AbsoluteUri}'");
                 }
             }

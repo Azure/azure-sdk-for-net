@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 {
     public partial class AzureOperatorNexusNetworkFunctionTemplate : IUtf8JsonSerializable, IJsonModel<AzureOperatorNexusNetworkFunctionTemplate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureOperatorNexusNetworkFunctionTemplate>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureOperatorNexusNetworkFunctionTemplate>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AzureOperatorNexusNetworkFunctionTemplate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         internal static AzureOperatorNexusNetworkFunctionTemplate DeserializeAzureOperatorNexusNetworkFunctionTemplate(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

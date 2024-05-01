@@ -383,7 +383,6 @@ namespace Azure.Storage.DataMovement.Blobs
                 (options?.ContentLanguage?.Preserve ?? true) &&
                 (options?.ContentType?.Preserve ?? true) &&
                 (options?.CacheControl?.Preserve ?? true) &&
-                (options?.AccessTier?.Preserve ?? true) &&
                 (options?.Metadata?.Preserve ?? true))
             {
                 return uploadFromUriOptions;
@@ -536,7 +535,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 ContentEncoding = checkpointData.ContentEncoding,
                 ContentLanguage = checkpointData.ContentLanguage,
                 ContentType = checkpointData.ContentType,
-                AccessTier = checkpointData.AccessTier,
+                AccessTier = checkpointData.AccessTierValue,
             };
         }
 
@@ -670,15 +669,15 @@ namespace Azure.Storage.DataMovement.Blobs
                     : options?.CacheControl?.Value,
             };
 
-        // By default we preserve the access tier
+        // Get the access tier property
         private static AccessTier? GetAccessTier(
             BlobStorageResourceOptions options,
             Dictionary<string, object> properties)
-            => (options?.AccessTier?.Preserve ?? true)
-               ? properties?.TryGetValue(DataMovementConstants.ResourceProperties.AccessTier, out object accessTierObject) == true
+            => options?.AccessTier != default
+                ? options?.AccessTier
+                : properties?.TryGetValue(DataMovementConstants.ResourceProperties.AccessTier, out object accessTierObject) == true
                     ? (AccessTier?)accessTierObject
-                    : default
-               : options?.AccessTier?.Value;
+                    : default;
 
         // By default we preserve the metadata
         private static Metadata GetMetadata(

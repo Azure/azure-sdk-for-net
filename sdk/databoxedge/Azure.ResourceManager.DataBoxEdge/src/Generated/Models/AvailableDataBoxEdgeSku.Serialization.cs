@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     public partial class AvailableDataBoxEdgeSku : IUtf8JsonSerializable, IJsonModel<AvailableDataBoxEdgeSku>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvailableDataBoxEdgeSku>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvailableDataBoxEdgeSku>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AvailableDataBoxEdgeSku>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static AvailableDataBoxEdgeSku DeserializeAvailableDataBoxEdgeSku(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

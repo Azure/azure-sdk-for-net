@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
     [PersistableModelProxy(typeof(UnknownEffectiveBaseSecurityAdminRule))]
     public partial class EffectiveBaseSecurityAdminRule : IUtf8JsonSerializable, IJsonModel<EffectiveBaseSecurityAdminRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EffectiveBaseSecurityAdminRule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EffectiveBaseSecurityAdminRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EffectiveBaseSecurityAdminRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static EffectiveBaseSecurityAdminRule DeserializeEffectiveBaseSecurityAdminRule(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 {
     public partial class UESessionInfo5G : IUtf8JsonSerializable, IJsonModel<UESessionInfo5G>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UESessionInfo5G>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UESessionInfo5G>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<UESessionInfo5G>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         internal static UESessionInfo5G DeserializeUESessionInfo5G(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

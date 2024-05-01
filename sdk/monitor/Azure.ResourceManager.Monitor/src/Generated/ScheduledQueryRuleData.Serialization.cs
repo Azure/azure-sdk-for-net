@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Monitor
 {
     public partial class ScheduledQueryRuleData : IUtf8JsonSerializable, IJsonModel<ScheduledQueryRuleData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScheduledQueryRuleData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScheduledQueryRuleData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ScheduledQueryRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Monitor
 
         internal static ScheduledQueryRuleData DeserializeScheduledQueryRuleData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

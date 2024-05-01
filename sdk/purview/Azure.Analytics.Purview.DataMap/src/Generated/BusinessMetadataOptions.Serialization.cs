@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.IO;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,7 +16,7 @@ namespace Azure.Analytics.Purview.DataMap
 {
     public partial class BusinessMetadataOptions : IUtf8JsonSerializable, IJsonModel<BusinessMetadataOptions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BusinessMetadataOptions>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BusinessMetadataOptions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BusinessMetadataOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -27,7 +28,14 @@ namespace Azure.Analytics.Purview.DataMap
 
             writer.WriteStartObject();
             writer.WritePropertyName("file"u8);
-            writer.WriteBase64StringValue(File.ToArray(), "D");
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(global::System.BinaryData.FromStream(File));
+#else
+            using (JsonDocument document = JsonDocument.Parse(BinaryData.FromStream(File)))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -60,20 +68,20 @@ namespace Azure.Analytics.Purview.DataMap
 
         internal static BusinessMetadataOptions DeserializeBusinessMetadataOptions(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            BinaryData file = default;
+            Stream file = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("file"u8))
                 {
-                    file = BinaryData.FromBytes(property.Value.GetBytesFromBase64("D"));
+                    file = BinaryData.FromString(property.Value.GetRawText()).ToStream();
                     continue;
                 }
                 if (options.Format != "W")
@@ -85,6 +93,28 @@ namespace Azure.Analytics.Purview.DataMap
             return new BusinessMetadataOptions(file, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeMultipart(ModelReaderWriterOptions options)
+        {
+            using MultipartFormDataRequestContent content = ToMultipartRequestContent();
+            using MemoryStream stream = new MemoryStream();
+            content.WriteTo(stream);
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        internal virtual MultipartFormDataRequestContent ToMultipartRequestContent()
+        {
+            MultipartFormDataRequestContent content = new MultipartFormDataRequestContent();
+            content.Add(File, "file", "file", "application/octet-stream");
+            return content;
+        }
+
         BinaryData IPersistableModel<BusinessMetadataOptions>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BusinessMetadataOptions>)this).GetFormatFromOptions(options) : options.Format;
@@ -93,6 +123,8 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "MFD":
+                    return SerializeMultipart(options);
                 default:
                     throw new FormatException($"The model {nameof(BusinessMetadataOptions)} does not support writing '{options.Format}' format.");
             }
@@ -114,7 +146,7 @@ namespace Azure.Analytics.Purview.DataMap
             }
         }
 
-        string IPersistableModel<BusinessMetadataOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BusinessMetadataOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "MFD";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>

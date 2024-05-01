@@ -273,6 +273,13 @@ rename-mapping:
   ParameterContract.required: IsRequired
   SchemaType: ApiSchemaType
   ApiRevisionContract.privateUrl: privateUrlString
+  ApiContract.properties.termsOfServiceUrl: termsOfServiceLink
+  ApiContract.properties.serviceUrl: serviceLink
+  ApiUpdateContract.properties.termsOfServiceUrl: termsOfServiceLink
+  ApiUpdateContract.properties.serviceUrl: serviceLink
+  ApiCreateOrUpdateParameter.properties.termsOfServiceUrl: termsOfServiceLink
+  ApiCreateOrUpdateParameter.properties.serviceUrl: serviceLink
+  ApiEntityBaseContract.termsOfServiceUrl: termsOfServiceLink
 
 directive:
   - remove-operation: 'ApiManagementOperations_List'

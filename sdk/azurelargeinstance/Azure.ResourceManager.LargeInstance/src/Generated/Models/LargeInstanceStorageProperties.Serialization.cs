@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
 {
     public partial class LargeInstanceStorageProperties : IUtf8JsonSerializable, IJsonModel<LargeInstanceStorageProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LargeInstanceStorageProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LargeInstanceStorageProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LargeInstanceStorageProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
 
         internal static LargeInstanceStorageProperties DeserializeLargeInstanceStorageProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

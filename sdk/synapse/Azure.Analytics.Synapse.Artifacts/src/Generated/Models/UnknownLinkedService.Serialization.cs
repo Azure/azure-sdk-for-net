@@ -151,11 +151,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return DeserializeUnknownLinkedService(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<LinkedService>(this);
             return content;
         }
     }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
 {
     public partial class SyncGroupSchemaTableColumn : IUtf8JsonSerializable, IJsonModel<SyncGroupSchemaTableColumn>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SyncGroupSchemaTableColumn>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SyncGroupSchemaTableColumn>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SyncGroupSchemaTableColumn>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static SyncGroupSchemaTableColumn DeserializeSyncGroupSchemaTableColumn(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -123,15 +123,16 @@ namespace Azure.ResourceManager.Sql.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(QuotedName), out propertyOverride);
-            if (Optional.IsDefined(QuotedName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  quotedName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(QuotedName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  quotedName: ");
                     if (QuotedName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -145,15 +146,16 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DataSize), out propertyOverride);
-            if (Optional.IsDefined(DataSize) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  dataSize: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DataSize))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  dataSize: ");
                     if (DataSize.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -167,15 +169,16 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DataType), out propertyOverride);
-            if (Optional.IsDefined(DataType) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  dataType: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DataType))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  dataType: ");
                     if (DataType.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

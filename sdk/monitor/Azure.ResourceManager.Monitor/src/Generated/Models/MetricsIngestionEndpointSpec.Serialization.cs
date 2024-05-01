@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Monitor.Models
 {
     internal partial class MetricsIngestionEndpointSpec : IUtf8JsonSerializable, IJsonModel<MetricsIngestionEndpointSpec>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MetricsIngestionEndpointSpec>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MetricsIngestionEndpointSpec>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MetricsIngestionEndpointSpec>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static MetricsIngestionEndpointSpec DeserializeMetricsIngestionEndpointSpec(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

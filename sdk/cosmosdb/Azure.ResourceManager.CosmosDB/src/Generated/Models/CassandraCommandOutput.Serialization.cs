@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 {
     public partial class CassandraCommandOutput : IUtf8JsonSerializable, IJsonModel<CassandraCommandOutput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CassandraCommandOutput>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CassandraCommandOutput>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CassandraCommandOutput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static CassandraCommandOutput DeserializeCassandraCommandOutput(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -101,15 +101,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CommandOutput), out propertyOverride);
-            if (Optional.IsDefined(CommandOutput) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  commandOutput: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CommandOutput))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  commandOutput: ");
                     if (CommandOutput.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

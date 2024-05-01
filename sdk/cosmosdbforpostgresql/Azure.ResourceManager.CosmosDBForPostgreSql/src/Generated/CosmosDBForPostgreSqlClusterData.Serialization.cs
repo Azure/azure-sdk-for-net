@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
 {
     public partial class CosmosDBForPostgreSqlClusterData : IUtf8JsonSerializable, IJsonModel<CosmosDBForPostgreSqlClusterData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBForPostgreSqlClusterData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBForPostgreSqlClusterData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CosmosDBForPostgreSqlClusterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
 
         internal static CosmosDBForPostgreSqlClusterData DeserializeCosmosDBForPostgreSqlClusterData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

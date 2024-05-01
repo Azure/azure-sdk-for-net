@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,7 +17,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
 {
     public partial class PublicNetworkAcls : IUtf8JsonSerializable, IJsonModel<PublicNetworkAcls>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PublicNetworkAcls>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PublicNetworkAcls>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PublicNetworkAcls>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -78,7 +80,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
         internal static PublicNetworkAcls DeserializePublicNetworkAcls(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -127,6 +129,67 @@ namespace Azure.ResourceManager.WebPubSub.Models
             return new PublicNetworkAcls(allow ?? new ChangeTrackingList<WebPubSubRequestType>(), deny ?? new ChangeTrackingList<WebPubSubRequestType>(), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Allow), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  allow: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Allow))
+                {
+                    if (Allow.Any())
+                    {
+                        builder.Append("  allow: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Allow)
+                        {
+                            builder.AppendLine($"    '{item.ToString()}'");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Deny), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  deny: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Deny))
+                {
+                    if (Deny.Any())
+                    {
+                        builder.Append("  deny: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Deny)
+                        {
+                            builder.AppendLine($"    '{item.ToString()}'");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<PublicNetworkAcls>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PublicNetworkAcls>)this).GetFormatFromOptions(options) : options.Format;
@@ -135,6 +198,8 @@ namespace Azure.ResourceManager.WebPubSub.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PublicNetworkAcls)} does not support writing '{options.Format}' format.");
             }

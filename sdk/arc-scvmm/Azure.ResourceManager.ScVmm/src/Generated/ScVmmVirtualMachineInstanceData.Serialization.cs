@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ScVmm
 {
     public partial class ScVmmVirtualMachineInstanceData : IUtf8JsonSerializable, IJsonModel<ScVmmVirtualMachineInstanceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScVmmVirtualMachineInstanceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScVmmVirtualMachineInstanceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ScVmmVirtualMachineInstanceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ScVmm
 
         internal static ScVmmVirtualMachineInstanceData DeserializeScVmmVirtualMachineInstanceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

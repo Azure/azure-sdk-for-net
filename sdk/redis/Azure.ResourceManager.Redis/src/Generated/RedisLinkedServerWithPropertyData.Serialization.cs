@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Redis
 {
     public partial class RedisLinkedServerWithPropertyData : IUtf8JsonSerializable, IJsonModel<RedisLinkedServerWithPropertyData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisLinkedServerWithPropertyData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisLinkedServerWithPropertyData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RedisLinkedServerWithPropertyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Redis
 
         internal static RedisLinkedServerWithPropertyData DeserializeRedisLinkedServerWithPropertyData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -244,15 +244,16 @@ namespace Azure.ResourceManager.Redis
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  name: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  name: ");
                     if (Name.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -266,29 +267,31 @@ namespace Azure.ResourceManager.Redis
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  id: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  id: ");
                     builder.AppendLine($"'{Id.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
-            if (Optional.IsDefined(SystemData) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  systemData: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  systemData: ");
                     builder.AppendLine($"'{SystemData.ToString()}'");
                 }
             }
@@ -296,57 +299,61 @@ namespace Azure.ResourceManager.Redis
             builder.Append("  properties:");
             builder.AppendLine(" {");
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LinkedRedisCacheId), out propertyOverride);
-            if (Optional.IsDefined(LinkedRedisCacheId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    linkedRedisCacheId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LinkedRedisCacheId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    linkedRedisCacheId: ");
                     builder.AppendLine($"'{LinkedRedisCacheId.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LinkedRedisCacheLocation), out propertyOverride);
-            if (Optional.IsDefined(LinkedRedisCacheLocation) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    linkedRedisCacheLocation: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LinkedRedisCacheLocation))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    linkedRedisCacheLocation: ");
                     builder.AppendLine($"'{LinkedRedisCacheLocation.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServerRole), out propertyOverride);
-            if (Optional.IsDefined(ServerRole) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    serverRole: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ServerRole))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    serverRole: ");
                     builder.AppendLine($"'{ServerRole.Value.ToSerialString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GeoReplicatedPrimaryHostName), out propertyOverride);
-            if (Optional.IsDefined(GeoReplicatedPrimaryHostName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    geoReplicatedPrimaryHostName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(GeoReplicatedPrimaryHostName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    geoReplicatedPrimaryHostName: ");
                     if (GeoReplicatedPrimaryHostName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -360,15 +367,16 @@ namespace Azure.ResourceManager.Redis
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrimaryHostName), out propertyOverride);
-            if (Optional.IsDefined(PrimaryHostName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    primaryHostName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PrimaryHostName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    primaryHostName: ");
                     if (PrimaryHostName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -382,15 +390,16 @@ namespace Azure.ResourceManager.Redis
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
-            if (Optional.IsDefined(ProvisioningState) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    provisioningState: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisioningState))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    provisioningState: ");
                     if (ProvisioningState.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

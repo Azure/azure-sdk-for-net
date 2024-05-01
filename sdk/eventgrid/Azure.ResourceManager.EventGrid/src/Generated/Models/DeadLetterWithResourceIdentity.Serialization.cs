@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 {
     public partial class DeadLetterWithResourceIdentity : IUtf8JsonSerializable, IJsonModel<DeadLetterWithResourceIdentity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeadLetterWithResourceIdentity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeadLetterWithResourceIdentity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DeadLetterWithResourceIdentity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static DeadLetterWithResourceIdentity DeserializeDeadLetterWithResourceIdentity(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Elastic.Models
 {
     public partial class LogRules : IUtf8JsonSerializable, IJsonModel<LogRules>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogRules>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogRules>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LogRules>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Elastic.Models
 
         internal static LogRules DeserializeLogRules(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class WebAppCookieExpiration : IUtf8JsonSerializable, IJsonModel<WebAppCookieExpiration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebAppCookieExpiration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebAppCookieExpiration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<WebAppCookieExpiration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static WebAppCookieExpiration DeserializeWebAppCookieExpiration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -116,29 +116,31 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Convention), out propertyOverride);
-            if (Optional.IsDefined(Convention) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  convention: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Convention))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  convention: ");
                     builder.AppendLine($"'{Convention.Value.ToSerialString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TimeToExpiration), out propertyOverride);
-            if (Optional.IsDefined(TimeToExpiration) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  timeToExpiration: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TimeToExpiration))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  timeToExpiration: ");
                     if (TimeToExpiration.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class WebAppBackupSchedule : IUtf8JsonSerializable, IJsonModel<WebAppBackupSchedule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebAppBackupSchedule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebAppBackupSchedule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<WebAppBackupSchedule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static WebAppBackupSchedule DeserializeWebAppBackupSchedule(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -159,75 +159,81 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FrequencyInterval), out propertyOverride);
-            builder.Append("  frequencyInterval: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.Append("  frequencyInterval: ");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
+                builder.Append("  frequencyInterval: ");
                 builder.AppendLine($"{FrequencyInterval}");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FrequencyUnit), out propertyOverride);
-            builder.Append("  frequencyUnit: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.Append("  frequencyUnit: ");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
+                builder.Append("  frequencyUnit: ");
                 builder.AppendLine($"'{FrequencyUnit.ToSerialString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ShouldKeepAtLeastOneBackup), out propertyOverride);
-            builder.Append("  keepAtLeastOneBackup: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.Append("  keepAtLeastOneBackup: ");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
+                builder.Append("  keepAtLeastOneBackup: ");
                 var boolValue = ShouldKeepAtLeastOneBackup == true ? "true" : "false";
                 builder.AppendLine($"{boolValue}");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RetentionPeriodInDays), out propertyOverride);
-            builder.Append("  retentionPeriodInDays: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.Append("  retentionPeriodInDays: ");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
+                builder.Append("  retentionPeriodInDays: ");
                 builder.AppendLine($"{RetentionPeriodInDays}");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartOn), out propertyOverride);
-            if (Optional.IsDefined(StartOn) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  startTime: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StartOn))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  startTime: ");
                     var formattedDateTimeString = TypeFormatters.ToString(StartOn.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastExecutedOn), out propertyOverride);
-            if (Optional.IsDefined(LastExecutedOn) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  lastExecutionTime: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LastExecutedOn))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  lastExecutionTime: ");
                     var formattedDateTimeString = TypeFormatters.ToString(LastExecutedOn.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }

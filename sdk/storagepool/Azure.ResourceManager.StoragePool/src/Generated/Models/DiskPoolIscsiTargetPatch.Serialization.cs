@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.StoragePool.Models
 {
     public partial class DiskPoolIscsiTargetPatch : IUtf8JsonSerializable, IJsonModel<DiskPoolIscsiTargetPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiskPoolIscsiTargetPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiskPoolIscsiTargetPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DiskPoolIscsiTargetPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.StoragePool.Models
 
         internal static DiskPoolIscsiTargetPatch DeserializeDiskPoolIscsiTargetPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

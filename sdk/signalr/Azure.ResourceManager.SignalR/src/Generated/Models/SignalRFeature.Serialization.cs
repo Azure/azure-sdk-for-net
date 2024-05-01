@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SignalR.Models
 {
     public partial class SignalRFeature : IUtf8JsonSerializable, IJsonModel<SignalRFeature>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SignalRFeature>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SignalRFeature>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SignalRFeature>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.SignalR.Models
 
         internal static SignalRFeature DeserializeSignalRFeature(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -133,26 +133,28 @@ namespace Azure.ResourceManager.SignalR.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Flag), out propertyOverride);
-            builder.Append("  flag: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.Append("  flag: ");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
+                builder.Append("  flag: ");
                 builder.AppendLine($"'{Flag.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Value), out propertyOverride);
-            if (Optional.IsDefined(Value) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  value: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Value))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  value: ");
                     if (Value.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -166,17 +168,18 @@ namespace Azure.ResourceManager.SignalR.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Properties), out propertyOverride);
-            if (Optional.IsCollectionDefined(Properties) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Properties.Any() || hasPropertyOverride)
+                builder.Append("  properties: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Properties))
                 {
-                    builder.Append("  properties: ");
-                    if (hasPropertyOverride)
+                    if (Properties.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  properties: ");
                         builder.AppendLine("{");
                         foreach (var item in Properties)
                         {

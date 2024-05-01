@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
 {
     public partial class ResourceHealthAvailabilityStatusProperties : IUtf8JsonSerializable, IJsonModel<ResourceHealthAvailabilityStatusProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceHealthAvailabilityStatusProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceHealthAvailabilityStatusProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ResourceHealthAvailabilityStatusProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
 
         internal static ResourceHealthAvailabilityStatusProperties DeserializeResourceHealthAvailabilityStatusProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

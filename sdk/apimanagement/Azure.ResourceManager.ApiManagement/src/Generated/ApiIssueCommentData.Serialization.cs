@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiManagement
 {
     public partial class ApiIssueCommentData : IUtf8JsonSerializable, IJsonModel<ApiIssueCommentData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiIssueCommentData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiIssueCommentData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ApiIssueCommentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ApiManagement
 
         internal static ApiIssueCommentData DeserializeApiIssueCommentData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

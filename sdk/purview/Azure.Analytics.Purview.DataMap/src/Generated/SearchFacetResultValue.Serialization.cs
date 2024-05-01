@@ -15,7 +15,7 @@ namespace Azure.Analytics.Purview.DataMap
 {
     public partial class SearchFacetResultValue : IUtf8JsonSerializable, IJsonModel<SearchFacetResultValue>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SearchFacetResultValue>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SearchFacetResultValue>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SearchFacetResultValue>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -158,7 +158,7 @@ namespace Azure.Analytics.Purview.DataMap
 
         internal static SearchFacetResultValue DeserializeSearchFacetResultValue(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -377,11 +377,11 @@ namespace Azure.Analytics.Purview.DataMap
             return DeserializeSearchFacetResultValue(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

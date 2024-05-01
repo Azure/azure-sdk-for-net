@@ -10,12 +10,13 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
     public partial class AzureFirstPartyManagedCertificateProperties : IUtf8JsonSerializable, IJsonModel<AzureFirstPartyManagedCertificateProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureFirstPartyManagedCertificateProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureFirstPartyManagedCertificateProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AzureFirstPartyManagedCertificateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -26,6 +27,41 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(SecretSource))
+            {
+                writer.WritePropertyName("secretSource"u8);
+                JsonSerializer.Serialize(writer, SecretSource);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Subject))
+            {
+                writer.WritePropertyName("subject"u8);
+                writer.WriteStringValue(Subject);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ExpirationDate))
+            {
+                writer.WritePropertyName("expirationDate"u8);
+                writer.WriteStringValue(ExpirationDate);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CertificateAuthority))
+            {
+                writer.WritePropertyName("certificateAuthority"u8);
+                writer.WriteStringValue(CertificateAuthority);
+            }
+            if (Optional.IsCollectionDefined(SubjectAlternativeNames))
+            {
+                writer.WritePropertyName("subjectAlternativeNames"u8);
+                writer.WriteStartArray();
+                foreach (var item in SubjectAlternativeNames)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(Thumbprint))
+            {
+                writer.WritePropertyName("thumbprint"u8);
+                writer.WriteStringValue(Thumbprint);
+            }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(SecretType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -60,17 +96,66 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static AzureFirstPartyManagedCertificateProperties DeserializeAzureFirstPartyManagedCertificateProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            WritableSubResource secretSource = default;
+            string subject = default;
+            string expirationDate = default;
+            string certificateAuthority = default;
+            IList<string> subjectAlternativeNames = default;
+            string thumbprint = default;
             SecretType type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("secretSource"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    secretSource = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("subject"u8))
+                {
+                    subject = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("expirationDate"u8))
+                {
+                    expirationDate = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("certificateAuthority"u8))
+                {
+                    certificateAuthority = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("subjectAlternativeNames"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    subjectAlternativeNames = array;
+                    continue;
+                }
+                if (property.NameEquals("thumbprint"u8))
+                {
+                    thumbprint = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("type"u8))
                 {
                     type = new SecretType(property.Value.GetString());
@@ -82,7 +167,15 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AzureFirstPartyManagedCertificateProperties(type, serializedAdditionalRawData);
+            return new AzureFirstPartyManagedCertificateProperties(
+                type,
+                serializedAdditionalRawData,
+                secretSource,
+                subject,
+                expirationDate,
+                certificateAuthority,
+                subjectAlternativeNames ?? new ChangeTrackingList<string>(),
+                thumbprint);
         }
 
         BinaryData IPersistableModel<AzureFirstPartyManagedCertificateProperties>.Write(ModelReaderWriterOptions options)

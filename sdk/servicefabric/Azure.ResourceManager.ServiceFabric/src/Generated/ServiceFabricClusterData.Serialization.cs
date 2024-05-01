@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ServiceFabric
 {
     public partial class ServiceFabricClusterData : IUtf8JsonSerializable, IJsonModel<ServiceFabricClusterData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceFabricClusterData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceFabricClusterData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ServiceFabricClusterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.ServiceFabric
 
         internal static ServiceFabricClusterData DeserializeServiceFabricClusterData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

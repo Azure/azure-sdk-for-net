@@ -15,7 +15,7 @@ namespace Azure.AI.OpenAI
 {
     public partial class ChatRequestAssistantMessage : IUtf8JsonSerializable, IJsonModel<ChatRequestAssistantMessage>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChatRequestAssistantMessage>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChatRequestAssistantMessage>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ChatRequestAssistantMessage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -89,7 +89,7 @@ namespace Azure.AI.OpenAI
 
         internal static ChatRequestAssistantMessage DeserializeChatRequestAssistantMessage(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -201,11 +201,11 @@ namespace Azure.AI.OpenAI
             return DeserializeChatRequestAssistantMessage(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

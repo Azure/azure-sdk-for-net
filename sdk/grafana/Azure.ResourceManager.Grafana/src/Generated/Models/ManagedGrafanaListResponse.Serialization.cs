@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Grafana.Models
 {
     internal partial class ManagedGrafanaListResponse : IUtf8JsonSerializable, IJsonModel<ManagedGrafanaListResponse>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedGrafanaListResponse>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedGrafanaListResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagedGrafanaListResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Grafana.Models
 
         internal static ManagedGrafanaListResponse DeserializeManagedGrafanaListResponse(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

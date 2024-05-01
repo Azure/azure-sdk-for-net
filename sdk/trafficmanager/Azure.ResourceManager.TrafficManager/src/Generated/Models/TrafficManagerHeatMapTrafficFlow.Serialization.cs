@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
 {
     public partial class TrafficManagerHeatMapTrafficFlow : IUtf8JsonSerializable, IJsonModel<TrafficManagerHeatMapTrafficFlow>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TrafficManagerHeatMapTrafficFlow>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TrafficManagerHeatMapTrafficFlow>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<TrafficManagerHeatMapTrafficFlow>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
 
         internal static TrafficManagerHeatMapTrafficFlow DeserializeTrafficManagerHeatMapTrafficFlow(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

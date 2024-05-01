@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
     public partial class VMwareVirtualNetworkData : IUtf8JsonSerializable, IJsonModel<VMwareVirtualNetworkData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VMwareVirtualNetworkData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VMwareVirtualNetworkData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VMwareVirtualNetworkData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         internal static VMwareVirtualNetworkData DeserializeVMwareVirtualNetworkData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

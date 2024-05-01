@@ -23,7 +23,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
             if (Optional.IsDefined(Url))
             {
                 writer.WritePropertyName("Url"u8);
-                writer.WriteStringValue(Url);
+                writer.WriteStringValue(Url.AbsoluteUri);
             }
             if (Optional.IsDefined(ResponseCode))
             {
@@ -60,7 +60,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
             writer.WriteEndObject();
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();

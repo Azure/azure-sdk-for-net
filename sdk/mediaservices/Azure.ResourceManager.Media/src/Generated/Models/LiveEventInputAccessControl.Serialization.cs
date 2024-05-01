@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Media.Models
 {
     internal partial class LiveEventInputAccessControl : IUtf8JsonSerializable, IJsonModel<LiveEventInputAccessControl>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LiveEventInputAccessControl>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LiveEventInputAccessControl>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LiveEventInputAccessControl>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static LiveEventInputAccessControl DeserializeLiveEventInputAccessControl(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

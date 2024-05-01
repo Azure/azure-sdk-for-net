@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class HDInsightMapReduceActivity : IUtf8JsonSerializable, IJsonModel<HDInsightMapReduceActivity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HDInsightMapReduceActivity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HDInsightMapReduceActivity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HDInsightMapReduceActivity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static HDInsightMapReduceActivity DeserializeHDInsightMapReduceActivity(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

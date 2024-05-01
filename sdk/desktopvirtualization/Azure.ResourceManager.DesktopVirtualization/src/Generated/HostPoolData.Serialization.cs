@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
 {
     public partial class HostPoolData : IUtf8JsonSerializable, IJsonModel<HostPoolData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HostPoolData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HostPoolData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HostPoolData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
 
         internal static HostPoolData DeserializeHostPoolData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

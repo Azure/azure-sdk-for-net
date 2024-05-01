@@ -58,7 +58,7 @@ namespace Azure.Maps.Search.Models
             return DeserializeGeoJsonGeometryCollectionData(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Common.Utf8JsonRequestContent();

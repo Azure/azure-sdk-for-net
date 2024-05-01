@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     public partial class SecurityConnectorGitHubOwnerData : IUtf8JsonSerializable, IJsonModel<SecurityConnectorGitHubOwnerData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityConnectorGitHubOwnerData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityConnectorGitHubOwnerData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SecurityConnectorGitHubOwnerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
         internal static SecurityConnectorGitHubOwnerData DeserializeSecurityConnectorGitHubOwnerData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

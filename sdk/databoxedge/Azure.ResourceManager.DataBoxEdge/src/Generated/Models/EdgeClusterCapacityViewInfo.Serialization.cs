@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     public partial class EdgeClusterCapacityViewInfo : IUtf8JsonSerializable, IJsonModel<EdgeClusterCapacityViewInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeClusterCapacityViewInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeClusterCapacityViewInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EdgeClusterCapacityViewInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static EdgeClusterCapacityViewInfo DeserializeEdgeClusterCapacityViewInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

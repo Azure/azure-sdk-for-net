@@ -15,7 +15,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
 {
     public partial class ReleaseResult : IUtf8JsonSerializable, IJsonModel<ReleaseResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReleaseResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReleaseResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ReleaseResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -72,7 +72,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
 
         internal static ReleaseResult DeserializeReleaseResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -152,11 +152,11 @@ namespace Azure.Messaging.EventGrid.Namespaces
             return DeserializeReleaseResult(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

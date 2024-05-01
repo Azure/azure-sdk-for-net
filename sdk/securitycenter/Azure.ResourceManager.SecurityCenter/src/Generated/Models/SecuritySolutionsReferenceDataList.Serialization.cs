@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     internal partial class SecuritySolutionsReferenceDataList : IUtf8JsonSerializable, IJsonModel<SecuritySolutionsReferenceDataList>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecuritySolutionsReferenceDataList>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecuritySolutionsReferenceDataList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SecuritySolutionsReferenceDataList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static SecuritySolutionsReferenceDataList DeserializeSecuritySolutionsReferenceDataList(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

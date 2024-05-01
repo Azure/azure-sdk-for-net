@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Attestation.Models
 {
     public partial class AttestationServiceCreationSpecificParams : IUtf8JsonSerializable, IJsonModel<AttestationServiceCreationSpecificParams>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AttestationServiceCreationSpecificParams>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AttestationServiceCreationSpecificParams>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AttestationServiceCreationSpecificParams>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Attestation.Models
 
         internal static AttestationServiceCreationSpecificParams DeserializeAttestationServiceCreationSpecificParams(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

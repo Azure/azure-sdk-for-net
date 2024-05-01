@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class AutoHealRules : IUtf8JsonSerializable, IJsonModel<AutoHealRules>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutoHealRules>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutoHealRules>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AutoHealRules>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AutoHealRules DeserializeAutoHealRules(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -120,29 +120,31 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Triggers), out propertyOverride);
-            if (Optional.IsDefined(Triggers) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  triggers: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Triggers))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  triggers: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Triggers, options, 2, false, "  triggers: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Actions), out propertyOverride);
-            if (Optional.IsDefined(Actions) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  actions: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Actions))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  actions: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Actions, options, 2, false, "  actions: ");
                 }
             }
