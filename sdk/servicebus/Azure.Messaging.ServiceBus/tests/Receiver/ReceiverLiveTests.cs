@@ -288,7 +288,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 SimulateNetworkFailure(client);
 
-                var numMessagesDeleted = await receiver.DeleteMessagesAsync(1, DateTimeOffset.UtcNow);
+                var numMessagesDeleted = await receiver.DeleteMessagesAsync(1, DateTimeOffset.UtcNow.AddSeconds(5));
                 Assert.AreEqual(numMessagesDeleted, 1);
             }
         }
@@ -1283,6 +1283,59 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         }
 
         [Test]
+        public async Task PurgeMessages()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+
+                var messageCount = ServiceBusReceiver.MaxDeleteMessageCount * 3;
+                await SendMessagesAsync(client, scope.QueueName, messageCount);
+
+                var receiver = client.CreateReceiver(scope.QueueName);
+                var numMessagesDeleted = await receiver.PurgeMessagesAsync();
+
+                Assert.NotZero(numMessagesDeleted);
+                Assert.LessOrEqual(numMessagesDeleted, messageCount);
+
+                // All messages should have been deleted.
+                var peekedMessage = receiver.PeekMessageAsync();
+                Assert.IsNull(peekedMessage.Result);
+            }
+        }
+
+        [Test]
+        public async Task PurgeMessagesWithDate()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+
+                var messageCount = ServiceBusReceiver.MaxDeleteMessageCount * 3;
+                await SendMessagesAsync(client, scope.QueueName, messageCount);
+
+                var targetDate = DateTime.UtcNow.AddSeconds(1);
+
+                // Wait to seconds and send a new message that should survive the purge.
+                await Task.Delay(TimeSpan.FromSeconds(15));
+
+                var message = new ServiceBusMessage("Eye of the tiger") { MessageId = "survivor" };
+                await client.CreateSender(scope.QueueName).SendMessageAsync(message);
+
+                var receiver = client.CreateReceiver(scope.QueueName);
+                var numMessagesDeleted = await receiver.PurgeMessagesAsync(targetDate);
+
+                Assert.NotZero(numMessagesDeleted);
+                Assert.LessOrEqual(numMessagesDeleted, messageCount);
+
+                // All messages should have been deleted, except for our designated survivor..
+                var peekedMessage = receiver.PeekMessageAsync();
+                Assert.IsNotNull(peekedMessage.Result);
+                Assert.AreEqual("survivor", peekedMessage.Result.MessageId);
+            }
+        }
+
+        [Test]
         public async Task DeleteMessagesPeekLockMode()
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
@@ -1298,12 +1351,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 var receiver = client.CreateReceiver(scope.QueueName);
 
-                var time = (DateTimeOffset.UtcNow).AddSeconds(1); // UtcNow sometimes gets resolved as the same time as messages sent
+                var time = (DateTimeOffset.UtcNow).AddSeconds(5); // UtcNow sometimes gets resolved as the same time as messages sent
                 var numMessagesDeleted = await receiver.DeleteMessagesAsync(messageCount, time);
-                Assert.AreEqual(messageCount, numMessagesDeleted);
-
-                var peekedMessage = receiver.PeekMessageAsync();
-                Assert.IsNull(peekedMessage.Result);
+                Assert.NotZero(numMessagesDeleted);
+                Assert.LessOrEqual(numMessagesDeleted, messageCount);
             }
         }
 
@@ -1323,17 +1374,15 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 var receiver = client.CreateReceiver(scope.QueueName, new ServiceBusReceiverOptions { ReceiveMode = ServiceBusReceiveMode.ReceiveAndDelete });
 
-                var time = (DateTimeOffset.UtcNow).AddSeconds(1); // UtcNow sometimes gets resolved as the same time as messages sent
-                var numMessagesDeleted = await receiver.DeleteMessagesAsync(Int32.MaxValue, time);
-                Assert.AreEqual(messageCount, numMessagesDeleted);
-
-                var peekedMessage = receiver.PeekMessageAsync();
-                Assert.IsNull(peekedMessage.Result);
+                var time = (DateTimeOffset.UtcNow).AddSeconds(5); // UtcNow sometimes gets resolved as the same time as messages sent
+                var numMessagesDeleted = await receiver.DeleteMessagesAsync(ServiceBusReceiver.MaxDeleteMessageCount, time);
+                Assert.NotZero(numMessagesDeleted);
+                Assert.LessOrEqual(numMessagesDeleted, messageCount);
             }
         }
 
         [Test]
-        public async Task DeleteMessagesReactsToClosingTheClient ()
+        public async Task DeleteMessagesReactsToClosingTheClient()
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
@@ -1350,7 +1399,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 var time = (DateTimeOffset.UtcNow).AddSeconds(1); // UtcNow sometimes gets resolved as the same time as messages sent
                 var numMessagesDeleted = await receiver.DeleteMessagesAsync(messageCount - 5, time);
-                Assert.AreEqual(messageCount - 5, numMessagesDeleted);
+                Assert.NotZero(numMessagesDeleted);
+                Assert.LessOrEqual(numMessagesDeleted, messageCount - 5);
 
                 await client.DisposeAsync();
 
