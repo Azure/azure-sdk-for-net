@@ -48,6 +48,7 @@ SearchIndex searchIndex = new(indexName)
                     ResourceUri = new Uri(Environment.GetEnvironmentVariable("OPENAI_ENDPOINT")),
                     ApiKey = Environment.GetEnvironmentVariable("OPENAI_KEY"),
                     DeploymentId = deploymentId,
+                    ModelName = AzureOpenAIModelName.TextEmbeddingAda002
                 }
             }
         }
