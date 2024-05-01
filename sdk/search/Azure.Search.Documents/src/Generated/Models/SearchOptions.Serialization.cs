@@ -197,7 +197,7 @@ namespace Azure.Search.Documents
             if (Optional.IsDefined(HybridSearch))
             {
                 writer.WritePropertyName("hybridSearch"u8);
-                writer.WriteObjectValue<object>(HybridSearch);
+                writer.WriteObjectValue(HybridSearch);
             }
             writer.WriteEndObject();
         }
@@ -239,7 +239,7 @@ namespace Azure.Search.Documents
             string semanticFields = default;
             IList<VectorQuery> vectorQueries = default;
             VectorFilterMode? vectorFilterMode = default;
-            object hybridSearch = default;
+            HybridSearch hybridSearch = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("count"u8))
@@ -483,7 +483,7 @@ namespace Azure.Search.Documents
                     {
                         continue;
                     }
-                    hybridSearch = property.Value.GetObject();
+                    hybridSearch = HybridSearch.DeserializeHybridSearch(property.Value);
                     continue;
                 }
             }

@@ -90,6 +90,18 @@ directive:
   transform: $.format = "url"
 ```
 
+### Set `hybridSearch` property to be type `HybridSearch` in SearchRequest
+
+``` yaml
+directive:
+  - from: searchindex.json
+    where: $.definitions.SearchRequest.properties
+    transform: >
+        delete $.hybridSearch["type"];
+        delete $.hybridSearch.items;
+        $.hybridSearch["$ref"] = "#/definitions/HybridSearch";
+```
+
 ### Enable `RawVectorQuery.vector` as embedding field
 
 ```yaml

@@ -151,7 +151,7 @@ namespace Azure.Search.Documents
         public System.Collections.Generic.IList<string> HighlightFields { get { throw null; } }
         public string HighlightPostTag { get { throw null; } set { } }
         public string HighlightPreTag { get { throw null; } set { } }
-        public object HybridSearch { get { throw null; } set { } }
+        public Azure.Search.Documents.Models.HybridSearch HybridSearch { get { throw null; } set { } }
         public bool? IncludeTotalCount { get { throw null; } set { } }
         public double? MinimumCoverage { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> OrderBy { get { throw null; } }
@@ -3225,6 +3225,30 @@ namespace Azure.Search.Documents.Models
     {
         Value = 0,
         Range = 1,
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct HybridCountAndFacetMode : System.IEquatable<Azure.Search.Documents.Models.HybridCountAndFacetMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public HybridCountAndFacetMode(string value) { throw null; }
+        public static Azure.Search.Documents.Models.HybridCountAndFacetMode CountAllResults { get { throw null; } }
+        public static Azure.Search.Documents.Models.HybridCountAndFacetMode CountRetrievableResults { get { throw null; } }
+        public bool Equals(Azure.Search.Documents.Models.HybridCountAndFacetMode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Search.Documents.Models.HybridCountAndFacetMode left, Azure.Search.Documents.Models.HybridCountAndFacetMode right) { throw null; }
+        public static implicit operator Azure.Search.Documents.Models.HybridCountAndFacetMode (string value) { throw null; }
+        public static bool operator !=(Azure.Search.Documents.Models.HybridCountAndFacetMode left, Azure.Search.Documents.Models.HybridCountAndFacetMode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class HybridSearch
+    {
+        public HybridSearch() { }
+        public Azure.Search.Documents.Models.HybridCountAndFacetMode? CountAndFacetMode { get { throw null; } set { } }
+        public int? MaxTextRecallSize { get { throw null; } set { } }
     }
     public partial class IndexActionCompletedEventArgs<T> : Azure.Search.Documents.Models.IndexActionEventArgs<T>
     {

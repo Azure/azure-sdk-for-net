@@ -60,8 +60,9 @@ namespace Azure.Search.Documents.Tests
             ServiceVersion = serviceVersion;
             JsonPathSanitizers.Add("$..applicationSecret");
             JsonPathSanitizers.Add("$..apiKey");
-            SanitizedHeaders.Add("api-key");
+            JsonPathSanitizers.Add("$..storageConnectionString");
             JsonPathSanitizers.Remove("$..token");
+            SanitizedHeaders.Add("api-key");
             CompareBodies = false;
         }
 

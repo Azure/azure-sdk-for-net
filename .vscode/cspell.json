@@ -125,6 +125,7 @@
     "uninstrumented",
     "vcpus",
     "Vectorizable",
+    "Vectorize",
     "Vectorizer",
     "Vectorizers",
     "vhdx",
