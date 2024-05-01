@@ -395,7 +395,7 @@ namespace Azure.Core.TestFramework
             // "AZSDK3491",
             // "AZSDK3492",
             "AZSDK3493", // $..name
-            // "AZSDK3494",
+            "AZSDK3494", // $..friendlyName
             // "AZSDK3495",
             // "AZSDK3496",
             // // "AZSDK4000",
