@@ -501,7 +501,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [sas_token]: https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/create-sas-tokens?tabs=Containers#create-your-sas-tokens-with-azure-storage-explorer
 [sas_token_permissions]: https://aka.ms/azsdk/documenttranslation/sas-permissions
 
-[documenttranslation_client_class]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/translation/Azure.AI.Translation.Document/src/custom/DocumentTranslationClient.cs
+[documenttranslation_client_class]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/translation/Azure.AI.Translation.Document/src/DocumentTranslationClient.cs
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#defaultazurecredential
 [register_aad_app]: https://learn.microsoft.com/azure/app-service/configure-authentication-provider-aad?tabs=workforce-tenant#--option-1-create-a-new-app-registration-automatically
