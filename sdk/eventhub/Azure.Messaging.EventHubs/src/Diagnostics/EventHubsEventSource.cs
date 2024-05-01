@@ -2835,6 +2835,26 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
+        ///   Indicates that an <see cref="EventProcessor{TPartition}"/> instance is attempting to update a checkpoint for
+        ///   a partition that is associated with a geo-replicated Event Hub and is missing a replication segment.
+        /// </summary>
+        ///
+        /// <param name="identifier">A unique name used to identify the event processor.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the buffered producer is associated with.</param>
+        /// <param name="offset">The offset associated with the checkpoint being updated.</param>
+        /// <param name="sequenceNumber">The sequence number associated with the checkpoint being updated, if provided.</param>
+        /// <param name="replicationSegment">The replication segment associated with the checkpoint being empty, likely empty.</param>
+        ///
+        [Event(131, Level = EventLevel.Warning, Message = "The processor instance with identifier '{0}' for Event Hub: {1} is attempting to update a checkpoint for a geo-replicated Event Hub without providing both a sequence number and replication segment. This can lead to data loss on failover.")]
+        public virtual void UpdateCheckpointMissingReplicationSegmentForGeoReplicatedEventHub(string identifier, string eventHubName, string offset, string sequenceNumber, string replicationSegment)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(131, identifier ?? string.Empty, eventHubName ?? string.Empty, offset ?? string.Empty, sequenceNumber ?? string.Empty, replicationSegment ?? string.Empty);
+            }
+        }
+
+        /// <summary>
         ///   Indicates that the receiving of events has completed.
         /// </summary>
         ///

@@ -201,6 +201,11 @@ namespace Azure.Messaging.EventHubs.Primitives
         internal EventHubsEventSource Logger { get; set; } = EventHubsEventSource.Log;
 
         /// <summary>
+        ///    The total number of replicas, including the primary, of the Event Hubs namespace. If this value is 1, then geo-replication is not enabled.
+        /// </summary>
+        protected int GeoReplicationCount { get; set; }
+
+        /// <summary>
         ///   The active policy which governs retry attempts for the processor.
         /// </summary>
         ///
@@ -1088,6 +1093,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   be called instead.
         /// </remarks>
         ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
         protected virtual Task UpdateCheckpointAsync(string partitionId,
                                                      long offset,
                                                      long? sequenceNumber,
@@ -1095,6 +1101,11 @@ namespace Azure.Messaging.EventHubs.Primitives
         {
             if (sequenceNumber.HasValue)
             {
+                if (GeoReplicationCount > 1)
+                {
+                    Logger.UpdateCheckpointMissingReplicationSegmentForGeoReplicatedEventHub(Identifier, EventHubName, offset.ToString(), sequenceNumber?.ToString(), null);
+                }
+
                 return UpdateCheckpointAsync(partitionId, new CheckpointPosition(sequenceNumber.Value), cancellationToken);
             }
 
@@ -1635,6 +1646,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                     try
                     {
                         partitionIds = await ListPartitionIdsAsync(connection, cancellationToken).ConfigureAwait(false);
+                        GeoReplicationCount = (await connection.GetPropertiesAsync(RetryPolicy, cancellationToken).ConfigureAwait(false)).GeoReplicationCount;
                     }
                     catch (Exception ex) when (ex.IsNotType<TaskCanceledException>())
                     {
@@ -2186,6 +2198,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             await using var connectionAwaiter = connection.ConfigureAwait(false);
 
             var properties = await connection.GetPropertiesAsync(RetryPolicy, cancellationToken).ConfigureAwait(false);
+            GeoReplicationCount = properties.GeoReplicationCount;
             var partitionIndex = new Random().Next(0, (properties.PartitionIds.Length - 1));
 
             // To ensure validity of the requested consumer group and that at least one partition exists,

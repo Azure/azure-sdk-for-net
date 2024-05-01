@@ -25,7 +25,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   The replication segment to associate with the checkpoint.
         /// </summary>
         ///
-        public int ReplicationSegment { get; }
+        public int? ReplicationSegment { get; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="CheckpointPosition"/> struct.
@@ -36,6 +36,7 @@ namespace Azure.Messaging.EventHubs.Processor
         public CheckpointPosition(long sequenceNumber)
         {
             SequenceNumber = sequenceNumber;
+            ReplicationSegment = null;
         }
 
         /// <summary>

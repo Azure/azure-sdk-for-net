@@ -241,6 +241,26 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         }
 
         /// <summary>
+        ///   Indicates that an <see cref="EventProcessorClient"/> instance is attempting to update a checkpoint for
+        ///   a partition that is associated with a geo-replicated Event Hub and is missing a replication segment.
+        /// </summary>
+        ///
+        /// <param name="identifier">A unique name used to identify the event processor.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the buffered producer is associated with.</param>
+        /// <param name="offset">The offset associated with the checkpoint being updated.</param>
+        /// <param name="sequenceNumber">The sequence number associated with the checkpoint being updated, if provided.</param>
+        /// <param name="replicationSegment">The replication segment associated with the checkpoint being empty, likely empty.</param>
+        ///
+        [Event(28, Level = EventLevel.Warning, Message = "The processor instance with identifier '{0}' for Event Hub: {1} is attempting to update a checkpoint for a geo-replicated Event Hub without providing both a sequence number and replication segment. This can lead to data loss on failover.")]
+        public virtual void UpdateCheckpointMissingReplicationSegmentForGeoReplicatedEventHub(string identifier, string eventHubName, string offset, string sequenceNumber, string replicationSegment)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(28, identifier ?? string.Empty, eventHubName ?? string.Empty, offset ?? string.Empty, sequenceNumber ?? string.Empty, replicationSegment ?? string.Empty);
+            }
+        }
+
+        /// <summary>
         ///   Writes an event with four string arguments into a stack allocated <see cref="EventSource.EventData"/> struct
         ///   to avoid the parameter array allocation on the WriteEvent methods.
         /// </summary>

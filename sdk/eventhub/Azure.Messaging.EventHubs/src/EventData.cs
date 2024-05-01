@@ -300,10 +300,14 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <value>
         ///   This value is read-only and will only be populated for events that have been read from Event Hubs. The default value
-        ///   when not populated is -1.
+        ///   when not populated is null.
         /// </value>
         ///
-        public int ReplicationSegment => _amqpMessage.GetReplicationSegment(-1);
+        /// <remarks>
+        ///   The replication segment is only relevant when geo-replication is enabled for the Event Hubs namespace.
+        /// </remarks>
+        ///
+        public int? ReplicationSegment => _amqpMessage.GetReplicationSegment();
 
         /// <summary>
         ///   The date and time, in UTC, of when the event was enqueued in the Event Hub partition.

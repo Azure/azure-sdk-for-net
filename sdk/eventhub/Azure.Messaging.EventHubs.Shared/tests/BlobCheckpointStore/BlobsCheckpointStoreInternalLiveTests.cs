@@ -884,7 +884,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 Assert.That(blobCount, Is.EqualTo(1));
                 Assert.That(storedCheckpoint, Is.Not.Null);
-                Assert.That(storedCheckpoint.StartingPosition, Is.EqualTo(EventPosition.FromSequenceNumber(mockEvent.SequenceNumber, 0, false)));
+                Assert.That(storedCheckpoint.StartingPosition, Is.EqualTo(EventPosition.FromSequenceNumber(mockEvent.SequenceNumber, mockEvent.ReplicationSegment, false)));
                 Assert.That(storedCheckpoint.ClientIdentifier, Is.EqualTo("Id"));
 
                 // Calling update again should update the existing checkpoint.

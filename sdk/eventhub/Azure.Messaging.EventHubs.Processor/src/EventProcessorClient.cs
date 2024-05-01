@@ -911,6 +911,12 @@ namespace Azure.Messaging.EventHubs
         /// <param name="sequenceNumber">The sequence number to associate with the checkpoint, indicating that a processor should begin reading from the next event in the stream.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal a request to cancel the operation.</param>
         ///
+        /// <remarks>
+        ///   This overload exists to preserve backwards compatibility; it is highly recommended that <see cref="UpdateCheckpointAsync(string, CheckpointPosition, CancellationToken)" />
+        ///   be called instead.
+        /// </remarks>
+        ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
         protected override Task UpdateCheckpointAsync(string partitionId,
                                                       long offset,
                                                       long? sequenceNumber,
@@ -919,7 +925,12 @@ namespace Azure.Messaging.EventHubs
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Argument.AssertNotNull(partitionId, nameof(partitionId));
 
-            Logger.UpdateCheckpointStart(partitionId, Identifier, EventHubName, ConsumerGroup, offset.ToString(), "-1", sequenceNumber?.ToString());
+            if (GeoReplicationCount > 1)
+            {
+                Logger.UpdateCheckpointMissingReplicationSegmentForGeoReplicatedEventHub(Identifier, EventHubName, offset.ToString(), sequenceNumber?.ToString(), null);
+            }
+
+            Logger.UpdateCheckpointStart(partitionId, Identifier, EventHubName, ConsumerGroup, offset.ToString(), null, sequenceNumber?.ToString());
 
             using var scope = ClientDiagnostics.CreateScope(DiagnosticProperty.EventProcessorCheckpointActivityName, ActivityKind.Internal);
             scope.Start();
@@ -934,13 +945,13 @@ namespace Azure.Messaging.EventHubs
                 // be thrown directly to the caller here.
 
                 scope.Failed(ex);
-                Logger.UpdateCheckpointError(partitionId, Identifier, EventHubName, ConsumerGroup, ex.Message, offset.ToString(), "-1", sequenceNumber?.ToString());
+                Logger.UpdateCheckpointError(partitionId, Identifier, EventHubName, ConsumerGroup, ex.Message, offset.ToString(), null, sequenceNumber?.ToString());
 
                 throw;
             }
             finally
             {
-                Logger.UpdateCheckpointComplete(partitionId, Identifier, EventHubName, ConsumerGroup, offset.ToString(), "-1", sequenceNumber?.ToString());
+                Logger.UpdateCheckpointComplete(partitionId, Identifier, EventHubName, ConsumerGroup, offset.ToString(), null, sequenceNumber?.ToString());
             }
         }
 
