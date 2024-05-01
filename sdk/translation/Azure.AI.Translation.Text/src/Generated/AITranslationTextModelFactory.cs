@@ -179,21 +179,21 @@ namespace Azure.AI.Translation.Text
         }
 
         /// <summary> Initializes a new instance of <see cref="Text.SentenceBoundaries"/>. </summary>
-        /// <param name="lengthsOfSourceSentences">
+        /// <param name="sourceSentencesLengths">
         /// An integer array representing the lengths of the sentences in the input text.
         /// The length of the array is the number of sentences, and the values are the length of each sentence.
         /// </param>
-        /// <param name="lengthsOfTranslatedSentences">
+        /// <param name="translatedSentencesLengths">
         /// An integer array representing the lengths of the sentences in the translated text.
         /// The length of the array is the number of sentences, and the values are the length of each sentence.
         /// </param>
         /// <returns> A new <see cref="Text.SentenceBoundaries"/> instance for mocking. </returns>
-        public static SentenceBoundaries SentenceBoundaries(IEnumerable<int> lengthsOfSourceSentences = null, IEnumerable<int> lengthsOfTranslatedSentences = null)
+        public static SentenceBoundaries SentenceBoundaries(IEnumerable<int> sourceSentencesLengths = null, IEnumerable<int> translatedSentencesLengths = null)
         {
-            lengthsOfSourceSentences ??= new List<int>();
-            lengthsOfTranslatedSentences ??= new List<int>();
+            sourceSentencesLengths ??= new List<int>();
+            translatedSentencesLengths ??= new List<int>();
 
-            return new SentenceBoundaries(lengthsOfSourceSentences?.ToList(), lengthsOfTranslatedSentences?.ToList(), serializedAdditionalRawData: null);
+            return new SentenceBoundaries(sourceSentencesLengths?.ToList(), translatedSentencesLengths?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Text.SourceText"/>. </summary>

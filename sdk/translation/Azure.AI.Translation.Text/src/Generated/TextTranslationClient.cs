@@ -323,7 +323,7 @@ namespace Azure.AI.Translation.Text
             return message;
         }
 
-        internal HttpMessage CreateTransliterateRequest(string language, string fromScript, string toScript, RequestContent content, string clientTraceId, RequestContext context)
+        internal HttpMessage CreateTransliterateRequest(string language, string sourceLanguageScript, string targetLanguageScript, RequestContent content, string clientTraceId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -332,8 +332,8 @@ namespace Azure.AI.Translation.Text
             uri.Reset(_endpoint);
             uri.AppendPath("/transliterate", false);
             uri.AppendQuery("language", language, true);
-            uri.AppendQuery("fromScript", fromScript, true);
-            uri.AppendQuery("toScript", toScript, true);
+            uri.AppendQuery("fromScript", sourceLanguageScript, true);
+            uri.AppendQuery("toScript", targetLanguageScript, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
