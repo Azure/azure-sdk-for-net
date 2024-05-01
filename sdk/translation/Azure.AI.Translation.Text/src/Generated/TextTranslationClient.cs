@@ -252,7 +252,7 @@ namespace Azure.AI.Translation.Text
             return message;
         }
 
-        internal HttpMessage CreateTranslateRequest(IEnumerable<string> targetLanguage, RequestContent content, string clientTraceId, string sourceLanguage, string textType, string category, string profanityAction, string profanityMarker, bool? includeAlignment, bool? includeSentenceLength, string suggestedSourceLanguage, string sourceLanguageScript, string targetLanguageScript, bool? allowFallback, RequestContext context)
+        internal HttpMessage CreateTranslateRequest(IEnumerable<string> targetLanguages, RequestContent content, string clientTraceId, string sourceLanguage, string textType, string category, string profanityAction, string profanityMarker, bool? includeAlignment, bool? includeSentenceLength, string suggestedSourceLanguage, string sourceLanguageScript, string targetLanguageScript, bool? allowFallback, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -260,9 +260,9 @@ namespace Azure.AI.Translation.Text
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/translate", false);
-            if (targetLanguage != null && !(targetLanguage is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
+            if (targetLanguages != null && !(targetLanguages is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
-                foreach (var param in targetLanguage)
+                foreach (var param in targetLanguages)
                 {
                     uri.AppendQuery("to", param, true);
                 }
