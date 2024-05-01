@@ -126,8 +126,8 @@ Gets the set of languages currently supported by other operations of the Transla
 ```C# Snippet:GetTextTranslationLanguages
 try
 {
-    Response<GetLanguagesResult> response = client.GetLanguages(cancellationToken: CancellationToken.None);
-    GetLanguagesResult languages = response.Value;
+    Response<GetSupportedLanguagesResult> response = client.GetSupportedLanguages(cancellationToken: CancellationToken.None);
+    GetSupportedLanguagesResult languages = response.Value;
 
     Console.WriteLine($"Number of supported languages for translate operations: {languages.Translation.Count}.");
 }
@@ -155,7 +155,7 @@ try
     IReadOnlyList<TranslatedTextItem> translations = response.Value;
     TranslatedTextItem translation = translations.FirstOrDefault();
 
-    Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
+    Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Confidence}.");
     Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().To}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
 }
 catch (RequestFailedException exception)
@@ -180,7 +180,7 @@ try
 
     foreach (TranslatedTextItem translation in translations)
     {
-        Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
+        Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Confidence}.");
 
         Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().To}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
     }
@@ -293,8 +293,8 @@ try
     IReadOnlyList<BreakSentenceItem> brokenSentences = response.Value;
     BreakSentenceItem brokenSentence = brokenSentences.FirstOrDefault();
 
-    Console.WriteLine($"Detected languages of the input text: {brokenSentence?.DetectedLanguage?.Language} with score: {brokenSentence?.DetectedLanguage?.Score}.");
-    Console.WriteLine($"The detected sentence boundaries: '{string.Join(",", brokenSentence?.SentLen)}'.");
+    Console.WriteLine($"Detected languages of the input text: {brokenSentence?.DetectedLanguage?.Language} with score: {brokenSentence?.DetectedLanguage?.Confidence}.");
+    Console.WriteLine($"The detected sentence boundaries: '{string.Join(",", brokenSentence?.LengthsOfSentences)}'.");
 }
 catch (RequestFailedException exception)
 {

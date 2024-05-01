@@ -13,29 +13,29 @@ using Azure.Core;
 
 namespace Azure.AI.Translation.Text
 {
-    public partial class SentenceLength : IUtf8JsonSerializable, IJsonModel<SentenceLength>
+    public partial class SentenceBoundaries : IUtf8JsonSerializable, IJsonModel<SentenceBoundaries>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SentenceLength>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SentenceBoundaries>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<SentenceLength>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SentenceBoundaries>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SentenceLength>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SentenceBoundaries>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SentenceLength)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SentenceBoundaries)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("srcSentLen"u8);
             writer.WriteStartArray();
-            foreach (var item in SrcSentLen)
+            foreach (var item in LengthsOfSourceSentences)
             {
                 writer.WriteNumberValue(item);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("transSentLen"u8);
             writer.WriteStartArray();
-            foreach (var item in TransSentLen)
+            foreach (var item in LengthsOfTranslatedSentences)
             {
                 writer.WriteNumberValue(item);
             }
@@ -58,19 +58,19 @@ namespace Azure.AI.Translation.Text
             writer.WriteEndObject();
         }
 
-        SentenceLength IJsonModel<SentenceLength>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SentenceBoundaries IJsonModel<SentenceBoundaries>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SentenceLength>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SentenceBoundaries>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SentenceLength)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SentenceBoundaries)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSentenceLength(document.RootElement, options);
+            return DeserializeSentenceBoundaries(document.RootElement, options);
         }
 
-        internal static SentenceLength DeserializeSentenceLength(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static SentenceBoundaries DeserializeSentenceBoundaries(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -110,46 +110,46 @@ namespace Azure.AI.Translation.Text
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SentenceLength(srcSentLen, transSentLen, serializedAdditionalRawData);
+            return new SentenceBoundaries(srcSentLen, transSentLen, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<SentenceLength>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<SentenceBoundaries>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SentenceLength>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SentenceBoundaries>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SentenceLength)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SentenceBoundaries)} does not support writing '{options.Format}' format.");
             }
         }
 
-        SentenceLength IPersistableModel<SentenceLength>.Create(BinaryData data, ModelReaderWriterOptions options)
+        SentenceBoundaries IPersistableModel<SentenceBoundaries>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SentenceLength>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SentenceBoundaries>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeSentenceLength(document.RootElement, options);
+                        return DeserializeSentenceBoundaries(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SentenceLength)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SentenceBoundaries)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<SentenceLength>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SentenceBoundaries>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static SentenceLength FromResponse(Response response)
+        internal static SentenceBoundaries FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeSentenceLength(document.RootElement);
+            return DeserializeSentenceBoundaries(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

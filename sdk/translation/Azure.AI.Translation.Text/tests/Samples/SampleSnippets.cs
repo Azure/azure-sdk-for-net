@@ -92,34 +92,13 @@ namespace Azure.AI.Translation.Text.Samples
             return client;
         }
 
-        public class CustomTokenCredential : TokenCredential
-        {
-            public CustomTokenCredential(AzureKeyCredential azureKeyCredential): base()
-            {
-            }
-
-            public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
-            {
-                throw new NotImplementedException();
-            }
-
-            public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
-            {
-                throw new NotImplementedException();
-            }
-        }
-
         [Test]
         public TextTranslationClient CreateTextTranslationClientWithToken()
         {
             #region Snippet:CreateTextTranslationClientWithToken
 
-#if SNIPPET
-            string apiKey = "<Text Translator Resource API Key>";
-#else
-            string apiKey = TestEnvironment.ApiKey;
-#endif
-            TokenCredential credential = new CustomTokenCredential(new AzureKeyCredential(apiKey));
+            string token = "<Cognitive Services Token>";
+            TokenCredential credential = new StaticAccessTokenCredential(new AccessToken(token, DateTimeOffset.Now.AddMinutes(1)));
             TextTranslationClient client = new(credential);
 
             #endregion
@@ -153,8 +132,8 @@ namespace Azure.AI.Translation.Text.Samples
             #region Snippet:GetTextTranslationLanguages
             try
             {
-                Response<GetLanguagesResult> response = client.GetLanguages(cancellationToken: CancellationToken.None);
-                GetLanguagesResult languages = response.Value;
+                Response<GetSupportedLanguagesResult> response = client.GetSupportedLanguages(cancellationToken: CancellationToken.None);
+                GetSupportedLanguagesResult languages = response.Value;
 
                 Console.WriteLine($"Number of supported languages for translate operations: {languages.Translation.Count}.");
             }
@@ -173,8 +152,8 @@ namespace Azure.AI.Translation.Text.Samples
 
             try
             {
-                Response<GetLanguagesResult> response = await client.GetLanguagesAsync(cancellationToken: CancellationToken.None).ConfigureAwait(false);
-                GetLanguagesResult languages = response.Value;
+                Response<GetSupportedLanguagesResult> response = await client.GetSupportedLanguagesAsync(cancellationToken: CancellationToken.None).ConfigureAwait(false);
+                GetSupportedLanguagesResult languages = response.Value;
 
                 Console.WriteLine($"Number of supported languages for translate operations: {languages.Translation.Count}.");
             }
@@ -193,8 +172,8 @@ namespace Azure.AI.Translation.Text.Samples
             #region Snippet:GetTextTranslationLanguagesMetadata
             try
             {
-                Response<GetLanguagesResult> response = client.GetLanguages();
-                GetLanguagesResult languages = response.Value;
+                Response<GetSupportedLanguagesResult> response = client.GetSupportedLanguages();
+                GetSupportedLanguagesResult languages = response.Value;
 
                 Console.WriteLine($"Number of supported languages for translate operation: {languages.Translation.Count}.");
                 Console.WriteLine($"Number of supported languages for transliterate operation: {languages.Transliteration.Count}.");
@@ -233,8 +212,8 @@ namespace Azure.AI.Translation.Text.Samples
 
             try
             {
-                Response<GetLanguagesResult> response = await client.GetLanguagesAsync().ConfigureAwait(false);
-                GetLanguagesResult languages = response.Value;
+                Response<GetSupportedLanguagesResult> response = await client.GetSupportedLanguagesAsync().ConfigureAwait(false);
+                GetSupportedLanguagesResult languages = response.Value;
 
                 Console.WriteLine($"Number of supported languages for translate operation: {languages.Translation.Count}.");
                 Console.WriteLine($"Number of supported languages for transliterate operation: {languages.Transliteration.Count}.");
@@ -274,8 +253,8 @@ namespace Azure.AI.Translation.Text.Samples
             try
             {
                 string scope = "translation";
-                Response<GetLanguagesResult> response = client.GetLanguages(scope: scope);
-                GetLanguagesResult languages = response.Value;
+                Response<GetSupportedLanguagesResult> response = client.GetSupportedLanguages(scope: scope);
+                GetSupportedLanguagesResult languages = response.Value;
 
                 Console.WriteLine($"Number of supported languages for translate operations: {languages.Translation.Count}.");
                 Console.WriteLine($"Number of supported languages for translate operations: {languages.Transliteration.Count}.");
@@ -315,8 +294,8 @@ namespace Azure.AI.Translation.Text.Samples
             try
             {
                 string scope = "translation";
-                Response<GetLanguagesResult> response = await client.GetLanguagesAsync(scope: scope).ConfigureAwait(false);
-                GetLanguagesResult languages = response.Value;
+                Response<GetSupportedLanguagesResult> response = await client.GetSupportedLanguagesAsync(scope: scope).ConfigureAwait(false);
+                GetSupportedLanguagesResult languages = response.Value;
 
                 Console.WriteLine($"Number of supported languages for translate operations: {languages.Translation.Count}.");
                 Console.WriteLine($"Number of supported languages for translate operations: {languages.Transliteration.Count}.");
@@ -356,8 +335,8 @@ namespace Azure.AI.Translation.Text.Samples
             try
             {
                 string acceptLanguage = "es";
-                Response<GetLanguagesResult> response = client.GetLanguages(acceptLanguage: acceptLanguage);
-                GetLanguagesResult languages = response.Value;
+                Response<GetSupportedLanguagesResult> response = client.GetSupportedLanguages(acceptLanguage: acceptLanguage);
+                GetSupportedLanguagesResult languages = response.Value;
 
                 Console.WriteLine($"Number of supported languages for translate operations: {languages.Translation.Count}.");
                 Console.WriteLine($"Number of supported languages for translate operations: {languages.Transliteration.Count}.");
@@ -397,8 +376,8 @@ namespace Azure.AI.Translation.Text.Samples
             try
             {
                 string acceptLanguage = "es";
-                Response<GetLanguagesResult> response = await client.GetLanguagesAsync(acceptLanguage: acceptLanguage).ConfigureAwait(false);
-                GetLanguagesResult languages = response.Value;
+                Response<GetSupportedLanguagesResult> response = await client.GetSupportedLanguagesAsync(acceptLanguage: acceptLanguage).ConfigureAwait(false);
+                GetSupportedLanguagesResult languages = response.Value;
 
                 Console.WriteLine($"Number of supported languages for translate operations: {languages.Translation.Count}.");
                 Console.WriteLine($"Number of supported languages for translate operations: {languages.Transliteration.Count}.");
@@ -444,7 +423,7 @@ namespace Azure.AI.Translation.Text.Samples
                 IReadOnlyList<TranslatedTextItem> translations = response.Value;
                 TranslatedTextItem translation = translations.FirstOrDefault();
 
-                Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
+                Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Confidence}.");
                 Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().To}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
             }
             catch (RequestFailedException exception)
@@ -471,7 +450,7 @@ namespace Azure.AI.Translation.Text.Samples
                 IReadOnlyList<TranslatedTextItem> translations = response.Value;
                 TranslatedTextItem translation = translations.FirstOrDefault();
 
-                Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
+                Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Confidence}.");
                 Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().To}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
             }
             catch (RequestFailedException exception)
@@ -495,7 +474,7 @@ namespace Azure.AI.Translation.Text.Samples
                 IReadOnlyList<TranslatedTextItem> translations = response.Value;
                 TranslatedTextItem translation = translations.FirstOrDefault();
 
-                Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
+                Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Confidence}.");
                 Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().To}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
             }
             catch (RequestFailedException exception)
@@ -521,7 +500,7 @@ namespace Azure.AI.Translation.Text.Samples
                 IReadOnlyList<TranslatedTextItem> translations = response.Value;
                 TranslatedTextItem translation = translations.FirstOrDefault();
 
-                Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
+                Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Confidence}.");
                 Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().To}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
             }
             catch (RequestFailedException exception)
@@ -547,7 +526,7 @@ namespace Azure.AI.Translation.Text.Samples
                 IReadOnlyList<TranslatedTextItem> translations = response.Value;
                 TranslatedTextItem translation = translations.FirstOrDefault();
 
-                Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
+                Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Confidence}.");
                 Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().To}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
             }
             catch (RequestFailedException exception)
@@ -572,7 +551,7 @@ namespace Azure.AI.Translation.Text.Samples
                 IReadOnlyList<TranslatedTextItem> translations = response.Value;
                 TranslatedTextItem translation = translations.FirstOrDefault();
 
-                Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
+                Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Confidence}.");
                 Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().To}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
             }
             catch (RequestFailedException exception)
@@ -597,7 +576,7 @@ namespace Azure.AI.Translation.Text.Samples
                 IReadOnlyList<TranslatedTextItem> translations = response.Value;
                 TranslatedTextItem translation = translations.FirstOrDefault();
 
-                Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
+                Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Confidence}.");
                 Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().To}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
             }
             catch (RequestFailedException exception)
@@ -614,7 +593,7 @@ namespace Azure.AI.Translation.Text.Samples
 
             try
             {
-                IEnumerable<string> targetLanguages = new[] { "cs" };
+                IEnumerable<string> tarGetSupportedLanguages = new[] { "cs" };
                 IEnumerable<string> inputTextElements = new[]
                 {
                     "This is a test.",
@@ -622,12 +601,12 @@ namespace Azure.AI.Translation.Text.Samples
                     "Dies ist ein Test."
                 };
 
-                Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(targetLanguages, inputTextElements);
+                Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(tarGetSupportedLanguages, inputTextElements);
                 IReadOnlyList<TranslatedTextItem> translations = response.Value;
 
                 foreach (TranslatedTextItem translation in translations)
                 {
-                    Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
+                    Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Confidence}.");
                     Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().To}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
                 }
             }
@@ -661,7 +640,7 @@ namespace Azure.AI.Translation.Text.Samples
 
                 foreach (TranslatedTextItem translation in translations)
                 {
-                    Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
+                    Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Confidence}.");
                     Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().To}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
                 }
             }
@@ -680,7 +659,7 @@ namespace Azure.AI.Translation.Text.Samples
 
             try
             {
-                IEnumerable<string> targetLanguages = new[] { "cs" };
+                IEnumerable<string> tarGetSupportedLanguages = new[] { "cs" };
                 IEnumerable<string> inputTextElements = new[]
                 {
                     "This is a test.",
@@ -688,12 +667,12 @@ namespace Azure.AI.Translation.Text.Samples
                     "Dies ist ein Test."
                 };
 
-                Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(targetLanguages, inputTextElements).ConfigureAwait(false);
+                Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(tarGetSupportedLanguages, inputTextElements).ConfigureAwait(false);
                 IReadOnlyList<TranslatedTextItem> translations = response.Value;
 
                 foreach (TranslatedTextItem translation in translations)
                 {
-                    Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
+                    Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Confidence}.");
                     Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().To}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
                 }
             }
@@ -712,18 +691,18 @@ namespace Azure.AI.Translation.Text.Samples
             #region Snippet:GetTextTranslationMatrix
             try
             {
-                IEnumerable<string> targetLanguages = new[] { "cs", "es", "de" };
+                IEnumerable<string> tarGetSupportedLanguages = new[] { "cs", "es", "de" };
                 IEnumerable<string> inputTextElements = new[]
                 {
                     "This is a test."
                 };
 
-                Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(targetLanguages, inputTextElements);
+                Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(tarGetSupportedLanguages, inputTextElements);
                 IReadOnlyList<TranslatedTextItem> translations = response.Value;
 
                 foreach (TranslatedTextItem translation in translations)
                 {
-                    Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
+                    Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Confidence}.");
 
                     Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().To}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
                 }
@@ -754,7 +733,7 @@ namespace Azure.AI.Translation.Text.Samples
 
                 foreach (TranslatedTextItem translation in translations)
                 {
-                    Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
+                    Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Confidence}.");
 
                     Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().To}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
                 }
@@ -774,18 +753,18 @@ namespace Azure.AI.Translation.Text.Samples
 
             try
             {
-                IEnumerable<string> targetLanguages = new[] { "cs", "es", "de" };
+                IEnumerable<string> tarGetSupportedLanguages = new[] { "cs", "es", "de" };
                 IEnumerable<string> inputTextElements = new[]
                 {
                     "This is a test."
                 };
 
-                Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(targetLanguages, inputTextElements).ConfigureAwait(false);
+                Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(tarGetSupportedLanguages, inputTextElements).ConfigureAwait(false);
                 IReadOnlyList<TranslatedTextItem> translations = response.Value;
 
                 foreach (TranslatedTextItem translation in translations)
                 {
-                    Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
+                    Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Confidence}.");
 
                     Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().To}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
                 }
@@ -805,17 +784,17 @@ namespace Azure.AI.Translation.Text.Samples
             #region Snippet:GetTextTranslationFormat
             try
             {
-                IEnumerable<string> targetLanguages = new[] { "cs" };
+                IEnumerable<string> tarGetSupportedLanguages = new[] { "cs" };
                 IEnumerable<string> inputTextElements = new[]
                 {
                     "<html><body>This <b>is</b> a test.</body></html>"
                 };
 
-                Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(targetLanguages, inputTextElements, textType: TextType.Html);
+                Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(tarGetSupportedLanguages, inputTextElements, textType: TextType.Html);
                 IReadOnlyList<TranslatedTextItem> translations = response.Value;
                 TranslatedTextItem translation = translations.FirstOrDefault();
 
-                Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
+                Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Confidence}.");
                 Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().To}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
             }
             catch (RequestFailedException exception)
@@ -833,17 +812,17 @@ namespace Azure.AI.Translation.Text.Samples
 
             try
             {
-                IEnumerable<string> targetLanguages = new[] { "cs" };
+                IEnumerable<string> tarGetSupportedLanguages = new[] { "cs" };
                 IEnumerable<string> inputTextElements = new[]
                 {
                     "<html><body>This <b>is</b> a test.</body></html>"
                 };
 
-                Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(targetLanguages, inputTextElements, textType: TextType.Html).ConfigureAwait(false);
+                Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(tarGetSupportedLanguages, inputTextElements, textType: TextType.Html).ConfigureAwait(false);
                 IReadOnlyList<TranslatedTextItem> translations = response.Value;
                 TranslatedTextItem translation = translations.FirstOrDefault();
 
-                Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
+                Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Confidence}.");
                 Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().To}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
             }
             catch (RequestFailedException exception)
@@ -862,17 +841,17 @@ namespace Azure.AI.Translation.Text.Samples
             try
             {
                 string from = "en";
-                IEnumerable<string> targetLanguages = new[] { "cs" };
+                IEnumerable<string> tarGetSupportedLanguages = new[] { "cs" };
                 IEnumerable<string> inputTextElements = new[]
                 {
                     "<div class=\"notranslate\">This will not be translated.</div><div>This will be translated. </div>"
                 };
 
-                Response<IReadOnlyList<TranslatedTextItem>> response =client.Translate(targetLanguages, inputTextElements, textType: TextType.Html, sourceLanguage: from);
+                Response<IReadOnlyList<TranslatedTextItem>> response =client.Translate(tarGetSupportedLanguages, inputTextElements, textType: TextType.Html, sourceLanguage: from);
                 IReadOnlyList<TranslatedTextItem> translations = response.Value;
                 TranslatedTextItem translation = translations.FirstOrDefault();
 
-                Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
+                Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Confidence}.");
                 Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().To}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
             }
             catch (RequestFailedException exception)
@@ -891,17 +870,17 @@ namespace Azure.AI.Translation.Text.Samples
             try
             {
                 string from = "en";
-                IEnumerable<string> targetLanguages = new[] { "cs" };
+                IEnumerable<string> tarGetSupportedLanguages = new[] { "cs" };
                 IEnumerable<string> inputTextElements = new[]
                 {
                     "<div class=\"notranslate\">This will not be translated.</div><div>This will be translated. </div>"
                 };
 
-                Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(targetLanguages, inputTextElements, textType: TextType.Html, sourceLanguage: from).ConfigureAwait(false);
+                Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(tarGetSupportedLanguages, inputTextElements, textType: TextType.Html, sourceLanguage: from).ConfigureAwait(false);
                 IReadOnlyList<TranslatedTextItem> translations = response.Value;
                 TranslatedTextItem translation = translations.FirstOrDefault();
 
-                Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
+                Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Confidence}.");
                 Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().To}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
             }
             catch (RequestFailedException exception)
@@ -920,17 +899,17 @@ namespace Azure.AI.Translation.Text.Samples
             try
             {
                 string from = "en";
-                IEnumerable<string> targetLanguages = new[] { "cs" };
+                IEnumerable<string> tarGetSupportedLanguages = new[] { "cs" };
                 IEnumerable<string> inputTextElements = new[]
                 {
                     "The word <mstrans:dictionary translation=\"wordomatic\">wordomatic</mstrans:dictionary> is a dictionary entry."
             };
 
-                Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(targetLanguages, inputTextElements, sourceLanguage: from);
+                Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(tarGetSupportedLanguages, inputTextElements, sourceLanguage: from);
                 IReadOnlyList<TranslatedTextItem> translations = response.Value;
                 TranslatedTextItem translation = translations.FirstOrDefault();
 
-                Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
+                Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Confidence}.");
                 Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().To}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
             }
             catch (RequestFailedException exception)
@@ -949,17 +928,17 @@ namespace Azure.AI.Translation.Text.Samples
             try
             {
                 string from = "en";
-                IEnumerable<string> targetLanguages = new[] { "cs" };
+                IEnumerable<string> tarGetSupportedLanguages = new[] { "cs" };
                 IEnumerable<string> inputTextElements = new[]
                 {
                     "The word <mstrans:dictionary translation=\"wordomatic\">wordomatic</mstrans:dictionary> is a dictionary entry."
             };
 
-                Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(targetLanguages, inputTextElements, sourceLanguage: from).ConfigureAwait(false);
+                Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(tarGetSupportedLanguages, inputTextElements, sourceLanguage: from).ConfigureAwait(false);
                 IReadOnlyList<TranslatedTextItem> translations = response.Value;
                 TranslatedTextItem translation = translations.FirstOrDefault();
 
-                Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
+                Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Confidence}.");
                 Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().To}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
             }
             catch (RequestFailedException exception)
@@ -980,17 +959,17 @@ namespace Azure.AI.Translation.Text.Samples
                 ProfanityAction profanityAction = ProfanityAction.Marked;
                 ProfanityMarker profanityMarkers = ProfanityMarker.Asterisk;
 
-                IEnumerable<string> targetLanguages = new[] { "cs" };
+                IEnumerable<string> tarGetSupportedLanguages = new[] { "cs" };
                 IEnumerable<string> inputTextElements = new[]
                 {
                     "This is ***."
                 };
 
-                Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(targetLanguages, inputTextElements, profanityAction: profanityAction, profanityMarker: profanityMarkers);
+                Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(tarGetSupportedLanguages, inputTextElements, profanityAction: profanityAction, profanityMarker: profanityMarkers);
                 IReadOnlyList<TranslatedTextItem> translations = response.Value;
                 TranslatedTextItem translation = translations.FirstOrDefault();
 
-                Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
+                Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Confidence}.");
                 Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().To}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
             }
             catch (RequestFailedException exception)
@@ -1011,17 +990,17 @@ namespace Azure.AI.Translation.Text.Samples
                 ProfanityAction profanityAction = ProfanityAction.Marked;
                 ProfanityMarker profanityMarkers = ProfanityMarker.Asterisk;
 
-                IEnumerable<string> targetLanguages = new[] { "cs" };
+                IEnumerable<string> tarGetSupportedLanguages = new[] { "cs" };
                 IEnumerable<string> inputTextElements = new[]
                 {
                     "This is ***."
                 };
 
-                Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(targetLanguages, inputTextElements, profanityAction: profanityAction, profanityMarker: profanityMarkers).ConfigureAwait(false);
+                Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(tarGetSupportedLanguages, inputTextElements, profanityAction: profanityAction, profanityMarker: profanityMarkers).ConfigureAwait(false);
                 IReadOnlyList<TranslatedTextItem> translations = response.Value;
                 TranslatedTextItem translation = translations.FirstOrDefault();
 
-                Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
+                Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Confidence}.");
                 Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().To}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
             }
             catch (RequestFailedException exception)
@@ -1041,19 +1020,19 @@ namespace Azure.AI.Translation.Text.Samples
             {
                 bool includeAlignment = true;
 
-                IEnumerable<string> targetLanguages = new[] { "cs" };
+                IEnumerable<string> tarGetSupportedLanguages = new[] { "cs" };
                 IEnumerable<string> inputTextElements = new[]
                 {
                     "The answer lies in machine translation."
                 };
 
-                Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(targetLanguages, inputTextElements, includeAlignment: includeAlignment);
+                Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(tarGetSupportedLanguages, inputTextElements, includeAlignment: includeAlignment);
                 IReadOnlyList<TranslatedTextItem> translations = response.Value;
                 TranslatedTextItem translation = translations.FirstOrDefault();
 
-                Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
+                Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Confidence}.");
                 Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().To}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
-                Console.WriteLine($"Alignments: {translation?.Translations?.FirstOrDefault()?.Alignment?.Proj}");
+                Console.WriteLine($"Alignments: {translation?.Translations?.FirstOrDefault()?.Alignment?.Projections}");
             }
             catch (RequestFailedException exception)
             {
@@ -1072,19 +1051,19 @@ namespace Azure.AI.Translation.Text.Samples
             {
                 bool includeAlignment = true;
 
-                IEnumerable<string> targetLanguages = new[] { "cs" };
+                IEnumerable<string> tarGetSupportedLanguages = new[] { "cs" };
                 IEnumerable<string> inputTextElements = new[]
                 {
                     "The answer lies in machine translation."
                 };
 
-                Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(targetLanguages, inputTextElements, includeAlignment: includeAlignment).ConfigureAwait(false);
+                Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(tarGetSupportedLanguages, inputTextElements, includeAlignment: includeAlignment).ConfigureAwait(false);
                 IReadOnlyList<TranslatedTextItem> translations = response.Value;
                 TranslatedTextItem translation = translations.FirstOrDefault();
 
-                Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
+                Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Confidence}.");
                 Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().To}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
-                Console.WriteLine($"Alignments: {translation?.Translations?.FirstOrDefault()?.Alignment?.Proj}");
+                Console.WriteLine($"Alignments: {translation?.Translations?.FirstOrDefault()?.Alignment?.Projections}");
             }
             catch (RequestFailedException exception)
             {
@@ -1103,20 +1082,20 @@ namespace Azure.AI.Translation.Text.Samples
             {
                 bool includeSentenceLength = true;
 
-                IEnumerable<string> targetLanguages = new[] { "cs" };
+                IEnumerable<string> tarGetSupportedLanguages = new[] { "cs" };
                 IEnumerable<string> inputTextElements = new[]
                 {
                     "The answer lies in machine translation. This is a test."
                 };
 
-                Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(targetLanguages, inputTextElements, includeSentenceLength: includeSentenceLength);
+                Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(tarGetSupportedLanguages, inputTextElements, includeSentenceLength: includeSentenceLength);
                 IReadOnlyList<TranslatedTextItem> translations = response.Value;
                 TranslatedTextItem translation = translations.FirstOrDefault();
 
-                Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
+                Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with confidence: {translation?.DetectedLanguage?.Confidence}.");
                 Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().To}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
-                Console.WriteLine($"Source Sentence length: {string.Join(",", translation?.Translations?.FirstOrDefault()?.SentLen?.SrcSentLen)}");
-                Console.WriteLine($"Translated Sentence length: {string.Join(",", translation?.Translations?.FirstOrDefault()?.SentLen?.TransSentLen)}");
+                Console.WriteLine($"Source Sentence length: {string.Join(",", translation?.Translations?.FirstOrDefault()?.SentenceBoundaries?.LengthsOfSourceSentences)}");
+                Console.WriteLine($"Translated Sentence length: {string.Join(",", translation?.Translations?.FirstOrDefault()?.SentenceBoundaries?.LengthsOfTranslatedSentences)}");
             }
             catch (RequestFailedException exception)
             {
@@ -1135,20 +1114,20 @@ namespace Azure.AI.Translation.Text.Samples
             {
                 bool includeSentenceLength = true;
 
-                IEnumerable<string> targetLanguages = new[] { "cs" };
+                IEnumerable<string> tarGetSupportedLanguages = new[] { "cs" };
                 IEnumerable<string> inputTextElements = new[]
                 {
                     "The answer lies in machine translation. This is a test."
                 };
 
-                Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(targetLanguages, inputTextElements, includeSentenceLength: includeSentenceLength).ConfigureAwait(false);
+                Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(tarGetSupportedLanguages, inputTextElements, includeSentenceLength: includeSentenceLength).ConfigureAwait(false);
                 IReadOnlyList<TranslatedTextItem> translations = response.Value;
                 TranslatedTextItem translation = translations.FirstOrDefault();
 
-                Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
+                Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Confidence}.");
                 Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().To}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
-                Console.WriteLine($"Source Sentence length: {string.Join(",", translation?.Translations?.FirstOrDefault()?.SentLen?.SrcSentLen)}");
-                Console.WriteLine($"Translated Sentence length: {string.Join(",", translation?.Translations?.FirstOrDefault()?.SentLen?.TransSentLen)}");
+                Console.WriteLine($"Source Sentence length: {string.Join(",", translation?.Translations?.FirstOrDefault()?.SentenceBoundaries?.LengthsOfSourceSentences)}");
+                Console.WriteLine($"Translated Sentence length: {string.Join(",", translation?.Translations?.FirstOrDefault()?.SentenceBoundaries?.LengthsOfTranslatedSentences)}");
             }
             catch (RequestFailedException exception)
             {
@@ -1166,17 +1145,17 @@ namespace Azure.AI.Translation.Text.Samples
             try
             {
                 string category = "<<Category ID>>";
-                IEnumerable<string> targetLanguages = new[] { "cs" };
+                IEnumerable<string> tarGetSupportedLanguages = new[] { "cs" };
                 IEnumerable<string> inputTextElements = new[]
                 {
                     "This is a test."
                 };
 
-                Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(targetLanguages, inputTextElements, category: category);
+                Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(tarGetSupportedLanguages, inputTextElements, category: category);
                 IReadOnlyList<TranslatedTextItem> translations = response.Value;
                 TranslatedTextItem translation = translations.FirstOrDefault();
 
-                Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
+                Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Confidence}.");
                 Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().To}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
             }
             catch (RequestFailedException exception)
@@ -1195,17 +1174,17 @@ namespace Azure.AI.Translation.Text.Samples
             try
             {
                 string category = "<<Category ID>>";
-                IEnumerable<string> targetLanguages = new[] { "cs" };
+                IEnumerable<string> tarGetSupportedLanguages = new[] { "cs" };
                 IEnumerable<string> inputTextElements = new[]
                 {
                     "This is a test."
                 };
 
-                Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(targetLanguages, inputTextElements, category: category).ConfigureAwait(false);
+                Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(tarGetSupportedLanguages, inputTextElements, category: category).ConfigureAwait(false);
                 IReadOnlyList<TranslatedTextItem> translations = response.Value;
                 TranslatedTextItem translation = translations.FirstOrDefault();
 
-                Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
+                Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Confidence}.");
                 Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().To}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
             }
             catch (RequestFailedException exception)
@@ -1234,8 +1213,8 @@ namespace Azure.AI.Translation.Text.Samples
                 IReadOnlyList<BreakSentenceItem> brokenSentences = response.Value;
                 BreakSentenceItem brokenSentence = brokenSentences.FirstOrDefault();
 
-                Console.WriteLine($"Detected languages of the input text: {brokenSentence?.DetectedLanguage?.Language} with score: {brokenSentence?.DetectedLanguage?.Score}.");
-                Console.WriteLine($"The detected sentence boundaries: '{string.Join(",", brokenSentence?.SentLen)}'.");
+                Console.WriteLine($"Detected languages of the input text: {brokenSentence?.DetectedLanguage?.Language} with score: {brokenSentence?.DetectedLanguage?.Confidence}.");
+                Console.WriteLine($"The detected sentence boundaries: '{string.Join(",", brokenSentence?.LengthsOfSentences)}'.");
             }
             catch (RequestFailedException exception)
             {
@@ -1263,8 +1242,8 @@ namespace Azure.AI.Translation.Text.Samples
                 IReadOnlyList<BreakSentenceItem> brokenSentences = response.Value;
                 BreakSentenceItem brokenSentence = brokenSentences.FirstOrDefault();
 
-                Console.WriteLine($"Detected languages of the input text: {brokenSentence?.DetectedLanguage?.Language} with score: {brokenSentence?.DetectedLanguage?.Score}.");
-                Console.WriteLine($"The detected sentence boundaries: '{string.Join(",", brokenSentence?.SentLen)}'.");
+                Console.WriteLine($"Detected languages of the input text: {brokenSentence?.DetectedLanguage?.Language} with score: {brokenSentence?.DetectedLanguage?.Confidence}.");
+                Console.WriteLine($"The detected sentence boundaries: '{string.Join(",", brokenSentence?.LengthsOfSentences)}'.");
             }
             catch (RequestFailedException exception)
             {
@@ -1289,8 +1268,8 @@ namespace Azure.AI.Translation.Text.Samples
                 IReadOnlyList<BreakSentenceItem> brokenSentences = response.Value;
                 BreakSentenceItem brokenSentence = brokenSentences.FirstOrDefault();
 
-                Console.WriteLine($"Detected languages of the input text: {brokenSentence?.DetectedLanguage?.Language} with score: {brokenSentence?.DetectedLanguage?.Score}.");
-                Console.WriteLine($"The detected sentence boundaries: '{string.Join(",", brokenSentence?.SentLen)}'.");
+                Console.WriteLine($"Detected languages of the input text: {brokenSentence?.DetectedLanguage?.Language} with score: {brokenSentence?.DetectedLanguage?.Confidence}.");
+                Console.WriteLine($"The detected sentence boundaries: '{string.Join(",", brokenSentence?.LengthsOfSentences)}'.");
             }
             catch (RequestFailedException exception)
             {
@@ -1315,8 +1294,8 @@ namespace Azure.AI.Translation.Text.Samples
                 IReadOnlyList<BreakSentenceItem> brokenSentences = response.Value;
                 BreakSentenceItem brokenSentence = brokenSentences.FirstOrDefault();
 
-                Console.WriteLine($"Detected languages of the input text: {brokenSentence?.DetectedLanguage?.Language} with score: {brokenSentence?.DetectedLanguage?.Score}.");
-                Console.WriteLine($"The detected sentence boundaries: '{string.Join(",", brokenSentence?.SentLen)}'.");
+                Console.WriteLine($"Detected languages of the input text: {brokenSentence?.DetectedLanguage?.Language} with score: {brokenSentence?.DetectedLanguage?.Confidence}.");
+                Console.WriteLine($"The detected sentence boundaries: '{string.Join(",", brokenSentence?.LengthsOfSentences)}'.");
             }
             catch (RequestFailedException exception)
             {
@@ -1419,13 +1398,13 @@ namespace Azure.AI.Translation.Text.Samples
                 string fromScript = "Latn";
                 string fromLanguage = "ar";
                 string toScript = "Latn";
-                IEnumerable<string> targetLanguages = new[] { "zh-Hans" };
+                IEnumerable<string> tarGetSupportedLanguages = new[] { "zh-Hans" };
                 IEnumerable<string> inputTextElements = new[]
                 {
                     "hudha akhtabar."
                 };
 
-                Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(targetLanguages, inputTextElements, sourceLanguage: fromLanguage, fromScript: fromScript, toScript: toScript);
+                Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(tarGetSupportedLanguages, inputTextElements, sourceLanguage: fromLanguage, fromScript: fromScript, toScript: toScript);
                 IReadOnlyList<TranslatedTextItem> translations = response.Value;
                 TranslatedTextItem translation = translations.FirstOrDefault();
 
@@ -1484,13 +1463,13 @@ namespace Azure.AI.Translation.Text.Samples
                 string fromScript = "Latn";
                 string fromLanguage = "ar";
                 string toScript = "Latn";
-                IEnumerable<string> targetLanguages = new[] { "zh-Hans" };
+                IEnumerable<string> tarGetSupportedLanguages = new[] { "zh-Hans" };
                 IEnumerable<string> inputTextElements = new[]
                 {
                     "hudha akhtabar."
                 };
 
-                Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(targetLanguages, inputTextElements, sourceLanguage: fromLanguage, fromScript: fromScript, toScript: toScript).ConfigureAwait(false);
+                Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(tarGetSupportedLanguages, inputTextElements, sourceLanguage: fromLanguage, fromScript: fromScript, toScript: toScript).ConfigureAwait(false);
                 IReadOnlyList<TranslatedTextItem> translations = response.Value;
                 TranslatedTextItem translation = translations.FirstOrDefault();
 
@@ -1519,8 +1498,8 @@ namespace Azure.AI.Translation.Text.Samples
                 IReadOnlyList<BreakSentenceItem> brokenSentences = response.Value;
                 BreakSentenceItem brokenSentence = brokenSentences.FirstOrDefault();
 
-                Console.WriteLine($"Detected languages of the input text: {brokenSentence?.DetectedLanguage?.Language} with score: {brokenSentence?.DetectedLanguage?.Score}.");
-                Console.WriteLine($"The detected sentence boundaries: '{string.Join(",", brokenSentence?.SentLen)}'.");
+                Console.WriteLine($"Detected languages of the input text: {brokenSentence?.DetectedLanguage?.Language} with score: {brokenSentence?.DetectedLanguage?.Confidence}.");
+                Console.WriteLine($"The detected sentence boundaries: '{string.Join(",", brokenSentence?.LengthsOfSentences)}'.");
             }
             catch (RequestFailedException exception)
             {
@@ -1543,8 +1522,8 @@ namespace Azure.AI.Translation.Text.Samples
                 IReadOnlyList<BreakSentenceItem> brokenSentences = response.Value;
                 BreakSentenceItem brokenSentence = brokenSentences.FirstOrDefault();
 
-                Console.WriteLine($"Detected languages of the input text: {brokenSentence?.DetectedLanguage?.Language} with score: {brokenSentence?.DetectedLanguage?.Score}.");
-                Console.WriteLine($"The detected sentence boundaries: '{string.Join(",", brokenSentence?.SentLen)}'.");
+                Console.WriteLine($"Detected languages of the input text: {brokenSentence?.DetectedLanguage?.Language} with score: {brokenSentence?.DetectedLanguage?.Confidence}.");
+                Console.WriteLine($"The detected sentence boundaries: '{string.Join(",", brokenSentence?.LengthsOfSentences)}'.");
             }
             catch (RequestFailedException exception)
             {
