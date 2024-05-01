@@ -327,8 +327,8 @@ namespace Azure.Core.TestFramework
             // "AZSDK3421",
             // "AZSDK3422",
             "AZSDK3423", // $..source
-            // "AZSDK3424",
-            // "AZSDK3425",
+            "AZSDK3424", // $..to
+            "AZSDK3425", // $..from
             // "AZSDK3426",
             // "AZSDK3427",
             // "AZSDK3428",
