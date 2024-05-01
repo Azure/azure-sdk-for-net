@@ -29,7 +29,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 if (BigDataPool != null)
                 {
                     writer.WritePropertyName("bigDataPool"u8);
-                    writer.WriteObjectValue<BigDataPoolReference>(BigDataPool);
+                    writer.WriteObjectValue(BigDataPool);
                 }
                 else
                 {
@@ -39,14 +39,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(TargetSparkConfiguration))
             {
                 writer.WritePropertyName("targetSparkConfiguration"u8);
-                writer.WriteObjectValue<SparkConfigurationReference>(TargetSparkConfiguration);
+                writer.WriteObjectValue(TargetSparkConfiguration);
             }
             if (Optional.IsDefined(SessionProperties))
             {
                 if (SessionProperties != null)
                 {
                     writer.WritePropertyName("sessionProperties"u8);
-                    writer.WriteObjectValue<NotebookSessionProperties>(SessionProperties);
+                    writer.WriteObjectValue(SessionProperties);
                 }
                 else
                 {
@@ -54,7 +54,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             writer.WritePropertyName("metadata"u8);
-            writer.WriteObjectValue<NotebookMetadata>(Metadata);
+            writer.WriteObjectValue(Metadata);
             writer.WritePropertyName("nbformat"u8);
             writer.WriteNumberValue(NotebookFormat);
             writer.WritePropertyName("nbformat_minor"u8);
@@ -63,7 +63,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartArray();
             foreach (var item in Cells)
             {
-                writer.WriteObjectValue<NotebookCell>(item);
+                writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Folder))
@@ -71,7 +71,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 if (Folder != null)
                 {
                     writer.WritePropertyName("folder"u8);
-                    writer.WriteObjectValue<NotebookFolder>(Folder);
+                    writer.WriteObjectValue(Folder);
                 }
                 else
                 {
@@ -190,12 +190,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalProperties);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static Notebook FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeNotebook(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class NotebookConverter : JsonConverter<Notebook>
         {
             public override void Write(Utf8JsonWriter writer, Notebook model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<Notebook>(model);
+                writer.WriteObjectValue(model);
             }
+
             public override Notebook Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

@@ -2,16 +2,17 @@
 // Licensed under the MIT License.
 
 extern alias DMBlobs;
+extern alias BaseBlobs;
+
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using Azure.Storage.Blobs.Models;
+using BaseBlobs::Azure.Storage.Blobs.Models;
 using Azure.Storage.Test;
 using DMBlobs::Azure.Storage.DataMovement.Blobs;
 using Moq;
 using NUnit.Framework;
-using static Azure.Storage.DataMovement.Tests.TransferUtility;
 
 namespace Azure.Storage.DataMovement.Tests
 {
@@ -22,6 +23,7 @@ namespace Azure.Storage.DataMovement.Tests
         private const string DefaultContentLanguage = "en-US";
         private const string DefaultContentDisposition = "inline";
         private const string DefaultCacheControl = "no-cache";
+        private static string GetNewTransferId() => Guid.NewGuid().ToString();
         public RehydrateBlobResourceTests()
         { }
 
@@ -59,7 +61,7 @@ namespace Azure.Storage.DataMovement.Tests
                 contentLanguage: new(DefaultContentLanguage),
                 contentDisposition: new(DefaultContentDisposition),
                 cacheControl: new(DefaultCacheControl),
-                accessTier: new(accessTier),
+                accessTier: accessTier,
                 metadata: new(DataProvider.BuildMetadata()),
                 tags: new(DataProvider.BuildTags()));
 
@@ -161,8 +163,7 @@ namespace Azure.Storage.DataMovement.Tests
                     .FromDestinationInternalHookAsync(transferProperties);
 
             Assert.AreEqual(destinationPath, storageResource.Uri.AbsoluteUri);
-            Assert.AreEqual(checkpointData.AccessTier.Preserve, storageResource._options.AccessTier.Preserve);
-            Assert.AreEqual(checkpointData.AccessTier.Value, storageResource._options.AccessTier.Value);
+            Assert.AreEqual(checkpointData.AccessTierValue.Value, storageResource._options.AccessTier.Value);
             Assert.AreEqual(checkpointData.Metadata.Preserve, storageResource._options.Metadata.Preserve);
             Assert.AreEqual(checkpointData.Metadata.Value, storageResource._options.Metadata.Value);
             Assert.AreEqual(checkpointData.CacheControl.Preserve, storageResource._options.CacheControl.Preserve);

@@ -72,8 +72,8 @@ namespace Azure.Health.Insights.RadiologyInsights
         {
             Argument.AssertNotNull(radiologyInsightsData, nameof(radiologyInsightsData));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = radiologyInsightsData.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = await InferRadiologyInsightsAsync(waitUntil, content, context).ConfigureAwait(false);
             return ProtocolOperationHelpers.Convert(response, FetchRadiologyInsightsInferenceResultFromRadiologyInsightsResult, ClientDiagnostics, "RadiologyInsightsClient.InferRadiologyInsights");
         }
@@ -89,8 +89,8 @@ namespace Azure.Health.Insights.RadiologyInsights
         {
             Argument.AssertNotNull(radiologyInsightsData, nameof(radiologyInsightsData));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = radiologyInsightsData.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = InferRadiologyInsights(waitUntil, content, context);
             return ProtocolOperationHelpers.Convert(response, FetchRadiologyInsightsInferenceResultFromRadiologyInsightsResult, ClientDiagnostics, "RadiologyInsightsClient.InferRadiologyInsights");
         }

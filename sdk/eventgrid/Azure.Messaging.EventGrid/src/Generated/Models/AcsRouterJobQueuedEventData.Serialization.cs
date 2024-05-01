@@ -130,12 +130,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 requestedWorkerSelectors ?? new ChangeTrackingList<AcsRouterWorkerSelector>());
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AcsRouterJobQueuedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAcsRouterJobQueuedEventData(document.RootElement);
+        }
+
         internal partial class AcsRouterJobQueuedEventDataConverter : JsonConverter<AcsRouterJobQueuedEventData>
         {
             public override void Write(Utf8JsonWriter writer, AcsRouterJobQueuedEventData model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override AcsRouterJobQueuedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

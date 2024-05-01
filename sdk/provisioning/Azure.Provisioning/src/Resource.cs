@@ -11,6 +11,7 @@ using System.Text;
 using Azure.Core;
 using Azure.Provisioning.ResourceManager;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Authorization.Models;
 
 namespace Azure.Provisioning
 {
@@ -25,7 +26,11 @@ namespace Azure.Provisioning
 
         private IList<Resource> Dependencies { get; }
 
-        internal void AddDependency(Resource resource)
+        /// <summary>
+        /// Adds a dependency to the resource.
+        /// </summary>
+        /// <param name="resource">The dependency for this resource.</param>
+        public void AddDependency(Resource resource)
         {
             Dependencies.Add(resource);
         }
@@ -34,17 +39,24 @@ namespace Azure.Provisioning
         /// Gets the parent <see cref="Resource"/>.
         /// </summary>
         public Resource? Parent { get; }
-        private protected object ResourceData { get; }
+
+        /// <summary>
+        /// Gets the data of the resource.
+        /// </summary>
+        protected object ResourceData { get; }
+
         /// <summary>
         /// Gets the version of the resource.
         /// </summary>
         public string Version { get; }
+
         /// <summary>
         /// Gets the name of the resource.
         /// </summary>
         public string Name { get; }
 
         private ResourceType ResourceType { get; }
+
         /// <summary>
         /// Gets the <see cref="ResourceIdentifier"/> of the resource.
         /// </summary>
@@ -226,6 +238,20 @@ namespace Azure.Provisioning
             var result = new Output(name, formatted, Scope, this, isLiteral, isSecure);
             Scope.AddOutput(result);
             return result;
+        }
+
+        /// <summary>
+        /// Assigns a role to the resource.
+        /// </summary>
+        /// <param name="roleDefinition">The role definition.</param>
+        /// <param name="principalId">The principal ID. If not specified, a principalId parameter will be added to the resulting bicep module.</param>
+        /// <param name="principalType">The principal type. If not specified, ServicePrincipal is used.</param>
+        public RoleAssignment AssignRole(
+            RoleDefinition roleDefinition,
+            Guid? principalId = default,
+            RoleManagementPrincipalType? principalType = default)
+        {
+            return new RoleAssignment(this, roleDefinition, principalId, principalType);
         }
 
         private static string? GetReference(Type targetType, Type currentType, string propertyName, string str)

@@ -10,6 +10,12 @@
 
 ### Other Changes
 
+## 1.7.2 (2024-04-29)
+
+### Features Added
+
+- Add `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
+
 ## 1.7.1 (2024-03-23)
 
 ### Features Added

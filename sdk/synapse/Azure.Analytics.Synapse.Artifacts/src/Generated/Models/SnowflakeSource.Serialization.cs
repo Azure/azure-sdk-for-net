@@ -25,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteObjectValue<object>(Query);
             }
             writer.WritePropertyName("exportSettings"u8);
-            writer.WriteObjectValue<SnowflakeExportCopyCommand>(ExportSettings);
+            writer.WriteObjectValue(ExportSettings);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(SourceRetryCount))
@@ -126,12 +126,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 exportSettings);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new SnowflakeSource FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSnowflakeSource(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class SnowflakeSourceConverter : JsonConverter<SnowflakeSource>
         {
             public override void Write(Utf8JsonWriter writer, SnowflakeSource model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<SnowflakeSource>(model);
+                writer.WriteObjectValue(model);
             }
+
             public override SnowflakeSource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

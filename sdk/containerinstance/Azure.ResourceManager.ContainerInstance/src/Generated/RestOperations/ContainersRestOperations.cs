@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -35,6 +34,31 @@ namespace Azure.ResourceManager.ContainerInstance
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2023-05-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListLogsRequestUri(string subscriptionId, string resourceGroupName, string containerGroupName, string containerName, int? tail, bool? timestamps)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ContainerInstance/containerGroups/", false);
+            uri.AppendPath(containerGroupName, true);
+            uri.AppendPath("/containers/", false);
+            uri.AppendPath(containerName, true);
+            uri.AppendPath("/logs", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (tail != null)
+            {
+                uri.AppendQuery("tail", tail.Value, true);
+            }
+            if (timestamps != null)
+            {
+                uri.AppendQuery("timestamps", timestamps.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListLogsRequest(string subscriptionId, string resourceGroupName, string containerGroupName, string containerName, int? tail, bool? timestamps)
@@ -134,6 +158,23 @@ namespace Azure.ResourceManager.ContainerInstance
             }
         }
 
+        internal RequestUriBuilder CreateExecuteCommandRequestUri(string subscriptionId, string resourceGroupName, string containerGroupName, string containerName, ContainerExecContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ContainerInstance/containerGroups/", false);
+            uri.AppendPath(containerGroupName, true);
+            uri.AppendPath("/containers/", false);
+            uri.AppendPath(containerName, true);
+            uri.AppendPath("/exec", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateExecuteCommandRequest(string subscriptionId, string resourceGroupName, string containerGroupName, string containerName, ContainerExecContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -155,7 +196,7 @@ namespace Azure.ResourceManager.ContainerInstance
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue<ContainerExecContent>(content, new ModelReaderWriterOptions("W"));
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -225,6 +266,23 @@ namespace Azure.ResourceManager.ContainerInstance
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateAttachRequestUri(string subscriptionId, string resourceGroupName, string containerGroupName, string containerName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ContainerInstance/containerGroups/", false);
+            uri.AppendPath(containerGroupName, true);
+            uri.AppendPath("/containers/", false);
+            uri.AppendPath(containerName, true);
+            uri.AppendPath("/attach", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateAttachRequest(string subscriptionId, string resourceGroupName, string containerGroupName, string containerName)

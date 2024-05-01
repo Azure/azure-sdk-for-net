@@ -39,7 +39,7 @@ namespace Azure.Security.KeyVault.Administration
                 writer.WriteStartArray();
                 foreach (var item in Permissions)
                 {
-                    writer.WriteObjectValue<KeyVaultPermission>(item);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -161,6 +161,22 @@ namespace Azure.Security.KeyVault.Administration
                 type0,
                 permissions ?? new ChangeTrackingList<KeyVaultPermission>(),
                 assignableScopes ?? new ChangeTrackingList<KeyVaultRoleScope>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static KeyVaultRoleDefinition FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeKeyVaultRoleDefinition(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

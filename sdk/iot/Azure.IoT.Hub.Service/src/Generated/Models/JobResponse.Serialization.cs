@@ -150,5 +150,13 @@ namespace Azure.IoT.Hub.Service.Models
                 statusMessage,
                 deviceJobStatistics);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static JobResponse FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeJobResponse(document.RootElement);
+        }
     }
 }

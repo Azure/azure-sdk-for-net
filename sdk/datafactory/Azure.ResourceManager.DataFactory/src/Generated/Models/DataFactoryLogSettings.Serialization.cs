@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class DataFactoryLogSettings : IUtf8JsonSerializable, IJsonModel<DataFactoryLogSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFactoryLogSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFactoryLogSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataFactoryLogSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(CopyActivityLogSettings))
             {
                 writer.WritePropertyName("copyActivityLogSettings"u8);
-                writer.WriteObjectValue<CopyActivityLogSettings>(CopyActivityLogSettings, options);
+                writer.WriteObjectValue(CopyActivityLogSettings, options);
             }
             writer.WritePropertyName("logLocationSettings"u8);
-            writer.WriteObjectValue<LogLocationSettings>(LogLocationSettings, options);
+            writer.WriteObjectValue(LogLocationSettings, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static DataFactoryLogSettings DeserializeDataFactoryLogSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             CopyActivityLogSettings copyActivityLogSettings = default;
             LogLocationSettings logLocationSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enableCopyActivityLog"u8))
@@ -109,10 +109,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DataFactoryLogSettings(enableCopyActivityLog, copyActivityLogSettings, logLocationSettings, serializedAdditionalRawData);
         }
 
