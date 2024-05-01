@@ -133,6 +133,20 @@ builder.Services.AddOpenTelemetry().UseAzureMonitor(o =>
 });
 ```
 
+#### Disable Logs Sampling
+
+By default, logs emitted within an Activity context are sampled based on the configured [sampling ratio](#customizing-sampling-percentage) for traces. This sampling can be disabled as shown below.
+
+``` C#
+builder.Services.AddOpenTelemetry().UseAzureMonitor(o =>
+{
+    o.DisableTraceBasedSamplingForLogs = true;
+});
+```
+
+> [!NOTE]
+> Logs emitted without an associated Activity context are not sampled and will be collected at a 100% rate.
+
 #### Adding Custom ActivitySource to Traces
 
 ```C#

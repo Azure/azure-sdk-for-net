@@ -9,7 +9,7 @@
   ([#42174](https://github.com/Azure/azure-sdk-for-net/pull/42174))
 * Turned off internal spans and logs in exporter HTTP pipeline
   ([#43359](https://github.com/Azure/azure-sdk-for-net/pull/43359))
-* Logs emitted within an activity context will now be sampled by default based on the `SamplingRatio` configured. To disable this sampling set `DisableTraceBasedSamplingForLogs` to `true`.
+* Logs emitted within an Activity context will now be sampled by default based on the `SamplingRatio` configured for Traces. To disable this sampling set `DisableTraceBasedSamplingForLogs` to `true`.
   ([#43793](https://github.com/Azure/azure-sdk-for-net/pull/43793))
 
 ### Breaking Changes

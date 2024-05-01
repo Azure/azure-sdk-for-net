@@ -156,6 +156,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                     {
                         var azureMonitorOptions = azureOptions.Get(Options.DefaultName);
 
+                        // Sequence of adding processors does not matter here even if the filtering processor is used.
+                        // LogRecord will pass through each processor independent of other processors in the pipeline.
                         if (!azureMonitorOptions.DisableTraceBasedSamplingForLogs)
                         {
                             var azureMonitorExporterOptions = new AzureMonitorExporterOptions();
@@ -175,8 +177,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                             });
                         }
 
-                        // Sequence of adding processors does not matter here even if the filtering processor is used.
-                        // LogRecord will pass through each processor independent of other processors in the pipeline.
                         if (azureMonitorOptions.EnableLiveMetrics)
                         {
                             loggingOptions.AddProcessor(sp =>
