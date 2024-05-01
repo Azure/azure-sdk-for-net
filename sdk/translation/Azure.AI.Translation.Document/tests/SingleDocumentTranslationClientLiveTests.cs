@@ -13,11 +13,13 @@ using Azure.Core;
 
 namespace Azure.AI.Translation.Document.Tests
 {
+    // These tests use multipart request body and recommendation was to run in live mode only.
+    // Here is the issue created: https://github.com/Azure/azure-sdk-for-net/issues/41674
+    [LiveOnly]
     public class SingleDocumentTranslationClientLiveTests : RecordedTestBase<DocumentTranslationTestEnvironment>
     {
         public SingleDocumentTranslationClientLiveTests(bool isAsync)
-        : base(isAsync, RecordedTestMode.Live)
-        //: base(isAsync)
+        : base(isAsync)
         {
             SanitizedHeaders.Add("Ocp-Apim-Subscription-Key");
         }
