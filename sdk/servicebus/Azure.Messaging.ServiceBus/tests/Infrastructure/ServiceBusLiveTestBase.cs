@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Messaging.ServiceBus.Amqp;
 using Microsoft.Azure.Amqp;
-using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests
 {
