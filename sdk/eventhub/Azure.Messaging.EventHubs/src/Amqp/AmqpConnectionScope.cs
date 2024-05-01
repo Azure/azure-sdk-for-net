@@ -702,11 +702,12 @@ namespace Azure.Messaging.EventHubs.Amqp
                     linkSettings.AddProperty(AmqpProperty.ConsumerIdentifier, linkIdentifier);
                 }
 
+                linkSettings.DesiredCapabilities ??= new Multiple<AmqpSymbol>();
                 if (trackLastEnqueuedEventProperties)
                 {
-                    linkSettings.DesiredCapabilities ??= new Multiple<AmqpSymbol>();
                     linkSettings.DesiredCapabilities.Add(AmqpProperty.TrackLastEnqueuedEventProperties);
                 }
+                linkSettings.DesiredCapabilities.Add(AmqpProperty.GeoReplication);
 
                 link = new ReceivingAmqpLink(linkSettings);
                 linkSettings.LinkName = $"{ Id };{ connection.Identifier }:{ session.Identifier }:{ link.Identifier }";
@@ -807,11 +808,12 @@ namespace Azure.Messaging.EventHubs.Amqp
                 linkSettings.AddProperty(AmqpProperty.Timeout, (uint)linkTimeout.CalculateRemaining(stopWatch.GetElapsedTime()).TotalMilliseconds);
                 linkSettings.AddProperty(AmqpProperty.EntityType, (int)AmqpProperty.Entity.EventHub);
 
+                linkSettings.DesiredCapabilities ??= new Multiple<AmqpSymbol>();
                 if ((features & TransportProducerFeatures.IdempotentPublishing) != 0)
                 {
-                    linkSettings.DesiredCapabilities ??= new Multiple<AmqpSymbol>();
                     linkSettings.DesiredCapabilities.Add(AmqpProperty.EnableIdempotentPublishing);
                 }
+                linkSettings.DesiredCapabilities.Add(AmqpProperty.GeoReplication);
 
                 // If any of the options have a value, the entire set must be specified for the link settings.  For any options that did not have a
                 // value, specifying null will signal the service to generate the value.

@@ -1560,7 +1560,9 @@ namespace Azure.Messaging.EventHubs.Tests
                     partitionId,
                     processorClient.Identifier,
                     processorClient.EventHubName,
-                    processorClient.ConsumerGroup),
+                    processorClient.ConsumerGroup,
+                    sequenceNumber.ToString(),
+                    null),
                 Times.Once);
 
             mockLogger
@@ -1568,7 +1570,9 @@ namespace Azure.Messaging.EventHubs.Tests
                     partitionId,
                     processorClient.Identifier,
                     processorClient.EventHubName,
-                    processorClient.ConsumerGroup),
+                    processorClient.ConsumerGroup,
+                    sequenceNumber.ToString(),
+                    null),
                 Times.Once);
 
             cancellationSource.Cancel();
@@ -1587,7 +1591,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var expectedException = new NotImplementedException("This didn't work.");
             var partitionId = "3";
-            var checkpointStartingPosition = new CheckpointPosition(789);
+            var sequenceNumber = 789;
+            var checkpointStartingPosition = new CheckpointPosition(sequenceNumber);
             var mockLogger = new Mock<EventProcessorClientEventSource>();
             var mockStorage = new Mock<CheckpointStore>();
             var processorClient = new TestEventProcessorClient(mockStorage.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
@@ -1612,7 +1617,9 @@ namespace Azure.Messaging.EventHubs.Tests
                     processorClient.Identifier,
                     processorClient.EventHubName,
                     processorClient.ConsumerGroup,
-                    expectedException.Message),
+                    expectedException.Message,
+                    sequenceNumber.ToString(),
+                    null),
                 Times.Once);
 
             cancellationSource.Cancel();

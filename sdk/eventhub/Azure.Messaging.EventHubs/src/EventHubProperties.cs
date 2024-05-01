@@ -32,6 +32,12 @@ namespace Azure.Messaging.EventHubs
         public string[] PartitionIds { get; }
 
         /// <summary>
+        /// The total number of replicas, including the primary of the Event Hubs namespace. If this value is 1,
+        /// then geo-replication is not enabled.
+        /// </summary>
+        public int GeoReplicationCount { get; }
+
+        /// <summary>
         ///   Initializes a new instance of the <see cref="EventHubProperties"/> class.
         /// </summary>
         ///
@@ -39,6 +45,7 @@ namespace Azure.Messaging.EventHubs
         /// <param name="createdOn">The date and time at which the Event Hub was created.</param>
         /// <param name="partitionIds">The set of unique identifiers for each partition.</param>
         ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
         protected internal EventHubProperties(string name,
                                               DateTimeOffset createdOn,
                                               string[] partitionIds)
@@ -46,6 +53,26 @@ namespace Azure.Messaging.EventHubs
             Name = name;
             CreatedOn = createdOn;
             PartitionIds = partitionIds;
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="EventHubProperties"/> class.
+        /// </summary>
+        ///
+        /// <param name="name">The name of the Event Hub.</param>
+        /// <param name="createdOn">The date and time at which the Event Hub was created.</param>
+        /// <param name="partitionIds">The set of unique identifiers for each partition.</param>
+        /// <param name="geoReplicationCount">The total number of replicas including the primary of the Event Hubs namespace.</param>
+        ///
+        protected internal EventHubProperties(string name,
+                                              DateTimeOffset createdOn,
+                                              string[] partitionIds,
+                                              int geoReplicationCount)
+        {
+            Name = name;
+            CreatedOn = createdOn;
+            PartitionIds = partitionIds;
+            GeoReplicationCount = geoReplicationCount;
         }
 
         /// <summary>

@@ -184,7 +184,8 @@ namespace Azure.Messaging.EventHubs.Amqp
             return new EventHubProperties(
                 (string)responseData[AmqpManagement.ResponseMap.Name],
                 new DateTimeOffset((DateTime)responseData[AmqpManagement.ResponseMap.CreatedAt], TimeSpan.Zero),
-                (string[])responseData[AmqpManagement.ResponseMap.PartitionIdentifiers]);
+                (string[])responseData[AmqpManagement.ResponseMap.PartitionIdentifiers],
+                (int)responseData[AmqpManagement.ResponseMap.GeoReplicationFactor]);
         }
 
         /// <summary>

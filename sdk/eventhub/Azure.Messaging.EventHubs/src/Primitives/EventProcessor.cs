@@ -207,6 +207,12 @@ namespace Azure.Messaging.EventHubs.Primitives
         protected EventHubsRetryPolicy RetryPolicy { get; }
 
         /// <summary>
+        ///    The total number of replicas, including the primary, of the Event Hubs namespace. If this value is 1, then geo-replication is not enabled.
+        /// </summary>
+        ///
+        protected int? GeoReplicationCount { get;  }
+
+        /// <summary>
         ///   Indicates whether or not this event processor should instrument batch event processing calls with distributed tracing.
         ///   Implementations that instrument event processing themselves should set this to <c>false</c>.
         /// </summary>
@@ -1088,6 +1094,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   be called instead.
         /// </remarks>
         ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
         protected virtual Task UpdateCheckpointAsync(string partitionId,
                                                      long offset,
                                                      long? sequenceNumber,
@@ -1095,6 +1102,10 @@ namespace Azure.Messaging.EventHubs.Primitives
         {
             if (sequenceNumber.HasValue)
             {
+                if (GeoReplicationCount > 1)
+                {
+                    Logger.UpdateCheckpointMissingInformationForGeoReplicatedEventHub(Identifier, EventHubName, offset.ToString(), sequenceNumber?.ToString());
+                }
                 return UpdateCheckpointAsync(partitionId, new CheckpointPosition(sequenceNumber.Value), cancellationToken);
             }
 

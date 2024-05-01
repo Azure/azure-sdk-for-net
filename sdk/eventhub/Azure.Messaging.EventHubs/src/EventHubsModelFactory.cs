@@ -22,17 +22,33 @@ namespace Azure.Messaging.EventHubs
     public static class EventHubsModelFactory
     {
         /// <summary>
-        ///   Initializes a new instance of the <see cref="EventHubProperties"/> class.
+        ///   Initializes a new instance of the <see cref="Azure.Messaging.EventHubs.EventHubProperties"/> class.
         /// </summary>
         ///
         /// <param name="name">The name of the Event Hub.</param>
         /// <param name="createdOn">The date and time at which the Event Hub was created.</param>
         /// <param name="partitionIds">The set of unique identifiers for each partition.</param>
         ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static EventHubProperties EventHubProperties(string name,
                                                             DateTimeOffset createdOn,
                                                             string[] partitionIds) =>
            new EventHubProperties(name, createdOn, partitionIds);
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="Azure.Messaging.EventHubs.EventHubProperties"/> class.
+        /// </summary>
+        ///
+        /// <param name="name">The name of the Event Hub.</param>
+        /// <param name="createdOn">The date and time at which the Event Hub was created.</param>
+        /// <param name="partitionIds">The set of unique identifiers for each partition.</param>
+        /// <param name="geoReplicationFactor">The total number of replicas, including the primary, of the Event Hubs namespace.</param>
+        ///
+        public static EventHubProperties EventHubProperties(string name,
+                                                            DateTimeOffset createdOn,
+                                                            string[] partitionIds,
+                                                            int geoReplicationFactor) =>
+           new EventHubProperties(name, createdOn, partitionIds, geoReplicationFactor);
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="PartitionProperties"/> class.
@@ -56,7 +72,7 @@ namespace Azure.Messaging.EventHubs
             new PartitionProperties(eventHubName, partitionId, isEmpty, beginningSequenceNumber, lastSequenceNumber, lastOffset, lastEnqueuedTime);
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="EventHubProperties"/> class.
+        ///   Initializes a new instance of the <see cref="Azure.Messaging.EventHubs.EventHubProperties"/> class.
         /// </summary>
         ///
         /// <param name="isIdempotentPublishingEnabled">Indicates whether idempotent publishing is enabled.</param>
