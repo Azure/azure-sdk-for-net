@@ -50,10 +50,10 @@ namespace Azure.AI.Translation.Document.Tests
             }
         }
 
-        // Enable this test when this is fixed => https://github.com/Azure/azure-sdk-for-net/issues/41674
         [RecordedTest]
         [TestCase(false)]
         [TestCase(true)]
+        [Ignore("Sync API test does not work because of MultipartFormDataRequestContent, enable it once it is resolved")]
         public async Task Translate_TextDocumentAsync(bool usetokenCredential)
         {
             var client = GetSingleDocumentTranslationClient(useTokenCredential: usetokenCredential);
@@ -68,10 +68,10 @@ namespace Azure.AI.Translation.Document.Tests
             Assert.AreNotEqual(requestString, responseString);
         }
 
-        // Enable this test when this is fixed => https://github.com/Azure/azure-sdk-for-net/issues/41674
         [RecordedTest]
         [TestCase(false)]
         [TestCase(true)]
+        [Ignore("Sync API test does not work because of MultipartFormDataRequestContent, enable it once it is resolved")]
         public async Task Translate_TextDocument_Single_CsvGlossary(bool usetokenCredential)
         {
             var client = GetSingleDocumentTranslationClient(useTokenCredential: usetokenCredential);
@@ -94,10 +94,10 @@ namespace Azure.AI.Translation.Document.Tests
             Assert.IsTrue(outputString.ToLowerInvariant().Contains("test"), $"'{outputString}' does not contain glossary 'test'");
         }
 
-        // Enable this test when this is fixed => https://github.com/Azure/azure-sdk-for-net/issues/41674
         [RecordedTest]
         [TestCase(false)]
         [TestCase(true)]
+        [Ignore("Sync API test does not work because of MultipartFormDataRequestContent, enable it once it is resolved")]
         public async Task Translate_TextDocument_Multiple_CsvGlossary(bool usetokenCredential)
         {
             var client = GetSingleDocumentTranslationClient(useTokenCredential: usetokenCredential);
