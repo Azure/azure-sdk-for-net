@@ -106,7 +106,7 @@ namespace Azure.Security.KeyVault.Secrets
             V7_3 = 3,
             V7_4 = 4,
             V7_5 = 5,
-            V7_6_Preview_1 = 6
+            V7_6_Preview_1 = 6,
         }
     }
     public static partial class SecretModelFactory
