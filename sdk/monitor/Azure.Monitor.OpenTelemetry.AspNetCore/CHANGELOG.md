@@ -48,8 +48,8 @@
     and [System.Net.Http](https://learn.microsoft.com/en-in/dotnet/core/diagnostics/built-in-metrics-system-net#systemnethttp).
   * For environments targetting `.NET 7.0` and below, distro uses ASP.NET Core and HTTP Client Instrumentation.
     Detailed metrics information can be found in the
-    [ASP.NET Core Instrumentation](https://github.com/open-telemetry/opentelemetry-dotnet/blob/main/src/OpenTelemetry.Instrumentation.AspNetCore/README.md#list-of-metrics-produced)
-    and [HTTP Client Instrumentation](https://github.com/open-telemetry/opentelemetry-dotnet/blob/main/src/OpenTelemetry.Instrumentation.Http/README.md#list-of-metrics-produced)
+    [ASP.NET Core Instrumentation](https://github.com/open-telemetry/opentelemetry-dotnet/blob/Instrumentation.AspNetCore-1.7.1/src/OpenTelemetry.Instrumentation.AspNetCore/README.md#list-of-metrics-produced)
+    and [HTTP Client Instrumentation](https://github.com/open-telemetry/opentelemetry-dotnet/blob/Instrumentation.Http-1.7.1/src/OpenTelemetry.Instrumentation.Http/README.md#list-of-metrics-produced)
     documentation.
   ([#42307](https://github.com/Azure/azure-sdk-for-net/pull/42307))
 
