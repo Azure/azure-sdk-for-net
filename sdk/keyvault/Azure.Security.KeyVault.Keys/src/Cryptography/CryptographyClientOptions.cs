@@ -57,7 +57,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
             /// <summary>
             /// The Key Vault API version 7.6-preview.1.
-            /// </summary>    
+            /// </summary>
             V7_6_Preview_1 = 6,
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
