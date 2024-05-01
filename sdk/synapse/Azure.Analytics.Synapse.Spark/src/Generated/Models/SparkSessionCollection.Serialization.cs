@@ -50,5 +50,13 @@ namespace Azure.Analytics.Synapse.Spark.Models
             }
             return new SparkSessionCollection(@from, total, sessions ?? new ChangeTrackingList<SparkSession>());
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SparkSessionCollection FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSparkSessionCollection(document.RootElement);
+        }
     }
 }

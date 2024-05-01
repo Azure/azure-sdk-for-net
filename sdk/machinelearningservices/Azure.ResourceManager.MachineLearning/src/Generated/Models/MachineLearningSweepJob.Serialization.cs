@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class MachineLearningSweepJob : IUtf8JsonSerializable, IJsonModel<MachineLearningSweepJob>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningSweepJob>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningSweepJob>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MachineLearningSweepJob>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (EarlyTermination != null)
                 {
                     writer.WritePropertyName("earlyTermination"u8);
-                    writer.WriteObjectValue<MachineLearningEarlyTerminationPolicy>(EarlyTermination, options);
+                    writer.WriteObjectValue(EarlyTermination, options);
                 }
                 else
                 {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     foreach (var item in Inputs)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue<MachineLearningJobInput>(item.Value, options);
+                        writer.WriteObjectValue(item.Value, options);
                     }
                     writer.WriteEndObject();
                 }
@@ -59,10 +59,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Limits))
             {
                 writer.WritePropertyName("limits"u8);
-                writer.WriteObjectValue<MachineLearningSweepJobLimits>(Limits, options);
+                writer.WriteObjectValue(Limits, options);
             }
             writer.WritePropertyName("objective"u8);
-            writer.WriteObjectValue<MachineLearningObjective>(Objective, options);
+            writer.WriteObjectValue(Objective, options);
             if (Optional.IsCollectionDefined(Outputs))
             {
                 if (Outputs != null)
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     foreach (var item in Outputs)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue<MachineLearningJobOutput>(item.Value, options);
+                        writer.WriteObjectValue(item.Value, options);
                     }
                     writer.WriteEndObject();
                 }
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (QueueSettings != null)
                 {
                     writer.WritePropertyName("queueSettings"u8);
-                    writer.WriteObjectValue<JobQueueSettings>(QueueSettings, options);
+                    writer.WriteObjectValue(QueueSettings, options);
                 }
                 else
                 {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             writer.WritePropertyName("samplingAlgorithm"u8);
-            writer.WriteObjectValue<SamplingAlgorithm>(SamplingAlgorithm, options);
+            writer.WriteObjectValue(SamplingAlgorithm, options);
             writer.WritePropertyName("searchSpace"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(SearchSpace);
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 #endif
             writer.WritePropertyName("trial"u8);
-            writer.WriteObjectValue<MachineLearningTrialComponent>(Trial, options);
+            writer.WriteObjectValue(Trial, options);
             if (Optional.IsDefined(ComponentId))
             {
                 if (ComponentId != null)
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Identity != null)
                 {
                     writer.WritePropertyName("identity"u8);
-                    writer.WriteObjectValue<MachineLearningIdentityConfiguration>(Identity, options);
+                    writer.WriteObjectValue(Identity, options);
                 }
                 else
                 {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (NotificationSetting != null)
                 {
                     writer.WritePropertyName("notificationSetting"u8);
-                    writer.WriteObjectValue<NotificationSetting>(NotificationSetting, options);
+                    writer.WriteObjectValue(NotificationSetting, options);
                 }
                 else
                 {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     foreach (var item in SecretsConfiguration)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue<SecretConfiguration>(item.Value, options);
+                        writer.WriteObjectValue(item.Value, options);
                     }
                     writer.WriteEndObject();
                 }
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     foreach (var item in Services)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue<MachineLearningJobService>(item.Value, options);
+                        writer.WriteObjectValue(item.Value, options);
                     }
                     writer.WriteEndObject();
                 }
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningSweepJob DeserializeMachineLearningSweepJob(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             IDictionary<string, string> properties = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("earlyTermination"u8))
@@ -561,10 +561,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MachineLearningSweepJob(
                 description,
                 properties ?? new ChangeTrackingDictionary<string, string>(),

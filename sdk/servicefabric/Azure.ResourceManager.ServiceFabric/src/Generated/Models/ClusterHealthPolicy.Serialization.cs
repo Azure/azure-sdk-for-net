@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 {
     public partial class ClusterHealthPolicy : IUtf8JsonSerializable, IJsonModel<ClusterHealthPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterHealthPolicy>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterHealthPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ClusterHealthPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 foreach (var item in ApplicationHealthPolicies)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<ApplicationHealthPolicy>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         internal static ClusterHealthPolicy DeserializeClusterHealthPolicy(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             int? maxPercentUnhealthyApplications = default;
             IDictionary<string, ApplicationHealthPolicy> applicationHealthPolicies = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxPercentUnhealthyNodes"u8))
@@ -126,10 +126,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ClusterHealthPolicy(maxPercentUnhealthyNodes, maxPercentUnhealthyApplications, applicationHealthPolicies ?? new ChangeTrackingDictionary<string, ApplicationHealthPolicy>(), serializedAdditionalRawData);
         }
 

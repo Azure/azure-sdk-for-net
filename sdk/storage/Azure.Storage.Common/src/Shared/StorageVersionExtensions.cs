@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-
+#if BlobDataMovementSDK
+extern alias BaseBlobs;
+#endif
 using System;
 
 // Alias the ServiceVersion enum used by the service importing this shared
@@ -19,7 +21,7 @@ using ServiceVersion =
 #elif DataMovementSDK
     Azure.Storage.Blobs.BlobClientOptions.ServiceVersion;
 #elif BlobDataMovementSDK
-    Azure.Storage.Blobs.BlobClientOptions.ServiceVersion;
+    BaseBlobs::Azure.Storage.Blobs.BlobClientOptions.ServiceVersion;
 #elif ShareDataMovementSDK
     Azure.Storage.Files.Shares.ShareClientOptions.ServiceVersion;
 #else

@@ -44,5 +44,13 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
             }
             return new ManagedPrivateEndpointListResponse(value ?? new ChangeTrackingList<ManagedPrivateEndpoint>(), nextLink);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ManagedPrivateEndpointListResponse FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeManagedPrivateEndpointListResponse(document.RootElement);
+        }
     }
 }

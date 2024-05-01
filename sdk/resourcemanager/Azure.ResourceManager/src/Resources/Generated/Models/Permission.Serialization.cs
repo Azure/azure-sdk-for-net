@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Resources.Models
 {
     public partial class Permission : IUtf8JsonSerializable, IJsonModel<Permission>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Permission>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Permission>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<Permission>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static Permission DeserializePermission(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Resources.Models
             IReadOnlyList<string> dataActions = default;
             IReadOnlyList<string> notDataActions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("actions"u8))
@@ -172,10 +172,10 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new Permission(actions ?? new ChangeTrackingList<string>(), notActions ?? new ChangeTrackingList<string>(), dataActions ?? new ChangeTrackingList<string>(), notDataActions ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
@@ -191,17 +191,18 @@ namespace Azure.ResourceManager.Resources.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowedActions), out propertyOverride);
-            if (Optional.IsCollectionDefined(AllowedActions) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (AllowedActions.Any() || hasPropertyOverride)
+                builder.Append("  actions: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AllowedActions))
                 {
-                    builder.Append("  actions: ");
-                    if (hasPropertyOverride)
+                    if (AllowedActions.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  actions: ");
                         builder.AppendLine("[");
                         foreach (var item in AllowedActions)
                         {
@@ -226,17 +227,18 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeniedActions), out propertyOverride);
-            if (Optional.IsCollectionDefined(DeniedActions) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (DeniedActions.Any() || hasPropertyOverride)
+                builder.Append("  notActions: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(DeniedActions))
                 {
-                    builder.Append("  notActions: ");
-                    if (hasPropertyOverride)
+                    if (DeniedActions.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  notActions: ");
                         builder.AppendLine("[");
                         foreach (var item in DeniedActions)
                         {
@@ -261,17 +263,18 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowedDataActions), out propertyOverride);
-            if (Optional.IsCollectionDefined(AllowedDataActions) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (AllowedDataActions.Any() || hasPropertyOverride)
+                builder.Append("  dataActions: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AllowedDataActions))
                 {
-                    builder.Append("  dataActions: ");
-                    if (hasPropertyOverride)
+                    if (AllowedDataActions.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  dataActions: ");
                         builder.AppendLine("[");
                         foreach (var item in AllowedDataActions)
                         {
@@ -296,17 +299,18 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeniedDataActions), out propertyOverride);
-            if (Optional.IsCollectionDefined(DeniedDataActions) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (DeniedDataActions.Any() || hasPropertyOverride)
+                builder.Append("  notDataActions: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(DeniedDataActions))
                 {
-                    builder.Append("  notDataActions: ");
-                    if (hasPropertyOverride)
+                    if (DeniedDataActions.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  notDataActions: ");
                         builder.AppendLine("[");
                         foreach (var item in DeniedDataActions)
                         {

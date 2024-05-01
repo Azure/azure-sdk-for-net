@@ -21,7 +21,7 @@ namespace Azure.Maps.Search.Models
             writer.WriteStartArray();
             foreach (var item in Features)
             {
-                writer.WriteObjectValue<GeoJsonFeature>(item);
+                writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -48,6 +48,22 @@ namespace Azure.Maps.Search.Models
                 }
             }
             return new GeoJsonFeatureCollectionData(features);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static GeoJsonFeatureCollectionData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeGeoJsonFeatureCollectionData(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Common.Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

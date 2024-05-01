@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HybridCompute
 {
     public partial class HybridComputeMachineData : IUtf8JsonSerializable, IJsonModel<HybridComputeMachineData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridComputeMachineData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridComputeMachineData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HybridComputeMachineData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.HybridCompute
                 writer.WriteStartArray();
                 foreach (var item in Resources)
                 {
-                    writer.WriteObjectValue<HybridComputeMachineExtensionData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -86,37 +86,37 @@ namespace Azure.ResourceManager.HybridCompute
             if (Optional.IsDefined(LocationData))
             {
                 writer.WritePropertyName("locationData"u8);
-                writer.WriteObjectValue<HybridComputeLocation>(LocationData, options);
+                writer.WriteObjectValue(LocationData, options);
             }
             if (options.Format != "W" && Optional.IsDefined(AgentConfiguration))
             {
                 writer.WritePropertyName("agentConfiguration"u8);
-                writer.WriteObjectValue<AgentConfiguration>(AgentConfiguration, options);
+                writer.WriteObjectValue(AgentConfiguration, options);
             }
             if (Optional.IsDefined(ServiceStatuses))
             {
                 writer.WritePropertyName("serviceStatuses"u8);
-                writer.WriteObjectValue<HybridComputeServiceStatuses>(ServiceStatuses, options);
+                writer.WriteObjectValue(ServiceStatuses, options);
             }
             if (Optional.IsDefined(CloudMetadata))
             {
                 writer.WritePropertyName("cloudMetadata"u8);
-                writer.WriteObjectValue<HybridComputeCloudMetadata>(CloudMetadata, options);
+                writer.WriteObjectValue(CloudMetadata, options);
             }
             if (Optional.IsDefined(AgentUpgrade))
             {
                 writer.WritePropertyName("agentUpgrade"u8);
-                writer.WriteObjectValue<AgentUpgrade>(AgentUpgrade, options);
+                writer.WriteObjectValue(AgentUpgrade, options);
             }
             if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
-                writer.WriteObjectValue<HybridComputeOSProfile>(OSProfile, options);
+                writer.WriteObjectValue(OSProfile, options);
             }
             if (Optional.IsDefined(LicenseProfile))
             {
                 writer.WritePropertyName("licenseProfile"u8);
-                writer.WriteObjectValue<LicenseProfileMachineInstanceView>(LicenseProfile, options);
+                writer.WriteObjectValue(LicenseProfile, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.HybridCompute
                 writer.WriteStartArray();
                 foreach (var item in Extensions)
                 {
-                    writer.WriteObjectValue<MachineExtensionInstanceView>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.HybridCompute
             if (options.Format != "W" && Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue<HybridComputeNetworkProfile>(NetworkProfile, options);
+                writer.WriteObjectValue(NetworkProfile, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.HybridCompute
 
         internal static HybridComputeMachineData DeserializeHybridComputeMachineData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.HybridCompute
             IReadOnlyDictionary<string, string> detectedProperties = default;
             HybridComputeNetworkProfile networkProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resources"u8))
@@ -664,10 +664,10 @@ namespace Azure.ResourceManager.HybridCompute
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new HybridComputeMachineData(
                 id,
                 name,

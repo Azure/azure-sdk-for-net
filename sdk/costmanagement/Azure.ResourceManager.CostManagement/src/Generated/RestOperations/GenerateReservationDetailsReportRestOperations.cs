@@ -34,6 +34,19 @@ namespace Azure.ResourceManager.CostManagement
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateByBillingAccountIdRequestUri(string billingAccountId, string startDate, string endDate)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
+            uri.AppendPath(billingAccountId, true);
+            uri.AppendPath("/providers/Microsoft.CostManagement/generateReservationDetailsReport", false);
+            uri.AppendQuery("startDate", startDate, true);
+            uri.AppendQuery("endDate", endDate, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateByBillingAccountIdRequest(string billingAccountId, string startDate, string endDate)
         {
             var message = _pipeline.CreateMessage();
@@ -101,6 +114,21 @@ namespace Azure.ResourceManager.CostManagement
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateByBillingProfileIdRequestUri(string billingAccountId, string billingProfileId, string startDate, string endDate)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
+            uri.AppendPath(billingAccountId, true);
+            uri.AppendPath("/billingProfiles/", false);
+            uri.AppendPath(billingProfileId, true);
+            uri.AppendPath("/providers/Microsoft.CostManagement/generateReservationDetailsReport", false);
+            uri.AppendQuery("startDate", startDate, true);
+            uri.AppendQuery("endDate", endDate, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateByBillingProfileIdRequest(string billingAccountId, string billingProfileId, string startDate, string endDate)

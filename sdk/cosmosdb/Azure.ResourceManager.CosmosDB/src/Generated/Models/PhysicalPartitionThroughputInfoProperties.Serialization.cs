@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 {
     internal partial class PhysicalPartitionThroughputInfoProperties : IUtf8JsonSerializable, IJsonModel<PhysicalPartitionThroughputInfoProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PhysicalPartitionThroughputInfoProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PhysicalPartitionThroughputInfoProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PhysicalPartitionThroughputInfoProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in PhysicalPartitionThroughputInfo)
                 {
-                    writer.WriteObjectValue<PhysicalPartitionThroughputInfoResource>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static PhysicalPartitionThroughputInfoProperties DeserializePhysicalPartitionThroughputInfoProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             IList<PhysicalPartitionThroughputInfoResource> physicalPartitionThroughputInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("physicalPartitionThroughputInfo"u8))
@@ -97,10 +97,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PhysicalPartitionThroughputInfoProperties(physicalPartitionThroughputInfo ?? new ChangeTrackingList<PhysicalPartitionThroughputInfoResource>(), serializedAdditionalRawData);
         }
 
@@ -116,17 +116,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PhysicalPartitionThroughputInfo), out propertyOverride);
-            if (Optional.IsCollectionDefined(PhysicalPartitionThroughputInfo) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (PhysicalPartitionThroughputInfo.Any() || hasPropertyOverride)
+                builder.Append("  physicalPartitionThroughputInfo: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(PhysicalPartitionThroughputInfo))
                 {
-                    builder.Append("  physicalPartitionThroughputInfo: ");
-                    if (hasPropertyOverride)
+                    if (PhysicalPartitionThroughputInfo.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  physicalPartitionThroughputInfo: ");
                         builder.AppendLine("[");
                         foreach (var item in PhysicalPartitionThroughputInfo)
                         {

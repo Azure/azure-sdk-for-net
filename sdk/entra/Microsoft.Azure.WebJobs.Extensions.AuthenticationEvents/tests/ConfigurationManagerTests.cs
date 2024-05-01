@@ -34,7 +34,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         {
             string testMessage = "Attributes are empty";
 
-            Assert.DoesNotThrow(() => configurationManager = new ConfigurationManager(new AuthenticationEventsTriggerAttribute()), testMessage);
+            Assert.DoesNotThrow(() => configurationManager = new ConfigurationManager(new WebJobsAuthenticationEventsTriggerAttribute()), testMessage);
             Assert.Throws<MissingFieldException>(() => _ = configurationManager.AudienceAppId, testMessage);
             Assert.DoesNotThrow(() => _ = configurationManager.AuthorizedPartyAppId, testMessage);
             Assert.AreEqual("99045fe1-7639-4a75-9d4a-577b6ca3810f", configurationManager.AuthorizedPartyAppId, testMessage);
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         {
             string testMessage = "Only Authorized Party is configured.";
 
-            Assert.DoesNotThrow(() => configurationManager = new ConfigurationManager(new AuthenticationEventsTriggerAttribute() { AuthorizedPartyAppId = testAuthorizedPartyId }), testMessage);
+            Assert.DoesNotThrow(() => configurationManager = new ConfigurationManager(new WebJobsAuthenticationEventsTriggerAttribute() { AuthorizedPartyAppId = testAuthorizedPartyId }), testMessage);
             Assert.Throws<MissingFieldException>(() => _ = configurationManager.AudienceAppId, testMessage);
             Assert.DoesNotThrow(() => _ = configurationManager.AuthorizedPartyAppId, testMessage);
             Assert.AreEqual(testAuthorizedPartyId, configurationManager.AuthorizedPartyAppId, testMessage);
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         [TestCase(" ")]
         public void Test_When_Attributes_AuthorizedPartyAppId_Is_Null(string value)
         {
-            var attribute = new AuthenticationEventsTriggerAttribute
+            var attribute = new WebJobsAuthenticationEventsTriggerAttribute
             {
                 AuthorizedPartyAppId = value,
                 AudienceAppId = testAudienceAppId,
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         [Test]
         public void Test_When_Attributes_AuthorizedPartyAppId_Is_NotSet()
         {
-            var attribute = new AuthenticationEventsTriggerAttribute
+            var attribute = new WebJobsAuthenticationEventsTriggerAttribute
             {
                 AudienceAppId = testAudienceAppId,
                 AuthorityUrl = testAuthorityUrl
@@ -104,7 +104,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         {
             string testMessage = "Audience App ID is null.";
 
-            var attribute = new AuthenticationEventsTriggerAttribute
+            var attribute = new WebJobsAuthenticationEventsTriggerAttribute
             {
                 AuthorizedPartyAppId = testAuthorizedPartyId,
                 AudienceAppId = value,
@@ -126,7 +126,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         {
             string testMessage = "Authority URL is null. Should use default value";
 
-            var attribute = new AuthenticationEventsTriggerAttribute
+            var attribute = new WebJobsAuthenticationEventsTriggerAttribute
             {
                 AuthorizedPartyAppId = testAuthorizedPartyId,
                 AudienceAppId = testAudienceAppId,
@@ -151,7 +151,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         {
             string testMessage = "AudienceAppId and AuthorityUrl is null.";
 
-            var attribute = new AuthenticationEventsTriggerAttribute
+            var attribute = new WebJobsAuthenticationEventsTriggerAttribute
             {
                 AuthorizedPartyAppId = testAuthorizedPartyId,
                 AudienceAppId = value,
@@ -170,7 +170,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         {
             string testMessage = "Test when all attributes are set. Result should be custom OIDC Config.";
 
-            var attribute = new AuthenticationEventsTriggerAttribute
+            var attribute = new WebJobsAuthenticationEventsTriggerAttribute
             {
                 AuthorizedPartyAppId = testAuthorizedPartyId,
                 AudienceAppId = testAudienceAppId,

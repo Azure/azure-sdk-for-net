@@ -46,5 +46,21 @@ namespace Azure.Search.Documents.Models
             }
             return new UnknownVectorSearchAlgorithmConfiguration(name, kind);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new UnknownVectorSearchAlgorithmConfiguration FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeUnknownVectorSearchAlgorithmConfiguration(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<VectorSearchAlgorithmConfiguration>(this);
+            return content;
+        }
     }
 }

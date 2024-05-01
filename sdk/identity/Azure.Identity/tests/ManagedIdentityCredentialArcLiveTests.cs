@@ -4,6 +4,7 @@
 using System;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.TestFramework;
 using Azure.Security.KeyVault.Secrets;
 using NUnit.Framework;
 
@@ -43,6 +44,7 @@ namespace Azure.Identity.Tests
 
         [NonParallelizable]
         [Test]
+        [LiveOnly(Reason = "https://github.com/Azure/azure-sdk-for-net/issues/43401")]
         public void ValidateUserAssignedIdentity()
         {
             if (string.IsNullOrEmpty(TestEnvironment.ArcEnable))

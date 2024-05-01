@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Peering.Models
 {
     public partial class PeeringLocation : IUtf8JsonSerializable, IJsonModel<PeeringLocation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PeeringLocation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PeeringLocation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PeeringLocation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -57,12 +57,12 @@ namespace Azure.ResourceManager.Peering.Models
             if (Optional.IsDefined(Direct))
             {
                 writer.WritePropertyName("direct"u8);
-                writer.WriteObjectValue<DirectPeeringLocationProperties>(Direct, options);
+                writer.WriteObjectValue(Direct, options);
             }
             if (Optional.IsDefined(Exchange))
             {
                 writer.WritePropertyName("exchange"u8);
-                writer.WriteObjectValue<PeeringLocationPropertiesExchange>(Exchange, options);
+                writer.WriteObjectValue(Exchange, options);
             }
             if (Optional.IsDefined(PeeringLocationValue))
             {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Peering.Models
 
         internal static PeeringLocation DeserializePeeringLocation(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Peering.Models
             string country = default;
             AzureLocation? azureRegion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -216,10 +216,10 @@ namespace Azure.ResourceManager.Peering.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PeeringLocation(
                 id,
                 name,

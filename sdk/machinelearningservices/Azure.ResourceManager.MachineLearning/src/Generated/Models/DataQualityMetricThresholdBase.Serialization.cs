@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     [PersistableModelProxy(typeof(UnknownDataQualityMetricThresholdBase))]
     public partial class DataQualityMetricThresholdBase : IUtf8JsonSerializable, IJsonModel<DataQualityMetricThresholdBase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataQualityMetricThresholdBase>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataQualityMetricThresholdBase>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataQualityMetricThresholdBase>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Threshold != null)
                 {
                     writer.WritePropertyName("threshold"u8);
-                    writer.WriteObjectValue<MonitoringThreshold>(Threshold, options);
+                    writer.WriteObjectValue(Threshold, options);
                 }
                 else
                 {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static DataQualityMetricThresholdBase DeserializeDataQualityMetricThresholdBase(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

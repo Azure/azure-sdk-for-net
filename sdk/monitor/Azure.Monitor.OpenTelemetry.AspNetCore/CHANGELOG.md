@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.3 (Unreleased)
+## 1.2.0-beta.4 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,31 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0-beta.3 (2024-04-19)
+
+### Features Added
+
+* Added support for OpenTelemetry Logs to be sent to LiveMetrics.
+  ([#43081](https://github.com/Azure/azure-sdk-for-net/pull/43081))
+
+### Bugs Fixed
+
+* Turned off internal spans and logs in distro HTTP pipelines
+  ([#43359](https://github.com/Azure/azure-sdk-for-net/pull/43359))
+
+### Other Changes
+
+* Update OpenTelemetry dependencies
+  ([#43197](https://github.com/Azure/azure-sdk-for-net/pull/43197))
+  - OpenTelemetry 1.8.0
+  - OpenTelemetry.Extensions.Hosting 1.8.0
+
+* Removed the necessity for custom resource attributes configuration in
+  OpenTelemetry logging setup, as the OpenTelemetry .NET SDK's enhancements to
+  the builder.ConfigureResource method now uniformly set resource attributes
+  across logs, metrics, and traces.
+  ([#43197](https://github.com/Azure/azure-sdk-for-net/pull/43197))
 
 ## 1.2.0-beta.2 (2024-03-12)
 
@@ -25,7 +50,7 @@
     documentation.
   ([#42307](https://github.com/Azure/azure-sdk-for-net/pull/42307))
 
-- Enabled support for log collection from Azure SDKs via `Microsoft.Extensions.Logging`. See [Logging with the Azure SDK for .NET](https://learn.microsoft.com/dotnet/azure/sdk/logging)
+* Enabled support for log collection from Azure SDKs via `Microsoft.Extensions.Logging`. See [Logging with the Azure SDK for .NET](https://learn.microsoft.com/dotnet/azure/sdk/logging)
   for the details.
   ([#42374](https://github.com/Azure/azure-sdk-for-net/pull/42374))
 
@@ -64,7 +89,7 @@
   property can be set to `false` to disable live metrics.
   ([#41872](https://github.com/Azure/azure-sdk-for-net/pull/41872))
 
-- Added an experimental feature for logs emitted within an active tracing
+* Added an experimental feature for logs emitted within an active tracing
   context to follow the Activity's sampling decision. The feature can be enabled
   by setting `OTEL_DOTNET_AZURE_MONITOR_EXPERIMENTAL_ENABLE_LOG_SAMPLING`
   environment variable to `true`.
@@ -75,6 +100,18 @@
 * Updated the vendored code in the `OpenTelemetry.ResourceDetectors.Azure`
   resource detector to include the Azure Container Apps resource detector.
   ([#41803](https://github.com/Azure/azure-sdk-for-net/pull/41803))
+
+## 1.1.1 (2024-04-26)
+
+### Other Changes
+
+* Update OpenTelemetry dependencies.
+  ([#43432](https://github.com/Azure/azure-sdk-for-net/pull/43432))
+  - OpenTelemetry 1.8.1
+  - OpenTelemetry.Extensions.Hosting 1.8.1
+  - OpenTelemetry.Instrumentation.AspNetCore 1.8.1
+  - OpenTelemetry.Instrumentation.Http 1.8.1
+  - This update is a response to [CVE-2024-32028](https://nvd.nist.gov/vuln/detail/CVE-2024-32028)
 
 ## 1.1.0 (2024-01-25)
 

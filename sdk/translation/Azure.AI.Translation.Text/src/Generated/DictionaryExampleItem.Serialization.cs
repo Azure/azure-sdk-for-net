@@ -15,7 +15,7 @@ namespace Azure.AI.Translation.Text
 {
     public partial class DictionaryExampleItem : IUtf8JsonSerializable, IJsonModel<DictionaryExampleItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DictionaryExampleItem>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DictionaryExampleItem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DictionaryExampleItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -34,7 +34,7 @@ namespace Azure.AI.Translation.Text
             writer.WriteStartArray();
             foreach (var item in Examples)
             {
-                writer.WriteObjectValue<DictionaryExample>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -69,7 +69,7 @@ namespace Azure.AI.Translation.Text
 
         internal static DictionaryExampleItem DeserializeDictionaryExampleItem(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -79,7 +79,7 @@ namespace Azure.AI.Translation.Text
             string normalizedTarget = default;
             IReadOnlyList<DictionaryExample> examples = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("normalizedSource"u8))
@@ -104,10 +104,10 @@ namespace Azure.AI.Translation.Text
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DictionaryExampleItem(normalizedSource, normalizedTarget, examples, serializedAdditionalRawData);
         }
 
@@ -150,11 +150,11 @@ namespace Azure.AI.Translation.Text
             return DeserializeDictionaryExampleItem(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<DictionaryExampleItem>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

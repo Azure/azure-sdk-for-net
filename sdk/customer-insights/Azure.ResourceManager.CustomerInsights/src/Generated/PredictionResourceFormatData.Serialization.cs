@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CustomerInsights
 {
     public partial class PredictionResourceFormatData : IUtf8JsonSerializable, IJsonModel<PredictionResourceFormatData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PredictionResourceFormatData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PredictionResourceFormatData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PredictionResourceFormatData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.CustomerInsights
             if (Optional.IsDefined(Mappings))
             {
                 writer.WritePropertyName("mappings"u8);
-                writer.WriteObjectValue<PredictionMappings>(Mappings, options);
+                writer.WriteObjectValue(Mappings, options);
             }
             if (Optional.IsDefined(ScoreLabel))
             {
@@ -158,14 +158,14 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WriteStartArray();
                 foreach (var item in Grades)
                 {
-                    writer.WriteObjectValue<PredictionGradesItem>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(SystemGeneratedEntities))
             {
                 writer.WritePropertyName("systemGeneratedEntities"u8);
-                writer.WriteObjectValue<PredictionSystemGeneratedEntities>(SystemGeneratedEntities, options);
+                writer.WriteObjectValue(SystemGeneratedEntities, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.CustomerInsights
 
         internal static PredictionResourceFormatData DeserializePredictionResourceFormatData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.CustomerInsights
             IList<PredictionGradesItem> grades = default;
             PredictionSystemGeneratedEntities systemGeneratedEntities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -428,10 +428,10 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PredictionResourceFormatData(
                 id,
                 name,

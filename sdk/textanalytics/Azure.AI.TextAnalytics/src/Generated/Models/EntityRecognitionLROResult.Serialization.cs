@@ -17,7 +17,7 @@ namespace Azure.AI.TextAnalytics.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("results"u8);
-            writer.WriteObjectValue<EntitiesResult>(Results);
+            writer.WriteObjectValue(Results);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             if (Optional.IsDefined(TaskName))
@@ -72,6 +72,22 @@ namespace Azure.AI.TextAnalytics.Models
                 }
             }
             return new EntityRecognitionLROResult(lastUpdateDateTime, status, kind, taskName, results);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new EntityRecognitionLROResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeEntityRecognitionLROResult(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

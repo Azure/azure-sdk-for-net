@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -35,6 +34,22 @@ namespace Azure.ResourceManager.Communication
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2023-04-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string emailServiceName, string domainName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Communication/emailServices/", false);
+            uri.AppendPath(emailServiceName, true);
+            uri.AppendPath("/domains/", false);
+            uri.AppendPath(domainName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string emailServiceName, string domainName)
@@ -125,6 +140,22 @@ namespace Azure.ResourceManager.Communication
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string emailServiceName, string domainName, CommunicationDomainResourceData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Communication/emailServices/", false);
+            uri.AppendPath(emailServiceName, true);
+            uri.AppendPath("/domains/", false);
+            uri.AppendPath(domainName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string emailServiceName, string domainName, CommunicationDomainResourceData data)
         {
             var message = _pipeline.CreateMessage();
@@ -145,7 +176,7 @@ namespace Azure.ResourceManager.Communication
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<CommunicationDomainResourceData>(data, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -207,6 +238,22 @@ namespace Azure.ResourceManager.Communication
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string emailServiceName, string domainName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Communication/emailServices/", false);
+            uri.AppendPath(emailServiceName, true);
+            uri.AppendPath("/domains/", false);
+            uri.AppendPath(domainName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string emailServiceName, string domainName)
@@ -287,6 +334,22 @@ namespace Azure.ResourceManager.Communication
             }
         }
 
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string emailServiceName, string domainName, CommunicationDomainResourcePatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Communication/emailServices/", false);
+            uri.AppendPath(emailServiceName, true);
+            uri.AppendPath("/domains/", false);
+            uri.AppendPath(domainName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string emailServiceName, string domainName, CommunicationDomainResourcePatch patch)
         {
             var message = _pipeline.CreateMessage();
@@ -307,7 +370,7 @@ namespace Azure.ResourceManager.Communication
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<CommunicationDomainResourcePatch>(patch, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -369,6 +432,21 @@ namespace Azure.ResourceManager.Communication
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByEmailServiceResourceRequestUri(string subscriptionId, string resourceGroupName, string emailServiceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Communication/emailServices/", false);
+            uri.AppendPath(emailServiceName, true);
+            uri.AppendPath("/domains", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByEmailServiceResourceRequest(string subscriptionId, string resourceGroupName, string emailServiceName)
@@ -450,6 +528,23 @@ namespace Azure.ResourceManager.Communication
             }
         }
 
+        internal RequestUriBuilder CreateInitiateVerificationRequestUri(string subscriptionId, string resourceGroupName, string emailServiceName, string domainName, DomainsRecordVerificationContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Communication/emailServices/", false);
+            uri.AppendPath(emailServiceName, true);
+            uri.AppendPath("/domains/", false);
+            uri.AppendPath(domainName, true);
+            uri.AppendPath("/initiateVerification", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateInitiateVerificationRequest(string subscriptionId, string resourceGroupName, string emailServiceName, string domainName, DomainsRecordVerificationContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -471,7 +566,7 @@ namespace Azure.ResourceManager.Communication
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue<DomainsRecordVerificationContent>(content, new ModelReaderWriterOptions("W"));
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -533,6 +628,23 @@ namespace Azure.ResourceManager.Communication
             }
         }
 
+        internal RequestUriBuilder CreateCancelVerificationRequestUri(string subscriptionId, string resourceGroupName, string emailServiceName, string domainName, DomainsRecordVerificationContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Communication/emailServices/", false);
+            uri.AppendPath(emailServiceName, true);
+            uri.AppendPath("/domains/", false);
+            uri.AppendPath(domainName, true);
+            uri.AppendPath("/cancelVerification", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCancelVerificationRequest(string subscriptionId, string resourceGroupName, string emailServiceName, string domainName, DomainsRecordVerificationContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -554,7 +666,7 @@ namespace Azure.ResourceManager.Communication
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue<DomainsRecordVerificationContent>(content, new ModelReaderWriterOptions("W"));
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -614,6 +726,14 @@ namespace Azure.ResourceManager.Communication
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByEmailServiceResourceNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string emailServiceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByEmailServiceResourceNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string emailServiceName)

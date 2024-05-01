@@ -31,7 +31,6 @@
 ##################
 # Repository root
 ##################
-
 # Catch all for loose files in the root, which are mostly global configuration and
 # should not be changed without team discussion.
 /*                                                                 @jsquire @pallavit @Azure/azure-sdk-write-net-core
@@ -175,12 +174,6 @@
 # ServiceLabel: %Bot Service
 # ServiceOwners:                                                   @sgellock
 
-# PRLabel: %CDK
-/sdk/provisioning/                                                 @JoshLove-msft @tg-msft
-
-# ServiceLabel: %CDK
-# AzureSdkOwners:                                                  @JoshLove-msft
-
 # ServiceLabel: %Cloud Shell
 # ServiceOwners:                                                   @maertendMSFT
 
@@ -315,9 +308,6 @@
 # PRLabel: %Communication - Identity
 /sdk/communication/Azure.Communication.Identity/                   @Azure/acs-identity-sdk @AikoBB @maximrytych-ms @mjafferi-msft
 
-# PRLabel: %Communication - Network Traversal
-/sdk/communication/Azure.Communication.NetworkTraversal/           @ajpeacock0 @nathpete-msft
-
 # PRLabel: %Communication - Phone Numbers
 /sdk/communication/Azure.Communication.PhoneNumbers/               @miguhern @whisper6284 @RoyHerrod @danielav7
 
@@ -325,7 +315,7 @@
 /sdk/communication/Azure.Communication.ShortCodes/                 @guilhermeluizsp @danielav7
 
 # PRLabel: %Communication - SMS
-/sdk/communication/Azure.Communication.Sms/                        @DimaKolomiiets @gfeitosa-msft @phermanov-msft @ilyapaliakou-msft
+/sdk/communication/Azure.Communication.Sms/                        @gfeitosa-msft @phermanov-msft @ilyapaliakou-msft @besh2014
 
 # PRLabel: %Communication - Rooms
 /sdk/communication/Azure.Communication.Rooms/                      @minnieliu @paolamvhz @alexokun @Mrayyan @shwali-msft @allchiang-msft @mikehang-msft
@@ -455,10 +445,10 @@
 # ServiceOwners:                                                   @raedJarrar @jifems
 
 # PRLabel: %DevCenter
-/sdk/devcenter/                                                    @sebrenna @mharlan @chrissmiller @shivangireja
+/sdk/devcenter/                                                    @sebrenna @shivangireja
 
 # ServiceLabel: %DevCenter
-# ServiceOwners:                                                   @sebrenna @mharlan @chrissmiller
+# ServiceOwners:                                                   @sebrenna
 
 # ServiceLabel: %Dev Spaces
 # ServiceOwners:                                                   @yuzorMa @johnsta @greenie-msft
@@ -679,9 +669,6 @@
 # ServiceLabel: %Network - Bastion
 # ServiceOwners:                                                   @bastionsuppgithub
 
-# ServiceLabel: %Network - CDN
-# ServiceOwners:                                                   @cdnfdsuppgithub
-
 # ServiceLabel: %Network - DDOS Protection
 # ServiceOwners:                                                   @ddossuppgithub
 
@@ -759,6 +746,12 @@
 
 # ServiceLabel: %PostgreSQL
 # ServiceOwners:                                                   @sunilagarwal @lfittl-msft @sr-msft @niklarin
+
+# PRLabel: %Provisioning
+/sdk/provisioning/                                                 @JoshLove-msft @tg-msft
+
+# ServiceLabel: %Provisioning
+# AzureSdkOwners:                                                  @JoshLove-msft
 
 # PRLabel: %Quantum
 /sdk/quantum/Azure.Quantum.Jobs/                                   @xfield
@@ -933,6 +926,12 @@
 # ServiceLabel: %Mgmt
 # AzureSdkOwners:                                                  @ArthurMa1978
 
+# PRLabel: %Astronomer
+/sdk/astronomer/Azure.ResourceManager.Astro/                       @banggaurav
+
+# ServiceLabel: %Astronomer %Mgmt
+# ServiceOwners:                                                   @banggaurav
+
 # PRLabel: %Communication - Resource Manager
 /sdk/communication/Azure.ResourceManager.Communication/            @archerzz @ArcturusZhang @ArthurMa1978
 
@@ -947,6 +946,12 @@
 
 # ServiceLabel: %Large Instance %Mgmt
 # ServiceOwners:                                                   @8Gitbrix
+
+# PRLabel: %Network - CDN
+/sdk/cdn/Azure.ResourceManager.*/                                  @ptnan7
+
+# ServiceLabel: %Network - CDN %Mgmt
+# ServiceOwners:                                                   @ptnan7
 
 # ServiceLabel: %Recovery Services Backup %Mgmt
 # ServiceOwners:                                                   @Daya-Patil

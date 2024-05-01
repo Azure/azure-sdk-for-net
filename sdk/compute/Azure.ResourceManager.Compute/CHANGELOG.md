@@ -1,6 +1,6 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
+## 1.5.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,16 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.5.0-beta.1 (2024-04-25)
+
+### Features Added
+
+- Support long-running operation rehydration.
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.11.1.
 
 ## 1.4.0 (2024-02-21)
 

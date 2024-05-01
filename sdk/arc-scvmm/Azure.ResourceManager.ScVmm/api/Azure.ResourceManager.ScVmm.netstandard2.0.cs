@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ScVmm
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ScVmm.ScVmmAvailabilitySetData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ScVmm.ScVmmAvailabilitySetData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ScVmmAvailabilitySetResource : Azure.ResourceManager.ArmResource
+    public partial class ScVmmAvailabilitySetResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ScVmm.ScVmmAvailabilitySetData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ScVmm.ScVmmAvailabilitySetData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ScVmmAvailabilitySetResource() { }
@@ -47,6 +47,11 @@ namespace Azure.ResourceManager.ScVmm
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ScVmm.ScVmmAvailabilitySetResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ScVmm.ScVmmAvailabilitySetResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ScVmm.ScVmmAvailabilitySetResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.ScVmm.ScVmmAvailabilitySetData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ScVmm.ScVmmAvailabilitySetData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ScVmm.ScVmmAvailabilitySetData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ScVmm.ScVmmAvailabilitySetData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ScVmm.ScVmmAvailabilitySetData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ScVmm.ScVmmAvailabilitySetData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ScVmm.ScVmmAvailabilitySetData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ScVmm.ScVmmAvailabilitySetResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ScVmm.Models.ScVmmResourcePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ScVmm.ScVmmAvailabilitySetResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ScVmm.Models.ScVmmResourcePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -84,7 +89,7 @@ namespace Azure.ResourceManager.ScVmm
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ScVmm.ScVmmCloudData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ScVmm.ScVmmCloudData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ScVmmCloudResource : Azure.ResourceManager.ArmResource
+    public partial class ScVmmCloudResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ScVmm.ScVmmCloudData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ScVmm.ScVmmCloudData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ScVmmCloudResource() { }
@@ -101,6 +106,11 @@ namespace Azure.ResourceManager.ScVmm
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ScVmm.ScVmmCloudResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ScVmm.ScVmmCloudResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ScVmm.ScVmmCloudResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.ScVmm.ScVmmCloudData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ScVmm.ScVmmCloudData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ScVmm.ScVmmCloudData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ScVmm.ScVmmCloudData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ScVmm.ScVmmCloudData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ScVmm.ScVmmCloudData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ScVmm.ScVmmCloudData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ScVmm.ScVmmCloudResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ScVmm.Models.ScVmmResourcePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ScVmm.ScVmmCloudResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ScVmm.Models.ScVmmResourcePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -158,7 +168,7 @@ namespace Azure.ResourceManager.ScVmm
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ScVmm.ScVmmGuestAgentData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ScVmm.ScVmmGuestAgentData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ScVmmGuestAgentResource : Azure.ResourceManager.ArmResource
+    public partial class ScVmmGuestAgentResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ScVmm.ScVmmGuestAgentData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ScVmm.ScVmmGuestAgentData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ScVmmGuestAgentResource() { }
@@ -171,6 +181,11 @@ namespace Azure.ResourceManager.ScVmm
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ScVmm.ScVmmGuestAgentResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ScVmm.ScVmmGuestAgentResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.ScVmm.ScVmmGuestAgentData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ScVmm.ScVmmGuestAgentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ScVmm.ScVmmGuestAgentData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ScVmm.ScVmmGuestAgentData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ScVmm.ScVmmGuestAgentData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ScVmm.ScVmmGuestAgentData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ScVmm.ScVmmGuestAgentData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ScVmmHybridIdentityMetadataData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ScVmm.ScVmmHybridIdentityMetadataData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ScVmm.ScVmmHybridIdentityMetadataData>
     {
@@ -184,7 +199,7 @@ namespace Azure.ResourceManager.ScVmm
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ScVmm.ScVmmHybridIdentityMetadataData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ScVmm.ScVmmHybridIdentityMetadataData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ScVmmHybridIdentityMetadataResource : Azure.ResourceManager.ArmResource
+    public partial class ScVmmHybridIdentityMetadataResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ScVmm.ScVmmHybridIdentityMetadataData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ScVmm.ScVmmHybridIdentityMetadataData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ScVmmHybridIdentityMetadataResource() { }
@@ -193,6 +208,11 @@ namespace Azure.ResourceManager.ScVmm
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string resourceUri) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ScVmm.ScVmmHybridIdentityMetadataResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ScVmm.ScVmmHybridIdentityMetadataResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.ScVmm.ScVmmHybridIdentityMetadataData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ScVmm.ScVmmHybridIdentityMetadataData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ScVmm.ScVmmHybridIdentityMetadataData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ScVmm.ScVmmHybridIdentityMetadataData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ScVmm.ScVmmHybridIdentityMetadataData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ScVmm.ScVmmHybridIdentityMetadataData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ScVmm.ScVmmHybridIdentityMetadataData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ScVmmInventoryItemCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ScVmm.ScVmmInventoryItemResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ScVmm.ScVmmInventoryItemResource>, System.Collections.IEnumerable
     {
@@ -222,7 +242,7 @@ namespace Azure.ResourceManager.ScVmm
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ScVmm.ScVmmInventoryItemData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ScVmm.ScVmmInventoryItemData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ScVmmInventoryItemResource : Azure.ResourceManager.ArmResource
+    public partial class ScVmmInventoryItemResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ScVmm.ScVmmInventoryItemData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ScVmm.ScVmmInventoryItemData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ScVmmInventoryItemResource() { }
@@ -233,6 +253,11 @@ namespace Azure.ResourceManager.ScVmm
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ScVmm.ScVmmInventoryItemResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ScVmm.ScVmmInventoryItemResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.ScVmm.ScVmmInventoryItemData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ScVmm.ScVmmInventoryItemData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ScVmm.ScVmmInventoryItemData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ScVmm.ScVmmInventoryItemData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ScVmm.ScVmmInventoryItemData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ScVmm.ScVmmInventoryItemData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ScVmm.ScVmmInventoryItemData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ScVmm.ScVmmInventoryItemResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ScVmm.ScVmmInventoryItemData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ScVmm.ScVmmInventoryItemResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ScVmm.ScVmmInventoryItemData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -271,7 +296,7 @@ namespace Azure.ResourceManager.ScVmm
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ScVmm.ScVmmServerData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ScVmm.ScVmmServerData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ScVmmServerResource : Azure.ResourceManager.ArmResource
+    public partial class ScVmmServerResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ScVmm.ScVmmServerData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ScVmm.ScVmmServerData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ScVmmServerResource() { }
@@ -291,6 +316,11 @@ namespace Azure.ResourceManager.ScVmm
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ScVmm.ScVmmServerResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ScVmm.ScVmmServerResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ScVmm.ScVmmServerResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.ScVmm.ScVmmServerData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ScVmm.ScVmmServerData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ScVmm.ScVmmServerData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ScVmm.ScVmmServerData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ScVmm.ScVmmServerData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ScVmm.ScVmmServerData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ScVmm.ScVmmServerData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ScVmm.ScVmmServerResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ScVmm.Models.ScVmmResourcePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ScVmm.ScVmmServerResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ScVmm.Models.ScVmmResourcePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -312,7 +342,7 @@ namespace Azure.ResourceManager.ScVmm
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ScVmm.ScVmmVirtualMachineInstanceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ScVmm.ScVmmVirtualMachineInstanceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ScVmmVirtualMachineInstanceResource : Azure.ResourceManager.ArmResource
+    public partial class ScVmmVirtualMachineInstanceResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ScVmm.ScVmmVirtualMachineInstanceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ScVmm.ScVmmVirtualMachineInstanceData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ScVmmVirtualMachineInstanceResource() { }
@@ -339,6 +369,11 @@ namespace Azure.ResourceManager.ScVmm
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> StartAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Stop(Azure.WaitUntil waitUntil, Azure.ResourceManager.ScVmm.Models.StopVirtualMachineContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> StopAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ScVmm.Models.StopVirtualMachineContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.ScVmm.ScVmmVirtualMachineInstanceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ScVmm.ScVmmVirtualMachineInstanceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ScVmm.ScVmmVirtualMachineInstanceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ScVmm.ScVmmVirtualMachineInstanceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ScVmm.ScVmmVirtualMachineInstanceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ScVmm.ScVmmVirtualMachineInstanceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ScVmm.ScVmmVirtualMachineInstanceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ScVmm.ScVmmVirtualMachineInstanceResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ScVmm.Models.ScVmmVirtualMachineInstancePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ScVmm.ScVmmVirtualMachineInstanceResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ScVmm.Models.ScVmmVirtualMachineInstancePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -387,7 +422,7 @@ namespace Azure.ResourceManager.ScVmm
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ScVmm.ScVmmVirtualMachineTemplateData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ScVmm.ScVmmVirtualMachineTemplateData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ScVmmVirtualMachineTemplateResource : Azure.ResourceManager.ArmResource
+    public partial class ScVmmVirtualMachineTemplateResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ScVmm.ScVmmVirtualMachineTemplateData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ScVmm.ScVmmVirtualMachineTemplateData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ScVmmVirtualMachineTemplateResource() { }
@@ -404,6 +439,11 @@ namespace Azure.ResourceManager.ScVmm
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ScVmm.ScVmmVirtualMachineTemplateResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ScVmm.ScVmmVirtualMachineTemplateResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ScVmm.ScVmmVirtualMachineTemplateResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.ScVmm.ScVmmVirtualMachineTemplateData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ScVmm.ScVmmVirtualMachineTemplateData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ScVmm.ScVmmVirtualMachineTemplateData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ScVmm.ScVmmVirtualMachineTemplateData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ScVmm.ScVmmVirtualMachineTemplateData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ScVmm.ScVmmVirtualMachineTemplateData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ScVmm.ScVmmVirtualMachineTemplateData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ScVmm.ScVmmVirtualMachineTemplateResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ScVmm.Models.ScVmmResourcePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ScVmm.ScVmmVirtualMachineTemplateResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ScVmm.Models.ScVmmResourcePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -439,7 +479,7 @@ namespace Azure.ResourceManager.ScVmm
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ScVmm.ScVmmVirtualNetworkData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ScVmm.ScVmmVirtualNetworkData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ScVmmVirtualNetworkResource : Azure.ResourceManager.ArmResource
+    public partial class ScVmmVirtualNetworkResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ScVmm.ScVmmVirtualNetworkData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ScVmm.ScVmmVirtualNetworkData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ScVmmVirtualNetworkResource() { }
@@ -456,6 +496,11 @@ namespace Azure.ResourceManager.ScVmm
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ScVmm.ScVmmVirtualNetworkResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ScVmm.ScVmmVirtualNetworkResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ScVmm.ScVmmVirtualNetworkResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.ScVmm.ScVmmVirtualNetworkData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ScVmm.ScVmmVirtualNetworkData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ScVmm.ScVmmVirtualNetworkData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ScVmm.ScVmmVirtualNetworkData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ScVmm.ScVmmVirtualNetworkData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ScVmm.ScVmmVirtualNetworkData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ScVmm.ScVmmVirtualNetworkData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ScVmm.ScVmmVirtualNetworkResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ScVmm.Models.ScVmmResourcePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ScVmm.ScVmmVirtualNetworkResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ScVmm.Models.ScVmmResourcePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

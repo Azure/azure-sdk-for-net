@@ -87,5 +87,13 @@ namespace Azure.Storage.Files.Shares.Models
             }
             return new StorageError(message, copySourceStatusCode, copySourceErrorCode, copySourceErrorMessage, authenticationErrorDetail);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static StorageError FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeStorageError(document.RootElement);
+        }
     }
 }

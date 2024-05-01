@@ -72,8 +72,9 @@ namespace Azure.Identity
             return request;
         }
 
-        protected override async ValueTask<AccessToken> HandleResponseAsync(bool async, TokenRequestContext context, Response response, CancellationToken cancellationToken)
+        protected override async ValueTask<AccessToken> HandleResponseAsync(bool async, TokenRequestContext context, HttpMessage message, CancellationToken cancellationToken)
         {
+            Response response = message.Response;
             if (response.Status == 401)
             {
                 if (!response.Headers.TryGetValue("WWW-Authenticate", out string challenge))
@@ -94,14 +95,22 @@ namespace Azure.Identity
 
                 request.Headers.Add("Authorization", authHeaderValue);
 
-                response = async
+                var challengeResponseMessage = Pipeline.HttpPipeline.CreateMessage();
+                challengeResponseMessage.Request.Method = request.Method;
+                challengeResponseMessage.Request.Uri.Reset(request.Uri.ToUri());
+                foreach (var header in request.Headers)
+                {
+                    challengeResponseMessage.Request.Headers.Add(header.Name, header.Value);
+                }
+
+                challengeResponseMessage.Response = async
                     ? await Pipeline.HttpPipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false)
                     : Pipeline.HttpPipeline.SendRequest(request, cancellationToken);
 
-                return await base.HandleResponseAsync(async, context, response, cancellationToken).ConfigureAwait(false);
+                return await base.HandleResponseAsync(async, context, challengeResponseMessage, cancellationToken).ConfigureAwait(false);
             }
 
-            return await base.HandleResponseAsync(async, context, response, cancellationToken).ConfigureAwait(false);
+            return await base.HandleResponseAsync(async, context, message, cancellationToken).ConfigureAwait(false);
         }
     }
 }

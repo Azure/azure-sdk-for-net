@@ -126,7 +126,7 @@ namespace Azure.IoT.Hub.Service
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<TwinConfiguration>(configuration);
+            content.JsonWriter.WriteObjectValue(configuration);
             request.Content = content;
             return message;
         }
@@ -346,7 +346,7 @@ namespace Azure.IoT.Hub.Service
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ConfigurationQueriesTestInput>(input);
+            content.JsonWriter.WriteObjectValue(input);
             request.Content = content;
             return message;
         }
@@ -419,7 +419,7 @@ namespace Azure.IoT.Hub.Service
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue<ConfigurationContent>(content);
+            content0.JsonWriter.WriteObjectValue(content);
             request.Content = content0;
             return message;
         }

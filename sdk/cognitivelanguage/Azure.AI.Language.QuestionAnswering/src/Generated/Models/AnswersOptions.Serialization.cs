@@ -43,7 +43,7 @@ namespace Azure.AI.Language.QuestionAnswering
             if (Optional.IsDefined(AnswerContext))
             {
                 writer.WritePropertyName("context"u8);
-                writer.WriteObjectValue<KnowledgeBaseAnswerContext>(AnswerContext);
+                writer.WriteObjectValue(AnswerContext);
             }
             if (Optional.IsDefined(RankerKind))
             {
@@ -53,12 +53,12 @@ namespace Azure.AI.Language.QuestionAnswering
             if (Optional.IsDefined(Filters))
             {
                 writer.WritePropertyName("filters"u8);
-                writer.WriteObjectValue<QueryFilters>(Filters);
+                writer.WriteObjectValue(Filters);
             }
             if (Optional.IsDefined(ShortAnswerOptions))
             {
                 writer.WritePropertyName("answerSpanRequest"u8);
-                writer.WriteObjectValue<ShortAnswerOptions>(ShortAnswerOptions);
+                writer.WriteObjectValue(ShortAnswerOptions);
             }
             if (Optional.IsDefined(IncludeUnstructuredSources))
             {
@@ -66,6 +66,14 @@ namespace Azure.AI.Language.QuestionAnswering
                 writer.WriteBooleanValue(IncludeUnstructuredSources.Value);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }
