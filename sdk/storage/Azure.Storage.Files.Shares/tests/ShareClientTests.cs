@@ -378,7 +378,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Arrange
             var shareName = GetNewShareName();
             ShareServiceClient service = SharesClientBuilder.GetServiceClient_SharedKey();
-            Uri sasUri = service.GenerateAccountSasUri(AccountSasPermissions.All, GetUtcNow().AddDays(1), AccountSasResourceTypes.All);
+            Uri sasUri = service.GenerateAccountSasUri(AccountSasPermissions.All, GetUtcNow().AddDays(-1), AccountSasResourceTypes.All);
             ShareServiceClient unauthorizedServiceClient = InstrumentClient(new ShareServiceClient(sasUri));
             ShareClient share = InstrumentClient(unauthorizedServiceClient.GetShareClient(shareName));
 
