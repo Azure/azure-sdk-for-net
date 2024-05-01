@@ -172,7 +172,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
 
                                 // Sampling is disabled by the user.
                                 // Set the SampleRatio of log exporter to 1.0.
-                                // The value will be used by the exporter to set SampleRate on the telemetry items.
+                                // The value will be used by the log exporter to set SampleRate on the telemetry items.
                                 o.SamplingRatio = 1.0f;
                             });
                         }
