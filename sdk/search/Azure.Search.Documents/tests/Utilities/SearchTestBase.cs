@@ -61,6 +61,7 @@ namespace Azure.Search.Documents.Tests
             JsonPathSanitizers.Add("$..applicationSecret");
             JsonPathSanitizers.Add("$..apiKey");
             SanitizedHeaders.Add("api-key");
+            JsonPathSanitizers.Remove("$..token");
             CompareBodies = false;
         }
 

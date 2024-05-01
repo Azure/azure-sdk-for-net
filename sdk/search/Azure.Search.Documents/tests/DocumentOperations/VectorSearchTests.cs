@@ -276,9 +276,8 @@ namespace Azure.Search.Documents.Tests
             Assert.AreEqual("InvalidRequestParameter", ex.ErrorCode);
         }
 
-        [Test]
+        [RecordedTest]
         [PlaybackOnly("The availability of Semantic Search is limited to specific regions, as indicated in the list provided here: https://azure.microsoft.com/explore/global-infrastructure/products-by-region/?products=search. Due to this limitation, the deployment of resources for weekly test pipeline for setting the \"semanticSearch\": \"free\" fails in the UsGov and China cloud regions.")]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/43552")]
         public async Task CanContinueWithNextPage()
         {
             const int size = 150;

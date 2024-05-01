@@ -212,8 +212,7 @@ namespace Azure.Search.Documents.Tests
         #endregion
 
         #region Champion
-        [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/43552")]
+        [RecordedTest]
         public async Task Champion_OneShotUpload()
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyIndexAsync<SimpleDocument>(this);
