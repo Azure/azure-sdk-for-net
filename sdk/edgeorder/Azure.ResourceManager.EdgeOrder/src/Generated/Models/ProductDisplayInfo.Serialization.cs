@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 {
     public partial class ProductDisplayInfo : IUtf8JsonSerializable, IJsonModel<ProductDisplayInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProductDisplayInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProductDisplayInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ProductDisplayInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         internal static ProductDisplayInfo DeserializeProductDisplayInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             string productFamilyDisplayName = default;
             string configurationDisplayName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("productFamilyDisplayName"u8))
@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ProductDisplayInfo(productFamilyDisplayName, configurationDisplayName, serializedAdditionalRawData);
         }
 

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Workloads.Models
 {
     public partial class SapInstallWithoutOSConfigSoftwareConfiguration : IUtf8JsonSerializable, IJsonModel<SapInstallWithoutOSConfigSoftwareConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapInstallWithoutOSConfigSoftwareConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapInstallWithoutOSConfigSoftwareConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SapInstallWithoutOSConfigSoftwareConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Workloads.Models
             if (Optional.IsDefined(HighAvailabilitySoftwareConfiguration))
             {
                 writer.WritePropertyName("highAvailabilitySoftwareConfiguration"u8);
-                writer.WriteObjectValue<HighAvailabilitySoftwareConfiguration>(HighAvailabilitySoftwareConfiguration, options);
+                writer.WriteObjectValue(HighAvailabilitySoftwareConfiguration, options);
             }
             writer.WritePropertyName("softwareInstallationType"u8);
             writer.WriteStringValue(SoftwareInstallationType.ToString());
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static SapInstallWithoutOSConfigSoftwareConfiguration DeserializeSapInstallWithoutOSConfigSoftwareConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Workloads.Models
             HighAvailabilitySoftwareConfiguration highAvailabilitySoftwareConfiguration = default;
             SapSoftwareInstallationType softwareInstallationType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("bomUrl"u8))
@@ -117,10 +117,10 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SapInstallWithoutOSConfigSoftwareConfiguration(
                 softwareInstallationType,
                 serializedAdditionalRawData,

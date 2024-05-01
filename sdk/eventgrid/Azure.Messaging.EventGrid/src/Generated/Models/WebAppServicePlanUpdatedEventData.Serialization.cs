@@ -90,12 +90,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 verb);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static WebAppServicePlanUpdatedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeWebAppServicePlanUpdatedEventData(document.RootElement);
+        }
+
         internal partial class WebAppServicePlanUpdatedEventDataConverter : JsonConverter<WebAppServicePlanUpdatedEventData>
         {
             public override void Write(Utf8JsonWriter writer, WebAppServicePlanUpdatedEventData model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override WebAppServicePlanUpdatedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

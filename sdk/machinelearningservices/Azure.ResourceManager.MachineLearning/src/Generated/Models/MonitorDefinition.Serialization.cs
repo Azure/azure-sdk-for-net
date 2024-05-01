@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class MonitorDefinition : IUtf8JsonSerializable, IJsonModel<MonitorDefinition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitorDefinition>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitorDefinition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MonitorDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (AlertNotificationSetting != null)
                 {
                     writer.WritePropertyName("alertNotificationSetting"u8);
-                    writer.WriteObjectValue<MonitoringAlertNotificationSettingsBase>(AlertNotificationSetting, options);
+                    writer.WriteObjectValue(AlertNotificationSetting, options);
                 }
                 else
                 {
@@ -39,13 +39,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             writer.WritePropertyName("computeConfiguration"u8);
-            writer.WriteObjectValue<MonitorComputeConfigurationBase>(ComputeConfiguration, options);
+            writer.WriteObjectValue(ComputeConfiguration, options);
             if (Optional.IsDefined(MonitoringTarget))
             {
                 if (MonitoringTarget != null)
                 {
                     writer.WritePropertyName("monitoringTarget"u8);
-                    writer.WriteObjectValue<MonitoringTarget>(MonitoringTarget, options);
+                    writer.WriteObjectValue(MonitoringTarget, options);
                 }
                 else
                 {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             foreach (var item in Signals)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue<MonitoringSignalBase>(item.Value, options);
+                writer.WriteObjectValue(item.Value, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MonitorDefinition DeserializeMonitorDefinition(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             MonitoringTarget monitoringTarget = default;
             IDictionary<string, MonitoringSignalBase> signals = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("alertNotificationSetting"u8))
@@ -143,10 +143,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MonitorDefinition(alertNotificationSetting, computeConfiguration, monitoringTarget, signals, serializedAdditionalRawData);
         }
 

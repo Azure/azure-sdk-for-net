@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
     public partial class HelmReleaseProperties : IUtf8JsonSerializable, IJsonModel<HelmReleaseProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HelmReleaseProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HelmReleaseProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HelmReleaseProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 if (HelmChartRef != null)
                 {
                     writer.WritePropertyName("helmChartRef"u8);
-                    writer.WriteObjectValue<KubernetesObjectReference>(HelmChartRef, options);
+                    writer.WriteObjectValue(HelmChartRef, options);
                 }
                 else
                 {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
 
         internal static HelmReleaseProperties DeserializeHelmReleaseProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             long? installFailureCount = default;
             long? upgradeFailureCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lastRevisionApplied"u8))
@@ -185,10 +185,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new HelmReleaseProperties(
                 lastRevisionApplied,
                 helmChartRef,

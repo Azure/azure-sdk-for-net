@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 {
     public partial class KeyVaultVirtualNetworkRule : IUtf8JsonSerializable, IJsonModel<KeyVaultVirtualNetworkRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KeyVaultVirtualNetworkRule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KeyVaultVirtualNetworkRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<KeyVaultVirtualNetworkRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         internal static KeyVaultVirtualNetworkRule DeserializeKeyVaultVirtualNetworkRule(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             string id = default;
             bool? ignoreMissingVnetServiceEndpoint = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new KeyVaultVirtualNetworkRule(id, ignoreMissingVnetServiceEndpoint, serializedAdditionalRawData);
         }
 
@@ -113,15 +113,16 @@ namespace Azure.ResourceManager.KeyVault.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  id: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  id: ");
                     if (Id.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -135,15 +136,16 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IgnoreMissingVnetServiceEndpoint), out propertyOverride);
-            if (Optional.IsDefined(IgnoreMissingVnetServiceEndpoint) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  ignoreMissingVnetServiceEndpoint: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IgnoreMissingVnetServiceEndpoint))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  ignoreMissingVnetServiceEndpoint: ");
                     var boolValue = IgnoreMissingVnetServiceEndpoint.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }

@@ -20,12 +20,14 @@ namespace Azure.Storage.Files.Shares.Models
         /// <param name="copySourceStatusCode"></param>
         /// <param name="copySourceErrorCode"></param>
         /// <param name="copySourceErrorMessage"></param>
-        internal StorageError(string message, long? copySourceStatusCode, string copySourceErrorCode, string copySourceErrorMessage)
+        /// <param name="authenticationErrorDetail"></param>
+        internal StorageError(string message, long? copySourceStatusCode, string copySourceErrorCode, string copySourceErrorMessage, string authenticationErrorDetail)
         {
             Message = message;
             CopySourceStatusCode = copySourceStatusCode;
             CopySourceErrorCode = copySourceErrorCode;
             CopySourceErrorMessage = copySourceErrorMessage;
+            AuthenticationErrorDetail = authenticationErrorDetail;
         }
 
         /// <summary> Gets the message. </summary>
@@ -36,5 +38,7 @@ namespace Azure.Storage.Files.Shares.Models
         public string CopySourceErrorCode { get; }
         /// <summary> Gets the copy source error message. </summary>
         public string CopySourceErrorMessage { get; }
+        /// <summary> Gets the authentication error detail. </summary>
+        public string AuthenticationErrorDetail { get; }
     }
 }

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 {
     public partial class DevCenterProjectPatch : IUtf8JsonSerializable, IJsonModel<DevCenterProjectPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevCenterProjectPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevCenterProjectPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DevCenterProjectPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         internal static DevCenterProjectPatch DeserializeDevCenterProjectPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             string description = default;
             int? maxDevBoxesPerUser = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DevCenterProjectPatch(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,

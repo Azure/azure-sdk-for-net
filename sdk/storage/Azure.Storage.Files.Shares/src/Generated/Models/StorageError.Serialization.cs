@@ -18,6 +18,7 @@ namespace Azure.Storage.Files.Shares.Models
             long? copySourceStatusCode = default;
             string copySourceErrorCode = default;
             string copySourceErrorMessage = default;
+            string authenticationErrorDetail = default;
             if (element.Element("Message") is XElement messageElement)
             {
                 message = (string)messageElement;
@@ -34,7 +35,11 @@ namespace Azure.Storage.Files.Shares.Models
             {
                 copySourceErrorMessage = (string)copySourceErrorMessageElement;
             }
-            return new StorageError(message, copySourceStatusCode, copySourceErrorCode, copySourceErrorMessage);
+            if (element.Element("AuthenticationErrorDetail") is XElement authenticationErrorDetailElement)
+            {
+                authenticationErrorDetail = (string)authenticationErrorDetailElement;
+            }
+            return new StorageError(message, copySourceStatusCode, copySourceErrorCode, copySourceErrorMessage, authenticationErrorDetail);
         }
 
         internal static StorageError DeserializeStorageError(JsonElement element)
@@ -47,6 +52,7 @@ namespace Azure.Storage.Files.Shares.Models
             long? copySourceStatusCode = default;
             string copySourceErrorCode = default;
             string copySourceErrorMessage = default;
+            string authenticationErrorDetail = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("Message"u8))
@@ -73,8 +79,21 @@ namespace Azure.Storage.Files.Shares.Models
                     copySourceErrorMessage = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("AuthenticationErrorDetail"u8))
+                {
+                    authenticationErrorDetail = property.Value.GetString();
+                    continue;
+                }
             }
-            return new StorageError(message, copySourceStatusCode, copySourceErrorCode, copySourceErrorMessage);
+            return new StorageError(message, copySourceStatusCode, copySourceErrorCode, copySourceErrorMessage, authenticationErrorDetail);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static StorageError FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeStorageError(document.RootElement);
         }
     }
 }

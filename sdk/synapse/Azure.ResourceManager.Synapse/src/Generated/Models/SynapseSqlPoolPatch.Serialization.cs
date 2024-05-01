@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Synapse.Models
 {
     public partial class SynapseSqlPoolPatch : IUtf8JsonSerializable, IJsonModel<SynapseSqlPoolPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseSqlPoolPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseSqlPoolPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SynapseSqlPoolPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Synapse.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue<SynapseSku>(Sku, options);
+                writer.WriteObjectValue(Sku, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseSqlPoolPatch DeserializeSynapseSqlPoolPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Synapse.Models
             SqlPoolStorageAccountType? storageAccountType = default;
             DateTimeOffset? sourceDatabaseDeletionDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -286,10 +286,10 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SynapseSqlPoolPatch(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,

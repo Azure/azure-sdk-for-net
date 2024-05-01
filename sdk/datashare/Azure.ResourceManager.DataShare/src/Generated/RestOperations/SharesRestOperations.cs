@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -35,6 +34,35 @@ namespace Azure.ResourceManager.DataShare
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2021-08-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListSynchronizationDetailsRequestUri(string subscriptionId, string resourceGroupName, string accountName, string shareName, ShareSynchronization shareSynchronization, string skipToken, string filter, string orderby)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataShare/accounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/shares/", false);
+            uri.AppendPath(shareName, true);
+            uri.AppendPath("/listSynchronizationDetails", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (orderby != null)
+            {
+                uri.AppendQuery("$orderby", orderby, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListSynchronizationDetailsRequest(string subscriptionId, string resourceGroupName, string accountName, string shareName, ShareSynchronization shareSynchronization, string skipToken, string filter, string orderby)
@@ -70,7 +98,7 @@ namespace Azure.ResourceManager.DataShare
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ShareSynchronization>(shareSynchronization, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(shareSynchronization, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -146,6 +174,35 @@ namespace Azure.ResourceManager.DataShare
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListSynchronizationsRequestUri(string subscriptionId, string resourceGroupName, string accountName, string shareName, string skipToken, string filter, string orderby)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataShare/accounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/shares/", false);
+            uri.AppendPath(shareName, true);
+            uri.AppendPath("/listSynchronizations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (orderby != null)
+            {
+                uri.AppendQuery("$orderby", orderby, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListSynchronizationsRequest(string subscriptionId, string resourceGroupName, string accountName, string shareName, string skipToken, string filter, string orderby)
@@ -251,6 +308,22 @@ namespace Azure.ResourceManager.DataShare
             }
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string accountName, string shareName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataShare/accounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/shares/", false);
+            uri.AppendPath(shareName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string accountName, string shareName)
         {
             var message = _pipeline.CreateMessage();
@@ -339,6 +412,22 @@ namespace Azure.ResourceManager.DataShare
             }
         }
 
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string accountName, string shareName, DataShareData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataShare/accounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/shares/", false);
+            uri.AppendPath(shareName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string accountName, string shareName, DataShareData data)
         {
             var message = _pipeline.CreateMessage();
@@ -359,7 +448,7 @@ namespace Azure.ResourceManager.DataShare
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<DataShareData>(data, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -431,6 +520,22 @@ namespace Azure.ResourceManager.DataShare
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string accountName, string shareName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataShare/accounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/shares/", false);
+            uri.AppendPath(shareName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string accountName, string shareName)
@@ -509,6 +614,33 @@ namespace Azure.ResourceManager.DataShare
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByAccountRequestUri(string subscriptionId, string resourceGroupName, string accountName, string skipToken, string filter, string orderby)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataShare/accounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/shares", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (orderby != null)
+            {
+                uri.AppendQuery("$orderby", orderby, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListByAccountRequest(string subscriptionId, string resourceGroupName, string accountName, string skipToken, string filter, string orderby)
@@ -608,6 +740,14 @@ namespace Azure.ResourceManager.DataShare
             }
         }
 
+        internal RequestUriBuilder CreateListSynchronizationDetailsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string shareName, ShareSynchronization shareSynchronization, string skipToken, string filter, string orderby)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListSynchronizationDetailsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string shareName, ShareSynchronization shareSynchronization, string skipToken, string filter, string orderby)
         {
             var message = _pipeline.CreateMessage();
@@ -698,6 +838,14 @@ namespace Azure.ResourceManager.DataShare
             }
         }
 
+        internal RequestUriBuilder CreateListSynchronizationsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string shareName, string skipToken, string filter, string orderby)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListSynchronizationsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string shareName, string skipToken, string filter, string orderby)
         {
             var message = _pipeline.CreateMessage();
@@ -782,6 +930,14 @@ namespace Azure.ResourceManager.DataShare
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByAccountNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string skipToken, string filter, string orderby)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByAccountNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string skipToken, string filter, string orderby)

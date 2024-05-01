@@ -434,7 +434,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateGetAccountInfoRequest()
+        internal HttpMessage CreateGetAccountInfoRequest(int? timeout)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -444,6 +444,10 @@ namespace Azure.Storage.Blobs
             uri.AppendPath("/", false);
             uri.AppendQuery("restype", "account", true);
             uri.AppendQuery("comp", "properties", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
             request.Uri = uri;
             request.Headers.Add("x-ms-version", _version);
             request.Headers.Add("Accept", "application/xml");
@@ -451,10 +455,11 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> Returns the sku name and account kind. </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ServiceGetAccountInfoHeaders>> GetAccountInfoAsync(CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ServiceGetAccountInfoHeaders>> GetAccountInfoAsync(int? timeout = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetAccountInfoRequest();
+            using var message = CreateGetAccountInfoRequest(timeout);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new ServiceGetAccountInfoHeaders(message.Response);
             switch (message.Response.Status)
@@ -467,10 +472,11 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> Returns the sku name and account kind. </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ServiceGetAccountInfoHeaders> GetAccountInfo(CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ServiceGetAccountInfoHeaders> GetAccountInfo(int? timeout = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetAccountInfoRequest();
+            using var message = CreateGetAccountInfoRequest(timeout);
             _pipeline.Send(message, cancellationToken);
             var headers = new ServiceGetAccountInfoHeaders(message.Response);
             switch (message.Response.Status)

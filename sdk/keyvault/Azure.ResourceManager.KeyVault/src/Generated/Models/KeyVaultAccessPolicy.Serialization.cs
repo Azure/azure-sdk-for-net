@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 {
     public partial class KeyVaultAccessPolicy : IUtf8JsonSerializable, IJsonModel<KeyVaultAccessPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KeyVaultAccessPolicy>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KeyVaultAccessPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<KeyVaultAccessPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 writer.WriteStringValue(ApplicationId.Value);
             }
             writer.WritePropertyName("permissions"u8);
-            writer.WriteObjectValue<IdentityAccessPermissions>(Permissions, options);
+            writer.WriteObjectValue(Permissions, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         internal static KeyVaultAccessPolicy DeserializeKeyVaultAccessPolicy(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             Guid? applicationId = default;
             IdentityAccessPermissions permissions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tenantId"u8))
@@ -110,10 +110,10 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new KeyVaultAccessPolicy(tenantId, objectId, applicationId, permissions, serializedAdditionalRawData);
         }
 
@@ -129,26 +129,28 @@ namespace Azure.ResourceManager.KeyVault.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TenantId), out propertyOverride);
-            builder.Append("  tenantId: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.Append("  tenantId: ");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
+                builder.Append("  tenantId: ");
                 builder.AppendLine($"'{TenantId.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ObjectId), out propertyOverride);
-            if (Optional.IsDefined(ObjectId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  objectId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ObjectId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  objectId: ");
                     if (ObjectId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -162,29 +164,31 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApplicationId), out propertyOverride);
-            if (Optional.IsDefined(ApplicationId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  applicationId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ApplicationId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  applicationId: ");
                     builder.AppendLine($"'{ApplicationId.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Permissions), out propertyOverride);
-            if (Optional.IsDefined(Permissions) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  permissions: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Permissions))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  permissions: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Permissions, options, 2, false, "  permissions: ");
                 }
             }

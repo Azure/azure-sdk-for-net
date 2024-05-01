@@ -124,7 +124,7 @@ namespace Azure.Storage.DataMovement.Tests
                 It.IsAny<CancellationToken>()),
                 Times.Once());
             destMock.Verify(b => b.DeleteIfExistsAsync(It.IsAny<CancellationToken>()),
-                Times.Once());
+                Times.Never());
             destMock.VerifyNoOtherCalls();
             await testEventsRaised.AssertSingleFailedCheck(1);
         }
@@ -163,9 +163,9 @@ namespace Azure.Storage.DataMovement.Tests
                 It.IsAny<CancellationToken>()),
                 Times.Once());
             destMock.Verify(b => b.DeleteIfExistsAsync(It.IsAny<CancellationToken>()),
-                Times.Once());
+                Times.Never());
             destMock.VerifyNoOtherCalls();
-            await testEventsRaised.AssertSingleFailedCheck(2);
+            await testEventsRaised.AssertSingleFailedCheck(1);
         }
     }
 }

@@ -678,6 +678,7 @@ namespace Azure.Storage.Blobs.Test
         #endregion
 
         [RecordedTest]
+        [LiveOnly(Reason = "Encryption Key cannot be stored in recordings.")]
         public async Task DownloadAsync_CPK()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -700,6 +701,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [LiveOnly(Reason = "Encryption Key cannot be stored in recordings.")]
         public async Task DownloadAsync_CPK_Streaming()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -722,6 +724,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [LiveOnly(Reason = "Encryption Key cannot be stored in recordings.")]
         public async Task DownloadAsync_CPK_BinaryData()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -4178,6 +4181,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [LiveOnly(Reason = "Encryption Key cannot be stored in recordings.")]
         public async Task GetPropertiesAsync_CPK()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -7636,6 +7640,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [LiveOnly(Reason = "Encryption Key cannot be stored in recordings.")]
         public async Task WithCustomerProvidedKey()
         {
             // Arrange
@@ -7816,6 +7821,40 @@ namespace Azure.Storage.Blobs.Test
             mock = new Mock<BlobBaseClient>(new Uri("https://test/test"), Tenants.GetNewSharedKeyCredentials(), new BlobClientOptions()).Object;
             mock = new Mock<BlobBaseClient>(new Uri("https://test/test"), new AzureSasCredential("foo"), new BlobClientOptions()).Object;
             mock = new Mock<BlobBaseClient>(new Uri("https://test/test"), Tenants.GetOAuthCredential(Tenants.TestConfigHierarchicalNamespace), new BlobClientOptions()).Object;
+        }
+
+        [RecordedTest]
+        public async Task GetAccountInfoAsync()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            // Act
+            Response<AccountInfo> response = await blob.GetAccountInfoAsync();
+
+            // Assert
+            Assert.AreEqual(SkuName.StandardRagrs, response.Value.SkuName);
+            Assert.AreEqual(AccountKind.StorageV2, response.Value.AccountKind);
+            Assert.IsFalse(response.Value.IsHierarchicalNamespaceEnabled);
+        }
+
+        [RecordedTest]
+        public async Task GetAccountInfoAsync_Error()
+        {
+            // Arrange
+            BlobServiceClient service = InstrumentClient(
+                new BlobServiceClient(
+                    BlobsClientBuilder.GetServiceClient_SharedKey().Uri,
+                    GetOptions()));
+
+            BlobClient blobClient = service.GetBlobContainerClient(GetNewContainerName()).GetBlobClient(GetNewBlobName());
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blobClient.GetAccountInfoAsync(),
+                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
         }
 
         public IEnumerable<AccessConditionParameters> AccessConditions_Data

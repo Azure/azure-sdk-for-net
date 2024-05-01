@@ -60,7 +60,7 @@ function ValidateChangeLog($changeLogPath, $versionString, $validationStatus)
         Write-Host "Path to change log: [$changeLogFullPath]"        
         if (Test-Path $changeLogFullPath)
         {
-            Confirm-ChangeLogEntry -ChangeLogLocation $changeLogFullPath -VersionString $versionString -ForRelease $true -ChangeLogStatus $ChangeLogStatus
+            Confirm-ChangeLogEntry -ChangeLogLocation $changeLogFullPath -VersionString $versionString -ForRelease $true -ChangeLogStatus $ChangeLogStatus -SuppressErrors $true
             $validationStatus.Status = if ($ChangeLogStatus.IsValid) { "Success" } else { "Failed" }
             $validationStatus.Message = $ChangeLogStatus.Message 
         }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 {
     internal partial class CommitmentPlanAccountAssociationListResult : IUtf8JsonSerializable, IJsonModel<CommitmentPlanAccountAssociationListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CommitmentPlanAccountAssociationListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CommitmentPlanAccountAssociationListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CommitmentPlanAccountAssociationListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue<CommitmentPlanAccountAssociationData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         internal static CommitmentPlanAccountAssociationListResult DeserializeCommitmentPlanAccountAssociationListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             string nextLink = default;
             IReadOnlyList<CommitmentPlanAccountAssociationData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"u8))
@@ -108,10 +108,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new CommitmentPlanAccountAssociationListResult(nextLink, value ?? new ChangeTrackingList<CommitmentPlanAccountAssociationData>(), serializedAdditionalRawData);
         }
 
@@ -127,15 +127,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NextLink), out propertyOverride);
-            if (Optional.IsDefined(NextLink) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  nextLink: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NextLink))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  nextLink: ");
                     if (NextLink.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -149,17 +150,18 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Value), out propertyOverride);
-            if (Optional.IsCollectionDefined(Value) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Value.Any() || hasPropertyOverride)
+                builder.Append("  value: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Value))
                 {
-                    builder.Append("  value: ");
-                    if (hasPropertyOverride)
+                    if (Value.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  value: ");
                         builder.AppendLine("[");
                         foreach (var item in Value)
                         {

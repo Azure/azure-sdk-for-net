@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -35,6 +34,19 @@ namespace Azure.ResourceManager.ProviderHub
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2020-11-20";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGenerateManifestRequestUri(string subscriptionId, string providerNamespace)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
+            uri.AppendPath(providerNamespace, true);
+            uri.AppendPath("/generateManifest", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGenerateManifestRequest(string subscriptionId, string providerNamespace)
@@ -110,6 +122,19 @@ namespace Azure.ResourceManager.ProviderHub
             }
         }
 
+        internal RequestUriBuilder CreateCheckinManifestRequestUri(string subscriptionId, string providerNamespace, CheckinManifestContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
+            uri.AppendPath(providerNamespace, true);
+            uri.AppendPath("/checkinManifest", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCheckinManifestRequest(string subscriptionId, string providerNamespace, CheckinManifestContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -127,7 +152,7 @@ namespace Azure.ResourceManager.ProviderHub
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue<CheckinManifestContent>(content, new ModelReaderWriterOptions("W"));
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;

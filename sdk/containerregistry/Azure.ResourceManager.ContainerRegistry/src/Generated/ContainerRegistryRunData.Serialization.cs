@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ContainerRegistry
 {
     public partial class ContainerRegistryRunData : IUtf8JsonSerializable, IJsonModel<ContainerRegistryRunData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerRegistryRunData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerRegistryRunData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerRegistryRunData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 writer.WriteStartArray();
                 foreach (var item in OutputImages)
                 {
-                    writer.WriteObjectValue<ContainerRegistryImageDescriptor>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -108,27 +108,27 @@ namespace Azure.ResourceManager.ContainerRegistry
             if (Optional.IsDefined(ImageUpdateTrigger))
             {
                 writer.WritePropertyName("imageUpdateTrigger"u8);
-                writer.WriteObjectValue<ContainerRegistryImageUpdateTrigger>(ImageUpdateTrigger, options);
+                writer.WriteObjectValue(ImageUpdateTrigger, options);
             }
             if (Optional.IsDefined(SourceTrigger))
             {
                 writer.WritePropertyName("sourceTrigger"u8);
-                writer.WriteObjectValue<ContainerRegistrySourceTriggerDescriptor>(SourceTrigger, options);
+                writer.WriteObjectValue(SourceTrigger, options);
             }
             if (Optional.IsDefined(TimerTrigger))
             {
                 writer.WritePropertyName("timerTrigger"u8);
-                writer.WriteObjectValue<ContainerRegistryTimerTriggerDescriptor>(TimerTrigger, options);
+                writer.WriteObjectValue(TimerTrigger, options);
             }
             if (Optional.IsDefined(Platform))
             {
                 writer.WritePropertyName("platform"u8);
-                writer.WriteObjectValue<ContainerRegistryPlatformProperties>(Platform, options);
+                writer.WriteObjectValue(Platform, options);
             }
             if (Optional.IsDefined(AgentConfiguration))
             {
                 writer.WritePropertyName("agentConfiguration"u8);
-                writer.WriteObjectValue<ContainerRegistryAgentProperties>(AgentConfiguration, options);
+                writer.WriteObjectValue(AgentConfiguration, options);
             }
             if (Optional.IsDefined(SourceRegistryAuth))
             {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             if (options.Format != "W" && Optional.IsDefined(LogArtifact))
             {
                 writer.WritePropertyName("logArtifact"u8);
-                writer.WriteObjectValue<ContainerRegistryImageDescriptor>(LogArtifact, options);
+                writer.WriteObjectValue(LogArtifact, options);
             }
             if (Optional.IsDefined(ProvisioningState))
             {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ContainerRegistry
 
         internal static ContainerRegistryRunData DeserializeContainerRegistryRunData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             ContainerRegistryProvisioningState? provisioningState = default;
             bool? isArchiveEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -461,10 +461,10 @@ namespace Azure.ResourceManager.ContainerRegistry
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerRegistryRunData(
                 id,
                 name,

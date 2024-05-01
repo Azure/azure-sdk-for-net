@@ -211,7 +211,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   Implementations that instrument event processing themselves should set this to <c>false</c>.
         /// </summary>
         ///
-        protected virtual bool? IsBatchTracingEnabled { get; set; }
+        protected bool EnableBatchTracing { get; set; } = true;
 
         /// <summary>
         ///   The set of currently active partition processing tasks issued by this event processor and their associated
@@ -2228,31 +2228,6 @@ namespace Azure.Messaging.EventHubs.Primitives
         }
 
         /// <summary>
-        ///   Creates a <see cref="CheckpointStore" /> to use for interacting with persistence for checkpoints and ownership.
-        /// </summary>
-        ///
-        /// <param name="instance">The <see cref="EventProcessor{TPartition}" /> instance to associate with the checkpoint store.</param>
-        ///
-        /// <returns>A <see cref="CheckpointStore" /> with the requested configuration.</returns>
-        ///
-        internal static CheckpointStore CreateCheckpointStore(EventProcessor<TPartition> instance) => new DelegatingCheckpointStore(instance);
-
-        /// <summary>
-        ///   Calculates the maximum number of partitions that it is advised this processor
-        ///   own, based on the host environment and some general heuristics.
-        /// </summary>
-        ///
-        /// <returns>The maximum number of partitions that it is advised this processor own.</returns>
-        ///
-        /// <remarks>
-        ///   The safe number of partitions owned will vary quite a bit by application logic, event structure, and the
-        ///   host environment.  This is a general approximation based on support issues observed since the initial
-        ///   processor release.
-        /// </remarks>
-        ///
-        private static int CalculateMaximumAdvisedOwnedPartitions() => (Environment.ProcessorCount * 2);
-
-        /// <summary>
         ///   Creates, starts, and enriches s processing diagnostics scope in case batch tracing is enabled.
         /// </summary>
         ///
@@ -2262,7 +2237,9 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///
         private DiagnosticScope? StartProcessorScope(IReadOnlyList<EventData> eventBatch)
         {
-            if (IsBatchTracingEnabled != null && !IsBatchTracingEnabled.Value)
+            // If batch tracing is not enabled, there is no need to create a scope.
+
+            if (!EnableBatchTracing)
             {
                 return null;
             }
@@ -2273,7 +2250,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             {
                 var isBatch = (EventBatchMaximumCount > 1);
 
-                if (isBatch && ActivityExtensions.SupportsActivitySource)
+                if ((isBatch) && (ActivityExtensions.SupportsActivitySource))
                 {
                     diagnosticScope.AddIntegerAttribute(MessagingClientDiagnostics.BatchCount, eventBatch.Count);
                 }
@@ -2316,6 +2293,31 @@ namespace Azure.Messaging.EventHubs.Primitives
             diagnosticScope.Start();
             return diagnosticScope;
         }
+
+        /// <summary>
+        ///   Creates a <see cref="CheckpointStore" /> to use for interacting with persistence for checkpoints and ownership.
+        /// </summary>
+        ///
+        /// <param name="instance">The <see cref="EventProcessor{TPartition}" /> instance to associate with the checkpoint store.</param>
+        ///
+        /// <returns>A <see cref="CheckpointStore" /> with the requested configuration.</returns>
+        ///
+        internal static CheckpointStore CreateCheckpointStore(EventProcessor<TPartition> instance) => new DelegatingCheckpointStore(instance);
+
+        /// <summary>
+        ///   Calculates the maximum number of partitions that it is advised this processor
+        ///   own, based on the host environment and some general heuristics.
+        /// </summary>
+        ///
+        /// <returns>The maximum number of partitions that it is advised this processor own.</returns>
+        ///
+        /// <remarks>
+        ///   The safe number of partitions owned will vary quite a bit by application logic, event structure, and the
+        ///   host environment.  This is a general approximation based on support issues observed since the initial
+        ///   processor release.
+        /// </remarks>
+        ///
+        private static int CalculateMaximumAdvisedOwnedPartitions() => (Environment.ProcessorCount * 2);
 
         /// <summary>
         ///   The set of information needed to track and manage the active processing

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Communication.Models
 {
     public partial class DomainPropertiesVerificationStates : IUtf8JsonSerializable, IJsonModel<DomainPropertiesVerificationStates>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DomainPropertiesVerificationStates>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DomainPropertiesVerificationStates>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DomainPropertiesVerificationStates>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,27 +29,27 @@ namespace Azure.ResourceManager.Communication.Models
             if (Optional.IsDefined(Domain))
             {
                 writer.WritePropertyName("Domain"u8);
-                writer.WriteObjectValue<DomainVerificationStatusRecord>(Domain, options);
+                writer.WriteObjectValue(Domain, options);
             }
             if (Optional.IsDefined(Spf))
             {
                 writer.WritePropertyName("SPF"u8);
-                writer.WriteObjectValue<DomainVerificationStatusRecord>(Spf, options);
+                writer.WriteObjectValue(Spf, options);
             }
             if (Optional.IsDefined(Dkim))
             {
                 writer.WritePropertyName("DKIM"u8);
-                writer.WriteObjectValue<DomainVerificationStatusRecord>(Dkim, options);
+                writer.WriteObjectValue(Dkim, options);
             }
             if (Optional.IsDefined(Dkim2))
             {
                 writer.WritePropertyName("DKIM2"u8);
-                writer.WriteObjectValue<DomainVerificationStatusRecord>(Dkim2, options);
+                writer.WriteObjectValue(Dkim2, options);
             }
             if (Optional.IsDefined(Dmarc))
             {
                 writer.WritePropertyName("DMARC"u8);
-                writer.WriteObjectValue<DomainVerificationStatusRecord>(Dmarc, options);
+                writer.WriteObjectValue(Dmarc, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Communication.Models
 
         internal static DomainPropertiesVerificationStates DeserializeDomainPropertiesVerificationStates(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Communication.Models
             DomainVerificationStatusRecord dkiM2 = default;
             DomainVerificationStatusRecord dmarc = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("Domain"u8))
@@ -145,10 +145,10 @@ namespace Azure.ResourceManager.Communication.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DomainPropertiesVerificationStates(
                 domain,
                 spf,

@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 extern alias DMBlobs;
+extern alias BaseBlobs;
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,9 +11,9 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Storage.Blobs;
-using Azure.Storage.Blobs.Models;
-using Azure.Storage.Blobs.Specialized;
+using BaseBlobs::Azure.Storage.Blobs;
+using BaseBlobs::Azure.Storage.Blobs.Models;
+using BaseBlobs::Azure.Storage.Blobs.Specialized;
 using DMBlobs::Azure.Storage.DataMovement.Blobs;
 using Moq;
 using NUnit.Framework;

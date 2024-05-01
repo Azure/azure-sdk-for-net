@@ -587,6 +587,7 @@ namespace Azure.Data.AppConfiguration
             try
             {
                 RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
+                context.AddClassifier(304, isError: false);
 
                 var dateTime = acceptDateTime.HasValue ? acceptDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture) : null;
                 using Response response = await GetConfigurationSettingAsync(key, label, dateTime, null, conditions, context).ConfigureAwait(false);
@@ -623,6 +624,7 @@ namespace Azure.Data.AppConfiguration
             try
             {
                 RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
+                context.AddClassifier(304, isError: false);
 
                 var dateTime = acceptDateTime.HasValue ? acceptDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture) : null;
                 using Response response = GetConfigurationSetting(key, label, dateTime, null, conditions, context);
@@ -650,29 +652,10 @@ namespace Azure.Data.AppConfiguration
         public virtual AsyncPageable<ConfigurationSetting> GetConfigurationSettingsAsync(SettingSelector selector, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(selector, nameof(selector));
-            var dateTime = selector.AcceptDateTime?.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
-            var key = selector.KeyFilter;
-            var label = selector.LabelFilter;
 
-            RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
-            IEnumerable<string> fieldsString = selector.Fields.Split();
-            int nextConditionsIndex = 0;
+            var pageableImplementation = GetConfigurationSettingsPageableImplementation(selector, cancellationToken);
 
-            context.AddClassifier(304, false);
-
-            HttpMessage FirstPageRequest(int? pageSizeHint)
-            {
-                MatchConditions conditions = (nextConditionsIndex < selector.MatchConditions.Count) ? selector.MatchConditions[nextConditionsIndex++] : null;
-                return CreateGetConfigurationSettingsRequest(key, label, null, dateTime, fieldsString, null, conditions, context);
-            };
-
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink)
-            {
-                MatchConditions conditions = (nextConditionsIndex < selector.MatchConditions.Count) ? selector.MatchConditions[nextConditionsIndex++] : null;
-                return CreateGetConfigurationSettingsNextPageRequest(nextLink, key, label, null, dateTime, fieldsString, null, conditions, context);
-            }
-
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ParseGetConfigurationSettingsResponse, ClientDiagnostics, _pipeline, "ConfigurationClient.GetConfigurationSettings", context);
+            return new AsyncConditionalPageable(pageableImplementation);
         }
 
         /// <summary>
@@ -683,29 +666,34 @@ namespace Azure.Data.AppConfiguration
         public virtual Pageable<ConfigurationSetting> GetConfigurationSettings(SettingSelector selector, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(selector, nameof(selector));
+
+            var pageableImplementation = GetConfigurationSettingsPageableImplementation(selector, cancellationToken);
+
+            return new ConditionalPageable(pageableImplementation);
+        }
+
+        private ConditionalPageableImplementation GetConfigurationSettingsPageableImplementation(SettingSelector selector, CancellationToken cancellationToken)
+        {
             var key = selector.KeyFilter;
             var label = selector.LabelFilter;
             var dateTime = selector.AcceptDateTime?.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
 
             RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
             IEnumerable<string> fieldsString = selector.Fields.Split();
-            int nextConditionsIndex = 0;
 
             context.AddClassifier(304, false);
 
-            HttpMessage FirstPageRequest(int? pageSizeHint)
+            HttpMessage FirstPageRequest(MatchConditions conditions, int? pageSizeHint)
             {
-                MatchConditions conditions = (nextConditionsIndex < selector.MatchConditions.Count) ? selector.MatchConditions[nextConditionsIndex++] : null;
                 return CreateGetConfigurationSettingsRequest(key, label, null, dateTime, fieldsString, null, conditions, context);
             };
 
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink)
+            HttpMessage NextPageRequest(MatchConditions conditions, int? pageSizeHint, string nextLink)
             {
-                MatchConditions conditions = (nextConditionsIndex < selector.MatchConditions.Count) ? selector.MatchConditions[nextConditionsIndex++] : null;
                 return CreateGetConfigurationSettingsNextPageRequest(nextLink, key, label, null, dateTime, fieldsString, null, conditions, context);
             }
 
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ParseGetConfigurationSettingsResponse, ClientDiagnostics, _pipeline, "ConfigurationClient.GetConfigurationSettings", context);
+            return new ConditionalPageableImplementation(FirstPageRequest, NextPageRequest, ParseGetConfigurationSettingsResponse, _pipeline, ClientDiagnostics, "ConfigurationClient.GetConfigurationSettings", context);
         }
 
         /// <summary>

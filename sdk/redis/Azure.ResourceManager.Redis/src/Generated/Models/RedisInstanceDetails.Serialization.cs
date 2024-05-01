@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Redis.Models
 {
     public partial class RedisInstanceDetails : IUtf8JsonSerializable, IJsonModel<RedisInstanceDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisInstanceDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisInstanceDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RedisInstanceDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Redis.Models
 
         internal static RedisInstanceDetails DeserializeRedisInstanceDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Redis.Models
             bool? isMaster = default;
             bool? isPrimary = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sslPort"u8))
@@ -157,10 +157,10 @@ namespace Azure.ResourceManager.Redis.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new RedisInstanceDetails(
                 sslPort,
                 nonSslPort,
@@ -183,43 +183,46 @@ namespace Azure.ResourceManager.Redis.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SslPort), out propertyOverride);
-            if (Optional.IsDefined(SslPort) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  sslPort: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SslPort))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  sslPort: ");
                     builder.AppendLine($"{SslPort.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NonSslPort), out propertyOverride);
-            if (Optional.IsDefined(NonSslPort) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  nonSslPort: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NonSslPort))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  nonSslPort: ");
                     builder.AppendLine($"{NonSslPort.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Zone), out propertyOverride);
-            if (Optional.IsDefined(Zone) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  zone: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Zone))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  zone: ");
                     if (Zone.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -233,44 +236,47 @@ namespace Azure.ResourceManager.Redis.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ShardId), out propertyOverride);
-            if (Optional.IsDefined(ShardId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  shardId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ShardId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  shardId: ");
                     builder.AppendLine($"{ShardId.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsMaster), out propertyOverride);
-            if (Optional.IsDefined(IsMaster) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  isMaster: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsMaster))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  isMaster: ");
                     var boolValue = IsMaster.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsPrimary), out propertyOverride);
-            if (Optional.IsDefined(IsPrimary) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  isPrimary: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsPrimary))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  isPrimary: ");
                     var boolValue = IsPrimary.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Synapse.Models
 {
     internal partial class SynapseBigDataPoolInfoListResult : IUtf8JsonSerializable, IJsonModel<SynapseBigDataPoolInfoListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseBigDataPoolInfoListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseBigDataPoolInfoListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SynapseBigDataPoolInfoListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue<SynapseBigDataPoolInfoData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseBigDataPoolInfoListResult DeserializeSynapseBigDataPoolInfoListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Synapse.Models
             string nextLink = default;
             IReadOnlyList<SynapseBigDataPoolInfoData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"u8))
@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SynapseBigDataPoolInfoListResult(nextLink, value ?? new ChangeTrackingList<SynapseBigDataPoolInfoData>(), serializedAdditionalRawData);
         }
 

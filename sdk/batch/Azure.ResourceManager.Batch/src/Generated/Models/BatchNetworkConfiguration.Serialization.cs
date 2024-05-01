@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Batch.Models
 {
     public partial class BatchNetworkConfiguration : IUtf8JsonSerializable, IJsonModel<BatchNetworkConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchNetworkConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchNetworkConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BatchNetworkConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(EndpointConfiguration))
             {
                 writer.WritePropertyName("endpointConfiguration"u8);
-                writer.WriteObjectValue<PoolEndpointConfiguration>(EndpointConfiguration, options);
+                writer.WriteObjectValue(EndpointConfiguration, options);
             }
             if (Optional.IsDefined(PublicIPAddressConfiguration))
             {
                 writer.WritePropertyName("publicIPAddressConfiguration"u8);
-                writer.WriteObjectValue<BatchPublicIPAddressConfiguration>(PublicIPAddressConfiguration, options);
+                writer.WriteObjectValue(PublicIPAddressConfiguration, options);
             }
             if (Optional.IsDefined(EnableAcceleratedNetworking))
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchNetworkConfiguration DeserializeBatchNetworkConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Batch.Models
             BatchPublicIPAddressConfiguration publicIPAddressConfiguration = default;
             bool? enableAcceleratedNetworking = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subnetId"u8))
@@ -145,10 +145,10 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new BatchNetworkConfiguration(
                 subnetId,
                 dynamicVnetAssignmentScope,

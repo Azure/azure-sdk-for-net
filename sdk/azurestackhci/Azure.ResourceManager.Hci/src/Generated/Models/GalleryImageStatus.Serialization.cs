@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Hci.Models
 {
     public partial class GalleryImageStatus : IUtf8JsonSerializable, IJsonModel<GalleryImageStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GalleryImageStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GalleryImageStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<GalleryImageStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.Hci.Models
             if (Optional.IsDefined(ProvisioningStatus))
             {
                 writer.WritePropertyName("provisioningStatus"u8);
-                writer.WriteObjectValue<GalleryImageStatusProvisioningStatus>(ProvisioningStatus, options);
+                writer.WriteObjectValue(ProvisioningStatus, options);
             }
             if (Optional.IsDefined(DownloadStatus))
             {
                 writer.WritePropertyName("downloadStatus"u8);
-                writer.WriteObjectValue<GalleryImageStatusDownloadStatus>(DownloadStatus, options);
+                writer.WriteObjectValue(DownloadStatus, options);
             }
             if (Optional.IsDefined(ProgressPercentage))
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         internal static GalleryImageStatus DeserializeGalleryImageStatus(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Hci.Models
             GalleryImageStatusDownloadStatus downloadStatus = default;
             long? progressPercentage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("errorCode"u8))
@@ -137,10 +137,10 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new GalleryImageStatus(
                 errorCode,
                 errorMessage,

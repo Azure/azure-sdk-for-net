@@ -2,9 +2,10 @@
 // Licensed under the MIT License.
 
 extern alias DMBlobs;
+extern alias BaseBlobs;
 
 using System.IO;
-using Azure.Storage.Blobs.Models;
+using BaseBlobs::Azure.Storage.Blobs.Models;
 using DMBlobs::Azure.Storage.DataMovement.Blobs;
 using NUnit.Framework;
 

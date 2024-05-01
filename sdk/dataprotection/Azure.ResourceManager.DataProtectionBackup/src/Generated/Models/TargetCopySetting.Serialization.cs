@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     public partial class TargetCopySetting : IUtf8JsonSerializable, IJsonModel<TargetCopySetting>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TargetCopySetting>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TargetCopySetting>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<TargetCopySetting>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -27,9 +27,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("copyAfter"u8);
-            writer.WriteObjectValue<DataProtectionBackupCopySetting>(CopyAfter, options);
+            writer.WriteObjectValue(CopyAfter, options);
             writer.WritePropertyName("dataStore"u8);
-            writer.WriteObjectValue<DataStoreInfoBase>(DataStore, options);
+            writer.WriteObjectValue(DataStore, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static TargetCopySetting DeserializeTargetCopySetting(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             DataProtectionBackupCopySetting copyAfter = default;
             DataStoreInfoBase dataStore = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("copyAfter"u8))
@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new TargetCopySetting(copyAfter, dataStore, serializedAdditionalRawData);
         }
 

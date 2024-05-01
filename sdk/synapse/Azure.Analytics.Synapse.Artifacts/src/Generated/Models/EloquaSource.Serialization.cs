@@ -149,12 +149,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 query);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new EloquaSource FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeEloquaSource(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class EloquaSourceConverter : JsonConverter<EloquaSource>
         {
             public override void Write(Utf8JsonWriter writer, EloquaSource model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<EloquaSource>(model);
+                writer.WriteObjectValue(model);
             }
+
             public override EloquaSource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 {
     public partial class ConfigurationValueWithSecrets : IUtf8JsonSerializable, IJsonModel<ConfigurationValueWithSecrets>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConfigurationValueWithSecrets>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConfigurationValueWithSecrets>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ConfigurationValueWithSecrets>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(ConfigurationGroupSchemaResourceReference))
             {
                 writer.WritePropertyName("configurationGroupSchemaResourceReference"u8);
-                writer.WriteObjectValue<DeploymentResourceIdReference>(ConfigurationGroupSchemaResourceReference, options);
+                writer.WriteObjectValue(ConfigurationGroupSchemaResourceReference, options);
             }
             writer.WritePropertyName("configurationType"u8);
             writer.WriteStringValue(ConfigurationType.ToString());
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         internal static ConfigurationValueWithSecrets DeserializeConfigurationValueWithSecrets(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             DeploymentResourceIdReference configurationGroupSchemaResourceReference = default;
             ConfigurationGroupValueConfigurationType configurationType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("secretConfigurationValue"u8))
@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ConfigurationValueWithSecrets(
                 provisioningState,
                 publisherName,

@@ -85,6 +85,7 @@
     "hnsw",
     "ienumerable",
     "illumos",
+    "imds",
     "interventional",
     "ints",
     "kubernetes",
@@ -171,6 +172,12 @@
       "words": [
         "dynatrace",
         "fqdns"
+      ]
+    },
+    {
+      "filename": "**/sdk/astronomer/**/*.cs",
+      "words": [
+        "astro"
       ]
     },
     {
@@ -628,6 +635,15 @@
       ]
     },
     {
+      "filename": "**/sdk/migrationdiscoverysap/**/*.cs",
+      "words": [
+        "Hana",
+        "Informix",
+        "Ascs",
+        "Webdisp"
+      ]
+    },
+    {
       "filename": "**/sdk/mobilenetwork/**/*.cs",
       "words": [
         "Napt",
@@ -1017,7 +1033,7 @@
       "filename": "**/sdk/securitycenter/**/*[.md,.txt,*.cs]",
       "words": [
         "Pricings",
-        "Cspm",
+        "Cspm"
       ]
     },
     {
@@ -1041,7 +1057,7 @@
         "Saas",
         "vmuuid",
         "vnets",
-        "Wdatp",
+        "Wdatp"
       ],
       "ignoreWords": [
         "AKIARPZCNODDNAEQFSOE",
@@ -1060,7 +1076,7 @@
         "matan",
         "matanvs",
         "OSDRIVE",
-        "WASECAGENTPROV",
+        "WASECAGENTPROV"
       ]
     },
     {
@@ -1137,7 +1153,8 @@
         "Soundex",
         "Sorani",
         "Unprocessable",
-        "Beider"
+        "Beider",
+        "Exfiltration"
       ]
     },
     {

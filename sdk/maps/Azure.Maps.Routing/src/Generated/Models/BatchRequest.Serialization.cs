@@ -22,11 +22,19 @@ namespace Azure.Maps.Routing.Models
                 writer.WriteStartArray();
                 foreach (var item in BatchItems)
                 {
-                    writer.WriteObjectValue<BatchRequestItem>(item);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Common.Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

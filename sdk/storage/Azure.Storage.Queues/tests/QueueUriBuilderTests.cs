@@ -13,8 +13,8 @@ namespace Azure.Storage.Queues.Test
 {
     public class QueueUriBuilderTests : QueueTestBase
     {
-        public QueueUriBuilderTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public QueueUriBuilderTests(bool async, QueueClientOptions.ServiceVersion serviceVersion)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 

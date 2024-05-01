@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class MachineLearningAksComputeProperties : IUtf8JsonSerializable, IJsonModel<MachineLearningAksComputeProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningAksComputeProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningAksComputeProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MachineLearningAksComputeProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteStartArray();
                     foreach (var item in SystemServices)
                     {
-                        writer.WriteObjectValue<MachineLearningComputeSystemService>(item, options);
+                        writer.WriteObjectValue(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (SslConfiguration != null)
                 {
                     writer.WritePropertyName("sslConfiguration"u8);
-                    writer.WriteObjectValue<MachineLearningSslConfiguration>(SslConfiguration, options);
+                    writer.WriteObjectValue(SslConfiguration, options);
                 }
                 else
                 {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (AksNetworkingConfiguration != null)
                 {
                     writer.WritePropertyName("aksNetworkingConfiguration"u8);
-                    writer.WriteObjectValue<MachineLearningAksNetworkingConfiguration>(AksNetworkingConfiguration, options);
+                    writer.WriteObjectValue(AksNetworkingConfiguration, options);
                 }
                 else
                 {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningAksComputeProperties DeserializeMachineLearningAksComputeProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             MachineLearningLoadBalancerType? loadBalancerType = default;
             string loadBalancerSubnet = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clusterFqdn"u8))
@@ -271,10 +271,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MachineLearningAksComputeProperties(
                 clusterFqdn,
                 systemServices ?? new ChangeTrackingList<MachineLearningComputeSystemService>(),
