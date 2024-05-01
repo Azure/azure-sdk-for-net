@@ -405,7 +405,7 @@ namespace Azure.Core.TestFramework
             // "AZSDK3495",
             "AZSDK3496", // $..resourceLocation
             // // "AZSDK4000",
-            // "AZSDK4001",
+            "AZSDK4001",
             // "AZSDK4003",
             // "AZSDK4004",
         };
