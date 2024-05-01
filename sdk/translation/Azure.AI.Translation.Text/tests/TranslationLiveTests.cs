@@ -448,8 +448,8 @@ namespace Azure.AI.Translation.Text.Tests
             Assert.AreEqual("fr", response.Value.FirstOrDefault().DetectedLanguage.Language);
             Assert.LessOrEqual(0.5, response.Value.FirstOrDefault().DetectedLanguage.Confidence);
             Assert.AreEqual(1, response.Value.FirstOrDefault().Translations.Count);
-            Assert.AreEqual(3, response.Value.FirstOrDefault().Translations.FirstOrDefault().SentenceBoundaries.LengthsOfSourceSentences.Count);
-            Assert.AreEqual(3, response.Value.FirstOrDefault().Translations.FirstOrDefault().SentenceBoundaries.LengthsOfTranslatedSentences.Count);
+            Assert.AreEqual(3, response.Value.FirstOrDefault().Translations.FirstOrDefault().SentenceBoundaries.SourceSentencesLengths.Count);
+            Assert.AreEqual(3, response.Value.FirstOrDefault().Translations.FirstOrDefault().SentenceBoundaries.TranslatedSentencesLengths.Count);
         }
 
         [RecordedTest]
@@ -469,8 +469,8 @@ namespace Azure.AI.Translation.Text.Tests
             Assert.AreEqual("fr", response.Value.FirstOrDefault().DetectedLanguage.Language);
             Assert.LessOrEqual(0.5, response.Value.FirstOrDefault().DetectedLanguage.Confidence);
             Assert.AreEqual(1, response.Value.FirstOrDefault().Translations.Count);
-            Assert.AreEqual(3, response.Value.FirstOrDefault().Translations.FirstOrDefault().SentenceBoundaries.LengthsOfSourceSentences.Count);
-            Assert.AreEqual(3, response.Value.FirstOrDefault().Translations.FirstOrDefault().SentenceBoundaries.LengthsOfTranslatedSentences.Count);
+            Assert.AreEqual(3, response.Value.FirstOrDefault().Translations.FirstOrDefault().SentenceBoundaries.SourceSentencesLengths.Count);
+            Assert.AreEqual(3, response.Value.FirstOrDefault().Translations.FirstOrDefault().SentenceBoundaries.TranslatedSentencesLengths.Count);
         }
 
         [RecordedTest]

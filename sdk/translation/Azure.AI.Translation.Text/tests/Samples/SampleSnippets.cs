@@ -1094,8 +1094,8 @@ namespace Azure.AI.Translation.Text.Samples
 
                 Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with confidence: {translation?.DetectedLanguage?.Confidence}.");
                 Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().To}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
-                Console.WriteLine($"Source Sentence length: {string.Join(",", translation?.Translations?.FirstOrDefault()?.SentenceBoundaries?.LengthsOfSourceSentences)}");
-                Console.WriteLine($"Translated Sentence length: {string.Join(",", translation?.Translations?.FirstOrDefault()?.SentenceBoundaries?.LengthsOfTranslatedSentences)}");
+                Console.WriteLine($"Source Sentence length: {string.Join(",", translation?.Translations?.FirstOrDefault()?.SentenceBoundaries?.SourceSentencesLengths)}");
+                Console.WriteLine($"Translated Sentence length: {string.Join(",", translation?.Translations?.FirstOrDefault()?.SentenceBoundaries?.TranslatedSentencesLengths)}");
             }
             catch (RequestFailedException exception)
             {
@@ -1126,8 +1126,8 @@ namespace Azure.AI.Translation.Text.Samples
 
                 Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Confidence}.");
                 Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().To}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
-                Console.WriteLine($"Source Sentence length: {string.Join(",", translation?.Translations?.FirstOrDefault()?.SentenceBoundaries?.LengthsOfSourceSentences)}");
-                Console.WriteLine($"Translated Sentence length: {string.Join(",", translation?.Translations?.FirstOrDefault()?.SentenceBoundaries?.LengthsOfTranslatedSentences)}");
+                Console.WriteLine($"Source Sentence length: {string.Join(",", translation?.Translations?.FirstOrDefault()?.SentenceBoundaries?.SourceSentencesLengths)}");
+                Console.WriteLine($"Translated Sentence length: {string.Join(",", translation?.Translations?.FirstOrDefault()?.SentenceBoundaries?.TranslatedSentencesLengths)}");
             }
             catch (RequestFailedException exception)
             {
