@@ -1315,7 +1315,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 var targetDate = DateTime.UtcNow.AddSeconds(1);
 
-                // Wait to seconds and send a new message that should survive the purge.
+                // Wait a few seconds, then send a new message that should survive the purge.
                 await Task.Delay(TimeSpan.FromSeconds(15));
 
                 var message = new ServiceBusMessage("Eye of the tiger") { MessageId = "survivor" };
@@ -1326,7 +1326,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 Assert.AreEqual(numMessagesDeleted, messageCount);
 
-                // All messages should have been deleted, except for our designated survivor..
+                // All messages should have been deleted, except for our designated survivor.
                 var peekedMessage = receiver.PeekMessageAsync();
                 Assert.IsNotNull(peekedMessage.Result);
                 Assert.AreEqual("survivor", peekedMessage.Result.MessageId);
