@@ -1,7 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -80,6 +83,29 @@ namespace Azure.Identity.Tests
                 Assert.AreEqual("mockPlanId", options.PlanId);
                 Assert.AreEqual("mockSystemAccessToken", options.SystemAccessToken);
                 Assert.AreEqual("mockTeamProjectId", options.TeamProjectId);
+            }
+        }
+
+        [Test]
+        public async Task AzurePipelineCredentialWorksInChainedCredential()
+        {
+            var chainedCred = new ChainedTokenCredential(new AzurePipelinesCredential("mockTenantID", "mockClientId", "serviceConnectionId"), new MockCredential());
+
+            AccessToken token = await chainedCred.GetTokenAsync(new TokenRequestContext(new[] { "scope" }), CancellationToken.None);
+
+            Assert.AreEqual("mockToken", token.Token);
+        }
+
+        public class MockCredential : TokenCredential
+        {
+            public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
+            {
+                return new AccessToken("mockToken", DateTimeOffset.MaxValue);
+            }
+
+            public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
+            {
+                return new ValueTask<AccessToken>(GetToken(requestContext, cancellationToken));
             }
         }
     }

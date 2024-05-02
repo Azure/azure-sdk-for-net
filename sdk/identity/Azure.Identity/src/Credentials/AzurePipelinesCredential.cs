@@ -88,11 +88,11 @@ namespace Azure.Identity
 
         internal HttpMessage CreateOidcRequestMessage(string serviceConnectionId, AzurePipelinesCredentialOptions options)
         {
-            string CollectionUri = options.CollectionUri ?? throw new InvalidOperationException("environment variable SYSTEM_TEAMFOUNDATIONCOLLECTIONURI is not set.");
-            string projectId = options.TeamProjectId ?? throw new InvalidOperationException("environment variable SYSTEM_TEAMPROJECTID is not set.");
-            string planId = options.PlanId ?? throw new InvalidOperationException("environment variable SYSTEM_PLANID is not set.");
-            string jobId = options.JobId ?? throw new InvalidOperationException("environment variable SYSTEM_JOBID is not set.");
-            string systemToken = options.SystemAccessToken ?? throw new InvalidOperationException("environment variable SYSTEM_ACCESSTOKEN is not set.");
+            string CollectionUri = options.CollectionUri ?? throw new CredentialUnavailableException("AzurePipelinesCredential is not available: environment variable SYSTEM_TEAMFOUNDATIONCOLLECTIONURI is not set.");
+            string projectId = options.TeamProjectId ?? throw new CredentialUnavailableException("AzurePipelinesCredential is not available: environment variable SYSTEM_TEAMPROJECTID is not set.");
+            string planId = options.PlanId ?? throw new CredentialUnavailableException("AzurePipelinesCredential is not available: environment variable SYSTEM_PLANID is not set.");
+            string jobId = options.JobId ?? throw new CredentialUnavailableException("AzurePipelinesCredential is not available: environment variable SYSTEM_JOBID is not set.");
+            string systemToken = options.SystemAccessToken ?? throw new CredentialUnavailableException("AzurePipelinesCredential is not available: environment variable SYSTEM_ACCESSTOKEN is not set.");
 
             var message = Pipeline.HttpPipeline.CreateMessage();
 
