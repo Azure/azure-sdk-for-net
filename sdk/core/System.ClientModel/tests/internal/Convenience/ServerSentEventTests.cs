@@ -10,7 +10,7 @@ namespace System.ClientModel.Tests.Convenience;
 public class ServerSentEventTests
 {
     [Test]
-    public void ParsesEventField()
+    public void SetsPropertiesFromFields()
     {
         string eventLine = "event: event.name";
         string dataLine = """data: {"id":"a","object":"value"}""";
@@ -23,8 +23,8 @@ public class ServerSentEventTests
         ServerSentEvent ssEvent = new(fields);
 
         Assert.IsNull(ssEvent.ReconnectionTime);
-        Assert.IsTrue(ssEvent.EventName.Span.SequenceEqual("event.name".AsMemory().Span));
-        Assert.IsTrue(ssEvent.Data.Span.SequenceEqual("""{"id":"a","object":"value"}""".AsMemory().Span));
+        Assert.IsTrue(ssEvent.EventName.Span.SequenceEqual("event.name".AsSpan()));
+        Assert.IsTrue(ssEvent.Data.Span.SequenceEqual("""{"id":"a","object":"value"}""".AsSpan()));
         Assert.AreEqual(ssEvent.LastEventId.Length, 0);
     }
 }

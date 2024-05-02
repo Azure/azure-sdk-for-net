@@ -28,6 +28,7 @@ internal sealed class ServerSentEventReader : IDisposable
     /// <returns>
     ///     The next <see cref="ServerSentEvent"/> in the stream, or null once no more data can be read from the stream.
     /// </returns>
+    // TODO: Would we rather use standard .NET TryGet semantics?
     public ServerSentEvent? TryGetNextEvent(CancellationToken cancellationToken = default)
     {
         List<ServerSentEventField> fields = new();
