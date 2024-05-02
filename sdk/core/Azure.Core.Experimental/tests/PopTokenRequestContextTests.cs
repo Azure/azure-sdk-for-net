@@ -12,7 +12,7 @@ namespace Azure
     public class PopTokenRequestContextTests
     {
         [Test]
-        public void CtorTests()
+        public void PopTokenRequestContextCtor()
         {
             var scopes = new string[] { "scope1", "scope2" };
             var parentRequestId = Guid.NewGuid().ToString();
