@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Azure.Provisioning.EventHubs simplifies declarative resource provisioning in .NET for Azure Event Hubs.</Description>
+    <Version>0.1.0</Version>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.ResourceManager.EventHubs" />
+  </ItemGroup>
+
+</Project>

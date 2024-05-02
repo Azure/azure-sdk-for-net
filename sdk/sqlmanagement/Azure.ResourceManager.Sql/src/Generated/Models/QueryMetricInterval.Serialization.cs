@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
 {
     public partial class QueryMetricInterval : IUtf8JsonSerializable, IJsonModel<QueryMetricInterval>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QueryMetricInterval>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QueryMetricInterval>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<QueryMetricInterval>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in Metrics)
                 {
-                    writer.WriteObjectValue<QueryMetricProperties>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static QueryMetricInterval DeserializeQueryMetricInterval(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Sql.Models
             long? executionCount = default;
             IList<QueryMetricProperties> metrics = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("intervalStartTime"u8))
@@ -138,10 +138,10 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new QueryMetricInterval(intervalStartTime, intervalType, executionCount, metrics ?? new ChangeTrackingList<QueryMetricProperties>(), serializedAdditionalRawData);
         }
 
@@ -157,15 +157,16 @@ namespace Azure.ResourceManager.Sql.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IntervalStartTime), out propertyOverride);
-            if (Optional.IsDefined(IntervalStartTime) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  intervalStartTime: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IntervalStartTime))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  intervalStartTime: ");
                     if (IntervalStartTime.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -179,45 +180,48 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IntervalType), out propertyOverride);
-            if (Optional.IsDefined(IntervalType) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  intervalType: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IntervalType))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  intervalType: ");
                     builder.AppendLine($"'{IntervalType.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExecutionCount), out propertyOverride);
-            if (Optional.IsDefined(ExecutionCount) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  executionCount: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ExecutionCount))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  executionCount: ");
                     builder.AppendLine($"'{ExecutionCount.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Metrics), out propertyOverride);
-            if (Optional.IsCollectionDefined(Metrics) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Metrics.Any() || hasPropertyOverride)
+                builder.Append("  metrics: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Metrics))
                 {
-                    builder.Append("  metrics: ");
-                    if (hasPropertyOverride)
+                    if (Metrics.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  metrics: ");
                         builder.AppendLine("[");
                         foreach (var item in Metrics)
                         {

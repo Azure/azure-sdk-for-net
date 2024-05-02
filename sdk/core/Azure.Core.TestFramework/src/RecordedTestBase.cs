@@ -55,7 +55,66 @@ namespace Azure.Core.TestFramework
         /// The list of JSON path sanitizers to use when sanitizing a JSON request or response body.
         /// </summary>
         public List<string> JsonPathSanitizers { get; } =
-            new() { "$..primaryKey", "$..secondaryKey", "$..primaryConnectionString", "$..secondaryConnectionString", "$..connectionString" };
+            new()
+            {
+                "$..access_token",
+                "$..accessSAS",
+                "$..accessToken",
+                "$..AccessToken",
+                "$..accountKey",
+                "$..acrToken",
+                "$..adminPassword",
+                "$..adminPassword.value",
+                "$..administratorLoginPassword",
+                "$..aliasPrimaryConnectionString",
+                "$..aliasSecondaryConnectionString",
+                "$..apiKey",
+                "$..appkey",
+                "$..applicationSecret",
+                "$..atlasKafkaPrimaryEndpoint",
+                "$..atlasKafkaSecondaryEndpoint",
+                "$..authHeader",
+                "$..blob_sas_url",
+                "$..certificatePassword",
+                "$..clientId",
+                "$..clientSecret",
+                "$..connectionString",
+                "$..containerUri",
+                "$..containerUrl",
+                "$..credential",
+                "$..decryptionKey",
+                "$..encryptedCredential",
+                "$..fencingClientPassword",
+                "$..functionKey",
+                "$..httpHeader",
+                "$.key",
+                "$..keyVaultClientSecret",
+                "$..password",
+                "$..primaryConnectionString",
+                "$..primaryKey",
+                "$..primaryMasterKey",
+                "$..primaryReadonlyMasterKey",
+                "$..principalId",
+                "$..privateKey",
+                "$.properties.WEBSITE_AUTH_ENCRYPTION_KEY",
+                "$.properties.siteConfig.machineKey.decryptionKey",
+                "$.properties.DOCKER_REGISTRY_SERVER_PASSWORD",
+                "$..refresh_token",
+                "$..runAsPassword",
+                "$..sasUri",
+                "$..scriptUrlSasToken",
+                "$..secondaryConnectionString",
+                "$..secondaryKey",
+                "$..secondaryMasterKey",
+                "$..secondaryReadonlyMasterKey",
+                "$..sshPassword",
+                "$..storageAccountPrimaryKey",
+                "$..storageContainerReadListSas",
+                "$..storageContainerWriteSas",
+                "$..token",
+                "$.value[*].key",
+                "$..WEBSITE_AUTH_ENCRYPTION_KEY",
+            };
 
         /// <summary>
         /// The list of <see cref="BodyKeySanitizer"/> to use while sanitizing request and response bodies. This is similar to
@@ -67,7 +126,67 @@ namespace Azure.Core.TestFramework
         /// The list of <see cref="BodyRegexSanitizer"/> to use while sanitizing request and response bodies. This allows you to specify a
         /// regex for matching on specific content in the body.
         /// </summary>
-        public List<BodyRegexSanitizer> BodyRegexSanitizers { get; } = new();
+        public List<BodyRegexSanitizer> BodyRegexSanitizers { get; } =
+            new()
+            {
+                new BodyRegexSanitizer("(client_assertion=)(?<secret>[^&]+)", SanitizeValue)
+                {
+                    GroupForReplace = "secret"
+                },
+                new BodyRegexSanitizer("(client_id=)(?<secret>[^&]+)", SanitizeValue)
+                {
+                    GroupForReplace = "secret"
+                },
+                new BodyRegexSanitizer("(client_secret=)(?<secret>[^&]+)", SanitizeValue)
+                {
+                    GroupForReplace = "secret"
+                },
+                new BodyRegexSanitizer("(?:\\\\.*[?](sv|sig|se|srt|ss|sp)=)(?<secret>[^&]+)", SanitizeValue)
+                {
+                    GroupForReplace = "secret"
+                },
+                new BodyRegexSanitizer(@"access_token=(?<group>.*?)(?=&|$)", SanitizeValue)
+                {
+                    GroupForReplace = "group"
+                },
+                new BodyRegexSanitizer(@"token=(?<group>.*?)(?=&|$)", SanitizeValue)
+                {
+                    GroupForReplace = "group"
+                },
+                new BodyRegexSanitizer(@"refresh_token=(?<group>.*?)(?=&|$)", SanitizeValue)
+                {
+                    GroupForReplace = "group"
+                },
+                new BodyRegexSanitizer("(?<=<UserDelegationKey>).*?(?:<Value>)(?<group>.*)(?:</Value>)", SanitizeValue)
+                {
+                    GroupForReplace = "group"
+                },
+                new BodyRegexSanitizer("(?<=<UserDelegationKey>).*?(?:<SignedTid>)(?<group>.*)(?:</SignedTid>)", SanitizeValue)
+                {
+                    GroupForReplace = "group"
+                },
+                new BodyRegexSanitizer("(?<=<UserDelegationKey>).*?(?:<SignedOid>)(?<group>.*)(?:</SignedOid>)", SanitizeValue)
+                {
+                    GroupForReplace = "group"
+                },
+                new BodyRegexSanitizer("(?:Password=)(?<group>.*?)(?:;)", SanitizeValue)
+                {
+                    GroupForReplace = "group"
+                },
+                new BodyRegexSanitizer("(?:User I[d|D]=)(?<group>.*?)(?:;)", SanitizeValue)
+                {
+                    GroupForReplace = "group"
+                },
+                new BodyRegexSanitizer("(?:<PrimaryKey>)(?<group>.*)(?:</PrimaryKey>)", SanitizeValue)
+                {
+                    GroupForReplace = "group"
+                },
+                new BodyRegexSanitizer("(?:<SecondaryKey>)(?<group>.*)(?:</SecondaryKey>)", SanitizeValue)
+                {
+                    GroupForReplace = "group"
+                },
+                new BodyRegexSanitizer("-----BEGIN PRIVATE KEY-----\\\\n(.+\\\\n)*-----END PRIVATE KEY-----\\\\n", SanitizeValue)
+            };
 
         /// <summary>
         /// The list of <see cref="UriRegexSanitizer"/> to use while sanitizing request and response URIs. This allows you to specify
@@ -92,12 +211,31 @@ namespace Azure.Core.TestFramework
         /// <summary>
         /// The list of headers that will be sanitized on the request and response. By default, the "Authorization" header is included.
         /// </summary>
-        public List<string> SanitizedHeaders { get; } = new() { "Authorization" };
+        public List<string> SanitizedHeaders { get; } = new()
+        {
+            "aeg-sas-key",
+            "aeg-sas-token",
+            "api-key",
+            "Authorization",
+            "ServiceBusDlqSupplementaryAuthorization",
+            "ServiceBusSupplementaryAuthorization",
+            "subscription-key",
+            "x-ms-encryption-key",
+            "x-ms-copy-source-authorization",
+            "x-ms-file-rename-source-authorization",
+            "x-ms-encryption-key-sha256",
+        };
 
         /// <summary>
         /// The list of query parameters that will be sanitized on the request and response URIs.
         /// </summary>
-        public List<string> SanitizedQueryParameters { get; } = new();
+        public List<string> SanitizedQueryParameters { get; } = new()
+        {
+            "sig",
+            "sip",
+            "client_id",
+            "client_secret"
+        };
 
         /// <summary>
         /// The list of header keys and query parameter tuples where the associated query parameter that should be sanitized from the corresponding

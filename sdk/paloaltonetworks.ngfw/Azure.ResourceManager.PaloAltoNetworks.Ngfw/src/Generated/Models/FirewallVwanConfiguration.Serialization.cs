@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
     public partial class FirewallVwanConfiguration : IUtf8JsonSerializable, IJsonModel<FirewallVwanConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FirewallVwanConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FirewallVwanConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FirewallVwanConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,21 +32,21 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 writer.WriteStringValue(NetworkVirtualApplianceId);
             }
             writer.WritePropertyName("vHub"u8);
-            writer.WriteObjectValue<IPAddressSpaceInfo>(Vhub, options);
+            writer.WriteObjectValue(Vhub, options);
             if (Optional.IsDefined(TrustSubnet))
             {
                 writer.WritePropertyName("trustSubnet"u8);
-                writer.WriteObjectValue<IPAddressSpaceInfo>(TrustSubnet, options);
+                writer.WriteObjectValue(TrustSubnet, options);
             }
             if (Optional.IsDefined(UnTrustSubnet))
             {
                 writer.WritePropertyName("unTrustSubnet"u8);
-                writer.WriteObjectValue<IPAddressSpaceInfo>(UnTrustSubnet, options);
+                writer.WriteObjectValue(UnTrustSubnet, options);
             }
             if (Optional.IsDefined(IPOfTrustSubnetForUdr))
             {
                 writer.WritePropertyName("ipOfTrustSubnetForUdr"u8);
-                writer.WriteObjectValue<IPAddressInfo>(IPOfTrustSubnetForUdr, options);
+                writer.WriteObjectValue(IPOfTrustSubnetForUdr, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 
         internal static FirewallVwanConfiguration DeserializeFirewallVwanConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             IPAddressSpaceInfo unTrustSubnet = default;
             IPAddressInfo ipOfTrustSubnetForUdr = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("networkVirtualApplianceId"u8))
@@ -134,10 +134,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new FirewallVwanConfiguration(
                 networkVirtualApplianceId,
                 vHub,

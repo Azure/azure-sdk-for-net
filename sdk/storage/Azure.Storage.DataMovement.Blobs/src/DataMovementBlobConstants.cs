@@ -42,8 +42,7 @@ namespace Azure.Storage.DataMovement.Blobs
             internal const int CacheControlOffsetIndex = PreserveCacheControlIndex + OneByte;
             internal const int CacheControlLengthIndex = CacheControlOffsetIndex + IntSizeInBytes;
 
-            internal const int PreserveAccessTierIndex = CacheControlLengthIndex + IntSizeInBytes;
-            internal const int AccessTierValueIndex = PreserveAccessTierIndex + OneByte;
+            internal const int AccessTierValueIndex = CacheControlLengthIndex + IntSizeInBytes;
 
             internal const int PreserveMetadataIndex = AccessTierValueIndex + OneByte;
             internal const int MetadataOffsetIndex = PreserveMetadataIndex + OneByte;

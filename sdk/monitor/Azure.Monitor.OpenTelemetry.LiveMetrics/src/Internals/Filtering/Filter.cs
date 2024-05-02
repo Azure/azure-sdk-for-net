@@ -91,6 +91,46 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
 
             this.info = filterInfo;
 
+            if (typeof(TTelemetry) == typeof(Request))
+            {
+                if (filterInfo.FieldName == "Success")
+                {
+                    filterInfo = new FilterInfo(nameof(Request.Extension_IsSuccess), filterInfo.Predicate, filterInfo.Comparand);
+                }
+            }
+            else if (typeof(TTelemetry) == typeof(RemoteDependency))
+            {
+                var fieldName = filterInfo.FieldName;
+                if (fieldName == "Type" || fieldName == "Target")
+                {
+                    Expression<Func<TTelemetry, bool>> lambdaExpression = Expression.Lambda<Func<TTelemetry, bool>>(Expression.Constant(true), Expression.Variable(typeof(TTelemetry)));
+                    this.filterLambda = lambdaExpression.Compile();
+                    return;
+                }
+                else if (fieldName == "Success")
+                {
+                    filterInfo = new FilterInfo(nameof(RemoteDependency.Extension_IsSuccess), filterInfo.Predicate, filterInfo.Comparand);
+                }
+                else if (fieldName == "Data")
+                {
+                    filterInfo = new FilterInfo(nameof(RemoteDependency.CommandName), filterInfo.Predicate, filterInfo.Comparand);
+                }
+            }
+            else if (typeof(TTelemetry) == typeof(Models.Exception))
+            {
+                var fieldName = filterInfo.FieldName;
+                if (fieldName == "Exception.StackTrace")
+                {
+                    Expression<Func<TTelemetry, bool>> lambdaExpression = Expression.Lambda<Func<TTelemetry, bool>>(Expression.Constant(true), Expression.Variable(typeof(TTelemetry)));
+                    this.filterLambda = lambdaExpression.Compile();
+                    return;
+                }
+                else if (fieldName == "Exception.Message")
+                {
+                    filterInfo = new FilterInfo(nameof(Models.Exception.ExceptionMessage), filterInfo.Predicate, filterInfo.Comparand);
+                }
+            }
+
             this.fieldName = filterInfo.FieldName;
             this.predicate = (Predicate)FilterInfoPredicateUtility.ToPredicate(filterInfo.Predicate);
             this.comparand = filterInfo.Comparand;
@@ -285,6 +325,11 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
                     .Aggregate(
                         typeof(TTelemetry),
                         (type, propertyName) => type.GetProperty(propertyName, BindingFlags.Instance | BindingFlags.Public).PropertyType);
+
+                if (fieldName == "Duration")
+                {
+                    propertyType = typeof(TimeSpan);
+                }
 
                 if (propertyType == null)
                 {
@@ -555,6 +600,11 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
                     if (fieldType == typeof(TimeSpan))
                     {
                         this.ThrowOnInvalidFilter(fieldType, !this.comparandTimeSpan.HasValue);
+                        if (fieldExpression.Type == typeof(string))
+                        {
+                            MethodInfo parseMethod = typeof(TimeSpan).GetMethod("Parse", new[] { typeof(string) });
+                            fieldExpression = Expression.Call(parseMethod, fieldExpression);
+                        }
 
                         switch (this.predicate)
                         {

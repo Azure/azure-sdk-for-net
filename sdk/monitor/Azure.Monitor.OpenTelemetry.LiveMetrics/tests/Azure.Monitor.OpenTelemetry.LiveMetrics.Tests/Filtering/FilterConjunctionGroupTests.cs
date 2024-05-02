@@ -15,9 +15,9 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
             // ARRANGE
             CollectionConfigurationError[] errors;
             var filterGroupInfo = new FilterConjunctionGroupInfo(new List<FilterInfo>() {
-                                        new FilterInfo("StringField", FilterInfoPredicate.Contains, "apple"),
-                                        new FilterInfo("StringField", FilterInfoPredicate.Contains, "dog"),
-                                        new FilterInfo("StringField", FilterInfoPredicate.Contains, "red")
+                                        new FilterInfo("StringField", PredicateType.Contains, "apple"),
+                                        new FilterInfo("StringField", PredicateType.Contains, "dog"),
+                                        new FilterInfo("StringField", PredicateType.Contains, "red")
                                       });
             var filterGroup = new FilterConjunctionGroup<DocumentMock>(filterGroupInfo, out errors);
             var telemetry = new DocumentMock() { StringField = "This string contains all valuable words: 'apple', 'dog', and 'red'." };
@@ -38,9 +38,9 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
             // ARRANGE
             CollectionConfigurationError[] errors;
             var filterGroupInfo = new FilterConjunctionGroupInfo(new List<FilterInfo>() {
-                                        new FilterInfo("StringField", FilterInfoPredicate.Contains, "apple"),
-                                        new FilterInfo("StringField", FilterInfoPredicate.Contains, "dog"),
-                                        new FilterInfo("StringField", FilterInfoPredicate.Contains, "red")
+                                        new FilterInfo("StringField", PredicateType.Contains, "apple"),
+                                        new FilterInfo("StringField", PredicateType.Contains, "dog"),
+                                        new FilterInfo("StringField", PredicateType.Contains, "red")
                                       });
             var filterGroup = new FilterConjunctionGroup<DocumentMock>(filterGroupInfo, out errors);
             var telemetry = new DocumentMock()
@@ -84,9 +84,9 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
             // ARRANGE
             CollectionConfigurationError[] errors;
             var filterGroupInfo = new FilterConjunctionGroupInfo(new List<FilterInfo>() {
-                                    new FilterInfo("NonExistentField", FilterInfoPredicate.Contains, "apple"),
-                                    new FilterInfo("BooleanField", FilterInfoPredicate.Contains, "dog"),
-                                    new FilterInfo("StringField", FilterInfoPredicate.Contains, "red")
+                                    new FilterInfo("NonExistentField", PredicateType.Contains, "apple"),
+                                    new FilterInfo("BooleanField", PredicateType.Contains, "dog"),
+                                    new FilterInfo("StringField", PredicateType.Contains, "red")
                                     });
             var filterGroup = new FilterConjunctionGroup<DocumentMock>(filterGroupInfo, out errors);
             var telemetry = new DocumentMock() { StringField = "red" };

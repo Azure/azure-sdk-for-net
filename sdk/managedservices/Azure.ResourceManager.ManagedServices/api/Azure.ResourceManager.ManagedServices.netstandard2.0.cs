@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ManagedServices
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedServices.ManagedServicesMarketplaceRegistrationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedServices.ManagedServicesMarketplaceRegistrationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ManagedServicesMarketplaceRegistrationResource : Azure.ResourceManager.ArmResource
+    public partial class ManagedServicesMarketplaceRegistrationResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedServices.ManagedServicesMarketplaceRegistrationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedServices.ManagedServicesMarketplaceRegistrationData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ManagedServicesMarketplaceRegistrationResource() { }
@@ -50,6 +50,11 @@ namespace Azure.ResourceManager.ManagedServices
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string scope, string marketplaceIdentifier) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ManagedServices.ManagedServicesMarketplaceRegistrationResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagedServices.ManagedServicesMarketplaceRegistrationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.ManagedServices.ManagedServicesMarketplaceRegistrationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedServices.ManagedServicesMarketplaceRegistrationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedServices.ManagedServicesMarketplaceRegistrationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedServices.ManagedServicesMarketplaceRegistrationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedServices.ManagedServicesMarketplaceRegistrationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedServices.ManagedServicesMarketplaceRegistrationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedServices.ManagedServicesMarketplaceRegistrationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ManagedServicesRegistrationAssignmentCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationAssignmentResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationAssignmentResource>, System.Collections.IEnumerable
     {
@@ -78,7 +83,7 @@ namespace Azure.ResourceManager.ManagedServices
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationAssignmentData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationAssignmentData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ManagedServicesRegistrationAssignmentResource : Azure.ResourceManager.ArmResource
+    public partial class ManagedServicesRegistrationAssignmentResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationAssignmentData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationAssignmentData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ManagedServicesRegistrationAssignmentResource() { }
@@ -89,6 +94,11 @@ namespace Azure.ResourceManager.ManagedServices
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationAssignmentResource> Get(bool? expandRegistrationDefinition = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationAssignmentResource>> GetAsync(bool? expandRegistrationDefinition = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationAssignmentData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationAssignmentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationAssignmentData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationAssignmentData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationAssignmentData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationAssignmentData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationAssignmentData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationAssignmentResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationAssignmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationAssignmentResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationAssignmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -120,7 +130,7 @@ namespace Azure.ResourceManager.ManagedServices
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ManagedServicesRegistrationResource : Azure.ResourceManager.ArmResource
+    public partial class ManagedServicesRegistrationResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ManagedServicesRegistrationResource() { }
@@ -131,6 +141,11 @@ namespace Azure.ResourceManager.ManagedServices
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

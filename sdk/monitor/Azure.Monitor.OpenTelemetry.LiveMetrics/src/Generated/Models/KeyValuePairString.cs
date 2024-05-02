@@ -5,28 +5,29 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 {
-    /// <summary> The KeyValuePairString. </summary>
+    /// <summary> Key-value pair of string and string. </summary>
     internal partial class KeyValuePairString
     {
         /// <summary> Initializes a new instance of <see cref="KeyValuePairString"/>. </summary>
-        public KeyValuePairString()
+        /// <param name="key"> Key of the key-value pair. </param>
+        /// <param name="value"> Value of the key-value pair. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        public KeyValuePairString(string key, string value)
         {
-        }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
-        /// <summary> Initializes a new instance of <see cref="KeyValuePairString"/>. </summary>
-        /// <param name="key"></param>
-        /// <param name="value"></param>
-        internal KeyValuePairString(string key, string value)
-        {
             Key = key;
             Value = value;
         }
 
-        /// <summary> Gets or sets the key. </summary>
-        public string Key { get; set; }
-        /// <summary> Gets or sets the value. </summary>
-        public string Value { get; set; }
+        /// <summary> Key of the key-value pair. </summary>
+        public string Key { get; }
+        /// <summary> Value of the key-value pair. </summary>
+        public string Value { get; }
     }
 }

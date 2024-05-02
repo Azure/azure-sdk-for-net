@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Communication
 {
     public partial class CommunicationDomainResourceData : IUtf8JsonSerializable, IJsonModel<CommunicationDomainResourceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CommunicationDomainResourceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CommunicationDomainResourceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CommunicationDomainResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -91,12 +91,12 @@ namespace Azure.ResourceManager.Communication
             if (options.Format != "W" && Optional.IsDefined(VerificationStates))
             {
                 writer.WritePropertyName("verificationStates"u8);
-                writer.WriteObjectValue<DomainPropertiesVerificationStates>(VerificationStates, options);
+                writer.WriteObjectValue(VerificationStates, options);
             }
             if (options.Format != "W" && Optional.IsDefined(VerificationRecords))
             {
                 writer.WritePropertyName("verificationRecords"u8);
-                writer.WriteObjectValue<DomainPropertiesVerificationRecords>(VerificationRecords, options);
+                writer.WriteObjectValue(VerificationRecords, options);
             }
             if (Optional.IsDefined(UserEngagementTracking))
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Communication
 
         internal static CommunicationDomainResourceData DeserializeCommunicationDomainResourceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Communication
             DomainPropertiesVerificationRecords verificationRecords = default;
             UserEngagementTracking? userEngagementTracking = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -277,10 +277,10 @@ namespace Azure.ResourceManager.Communication
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new CommunicationDomainResourceData(
                 id,
                 name,

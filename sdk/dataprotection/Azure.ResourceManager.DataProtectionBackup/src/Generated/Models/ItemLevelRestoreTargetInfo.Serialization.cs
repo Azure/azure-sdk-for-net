@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     public partial class ItemLevelRestoreTargetInfo : IUtf8JsonSerializable, IJsonModel<ItemLevelRestoreTargetInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ItemLevelRestoreTargetInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ItemLevelRestoreTargetInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ItemLevelRestoreTargetInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -30,20 +30,20 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteStartArray();
             foreach (var item in RestoreCriteria)
             {
-                writer.WriteObjectValue<ItemLevelRestoreCriteria>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("datasourceInfo"u8);
-            writer.WriteObjectValue<DataSourceInfo>(DatasourceInfo, options);
+            writer.WriteObjectValue(DatasourceInfo, options);
             if (Optional.IsDefined(DatasourceSetInfo))
             {
                 writer.WritePropertyName("datasourceSetInfo"u8);
-                writer.WriteObjectValue<DataSourceSetInfo>(DatasourceSetInfo, options);
+                writer.WriteObjectValue(DatasourceSetInfo, options);
             }
             if (Optional.IsDefined(DatasourceAuthCredentials))
             {
                 writer.WritePropertyName("datasourceAuthCredentials"u8);
-                writer.WriteObjectValue<DataProtectionBackupAuthCredentials>(DatasourceAuthCredentials, options);
+                writer.WriteObjectValue(DatasourceAuthCredentials, options);
             }
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static ItemLevelRestoreTargetInfo DeserializeItemLevelRestoreTargetInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             RecoverySetting recoveryOption = default;
             AzureLocation? restoreLocation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("restoreCriteria"u8))
@@ -157,10 +157,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ItemLevelRestoreTargetInfo(
                 objectType,
                 recoveryOption,

@@ -44,12 +44,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             return new AppConfigurationSnapshotModifiedEventData(name, etag, syncToken);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AppConfigurationSnapshotModifiedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAppConfigurationSnapshotModifiedEventData(document.RootElement);
+        }
+
         internal partial class AppConfigurationSnapshotModifiedEventDataConverter : JsonConverter<AppConfigurationSnapshotModifiedEventData>
         {
             public override void Write(Utf8JsonWriter writer, AppConfigurationSnapshotModifiedEventData model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override AppConfigurationSnapshotModifiedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

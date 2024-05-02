@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class AppServiceHostName : IUtf8JsonSerializable, IJsonModel<AppServiceHostName>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServiceHostName>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServiceHostName>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AppServiceHostName>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceHostName DeserializeAppServiceHostName(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.AppService.Models
             CustomHostNameDnsRecordType? customHostNameDnsRecordType = default;
             AppServiceHostNameType? hostNameType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -164,10 +164,10 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AppServiceHostName(
                 name,
                 siteNames ?? new ChangeTrackingList<string>(),
@@ -190,15 +190,16 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  name: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  name: ");
                     if (Name.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -212,17 +213,18 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SiteNames), out propertyOverride);
-            if (Optional.IsCollectionDefined(SiteNames) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (SiteNames.Any() || hasPropertyOverride)
+                builder.Append("  siteNames: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(SiteNames))
                 {
-                    builder.Append("  siteNames: ");
-                    if (hasPropertyOverride)
+                    if (SiteNames.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  siteNames: ");
                         builder.AppendLine("[");
                         foreach (var item in SiteNames)
                         {
@@ -247,15 +249,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AzureResourceName), out propertyOverride);
-            if (Optional.IsDefined(AzureResourceName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  azureResourceName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AzureResourceName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  azureResourceName: ");
                     if (AzureResourceName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -269,43 +272,46 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AzureResourceType), out propertyOverride);
-            if (Optional.IsDefined(AzureResourceType) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  azureResourceType: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AzureResourceType))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  azureResourceType: ");
                     builder.AppendLine($"'{AzureResourceType.Value.ToSerialString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomHostNameDnsRecordType), out propertyOverride);
-            if (Optional.IsDefined(CustomHostNameDnsRecordType) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  customHostNameDnsRecordType: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CustomHostNameDnsRecordType))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  customHostNameDnsRecordType: ");
                     builder.AppendLine($"'{CustomHostNameDnsRecordType.Value.ToSerialString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HostNameType), out propertyOverride);
-            if (Optional.IsDefined(HostNameType) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  hostNameType: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(HostNameType))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  hostNameType: ");
                     builder.AppendLine($"'{HostNameType.Value.ToSerialString()}'");
                 }
             }

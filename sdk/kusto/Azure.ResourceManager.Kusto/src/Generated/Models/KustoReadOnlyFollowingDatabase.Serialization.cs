@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Kusto.Models
 {
     public partial class KustoReadOnlyFollowingDatabase : IUtf8JsonSerializable, IJsonModel<KustoReadOnlyFollowingDatabase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KustoReadOnlyFollowingDatabase>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KustoReadOnlyFollowingDatabase>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<KustoReadOnlyFollowingDatabase>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Kusto.Models
             if (options.Format != "W" && Optional.IsDefined(Statistics))
             {
                 writer.WritePropertyName("statistics"u8);
-                writer.WriteObjectValue<DatabaseStatistics>(Statistics, options);
+                writer.WriteObjectValue(Statistics, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LeaderClusterResourceId))
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Kusto.Models
             if (options.Format != "W" && Optional.IsDefined(TableLevelSharingProperties))
             {
                 writer.WritePropertyName("tableLevelSharingProperties"u8);
-                writer.WriteObjectValue<KustoDatabaseTableLevelSharingProperties>(TableLevelSharingProperties, options);
+                writer.WriteObjectValue(TableLevelSharingProperties, options);
             }
             if (options.Format != "W" && Optional.IsDefined(OriginalDatabaseName))
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Kusto.Models
             if (options.Format != "W" && Optional.IsDefined(SuspensionDetails))
             {
                 writer.WritePropertyName("suspensionDetails"u8);
-                writer.WriteObjectValue<SuspensionDetails>(SuspensionDetails, options);
+                writer.WriteObjectValue(SuspensionDetails, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Kusto.Models
 
         internal static KustoReadOnlyFollowingDatabase DeserializeKustoReadOnlyFollowingDatabase(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Kusto.Models
             KustoDatabaseShareOrigin? databaseShareOrigin = default;
             SuspensionDetails suspensionDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -310,10 +310,10 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new KustoReadOnlyFollowingDatabase(
                 id,
                 name,

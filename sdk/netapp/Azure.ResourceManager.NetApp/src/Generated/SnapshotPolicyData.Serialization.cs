@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.NetApp
 {
     public partial class SnapshotPolicyData : IUtf8JsonSerializable, IJsonModel<SnapshotPolicyData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SnapshotPolicyData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SnapshotPolicyData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SnapshotPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -71,22 +71,22 @@ namespace Azure.ResourceManager.NetApp
             if (Optional.IsDefined(HourlySchedule))
             {
                 writer.WritePropertyName("hourlySchedule"u8);
-                writer.WriteObjectValue<SnapshotPolicyHourlySchedule>(HourlySchedule, options);
+                writer.WriteObjectValue(HourlySchedule, options);
             }
             if (Optional.IsDefined(DailySchedule))
             {
                 writer.WritePropertyName("dailySchedule"u8);
-                writer.WriteObjectValue<SnapshotPolicyDailySchedule>(DailySchedule, options);
+                writer.WriteObjectValue(DailySchedule, options);
             }
             if (Optional.IsDefined(WeeklySchedule))
             {
                 writer.WritePropertyName("weeklySchedule"u8);
-                writer.WriteObjectValue<SnapshotPolicyWeeklySchedule>(WeeklySchedule, options);
+                writer.WriteObjectValue(WeeklySchedule, options);
             }
             if (Optional.IsDefined(MonthlySchedule))
             {
                 writer.WritePropertyName("monthlySchedule"u8);
-                writer.WriteObjectValue<SnapshotPolicyMonthlySchedule>(MonthlySchedule, options);
+                writer.WriteObjectValue(MonthlySchedule, options);
             }
             if (Optional.IsDefined(IsEnabled))
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.NetApp
 
         internal static SnapshotPolicyData DeserializeSnapshotPolicyData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.NetApp
             bool? enabled = default;
             string provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -270,10 +270,10 @@ namespace Azure.ResourceManager.NetApp
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SnapshotPolicyData(
                 id,
                 name,

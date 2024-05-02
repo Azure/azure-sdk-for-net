@@ -5,32 +5,32 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 {
     /// <summary> Metric data point. </summary>
     internal partial class MetricPoint
     {
         /// <summary> Initializes a new instance of <see cref="MetricPoint"/>. </summary>
-        public MetricPoint()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="MetricPoint"/>. </summary>
         /// <param name="name"> Metric name. </param>
         /// <param name="value"> Metric value. </param>
         /// <param name="weight"> Metric weight. </param>
-        internal MetricPoint(string name, float? value, int? weight)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public MetricPoint(string name, double value, int weight)
         {
+            Argument.AssertNotNull(name, nameof(name));
+
             Name = name;
             Value = value;
             Weight = weight;
         }
 
         /// <summary> Metric name. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
         /// <summary> Metric value. </summary>
-        public float? Value { get; set; }
+        public double Value { get; }
         /// <summary> Metric weight. </summary>
-        public int? Weight { get; set; }
+        public int Weight { get; }
     }
 }

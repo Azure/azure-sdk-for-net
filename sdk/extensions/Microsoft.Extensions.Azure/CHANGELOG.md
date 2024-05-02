@@ -10,6 +10,12 @@
 
 ### Other Changes
 
+## 1.7.3 (2024-04-16)
+
+### Other Changes
+
+- Updated dependency `Azure.Identity` to version `1.11.0`.
+
 ## 1.7.2 (2024-02-12)
 
 ### Bugs Fixed

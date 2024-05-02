@@ -45,12 +45,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return UnknownImportSettings.DeserializeUnknownImportSettings(element);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ImportSettings FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeImportSettings(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class ImportSettingsConverter : JsonConverter<ImportSettings>
         {
             public override void Write(Utf8JsonWriter writer, ImportSettings model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<ImportSettings>(model);
+                writer.WriteObjectValue(model);
             }
+
             public override ImportSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

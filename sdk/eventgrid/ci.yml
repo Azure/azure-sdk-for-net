@@ -10,6 +10,7 @@ trigger:
   paths:
     include:
       - sdk/eventgrid/Azure.Messaging.EventGrid
+      - sdk/eventgrid/Azure.Messaging.EventGrid.Namespaces
       - sdk/eventgrid/Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents
       - sdk/eventgrid/service.projects
       - sdk/eventgrid/ci.yml
@@ -24,6 +25,7 @@ pr:
   paths:
     include:
       - sdk/eventgrid/Azure.Messaging.EventGrid
+      - sdk/eventgrid/Azure.Messaging.EventGrid.Namespaces
       - sdk/eventgrid/Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents
       - sdk/eventgrid/service.projects
       - sdk/eventgrid/ci.yml
@@ -39,5 +41,7 @@ extends:
       safeName: AzureMessagingEventGrid
     - name: Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents
       safeName: MicrosoftAzureMessagingEventGridCloudNativeCloudEvents
+    - name: Azure.Messaging.EventGrid.Namespaces
+      safeName: AzureMessagingEventGridNamespaces
 
-    
+

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Logic.Models
 {
     public partial class IntegrationServiceEnvironmentSubnetNetworkHealth : IUtf8JsonSerializable, IJsonModel<IntegrationServiceEnvironmentSubnetNetworkHealth>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IntegrationServiceEnvironmentSubnetNetworkHealth>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IntegrationServiceEnvironmentSubnetNetworkHealth>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<IntegrationServiceEnvironmentSubnetNetworkHealth>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,14 +32,14 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in OutboundNetworkDependencies)
                 {
-                    writer.WriteObjectValue<IntegrationServiceEnvironmentNetworkDependency>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(OutboundNetworkHealth))
             {
                 writer.WritePropertyName("outboundNetworkHealth"u8);
-                writer.WriteObjectValue<IntegrationServiceEnvironmentNetworkDependencyHealth>(OutboundNetworkHealth, options);
+                writer.WriteObjectValue(OutboundNetworkHealth, options);
             }
             writer.WritePropertyName("networkDependencyHealthState"u8);
             writer.WriteStringValue(NetworkDependencyHealthState.ToString());
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static IntegrationServiceEnvironmentSubnetNetworkHealth DeserializeIntegrationServiceEnvironmentSubnetNetworkHealth(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Logic.Models
             IntegrationServiceEnvironmentNetworkDependencyHealth outboundNetworkHealth = default;
             IntegrationServiceEnvironmentNetworkEndPointAccessibilityState networkDependencyHealthState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("outboundNetworkDependencies"u8))
@@ -118,10 +118,10 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new IntegrationServiceEnvironmentSubnetNetworkHealth(outboundNetworkDependencies ?? new ChangeTrackingList<IntegrationServiceEnvironmentNetworkDependency>(), outboundNetworkHealth, networkDependencyHealthState, serializedAdditionalRawData);
         }
 

@@ -24,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
-                writer.WriteObjectValue<IntegrationRuntimeReference>(ConnectVia);
+                writer.WriteObjectValue(ConnectVia);
             }
             if (Optional.IsDefined(Description))
             {
@@ -38,7 +38,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<ParameterSpecification>(item.Value);
+                    writer.WriteObjectValue(item.Value);
                 }
                 writer.WriteEndObject();
             }
@@ -77,7 +77,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ServicePrincipalKey))
             {
                 writer.WritePropertyName("servicePrincipalKey"u8);
-                writer.WriteObjectValue<SecretBase>(ServicePrincipalKey);
+                writer.WriteObjectValue(ServicePrincipalKey);
             }
             if (Optional.IsDefined(Tenant))
             {
@@ -97,7 +97,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ServicePrincipalCredential))
             {
                 writer.WritePropertyName("servicePrincipalCredential"u8);
-                writer.WriteObjectValue<SecretBase>(ServicePrincipalCredential);
+                writer.WriteObjectValue(ServicePrincipalCredential);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
@@ -112,12 +112,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(SasToken))
             {
                 writer.WritePropertyName("sasToken"u8);
-                writer.WriteObjectValue<SecretBase>(SasToken);
+                writer.WriteObjectValue(SasToken);
             }
             if (Optional.IsDefined(Credential))
             {
                 writer.WritePropertyName("credential"u8);
-                writer.WriteObjectValue<CredentialReference>(Credential);
+                writer.WriteObjectValue(Credential);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -353,12 +353,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 credential);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AzureBlobFSLinkedService FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAzureBlobFSLinkedService(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class AzureBlobFSLinkedServiceConverter : JsonConverter<AzureBlobFSLinkedService>
         {
             public override void Write(Utf8JsonWriter writer, AzureBlobFSLinkedService model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<AzureBlobFSLinkedService>(model);
+                writer.WriteObjectValue(model);
             }
+
             public override AzureBlobFSLinkedService Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

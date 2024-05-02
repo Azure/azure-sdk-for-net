@@ -21,22 +21,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(SourceDatabase))
             {
                 writer.WritePropertyName("sourceDatabase"u8);
-                writer.WriteObjectValue<LinkConnectionSourceDatabase>(SourceDatabase);
+                writer.WriteObjectValue(SourceDatabase);
             }
             if (Optional.IsDefined(TargetDatabase))
             {
                 writer.WritePropertyName("targetDatabase"u8);
-                writer.WriteObjectValue<LinkConnectionTargetDatabase>(TargetDatabase);
+                writer.WriteObjectValue(TargetDatabase);
             }
             if (Optional.IsDefined(LandingZone))
             {
                 writer.WritePropertyName("landingZone"u8);
-                writer.WriteObjectValue<LinkConnectionLandingZone>(LandingZone);
+                writer.WriteObjectValue(LandingZone);
             }
             if (Optional.IsDefined(Compute))
             {
                 writer.WritePropertyName("compute"u8);
-                writer.WriteObjectValue<LinkConnectionCompute>(Compute);
+                writer.WriteObjectValue(Compute);
             }
             writer.WriteEndObject();
         }
@@ -93,12 +93,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new LinkConnection(sourceDatabase, targetDatabase, landingZone, compute);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static LinkConnection FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeLinkConnection(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class LinkConnectionConverter : JsonConverter<LinkConnection>
         {
             public override void Write(Utf8JsonWriter writer, LinkConnection model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<LinkConnection>(model);
+                writer.WriteObjectValue(model);
             }
+
             public override LinkConnection Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

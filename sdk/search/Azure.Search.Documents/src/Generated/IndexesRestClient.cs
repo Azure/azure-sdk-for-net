@@ -54,7 +54,7 @@ namespace Azure.Search.Documents
             request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<SearchIndex>(index);
+            content.JsonWriter.WriteObjectValue(index);
             request.Content = content;
             return message;
         }
@@ -201,7 +201,7 @@ namespace Azure.Search.Documents
             request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<SearchIndex>(index);
+            content.JsonWriter.WriteObjectValue(index);
             request.Content = content;
             return message;
         }
@@ -507,7 +507,7 @@ namespace Azure.Search.Documents
             request0.Headers.Add("Accept", "application/json; odata.metadata=minimal");
             request0.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<AnalyzeTextOptions>(request);
+            content.JsonWriter.WriteObjectValue(request);
             request0.Content = content;
             return message;
         }

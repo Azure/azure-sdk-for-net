@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Reservations.Models
 {
     public partial class ReservationProperties : IUtf8JsonSerializable, IJsonModel<ReservationProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReservationProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReservationProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ReservationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(ExtendedStatusInfo))
             {
                 writer.WritePropertyName("extendedStatusInfo"u8);
-                writer.WriteObjectValue<ExtendedStatusInfo>(ExtendedStatusInfo, options);
+                writer.WriteObjectValue(ExtendedStatusInfo, options);
             }
             if (Optional.IsDefined(BillingPlan))
             {
@@ -144,22 +144,22 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(SplitProperties))
             {
                 writer.WritePropertyName("splitProperties"u8);
-                writer.WriteObjectValue<ReservationSplitProperties>(SplitProperties, options);
+                writer.WriteObjectValue(SplitProperties, options);
             }
             if (Optional.IsDefined(MergeProperties))
             {
                 writer.WritePropertyName("mergeProperties"u8);
-                writer.WriteObjectValue<ReservationMergeProperties>(MergeProperties, options);
+                writer.WriteObjectValue(MergeProperties, options);
             }
             if (Optional.IsDefined(SwapProperties))
             {
                 writer.WritePropertyName("swapProperties"u8);
-                writer.WriteObjectValue<ReservationSwapProperties>(SwapProperties, options);
+                writer.WriteObjectValue(SwapProperties, options);
             }
             if (Optional.IsDefined(AppliedScopeProperties))
             {
                 writer.WritePropertyName("appliedScopeProperties"u8);
-                writer.WriteObjectValue<AppliedScopeProperties>(AppliedScopeProperties, options);
+                writer.WriteObjectValue(AppliedScopeProperties, options);
             }
             if (Optional.IsDefined(BillingScopeId))
             {
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(RenewProperties))
             {
                 writer.WritePropertyName("renewProperties"u8);
-                writer.WriteObjectValue<RenewProperties>(RenewProperties, options);
+                writer.WriteObjectValue(RenewProperties, options);
             }
             if (Optional.IsDefined(Term))
             {
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Reservations.Models
             if (options.Format != "W" && Optional.IsDefined(Utilization))
             {
                 writer.WritePropertyName("utilization"u8);
-                writer.WriteObjectValue<ReservationPropertiesUtilization>(Utilization, options);
+                writer.WriteObjectValue(Utilization, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Reservations.Models
 
         internal static ReservationProperties DeserializeReservationProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Reservations.Models
             string userFriendlyRenewState = default;
             ReservationPropertiesUtilization utilization = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("reservedResourceType"u8))
@@ -569,10 +569,10 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ReservationProperties(
                 reservedResourceType,
                 instanceFlexibility,
