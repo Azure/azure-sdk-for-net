@@ -7,9 +7,9 @@ using System.Collections.Generic;
 namespace Azure.Identity
 {
     /// <summary>
-    /// Options used to configure the <see cref="AzurePipelinesServiceConnectionCredential"/>.
+    /// Options used to configure the <see cref="AzurePipelinesCredential"/>.
     /// </summary>
-    public class AzurePipelinesServiceConnectionCredentialOptions : TokenCredentialOptions, ISupportsDisableInstanceDiscovery, ISupportsAdditionallyAllowedTenants, ISupportsTokenCachePersistenceOptions
+    public class AzurePipelinesCredentialOptions : TokenCredentialOptions, ISupportsDisableInstanceDiscovery, ISupportsAdditionallyAllowedTenants, ISupportsTokenCachePersistenceOptions
     {
         internal CredentialPipeline Pipeline { get; set; }
 
@@ -23,22 +23,22 @@ namespace Azure.Identity
         /// <summary>
         /// The URI of the TFS collection or Azure DevOps organization.
         /// </summary>
-        public string CollectionUri { get; set; } = Environment.GetEnvironmentVariable("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI");
+        internal string CollectionUri { get; set; } = Environment.GetEnvironmentVariable("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI");
 
         /// <summary>
         /// A unique identifier for a single attempt of a single job. The value is unique to the current pipeline.
         /// </summary>
-        public string JobId { get; set; } = Environment.GetEnvironmentVariable("SYSTEM_JOBID");
+        internal string JobId { get; set; } = Environment.GetEnvironmentVariable("SYSTEM_JOBID");
 
         /// <summary>
         /// A string-based identifier for a single pipeline run.
         /// </summary>
-        public string PlanId { get; set; } = Environment.GetEnvironmentVariable("SYSTEM_PLANID");
+        internal string PlanId { get; set; } = Environment.GetEnvironmentVariable("SYSTEM_PLANID");
 
         /// <summary>
         /// The ID of the project that this build belongs to.
         /// </summary>
-        public string TeamProjectId { get; set; } = Environment.GetEnvironmentVariable("SYSTEM_TEAMPROJECTID");
+        internal string TeamProjectId { get; set; } = Environment.GetEnvironmentVariable("SYSTEM_TEAMPROJECTID");
 
         /// <inheritdoc/>
         public IList<string> AdditionallyAllowedTenants { get; internal set; } = new List<string>();

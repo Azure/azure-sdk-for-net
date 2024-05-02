@@ -8,16 +8,16 @@ using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
-    public class AzurePipelinesServiceConnectionCredentialTests : CredentialTestBase<AzurePipelinesServiceConnectionCredentialOptions>
+    public class AzurePipelinesCredentialTests : CredentialTestBase<AzurePipelinesCredentialOptions>
     {
-        public AzurePipelinesServiceConnectionCredentialTests(bool isAsync) : base(isAsync)
+        public AzurePipelinesCredentialTests(bool isAsync) : base(isAsync)
         { }
 
         public override TokenCredential GetTokenCredential(TokenCredentialOptions options)
         {
-            var clientAssertionOptions = new AzurePipelinesServiceConnectionCredentialOptions { Diagnostics = { IsAccountIdentifierLoggingEnabled = options.Diagnostics.IsAccountIdentifierLoggingEnabled }, MsalClient = mockConfidentialMsalClient, Pipeline = CredentialPipeline.GetInstance(null) };
+            var clientAssertionOptions = new AzurePipelinesCredentialOptions { Diagnostics = { IsAccountIdentifierLoggingEnabled = options.Diagnostics.IsAccountIdentifierLoggingEnabled }, MsalClient = mockConfidentialMsalClient, Pipeline = CredentialPipeline.GetInstance(null) };
 
-            return InstrumentClient(new AzurePipelinesServiceConnectionCredential(expectedTenantId, ClientId, "serviceConnectionId", clientAssertionOptions));
+            return InstrumentClient(new AzurePipelinesCredential(expectedTenantId, ClientId, "serviceConnectionId", clientAssertionOptions));
         }
 
         public override TokenCredential GetTokenCredential(CommonCredentialTestConfig config)
@@ -27,7 +27,7 @@ namespace Azure.Identity.Tests
                 Assert.Ignore("Null TenantId test does not apply to this credential");
             }
 
-            var options = new AzurePipelinesServiceConnectionCredentialOptions
+            var options = new AzurePipelinesCredentialOptions
             {
                 DisableInstanceDiscovery = config.DisableInstanceDiscovery,
                 AdditionallyAllowedTenants = config.AdditionallyAllowedTenants,
@@ -59,11 +59,11 @@ namespace Azure.Identity.Tests
 
             var pipeline = CredentialPipeline.GetInstance(options);
             options.Pipeline = pipeline;
-            return InstrumentClient(new AzurePipelinesServiceConnectionCredential(config.TenantId, ClientId, "serviceConnectionId", options));
+            return InstrumentClient(new AzurePipelinesCredential(config.TenantId, ClientId, "serviceConnectionId", options));
         }
 
         [Test]
-        public void AzurePipelinesServiceConnectionCredentialOptions_Loads_From_Env()
+        public void AzurePipelinesCredentialOptions_Loads_From_Env()
         {
             using (new TestEnvVar(new Dictionary<string, string>
             {
@@ -74,7 +74,7 @@ namespace Azure.Identity.Tests
                 { "SYSTEM_ACCESSTOKEN", "mockSystemAccessToken" },
                 { "SYSTEM_TEAMPROJECTID", "mockTeamProjectId" }}))
             {
-                var options = new AzurePipelinesServiceConnectionCredentialOptions();
+                var options = new AzurePipelinesCredentialOptions();
                 Assert.AreEqual("mockCollectionUri", options.CollectionUri);
                 Assert.AreEqual("mockJobId", options.JobId);
                 Assert.AreEqual("mockPlanId", options.PlanId);

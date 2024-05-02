@@ -14,7 +14,7 @@ namespace Azure.Identity
     /// <summary>
     /// Credential which authenticates using an Azure Pipelines service connection.
     /// </summary>
-    public class AzurePipelinesServiceConnectionCredential : TokenCredential
+    public class AzurePipelinesCredential : TokenCredential
     {
         internal readonly string[] AdditionallyAllowedTenantIds;
         internal string TenantId { get; }
@@ -27,18 +27,18 @@ namespace Azure.Identity
         /// <summary>
         /// Protected constructor for mocking.
         /// </summary>
-        protected AzurePipelinesServiceConnectionCredential()
+        protected AzurePipelinesCredential()
         { }
 
         /// <summary>
-        /// Creates a new instance of the <see cref="AzurePipelinesServiceConnectionCredential"/>.
+        /// Creates a new instance of the <see cref="AzurePipelinesCredential"/>.
         /// </summary>
         /// <param name="tenantId">The tenant ID for the service connection.</param>
         /// <param name="clientId">The client ID for the service connection.</param>
         /// <param name="serviceConnectionId">The service connection ID, as found in the querystring's resourceId key.</param>
-        /// <param name="options">An instance of <see cref="AzurePipelinesServiceConnectionCredentialOptions"/>.</param>
+        /// <param name="options">An instance of <see cref="AzurePipelinesCredentialOptions"/>.</param>
         /// <exception cref="System.ArgumentNullException">When <paramref name="tenantId"/>, <paramref name="clientId"/>, or <paramref name="serviceConnectionId"/> is null.</exception>
-        public AzurePipelinesServiceConnectionCredential(string tenantId, string clientId, string serviceConnectionId, AzurePipelinesServiceConnectionCredentialOptions options = default)
+        public AzurePipelinesCredential(string tenantId, string clientId, string serviceConnectionId, AzurePipelinesCredentialOptions options = default)
         {
             Argument.AssertNotNull(serviceConnectionId, nameof(serviceConnectionId));
             Argument.AssertNotNull(clientId, nameof(clientId));
@@ -50,7 +50,7 @@ namespace Azure.Identity
 
             Func<CancellationToken, Task<string>> _assertionCallback = async (cancellationToken) =>
             {
-                var message = CreateOidcRequestMessage(serviceConnectionId, options ?? new AzurePipelinesServiceConnectionCredentialOptions());
+                var message = CreateOidcRequestMessage(serviceConnectionId, options ?? new AzurePipelinesCredentialOptions());
                 await Pipeline.HttpPipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 return GetOidcTokenResponse(message);
             };
@@ -70,7 +70,7 @@ namespace Azure.Identity
 
         internal async ValueTask<AccessToken> GetTokenCoreAsync(bool async, TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
-            using CredentialDiagnosticScope scope = Pipeline.StartGetTokenScope("AzurePipelinesServiceConnectionCredential.GetToken", requestContext);
+            using CredentialDiagnosticScope scope = Pipeline.StartGetTokenScope("AzurePipelinesCredential.GetToken", requestContext);
 
             try
             {
@@ -86,7 +86,7 @@ namespace Azure.Identity
             }
         }
 
-        internal HttpMessage CreateOidcRequestMessage(string serviceConnectionId, AzurePipelinesServiceConnectionCredentialOptions options)
+        internal HttpMessage CreateOidcRequestMessage(string serviceConnectionId, AzurePipelinesCredentialOptions options)
         {
             string CollectionUri = options.CollectionUri ?? throw new InvalidOperationException("environment variable SYSTEM_TEAMFOUNDATIONCOLLECTIONURI is not set.");
             string projectId = options.TeamProjectId ?? throw new InvalidOperationException("environment variable SYSTEM_TEAMPROJECTID is not set.");
