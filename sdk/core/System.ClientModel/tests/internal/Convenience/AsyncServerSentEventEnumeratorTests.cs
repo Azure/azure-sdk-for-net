@@ -2,42 +2,37 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Internal;
-using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace System.ClientModel.Tests.Convenience;
 
-public class ServerSentEventReaderTests
+public class AsyncServerSentEventEnumeratorTests
 {
-    // TODO: Test both sync and async
-
     [Test]
-    public async Task GetsEventsFromStream()
+    public async Task EnumeratesSingleEvents()
     {
         Stream contentStream = BinaryData.FromString(_mockContent).ToStream();
         using ServerSentEventReader reader = new(contentStream);
+        using AsyncServerSentEventEnumerator enumerator = new(reader);
 
-        List<ServerSentEvent> events = new();
-        ServerSentEvent? ssEvent = await reader.TryGetNextEventAsync();
-        while (ssEvent is not null)
+        int i = 0;
+        while (await enumerator.MoveNextAsync())
         {
-            events.Add(ssEvent.Value);
-            ssEvent = await reader.TryGetNextEventAsync();
-        }
+            ServerSentEvent sse = enumerator.Current;
 
-        Assert.AreEqual(events.Count, 3);
-
-        for (int i = 0; i < events.Count; i++)
-        {
-            ServerSentEvent sse = events[i];
             Assert.IsTrue(sse.EventName.Span.SequenceEqual($"event.{i}".AsSpan()));
             Assert.IsTrue(sse.Data.Span.SequenceEqual($"{{ \"id\": \"{i}\", \"object\": {i} }}".AsSpan()));
+
+            i++;
         }
 
-        // TODO: Question - should this include the "done" event?  Probably yes?
+        Assert.AreEqual(i, 3);
     }
+
+    // TODO: Add tests for dispose and handling cancellation token
+    // TODO: later, add tests for varying the _doneToken value.
 
     #region Helpers
 
