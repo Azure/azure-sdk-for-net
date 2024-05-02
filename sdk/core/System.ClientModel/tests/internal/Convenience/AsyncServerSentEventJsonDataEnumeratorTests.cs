@@ -43,7 +43,7 @@ public class AsyncServerSentEventJsonDataEnumeratorTests
         Stream contentStream = BinaryData.FromString(_mockBatchEventContent).ToStream();
         using ServerSentEventReader reader = new(contentStream);
         using AsyncServerSentEventEnumerator eventEnumerator = new(reader);
-        using AsyncServerSentEventJsonDataEnumerator<MockJsonModel> modelEnumerator = new(eventEnumerator);
+        using AsyncServerSentEventJsonDataEnumerator<MockJsonModel, MockJsonModelCollection> modelEnumerator = new(eventEnumerator);
 
         int i = 0;
         while (await modelEnumerator.MoveNextAsync())
@@ -82,13 +82,13 @@ public class AsyncServerSentEventJsonDataEnumeratorTests
 
     private string _mockBatchEventContent = """
         event: event.0
-        data: { { "IntValue": 0, "StringValue": "0" }, { "IntValue": 1, "StringValue": "1" } }
+        data: { "values" : [ { "IntValue": 0, "StringValue": "0" }, { "IntValue": 1, "StringValue": "1" } ] }
 
         event: event.1
-        data: { "IntValue": 2, "StringValue": "2" }
+        data: { "values" : [ { "IntValue": 2, "StringValue": "2" } ] }
 
         event: event.2
-        data: { { "IntValue": 3, "StringValue": "3" }, { "IntValue": 4, "StringValue": "4" }, { "IntValue": 5, "StringValue": "5" } }
+        data: { "values": [ { "IntValue": 3, "StringValue": "3" }, { "IntValue": 4, "StringValue": "4" }, { "IntValue": 5, "StringValue": "5" } ]}
 
         event: done
         data: [DONE]
@@ -97,24 +97,48 @@ public class AsyncServerSentEventJsonDataEnumeratorTests
 
     private class MockJsonModelCollection : ReadOnlyCollection<MockJsonModel>, IJsonModel<MockJsonModelCollection>
     {
+        public MockJsonModelCollection() : base(new List<MockJsonModel>())
+        {
+        }
+
         public MockJsonModelCollection(IList<MockJsonModel> models) : base(models)
         {
         }
 
         MockJsonModelCollection IJsonModel<MockJsonModelCollection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            throw new NotImplementedException();
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+
+            List<MockJsonModel> list = new();
+            foreach (JsonProperty property in document.RootElement.EnumerateObject())
+            {
+                if (property.NameEquals("values"u8))
+                {
+                    foreach (JsonElement value in property.Value.EnumerateArray())
+                    {
+                        BinaryData data = BinaryData.FromString(value.ToString());
+                        MockJsonModel model = ModelReaderWriter.Read<MockJsonModel>(data)!;
+                        list.Add(model);
+                    }
+                }
+            }
+
+            return new MockJsonModelCollection(list);
         }
 
         MockJsonModelCollection IPersistableModel<MockJsonModelCollection>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            throw new NotImplementedException();
+            if (options?.Format != "J")
+            {
+                throw new InvalidOperationException();
+            }
+
+            Utf8JsonReader reader = new(data);
+            return ((IJsonModel<MockJsonModelCollection>)this).Create(ref reader, options);
         }
 
         string IPersistableModel<MockJsonModelCollection>.GetFormatFromOptions(ModelReaderWriterOptions options)
-        {
-            throw new NotImplementedException();
-        }
+            => "J";
 
         void IJsonModel<MockJsonModelCollection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
