@@ -145,7 +145,7 @@ namespace Azure.Identity
 
                 if (_record is null)
                 {
-                    token = await AcquireTokenWithCode(async, requestContext, token, tenantId, cancellationToken).ConfigureAwait(false);
+                    token = await AcquireTokenWithCode(async, requestContext,tenantId, cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
@@ -169,7 +169,7 @@ namespace Azure.Identity
 
             try
             {
-                token = await AcquireTokenWithCode(async, requestContext, token, tenantId, cancellationToken).ConfigureAwait(false);
+                token = await AcquireTokenWithCode(async, requestContext, tenantId, cancellationToken).ConfigureAwait(false);
                 return scope.Succeeded(token);
             }
             catch (Exception e)
@@ -178,7 +178,7 @@ namespace Azure.Identity
             }
         }
 
-        private async Task<AccessToken> AcquireTokenWithCode(bool async, TokenRequestContext requestContext, AccessToken token, string tenantId, CancellationToken cancellationToken)
+        private async Task<AccessToken> AcquireTokenWithCode(bool async, TokenRequestContext requestContext, string tenantId, CancellationToken cancellationToken)
         {
             AuthenticationResult result = await Client
                                     .AcquireTokenByAuthorizationCodeAsync(
@@ -192,8 +192,7 @@ namespace Azure.Identity
                                         cancellationToken)
                                     .ConfigureAwait(false);
             _record = new AuthenticationRecord(result, _clientId);
-            token = new AccessToken(result.AccessToken, result.ExpiresOn);
-            return token;
+            return new AccessToken(result.AccessToken, result.ExpiresOn);
         }
     }
 }
