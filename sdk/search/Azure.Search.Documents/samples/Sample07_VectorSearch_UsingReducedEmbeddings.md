@@ -6,7 +6,7 @@ This sample demonstrates how to create a vector fields index with reduced dimens
 
 Let's consider the example of a `Hotel`. First, we need to create an index for storing hotel information. In this index, we will define vector fields called `DescriptionVector` and `CategoryVector`. To configure the vector field, you need to provide the model dimensions, which indicate the size of the embeddings generated for this field. You can pass reduced dimensions and the name of the vector search profile that specifies the algorithm configuration, along with `Vectorizer`.
 
-In order to get the reduced embeddings using either the `text-embedding-3-small` or `text-embedding-3-large` models, it is necessary to include the `dimensions` parameter. This parameter enables customers to define the desired number of dimensions for the output vector. Therefore, for `AzureOpenAIVectorizer`, we will retrieve the `VectorSearchDimensions` that is already specified in the corresponding index field definition. However, to ensure that dimensions are only passed along in the vectorizer for a model that supports it, we need to pass a required property named `ModelName`. This property enables the service to determine which model we are using, and dimensions will only be passed along when it is for a known supported model name.
+In order to get the reduced embeddings using either the `text-embedding-3-small` or `text-embedding-3-large` models, it is necessary to include the `Dimensions` parameter. This parameter enables customers to define the desired number of dimensions for the output vector. Therefore, for `AzureOpenAIVectorizer`, we will retrieve the `VectorSearchDimensions` that is already specified in the corresponding index field definition. However, to ensure that dimensions are only passed along in the vectorizer for a model that supports it, we need to pass a required property named `ModelName`. This property enables the service to determine which model we are using, and dimensions will only be passed along when it is for a known supported model name.
 
 We will create an instace of `SearchIndex` and define `Hotel` fields.
 
@@ -89,7 +89,7 @@ Next, we will create sample hotel documents. The vector field requires submittin
 
 ### Get Embeddings using `Azure.AI.OpenAI`
 
-You can use Azure OpenAI embedding models, `text-embedding-3-small` or `text-embedding-3-large`, to get the reduced embeddings. With these models, you can specify the desired number of dimensions for the output vector by passing the `dimensions` property. This enables you to customize the output according to your needs.
+You can use Azure OpenAI embedding models, `text-embedding-3-small` or `text-embedding-3-large`, to get the reduced embeddings. With these models, you can specify the desired number of dimensions for the output vector by passing the `Dimensions` property. This enables you to customize the output according to your needs.
 
 For more details about how to generate embeddings, refer to the [documentation](https://learn.microsoft.com/azure/search/vector-search-how-to-generate-embeddings). Here's an example of how you can get embeddings using [Azure.AI.OpenAI](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/openai/Azure.AI.OpenAI/README.md) library.
 
