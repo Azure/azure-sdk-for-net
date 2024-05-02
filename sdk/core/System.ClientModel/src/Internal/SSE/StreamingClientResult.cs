@@ -8,29 +8,20 @@ using System.Threading;
 
 namespace System.ClientModel.Internal;
 
-#pragma warning disable CS1591 // public XML comments
 /// <summary>
 /// Represents an operation response with streaming content that can be deserialized and enumerated while the response
 /// is still being received.
 /// </summary>
 /// <typeparam name="T"> The data type representative of distinct, streamable items. </typeparam>
-public class StreamingClientResult<T> : IAsyncEnumerable<T>
+internal class StreamingClientResult<T> : AsyncClientResultCollection<T>
 {
-    private readonly PipelineResponse _response;
     private readonly Func<Stream, CancellationToken, IAsyncEnumerator<T>> _asyncEnumeratorSourceDelegate;
 
     // TODO: use?
     //private bool _disposedValue;
 
-    /// <summary>
-    /// Gets the underlying <see cref="PipelineResponse"/> that contains headers and other response-wide information.
-    /// </summary>
-    /// <returns>
-    /// The <see cref="PipelineResponse"/> instance used in this <see cref="StreamingClientResult{T}"/>.
-    /// </returns>
-    public PipelineResponse GetRawResponse() => _response;
-
     private StreamingClientResult(PipelineResponse response, Func<Stream, CancellationToken, IAsyncEnumerator<T>> asyncEnumeratorSourceDelegate)
+        : base(response)
     {
         Argument.AssertNotNull(response, nameof(response));
 
@@ -39,7 +30,6 @@ public class StreamingClientResult<T> : IAsyncEnumerable<T>
             throw new ArgumentException("Unable to create result from response with null ContentStream", nameof(response));
         }
 
-        _response = response;
         _asyncEnumeratorSourceDelegate = asyncEnumeratorSourceDelegate;
     }
 
@@ -96,9 +86,8 @@ public class StreamingClientResult<T> : IAsyncEnumerable<T>
         }
     }
 
-    IAsyncEnumerator<T> IAsyncEnumerable<T>.GetAsyncEnumerator(CancellationToken cancellationToken)
+    public override IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken)
     {
-        return _asyncEnumeratorSourceDelegate.Invoke(_response.ContentStream!, cancellationToken);
+        return _asyncEnumeratorSourceDelegate.Invoke(GetRawResponse().ContentStream!, cancellationToken);
     }
 }
-#pragma warning restore CS1591 // public XML comments
