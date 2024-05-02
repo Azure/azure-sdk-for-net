@@ -24,7 +24,6 @@ pr:
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
-    SDKType: client
     ServiceDirectory: extensions
     ArtifactName: packages
     Artifacts:
