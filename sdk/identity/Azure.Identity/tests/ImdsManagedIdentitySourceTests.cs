@@ -63,7 +63,7 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public void DefaultAzureCredentialUsesFirstRequestBehaviorUntilFirstResponse()
+        public async Task DefaultAzureCredentialUsesFirstRequestBehaviorUntilFirstResponse()
         {
             int callCount = 0;
             List<TimeSpan?> networkTimeouts = new();
@@ -74,9 +74,12 @@ namespace Azure.Identity.Tests
             {
                 callCount++;
                 networkTimeouts.Add(msg.NetworkTimeout);
-                return callCount > 1 ?
-                 CreateMockResponse(400, "Error").WithHeader("Content-Type", "application/json") :
-                 throw new TaskCanceledException();
+                return callCount switch
+                {
+                    1 => throw new TaskCanceledException(),
+                    2 => CreateMockResponse(400, "Error").WithHeader("Content-Type", "application/json"),
+                    _ => CreateMockResponse(200, "token").WithHeader("Content-Type", "application/json"),
+                };
             });
 
             var cred = new DefaultAzureCredential(new DefaultAzureCredentialOptions
@@ -100,7 +103,7 @@ namespace Azure.Identity.Tests
             networkTimeouts.Clear();
 
             // Second request gets the expected probe response and should use the probe timeout on first request and default timeout on the retry
-            Assert.ThrowsAsync<CredentialUnavailableException>(async () => await cred.GetTokenAsync(new(new[] { "test" })));
+            await cred.GetTokenAsync(new(new[] { "test" }));
 
             expectedTimeouts = new TimeSpan?[] { TimeSpan.FromSeconds(1), null };
             CollectionAssert.AreEqual(expectedTimeouts, networkTimeouts);
