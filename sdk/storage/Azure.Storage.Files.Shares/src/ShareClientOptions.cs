@@ -264,6 +264,8 @@ namespace Azure.Storage.Files.Shares
             Diagnostics.LoggedHeaderNames.Add("x-ms-share-quota");
             Diagnostics.LoggedHeaderNames.Add("x-ms-type");
             Diagnostics.LoggedHeaderNames.Add("x-ms-write");
+            Diagnostics.LoggedHeaderNames.Add("x-ms-copy-source-error-code");
+            Diagnostics.LoggedHeaderNames.Add("x-ms-copy-source-status-code");
 
             Diagnostics.LoggedQueryParameters.Add("comp");
             Diagnostics.LoggedQueryParameters.Add("maxresults");

@@ -306,6 +306,8 @@ namespace Azure.Storage.Blobs
             Diagnostics.LoggedHeaderNames.Add("x-ms-source-if-unmodified-since");
             Diagnostics.LoggedHeaderNames.Add("x-ms-tag-count");
             Diagnostics.LoggedHeaderNames.Add("x-ms-encryption-key-sha256");
+            Diagnostics.LoggedHeaderNames.Add("x-ms-copy-source-error-code");
+            Diagnostics.LoggedHeaderNames.Add("x-ms-copy-source-status-code");
 
             Diagnostics.LoggedQueryParameters.Add("comp");
             Diagnostics.LoggedQueryParameters.Add("maxresults");
