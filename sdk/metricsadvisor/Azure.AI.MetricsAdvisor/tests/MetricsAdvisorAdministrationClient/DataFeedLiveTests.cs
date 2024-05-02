@@ -16,7 +16,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
     {
         private string DataSourceAccount => Mode == RecordedTestMode.Live ? "account" : SanitizeValue;
         private string DataSourceAppId => Mode == RecordedTestMode.Live ? "appId" : SanitizeValue;
-        private string DataSourceClientId => Mode == RecordedTestMode.Live ? "clientId" : Guid.Empty.ToString();
+        private string DataSourceClientId => Mode == RecordedTestMode.Live ? "clientId" : EmptyGuid;
         private const string DataSourceCloud = "cloud";
         private const string DataSourceCollectionId = "collectId";
         private const string DataSourceCommand = "command";
@@ -29,7 +29,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         private const string DataSourceQuery = "query";
         private const string DataSourceTable = "table";
         private const string DataSourceTemplate = "template";
-        private string DataSourceTenantId => Mode == RecordedTestMode.Live ? "tenantId" : Guid.Empty.ToString();
+        private string DataSourceTenantId => Mode == RecordedTestMode.Live ? "tenantId" : EmptyGuid;
         private string DataSourceUsername => Mode == RecordedTestMode.Live ? "username" : SanitizeValue;
         private const string DataSourceWorkspaceId = "workspaceId";
 

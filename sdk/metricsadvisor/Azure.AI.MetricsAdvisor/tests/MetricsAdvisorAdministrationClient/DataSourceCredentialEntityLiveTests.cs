@@ -12,8 +12,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
 {
     public class DataSourceCredentialEntityLiveTests : MetricsAdvisorLiveTestBase
     {
-        private string TenantId => Mode == RecordedTestMode.Live ? "tenantId" : Guid.Empty.ToString();
-        private string ClientId => Mode == RecordedTestMode.Live ? "clientId" : Guid.Empty.ToString();
+        private string TenantId => Mode == RecordedTestMode.Live ? "tenantId" : EmptyGuid;
+        private string ClientId => Mode == RecordedTestMode.Live ? "clientId" : EmptyGuid;
         private const string Endpoint = "https://fakeuri.com/";
         private const string ClientIdSecretName = "clientIdSecretName";
         private const string ClientSecretSecretName = "clientSecretSecretName";
