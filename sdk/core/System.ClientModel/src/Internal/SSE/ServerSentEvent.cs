@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -20,12 +19,12 @@ internal readonly struct ServerSentEvent
     public TimeSpan? ReconnectionTime { get; }
 
     private readonly IReadOnlyList<ServerSentEventField> _fields;
-    private readonly string _multiLineData;
+    private readonly string? _multiLineData;
 
     internal ServerSentEvent(IReadOnlyList<ServerSentEventField> fields)
     {
         _fields = fields;
-        StringBuilder multiLineDataBuilder = null;
+        StringBuilder? multiLineDataBuilder = null;
         for (int i = 0; i < _fields.Count; i++)
         {
             ReadOnlyMemory<char> fieldValue = _fields[i].Value;

@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,10 +9,11 @@ namespace System.ClientModel.Internal;
 
 internal sealed class AsyncServerSentEventEnumerator : IAsyncEnumerator<ServerSentEvent>, IDisposable, IAsyncDisposable
 {
+    // TODO: make this configurable per coming from TypeSpec
     private static readonly ReadOnlyMemory<char> _doneToken = "[DONE]".AsMemory();
 
     private readonly ServerSentEventReader _reader;
-    private CancellationToken _cancellationToken;
+    private readonly CancellationToken _cancellationToken;
     private bool _disposedValue;
 
     public ServerSentEvent Current { get; private set; }

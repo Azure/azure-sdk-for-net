@@ -19,7 +19,8 @@ public class StreamingClientResult<T> : IAsyncEnumerable<T>
     private readonly PipelineResponse _response;
     private readonly Func<Stream, CancellationToken, IAsyncEnumerator<T>> _asyncEnumeratorSourceDelegate;
 
-    private bool _disposedValue;
+    // TODO: use?
+    //private bool _disposedValue;
 
     /// <summary>
     /// Gets the underlying <see cref="PipelineResponse"/> that contains headers and other response-wide information.
@@ -31,6 +32,13 @@ public class StreamingClientResult<T> : IAsyncEnumerable<T>
 
     private StreamingClientResult(PipelineResponse response, Func<Stream, CancellationToken, IAsyncEnumerator<T>> asyncEnumeratorSourceDelegate)
     {
+        Argument.AssertNotNull(response, nameof(response));
+
+        if (response.ContentStream is null)
+        {
+            throw new ArgumentException("Unable to create result from response with null ContentStream", nameof(response));
+        }
+
         _response = response;
         _asyncEnumeratorSourceDelegate = asyncEnumeratorSourceDelegate;
     }
@@ -70,8 +78,8 @@ public class StreamingClientResult<T> : IAsyncEnumerable<T>
         CancellationToken cancellationToken = default)
             where TJsonDataType : IJsonModel<TJsonDataType>
     {
-        ServerSentEventReader sseReader = null;
-        AsyncServerSentEventEnumerator sseEnumerator = null;
+        ServerSentEventReader? sseReader = null;
+        AsyncServerSentEventEnumerator? sseEnumerator = null;
         try
         {
             sseReader = new(stream);
@@ -90,7 +98,7 @@ public class StreamingClientResult<T> : IAsyncEnumerable<T>
 
     IAsyncEnumerator<T> IAsyncEnumerable<T>.GetAsyncEnumerator(CancellationToken cancellationToken)
     {
-        return _asyncEnumeratorSourceDelegate.Invoke(_response.ContentStream, cancellationToken);
+        return _asyncEnumeratorSourceDelegate.Invoke(_response.ContentStream!, cancellationToken);
     }
 }
 #pragma warning restore CS1591 // public XML comments

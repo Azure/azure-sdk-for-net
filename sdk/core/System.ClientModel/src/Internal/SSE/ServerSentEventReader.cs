@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
@@ -31,11 +30,11 @@ internal sealed class ServerSentEventReader : IDisposable
     /// </returns>
     public ServerSentEvent? TryGetNextEvent(CancellationToken cancellationToken = default)
     {
-        List<ServerSentEventField> fields = [];
+        List<ServerSentEventField> fields = new();
 
         while (!cancellationToken.IsCancellationRequested)
         {
-            string line = _reader.ReadLine();
+            string? line = _reader.ReadLine();
             if (line == null)
             {
                 // A null line indicates end of input
@@ -45,7 +44,7 @@ internal sealed class ServerSentEventReader : IDisposable
             {
                 // An empty line should dispatch an event for pending accumulated fields
                 ServerSentEvent nextEvent = new(fields);
-                fields = [];
+                fields = new();
                 return nextEvent;
             }
             else if (line[0] == ':')
@@ -73,11 +72,11 @@ internal sealed class ServerSentEventReader : IDisposable
     /// </returns>
     public async Task<ServerSentEvent?> TryGetNextEventAsync(CancellationToken cancellationToken = default)
     {
-        List<ServerSentEventField> fields = [];
+        List<ServerSentEventField> fields = new();
 
         while (!cancellationToken.IsCancellationRequested)
         {
-            string line = await _reader.ReadLineAsync().ConfigureAwait(false);
+            string? line = await _reader.ReadLineAsync().ConfigureAwait(false);
             if (line == null)
             {
                 // A null line indicates end of input

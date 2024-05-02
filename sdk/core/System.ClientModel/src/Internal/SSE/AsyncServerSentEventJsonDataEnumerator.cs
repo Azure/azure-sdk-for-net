@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -19,13 +18,18 @@ internal class AsyncServerSentEventJsonDataEnumerator<T> : AsyncServerSentEventJ
 internal class AsyncServerSentEventJsonDataEnumerator<TInstanceType, TJsonDataType> : IAsyncEnumerator<TInstanceType>, IDisposable, IAsyncDisposable
     where TJsonDataType : IJsonModel<TJsonDataType>
 {
-    private AsyncServerSentEventEnumerator _eventEnumerator;
-    private IEnumerator<TInstanceType> _currentInstanceEnumerator;
+    private readonly AsyncServerSentEventEnumerator _eventEnumerator;
+    private IEnumerator<TInstanceType>? _currentInstanceEnumerator;
 
-    public TInstanceType Current { get; private set; }
+    private TInstanceType? _current;
+
+    // TODO: is null supression the correct pattern here?
+    public TInstanceType Current { get => _current!; }
 
     public AsyncServerSentEventJsonDataEnumerator(AsyncServerSentEventEnumerator eventEnumerator)
     {
+        Argument.AssertNotNull(eventEnumerator, nameof(eventEnumerator));
+
         _eventEnumerator = eventEnumerator;
     }
 
@@ -33,25 +37,34 @@ internal class AsyncServerSentEventJsonDataEnumerator<TInstanceType, TJsonDataTy
     {
         if (_currentInstanceEnumerator?.MoveNext() == true)
         {
-            Current = _currentInstanceEnumerator.Current;
+            _current = _currentInstanceEnumerator.Current;
             return true;
         }
-        if (await _eventEnumerator.MoveNextAsync())
+
+        if (await _eventEnumerator.MoveNextAsync().ConfigureAwait(false))
         {
             using JsonDocument eventDocument = JsonDocument.Parse(_eventEnumerator.Current.Data);
             BinaryData eventData = BinaryData.FromObjectAsJson(eventDocument.RootElement);
-            TJsonDataType jsonData = ModelReaderWriter.Read<TJsonDataType>(eventData);
+            TJsonDataType? jsonData = ModelReaderWriter.Read<TJsonDataType>(eventData);
+
+            if (jsonData is null)
+            {
+                _current = default;
+                return false;
+            }
+
             if (jsonData is TInstanceType singleInstanceData)
             {
-                Current = singleInstanceData;
+                _current = singleInstanceData;
                 return true;
             }
+
             if (jsonData is IEnumerable<TInstanceType> instanceCollectionData)
             {
                 _currentInstanceEnumerator = instanceCollectionData.GetEnumerator();
                 if (_currentInstanceEnumerator.MoveNext() == true)
                 {
-                    Current = _currentInstanceEnumerator.Current;
+                    _current = _currentInstanceEnumerator.Current;
                     return true;
                 }
             }
@@ -61,7 +74,7 @@ internal class AsyncServerSentEventJsonDataEnumerator<TInstanceType, TJsonDataTy
 
     public async ValueTask DisposeAsync()
     {
-        await _eventEnumerator.DisposeAsync();
+        await _eventEnumerator.DisposeAsync().ConfigureAwait(false);
     }
 
     public void Dispose()
