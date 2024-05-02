@@ -28,7 +28,7 @@ namespace Azure.AI.Translation.Document.Samples
 
             return client;
         }
-        /*
+
         [Test]
         public void StartSingleDocumentTranslation()
         {
@@ -39,8 +39,9 @@ namespace Azure.AI.Translation.Document.Samples
             {
                 string filePath = Path.Combine("TestData", "test-input.txt");
                 using Stream fileStream = File.OpenRead(filePath);
-                var sourceDocument = new MultipartFormFileData(Path.GetFileName(filePath), BinaryData.FromStream(fileStream), "text/html");
-                var response = client.DocumentTranslate("hi", sourceDocument);
+                var sourceDocument = new MultipartFormFileData(Path.GetFileName(filePath), fileStream, "text/html");
+                DocumentTranslateContent content = new DocumentTranslateContent(sourceDocument);
+                var response = client.DocumentTranslate("hi", content);
 
                 var requestString = File.ReadAllText(filePath);
                 var responseString = Encoding.UTF8.GetString(response.Value.ToArray());
@@ -54,6 +55,6 @@ namespace Azure.AI.Translation.Document.Samples
                 Console.WriteLine($"Message: {exception.Message}");
             }
             #endregion
-        }*/
+        }
     }
 }
