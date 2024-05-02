@@ -672,7 +672,7 @@ namespace Azure.Messaging.ServiceBus
         /// Attempts to purge all messages from an entity.  Locked messages are not eligible for removal and
         /// will remain in the entity.
         /// </summary>
-        /// <param name="beforeEnqueueTimeUtc">An optional <see cref="DateTimeOffset"/> representing the cutoff time for deletion. Only messages that were enqueued before this time will be deleted.  If not specified, <see cref="DateTimeOffset.UtcNow"/> will be assumed.</param>
+        /// <param name="beforeEnqueueTime">An optional <see cref="DateTimeOffset"/>, in UTC, representing the cutoff time for deletion. Only messages that were enqueued before this time will be deleted.  If not specified, <see cref="DateTimeOffset.UtcNow"/> will be assumed.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <remarks>
         /// If the lock for a message is held by a receiver, it will be respected and the message will not be deleted.
@@ -685,12 +685,12 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         /// <returns>The number of messages that were deleted.</returns>
         public virtual async Task<int> PurgeMessagesAsync(
-            DateTimeOffset? beforeEnqueueTimeUtc = null,
+            DateTimeOffset? beforeEnqueueTime = null,
             CancellationToken cancellationToken = default)
         {
-            beforeEnqueueTimeUtc ??= DateTimeOffset.UtcNow;
+            beforeEnqueueTime ??= DateTimeOffset.UtcNow;
 
-            var deleted = await DeleteMessagesAsync(MaxDeleteMessageCount, beforeEnqueueTimeUtc.Value, cancellationToken).ConfigureAwait(false);
+            var deleted = await DeleteMessagesAsync(MaxDeleteMessageCount, beforeEnqueueTime.Value, cancellationToken).ConfigureAwait(false);
 
             // The service currently has a known bug that should be fixed before GA, where the
             // delete operation may not delete the requested batch size in a single call, even
@@ -705,7 +705,7 @@ namespace Azure.Messaging.ServiceBus
 
                while (batchCount > 0)
                {
-                   batchCount = await DeleteMessagesAsync(MaxDeleteMessageCount, beforeEnqueueTimeUtc.Value, cancellationToken).ConfigureAwait(false);
+                   batchCount = await DeleteMessagesAsync(MaxDeleteMessageCount, beforeEnqueueTime.Value, cancellationToken).ConfigureAwait(false);
                    deleted += batchCount;
                }
             }
@@ -717,8 +717,8 @@ namespace Azure.Messaging.ServiceBus
         /// Deletes up to <paramref name="messageCount"/> messages from the entity. The actual number
         /// of deleted messages may be less if there are fewer eligible messages in the entity.
         /// </summary>
-        /// <param name="messageCount">The desired number of messages to delete.  This value is limited by the service and governed <see href="https://learn.microsoft.com/azure/service-bus-messaging/service-bus-quotas">Service Bus quotas</see>.</param>
-        /// <param name="beforeEnqueueTimeUtc">An optional <see cref="DateTimeOffset"/> representing the cutoff time for deletion. Only messages that were enqueued before this time will be deleted.  If not specified, <see cref="DateTimeOffset.UtcNow"/> will be assumed.</param>
+        /// <param name="messageCount">The desired number of messages to delete.  This value is limited by the service and governed <see href="https://learn.microsoft.com/azure/service-bus-messaging/service-bus-quotas">Service Bus quotas</see>.  The service may delete fewer messages than this limit.</param>
+        /// <param name="beforeEnqueueTime">An optional <see cref="DateTimeOffset"/>, in UTC, representing the cutoff time for deletion. Only messages that were enqueued before this time will be deleted.  If not specified, <see cref="DateTimeOffset.UtcNow"/> will be assumed.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <returns>The number of messages that were deleted.</returns>
         /// <remarks>If the lock for a message is held by a receiver, it will be respected and the message will not be deleted.</remarks>
@@ -728,7 +728,7 @@ namespace Azure.Messaging.ServiceBus
         /// </exception>
         public virtual async Task<int> DeleteMessagesAsync(
             int messageCount,
-            DateTimeOffset? beforeEnqueueTimeUtc = null,
+            DateTimeOffset? beforeEnqueueTime = null,
             CancellationToken cancellationToken = default)
         {
             // Remove after service bug fixed.  Currently, the service responds
@@ -741,10 +741,10 @@ namespace Azure.Messaging.ServiceBus
             Argument.AssertNotDisposed(IsDisposed, nameof(ServiceBusReceiver));
             _connection.ThrowIfClosed();
 
-            beforeEnqueueTimeUtc ??= DateTimeOffset.UtcNow;
+            beforeEnqueueTime ??= DateTimeOffset.UtcNow;
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-            Logger.DeleteMessagesStart(Identifier, messageCount, beforeEnqueueTimeUtc.Value);
+            Logger.DeleteMessagesStart(Identifier, messageCount, beforeEnqueueTime.Value);
 
             using DiagnosticScope scope = ClientDiagnostics.CreateScope(
                 DiagnosticProperty.DeleteActivityName,
@@ -756,7 +756,7 @@ namespace Azure.Messaging.ServiceBus
             int numMessagesDeleted;
             try
             {
-                numMessagesDeleted = await InnerReceiver.DeleteMessagesAsync(messageCount, beforeEnqueueTimeUtc.Value, cancellationToken).ConfigureAwait(false);
+                numMessagesDeleted = await InnerReceiver.DeleteMessagesAsync(messageCount, beforeEnqueueTime.Value, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception exception)
             {

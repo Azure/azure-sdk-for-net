@@ -1295,7 +1295,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 var receiver = client.CreateReceiver(scope.QueueName);
                 var numMessagesDeleted = await receiver.PurgeMessagesAsync();
 
-                Assert.GreaterOrEqual(numMessagesDeleted, messageCount);
+                Assert.AreEqual(numMessagesDeleted, messageCount);
 
                 // All messages should have been deleted.
                 var peekedMessage = receiver.PeekMessageAsync();
@@ -1324,7 +1324,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 var receiver = client.CreateReceiver(scope.QueueName);
                 var numMessagesDeleted = await receiver.PurgeMessagesAsync(targetDate);
 
-                Assert.GreaterOrEqual(numMessagesDeleted, messageCount);
+                Assert.AreEqual(numMessagesDeleted, messageCount);
 
                 // All messages should have been deleted, except for our designated survivor..
                 var peekedMessage = receiver.PeekMessageAsync();
