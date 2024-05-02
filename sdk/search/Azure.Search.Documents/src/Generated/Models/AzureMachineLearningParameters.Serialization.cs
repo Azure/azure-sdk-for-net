@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class AMLParameters : IUtf8JsonSerializable
+    public partial class AzureMachineLearningParameters : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -81,7 +81,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteEndObject();
         }
 
-        internal static AMLParameters DeserializeAMLParameters(JsonElement element)
+        internal static AzureMachineLearningParameters DeserializeAzureMachineLearningParameters(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -155,7 +155,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new AMLParameters(
+            return new AzureMachineLearningParameters(
                 uri,
                 key,
                 resourceId,
@@ -166,10 +166,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static AMLParameters FromResponse(Response response)
+        internal static AzureMachineLearningParameters FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeAMLParameters(document.RootElement);
+            return DeserializeAzureMachineLearningParameters(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

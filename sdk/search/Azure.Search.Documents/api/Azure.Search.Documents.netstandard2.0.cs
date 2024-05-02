@@ -404,21 +404,6 @@ namespace Azure.Search.Documents.Indexes.Models
         public static bool operator !=(Azure.Search.Documents.Indexes.Models.AIStudioModelCatalogName left, Azure.Search.Documents.Indexes.Models.AIStudioModelCatalogName right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class AMLParameters
-    {
-        public AMLParameters(System.Uri scoringUri) { }
-        public string AuthenticationKey { get { throw null; } set { } }
-        public Azure.Search.Documents.Indexes.Models.AIStudioModelCatalogName? ModelName { get { throw null; } set { } }
-        public string Region { get { throw null; } set { } }
-        public string ResourceId { get { throw null; } set { } }
-        public System.Uri ScoringUri { get { throw null; } set { } }
-        public System.TimeSpan? Timeout { get { throw null; } set { } }
-    }
-    public partial class AMLVectorizer : Azure.Search.Documents.Indexes.Models.VectorSearchVectorizer
-    {
-        public AMLVectorizer(string name) : base (default(string)) { }
-        public Azure.Search.Documents.Indexes.Models.AMLParameters AMLParameters { get { throw null; } set { } }
-    }
     public partial class AnalyzedTokenInfo
     {
         internal AnalyzedTokenInfo() { }
@@ -445,6 +430,16 @@ namespace Azure.Search.Documents.Indexes.Models
         public AsciiFoldingTokenFilter(string name) { }
         public bool? PreserveOriginal { get { throw null; } set { } }
     }
+    public partial class AzureMachineLearningParameters
+    {
+        public AzureMachineLearningParameters(System.Uri scoringUri) { }
+        public string AuthenticationKey { get { throw null; } set { } }
+        public Azure.Search.Documents.Indexes.Models.AIStudioModelCatalogName? ModelName { get { throw null; } set { } }
+        public string Region { get { throw null; } set { } }
+        public string ResourceId { get { throw null; } set { } }
+        public System.Uri ScoringUri { get { throw null; } set { } }
+        public System.TimeSpan? Timeout { get { throw null; } set { } }
+    }
     public partial class AzureMachineLearningSkill : Azure.Search.Documents.Indexes.Models.SearchIndexerSkill
     {
         public AzureMachineLearningSkill(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> outputs, Azure.Core.ResourceIdentifier resourceId, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) { }
@@ -455,6 +450,11 @@ namespace Azure.Search.Documents.Indexes.Models
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
         public System.Uri ScoringUri { get { throw null; } }
         public System.TimeSpan? Timeout { get { throw null; } set { } }
+    }
+    public partial class AzureMachineLearningVectorizer : Azure.Search.Documents.Indexes.Models.VectorSearchVectorizer
+    {
+        public AzureMachineLearningVectorizer(string name) : base (default(string)) { }
+        public Azure.Search.Documents.Indexes.Models.AzureMachineLearningParameters AMLParameters { get { throw null; } set { } }
     }
     public partial class AzureOpenAIEmbeddingSkill : Azure.Search.Documents.Indexes.Models.SearchIndexerSkill
     {

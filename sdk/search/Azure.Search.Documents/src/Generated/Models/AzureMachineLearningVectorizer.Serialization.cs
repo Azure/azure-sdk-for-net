@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class AMLVectorizer : IUtf8JsonSerializable
+    public partial class AzureMachineLearningVectorizer : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -27,13 +27,13 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteEndObject();
         }
 
-        internal static AMLVectorizer DeserializeAMLVectorizer(JsonElement element)
+        internal static AzureMachineLearningVectorizer DeserializeAzureMachineLearningVectorizer(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            AMLParameters amlParameters = default;
+            AzureMachineLearningParameters amlParameters = default;
             string name = default;
             VectorSearchVectorizerKind kind = default;
             foreach (var property in element.EnumerateObject())
@@ -44,7 +44,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         continue;
                     }
-                    amlParameters = AMLParameters.DeserializeAMLParameters(property.Value);
+                    amlParameters = AzureMachineLearningParameters.DeserializeAzureMachineLearningParameters(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -58,15 +58,15 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new AMLVectorizer(name, kind, amlParameters);
+            return new AzureMachineLearningVectorizer(name, kind, amlParameters);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new AMLVectorizer FromResponse(Response response)
+        internal static new AzureMachineLearningVectorizer FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeAMLVectorizer(document.RootElement);
+            return DeserializeAzureMachineLearningVectorizer(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

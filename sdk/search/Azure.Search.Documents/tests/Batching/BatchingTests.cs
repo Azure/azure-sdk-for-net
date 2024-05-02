@@ -212,7 +212,8 @@ namespace Azure.Search.Documents.Tests
         #endregion
 
         #region Champion
-        [RecordedTest]
+        [Test]
+        [LiveOnly]
         public async Task Champion_OneShotUpload()
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyIndexAsync<SimpleDocument>(this);

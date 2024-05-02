@@ -174,6 +174,24 @@ directive:
   transform: $["x-ms-client-name"] = "VectorizedQuery";
 ```
 
+### Rename `AMLVectorizer` to `AzureMachineLearningVectorizer`
+
+```yaml
+directive:
+- from: searchservice.json
+  where: $.definitions.AMLVectorizer
+  transform: $["x-ms-client-name"] = "AzureMachineLearningVectorizer";
+```
+
+### Rename `AMLParameters` to `AzureMachineLearningParameters`
+
+```yaml
+directive:
+- from: searchservice.json
+  where: $.definitions.AMLParameters
+  transform: $["x-ms-client-name"] = "AzureMachineLearningParameters";
+```
+
 ### Rename `PIIDetectionSkill.minimumPrecision` to `PIIDetectionSkill.MinPrecision`
 
 ```yaml
