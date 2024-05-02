@@ -1,9 +1,8 @@
 trigger: none
 
 extends:
-  template: /eng/pipelines/templates/stages/archetype-sdk-tests.yml
+  template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
     SDKType: client
     ServiceDirectory: trustedsigning
-    SupportedClouds: 'Public,Preview'
-    Location: eastus
+    Location: westeurope
