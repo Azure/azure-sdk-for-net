@@ -22,6 +22,8 @@ namespace Azure.Core.TestFramework
     {
         public TestRecording Recording { get; private set; }
 
+        private static string EmptyGuid = Guid.Empty.ToString();
+
         public RecordedTestMode Mode { get; set; }
 
         // copied the Windows version https://github.com/dotnet/runtime/blob/master/src/libraries/System.Private.CoreLib/src/System/IO/Path.Windows.cs
@@ -122,7 +124,7 @@ namespace Azure.Core.TestFramework
         /// </summary>
         public List<BodyKeySanitizer> BodyKeySanitizers { get; } = new()
         {
-            new BodyKeySanitizer(Guid.Empty.ToString())
+            new BodyKeySanitizer(EmptyGuid)
             {
                 JsonPath = "$..keyVaultClientId"
             }
@@ -202,8 +204,8 @@ namespace Azure.Core.TestFramework
         /// </summary>
         public List<UriRegexSanitizer> UriRegexSanitizers { get; } = new()
         {
-            UriRegexSanitizer.CreateWithQueryParameter("skoid", Guid.Empty.ToString()),
-            UriRegexSanitizer.CreateWithQueryParameter("sktid", Guid.Empty.ToString()),
+            UriRegexSanitizer.CreateWithQueryParameter("skoid", EmptyGuid),
+            UriRegexSanitizer.CreateWithQueryParameter("sktid", EmptyGuid),
         };
 
         /// <summary>
