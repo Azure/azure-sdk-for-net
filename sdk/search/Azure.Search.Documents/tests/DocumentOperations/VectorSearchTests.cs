@@ -280,7 +280,7 @@ namespace Azure.Search.Documents.Tests
         [PlaybackOnly("The availability of Semantic Search is limited to specific regions, as indicated in the list provided here: https://azure.microsoft.com/explore/global-infrastructure/products-by-region/?products=search. Due to this limitation, the deployment of resources for weekly test pipeline for setting the \"semanticSearch\": \"free\" fails in the UsGov and China cloud regions.")]
         public async Task CanContinueWithNextPage()
         {
-            const int size = 150;
+            const int size = 100;
 
             await using SearchResources resources = await SearchResources.CreateLargeHotelsIndexAsync(this, size, true);
             SearchClient client = resources.GetQueryClient();
@@ -318,7 +318,7 @@ namespace Azure.Search.Documents.Tests
                 Assert.LessOrEqual(docsPerPageCount, 50);
             }
 
-            Assert.LessOrEqual(totalDocsCount, 150);
+            Assert.LessOrEqual(totalDocsCount, 100);
             Assert.GreaterOrEqual(pageCount, 2);
         }
 

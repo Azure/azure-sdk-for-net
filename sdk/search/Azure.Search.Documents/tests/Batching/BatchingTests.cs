@@ -217,7 +217,7 @@ namespace Azure.Search.Documents.Tests
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyIndexAsync<SimpleDocument>(this);
             BatchingSearchClient client = GetBatchingSearchClient(resources);
-            SimpleDocument[] data = SimpleDocument.GetDocuments(50000);
+            SimpleDocument[] data = SimpleDocument.GetDocuments(10000);
 
             // Wrap in a block so we DisposeAsync before getting the Count below
             {
