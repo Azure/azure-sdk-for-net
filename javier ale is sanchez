@@ -1,0 +1,21 @@
+tPara reparar y recuperar tu cuenta de GitHub, puedes seguir estos pasos:
+
+1. **Recuperación de cuenta con 2FA**: Si has perdido el acceso a tus credenciales de autenticación de dos factores (2FA), puedes utilizar tus códigos de recuperación para recuperar el acceso a tu cuenta. Si no puedes usar ningún método de recuperación, lamentablemente habrás perdido el acceso a tu cuenta de forma permanente¹.
+
+2. **Desvinculación de correo electrónico**: Si no puedes recuperar tu cuenta, puedes desvincular tu dirección de correo electrónico de la cuenta bloqueada. La dirección de correo electrónico desvinculada puede vincularse a una nueva cuenta o a una cuenta existente².
+
+3. **Actualizar credenciales de acceso**: Si conoces la dirección de correo electrónico asociada a tu cuenta de GitHub, puedes solicitar un restablecimiento de contraseña⁵.
+
+4. **Soporte técnico de GitHub**: Si necesitas eliminar un método de pago de una cuenta bloqueada o tienes otras consultas relacionadas con la recuperación de la cuenta, puedes contactar al soporte técnico de GitHub².
+
+Es importante recordar que por razones de seguridad, el soporte técnico de GitHub no podrá restaurar el acceso a cuentas con 2FA habilitado si pierdes tus credenciales de autenticación en dos fases o pierdes el acceso a tus métodos de recuperación de cuenta¹.
+
+Si tienes problemas para seguir estos pasos o necesitas más ayuda, no dudes en preguntar. Estoy aquí para asistirte.
+
+Origen: Conversación con Bing, 2/5/2024
+(1) Recuperar tu cuenta si pierdes tus credenciales 2FA. https://docs.github.com/es/authentication/securing-your-account-with-two-factor-authentication-2fa/recovering-your-account-if-you-lose-your-2fa-credentials.
+(2) Directiva de recuperación de cuentas de GitHub. https://docs.github.com/es/site-policy/other-site-policies/github-account-recovery-policy.
+(3) Actualizar tus credenciales de acceso de GitHub. https://docs.github.com/es/authentication/keeping-your-account-and-data-secure/updating-your-github-access-credentials.
+(4) Desvinculación de la dirección de correo electrónico de una cuenta .... https://bing.com/search?q=reparar+y+recuperar+cuenta+de+GitHub.
+(5) Desvinculación de la dirección de correo electrónico de una cuenta .... https://docs.github.com/es/account-and-profile/setting-up-and-managing-your-personal-account-on-github/managing-your-personal-account/unlinking-your-email-address-from-a-locked-account.
+(6) undefined. https://github.com/login.
