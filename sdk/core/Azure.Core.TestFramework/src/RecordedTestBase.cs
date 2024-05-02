@@ -200,7 +200,11 @@ namespace Azure.Core.TestFramework
         /// a regex for matching on the URI. <seealso cref="SanitizedQueryParameters"/> is a convenience property that allows you to sanitize
         /// query parameters without constructing the <see cref="UriRegexSanitizer"/> yourself.
         /// </summary>
-        public List<UriRegexSanitizer> UriRegexSanitizers { get; } = new();
+        public List<UriRegexSanitizer> UriRegexSanitizers { get; } = new()
+        {
+            UriRegexSanitizer.CreateWithQueryParameter("skoid", Guid.Empty.ToString()),
+            UriRegexSanitizer.CreateWithQueryParameter("sktid", Guid.Empty.ToString()),
+        };
 
         /// <summary>
         /// The list of <see cref="HeaderTransform"/> to apply in Playback mode to the response headers.
