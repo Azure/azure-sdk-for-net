@@ -1,22 +1,22 @@
-param location string = resourceGroup().location
+param location string = 'centraluseuap'
 
 @description('A signing account name to provision.')
 @minLength(3)
 @maxLength(15)
-param accountName string
+param accountName string = uniqueString(resourceGroup().id)
 
 @description('A certificate profile to provision.')
 @minLength(3)
 @maxLength(15)
-param profileName string
+param profileName string = uniqueString(resourceGroup().id)
 
 @description('The identity validation id to be use for the certificate profile provisioning.')
-param identityValidationId string //'4931b0b1-c1d4-43a5-800e-259f7937220b'
+param identityValidationId string = 'f0bde931-daf1-497b-a4fa-789a4d9fc6c0'
 
 //Short name regions
 var shortLocation = {
   eastus: 'eus'
-  southcentralus: 'scus'
+  centraluseuap: 'scus'
   northeurope: 'neu'
   westcentralus: 'wcus'
   westeurope: 'weu'
