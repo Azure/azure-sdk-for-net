@@ -89,7 +89,7 @@ Next, we will create sample hotel documents. The vector field requires submittin
 
 ### Get Embeddings using `Azure.AI.OpenAI`
 
-You can use Azure OpenAI embedding models, `text-embedding-3-small` or `text-embedding-3-large` to get the reduced embdeddings. These models require the `dimensions` property, enabling customers to specify the desired number of dimensions for the output vector.
+You can use Azure OpenAI embedding models, `text-embedding-3-small` or `text-embedding-3-large`, to get the reduced embeddings. With these models, you can specify the desired number of dimensions for the output vector by passing the `dimensions` property. This enables you to customize the output according to your needs.
 
 For more details about how to generate embeddings, refer to the [documentation](https://learn.microsoft.com/azure/search/vector-search-how-to-generate-embeddings). Here's an example of how you can get embeddings using [Azure.AI.OpenAI](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/openai/Azure.AI.OpenAI/README.md) library.
 
