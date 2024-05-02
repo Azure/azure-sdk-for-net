@@ -1,0 +1,30 @@
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System.ClientModel.Internal;
+using System.Collections.Generic;
+using NUnit.Framework;
+
+namespace System.ClientModel.Tests.Convenience;
+
+public class ServerSentEventTests
+{
+    [Test]
+    public void ParsesEventField()
+    {
+        string eventLine = "event: event.name";
+        string dataLine = """data: {"id":"a","object":"value"}""";
+
+        List<ServerSentEventField> fields = new() {
+            new ServerSentEventField(eventLine),
+            new ServerSentEventField(dataLine)
+        };
+
+        ServerSentEvent ssEvent = new(fields);
+
+        Assert.IsNull(ssEvent.ReconnectionTime);
+        Assert.IsTrue(ssEvent.EventName.Span.SequenceEqual("event.name".AsMemory().Span));
+        Assert.IsTrue(ssEvent.Data.Span.SequenceEqual("""{"id":"a","object":"value"}""".AsMemory().Span));
+        Assert.AreEqual(ssEvent.LastEventId.Length, 0);
+    }
+}

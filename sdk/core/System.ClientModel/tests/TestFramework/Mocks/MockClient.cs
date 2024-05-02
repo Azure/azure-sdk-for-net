@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ClientModel;
+using System.Collections.Generic;
 using Azure.Core.TestFramework;
 
 namespace ClientModel.Tests.Mocks;
@@ -49,4 +50,9 @@ internal class MockClient
             return ClientResult.FromOptionalValue<int?>(default, response);
         }
     }
+
+    //public virtual AsyncClientResultCollection<MockJsonModel> GetSseModels(IEnumerable<MockJsonModel> models)
+    //{
+
+    //}
 }

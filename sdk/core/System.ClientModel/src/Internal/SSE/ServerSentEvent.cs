@@ -55,7 +55,7 @@ internal readonly struct ServerSentEvent
                     LastEventId = fieldValue;
                     break;
                 case ServerSentEventFieldKind.Retry:
-                    ReconnectionTime = Int32.TryParse(fieldValue.ToString(), out int retry) ? TimeSpan.FromMilliseconds(retry) : null;
+                    ReconnectionTime = int.TryParse(fieldValue.ToString(), out int retry) ? TimeSpan.FromMilliseconds(retry) : null;
                     break;
                 default:
                     break;
