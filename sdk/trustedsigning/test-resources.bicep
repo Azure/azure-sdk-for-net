@@ -1,14 +1,14 @@
-param location string = 'centraluseuap'
+param location string = az.resourceGroup().location
 
 @description('A signing account name to provision.')
 @minLength(3)
 @maxLength(15)
-param accountName string = uniqueString(resourceGroup().id)
+param accountName string = uniqueString(az.resourceGroup().id)
 
 @description('A certificate profile to provision.')
 @minLength(3)
 @maxLength(15)
-param profileName string = uniqueString(resourceGroup().id)
+param profileName string = uniqueString(az.resourceGroup().id)
 
 @description('The identity validation id to be use for the certificate profile provisioning.')
 param identityValidationId string = 'f0bde931-daf1-497b-a4fa-789a4d9fc6c0'
