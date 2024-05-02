@@ -269,9 +269,9 @@ namespace Azure.Core.TestFramework
             "AZSDK2003", // Location header
             // "AZSDK2004",
             // "AZSDK2005",
-            // "AZSDK2006",
-            // "AZSDK2007",
-            // "AZSDK2008",
+            "AZSDK2006", // x-ms-rename-source
+            "AZSDK2007", // x-ms-file-rename-source
+            "AZSDK2008", // x-ms-copy-source
             // "AZSDK2009",
             // "AZSDK2010",
             // "AZSDK2011",
