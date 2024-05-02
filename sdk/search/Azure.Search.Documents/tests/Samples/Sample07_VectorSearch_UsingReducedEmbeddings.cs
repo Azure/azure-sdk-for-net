@@ -196,21 +196,37 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
                         "Best hotel in town if you like luxury hotels. They have an amazing infinity pool, a spa, " +
                         "and a really helpful concierge. The location is perfect -- right downtown, close to all " +
                         "the tourist attractions. We highly recommend this hotel.",
+#if !SNIPPET
+                    DescriptionVector = VectorSearchEmbeddings.Hotel1ReducedVectorizeDescription,
+#else
                     DescriptionVector = GetEmbeddings(
                         "Best hotel in town if you like luxury hotels. They have an amazing infinity pool, a spa, " +
                         "and a really helpful concierge. The location is perfect -- right downtown, close to all " +
                         "the tourist attractions. We highly recommend this hotel."),
+#endif
                     Category = "Luxury",
+#if !SNIPPET
+                    CategoryVector = VectorSearchEmbeddings.LuxuryReducedVectorizeCategory
+#else
                     CategoryVector = GetEmbeddings("Luxury")
+#endif
                 },
                 new Hotel()
                 {
                     HotelId = "2",
                     HotelName = "Roach Motel",
                     Description = "Cheapest hotel in town. Infact, a motel.",
+#if !SNIPPET
+                    DescriptionVector = VectorSearchEmbeddings.Hotel2ReducedVectorizeDescription,
+#else
                     DescriptionVector = GetEmbeddings("Cheapest hotel in town. Infact, a motel."),
+#endif
                     Category = "Budget",
+#if !SNIPPET
+                    CategoryVector = VectorSearchEmbeddings.BudgetReducedVectorizeCategory
+#else
                     CategoryVector = GetEmbeddings("Budget")
+#endif
                 },
 #if !SNIPPET
                 new Hotel()
@@ -218,18 +234,18 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
                     HotelId = "3",
                     HotelName = "EconoStay",
                     Description = "Very popular hotel in town.",
-                    DescriptionVector = GetEmbeddings("Very popular hotel in town."),
+                    DescriptionVector = VectorSearchEmbeddings.Hotel3ReducedVectorizeDescription,
                     Category = "Budget",
-                    CategoryVector = GetEmbeddings("Budget")
+                    CategoryVector = VectorSearchEmbeddings.BudgetReducedVectorizeCategory
                 },
                 new Hotel()
                 {
                     HotelId = "4",
                     HotelName = "Modern Stay",
                     Description = "Modern architecture, very polite staff and very clean. Also very affordable.",
-                    DescriptionVector = GetEmbeddings("Modern architecture, very polite staff and very clean. Also very affordable."),
+                    DescriptionVector = VectorSearchEmbeddings.Hotel4ReducedVectorizeDescription,
                     Category = "Luxury",
-                    CategoryVector = GetEmbeddings("Luxury")
+                    CategoryVector = VectorSearchEmbeddings.LuxuryReducedVectorizeCategory
                 },
                 new Hotel()
                 {
@@ -238,11 +254,9 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
                      Description = "The hotel is ideally located on the main commercial artery of the city in the heart of New York. " +
                      "A few minutes away is Time's Square and the historic centre of the city, " +
                      "as well as other places of interest that make New York one of America's most attractive and cosmopolitan cities.",
-                    DescriptionVector = GetEmbeddings("The hotel is ideally located on the main commercial artery of the city in the heart of New York. " +
-                     "A few minutes away is Time's Square and the historic centre of the city, " +
-                     "as well as other places of interest that make New York one of America's most attractive and cosmopolitan cities."),
+                    DescriptionVector = VectorSearchEmbeddings.Hotel5ReducedVectorizeDescription,
                     Category = "Boutique",
-                    CategoryVector = GetEmbeddings("Boutique")
+                    CategoryVector = VectorSearchEmbeddings.BoutiqueReducedVectorizeCategory
                 }
 #endif
                 // Add more hotel documents here...
