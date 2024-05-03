@@ -276,6 +276,7 @@ namespace Azure.Search.Documents.Tests
             Assert.AreEqual("InvalidRequestParameter", ex.ErrorCode);
         }
 
+        [Test]
         [LiveOnly]
         public async Task CanContinueWithNextPage()
         {
