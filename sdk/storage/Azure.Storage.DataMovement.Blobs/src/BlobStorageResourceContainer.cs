@@ -32,6 +32,13 @@ namespace Azure.Storage.DataMovement.Blobs
         public override string ProviderId => "blob";
 
         /// <summary>
+        /// For mocking.
+        /// </summary>
+        protected BlobStorageResourceContainer()
+        {
+        }
+
+        /// <summary>
         /// The constructor to create an instance of the BlobStorageResourceContainer.
         /// </summary>
         /// <param name="blobContainerClient">

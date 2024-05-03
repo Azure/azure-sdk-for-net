@@ -57,6 +57,14 @@ namespace Azure.Storage.DataMovement.Blobs
         protected override long? Length => ResourceProperties?.ResourceLength;
 
         /// <summary>
+        /// For mocking.
+        /// </summary>
+        internal BlockBlobStorageResource()
+        {
+            _blocks = new ConcurrentDictionary<long, string>();
+        }
+
+        /// <summary>
         /// The constructor for a new instance of the <see cref="AppendBlobStorageResource"/>
         /// class.
         /// </summary>
