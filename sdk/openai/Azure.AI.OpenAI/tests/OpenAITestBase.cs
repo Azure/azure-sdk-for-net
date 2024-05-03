@@ -41,6 +41,7 @@ namespace Azure.AI.OpenAI.Tests
             BodyRegexSanitizers.Add(new BodyRegexSanitizer("(\"key\" *: *\")[^ \n\"]*(\")", "$1placeholder$2"));
             HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("api-key", "***********"));
             UriRegexSanitizers.Add(new UriRegexSanitizer("sig=[^\"]*", "sig=Sanitized"));
+            JsonPathSanitizers.Add("$.messages[*].content[*].image_url.url");
             SanitizedQueryParameters.Add("sig");
         }
 
@@ -117,6 +118,21 @@ namespace Azure.AI.OpenAI.Tests
                 _ => throw new NotImplementedException(),
             });
         }
+
+        protected Uri GetTestImageInternetUri()
+        {
+            return new Uri("https://www.bing.com/th?id=OHR.BradgateFallow_EN-US3932725763_1920x1080.jpg");
+        }
+
+        protected Stream GetTestImageStream(string mimeType)
+            => File.OpenRead(mimeType switch
+            {
+                "image/jpg" => TestEnvironment.TestImageJpgInputPath,
+                _ => throw new ArgumentException(nameof(mimeType)),
+            });
+
+        protected BinaryData GetTestImageData(string mimeType)
+            => BinaryData.FromStream(GetTestImageStream(mimeType));
 
         [SetUp]
         public void CreateDeployment()

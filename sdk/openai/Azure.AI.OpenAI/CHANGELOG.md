@@ -4,7 +4,18 @@
 
 ### Features Added
 
+- Image input support for `gpt-4-turbo` chat completions now works with image data in addition to internet URLs.
+  Images may be now be used as `gpt-4-turbo` message content items via one of three constructors:
+  - `ChatMessageImageContent(Uri)` -- the existing constructor, used for URL-based image references
+  - `ChatMessageImageContent(Stream,string)` -- (new) used with a stream and known MIME type (like `image/png`)
+  - `ChatMessageImageContent(BinaryData,string)` -- (new) used with a BinaryData instance and known MIME type
+  Please see the [readme example](README.md#chat-with-images-using-gpt-4-turbo) for more details.
+
 ### Breaking Changes
+
+- Public visibility of the `ChatMessageImageUrl` type is removed to promote more flexible use of data sources in
+  `ChatMessageImageContent`. Code that previously created a `ChatMessageImageUrl` using a `Uri` should simply provide
+  the `Uri` to the `ChatMessageImageContent` constructor directly.
 
 ### Bugs Fixed
 
