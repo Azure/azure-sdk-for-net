@@ -15,4 +15,4 @@ var credential = new AzurePipelinesCredential(tenantId, clientId, serviceConnect
 var client = new SecretClient(new Uri("https://keyvault-name.vault.azure.net/"), credential);
 ```
 
-***Note:*** This credential is **not** included in the `DefaultAzureCredential` chain and must be used explicitly.
+***Note:*** This credential is **not** included in the `DefaultAzureCredential` chain.
