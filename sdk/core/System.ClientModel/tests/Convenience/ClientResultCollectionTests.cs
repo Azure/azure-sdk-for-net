@@ -21,8 +21,7 @@ public class ClientResultCollectionTests : SyncAsyncTestBase
         MockPipelineResponse response = new();
         response.SetContent("[DONE]");
 
-        AsyncClientResultCollection<MockJsonModel> results =
-            AsyncClientResultCollection<MockJsonModel>.Create<MockJsonModel>(response);
+        var results = AsyncClientResultCollection<MockJsonModel>.Create<MockJsonModel>(response);
 
         bool empty = true;
         await foreach (MockJsonModel result in results)
@@ -34,4 +33,42 @@ public class ClientResultCollectionTests : SyncAsyncTestBase
         Assert.AreEqual(results.GetRawResponse(), response);
         Assert.IsTrue(empty);
     }
+
+    [Test]
+    public async Task EnumeratesModelValues()
+    {
+        MockPipelineResponse response = new();
+        response.SetContent(_mockContent);
+        var results = AsyncClientResultCollection<MockJsonModel>.Create<MockJsonModel>(response);
+
+        int i = 0;
+        await foreach (MockJsonModel model in results)
+        {
+            Assert.AreEqual(model.IntValue, i);
+            Assert.AreEqual(model.StringValue, i.ToString());
+
+            i++;
+        }
+
+        Assert.AreEqual(i, 3);
+    }
+
+    #region Helpers
+
+    private readonly string _mockContent = """
+        event: event.0
+        data: { "IntValue": 0, "StringValue": "0" }
+
+        event: event.1
+        data: { "IntValue": 1, "StringValue": "1" }
+
+        event: event.2
+        data: { "IntValue": 2, "StringValue": "2" }
+
+        event: done
+        data: [DONE]
+
+        """;
+
+    #endregion
 }

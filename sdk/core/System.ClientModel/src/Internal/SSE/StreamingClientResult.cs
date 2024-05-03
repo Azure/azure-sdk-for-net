@@ -51,22 +51,8 @@ internal class StreamingClientResult<T> : AsyncClientResultCollection<T>
         return new(response, GetServerSentEventDeserializationEnumerator<U>);
     }
 
-    public static StreamingClientResult<TInstanceType> Create<TInstanceType, TJsonDataType>(PipelineResponse response, CancellationToken cancellationToken = default)
-        where TJsonDataType : IJsonModel<TJsonDataType>
-    {
-        return new(response, GetServerSentEventDeserializationEnumerator<TInstanceType, TJsonDataType>);
-    }
-
     private static IAsyncEnumerator<U> GetServerSentEventDeserializationEnumerator<U>(Stream stream, CancellationToken cancellationToken = default)
         where U : IJsonModel<U>
-    {
-        return GetServerSentEventDeserializationEnumerator<U, U>(stream, cancellationToken);
-    }
-
-    private static IAsyncEnumerator<TInstanceType> GetServerSentEventDeserializationEnumerator<TInstanceType, TJsonDataType>(
-        Stream stream,
-        CancellationToken cancellationToken = default)
-            where TJsonDataType : IJsonModel<TJsonDataType>
     {
         ServerSentEventReader? sseReader = null;
         AsyncServerSentEventEnumerator? sseEnumerator = null;
@@ -74,7 +60,7 @@ internal class StreamingClientResult<T> : AsyncClientResultCollection<T>
         {
             sseReader = new(stream);
             sseEnumerator = new(sseReader, cancellationToken);
-            AsyncServerSentEventJsonDataEnumerator<TInstanceType, TJsonDataType> instanceEnumerator = new(sseEnumerator);
+            AsyncServerSentEventJsonDataEnumerator<U> instanceEnumerator = new(sseEnumerator);
             sseEnumerator = null;
             sseReader = null;
             return instanceEnumerator;

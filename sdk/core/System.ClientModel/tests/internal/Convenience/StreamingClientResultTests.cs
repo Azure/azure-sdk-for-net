@@ -2,28 +2,25 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Internal;
-using System.IO;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using ClientModel.Tests.Mocks;
 using NUnit.Framework;
 
 namespace System.ClientModel.Tests.Convenience;
 
-public class AsyncServerSentEventJsonDataEnumeratorTests
+public class StreamingClientResultTests
 {
     [Test]
-    public async Task EnumeratesSingleEvents()
+    public async Task EnumeratesModelValues()
     {
-        Stream contentStream = BinaryData.FromString(_mockContent).ToStream();
-        using ServerSentEventReader reader = new(contentStream);
-        using AsyncServerSentEventEnumerator eventEnumerator = new(reader);
-        using AsyncServerSentEventJsonDataEnumerator<MockJsonModel> modelEnumerator = new(eventEnumerator);
+        MockPipelineResponse response = new();
+        response.SetContent(_mockContent);
+        var results = StreamingClientResult<MockJsonModel>.Create<MockJsonModel>(response);
 
         int i = 0;
-        while (await modelEnumerator.MoveNextAsync())
+        await foreach (MockJsonModel model in results)
         {
-            MockJsonModel model = modelEnumerator.Current;
-
             Assert.AreEqual(model.IntValue, i);
             Assert.AreEqual(model.StringValue, i.ToString());
 
@@ -35,7 +32,6 @@ public class AsyncServerSentEventJsonDataEnumeratorTests
 
     // TODO: Add tests for dispose and handling cancellation token
     // TODO: later, add tests for varying the _doneToken value.
-    // TODO: tests for infinite stream -- no terminal event; how to show it won't stop?
 
     #region Helpers
 
