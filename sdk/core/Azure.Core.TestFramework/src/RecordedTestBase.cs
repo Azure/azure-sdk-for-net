@@ -126,7 +126,13 @@ namespace Azure.Core.TestFramework
     {
         new BodyKeySanitizer(SanitizeValue)
         {
-            JsonPath = "$..sasUri", Regex = "sig=(?<sig>[^&]+)", GroupForReplace = "sig"
+            JsonPath = "$..sasUri",
+            Regex = "sig=(?<sig>[^&]+)",
+            GroupForReplace = "sig"
+        },
+        new BodyKeySanitizer(EmptyGuid)
+        {
+            JsonPath = "$..applicationId"
         }
     };
 
@@ -335,7 +341,7 @@ namespace Azure.Core.TestFramework
             // "AZSDK3417",
             // "AZSDK3418",
             // "AZSDK3419",
-            // "AZSDK3420",
+            "AZSDK3420", // $..targetResourceId
             // "AZSDK3421",
             // "AZSDK3422",
             "AZSDK3423", // $..source
@@ -391,8 +397,8 @@ namespace Azure.Core.TestFramework
             // "AZSDK3475",
             // "AZSDK3476",
             // "AZSDK3477",
-            // "AZSDK3478",
-            "AZSDK3479",
+            "AZSDK3478", // $..accountName
+            "AZSDK3479", // $..applicationId
             // "AZSDK3480",
             // "AZSDK3481",
             // "AZSDK3482",
@@ -401,14 +407,14 @@ namespace Azure.Core.TestFramework
             // "AZSDK3485",
             // "AZSDK3486",
             // "AZSDK3487",
-            // "AZSDK3488",
+            "AZSDK3488", // $..targetResourceRegion
             // "AZSDK3489",
             "AZSDK3490", // $..etag
             // "AZSDK3491",
             // "AZSDK3492",
             "AZSDK3493", // $..name
             "AZSDK3494", // $..friendlyName
-            // "AZSDK3495",
+            "AZSDK3495", // $..targetModelLocation
             "AZSDK3496", // $..resourceLocation
             // // "AZSDK4000",
             "AZSDK4001",
