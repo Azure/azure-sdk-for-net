@@ -122,13 +122,7 @@ namespace Azure.Core.TestFramework
         /// The list of <see cref="BodyKeySanitizer"/> to use while sanitizing request and response bodies. This is similar to
         /// <see cref="JsonPathSanitizers"/>, but provides additional features such as regex matching, and customizing the sanitization replacement.
         /// </summary>
-        public List<BodyKeySanitizer> BodyKeySanitizers { get; } = new()
-        {
-            new BodyKeySanitizer(EmptyGuid)
-            {
-                JsonPath = "$..keyVaultClientId"
-            }
-        };
+        public List<BodyKeySanitizer> BodyKeySanitizers { get; } = new();
 
         /// <summary>
         /// The list of <see cref="BodyRegexSanitizer"/> to use while sanitizing request and response bodies. This allows you to specify a
@@ -158,10 +152,10 @@ namespace Azure.Core.TestFramework
                 {
                     GroupForReplace = "group"
                 },
-                new BodyRegexSanitizer(@"token=(?<group>.*?)(?=&|$)", SanitizeValue)
-                {
-                    GroupForReplace = "group"
-                },
+                // new BodyRegexSanitizer(@"token=(?<group>.*?)(?=&|$)", SanitizeValue)
+                // {
+                //     GroupForReplace = "group"
+                // },
                 new BodyRegexSanitizer(@"refresh_token=(?<group>.*?)(?=&|$)", SanitizeValue)
                 {
                     GroupForReplace = "group"
@@ -301,7 +295,7 @@ namespace Azure.Core.TestFramework
             // "AZSDK3000",
             // "AZSDK3001",
             // "AZSDK3002",
-            // "AZSDK3003",
+            "AZSDK3003",
             // "AZSDK3004",
             "AZSDK3005", // User Delegation Key - needs to use Base64 replacement
             // "AZSDK3006",
@@ -347,7 +341,7 @@ namespace Azure.Core.TestFramework
             // "AZSDK3429",
             // "AZSDK3431",
             // "AZSDK3432",
-            // "AZSDK3433",
+            "AZSDK3433", // $..userId
             // "AZSDK3435",
             // "AZSDK3436",
             // "AZSDK3437",
@@ -356,11 +350,11 @@ namespace Azure.Core.TestFramework
             // "AZSDK3440",
             // // "AZSDK3441",
             // // "AZSDK3442",
-            // "AZSDK3443", // $..tenantId
+            // "AZSDK3443",
             // "AZSDK3444",
             // "AZSDK3445",
             // "AZSDK3446",
-            // "AZSDK3447",
+            "AZSDK3447", // $.key
             // "AZSDK3448",
             // "AZSDK3449",
             // "AZSDK3450",
