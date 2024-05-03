@@ -276,8 +276,7 @@ namespace Azure.Search.Documents.Tests
             Assert.AreEqual("InvalidRequestParameter", ex.ErrorCode);
         }
 
-        [RecordedTest]
-        [PlaybackOnly("The availability of Semantic Search is limited to specific regions, as indicated in the list provided here: https://azure.microsoft.com/explore/global-infrastructure/products-by-region/?products=search. Due to this limitation, the deployment of resources for weekly test pipeline for setting the \"semanticSearch\": \"free\" fails in the UsGov and China cloud regions.")]
+        [LiveOnly]
         public async Task CanContinueWithNextPage()
         {
             const int size = 100;
@@ -293,13 +292,6 @@ namespace Azure.Search.Documents.Tests
                         {
                             Queries = { new VectorizedQuery(vectorizedResult) { KNearestNeighborsCount = 50, Fields = { "descriptionVector" } } }
                         },
-                        SemanticSearch = new()
-                        {
-                            SemanticConfigurationName = "my-semantic-config",
-                            QueryCaption = new(QueryCaptionType.Extractive),
-                            QueryAnswer = new(QueryAnswerType.Extractive)
-                        },
-                        QueryType = SearchQueryType.Semantic,
                         Select = new[] { "hotelId" }
                     });
 
