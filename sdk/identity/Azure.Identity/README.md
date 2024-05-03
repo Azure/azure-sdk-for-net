@@ -125,18 +125,47 @@ var eventHubClient = new EventHubProducerClient("myeventhub.eventhubs.windows.ne
 
 ### Specify a user-assigned managed identity with `DefaultAzureCredential`
 
-Many Azure hosts allow the assignment of a user-assigned managed identity. This example demonstrates configuring the `DefaultAzureCredential` to authenticate a user-assigned identity when deployed to an Azure host. It then authenticates a `BlobClient` from the [Azure.Storage.Blobs][blobs_client_library] client library with credential.
+Many Azure hosts allow the assignment of a user-assigned managed identity. The following examples demonstrate configuring `DefaultAzureCredential` to authenticate a user-assigned managed identity when deployed to an Azure host. The sample code uses the credential to authenticate a `BlobClient` from the [Azure.Storage.Blobs][blobs_client_library] client library. To do this, you can specify a user-assigned managed identity either by a client ID or a resource ID.
 
-```C# Snippet:UserAssignedManagedIdentity
-// When deployed to an azure host, the default azure credential will authenticate the specified user assigned managed identity.
+#### Client ID
 
-string userAssignedClientId = "<your managed identity client Id>";
-var credential = new DefaultAzureCredential(new DefaultAzureCredentialOptions { ManagedIdentityClientId = userAssignedClientId });
+To use a client ID, take one of the following approaches:
 
-var blobClient = new BlobClient(new Uri("https://myaccount.blob.core.windows.net/mycontainer/myblob"), credential);
+1. Set the [DefaultAzureCredentialOptions.ManagedIdentityClientId](https://learn.microsoft.com/dotnet/api/azure.identity.defaultazurecredentialoptions.managedidentityclientid?view=azure-dotnet) property. For example:
+
+    ```C# Snippet:UserAssignedManagedIdentityWithClientId
+    // When deployed to an Azure host, DefaultAzureCredential will authenticate the specified user-assigned managed identity.
+
+    string userAssignedClientId = "<your managed identity client ID>";
+    var credential = new DefaultAzureCredential(
+        new DefaultAzureCredentialOptions
+        {
+            ManagedIdentityClientId = userAssignedClientId
+        });
+
+    var blobClient = new BlobClient(
+        new Uri("https://myaccount.blob.core.windows.net/mycontainer/myblob"),
+        credential);
+    ```
+
+1. Set the `AZURE_CLIENT_ID` environment variable.
+
+#### Resource ID
+
+To use a resource ID, set the [DefaultAzureCredentialOptions.ManagedIdentityResourceId](https://learn.microsoft.com/dotnet/api/azure.identity.defaultazurecredentialoptions.managedidentityresourceid?view=azure-dotnet) property. The resource ID takes the form `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}`. For example:
+
+```C# Snippet:UserAssignedManagedIdentityWithResourceId
+string userAssignedResourceId = "<your managed identity resource ID>";
+var credential = new DefaultAzureCredential(
+    new DefaultAzureCredentialOptions
+    {
+        ManagedIdentityResourceId = new ResourceIdentifier(userAssignedResourceId)
+    });
+
+var blobClient = new BlobClient(
+    new Uri("https://myaccount.blob.core.windows.net/mycontainer/myblob"),
+    credential);
 ```
-
-In addition to configuring the `ManagedIdentityClientId` via code, it can also be set using the `AZURE_CLIENT_ID` environment variable. These two approaches are equivalent when using the `DefaultAzureCredential`.
 
 ### Define a custom authentication flow with `ChainedTokenCredential`
 
