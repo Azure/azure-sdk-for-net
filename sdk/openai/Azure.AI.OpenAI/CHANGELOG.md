@@ -9,7 +9,7 @@
   - `ChatMessageImageContent(Uri)` -- the existing constructor, used for URL-based image references
   - `ChatMessageImageContent(Stream,string)` -- (new) used with a stream and known MIME type (like `image/png`)
   - `ChatMessageImageContent(BinaryData,string)` -- (new) used with a BinaryData instance and known MIME type
-  Please see the [readme example](README.md#chat-with-images-using-gpt-4-turbo) for more details.
+  Please see the [readme example](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/openai/Azure.AI.OpenAI/README.md#chat-with-images-using-gpt-4-turbo) for more details.
 
 ### Breaking Changes
 
