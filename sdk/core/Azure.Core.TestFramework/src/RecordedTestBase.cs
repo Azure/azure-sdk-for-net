@@ -118,11 +118,17 @@ namespace Azure.Core.TestFramework
         //     "$..WEBSITE_AUTH_ENCRYPTION_KEY",
     // };
 
-        /// <summary>
-        /// The list of <see cref="BodyKeySanitizer"/> to use while sanitizing request and response bodies. This is similar to
-        /// <see cref="JsonPathSanitizers"/>, but provides additional features such as regex matching, and customizing the sanitization replacement.
-        /// </summary>
-        public List<BodyKeySanitizer> BodyKeySanitizers { get; } = new();
+    /// <summary>
+    /// The list of <see cref="BodyKeySanitizer"/> to use while sanitizing request and response bodies. This is similar to
+    /// <see cref="JsonPathSanitizers"/>, but provides additional features such as regex matching, and customizing the sanitization replacement.
+    /// </summary>
+    public List<BodyKeySanitizer> BodyKeySanitizers { get; } = new()
+    {
+        new BodyKeySanitizer(SanitizeValue)
+        {
+            JsonPath = "$..sasUri", Regex = "sig=(?<sig>[^&]+)", GroupForReplace = "sig"
+        }
+    };
 
         /// <summary>
         /// The list of <see cref="BodyRegexSanitizer"/> to use while sanitizing request and response bodies. This allows you to specify a
@@ -283,7 +289,7 @@ namespace Azure.Core.TestFramework
             // "AZSDK2017",
             // "AZSDK2018",
             // "AZSDK2019",
-            // "AZSDK2020",
+            "AZSDK2020", // "x-ms-request-id"
             // "AZSDK2021",
             // "AZSDK2022",
             // "AZSDK2023",
@@ -338,7 +344,7 @@ namespace Azure.Core.TestFramework
             // "AZSDK3426",
             // "AZSDK3427",
             // "AZSDK3428",
-            // "AZSDK3429",
+            "AZSDK3429",
             // "AZSDK3431",
             // "AZSDK3432",
             "AZSDK3433", // $..userId
@@ -386,7 +392,7 @@ namespace Azure.Core.TestFramework
             // "AZSDK3476",
             // "AZSDK3477",
             // "AZSDK3478",
-            // "AZSDK3479",
+            "AZSDK3479",
             // "AZSDK3480",
             // "AZSDK3481",
             // "AZSDK3482",
