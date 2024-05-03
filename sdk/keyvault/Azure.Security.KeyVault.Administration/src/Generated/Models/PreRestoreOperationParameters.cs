@@ -8,7 +8,7 @@
 namespace Azure.Security.KeyVault.Administration.Models
 {
     /// <summary> The PreRestoreOperationParameters. </summary>
-    public partial class PreRestoreOperationParameters
+    internal partial class PreRestoreOperationParameters
     {
         /// <summary> Initializes a new instance of <see cref="PreRestoreOperationParameters"/>. </summary>
         public PreRestoreOperationParameters()
