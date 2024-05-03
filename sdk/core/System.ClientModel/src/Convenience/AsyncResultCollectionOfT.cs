@@ -27,7 +27,7 @@ public abstract class AsyncResultCollection<T> : ClientResult, IAsyncEnumerable<
     public static AsyncResultCollection<TValue> Create<TValue>(PipelineResponse response, CancellationToken cancellationToken = default)
         where TValue : IJsonModel<TValue>
     {
-        return StreamingClientResult<TValue>.Create<TValue>(response, cancellationToken);
+        return StreamingClientResult<TValue>.CreateStreaming<TValue>(response, cancellationToken);
     }
 
     // TODO: Next - add this!

@@ -45,7 +45,7 @@ internal class StreamingClientResult<T> : AsyncResultCollection<T>
     /// The optional cancellation token used to control the enumeration.
     /// </param>
     /// <returns> A new instance of <see cref="StreamingClientResult{T}"/>. </returns>
-    public static StreamingClientResult<U> Create<U>(PipelineResponse response, CancellationToken cancellationToken = default)
+    public static StreamingClientResult<U> CreateStreaming<U>(PipelineResponse response, CancellationToken cancellationToken = default)
         where U : IJsonModel<U>
     {
         return new(response, GetServerSentEventDeserializationEnumerator<U>);

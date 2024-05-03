@@ -53,6 +53,27 @@ public class ClientResultCollectionTests : SyncAsyncTestBase
         Assert.AreEqual(i, 3);
     }
 
+    [Test]
+    public async Task CanDelaySendingRequest()
+    {
+        MockClient client = new MockClient();
+        AsyncResultCollection<MockJsonModel> models = client.GetModelsStreamingAsync(_mockContent);
+
+        Assert.IsFalse(client.StreamingProtocolMethodCalled);
+
+        int i = 0;
+        await foreach (MockJsonModel model in models)
+        {
+            Assert.AreEqual(model.IntValue, i);
+            Assert.AreEqual(model.StringValue, i.ToString());
+
+            i++;
+        }
+
+        Assert.AreEqual(i, 3);
+        Assert.IsTrue(client.StreamingProtocolMethodCalled);
+    }
+
     #region Helpers
 
     private readonly string _mockContent = """

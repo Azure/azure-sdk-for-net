@@ -12,6 +12,8 @@ namespace ClientModel.Tests.Mocks;
 
 public class MockClient
 {
+    public bool StreamingProtocolMethodCalled { get; private set; }
+
     public virtual ClientResult<MockJsonModel> GetModel(int intValue, string stringValue)
     {
         MockPipelineResponse response = new(200);
@@ -68,6 +70,9 @@ public class MockClient
 
         MockPipelineResponse response = new();
         response.SetContent(content);
+
+        StreamingProtocolMethodCalled = true;
+
         return ClientResult.FromResponse(response);
     }
 
