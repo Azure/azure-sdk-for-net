@@ -62,10 +62,10 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
         /// Disables sampling for logs that are emitted within an activity context.
         /// </summary>
         /// <remarks>
-        /// Default value is <see langword="false" /> i.e. the logs that are emitted within an activity context are sampled
+        /// Default value is <see langword="true" /> i.e. the logs that are emitted within an activity context are sampled
         /// based on the configured <see cref= "SamplingRatio" /> for traces.
         /// </remarks>
-        public bool DisableTraceBasedSamplingForLogs { get; set; }
+        public bool EnableTraceBasedSamplingForLogs { get; set; } = true;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AzureMonitorOptions"/>.
