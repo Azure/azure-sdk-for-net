@@ -4,6 +4,7 @@
 
 ### Features Added
 - `ClientAssertionCredentialOptions` now supports `TokenCachePersistenceOptions` for configuring token cache persistence.
+- Added `AzurePipelinesCredential` for authenticating with Azure Pipelines service connections.
 
 ### Breaking Changes
 
