@@ -123,7 +123,7 @@ namespace Azure.AI.OpenAI.Tests
         {
             if (Mode == RecordedTestMode.Playback)
             {
-                return new Uri("Sanitized");
+                return new Uri("https://sanitized");
             }
             return new Uri("https://www.bing.com/th?id=OHR.BradgateFallow_EN-US3932725763_1920x1080.jpg");
         }
