@@ -14,7 +14,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
             => new()
             {
                 Conditions = options?.DestinationConditions,
-                TransferValidation = options?.UploadTransferValidationOptions,
             };
 
         internal static ShareFileUploadRangeOptions ToShareFileUploadRangeOptions(
@@ -22,7 +21,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
             => new()
             {
                 Conditions = options?.DestinationConditions,
-                TransferValidation = options?.UploadTransferValidationOptions,
             };
 
         internal static ShareFileUploadRangeFromUriOptions ToShareFileUploadRangeFromUriOptions(
@@ -85,7 +83,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
             {
                 Range = range,
                 Conditions = options?.SourceConditions,
-                TransferValidation = options?.DownloadTransferValidationOptions,
             };
 
         internal static StorageResourceReadStreamResult ToStorageResourceReadStreamResult(
