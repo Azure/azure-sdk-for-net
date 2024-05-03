@@ -192,6 +192,15 @@ directive:
   transform: $["x-ms-client-name"] = "AzureMachineLearningParameters";
 ```
 
+### Rename `ServiceLimits.maxStoragePerIndex` to `ServiceLimits.maxStoragePerIndexInBytes`
+
+```yaml
+directive:
+- from: searchservice.json
+  where: $.definitions.ServiceLimits
+  transform: $.properties.maxStoragePerIndex["x-ms-client-name"] = "maxStoragePerIndexInBytes";
+```
+
 ### Rename `PIIDetectionSkill.minimumPrecision` to `PIIDetectionSkill.MinPrecision`
 
 ```yaml
