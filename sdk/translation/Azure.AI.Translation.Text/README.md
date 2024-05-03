@@ -294,7 +294,7 @@ try
     BreakSentenceItem brokenSentence = brokenSentences.FirstOrDefault();
 
     Console.WriteLine($"Detected languages of the input text: {brokenSentence?.DetectedLanguage?.Language} with score: {brokenSentence?.DetectedLanguage?.Confidence}.");
-    Console.WriteLine($"The detected sentence boundaries: '{string.Join(",", brokenSentence?.LengthsOfSentences)}'.");
+    Console.WriteLine($"The detected sentence boundaries: '{string.Join(",", brokenSentence?.SentencesLengths)}'.");
 }
 catch (RequestFailedException exception)
 {

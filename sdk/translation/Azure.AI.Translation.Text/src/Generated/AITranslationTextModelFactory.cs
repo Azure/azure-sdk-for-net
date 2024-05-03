@@ -206,16 +206,16 @@ namespace Azure.AI.Translation.Text
 
         /// <summary> Initializes a new instance of <see cref="Text.BreakSentenceItem"/>. </summary>
         /// <param name="detectedLanguage"> The detectedLanguage property is only present in the result object when language auto-detection is requested. </param>
-        /// <param name="lengthsOfSentences">
+        /// <param name="sentencesLengths">
         /// An integer array representing the lengths of the sentences in the input text.
         /// The length of the array is the number of sentences, and the values are the length of each sentence.
         /// </param>
         /// <returns> A new <see cref="Text.BreakSentenceItem"/> instance for mocking. </returns>
-        public static BreakSentenceItem BreakSentenceItem(DetectedLanguage detectedLanguage = null, IEnumerable<int> lengthsOfSentences = null)
+        public static BreakSentenceItem BreakSentenceItem(DetectedLanguage detectedLanguage = null, IEnumerable<int> sentencesLengths = null)
         {
-            lengthsOfSentences ??= new List<int>();
+            sentencesLengths ??= new List<int>();
 
-            return new BreakSentenceItem(detectedLanguage, lengthsOfSentences?.ToList(), serializedAdditionalRawData: null);
+            return new BreakSentenceItem(detectedLanguage, sentencesLengths?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Text.DictionaryLookupItem"/>. </summary>

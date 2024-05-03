@@ -3,7 +3,7 @@ namespace Azure.AI.Translation.Text
     public static partial class AITranslationTextModelFactory
     {
         public static Azure.AI.Translation.Text.BackTranslation BackTranslation(string normalizedText = null, string displayText = null, int examplesCount = 0, int frequencyCount = 0) { throw null; }
-        public static Azure.AI.Translation.Text.BreakSentenceItem BreakSentenceItem(Azure.AI.Translation.Text.DetectedLanguage detectedLanguage = null, System.Collections.Generic.IEnumerable<int> lengthsOfSentences = null) { throw null; }
+        public static Azure.AI.Translation.Text.BreakSentenceItem BreakSentenceItem(Azure.AI.Translation.Text.DetectedLanguage detectedLanguage = null, System.Collections.Generic.IEnumerable<int> sentencesLengths = null) { throw null; }
         public static Azure.AI.Translation.Text.DetectedLanguage DetectedLanguage(string language = null, float confidence = 0f) { throw null; }
         public static Azure.AI.Translation.Text.DictionaryExample DictionaryExample(string sourcePrefix = null, string sourceTerm = null, string sourceSuffix = null, string targetPrefix = null, string targetTerm = null, string targetSuffix = null) { throw null; }
         public static Azure.AI.Translation.Text.DictionaryExampleItem DictionaryExampleItem(string normalizedSource = null, string normalizedTarget = null, System.Collections.Generic.IEnumerable<Azure.AI.Translation.Text.DictionaryExample> examples = null) { throw null; }
@@ -40,7 +40,7 @@ namespace Azure.AI.Translation.Text
     {
         internal BreakSentenceItem() { }
         public Azure.AI.Translation.Text.DetectedLanguage DetectedLanguage { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<int> LengthsOfSentences { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<int> SentencesLengths { get { throw null; } }
         Azure.AI.Translation.Text.BreakSentenceItem System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.BreakSentenceItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.BreakSentenceItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Translation.Text.BreakSentenceItem System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.BreakSentenceItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
