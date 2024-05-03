@@ -24,16 +24,16 @@ public abstract class AsyncResultCollection<T> : ClientResult, IAsyncEnumerable<
 
     // TODO: take CancellationToken -- question -- does the cancellation token go here or to the enumerator?
     //public static ClientResultCollection<T> Create<TValue>(PipelineResponse response) where TValue : IJsonModel<T>
+    // TODO: terminal event can be a model type as well ... are we happy using string for now and adding an overload if needed later?
     public static AsyncResultCollection<TValue> Create<TValue>(PipelineResponse response, CancellationToken cancellationToken = default)
         where TValue : IJsonModel<TValue>
     {
         return StreamingClientResult<TValue>.CreateStreaming<TValue>(response, cancellationToken);
     }
 
-    // TODO: Next - add this!
-    //public static AsyncResultCollection<BinaryData> Create(PipelineResponse response)
-    //{
-    //    return StreamingClientResult<TValue>.Create<TValue>(response);
-    //}
+    public static AsyncResultCollection<BinaryData> Create(PipelineResponse response, CancellationToken cancellationToken = default)
+    {
+        return StreamingClientResult<BinaryData>.CreateStreaming(response, cancellationToken);
+    }
 }
 #pragma warning restore CS1591 // public XML comments

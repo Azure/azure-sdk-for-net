@@ -4,6 +4,7 @@
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using System.Threading;
 
 namespace System.ClientModel.Internal;
@@ -17,8 +18,9 @@ internal class StreamingClientResult<T> : AsyncResultCollection<T>
 {
     private readonly Func<Stream, CancellationToken, IAsyncEnumerator<T>> _asyncEnumeratorSourceDelegate;
 
-    // TODO: use?
-    //private bool _disposedValue;
+    // TODO: Add an overload that creates the type but delays sending the response
+    // for use with convenience methods.  Do we need to take a func in the public
+    // method or is there another way?
 
     private StreamingClientResult(PipelineResponse response, Func<Stream, CancellationToken, IAsyncEnumerator<T>> asyncEnumeratorSourceDelegate)
         : base(response)
@@ -51,6 +53,26 @@ internal class StreamingClientResult<T> : AsyncResultCollection<T>
         return new(response, GetServerSentEventDeserializationEnumerator<U>);
     }
 
+    public static StreamingClientResult<BinaryData> CreateStreaming(PipelineResponse response, CancellationToken cancellationToken = default)
+    {
+        return new(response, GetBinaryDataEnumerator);
+    }
+
+    private static async IAsyncEnumerator<BinaryData> GetBinaryDataEnumerator(Stream stream, CancellationToken cancellationToken = default)
+    {
+        // TODO: handle via DisposeAsync instead?
+
+        using ServerSentEventReader reader = new(stream);
+        using AsyncServerSentEventEnumerator sseEnumerator = new(reader, cancellationToken);
+        while (await sseEnumerator.MoveNextAsync().ConfigureAwait(false))
+        {
+            // TODO: more efficient way?
+            char[] chars = sseEnumerator.Current.Data.ToArray();
+            byte[] bytes = Encoding.UTF8.GetBytes(chars);
+            yield return new BinaryData(bytes);
+        }
+    }
+
     private static IAsyncEnumerator<U> GetServerSentEventDeserializationEnumerator<U>(Stream stream, CancellationToken cancellationToken = default)
         where U : IJsonModel<U>
     {
@@ -67,6 +89,7 @@ internal class StreamingClientResult<T> : AsyncResultCollection<T>
         }
         finally
         {
+            // TODO: I think we may need to use DisposeAsync here instead?
             sseEnumerator?.Dispose();
             sseReader?.Dispose();
         }

@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 
 namespace System.ClientModel.Internal;
 
-internal sealed class ServerSentEventReader : IDisposable
+// TODO: Different sync and async readers to dispose differently?
+internal sealed class ServerSentEventReader : IDisposable, IAsyncDisposable
 {
     private readonly Stream _stream;
     private readonly StreamReader _reader;
@@ -28,7 +29,6 @@ internal sealed class ServerSentEventReader : IDisposable
     /// <returns>
     ///     The next <see cref="ServerSentEvent"/> in the stream, or null once no more data can be read from the stream.
     /// </returns>
-    // TODO: Would we rather use standard .NET TryGet semantics?
     public ServerSentEvent? TryGetNextEvent(CancellationToken cancellationToken = default)
     {
         List<ServerSentEventField> fields = new();
@@ -122,5 +122,17 @@ internal sealed class ServerSentEventReader : IDisposable
 
             _disposedValue = true;
         }
+    }
+
+    // TODO: get this pattern right
+    public async ValueTask DisposeAsync()
+    {
+#if NETSTANDARD2_0
+        // TODO: is this the right pattern for calling sync methods in
+        // async contexts?
+        await Task.Run(_stream.Dispose).ConfigureAwait(false);
+#else
+        await _stream.DisposeAsync().ConfigureAwait(false);
+#endif
     }
 }

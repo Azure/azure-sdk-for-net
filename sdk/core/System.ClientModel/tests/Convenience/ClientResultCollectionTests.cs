@@ -35,7 +35,7 @@ public class ClientResultCollectionTests : SyncAsyncTestBase
     }
 
     [Test]
-    public async Task EnumeratesModelValues()
+    public async Task CanEnumerateModelValues()
     {
         MockPipelineResponse response = new();
         response.SetContent(_mockContent);
@@ -44,6 +44,27 @@ public class ClientResultCollectionTests : SyncAsyncTestBase
         int i = 0;
         await foreach (MockJsonModel model in results)
         {
+            Assert.AreEqual(model.IntValue, i);
+            Assert.AreEqual(model.StringValue, i.ToString());
+
+            i++;
+        }
+
+        Assert.AreEqual(i, 3);
+    }
+
+    [Test]
+    public async Task CanEnumerateBinaryDataValues()
+    {
+        MockPipelineResponse response = new();
+        response.SetContent(_mockContent);
+        AsyncResultCollection<BinaryData> results = AsyncResultCollection<BinaryData>.Create(response);
+
+        int i = 0;
+        await foreach (BinaryData value in results)
+        {
+            MockJsonModel model = value.ToObjectFromJson<MockJsonModel>();
+
             Assert.AreEqual(model.IntValue, i);
             Assert.AreEqual(model.StringValue, i.ToString());
 
