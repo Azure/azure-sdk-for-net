@@ -152,7 +152,7 @@ namespace Azure.Identity
                     AuthenticationResult result = await Client
                         .AcquireTokenSilentAsync(requestContext.Scopes, (AuthenticationAccount)_record, tenantId, _redirectUri, requestContext.Claims, requestContext.IsCaeEnabled, async, cancellationToken)
                         .ConfigureAwait(false);
-                    token = new AccessToken(result.AccessToken, result.ExpiresOn);
+                    token = result.ToAccessToken();
                 }
 
                 return scope.Succeeded(token);
@@ -192,7 +192,7 @@ namespace Azure.Identity
                                         cancellationToken)
                                     .ConfigureAwait(false);
             _record = new AuthenticationRecord(result, _clientId);
-            return new AccessToken(result.AccessToken, result.ExpiresOn);
+            return result.ToAccessToken();
         }
     }
 }
