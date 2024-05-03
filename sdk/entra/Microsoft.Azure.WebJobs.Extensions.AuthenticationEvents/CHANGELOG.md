@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.8 (Unreleased)
+## 1.0.0-beta.9 (Unreleased)
 
 ### Features Added
 
@@ -10,8 +10,12 @@
 
 ### Other Changes
 
-## 1.0.0-beta.7 (2024-04-15)
+## 1.0.0-beta.8 (2024-05-01)
 
+### Other Changes
+- Updated Prefix WebJobs for WebjobsAuthenticationEventsTokenClaim -> WebJobsAuthenticationEventsTokenClaim
+
+## 1.0.0-beta.7 (2024-04-15)
 
 ### Other Changes
 - Consildated namespaces. Removing:

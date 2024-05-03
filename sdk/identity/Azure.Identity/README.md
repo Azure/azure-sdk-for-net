@@ -208,6 +208,7 @@ Not all credentials require this configuration. Credentials which authenticate t
 
 |Credential | Usage | Reference
 |-|-|-
+|`AzurePipelinesCredential`|Supports [Microsoft Entra Workload ID](https://learn.microsoft.com/azure/devops/pipelines/release/configure-workload-identity?view=azure-devops) on Azure Pipelines.| [example](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/samples/OtherCredentialSamples.md#AzurePipelinesCredential_example)
 |[`ClientAssertionCredential`][ref_ClientAssertionCredential]|Authenticates a service principal using a signed client assertion. |
 |[`ClientCertificateCredential`][ref_ClientCertificateCredential]|Authenticates a service principal using a certificate. | [Service principal authentication](https://learn.microsoft.com/entra/identity-platform/app-objects-and-service-principals)
 |[`ClientSecretCredential`][ref_ClientSecretCredential]|Authenticates a service principal using a secret. | [Service principal authentication](https://learn.microsoft.com/entra/identity-platform/app-objects-and-service-principals)
