@@ -143,20 +143,20 @@ namespace Azure.Core.TestFramework
         public List<BodyRegexSanitizer> BodyRegexSanitizers { get; } =
             new()
             {
-                new BodyRegexSanitizer("(client_assertion=)(?<secret>[^&]+)", SanitizeValue)
+                new BodyRegexSanitizer("(client_assertion=)(?<secret>[^&\\\"\\s\n,\\\\]+)", SanitizeValue)
                 {
                     GroupForReplace = "secret"
                 },
-                new BodyRegexSanitizer("(client_id=)(?<secret>[^&]+)", SanitizeValue)
+                new BodyRegexSanitizer("(client_id=)(?<cid>[^&\\\"\\s\n,\\\\]+)", SanitizeValue)
                 {
-                    GroupForReplace = "secret"
+                    GroupForReplace = "cid"
                 },
-                new BodyRegexSanitizer("(client_secret=)(?<secret>[^&]+)", SanitizeValue)
+                new BodyRegexSanitizer("(client_secret=)(?<secret>[^&\\\"\\s\n,\\\\]+)", SanitizeValue)
                 {
                     GroupForReplace = "secret"
                 },
                 // TODO remove if the common Proxy version is updated to exclude "st" and "se"
-                new BodyRegexSanitizer("(?:[?&](sig)=)(?<secret>[^&\\\\\"\\s]*)", SanitizeValue)
+                new BodyRegexSanitizer("(?:[?&](sig)=)(?<secret>[^&\\\"\\s\n,\\\\]*)", SanitizeValue)
                 {
                     GroupForReplace = "secret"
                 },
@@ -304,7 +304,7 @@ namespace Azure.Core.TestFramework
             // "AZSDK2026",
             // "AZSDK2027",
             // "AZSDK2028",
-            // "AZSDK3000",
+            "AZSDK3000",
             // "AZSDK3001",
             // "AZSDK3002",
             "AZSDK3003",
@@ -410,16 +410,16 @@ namespace Azure.Core.TestFramework
             "AZSDK3488", // $..targetResourceRegion
             // "AZSDK3489",
             "AZSDK3490", // $..etag
-            // "AZSDK3491",
-            // "AZSDK3492",
+            "AZSDK3491",
+            "AZSDK3492",
             "AZSDK3493", // $..name
             "AZSDK3494", // $..friendlyName
             "AZSDK3495", // $..targetModelLocation
             "AZSDK3496", // $..resourceLocation
             // // "AZSDK4000",
             "AZSDK4001",
-            // "AZSDK4003",
-            // "AZSDK4004",
+            "AZSDK4003",
+            "AZSDK4004",
         };
 
         /// <summary>
