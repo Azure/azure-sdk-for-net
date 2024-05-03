@@ -1,8 +1,9 @@
 # Release History
 
 ## 1.0.0 (2024-05-03)
-
 - GA release
+### Breaking Changes
+- POST call deprecated and replaced with PUT
 
 ## 1.0.0-beta.1 (2024-03-01)
 
