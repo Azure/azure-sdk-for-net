@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.17 (Unreleased)
+## 1.0.0-beta.17 (2024-05-03)
 
 ### Features Added
 
@@ -16,10 +16,6 @@
 - Public visibility of the `ChatMessageImageUrl` type is removed to promote more flexible use of data sources in
   `ChatMessageImageContent`. Code that previously created a `ChatMessageImageUrl` using a `Uri` should simply provide
   the `Uri` to the `ChatMessageImageContent` constructor directly.
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.0.0-beta.16 (2024-04-11)
 
