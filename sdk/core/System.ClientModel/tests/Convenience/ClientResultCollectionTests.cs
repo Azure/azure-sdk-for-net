@@ -21,7 +21,7 @@ public class ClientResultCollectionTests : SyncAsyncTestBase
         MockPipelineResponse response = new();
         response.SetContent("[DONE]");
 
-        var results = AsyncClientResultCollection<MockJsonModel>.Create<MockJsonModel>(response);
+        var results = AsyncResultCollection<MockJsonModel>.Create<MockJsonModel>(response);
 
         bool empty = true;
         await foreach (MockJsonModel result in results)
@@ -39,7 +39,7 @@ public class ClientResultCollectionTests : SyncAsyncTestBase
     {
         MockPipelineResponse response = new();
         response.SetContent(_mockContent);
-        var results = AsyncClientResultCollection<MockJsonModel>.Create<MockJsonModel>(response);
+        var results = AsyncResultCollection<MockJsonModel>.Create<MockJsonModel>(response);
 
         int i = 0;
         await foreach (MockJsonModel model in results)

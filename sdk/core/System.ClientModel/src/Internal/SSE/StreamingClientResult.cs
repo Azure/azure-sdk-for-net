@@ -13,7 +13,7 @@ namespace System.ClientModel.Internal;
 /// is still being received.
 /// </summary>
 /// <typeparam name="T"> The data type representative of distinct, streamable items. </typeparam>
-internal class StreamingClientResult<T> : AsyncClientResultCollection<T>
+internal class StreamingClientResult<T> : AsyncResultCollection<T>
 {
     private readonly Func<Stream, CancellationToken, IAsyncEnumerator<T>> _asyncEnumeratorSourceDelegate;
 

@@ -32,7 +32,7 @@ public class ClientResult
     /// <exception cref="InvalidOperationException">No
     /// <see cref="PipelineResponse"/> value is currently available for this
     /// <see cref="ClientResult"/> instance.  This can happen when the instance
-    /// is a collection type like <see cref="AsyncClientResultCollection{T}"/>
+    /// is a collection type like <see cref="AsyncResultCollection{T}"/>
     /// that has not yet been enumerated.</exception>
     public PipelineResponse GetRawResponse()
     {
