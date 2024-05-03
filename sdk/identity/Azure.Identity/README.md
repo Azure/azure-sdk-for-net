@@ -133,20 +133,20 @@ To use a client ID, take one of the following approaches:
 
 1. Set the [DefaultAzureCredentialOptions.ManagedIdentityClientId](https://learn.microsoft.com/dotnet/api/azure.identity.defaultazurecredentialoptions.managedidentityclientid?view=azure-dotnet) property. For example:
 
-    ```C# Snippet:UserAssignedManagedIdentityWithClientId
-    // When deployed to an Azure host, DefaultAzureCredential will authenticate the specified user-assigned managed identity.
+```C# Snippet:UserAssignedManagedIdentityWithClientId
+// When deployed to an Azure host, DefaultAzureCredential will authenticate the specified user-assigned managed identity.
 
-    string userAssignedClientId = "<your managed identity client ID>";
-    var credential = new DefaultAzureCredential(
-        new DefaultAzureCredentialOptions
-        {
-            ManagedIdentityClientId = userAssignedClientId
-        });
+string userAssignedClientId = "<your managed identity client ID>";
+var credential = new DefaultAzureCredential(
+    new DefaultAzureCredentialOptions
+    {
+        ManagedIdentityClientId = userAssignedClientId
+    });
 
-    var blobClient = new BlobClient(
-        new Uri("https://myaccount.blob.core.windows.net/mycontainer/myblob"),
-        credential);
-    ```
+var blobClient = new BlobClient(
+    new Uri("https://myaccount.blob.core.windows.net/mycontainer/myblob"),
+    credential);
+```
 
 1. Set the `AZURE_CLIENT_ID` environment variable.
 
