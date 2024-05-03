@@ -396,12 +396,12 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 { DataMovementConstants.ResourceProperties.ContentLanguage, DefaultContentLanguage },
                 { DataMovementConstants.ResourceProperties.ContentDisposition, DefaultContentDisposition },
                 { DataMovementConstants.ResourceProperties.CacheControl, DefaultCacheControl },
-                { DataMovementShareConstants.ResourceProperties.FileAttributes, DefaultFileAttributes },
-                { DataMovementShareConstants.ResourceProperties.FilePermissionKey, DefaultFilePermissionKey },
+                { DataMovementConstants.ResourceProperties.FileAttributes, DefaultFileAttributes },
+                { DataMovementConstants.ResourceProperties.FilePermissionKey, DefaultFilePermissionKey },
                 { DataMovementConstants.ResourceProperties.CreationTime, DefaultFileCreatedOn },
                 { DataMovementConstants.ResourceProperties.ChangedOnTime, DefaultFileChangedOn },
-                { DataMovementShareConstants.ResourceProperties.FileMetadata, DefaultFileMetadata },
-                { DataMovementShareConstants.ResourceProperties.DirectoryMetadata, DefaultDirectoryMetadata }
+                { DataMovementConstants.ResourceProperties.Metadata, DefaultFileMetadata },
+                { DataMovementConstants.ResourceProperties.DirectoryMetadata, DefaultDirectoryMetadata }
             };
 
             Mock<ShareFileClient> mock = await CopyFromStreamPreserveProperties_Internal(
@@ -455,12 +455,12 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 { DataMovementConstants.ResourceProperties.ContentLanguage, DefaultContentLanguage },
                 { DataMovementConstants.ResourceProperties.ContentDisposition, DefaultContentDisposition },
                 { DataMovementConstants.ResourceProperties.CacheControl, DefaultCacheControl },
-                { DataMovementShareConstants.ResourceProperties.FileAttributes, DefaultFileAttributes },
-                { DataMovementShareConstants.ResourceProperties.FilePermissionKey, DefaultFilePermissionKey },
+                { DataMovementConstants.ResourceProperties.FileAttributes, DefaultFileAttributes },
+                { DataMovementConstants.ResourceProperties.FilePermissionKey, DefaultFilePermissionKey },
                 { DataMovementConstants.ResourceProperties.CreationTime, DefaultFileCreatedOn },
                 { DataMovementConstants.ResourceProperties.ChangedOnTime, DefaultFileChangedOn },
-                { DataMovementShareConstants.ResourceProperties.FileMetadata, DefaultFileMetadata },
-                { DataMovementShareConstants.ResourceProperties.DirectoryMetadata, DefaultDirectoryMetadata }
+                { DataMovementConstants.ResourceProperties.Metadata, DefaultFileMetadata },
+                { DataMovementConstants.ResourceProperties.DirectoryMetadata, DefaultDirectoryMetadata }
             };
 
             Mock<ShareFileClient> mock = await CopyFromStreamPreserveProperties_Internal(
@@ -527,12 +527,12 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 { DataMovementConstants.ResourceProperties.ContentLanguage, DefaultContentLanguage },
                 { DataMovementConstants.ResourceProperties.ContentDisposition, DefaultContentDisposition },
                 { DataMovementConstants.ResourceProperties.CacheControl, DefaultCacheControl },
-                { DataMovementShareConstants.ResourceProperties.FileAttributes, DefaultFileAttributes },
-                { DataMovementShareConstants.ResourceProperties.FilePermissionKey, DefaultFilePermissionKey },
+                { DataMovementConstants.ResourceProperties.FileAttributes, DefaultFileAttributes },
+                { DataMovementConstants.ResourceProperties.FilePermissionKey, DefaultFilePermissionKey },
                 { DataMovementConstants.ResourceProperties.CreationTime, DefaultFileCreatedOn },
                 { DataMovementConstants.ResourceProperties.ChangedOnTime, DefaultFileChangedOn },
-                { DataMovementShareConstants.ResourceProperties.FileMetadata, DefaultFileMetadata },
-                { DataMovementShareConstants.ResourceProperties.DirectoryMetadata, DefaultDirectoryMetadata }
+                { DataMovementConstants.ResourceProperties.Metadata, DefaultFileMetadata },
+                { DataMovementConstants.ResourceProperties.DirectoryMetadata, DefaultDirectoryMetadata }
             };
 
             Mock<ShareFileClient> mock = await CopyFromStreamPreserveProperties_Internal(
@@ -805,12 +805,12 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 { DataMovementConstants.ResourceProperties.ContentLanguage, DefaultContentLanguage },
                 { DataMovementConstants.ResourceProperties.ContentDisposition, DefaultContentDisposition },
                 { DataMovementConstants.ResourceProperties.CacheControl, DefaultCacheControl },
-                { DataMovementShareConstants.ResourceProperties.FileAttributes, DefaultFileAttributes },
-                { DataMovementShareConstants.ResourceProperties.FilePermissionKey, DefaultFilePermissionKey },
+                { DataMovementConstants.ResourceProperties.FileAttributes, DefaultFileAttributes },
+                { DataMovementConstants.ResourceProperties.FilePermissionKey, DefaultFilePermissionKey },
                 { DataMovementConstants.ResourceProperties.CreationTime, DefaultFileCreatedOn },
                 { DataMovementConstants.ResourceProperties.ChangedOnTime, DefaultFileChangedOn },
-                { DataMovementShareConstants.ResourceProperties.FileMetadata, DefaultFileMetadata },
-                { DataMovementShareConstants.ResourceProperties.DirectoryMetadata, DefaultDirectoryMetadata }
+                { DataMovementConstants.ResourceProperties.Metadata, DefaultFileMetadata },
+                { DataMovementConstants.ResourceProperties.DirectoryMetadata, DefaultDirectoryMetadata }
             };
 
             // Act
@@ -867,12 +867,12 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 { DataMovementConstants.ResourceProperties.ContentLanguage, DefaultContentLanguage },
                 { DataMovementConstants.ResourceProperties.ContentDisposition, DefaultContentDisposition },
                 { DataMovementConstants.ResourceProperties.CacheControl, DefaultCacheControl },
-                { DataMovementShareConstants.ResourceProperties.FileAttributes, DefaultFileAttributes },
-                { DataMovementShareConstants.ResourceProperties.FilePermissionKey, DefaultFilePermissionKey },
+                { DataMovementConstants.ResourceProperties.FileAttributes, DefaultFileAttributes },
+                { DataMovementConstants.ResourceProperties.FilePermissionKey, DefaultFilePermissionKey },
                 { DataMovementConstants.ResourceProperties.CreationTime, DefaultFileCreatedOn },
                 { DataMovementConstants.ResourceProperties.ChangedOnTime, DefaultFileChangedOn },
-                { DataMovementShareConstants.ResourceProperties.FileMetadata, DefaultFileMetadata },
-                { DataMovementShareConstants.ResourceProperties.DirectoryMetadata, DefaultDirectoryMetadata }
+                { DataMovementConstants.ResourceProperties.Metadata, DefaultFileMetadata },
+                { DataMovementConstants.ResourceProperties.DirectoryMetadata, DefaultDirectoryMetadata }
             };
 
             // Act
@@ -942,12 +942,12 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 { DataMovementConstants.ResourceProperties.ContentLanguage, DefaultContentLanguage },
                 { DataMovementConstants.ResourceProperties.ContentDisposition, DefaultContentDisposition },
                 { DataMovementConstants.ResourceProperties.CacheControl, DefaultCacheControl },
-                { DataMovementShareConstants.ResourceProperties.FileAttributes, DefaultFileAttributes },
-                { DataMovementShareConstants.ResourceProperties.FilePermissionKey, DefaultFilePermissionKey },
+                { DataMovementConstants.ResourceProperties.FileAttributes, DefaultFileAttributes },
+                { DataMovementConstants.ResourceProperties.FilePermissionKey, DefaultFilePermissionKey },
                 { DataMovementConstants.ResourceProperties.CreationTime, DefaultFileCreatedOn },
                 { DataMovementConstants.ResourceProperties.ChangedOnTime, DefaultFileChangedOn },
-                { DataMovementShareConstants.ResourceProperties.FileMetadata, DefaultFileMetadata },
-                { DataMovementShareConstants.ResourceProperties.DirectoryMetadata, DefaultDirectoryMetadata }
+                { DataMovementConstants.ResourceProperties.Metadata, DefaultFileMetadata },
+                { DataMovementConstants.ResourceProperties.DirectoryMetadata, DefaultDirectoryMetadata }
             };
 
             // Act
@@ -1237,12 +1237,12 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 { DataMovementConstants.ResourceProperties.ContentLanguage, DefaultContentLanguage },
                 { DataMovementConstants.ResourceProperties.ContentDisposition, DefaultContentDisposition },
                 { DataMovementConstants.ResourceProperties.CacheControl, DefaultCacheControl },
-                { DataMovementShareConstants.ResourceProperties.FileAttributes, DefaultFileAttributes },
-                { DataMovementShareConstants.ResourceProperties.FilePermissionKey, DefaultFilePermissionKey },
+                { DataMovementConstants.ResourceProperties.FileAttributes, DefaultFileAttributes },
+                { DataMovementConstants.ResourceProperties.FilePermissionKey, DefaultFilePermissionKey },
                 { DataMovementConstants.ResourceProperties.CreationTime, DefaultFileCreatedOn },
                 { DataMovementConstants.ResourceProperties.ChangedOnTime, DefaultFileChangedOn },
-                { DataMovementShareConstants.ResourceProperties.FileMetadata, DefaultFileMetadata },
-                { DataMovementShareConstants.ResourceProperties.DirectoryMetadata, DefaultDirectoryMetadata }
+                { DataMovementConstants.ResourceProperties.Metadata, DefaultFileMetadata },
+                { DataMovementConstants.ResourceProperties.DirectoryMetadata, DefaultDirectoryMetadata }
             };
 
             // Act
@@ -1299,12 +1299,12 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 { DataMovementConstants.ResourceProperties.ContentLanguage, DefaultContentLanguage },
                 { DataMovementConstants.ResourceProperties.ContentDisposition, DefaultContentDisposition },
                 { DataMovementConstants.ResourceProperties.CacheControl, DefaultCacheControl },
-                { DataMovementShareConstants.ResourceProperties.FileAttributes, DefaultFileAttributes },
-                { DataMovementShareConstants.ResourceProperties.FilePermissionKey, DefaultFilePermissionKey },
+                { DataMovementConstants.ResourceProperties.FileAttributes, DefaultFileAttributes },
+                { DataMovementConstants.ResourceProperties.FilePermissionKey, DefaultFilePermissionKey },
                 { DataMovementConstants.ResourceProperties.CreationTime, DefaultFileCreatedOn },
                 { DataMovementConstants.ResourceProperties.ChangedOnTime, DefaultFileChangedOn },
-                { DataMovementShareConstants.ResourceProperties.FileMetadata, DefaultFileMetadata },
-                { DataMovementShareConstants.ResourceProperties.DirectoryMetadata, DefaultDirectoryMetadata }
+                { DataMovementConstants.ResourceProperties.Metadata, DefaultFileMetadata },
+                { DataMovementConstants.ResourceProperties.DirectoryMetadata, DefaultDirectoryMetadata }
             };
 
             // Act
@@ -1374,12 +1374,12 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 { DataMovementConstants.ResourceProperties.ContentLanguage, DefaultContentLanguage },
                 { DataMovementConstants.ResourceProperties.ContentDisposition, DefaultContentDisposition },
                 { DataMovementConstants.ResourceProperties.CacheControl, DefaultCacheControl },
-                { DataMovementShareConstants.ResourceProperties.FileAttributes, DefaultFileAttributes },
-                { DataMovementShareConstants.ResourceProperties.FilePermissionKey, DefaultFilePermissionKey },
+                { DataMovementConstants.ResourceProperties.FileAttributes, DefaultFileAttributes },
+                { DataMovementConstants.ResourceProperties.FilePermissionKey, DefaultFilePermissionKey },
                 { DataMovementConstants.ResourceProperties.CreationTime, DefaultFileCreatedOn },
                 { DataMovementConstants.ResourceProperties.ChangedOnTime, DefaultFileChangedOn },
-                { DataMovementShareConstants.ResourceProperties.FileMetadata, DefaultFileMetadata },
-                { DataMovementShareConstants.ResourceProperties.DirectoryMetadata, DefaultDirectoryMetadata }
+                { DataMovementConstants.ResourceProperties.Metadata, DefaultFileMetadata },
+                { DataMovementConstants.ResourceProperties.DirectoryMetadata, DefaultDirectoryMetadata }
             };
 
             // Act
@@ -1549,11 +1549,11 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             result.RawProperties.TryGetValue(DataMovementConstants.ResourceProperties.ContentLanguage, out object contentLanguageObject);
             result.RawProperties.TryGetValue(DataMovementConstants.ResourceProperties.ContentDisposition, out object contentDispositionObject);
             result.RawProperties.TryGetValue(DataMovementConstants.ResourceProperties.CacheControl, out object cacheControlObject);
-            result.RawProperties.TryGetValue(DataMovementShareConstants.ResourceProperties.FileAttributes, out object fileAttributesObject);
-            result.RawProperties.TryGetValue(DataMovementShareConstants.ResourceProperties.FileMetadata, out object metadataObject);
+            result.RawProperties.TryGetValue(DataMovementConstants.ResourceProperties.FileAttributes, out object fileAttributesObject);
+            result.RawProperties.TryGetValue(DataMovementConstants.ResourceProperties.Metadata, out object metadataObject);
             result.RawProperties.TryGetValue(DataMovementConstants.ResourceProperties.CreationTime, out object createdOnObject);
             result.RawProperties.TryGetValue(DataMovementConstants.ResourceProperties.ChangedOnTime, out object changedOnObject);
-            result.RawProperties.TryGetValue(DataMovementShareConstants.ResourceProperties.FilePermissionKey, out object permissionKeyObject);
+            result.RawProperties.TryGetValue(DataMovementConstants.ResourceProperties.FilePermissionKey, out object permissionKeyObject);
 
             // Assert
             Assert.NotNull(result);

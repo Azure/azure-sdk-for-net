@@ -76,13 +76,5 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
             internal const int VariableLengthStartIndex = DirectoryMetadataLengthIndex + OffsetLengthEncodedSize;
         }
-
-        internal class ResourceProperties
-        {
-            internal const string FileAttributes = "FileAttributes";
-            internal const string FilePermissionKey = "FilePermissionKey";
-            internal const string FileMetadata = "FileMetadata";
-            internal const string DirectoryMetadata = "DirectoryMetadata";
-        }
     }
 }

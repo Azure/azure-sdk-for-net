@@ -76,9 +76,9 @@ namespace Azure.Storage.DataMovement.Files.Shares
             FileSmbProperties smbProperties = _options?.GetFileSmbProperties(properties);
             await ShareFileClient.CreateAsync(
                     maxSize: maxSize,
-                    httpHeaders: _options?.GetShareFileHttpHeaders(properties?.RawProperties),
-                    metadata: _options?.GetFileMetadata(properties?.RawProperties),
-                    smbProperties: _options?.GetFileSmbProperties(properties),
+                    httpHeaders: httpHeaders,
+                    metadata: metadata,
+                    smbProperties: smbProperties,
                     filePermission: _options?.FilePermissions,
                     conditions: _options?.DestinationConditions,
                     cancellationToken: cancellationToken).ConfigureAwait(false);

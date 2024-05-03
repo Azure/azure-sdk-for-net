@@ -47,7 +47,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             this ShareFileStorageResourceOptions options,
             Dictionary<string, object> properties)
             => (options?.FileMetadata?.Preserve ?? true)
-                    ? properties?.TryGetValue(DataMovementShareConstants.ResourceProperties.FileMetadata, out object metadata) == true
+                    ? properties?.TryGetValue(DataMovementConstants.ResourceProperties.Metadata, out object metadata) == true
                         ? (Metadata) metadata
                         : default
                     : options?.FileMetadata?.Value;
@@ -56,7 +56,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             this ShareFileStorageResourceOptions options,
             Dictionary<string, object> properties)
             => (options?.DirectoryMetadata?.Preserve ?? true)
-                    ? properties?.TryGetValue(DataMovementShareConstants.ResourceProperties.DirectoryMetadata, out object metadata) == true
+                    ? properties?.TryGetValue(DataMovementConstants.ResourceProperties.DirectoryMetadata, out object metadata) == true
                         ? (Metadata)metadata
                         : default
             : options?.DirectoryMetadata?.Value;
@@ -67,7 +67,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             => new()
             {
                 FileAttributes = (options?.FileAttributes?.Preserve ?? true)
-                    ? properties?.RawProperties?.TryGetValue(DataMovementShareConstants.ResourceProperties.FileAttributes, out object fileAttributes) == true
+                    ? properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.FileAttributes, out object fileAttributes) == true
                         ? (NtfsFileAttributes?) fileAttributes
                         : default
                     : options?.FileAttributes?.Value,
@@ -128,7 +128,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             Dictionary<string, object> properties = new();
             if (fileProperties.Metadata != default)
             {
-                properties.Add(DataMovementShareConstants.ResourceProperties.FileMetadata, fileProperties.Metadata);
+                properties.Add(DataMovementConstants.ResourceProperties.Metadata, fileProperties.Metadata);
             }
             if (fileProperties.SmbProperties.FileCreatedOn != default)
             {
@@ -140,11 +140,11 @@ namespace Azure.Storage.DataMovement.Files.Shares
             }
             if (fileProperties.SmbProperties.FileAttributes != default)
             {
-                properties.Add(DataMovementShareConstants.ResourceProperties.FileAttributes, fileProperties.SmbProperties.FileAttributes);
+                properties.Add(DataMovementConstants.ResourceProperties.FileAttributes, fileProperties.SmbProperties.FileAttributes);
             }
             if (fileProperties.SmbProperties.FilePermissionKey != default)
             {
-                properties.Add(DataMovementShareConstants.ResourceProperties.FilePermissionKey, fileProperties.SmbProperties.FilePermissionKey);
+                properties.Add(DataMovementConstants.ResourceProperties.FilePermissionKey, fileProperties.SmbProperties.FilePermissionKey);
             }
             if (fileProperties.ContentType != default)
             {
