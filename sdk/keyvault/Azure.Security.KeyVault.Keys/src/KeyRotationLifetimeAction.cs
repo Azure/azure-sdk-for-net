@@ -37,6 +37,7 @@ namespace Azure.Security.KeyVault.Keys
 
         /// <summary>
         /// Gets the <see cref="KeyRotationPolicyAction"/> that will be executed.
+        /// The value is compared case-insensitively by the service.
         /// </summary>
         public KeyRotationPolicyAction Action { get; private set; }
 

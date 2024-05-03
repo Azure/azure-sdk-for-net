@@ -70,7 +70,7 @@ The recorded tests are run automatically on every pull request. Live tests are r
 Before running or recording live tests you need to create [live test resources][live_tests]. In addition to the standard parameters to `New-TestResources.ps1`, you can pass additional parameters for Azure Key Vault:
 
 ```powershell
-eng\common\TestResources\New-TestResources.ps1 `
+eng\common\TestResources\New-TestResources.ps1 -UserAuth true `
   -ServiceDirectory 'keyvault' `
   -AdditionalParameters @{
     # Enable Managed HSM provisioning and testing.
