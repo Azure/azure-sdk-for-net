@@ -1,14 +1,8 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0 (2024-05-03)
 
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- GA release
 
 ## 1.0.0-beta.1 (2024-03-01)
 
