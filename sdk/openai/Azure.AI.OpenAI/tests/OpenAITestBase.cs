@@ -121,15 +121,25 @@ namespace Azure.AI.OpenAI.Tests
 
         protected Uri GetTestImageInternetUri()
         {
+            if (Mode == RecordedTestMode.Playback)
+            {
+                return new Uri("Sanitized");
+            }
             return new Uri("https://www.bing.com/th?id=OHR.BradgateFallow_EN-US3932725763_1920x1080.jpg");
         }
 
         protected Stream GetTestImageStream(string mimeType)
-            => File.OpenRead(mimeType switch
+        {
+            if (Mode == RecordedTestMode.Playback)
+            {
+                return new MemoryStream();
+            }
+            return File.OpenRead(mimeType switch
             {
                 "image/jpg" => TestEnvironment.TestImageJpgInputPath,
                 _ => throw new ArgumentException(nameof(mimeType)),
             });
+        }
 
         protected BinaryData GetTestImageData(string mimeType)
             => BinaryData.FromStream(GetTestImageStream(mimeType));
