@@ -14,7 +14,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 {
     public class DataFeedLiveTests : MetricsAdvisorLiveTestBase
     {
-        private string DataSourceAccount => Mode == RecordedTestMode.Live ? "account" : SanitizeValue;
+        private const string DataSourceAccount = "account";
         private string DataSourceAppId => Mode == RecordedTestMode.Live ? "appId" : EmptyGuid;
         private string DataSourceClientId => Mode == RecordedTestMode.Live ? "clientId" : EmptyGuid;
         private const string DataSourceCloud = "cloud";
