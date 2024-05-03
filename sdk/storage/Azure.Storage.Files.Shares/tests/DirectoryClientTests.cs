@@ -1735,6 +1735,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [TestCase("%21%27%28%29%3B%5B%5D", "%2B%24%2C%23äÄöÖüÜß%3B")]
         [TestCase("directory", "my cool file")]
         [TestCase("directory", "file")]
+        [TestCase("  ", "  ")]
         [RetryOnException(5, typeof(RequestFailedException))]
         public async Task GetFileClient_SpecialCharacters(string directoryName, string fileName)
         {
