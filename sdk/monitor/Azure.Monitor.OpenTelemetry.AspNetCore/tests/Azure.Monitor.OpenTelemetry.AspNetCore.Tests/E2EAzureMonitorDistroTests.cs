@@ -85,13 +85,13 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
         [InlineData(false, 1.0f)]
         [InlineData(false, 0.5f)]
         [InlineData(true, 0.5f)]
-        public void ValidateLogFilteringProcessorIsAddedToLoggerProvider(bool disableLogSampling, float sampleRatio)
+        public void ValidateLogFilteringProcessorIsAddedToLoggerProvider(bool enableLogSampling, float sampleRatio)
         {
             var sv = new ServiceCollection();
             sv.AddOpenTelemetry().UseAzureMonitor(o =>
             {
                 o.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000";
-                o.DisableTraceBasedSamplingForLogs = disableLogSampling;
+                o.EnableTraceBasedSamplingForLogs = enableLogSampling;
                 o.SamplingRatio = sampleRatio;
             });
 
@@ -111,7 +111,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
 
             var sampleRate = exporter?.GetType()?.GetField("_sampleRate", BindingFlags.Instance | BindingFlags.NonPublic)?.GetValue(exporter);
 
-            if (!disableLogSampling)
+            if (enableLogSampling)
             {
                 Assert.True(logProcessor is LogFilteringProcessor);
                 Assert.True(logProcessor is BatchLogRecordExportProcessor);
