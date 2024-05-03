@@ -7,12 +7,12 @@ using System.Text.Json.Serialization;
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart
 {
     /// <summary>Represents a Token Claim.</summary>
-    public class WebjobsAuthenticationEventsTokenClaim
+    public class WebJobsAuthenticationEventsTokenClaim
     {
-        /// <summary>Initializes a new instance of the <see cref="WebjobsAuthenticationEventsTokenClaim" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="WebJobsAuthenticationEventsTokenClaim" /> class.</summary>
         /// <param name="id">The identifier.</param>
         /// <param name="values">The values.</param>
-        public WebjobsAuthenticationEventsTokenClaim(string id, params string[] values)
+        public WebJobsAuthenticationEventsTokenClaim(string id, params string[] values)
         {
             Id = id;
             Values = values;

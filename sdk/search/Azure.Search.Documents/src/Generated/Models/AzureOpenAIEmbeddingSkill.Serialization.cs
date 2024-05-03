@@ -17,6 +17,18 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(Dimensions))
+            {
+                if (Dimensions != null)
+                {
+                    writer.WritePropertyName("dimensions"u8);
+                    writer.WriteNumberValue(Dimensions.Value);
+                }
+                else
+                {
+                    writer.WriteNull("dimensions");
+                }
+            }
             if (Optional.IsDefined(ResourceUri))
             {
                 writer.WritePropertyName("resourceUri"u8);
@@ -43,6 +55,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     writer.WriteNull("authIdentity");
                 }
+            }
+            if (Optional.IsDefined(ModelName))
+            {
+                writer.WritePropertyName("modelName"u8);
+                writer.WriteStringValue(ModelName.Value.ToString());
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(ODataType);
@@ -84,10 +101,12 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
+            int? dimensions = default;
             Uri resourceUri = default;
             string deploymentId = default;
             string apiKey = default;
             SearchIndexerDataIdentity authIdentity = default;
+            AzureOpenAIModelName? modelName = default;
             string odataType = default;
             string name = default;
             string description = default;
@@ -96,6 +115,16 @@ namespace Azure.Search.Documents.Indexes.Models
             IList<OutputFieldMappingEntry> outputs = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("dimensions"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        dimensions = null;
+                        continue;
+                    }
+                    dimensions = property.Value.GetInt32();
+                    continue;
+                }
                 if (property.NameEquals("resourceUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -123,6 +152,15 @@ namespace Azure.Search.Documents.Indexes.Models
                         continue;
                     }
                     authIdentity = SearchIndexerDataIdentity.DeserializeSearchIndexerDataIdentity(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("modelName"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    modelName = new AzureOpenAIModelName(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("@odata.type"u8))
@@ -173,10 +211,12 @@ namespace Azure.Search.Documents.Indexes.Models
                 context,
                 inputs,
                 outputs,
+                dimensions,
                 resourceUri,
                 deploymentId,
                 apiKey,
-                authIdentity);
+                authIdentity,
+                modelName);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

@@ -30,6 +30,7 @@ namespace Azure.Core
             TenantId = tenantId;
             IsCaeEnabled = isCaeEnabled;
             ProofOfPossessionNonce = proofOfPossessionNonce;
+            IsProofOfPossessionEnabled = isProofOfPossessionEnabled;
             _request = request;
         }
 

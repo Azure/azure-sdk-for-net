@@ -356,8 +356,6 @@ namespace Azure.AI.OpenAI
         public static Azure.AI.OpenAI.ChatChoiceLogProbabilityInfo ChatChoiceLogProbabilityInfo(System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.ChatTokenLogProbabilityResult> tokenLogProbabilityResults = null) { throw null; }
         public static Azure.AI.OpenAI.ChatCompletions ChatCompletions(string id = null, System.DateTimeOffset created = default(System.DateTimeOffset), System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.ChatChoice> choices = null, string model = null, System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.ContentFilterResultsForPrompt> promptFilterResults = null, string systemFingerprint = null, Azure.AI.OpenAI.CompletionsUsage usage = null) { throw null; }
         public static Azure.AI.OpenAI.ChatCompletionsFunctionToolDefinition ChatCompletionsFunctionToolDefinition(Azure.AI.OpenAI.FunctionDefinition function = null) { throw null; }
-        public static Azure.AI.OpenAI.ChatMessageImageContentItem ChatMessageImageContentItem(Azure.AI.OpenAI.ChatMessageImageUrl imageUrl = null) { throw null; }
-        public static Azure.AI.OpenAI.ChatMessageImageUrl ChatMessageImageUrl(System.Uri url = null, Azure.AI.OpenAI.ChatMessageImageDetailLevel? detail = default(Azure.AI.OpenAI.ChatMessageImageDetailLevel?)) { throw null; }
         public static Azure.AI.OpenAI.ChatMessageTextContentItem ChatMessageTextContentItem(string text = null) { throw null; }
         public static Azure.AI.OpenAI.ChatRequestAssistantMessage ChatRequestAssistantMessage(string content = null, string name = null, System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.ChatCompletionsToolCall> toolCalls = null, Azure.AI.OpenAI.FunctionCall functionCall = null) { throw null; }
         public static Azure.AI.OpenAI.ChatRequestFunctionMessage ChatRequestFunctionMessage(string name = null, string content = null) { throw null; }
@@ -613,10 +611,9 @@ namespace Azure.AI.OpenAI
     }
     public partial class ChatMessageImageContentItem : Azure.AI.OpenAI.ChatMessageContentItem, System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.ChatMessageImageContentItem>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.ChatMessageImageContentItem>
     {
-        public ChatMessageImageContentItem(Azure.AI.OpenAI.ChatMessageImageUrl imageUrl) { }
-        public ChatMessageImageContentItem(System.Uri imageUri) { }
-        public ChatMessageImageContentItem(System.Uri imageUri, Azure.AI.OpenAI.ChatMessageImageDetailLevel detailLevel) { }
-        public Azure.AI.OpenAI.ChatMessageImageUrl ImageUrl { get { throw null; } }
+        public ChatMessageImageContentItem(System.BinaryData bytes, string mimeType, Azure.AI.OpenAI.ChatMessageImageDetailLevel? detailLevel = default(Azure.AI.OpenAI.ChatMessageImageDetailLevel?)) { }
+        public ChatMessageImageContentItem(System.IO.Stream stream, string mimeType, Azure.AI.OpenAI.ChatMessageImageDetailLevel? detailLevel = default(Azure.AI.OpenAI.ChatMessageImageDetailLevel?)) { }
+        public ChatMessageImageContentItem(System.Uri imageUri, Azure.AI.OpenAI.ChatMessageImageDetailLevel? detailLevel = default(Azure.AI.OpenAI.ChatMessageImageDetailLevel?)) { }
         Azure.AI.OpenAI.ChatMessageImageContentItem System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.ChatMessageImageContentItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.ChatMessageImageContentItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.ChatMessageImageContentItem System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.ChatMessageImageContentItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -641,17 +638,6 @@ namespace Azure.AI.OpenAI
         public static implicit operator Azure.AI.OpenAI.ChatMessageImageDetailLevel (string value) { throw null; }
         public static bool operator !=(Azure.AI.OpenAI.ChatMessageImageDetailLevel left, Azure.AI.OpenAI.ChatMessageImageDetailLevel right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class ChatMessageImageUrl : System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.ChatMessageImageUrl>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.ChatMessageImageUrl>
-    {
-        public ChatMessageImageUrl(System.Uri url) { }
-        public Azure.AI.OpenAI.ChatMessageImageDetailLevel? Detail { get { throw null; } set { } }
-        public System.Uri Url { get { throw null; } }
-        Azure.AI.OpenAI.ChatMessageImageUrl System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.ChatMessageImageUrl>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.ChatMessageImageUrl>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.OpenAI.ChatMessageImageUrl System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.ChatMessageImageUrl>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.ChatMessageImageUrl>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.ChatMessageImageUrl>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ChatMessageTextContentItem : Azure.AI.OpenAI.ChatMessageContentItem, System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.ChatMessageTextContentItem>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.ChatMessageTextContentItem>
     {

@@ -312,31 +312,31 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
                         HttpStatusCode.OK,
                         "{\"data\":{\"@odata.type\":\"microsoft.graph.onTokenIssuanceStartResponseData\",\"actions\":[{\"@odata.type\":\"microsoft.graph.tokenIssuanceStart.provideClaimsForToken\",\"claims\":{}}]}}");
                 case ActionTestTypes.NullClaimId:
-                    return (new WebJobsProvideClaimsForToken(new WebjobsAuthenticationEventsTokenClaim[] { new WebjobsAuthenticationEventsTokenClaim(null, string.Empty) }),
+                    return (new WebJobsProvideClaimsForToken(new WebJobsAuthenticationEventsTokenClaim[] { new WebJobsAuthenticationEventsTokenClaim(null, string.Empty) }),
                         HttpStatusCode.InternalServerError,
-                        "{\"errors\":[\"WebJobsTokenIssuanceStartResponse: WebJobsProvideClaimsForToken: WebjobsAuthenticationEventsTokenClaim: The Id field is required.\"]}");
+                        "{\"errors\":[\"WebJobsTokenIssuanceStartResponse: WebJobsProvideClaimsForToken: WebJobsAuthenticationEventsTokenClaim: The Id field is required.\"]}");
                 case ActionTestTypes.EmptyClaimsId:
-                    return (new WebJobsProvideClaimsForToken(new WebjobsAuthenticationEventsTokenClaim[] { new WebjobsAuthenticationEventsTokenClaim(String.Empty, string.Empty) }),
+                    return (new WebJobsProvideClaimsForToken(new WebJobsAuthenticationEventsTokenClaim[] { new WebJobsAuthenticationEventsTokenClaim(String.Empty, string.Empty) }),
                         HttpStatusCode.InternalServerError,
-                        "{\"errors\":[\"WebJobsTokenIssuanceStartResponse: WebJobsProvideClaimsForToken: WebjobsAuthenticationEventsTokenClaim: The Id field is required.\"]}");
+                        "{\"errors\":[\"WebJobsTokenIssuanceStartResponse: WebJobsProvideClaimsForToken: WebJobsAuthenticationEventsTokenClaim: The Id field is required.\"]}");
                 case ActionTestTypes.EmptyValueString:
-                    return (new WebJobsProvideClaimsForToken(new WebjobsAuthenticationEventsTokenClaim[] { new WebjobsAuthenticationEventsTokenClaim("key", string.Empty) }),
+                    return (new WebJobsProvideClaimsForToken(new WebJobsAuthenticationEventsTokenClaim[] { new WebJobsAuthenticationEventsTokenClaim("key", string.Empty) }),
                         HttpStatusCode.OK,
                         "{\"data\":{\"@odata.type\":\"microsoft.graph.onTokenIssuanceStartResponseData\",\"actions\":[{\"@odata.type\":\"microsoft.graph.tokenIssuanceStart.provideClaimsForToken\",\"claims\":{\"key\":\"\"}}]}}");
                 case ActionTestTypes.NullValue:
-                    return (new WebJobsProvideClaimsForToken(new WebjobsAuthenticationEventsTokenClaim[] { new WebjobsAuthenticationEventsTokenClaim("key", null) }),
+                    return (new WebJobsProvideClaimsForToken(new WebJobsAuthenticationEventsTokenClaim[] { new WebJobsAuthenticationEventsTokenClaim("key", null) }),
                         HttpStatusCode.OK,
                         "{\"data\":{\"@odata.type\":\"microsoft.graph.onTokenIssuanceStartResponseData\",\"actions\":[{\"@odata.type\":\"microsoft.graph.tokenIssuanceStart.provideClaimsForToken\",\"claims\":{\"key\":null}}]}}");
                 case ActionTestTypes.EmptyValueArray:
-                    return (new WebJobsProvideClaimsForToken(new WebjobsAuthenticationEventsTokenClaim[] { new WebjobsAuthenticationEventsTokenClaim("key", new string[] { }) }),
+                    return (new WebJobsProvideClaimsForToken(new WebJobsAuthenticationEventsTokenClaim[] { new WebJobsAuthenticationEventsTokenClaim("key", new string[] { }) }),
                         HttpStatusCode.OK,
                         "{\"data\":{\"@odata.type\":\"microsoft.graph.onTokenIssuanceStartResponseData\",\"actions\":[{\"@odata.type\":\"microsoft.graph.tokenIssuanceStart.provideClaimsForToken\",\"claims\":{\"key\":[]}}]}}");
                 case ActionTestTypes.EmptyValueStringArray:
-                    return (new WebJobsProvideClaimsForToken(new WebjobsAuthenticationEventsTokenClaim[] { new WebjobsAuthenticationEventsTokenClaim("key", new string[] { String.Empty, String.Empty }) }),
+                    return (new WebJobsProvideClaimsForToken(new WebJobsAuthenticationEventsTokenClaim[] { new WebJobsAuthenticationEventsTokenClaim("key", new string[] { String.Empty, String.Empty }) }),
                         HttpStatusCode.OK,
                         "{\"data\":{\"@odata.type\":\"microsoft.graph.onTokenIssuanceStartResponseData\",\"actions\":[{\"@odata.type\":\"microsoft.graph.tokenIssuanceStart.provideClaimsForToken\",\"claims\":{\"key\":[\"\",\"\"]}}]}}");
                 case ActionTestTypes.EmptyMixedArray:
-                    return (new WebJobsProvideClaimsForToken(new WebjobsAuthenticationEventsTokenClaim[] { new WebjobsAuthenticationEventsTokenClaim("key", new string[] { String.Empty, null, " " }) }),
+                    return (new WebJobsProvideClaimsForToken(new WebJobsAuthenticationEventsTokenClaim[] { new WebJobsAuthenticationEventsTokenClaim("key", new string[] { String.Empty, null, " " }) }),
                         HttpStatusCode.OK,
                         "{\"data\":{\"@odata.type\":\"microsoft.graph.onTokenIssuanceStartResponseData\",\"actions\":[{\"@odata.type\":\"microsoft.graph.tokenIssuanceStart.provideClaimsForToken\",\"claims\":{\"key\":[\"\",null,\" \"]}}]}}");
                 case ActionTestTypes.NullActionItems:

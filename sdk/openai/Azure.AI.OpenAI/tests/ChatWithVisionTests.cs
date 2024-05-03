@@ -15,13 +15,33 @@ public class ChatWithVisionTests : OpenAITestBase
     {
     }
 
+    public enum ImageTestSourceKind
+    {
+        UsingInternetLocation,
+        UsingStream,
+        UsingBinaryData,
+    }
+
     [RecordedTest]
-    [TestCase(Service.Azure)]
-    [TestCase(Service.NonAzure)]
-    public async Task ChatWithImages(Service serviceTarget)
+    [TestCase(Service.Azure, ImageTestSourceKind.UsingInternetLocation)]
+    [TestCase(Service.Azure, ImageTestSourceKind.UsingStream)]
+    [TestCase(Service.Azure, ImageTestSourceKind.UsingBinaryData)]
+    [TestCase(Service.NonAzure, ImageTestSourceKind.UsingInternetLocation)]
+    [TestCase(Service.NonAzure, ImageTestSourceKind.UsingStream)]
+    [TestCase(Service.NonAzure, ImageTestSourceKind.UsingBinaryData)]
+    public async Task ChatWithImages(Service serviceTarget, ImageTestSourceKind imageSourceKind)
     {
         OpenAIClient client = GetTestClient(serviceTarget);
         string deploymentOrModelName = GetDeploymentOrModelName(serviceTarget);
+
+        ChatMessageImageContentItem imageContentItem = imageSourceKind switch
+        {
+            ImageTestSourceKind.UsingInternetLocation => new(GetTestImageInternetUri(), ChatMessageImageDetailLevel.Low),
+            ImageTestSourceKind.UsingStream => new(GetTestImageStream("image/jpg"), "image/jpg", ChatMessageImageDetailLevel.Low),
+            ImageTestSourceKind.UsingBinaryData => new(GetTestImageData("image/jpg"), "image/jpg", ChatMessageImageDetailLevel.Low),
+            _ => throw new ArgumentException(nameof(imageSourceKind)),
+        };
+
         var requestOptions = new ChatCompletionsOptions()
         {
             DeploymentName = deploymentOrModelName,
@@ -30,9 +50,7 @@ public class ChatWithVisionTests : OpenAITestBase
                 new ChatRequestSystemMessage("You are a helpful assistant that helps describe images."),
                 new ChatRequestUserMessage(
                     new ChatMessageTextContentItem("describe this image"),
-                    new ChatMessageImageContentItem(
-                        new Uri("https://www.bing.com/th?id=OHR.BradgateFallow_EN-US3932725763_1920x1080.jpg"),
-                        ChatMessageImageDetailLevel.Low)),
+                    imageContentItem),
             },
             MaxTokens = 2048,
         };
@@ -46,20 +64,7 @@ public class ChatWithVisionTests : OpenAITestBase
         ChatChoice choice = response.Value.Choices[0];
         Assert.That(choice.Index, Is.EqualTo(0));
 
-        // Check temporarily disabled for Azure
-        if (serviceTarget != Service.Azure)
-        {
-            Assert.That(choice.FinishReason != null || choice.FinishDetails != null);
-            if (choice.FinishReason == null)
-            {
-                Assert.That(choice.FinishDetails, Is.InstanceOf<StopFinishDetails>());
-            }
-            else if (choice.FinishDetails == null)
-            {
-                Assert.That(choice.FinishReason == CompletionsFinishReason.Stopped);
-            }
-        }
-
+        Assert.That(choice.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
         Assert.That(choice.Message.Role, Is.EqualTo(ChatRole.Assistant));
         Assert.That(choice.Message.Content, Is.Not.Null.Or.Empty);
     }

@@ -194,6 +194,11 @@ namespace Azure.Search.Documents
                 writer.WritePropertyName("vectorFilterMode"u8);
                 writer.WriteStringValue(FilterMode.Value.ToString());
             }
+            if (Optional.IsDefined(HybridSearch))
+            {
+                writer.WritePropertyName("hybridSearch"u8);
+                writer.WriteObjectValue(HybridSearch);
+            }
             writer.WriteEndObject();
         }
 
@@ -234,6 +239,7 @@ namespace Azure.Search.Documents
             string semanticFields = default;
             IList<VectorQuery> vectorQueries = default;
             VectorFilterMode? vectorFilterMode = default;
+            HybridSearch hybridSearch = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("count"u8))
@@ -471,6 +477,15 @@ namespace Azure.Search.Documents
                     vectorFilterMode = new VectorFilterMode(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("hybridSearch"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    hybridSearch = HybridSearch.DeserializeHybridSearch(property.Value);
+                    continue;
+                }
             }
             return new SearchOptions(
                 count,
@@ -503,7 +518,8 @@ namespace Azure.Search.Documents
                 captions,
                 semanticFields,
                 vectorQueries ?? new ChangeTrackingList<VectorQuery>(),
-                vectorFilterMode);
+                vectorFilterMode,
+                hybridSearch);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

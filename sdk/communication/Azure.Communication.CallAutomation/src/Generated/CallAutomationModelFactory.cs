@@ -230,5 +230,72 @@ namespace Azure.Communication.CallAutomation
                 serverCallId,
                 correlationId);
         }
+
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.MediaStreamingFailed"/>. </summary>
+        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
+        /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
+        /// <param name="mediaStreamingUpdate"> Defines the result for audio streaming update with the current status and the details about the status. </param>
+        /// <param name="callConnectionId"> Call connection ID. </param>
+        /// <param name="serverCallId"> Server call ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        /// <returns> A new <see cref="CallAutomation.MediaStreamingFailed"/> instance for mocking. </returns>
+        public static MediaStreamingFailed MediaStreamingFailed(string operationContext = null, ResultInformation resultInformation = null, MediaStreamingUpdate mediaStreamingUpdate = null, string callConnectionId = null, string serverCallId = null, string correlationId = null)
+        {
+            return new MediaStreamingFailed(
+                operationContext,
+                resultInformation,
+                mediaStreamingUpdate,
+                callConnectionId,
+                serverCallId,
+                correlationId);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.MediaStreamingUpdate"/>. </summary>
+        /// <param name="contentType"></param>
+        /// <param name="mediaStreamingStatus"></param>
+        /// <param name="mediaStreamingStatusDetails"></param>
+        /// <returns> A new <see cref="CallAutomation.MediaStreamingUpdate"/> instance for mocking. </returns>
+        public static MediaStreamingUpdate MediaStreamingUpdate(string contentType = null, MediaStreamingStatus? mediaStreamingStatus = null, MediaStreamingStatusDetails? mediaStreamingStatusDetails = null)
+        {
+            return new MediaStreamingUpdate(contentType, mediaStreamingStatus, mediaStreamingStatusDetails);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.MediaStreamingStarted"/>. </summary>
+        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
+        /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
+        /// <param name="mediaStreamingUpdate"> Defines the result for audio streaming update with the current status and the details about the status. </param>
+        /// <param name="callConnectionId"> Call connection ID. </param>
+        /// <param name="serverCallId"> Server call ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        /// <returns> A new <see cref="CallAutomation.MediaStreamingStarted"/> instance for mocking. </returns>
+        public static MediaStreamingStarted MediaStreamingStarted(string operationContext = null, ResultInformation resultInformation = null, MediaStreamingUpdate mediaStreamingUpdate = null, string callConnectionId = null, string serverCallId = null, string correlationId = null)
+        {
+            return new MediaStreamingStarted(
+                operationContext,
+                resultInformation,
+                mediaStreamingUpdate,
+                callConnectionId,
+                serverCallId,
+                correlationId);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.MediaStreamingStopped"/>. </summary>
+        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
+        /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
+        /// <param name="mediaStreamingUpdate"> Defines the result for audio streaming update with the current status and the details about the status. </param>
+        /// <param name="callConnectionId"> Call connection ID. </param>
+        /// <param name="serverCallId"> Server call ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        /// <returns> A new <see cref="CallAutomation.MediaStreamingStopped"/> instance for mocking. </returns>
+        public static MediaStreamingStopped MediaStreamingStopped(string operationContext = null, ResultInformation resultInformation = null, MediaStreamingUpdate mediaStreamingUpdate = null, string callConnectionId = null, string serverCallId = null, string correlationId = null)
+        {
+            return new MediaStreamingStopped(
+                operationContext,
+                resultInformation,
+                mediaStreamingUpdate,
+                callConnectionId,
+                serverCallId,
+                correlationId);
+        }
     }
 }

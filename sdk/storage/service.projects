@@ -16,7 +16,7 @@
 
 <Project>
   <ItemGroup Condition="'$(SDKType)' == 'client'">
-    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.Storage.*\**\*.csproj" />
+    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.Storage.*\**\*.csproj" Exclude="$(MSBuildThisFileDirectory)Azure.Storage.DataMovement*\**\*.csproj" />
   </ItemGroup>
   <ItemGroup Condition="'$(SDKType)' == 'mgmt'">
     <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.ResourceManager.*\**\*.csproj" />

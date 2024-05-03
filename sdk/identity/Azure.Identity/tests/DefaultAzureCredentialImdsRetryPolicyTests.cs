@@ -9,7 +9,7 @@ using Azure.Core.TestFramework;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
 
-namespace Azure.Identity
+namespace Azure.Identity.Tests
 {
     public class DefaultAzureCredentialImdsRetryPolicyTests : SyncAsyncPolicyTestBase
     {

@@ -27,14 +27,14 @@ namespace Azure.AI.Translation.Document
         /// <summary>
         /// Optional file format version. If not specified, the service will
         /// use the <see cref="DocumentTranslationFileFormat.DefaultFormatVersion"/> for the file format returned from the
-        /// <see cref="DocumentTranslationClient.GetSupportedGlossaryFormatsAsync(System.Threading.CancellationToken)"/> client method.
+        /// <see cref="DocumentTranslationClient.GetSupportedFormatsAsync(FileFormatType?, System.Threading.CancellationToken)"/> client method.
         /// </summary>
         [CodeGenMember("Version")]
         public string FormatVersion { get; set; }
 
         /// <summary>
         /// Format of the glossary file. To see supported formats,
-        /// use the <see cref="DocumentTranslationClient.GetSupportedGlossaryFormatsAsync(System.Threading.CancellationToken)"/> client method.
+        /// use the <see cref="DocumentTranslationClient.GetSupportedFormatsAsync(FileFormatType?, System.Threading.CancellationToken)"/> client method.
         /// </summary>
         public string Format { get; }
     }

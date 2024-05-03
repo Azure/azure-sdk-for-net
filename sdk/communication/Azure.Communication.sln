@@ -48,10 +48,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.Email",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.Email.Tests", "Azure.Communication.Email\tests\Azure.Communication.Email.Tests.csproj", "{F564FD34-F010-41FA-A58C-51558FB9FE89}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.MediaComposition", "Azure.Communication.MediaComposition\src\Azure.Communication.MediaComposition.csproj", "{D5445861-C735-4A13-900F-3745FBD9566A}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.MediaComposition.Tests", "Azure.Communication.MediaComposition\tests\Azure.Communication.MediaComposition.Tests.csproj", "{78DDAA7E-7DFE-41DD-B603-7874CC96A2A2}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.Rooms", "Azure.Communication.Rooms\src\Azure.Communication.Rooms.csproj", "{E4AE37FB-9A3F-45BE-9518-4EBCE2B95E0A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.Rooms.Tests", "Azure.Communication.Rooms\tests\Azure.Communication.Rooms.Tests.csproj", "{94DC6193-A7F1-4FCC-8A90-BA46B781E9F8}"

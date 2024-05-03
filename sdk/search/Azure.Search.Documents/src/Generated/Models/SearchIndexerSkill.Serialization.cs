@@ -80,6 +80,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     case "#Microsoft.Skills.Util.ShaperSkill": return ShaperSkill.DeserializeShaperSkill(element);
                     case "#Microsoft.Skills.Vision.ImageAnalysisSkill": return ImageAnalysisSkill.DeserializeImageAnalysisSkill(element);
                     case "#Microsoft.Skills.Vision.OcrSkill": return OcrSkill.DeserializeOcrSkill(element);
+                    case "#Microsoft.Skills.Vision.VectorizeSkill": return VisionVectorizeSkill.DeserializeVisionVectorizeSkill(element);
                 }
             }
             return UnknownSearchIndexerSkill.DeserializeUnknownSearchIndexerSkill(element);
