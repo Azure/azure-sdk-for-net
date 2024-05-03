@@ -156,7 +156,7 @@ namespace Azure.Core.TestFramework
                     GroupForReplace = "secret"
                 },
                 // TODO remove if the common Proxy version is updated to exclude "st" and "se"
-                new BodyRegexSanitizer("(?:[?&](sv|sig)=)(?<secret>[^&\\\"\\s]*)", SanitizeValue)
+                new BodyRegexSanitizer("(?:[?&](sig)=)(?<secret>[^&\\\\\"\\s]*)", SanitizeValue)
                 {
                     GroupForReplace = "secret"
                 },
