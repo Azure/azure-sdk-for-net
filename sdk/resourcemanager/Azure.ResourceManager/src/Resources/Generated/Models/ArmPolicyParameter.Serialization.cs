@@ -187,31 +187,33 @@ namespace Azure.ResourceManager.Resources.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ParameterType), out propertyOverride);
-            if (Optional.IsDefined(ParameterType) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  type: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ParameterType))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  type: ");
                     builder.AppendLine($"'{ParameterType.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowedValues), out propertyOverride);
-            if (Optional.IsCollectionDefined(AllowedValues) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (AllowedValues.Any() || hasPropertyOverride)
+                builder.Append("  allowedValues: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AllowedValues))
                 {
-                    builder.Append("  allowedValues: ");
-                    if (hasPropertyOverride)
+                    if (AllowedValues.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  allowedValues: ");
                         builder.AppendLine("[");
                         foreach (var item in AllowedValues)
                         {
@@ -228,29 +230,31 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultValue), out propertyOverride);
-            if (Optional.IsDefined(DefaultValue) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  defaultValue: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DefaultValue))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  defaultValue: ");
                     builder.AppendLine($"'{DefaultValue.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Metadata), out propertyOverride);
-            if (Optional.IsDefined(Metadata) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  metadata: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Metadata))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  metadata: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Metadata, options, 2, false, "  metadata: ");
                 }
             }

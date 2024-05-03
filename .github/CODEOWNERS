@@ -445,10 +445,10 @@
 # ServiceOwners:                                                   @raedJarrar @jifems
 
 # PRLabel: %DevCenter
-/sdk/devcenter/                                                    @sebrenna @chrissmiller @shivangireja
+/sdk/devcenter/                                                    @sebrenna @shivangireja
 
 # ServiceLabel: %DevCenter
-# ServiceOwners:                                                   @sebrenna @chrissmiller
+# ServiceOwners:                                                   @sebrenna
 
 # ServiceLabel: %Dev Spaces
 # ServiceOwners:                                                   @yuzorMa @johnsta @greenie-msft
@@ -926,6 +926,12 @@
 # ServiceLabel: %Mgmt
 # AzureSdkOwners:                                                  @ArthurMa1978
 
+# PRLabel: %Astronomer
+/sdk/astronomer/Azure.ResourceManager.Astro/                       @banggaurav
+
+# ServiceLabel: %Astronomer %Mgmt
+# ServiceOwners:                                                   @banggaurav
+
 # PRLabel: %Communication - Resource Manager
 /sdk/communication/Azure.ResourceManager.Communication/            @archerzz @ArcturusZhang @ArthurMa1978
 
@@ -964,7 +970,8 @@
 /eng/mgmt/                                                         @ArthurMa1978 @m-nash
 
 # Add owners for notifications for specific pipelines
-/eng/pipelines/aggregate-reports.yml                               @jsquire @maririos @pallavit
+/eng/pipelines/aggregate-reports.yml                               @jsquire @pallavit
+/eng/common/pipelines/codeowners-linter.yml                        @jsquire @pallavit
 /sdk/eventhub/tests.data.yml                                       @serkantkaraca @sjkwak
 /sdk/servicebus/tests.data.yml                                     @shankarsama @EldertGrootenboer
 

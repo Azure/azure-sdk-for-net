@@ -18,7 +18,7 @@
 
 ### Features Added
 
-- Enable long-running operation rehydration.
+- Added experimental Bicep serialization.
 
 ## 1.11.0 (2024-03-22)
 

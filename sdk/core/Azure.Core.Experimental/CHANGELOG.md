@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed a bug in the `PopTokenRequestContext` constructor that caused the `IsProofOfPossessionEnabled` property to be ignored.
+
 ### Other Changes
 
 ## 0.1.0-preview.33 (2024-04-04)

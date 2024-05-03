@@ -117,15 +117,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourceCollectionRid), out propertyOverride);
-            if (Optional.IsDefined(SourceCollectionRid) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  sourceCollectionRid: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SourceCollectionRid))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  sourceCollectionRid: ");
                     if (SourceCollectionRid.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -139,15 +140,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourceCollectionId), out propertyOverride);
-            if (Optional.IsDefined(SourceCollectionId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  sourceCollectionId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SourceCollectionId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  sourceCollectionId: ");
                     if (SourceCollectionId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -161,15 +163,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Definition), out propertyOverride);
-            if (Optional.IsDefined(Definition) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  definition: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Definition))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  definition: ");
                     if (Definition.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

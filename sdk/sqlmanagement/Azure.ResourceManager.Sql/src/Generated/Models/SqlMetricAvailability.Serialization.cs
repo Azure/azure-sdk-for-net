@@ -112,15 +112,16 @@ namespace Azure.ResourceManager.Sql.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Retention), out propertyOverride);
-            if (Optional.IsDefined(Retention) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  retention: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Retention))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  retention: ");
                     if (Retention.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -134,15 +135,16 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TimeGrain), out propertyOverride);
-            if (Optional.IsDefined(TimeGrain) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  timeGrain: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TimeGrain))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  timeGrain: ");
                     if (TimeGrain.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Samples
             ApplicationInsightsComponentResource applicationInsightsComponent = client.GetApplicationInsightsComponentResource(applicationInsightsComponentResourceId);
 
             // invoke the operation
-            ComponentTag componentTags = new ComponentTag()
+            WebTestComponentTag componentTags = new WebTestComponentTag()
             {
                 Tags =
 {
@@ -170,16 +170,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Samples
             ApplicationInsightsComponentResource applicationInsightsComponent = client.GetApplicationInsightsComponentResource(applicationInsightsComponentResourceId);
 
             // invoke the operation
-            ComponentPurgeBody body = new ComponentPurgeBody("Heartbeat", new ComponentPurgeBodyFilters[]
+            ComponentPurgeContent content = new ComponentPurgeContent("Heartbeat", new ComponentPurgeFilters[]
             {
-new ComponentPurgeBodyFilters()
+new ComponentPurgeFilters()
 {
 Column = "TimeGenerated",
 Operator = ">",
 Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
 }
             });
-            ComponentPurgeResponse result = await applicationInsightsComponent.PurgeAsync(body);
+            ComponentPurgeResult result = await applicationInsightsComponent.PurgeAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -207,7 +207,7 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
 
             // invoke the operation
             string purgeId = "purge-970318e7-b859-4edb-8903-83b1b54d0b74";
-            ComponentPurgeStatusResponse result = await applicationInsightsComponent.GetPurgeStatusAsync(purgeId);
+            ComponentPurgeStatusResult result = await applicationInsightsComponent.GetPurgeStatusAsync(purgeId);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -236,7 +236,7 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
             // invoke the operation and iterate over the result
             string start = "2018-02-05T00%253A30%253A00.000Z";
             string end = "2018-02-06T00%253A33A00.000Z";
-            await foreach (Annotation item in applicationInsightsComponent.GetAnnotationsAsync(start, end))
+            await foreach (ApplicationInsightsAnnotation item in applicationInsightsComponent.GetAnnotationsAsync(start, end))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -266,15 +266,15 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
             ApplicationInsightsComponentResource applicationInsightsComponent = client.GetApplicationInsightsComponentResource(applicationInsightsComponentResourceId);
 
             // invoke the operation and iterate over the result
-            Annotation annotationProperties = new Annotation()
+            ApplicationInsightsAnnotation annotationProperties = new ApplicationInsightsAnnotation()
             {
                 AnnotationName = "TestAnnotation",
                 Category = "Text",
-                EventOn = DateTimeOffset.Parse("2018-01-31T13:41:38.657Z"),
+                EventOccurredOn = DateTimeOffset.Parse("2018-01-31T13:41:38.657Z"),
                 Id = "444e2c08-274a-4bbb-a89e-d77bb720f44a",
                 Properties = "{\"Comments\":\"Testing\",\"Label\":\"Success\"}",
             };
-            await foreach (Annotation item in applicationInsightsComponent.CreateAnnotationsAsync(annotationProperties))
+            await foreach (ApplicationInsightsAnnotation item in applicationInsightsComponent.CreateAnnotationsAsync(annotationProperties))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -333,7 +333,7 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
 
             // invoke the operation and iterate over the result
             string annotationId = "444e2c08-274a-4bbb-a89e-d77bb720f44a";
-            await foreach (Annotation item in applicationInsightsComponent.GetAnnotationsAsync(annotationId))
+            await foreach (ApplicationInsightsAnnotation item in applicationInsightsComponent.GetAnnotationsAsync(annotationId))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -344,7 +344,7 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
         // APIKeysList
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAPIKeys_APIKeysList()
+        public async Task GetApiKeys_APIKeysList()
         {
             // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2015-05-01/examples/APIKeysList.json
             // this example is just showing the usage of "APIKeys_List" operation, for the dependent resources, they will have to be created separately.
@@ -363,7 +363,7 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
             ApplicationInsightsComponentResource applicationInsightsComponent = client.GetApplicationInsightsComponentResource(applicationInsightsComponentResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (ApplicationInsightsComponentAPIKey item in applicationInsightsComponent.GetAPIKeysAsync())
+            await foreach (ApplicationInsightsComponentApiKey item in applicationInsightsComponent.GetApiKeysAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -374,7 +374,7 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
         // APIKeyCreate
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateAPIKey_APIKeyCreate()
+        public async Task CreateApiKey_APIKeyCreate()
         {
             // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2015-05-01/examples/APIKeysCreate.json
             // this example is just showing the usage of "APIKeys_Create" operation, for the dependent resources, they will have to be created separately.
@@ -393,7 +393,7 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
             ApplicationInsightsComponentResource applicationInsightsComponent = client.GetApplicationInsightsComponentResource(applicationInsightsComponentResourceId);
 
             // invoke the operation
-            APIKeyContent content = new APIKeyContent()
+            ApplicationInsightsApiKeyContent content = new ApplicationInsightsApiKeyContent()
             {
                 Name = "test2",
                 LinkedReadProperties =
@@ -405,7 +405,7 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
 "/subscriptions/subid/resourceGroups/my-resource-group/providers/Microsoft.Insights/components/my-component/annotations"
 },
             };
-            ApplicationInsightsComponentAPIKey result = await applicationInsightsComponent.CreateAPIKeyAsync(content);
+            ApplicationInsightsComponentApiKey result = await applicationInsightsComponent.CreateApiKeyAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -413,7 +413,7 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
         // APIKeyDelete
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task DeleteAPIKey_APIKeyDelete()
+        public async Task DeleteApiKey_APIKeyDelete()
         {
             // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2015-05-01/examples/APIKeysDelete.json
             // this example is just showing the usage of "APIKeys_Delete" operation, for the dependent resources, they will have to be created separately.
@@ -433,7 +433,7 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
 
             // invoke the operation
             string keyId = "bb820f1b-3110-4a8b-ba2c-8c1129d7eb6a";
-            ApplicationInsightsComponentAPIKey result = await applicationInsightsComponent.DeleteAPIKeyAsync(keyId);
+            ApplicationInsightsComponentApiKey result = await applicationInsightsComponent.DeleteApiKeyAsync(keyId);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -441,7 +441,7 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
         // APIKeysGet
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAPIKey_APIKeysGet()
+        public async Task GetApiKey_APIKeysGet()
         {
             // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2015-05-01/examples/APIKeysGet.json
             // this example is just showing the usage of "APIKeys_Get" operation, for the dependent resources, they will have to be created separately.
@@ -461,7 +461,7 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
 
             // invoke the operation
             string keyId = "bb820f1b-3110-4a8b-ba2c-8c1129d7eb6a";
-            ApplicationInsightsComponentAPIKey result = await applicationInsightsComponent.GetAPIKeyAsync(keyId);
+            ApplicationInsightsComponentApiKey result = await applicationInsightsComponent.GetApiKeyAsync(keyId);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -518,19 +518,19 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
             ApplicationInsightsComponentResource applicationInsightsComponent = client.GetApplicationInsightsComponentResource(applicationInsightsComponentResourceId);
 
             // invoke the operation and iterate over the result
-            ApplicationInsightsComponentExportRequest exportProperties = new ApplicationInsightsComponentExportRequest()
+            ApplicationInsightsComponentExportContent content = new ApplicationInsightsComponentExportContent()
             {
                 RecordTypes = "Requests, Event, Exceptions, Metrics, PageViews, PageViewPerformance, Rdd, PerformanceCounters, Availability",
                 DestinationType = "Blob",
                 DestinationAddress = "https://mystorageblob.blob.core.windows.net/testexport?sv=2015-04-05&sr=c&sig=token",
                 IsEnabled = "true",
-                NotificationQueueEnabled = "false",
+                IsNotificationQueueEnabled = "false",
                 NotificationQueueUri = new Uri(""),
                 DestinationStorageSubscriptionId = "subid",
                 DestinationStorageLocationId = "eastus",
-                DestinationAccountId = "/subscriptions/subid/resourceGroups/my-resource-group/providers/Microsoft.ClassicStorage/storageAccounts/mystorageblob",
+                DestinationAccountId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/my-resource-group/providers/Microsoft.ClassicStorage/storageAccounts/mystorageblob"),
             };
-            await foreach (ApplicationInsightsComponentExportConfiguration item in applicationInsightsComponent.CreateExportConfigurationsAsync(exportProperties))
+            await foreach (ApplicationInsightsComponentExportConfiguration item in applicationInsightsComponent.CreateExportConfigurationsAsync(content))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -617,19 +617,19 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
 
             // invoke the operation
             string exportId = "uGOoki0jQsyEs3IdQ83Q4QsNr4=";
-            ApplicationInsightsComponentExportRequest exportProperties = new ApplicationInsightsComponentExportRequest()
+            ApplicationInsightsComponentExportContent content = new ApplicationInsightsComponentExportContent()
             {
                 RecordTypes = "Requests, Event, Exceptions, Metrics, PageViews, PageViewPerformance, Rdd, PerformanceCounters, Availability",
                 DestinationType = "Blob",
                 DestinationAddress = "https://mystorageblob.blob.core.windows.net/fchentest?sv=2015-04-05&sr=c&sig=token",
                 IsEnabled = "true",
-                NotificationQueueEnabled = "false",
+                IsNotificationQueueEnabled = "false",
                 NotificationQueueUri = new Uri(""),
                 DestinationStorageSubscriptionId = "subid",
                 DestinationStorageLocationId = "eastus",
-                DestinationAccountId = "/subscriptions/subid/resourceGroups/my-resource-group/providers/Microsoft.ClassicStorage/storageAccounts/mystorageblob",
+                DestinationAccountId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/my-resource-group/providers/Microsoft.ClassicStorage/storageAccounts/mystorageblob"),
             };
-            ApplicationInsightsComponentExportConfiguration result = await applicationInsightsComponent.UpdateExportConfigurationAsync(exportId, exportProperties);
+            ApplicationInsightsComponentExportConfiguration result = await applicationInsightsComponent.UpdateExportConfigurationAsync(exportId, content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -871,7 +871,7 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
 {
 "foo@microsoft.com","foo2@microsoft.com"
 },
-                LastUpdatedTime = null,
+                LastUpdatedOn = null,
                 RuleDefinitions = new ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions()
                 {
                     Name = "slowpageloadtime",
@@ -881,7 +881,7 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
                     IsHidden = false,
                     IsEnabledByDefault = true,
                     IsInPreview = false,
-                    SupportsEmailNotifications = true,
+                    IsEmailNotificationsSupported = true,
                 },
             };
             ApplicationInsightsComponentProactiveDetectionConfiguration result = await applicationInsightsComponent.UpdateProactiveDetectionConfigurationAsync(configurationId, proactiveDetectionProperties);
@@ -1088,7 +1088,7 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
                 Name = "Blah Blah Blah",
                 Config = "{\"MEDataModelRawJSON\":\"{\\n  \\\"version\\\": \\\"1.4.1\\\",\\n  \\\"isCustomDataModel\\\": true,\\n  \\\"items\\\": [\\n    {\\n      \\\"id\\\": \\\"90a7134d-9a38-4c25-88d3-a495209873eb\\\",\\n      \\\"chartType\\\": \\\"Area\\\",\\n      \\\"chartHeight\\\": 4,\\n      \\\"metrics\\\": [\\n        {\\n          \\\"id\\\": \\\"preview/requests/count\\\",\\n          \\\"metricAggregation\\\": \\\"Sum\\\",\\n          \\\"color\\\": \\\"msportalfx-bgcolor-d0\\\"\\n        }\\n      ],\\n      \\\"priorPeriod\\\": false,\\n      \\\"clickAction\\\": {\\n        \\\"defaultBlade\\\": \\\"SearchBlade\\\"\\n      },\\n      \\\"horizontalBars\\\": true,\\n      \\\"showOther\\\": true,\\n      \\\"aggregation\\\": \\\"Sum\\\",\\n      \\\"percentage\\\": false,\\n      \\\"palette\\\": \\\"fail\\\",\\n      \\\"yAxisOption\\\": 0,\\n      \\\"title\\\": \\\"\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"0c289098-88e8-4010-b212-546815cddf70\\\",\\n      \\\"chartType\\\": \\\"Area\\\",\\n      \\\"chartHeight\\\": 2,\\n      \\\"metrics\\\": [\\n        {\\n          \\\"id\\\": \\\"preview/requests/duration\\\",\\n          \\\"metricAggregation\\\": \\\"Avg\\\",\\n          \\\"color\\\": \\\"msportalfx-bgcolor-j1\\\"\\n        }\\n      ],\\n      \\\"priorPeriod\\\": false,\\n      \\\"clickAction\\\": {\\n        \\\"defaultBlade\\\": \\\"SearchBlade\\\"\\n      },\\n      \\\"horizontalBars\\\": true,\\n      \\\"showOther\\\": true,\\n      \\\"aggregation\\\": \\\"Avg\\\",\\n      \\\"percentage\\\": false,\\n      \\\"palette\\\": \\\"greenHues\\\",\\n      \\\"yAxisOption\\\": 0,\\n      \\\"title\\\": \\\"\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"cbdaab6f-a808-4f71-aca5-b3976cbb7345\\\",\\n      \\\"chartType\\\": \\\"Bar\\\",\\n      \\\"chartHeight\\\": 4,\\n      \\\"metrics\\\": [\\n        {\\n          \\\"id\\\": \\\"preview/requests/duration\\\",\\n          \\\"metricAggregation\\\": \\\"Avg\\\",\\n          \\\"color\\\": \\\"msportalfx-bgcolor-d0\\\"\\n        }\\n      ],\\n      \\\"priorPeriod\\\": false,\\n      \\\"clickAction\\\": {\\n        \\\"defaultBlade\\\": \\\"SearchBlade\\\"\\n      },\\n      \\\"horizontalBars\\\": true,\\n      \\\"showOther\\\": true,\\n      \\\"aggregation\\\": \\\"Avg\\\",\\n      \\\"percentage\\\": false,\\n      \\\"palette\\\": \\\"magentaHues\\\",\\n      \\\"yAxisOption\\\": 0,\\n      \\\"title\\\": \\\"\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"1d5a6a3a-9fa1-4099-9cf9-05eff72d1b02\\\",\\n      \\\"grouping\\\": {\\n        \\\"kind\\\": \\\"ByDimension\\\",\\n        \\\"dimension\\\": \\\"context.application.version\\\"\\n      },\\n      \\\"chartType\\\": \\\"Grid\\\",\\n      \\\"chartHeight\\\": 1,\\n      \\\"metrics\\\": [\\n        {\\n          \\\"id\\\": \\\"basicException.count\\\",\\n          \\\"metricAggregation\\\": \\\"Sum\\\",\\n          \\\"color\\\": \\\"msportalfx-bgcolor-g0\\\"\\n        },\\n        {\\n          \\\"id\\\": \\\"requestFailed.count\\\",\\n          \\\"metricAggregation\\\": \\\"Sum\\\",\\n          \\\"color\\\": \\\"msportalfx-bgcolor-f0s2\\\"\\n        }\\n      ],\\n      \\\"priorPeriod\\\": true,\\n      \\\"clickAction\\\": {\\n        \\\"defaultBlade\\\": \\\"SearchBlade\\\"\\n      },\\n      \\\"horizontalBars\\\": true,\\n      \\\"showOther\\\": true,\\n      \\\"percentage\\\": false,\\n      \\\"palette\\\": \\\"blueHues\\\",\\n      \\\"yAxisOption\\\": 0,\\n      \\\"title\\\": \\\"\\\"\\n    }\\n  ],\\n  \\\"currentFilter\\\": {\\n    \\\"eventTypes\\\": [\\n      1,\\n      2\\n    ],\\n    \\\"typeFacets\\\": {},\\n    \\\"isPermissive\\\": false\\n  },\\n  \\\"timeContext\\\": {\\n    \\\"durationMs\\\": 75600000,\\n    \\\"endTime\\\": \\\"2018-01-31T20:30:00.000Z\\\",\\n    \\\"createdTime\\\": \\\"2018-01-31T23:54:26.280Z\\\",\\n    \\\"isInitialTime\\\": false,\\n    \\\"grain\\\": 1,\\n    \\\"useDashboardTimeRange\\\": false\\n  },\\n  \\\"jsonUri\\\": \\\"Favorite_BlankChart\\\",\\n  \\\"timeSource\\\": 0\\n}\"}",
                 Version = "ME",
-                FavoriteType = FavoriteType.Shared,
+                FavoriteType = ComponentFavoriteType.Shared,
                 SourceType = null,
                 Tags =
 {
@@ -1130,7 +1130,7 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
                 Name = "Derek Changed This",
                 Config = "{\"MEDataModelRawJSON\":\"{\\\"version\\\": \\\"1.4.1\\\",\\\"isCustomDataModel\\\": true,\\\"items\\\": [{\\\"id\\\": \\\"90a7134d-9a38-4c25-88d3-a495209873eb\\\",\\\"chartType\\\": \\\"Area\\\",\\\"chartHeight\\\": 4,\\\"metrics\\\": [{\\\"id\\\": \\\"preview/requests/count\\\",\\\"metricAggregation\\\": \\\"Sum\\\",\\\"color\\\": \\\"msportalfx-bgcolor-d0\\\"}],\\\"priorPeriod\\\": false,\\\"clickAction\\\": {\\\"defaultBlade\\\": \\\"SearchBlade\\\"},\\\"horizontalBars\\\": true,\\\"showOther\\\": true,\\\"aggregation\\\": \\\"Sum\\\",\\\"percentage\\\": false,\\\"palette\\\": \\\"fail\\\",\\\"yAxisOption\\\": 0,\\\"title\\\": \\\"\\\"},{\\\"id\\\": \\\"0c289098-88e8-4010-b212-546815cddf70\\\",\\\"chartType\\\": \\\"Area\\\",\\\"chartHeight\\\": 2,\\\"metrics\\\": [{\\\"id\\\": \\\"preview/requests/duration\\\",\\\"metricAggregation\\\": \\\"Avg\\\",\\\"color\\\": \\\"msportalfx-bgcolor-j1\\\"}],\\\"priorPeriod\\\": false,\\\"clickAction\\\": {\\\"defaultBlade\\\": \\\"SearchBlade\\\"},\\\"horizontalBars\\\": true,\\\"showOther\\\": true,\\\"aggregation\\\": \\\"Avg\\\",\\\"percentage\\\": false,\\\"palette\\\": \\\"greenHues\\\",\\\"yAxisOption\\\": 0,\\\"title\\\": \\\"\\\"},{\\\"id\\\": \\\"cbdaab6f-a808-4f71-aca5-b3976cbb7345\\\",\\\"chartType\\\": \\\"Bar\\\",\\\"chartHeight\\\": 4,\\\"metrics\\\": [{\\\"id\\\": \\\"preview/requests/duration\\\",\\\"metricAggregation\\\": \\\"Avg\\\",\\\"color\\\": \\\"msportalfx-bgcolor-d0\\\"}],\\\"priorPeriod\\\": false,\\\"clickAction\\\": {\\\"defaultBlade\\\": \\\"SearchBlade\\\"},\\\"horizontalBars\\\": true,\\\"showOther\\\": true,\\\"aggregation\\\": \\\"Avg\\\",\\\"percentage\\\": false,\\\"palette\\\": \\\"magentaHues\\\",\\\"yAxisOption\\\": 0,\\\"title\\\": \\\"\\\"},{\\\"id\\\": \\\"1d5a6a3a-9fa1-4099-9cf9-05eff72d1b02\\\",\\\"grouping\\\": {\\\"kind\\\": \\\"ByDimension\\\",\\\"dimension\\\": \\\"context.application.version\\\"},\\\"chartType\\\": \\\"Grid\\\",\\\"chartHeight\\\": 1,\\\"metrics\\\": [{\\\"id\\\": \\\"basicException.count\\\",\\\"metricAggregation\\\": \\\"Sum\\\",\\\"color\\\": \\\"msportalfx-bgcolor-g0\\\"},{\\\"id\\\": \\\"requestFailed.count\\\",\\\"metricAggregation\\\": \\\"Sum\\\",\\\"color\\\": \\\"msportalfx-bgcolor-f0s2\\\"}],\\\"priorPeriod\\\": true,\\\"clickAction\\\": {\\\"defaultBlade\\\": \\\"SearchBlade\\\"},\\\"horizontalBars\\\": true,\\\"showOther\\\": true,\\\"percentage\\\": false,\\\"palette\\\": \\\"blueHues\\\",\\\"yAxisOption\\\": 0,\\\"title\\\": \\\"\\\"}],\\\"currentFilter\\\": {\\\"eventTypes\\\": [1,2],\\\"typeFacets\\\": {},\\\"isPermissive\\\": false},\\\"timeContext\\\": {\\\"durationMs\\\": 75600000,\\\"endTime\\\": \\\"2018-01-31T20:30:00.000Z\\\",\\\"createdTime\\\": \\\"2018-01-31T23:54:26.280Z\\\",\\\"isInitialTime\\\": false,\\\"grain\\\": 1,\\\"useDashboardTimeRange\\\": false},\\\"jsonUri\\\": \\\"Favorite_BlankChart\\\",\\\"timeSource\\\": 0}\"}",
                 Version = "ME",
-                FavoriteType = FavoriteType.Shared,
+                FavoriteType = ComponentFavoriteType.Shared,
                 SourceType = null,
                 Tags =
 {
@@ -1224,11 +1224,11 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
             ApplicationInsightsComponentResource applicationInsightsComponent = client.GetApplicationInsightsComponentResource(applicationInsightsComponentResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (WebTestResource item in applicationInsightsComponent.GetWebTestsAsync())
+            await foreach (ApplicationInsightsWebTestResource item in applicationInsightsComponent.GetWebTestsAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                WebTestData resourceData = item.Data;
+                ApplicationInsightsWebTestData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -1258,7 +1258,7 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
             ApplicationInsightsComponentResource applicationInsightsComponent = client.GetApplicationInsightsComponentResource(applicationInsightsComponentResourceId);
 
             // invoke the operation and iterate over the result
-            ItemScopePath scopePath = ItemScopePath.AnalyticsItems;
+            AnalyticsItemScopePath scopePath = AnalyticsItemScopePath.AnalyticsItems;
             await foreach (ApplicationInsightsComponentAnalyticsItem item in applicationInsightsComponent.GetAnalyticsItemsAsync(scopePath))
             {
                 Console.WriteLine($"Succeeded: {item}");
@@ -1289,7 +1289,7 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
             ApplicationInsightsComponentResource applicationInsightsComponent = client.GetApplicationInsightsComponentResource(applicationInsightsComponentResourceId);
 
             // invoke the operation
-            ItemScopePath scopePath = ItemScopePath.AnalyticsItems;
+            AnalyticsItemScopePath scopePath = AnalyticsItemScopePath.AnalyticsItems;
             string id = "3466c160-4a10-4df8-afdf-0007f3f6dee5";
             ApplicationInsightsComponentAnalyticsItem result = await applicationInsightsComponent.GetAnalyticsItemAsync(scopePath, id: id);
 
@@ -1299,7 +1299,7 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
         // AnalyticsItemPut
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task PutAnalyticsItem_AnalyticsItemPut()
+        public async Task AddOrUpdateAnalyticsItem_AnalyticsItemPut()
         {
             // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2015-05-01/examples/AnalyticsItemPut.json
             // this example is just showing the usage of "AnalyticsItems_Put" operation, for the dependent resources, they will have to be created separately.
@@ -1318,15 +1318,15 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
             ApplicationInsightsComponentResource applicationInsightsComponent = client.GetApplicationInsightsComponentResource(applicationInsightsComponentResourceId);
 
             // invoke the operation
-            ItemScopePath scopePath = ItemScopePath.AnalyticsItems;
+            AnalyticsItemScopePath scopePath = AnalyticsItemScopePath.AnalyticsItems;
             ApplicationInsightsComponentAnalyticsItem itemProperties = new ApplicationInsightsComponentAnalyticsItem()
             {
                 Name = "Exceptions - New in the last 24 hours",
                 Content = "let newExceptionsTimeRange = 1d;\nlet timeRangeToCheckBefore = 7d;\nexceptions\n| where timestamp < ago(timeRangeToCheckBefore)\n| summarize count() by problemId\n| join kind= rightanti (\nexceptions\n| where timestamp >= ago(newExceptionsTimeRange)\n| extend stack = tostring(details[0].rawStack)\n| summarize count(), dcount(user_AuthenticatedId), min(timestamp), max(timestamp), any(stack) by problemId  \n) on problemId \n| order by  count_ desc\n",
-                Scope = ItemScope.Shared,
-                ItemType = ItemType.Query,
+                Scope = ComponentItemScope.Shared,
+                ComponentItemType = ComponentItemType.Query,
             };
-            ApplicationInsightsComponentAnalyticsItem result = await applicationInsightsComponent.PutAnalyticsItemAsync(scopePath, itemProperties);
+            ApplicationInsightsComponentAnalyticsItem result = await applicationInsightsComponent.AddOrUpdateAnalyticsItemAsync(scopePath, itemProperties);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -1353,7 +1353,7 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
             ApplicationInsightsComponentResource applicationInsightsComponent = client.GetApplicationInsightsComponentResource(applicationInsightsComponentResourceId);
 
             // invoke the operation
-            ItemScopePath scopePath = ItemScopePath.AnalyticsItems;
+            AnalyticsItemScopePath scopePath = AnalyticsItemScopePath.AnalyticsItems;
             string id = "3466c160-4a10-4df8-afdf-0007f3f6dee5";
             await applicationInsightsComponent.DeleteAnalyticsItemAsync(scopePath, id: id);
 
