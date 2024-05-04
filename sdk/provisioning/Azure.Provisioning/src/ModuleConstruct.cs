@@ -194,17 +194,17 @@ namespace Azure.Provisioning
             {
                 value = output.Kind switch
                 {
-                    BicepKind.Bool => output.Value.ToLower(),
-                    BicepKind.Int => output.Value,
-                    BicepKind.Array => output.Value,
-                    BicepKind.Object => output.Value,
+                    BicepKind.Bool => output.Value.ToString()!.ToLower(),
+                    BicepKind.Int => output.Value.ToString()!,
+                    BicepKind.Array => output.Value.ToString()!,
+                    BicepKind.Object => output.Value.ToString()!,
                     BicepKind.String => $"'{output.Value}'",
                     _ => throw new NotSupportedException("Invalid output kind.")
                 };
             }
             else if (ReferenceEquals(this, output.Resource.ModuleScope))
             {
-                value = output.Value;
+                value = output.Value.ToString()!;
             }
             else
             {
@@ -246,35 +246,36 @@ namespace Azure.Provisioning
                 }
 
                 stream.WriteLine($"@description('{parameter.Description}')");
-                stream.WriteLine($"param {parameter.Name} {parameter.Kind.ToString().ToLower()}{GetDefaultValue(parameter)}{Environment.NewLine}");
+                stream.WriteLine($"{GetParameterDeclaration(parameter)}{Environment.NewLine}");
             }
         }
 
-        private string GetDefaultValue(Parameter parameter)
+        private string GetParameterDeclaration(Parameter parameter)
         {
+            string value;
+
             if (parameter.DefaultValue is null)
             {
-                return string.Empty;
+                value = string.Empty;
+            }
+            else if (parameter.IsExpression)
+            {
+                value = parameter.DefaultValue.ToString()!;
+            }
+            else
+            {
+                value = parameter.Kind switch
+                {
+                    BicepKind.Bool => parameter.DefaultValue.ToString()!.ToLower(),
+                    BicepKind.Int => parameter.DefaultValue.ToString()!,
+                    BicepKind.Array => parameter.DefaultValue.ToString()!,
+                    BicepKind.Object => parameter.DefaultValue.ToString()!,
+                    BicepKind.String => $"'{parameter.DefaultValue}'",
+                    _ => throw new NotSupportedException("Invalid parameter kind.")
+                };
             }
 
-            if (parameter.IsExpression)
-            {
-                return $" = {parameter.DefaultValue}";
-            }
-
-            switch (parameter.Kind)
-            {
-                case BicepKind.Bool:
-                    return $" = {parameter.DefaultValue.ToString()!.ToLower()}";
-                case BicepKind.Int:
-                case BicepKind.Array:
-                case BicepKind.Object:
-                    return $" = {parameter.DefaultValue}";
-                case BicepKind.String:
-                    return $" = '{parameter.DefaultValue}'";
-                default:
-                    throw new NotSupportedException("Invalid parameter kind.");
-            }
+            return $"param {parameter.Name} {parameter.Kind.ToString().ToLower()}{(!string.IsNullOrEmpty(value) ? $" = {value}" : string.Empty)}";
         }
 
         private bool ShouldExposeParameter(Parameter parameter, HashSet<Output> outputs)

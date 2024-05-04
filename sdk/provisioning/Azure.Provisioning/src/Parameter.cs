@@ -52,7 +52,7 @@ namespace Azure.Provisioning
         /// <summary>
         /// The value of the parameter.
         /// </summary>
-        public string? Value { get; }
+        public object? Value { get; }
 
         /// <summary>
         /// The source of the parameter.
@@ -74,7 +74,7 @@ namespace Azure.Provisioning
             Output = output;
         }
 
-        internal Parameter(string name, string? description, object? defaultValue, bool isSecure, IConstruct source, string? value, Output? output)
+        internal Parameter(string name, string? description, object? defaultValue, bool isSecure, IConstruct source, object? value, Output? output)
         {
             Name = name;
             Description = description;
@@ -131,7 +131,7 @@ namespace Azure.Provisioning
             // If the parameter is an output from the current scope, use its Value.
             if (ReferenceEquals(Output!.Resource.ModuleScope, parentScope))
             {
-                return Value!;
+                return Value!.ToString()!;
             }
 
             // Otherwise it is an output from a different scope, use the full reference.

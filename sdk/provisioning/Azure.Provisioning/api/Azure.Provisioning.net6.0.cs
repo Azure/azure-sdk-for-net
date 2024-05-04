@@ -77,7 +77,7 @@ namespace Azure.Provisioning
         public bool IsSecure { get { throw null; } }
         public Azure.Provisioning.BicepKind Kind { get { throw null; } }
         public string Name { get { throw null; } }
-        public string Value { get { throw null; } }
+        public object Value { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct Parameter
@@ -93,7 +93,7 @@ namespace Azure.Provisioning
         public Azure.Provisioning.BicepKind Kind { get { throw null; } }
         public string Name { get { throw null; } }
         public Azure.Provisioning.IConstruct? Source { get { throw null; } }
-        public string? Value { get { throw null; } }
+        public object? Value { get { throw null; } }
     }
     public static partial class ProvisioningExtensions
     {
