@@ -56,85 +56,13 @@ namespace Azure.Core.TestFramework
         /// <summary>
         /// The list of JSON path sanitizers to use when sanitizing a JSON request or response body.
         /// </summary>
-        public List<string> JsonPathSanitizers { get; } =
-            new();
-        // {
-        //     "$..access_token",
-        //     "$..accessSAS",
-        //     "$..accessToken",
-        //     "$..AccessToken",
-        //     "$..accountKey",
-        //     "$..acrToken",
-        //     "$..adminPassword",
-        //     "$..adminPassword.value",
-        //     "$..administratorLoginPassword",
-        //     "$..aliasPrimaryConnectionString",
-        //     "$..aliasSecondaryConnectionString",
-        //     "$..apiKey",
-        //     "$..appkey",
-        //     "$..applicationSecret",
-        //     "$..atlasKafkaPrimaryEndpoint",
-        //     "$..atlasKafkaSecondaryEndpoint",
-        //     "$..authHeader",
-        //     "$..blob_sas_url",
-        //     "$..certificatePassword",
-        //     "$..clientId",
-        //     "$..clientSecret",
-        //     "$..connectionString",
-        //     "$..containerUri",
-        //     "$..containerUrl",
-        //     "$..credential",
-        //     "$..decryptionKey",
-        //     "$..encryptedCredential",
-        //     "$..fencingClientPassword",
-        //     "$..functionKey",
-        //     "$..httpHeader",
-        //     "$.key",
-        //     "$..keyVaultClientSecret",
-        //     "$..password",
-        //     "$..primaryConnectionString",
-        //     "$..primaryKey",
-        //     "$..primaryMasterKey",
-        //     "$..primaryReadonlyMasterKey",
-        //     "$..principalId",
-        //     "$..privateKey",
-        //     "$.properties.WEBSITE_AUTH_ENCRYPTION_KEY",
-        //     "$.properties.siteConfig.machineKey.decryptionKey",
-        //     "$.properties.DOCKER_REGISTRY_SERVER_PASSWORD",
-        //     "$..refresh_token",
-        //     "$..runAsPassword",
-        //     "$..sasUri",
-        //     "$..scriptUrlSasToken",
-        //     "$..secondaryConnectionString",
-        //     "$..secondaryKey",
-        //     "$..secondaryMasterKey",
-        //     "$..secondaryReadonlyMasterKey",
-        //     "$..sshPassword",
-        //     "$..storageAccountPrimaryKey",
-        //     "$..storageContainerReadListSas",
-        //     "$..storageContainerWriteSas",
-        //     "$..token",
-        //     "$.value[*].key",
-        //     "$..WEBSITE_AUTH_ENCRYPTION_KEY",
-    // };
+        public List<string> JsonPathSanitizers { get; } = new();
 
-    /// <summary>
-    /// The list of <see cref="BodyKeySanitizer"/> to use while sanitizing request and response bodies. This is similar to
-    /// <see cref="JsonPathSanitizers"/>, but provides additional features such as regex matching, and customizing the sanitization replacement.
-    /// </summary>
-    public List<BodyKeySanitizer> BodyKeySanitizers { get; } = new()
-    {
-        new BodyKeySanitizer(SanitizeValue)
-        {
-            JsonPath = "$..sasUri",
-            Regex = "sig=(?<sig>[^&]+)",
-            GroupForReplace = "sig"
-        },
-        new BodyKeySanitizer(EmptyGuid)
-        {
-            JsonPath = "$..applicationId"
-        }
-    };
+        /// <summary>
+        /// The list of <see cref="BodyKeySanitizer"/> to use while sanitizing request and response bodies. This is similar to
+        /// <see cref="JsonPathSanitizers"/>, but provides additional features such as regex matching, and customizing the sanitization replacement.
+        /// </summary>
+        public List<BodyKeySanitizer> BodyKeySanitizers { get; } = new();
 
         /// <summary>
         /// The list of <see cref="BodyRegexSanitizer"/> to use while sanitizing request and response bodies. This allows you to specify a
@@ -160,47 +88,6 @@ namespace Azure.Core.TestFramework
                 {
                     GroupForReplace = "secret"
                 },
-                new BodyRegexSanitizer(@"access_token=(?<group>.*?)(?=&|$)", SanitizeValue)
-                {
-                    GroupForReplace = "group"
-                },
-                // new BodyRegexSanitizer(@"token=(?<group>.*?)(?=&|$)", SanitizeValue)
-                // {
-                //     GroupForReplace = "group"
-                // },
-                new BodyRegexSanitizer(@"refresh_token=(?<group>.*?)(?=&|$)", SanitizeValue)
-                {
-                    GroupForReplace = "group"
-                },
-                new BodyRegexSanitizer("(?<=<UserDelegationKey>).*?(?:<Value>)(?<group>.*)(?:</Value>)", "Kg==")
-                {
-                    GroupForReplace = "group"
-                },
-                // new BodyRegexSanitizer("(?<=<UserDelegationKey>).*?(?:<SignedTid>)(?<group>.*)(?:</SignedTid>)", SanitizeValue)
-                // {
-                //     GroupForReplace = "group"
-                // },
-                // new BodyRegexSanitizer("(?<=<UserDelegationKey>).*?(?:<SignedOid>)(?<group>.*)(?:</SignedOid>)", SanitizeValue)
-                // {
-                //     GroupForReplace = "group"
-                // },
-                new BodyRegexSanitizer("(?:Password=)(?<group>.*?)(?:;)", SanitizeValue)
-                {
-                    GroupForReplace = "group"
-                },
-                new BodyRegexSanitizer("(?:User I[d|D]=)(?<group>.*?)(?:;)", SanitizeValue)
-                {
-                    GroupForReplace = "group"
-                },
-                new BodyRegexSanitizer("(?:<PrimaryKey>)(?<group>.*)(?:</PrimaryKey>)", SanitizeValue)
-                {
-                    GroupForReplace = "group"
-                },
-                new BodyRegexSanitizer("(?:<SecondaryKey>)(?<group>.*)(?:</SecondaryKey>)", SanitizeValue)
-                {
-                    GroupForReplace = "group"
-                },
-                new BodyRegexSanitizer("-----BEGIN PRIVATE KEY-----\\\\n(.+\\\\n)*-----END PRIVATE KEY-----\\\\n", SanitizeValue)
             };
 
         /// <summary>
@@ -230,20 +117,7 @@ namespace Azure.Core.TestFramework
         /// <summary>
         /// The list of headers that will be sanitized on the request and response. By default, the "Authorization" header is included.
         /// </summary>
-        public List<string> SanitizedHeaders { get; } = new()
-        {
-            "aeg-sas-key",
-            "aeg-sas-token",
-            "api-key",
-            "Authorization",
-            "ServiceBusDlqSupplementaryAuthorization",
-            "ServiceBusSupplementaryAuthorization",
-            "subscription-key",
-            "x-ms-encryption-key",
-            "x-ms-copy-source-authorization",
-            "x-ms-file-rename-source-authorization",
-            "x-ms-encryption-key-sha256",
-        };
+        public List<string> SanitizedHeaders { get; } = new();
 
         /// <summary>
         /// The list of query parameters that will be sanitized on the request and response URIs.
@@ -268,25 +142,21 @@ namespace Azure.Core.TestFramework
         /// </summary>
         public List<string> SanitizersToRemove { get; } = new()
         {
-            "AZSDK3430", // $..id
             "AZSDK1007", // SAS URL - this is added separately in BodyRegexSanitizers
             "AZSDK2003", // Location header
             "AZSDK2006", // x-ms-rename-source
             "AZSDK2007", // x-ms-file-rename-source
             "AZSDK2008", // x-ms-copy-source
-            "AZSDK2020", // "x-ms-request-id"
-            "AZSDK3000",
-            "AZSDK3003",
+            "AZSDK2020", // x-ms-request-id
             "AZSDK3420", // $..targetResourceId
             "AZSDK3423", // $..source
             "AZSDK3424", // $..to
             "AZSDK3425", // $..from
-            "AZSDK3429",
+            "AZSDK3430", // $..id
             "AZSDK3433", // $..userId
             "AZSDK3447", // $.key - app config key
             "AZSDK3451", // $..storageContainerUri - used for mixed reality - no sas token
             "AZSDK3478", // $..accountName
-            "AZSDK3479", // $..applicationId
             "AZSDK3488", // $..targetResourceRegion
             "AZSDK3490", // $..etag
             "AZSDK3491", // $..functionUri
@@ -294,7 +164,7 @@ namespace Azure.Core.TestFramework
             "AZSDK3494", // $..friendlyName
             "AZSDK3495", // $..targetModelLocation
             "AZSDK3496", // $..resourceLocation
-            "AZSDK4001",
+            "AZSDK4001", // host name regex
         };
 
         /// <summary>
