@@ -19,6 +19,6 @@ namespace Azure.Provisioning.PostgreSql
         {
         }
 
-        private static string GetParameterValue(Parameter parameter) => parameter.IsFromOutput ? parameter.Value! : parameter.Name;
+        private static string GetParameterValue(Parameter parameter) => parameter.IsFromOutput ? parameter.Value!.ToString()! : parameter.Name;
     }
 }
