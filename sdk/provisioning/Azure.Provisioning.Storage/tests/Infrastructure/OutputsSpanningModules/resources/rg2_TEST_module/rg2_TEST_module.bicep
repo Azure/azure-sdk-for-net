@@ -13,5 +13,8 @@ resource storageAccount_UIohQXEH1 'Microsoft.Storage/storageAccounts@2022-09-01'
   }
   kind: STORAGE_KIND
   properties: {
+    networkAcls: {
+      defaultAction: 'Deny'
+    }
   }
 }

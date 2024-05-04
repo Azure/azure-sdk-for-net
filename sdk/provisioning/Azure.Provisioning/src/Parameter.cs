@@ -17,18 +17,27 @@ namespace Azure.Provisioning
         /// Gets the name of the parameter.
         /// </summary>
         public string Name { get; }
+
         /// <summary>
         /// Gets the description of the parameter.
         /// </summary>
         public string? Description { get; }
+
         /// <summary>
         /// Gets the default value of the parameter.
         /// </summary>
         public object? DefaultValue { get; }
+
         /// <summary>
         /// Gets a value indicating whether the parameter is secure.
         /// </summary>
         public bool IsSecure { get; }
+
+        /// <summary>
+        /// Gets the kind of the parameter.
+        /// </summary>
+        public ParameterKind Kind { get; }
+
         /// <summary>
         /// Gets a value indicating whether the parameter is an expression.
         /// </summary>
@@ -79,12 +88,14 @@ namespace Azure.Provisioning
         /// Initializes a new instance of the <see cref="Parameter"/>.
         /// </summary>
         /// <param name="name">The parameter name.</param>
+        /// <param name="kind">The parameter kind.</param>
         /// <param name="description">The parameter description.</param>
         /// <param name="defaultValue">The parameter defaultValue.</param>
         /// <param name="isSecure">Is the parameter secure.</param>
-        public Parameter(string name, string? description = default, object? defaultValue = default, bool isSecure = false)
+        public Parameter(string name, ParameterKind kind = ParameterKind.String, string? description = default, object? defaultValue = default, bool isSecure = false)
         {
             Name = name;
+            Kind = kind;
             Description = description;
             DefaultValue = defaultValue;
             IsSecure = isSecure;
@@ -98,7 +109,7 @@ namespace Azure.Provisioning
         /// <param name="isSecure">Is the parameter secure.</param>
         /// <param name="isExpression">Is the parameter an expression.</param>
         internal Parameter(string name, string? description, object? defaultValue = default, bool isSecure = false, bool isExpression = false)
-        : this (name, description, defaultValue, isSecure)
+        : this(name, ParameterKind.String, description, defaultValue, isSecure)
         {
             IsExpression = isExpression;
         }

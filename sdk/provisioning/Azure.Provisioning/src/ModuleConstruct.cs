@@ -221,16 +221,41 @@ namespace Azure.Provisioning
                 {
                     continue;
                 }
-                string defaultValue =
-                    parameter.DefaultValue is null ?
-                        string.Empty :
-                        parameter.IsExpression ? $" = {parameter.DefaultValue}" : $" = '{parameter.DefaultValue}'";
 
                 if (parameter.IsSecure)
+                {
                     stream.WriteLine($"@secure()");
+                }
 
                 stream.WriteLine($"@description('{parameter.Description}')");
-                stream.WriteLine($"param {parameter.Name} string{defaultValue}{Environment.NewLine}");
+                stream.WriteLine($"param {parameter.Name} {parameter.Kind.ToString().ToLower()}{GetDefaultValue(parameter)}{Environment.NewLine}");
+            }
+        }
+
+        private string GetDefaultValue(Parameter parameter)
+        {
+            if (parameter.DefaultValue is null)
+            {
+                return string.Empty;
+            }
+
+            if (parameter.IsExpression)
+            {
+                return $" = {parameter.DefaultValue}";
+            }
+
+            switch (parameter.Kind)
+            {
+                case ParameterKind.Bool:
+                    return $" = {parameter.DefaultValue.ToString()!.ToLower()}";
+                case ParameterKind.Int:
+                case ParameterKind.Array:
+                case ParameterKind.Object:
+                    return $" = {parameter.DefaultValue}";
+                case ParameterKind.String:
+                    return $" = '{parameter.DefaultValue}'";
+                default:
+                    throw new NotSupportedException("Invalid parameter kind.");
             }
         }
 

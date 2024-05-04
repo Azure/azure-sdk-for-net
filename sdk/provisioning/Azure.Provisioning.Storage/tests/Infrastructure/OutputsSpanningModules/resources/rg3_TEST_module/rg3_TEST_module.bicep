@@ -13,5 +13,8 @@ resource storageAccount_TtwZtKQQ1 'Microsoft.Storage/storageAccounts@2022-09-01'
   }
   kind: 'Storage'
   properties: {
+    networkAcls: {
+      defaultAction: 'Deny'
+    }
   }
 }

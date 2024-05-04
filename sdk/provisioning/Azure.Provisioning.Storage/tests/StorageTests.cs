@@ -25,8 +25,17 @@ namespace Azure.Provisioning.Storage.Tests
             var infra = new TestInfrastructure();
             var storageAccount = infra.AddStorageAccount(name: "photoAcct", sku: StorageSkuName.PremiumLrs, kind: StorageKind.BlockBlobStorage);
             infra.AddBlobService();
-            infra.Build(GetOutputPath());
+            storageAccount.AssignProperty(a => a.PrimaryEndpoints,
+                new Parameter(
+                    "primaryEndpoints",
+                    ParameterKind.Object,
+                    defaultValue: "{ " +
+                                  "'blob': 'https://photoacct.blob.core.windows.net/' " + Environment.NewLine +
+                                  "'file': 'https://photoacct.file.core.windows.net/' " + Environment.NewLine +
+                                    "'queue': 'https://photoacct.queue.core.windows.net/' " + Environment.NewLine +
+                                  "}"));
 
+            infra.Build(GetOutputPath());
             await ValidateBicepAsync();
         }
 
@@ -115,7 +124,7 @@ namespace Azure.Provisioning.Storage.Tests
             var output1 = storageAccount1.AddOutput("STORAGE_KIND", data => data.Kind);
 
             KeyVaults.KeyVault keyVault = infra.AddKeyVault(resourceGroup: rg1);
-            keyVault.AssignProperty(data => data.Properties.EnableSoftDelete, new Parameter("enableSoftDelete", "Enable soft delete", defaultValue: true, isSecure: false));
+            keyVault.AssignProperty(data => data.Properties.EnableSoftDelete, new Parameter("enableSoftDelete", description: "Enable soft delete", defaultValue: true, isSecure: false));
 
             var storageAccount2 = infra.AddStorageAccount(kind: StorageKind.Storage, sku: StorageSkuName.StandardGrs, parent: rg2);
 
