@@ -31,3 +31,4 @@ resource keyVault_67efR8a7Y 'Microsoft.KeyVault/vaults@2022-07-01' = {
 }
 
 output STORAGE_KIND string = storageAccount_HrOuDaeNb.kind
+output PRIMARY_ENDPOINTS object = storageAccount_HrOuDaeNb.properties.primaryEndpoints

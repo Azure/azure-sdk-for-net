@@ -36,7 +36,7 @@ namespace Azure.Provisioning
         /// <summary>
         /// Gets the kind of the parameter.
         /// </summary>
-        public ParameterKind Kind { get; }
+        public BicepKind Kind { get; }
 
         /// <summary>
         /// Gets a value indicating whether the parameter is an expression.
@@ -70,6 +70,7 @@ namespace Azure.Provisioning
             IsSecure = output.IsSecure;
             Value = output.Value;
             Source = output.Source;
+            Kind = output.Kind;
             Output = output;
         }
 
@@ -92,7 +93,7 @@ namespace Azure.Provisioning
         /// <param name="description">The parameter description.</param>
         /// <param name="defaultValue">The parameter defaultValue.</param>
         /// <param name="isSecure">Is the parameter secure.</param>
-        public Parameter(string name, ParameterKind kind = ParameterKind.String, string? description = default, object? defaultValue = default, bool isSecure = false)
+        public Parameter(string name, BicepKind kind = BicepKind.String, string? description = default, object? defaultValue = default, bool isSecure = false)
         {
             Name = name;
             Kind = kind;
@@ -109,7 +110,7 @@ namespace Azure.Provisioning
         /// <param name="isSecure">Is the parameter secure.</param>
         /// <param name="isExpression">Is the parameter an expression.</param>
         internal Parameter(string name, string? description, object? defaultValue = default, bool isSecure = false, bool isExpression = false)
-        : this(name, ParameterKind.String, description, defaultValue, isSecure)
+        : this(name, BicepKind.String, description, defaultValue, isSecure)
         {
             IsExpression = isExpression;
         }

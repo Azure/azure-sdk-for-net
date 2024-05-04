@@ -182,18 +182,36 @@ namespace Azure.Provisioning
             GetAllOutputsRecursive(this, outputsToWrite, false);
             foreach (var output in outputsToWrite)
             {
-                string value;
-                if (output.IsLiteral || ReferenceEquals(this, output.Resource.ModuleScope))
-                {
-                    value = output.IsLiteral ? $"'{output.Value}'" : output.Value;
-                }
-                else
-                {
-                    value = $"{output.Resource.ModuleScope!.Name}.outputs.{output.Name}";
-                }
-                string name = output.Name;
-                stream.WriteLine($"output {name} string = {value}");
+                stream.WriteLine(GetOutputString(output));
             }
+        }
+
+        private string GetOutputString(Output output)
+        {
+            string value;
+
+            if (output.IsLiteral)
+            {
+                value = output.Kind switch
+                {
+                    BicepKind.Bool => output.Value.ToLower(),
+                    BicepKind.Int => output.Value,
+                    BicepKind.Array => output.Value,
+                    BicepKind.Object => output.Value,
+                    BicepKind.String => $"'{output.Value}'",
+                    _ => throw new NotSupportedException("Invalid output kind.")
+                };
+            }
+            else if (ReferenceEquals(this, output.Resource.ModuleScope))
+            {
+                value = output.Value;
+            }
+            else
+            {
+                value = $"{output.Resource.ModuleScope!.Name}.outputs.{output.Name}";
+            }
+
+            return $"output {output.Name} {output.Kind.ToString().ToLower()} = {value}";
         }
 
         private void GetAllOutputsRecursive(IConstruct construct, HashSet<Output> visited, bool isChild)
@@ -246,13 +264,13 @@ namespace Azure.Provisioning
 
             switch (parameter.Kind)
             {
-                case ParameterKind.Bool:
+                case BicepKind.Bool:
                     return $" = {parameter.DefaultValue.ToString()!.ToLower()}";
-                case ParameterKind.Int:
-                case ParameterKind.Array:
-                case ParameterKind.Object:
+                case BicepKind.Int:
+                case BicepKind.Array:
+                case BicepKind.Object:
                     return $" = {parameter.DefaultValue}";
-                case ParameterKind.String:
+                case BicepKind.String:
                     return $" = '{parameter.DefaultValue}'";
                 default:
                     throw new NotSupportedException("Invalid parameter kind.");

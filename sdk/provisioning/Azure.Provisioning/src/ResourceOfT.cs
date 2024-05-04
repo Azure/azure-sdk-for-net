@@ -100,12 +100,13 @@ namespace Azure.Provisioning
         /// <param name="propertySelector">A lambda expression to select the property to use as the source of the output.</param>
         /// <param name="isLiteral">Is the output literal.</param>
         /// <param name="isSecure">Is the output secure.</param>
+        /// <param name="kind">The kind of the output.</param>
         /// <returns>The <see cref="Output"/>.</returns>
-        public Output AddOutput(string outputName, Expression<Func<T, object?>> propertySelector, bool isLiteral = false, bool isSecure = false)
+        public Output AddOutput(string outputName, Expression<Func<T, object?>> propertySelector, bool isLiteral = false, bool isSecure = false, BicepKind kind = BicepKind.String)
         {
             (_, _, string expression) = EvaluateLambda(propertySelector, true);
 
-            return AddOutput(outputName, expression, isLiteral, isSecure);
+            return AddOutput(outputName, expression, isLiteral, isSecure, kind: kind);
         }
 
         /// <summary>
@@ -116,8 +117,9 @@ namespace Azure.Provisioning
         /// <param name="formattedString">A tokenized string containing the output.</param>
         /// <param name="isLiteral">Is the output literal.</param>
         /// <param name="isSecure">Is the output secure.</param>
+        /// <param name="kind">The kind of the output.</param>
         /// <returns>The <see cref="Output"/>.</returns>
-        public Output AddOutput(string outputName, string formattedString, Expression<Func<T, object?>> propertySelector, bool isLiteral = false, bool isSecure = false)
+        public Output AddOutput(string outputName, string formattedString, Expression<Func<T, object?>> propertySelector, bool isLiteral = false, bool isSecure = false, BicepKind kind = BicepKind.String)
         {
             (_, _, string expression) = EvaluateLambda(propertySelector, true);
 

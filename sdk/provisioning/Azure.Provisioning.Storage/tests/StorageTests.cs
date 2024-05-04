@@ -28,7 +28,7 @@ namespace Azure.Provisioning.Storage.Tests
             storageAccount.AssignProperty(a => a.PrimaryEndpoints,
                 new Parameter(
                     "primaryEndpoints",
-                    ParameterKind.Object,
+                    BicepKind.Object,
                     defaultValue: "{ " +
                                   "'blob': 'https://photoacct.blob.core.windows.net/' " + Environment.NewLine +
                                   "'file': 'https://photoacct.file.core.windows.net/' " + Environment.NewLine +
@@ -122,6 +122,7 @@ namespace Azure.Provisioning.Storage.Tests
             var storageAccount1 = infra.AddStorageAccount(kind: StorageKind.Storage, sku: StorageSkuName.StandardGrs, parent: rg1);
 
             var output1 = storageAccount1.AddOutput("STORAGE_KIND", data => data.Kind);
+            var output2 = storageAccount1.AddOutput("PRIMARY_ENDPOINTS", data => data.PrimaryEndpoints, kind: BicepKind.Object);
 
             KeyVaults.KeyVault keyVault = infra.AddKeyVault(resourceGroup: rg1);
             keyVault.AssignProperty(data => data.Properties.EnableSoftDelete, new Parameter("enableSoftDelete", description: "Enable soft delete", defaultValue: true, isSecure: false));
@@ -129,12 +130,13 @@ namespace Azure.Provisioning.Storage.Tests
             var storageAccount2 = infra.AddStorageAccount(kind: StorageKind.Storage, sku: StorageSkuName.StandardGrs, parent: rg2);
 
             storageAccount2.AssignProperty(data => data.Kind, new Parameter(output1));
+            storageAccount2.AssignProperty(data => data.PrimaryEndpoints, new Parameter(output2));
 
             infra.AddStorageAccount(kind: StorageKind.Storage, sku: StorageSkuName.StandardGrs, parent: rg3);
             infra.Build(GetOutputPath());
 
-            Assert.AreEqual(2, infra.GetParameters().Count());
-            Assert.AreEqual(1, infra.GetOutputs().Count());
+            Assert.AreEqual(3, infra.GetParameters().Count());
+            Assert.AreEqual(2, infra.GetOutputs().Count());
 
             await ValidateBicepAsync();
         }
