@@ -1,14 +1,28 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0-beta.1 (2024-05-07)
 
 ### Features Added
+- Added Synchronous document translation API: {RESOURCE}/translator/document:translate?api-version=[Date]
 
 ### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- The `api-version` is `2024-05-01` which is now part of the query string instead of path 
+- Version `v1.0` is not supported
+- `Start Translation` API is updated from {RESOURCE}/translator/text/batch/v1.0/batches to {RESOURCE}/translator/document/batches?api-version=[Date] 
+- `Get Tranlations Status` API is updated from {RESOURCE}/translator/text/batch/v1.1/batches to {RESOURCE}/translator/document/batches?api-version=[Date] 
+- `Get Tranlation Status` API is updated from {RESOURCE}/translator/text/batch/v1.1/batches/{id} to {RESOURCE}/translator/document/batches/{id}?api-version=  [Date] 
+- `Get Documents Status` API is updated from {RESOURCE}/translator/text/batch/v1.1/batches/{id}/documents to {RESOURCE}/translator/document/batches/{id}/documents?api-version=[Date] 
+- `Get Document Status` API is updated from {RESOURCE}/translator/text/batch/v1.1/batches/{id}/documents/{documentId} to {RESOURCE}/translator/document/batches/{id}/documents/{documentId}?api-version=[Date] 
+- `Cancel Translation` API is updated from {RESOURCE}/translator/text/batch/v1.1/batches/{id} to {RESOURCE}/translator/document/batches/{id}?api-version=[Date] 
+- `Get Supported Documents` API is updated from {RESOURCE}/translator/text/batch/v1.1/documents/formats to {RESOURCE}/translator/document/formats?api-version=[Date]&type=document 
+- `Get Supported Glossaries` API is updated from {RESOURCE}/translator/text/batch/v1.1/glossaries/formats to {RESOURCE}/translator/document/formats?api-version=[Date]&type=glossary 
+- `Get Supported Storage Sources` API was {RESOURCE}/translator/text/batch/v1.1/storagesources and is now dropped
+- The following `Get Translations Status` request query parameters that specify the number of results to return and an offset for the collection are updated:
+	- $top to top
+	- $skip to skip
+	- $maxpagesize to maxpagesize
+	- $orderBy to orderby
+- Renamed property `FormatType` to `FileFormatType`
 
 ## 1.0.0 (2022-06-07)
 
