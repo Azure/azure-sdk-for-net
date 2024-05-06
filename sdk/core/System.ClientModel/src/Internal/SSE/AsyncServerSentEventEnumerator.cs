@@ -31,13 +31,6 @@ internal sealed class AsyncServerSentEventEnumerator : IAsyncEnumerator<ServerSe
             throw new ObjectDisposedException(nameof(AsyncServerSentEventEnumerator));
         }
 
-        if (_cancellationToken.IsCancellationRequested)
-        {
-            // TODO: correct to return false in this case?
-            // Or do we throw TaskCancelledException?
-            return false;
-        }
-
         ServerSentEvent? nextEvent = await _reader.TryGetNextEventAsync(_cancellationToken).ConfigureAwait(false);
         if (nextEvent.HasValue)
         {

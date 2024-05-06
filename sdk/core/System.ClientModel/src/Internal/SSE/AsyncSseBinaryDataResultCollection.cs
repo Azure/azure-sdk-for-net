@@ -35,7 +35,6 @@ internal class AsyncSseBinaryDataResultCollection : AsyncResultCollection<Binary
     {
         private AsyncServerSentEventEnumerator? _events;
         private BinaryData? _current;
-        private readonly CancellationToken _cancellationToken;
 
         // TODO: is null supression the correct pattern here?
         public BinaryData Current { get => _current!; }
@@ -44,20 +43,11 @@ internal class AsyncSseBinaryDataResultCollection : AsyncResultCollection<Binary
         {
             Debug.Assert(contentStream is not null);
 
-            // TODO: concerns about passing cancellationToken twice?
             _events = new(contentStream!, cancellationToken);
-            _cancellationToken = cancellationToken;
         }
 
         public async ValueTask<bool> MoveNextAsync()
         {
-            if (_cancellationToken.IsCancellationRequested)
-            {
-                // TODO: correct to return false in this case?
-                // Or do we throw TaskCancelledException?
-                return false;
-            }
-
             if (_events is null)
             {
                 throw new ObjectDisposedException(nameof(AsyncSseDataEnumerator));

@@ -37,8 +37,11 @@ internal sealed class ServerSentEventReader : IDisposable, IAsyncDisposable
         }
 
         List<ServerSentEventField>? fields = default;
-        while (!cancellationToken.IsCancellationRequested)
+        while (true)
         {
+            cancellationToken.ThrowIfCancellationRequested();
+
+            // TODO: Pass cancellationToken?
             string? line = _reader.ReadLine();
 
             if (line == null)
@@ -67,8 +70,6 @@ internal sealed class ServerSentEventReader : IDisposable, IAsyncDisposable
                 fields.Add(new ServerSentEventField(line));
             }
         }
-
-        return null;
     }
 
     /// <summary>
@@ -87,8 +88,10 @@ internal sealed class ServerSentEventReader : IDisposable, IAsyncDisposable
         }
 
         List<ServerSentEventField>? fields = default;
-        while (!cancellationToken.IsCancellationRequested)
+        while (true)
         {
+            cancellationToken.ThrowIfCancellationRequested();
+
             string? line = await _reader.ReadLineAsync().ConfigureAwait(false);
 
             if (line == null)
@@ -117,8 +120,6 @@ internal sealed class ServerSentEventReader : IDisposable, IAsyncDisposable
                 fields.Add(new ServerSentEventField(line));
             }
         }
-
-        return null;
     }
 
     public void Dispose()

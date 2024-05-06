@@ -79,9 +79,9 @@ public class ClientResultCollectionTests : SyncAsyncTestBase
         AsyncResultCollection<BinaryData> results = AsyncResultCollection<BinaryData>.Create(response);
 
         int i = 0;
-        await foreach (BinaryData value in results)
+        await foreach (BinaryData result in results)
         {
-            MockJsonModel model = value.ToObjectFromJson<MockJsonModel>();
+            MockJsonModel model = result.ToObjectFromJson<MockJsonModel>();
 
             Assert.AreEqual(model.IntValue, i);
             Assert.AreEqual(model.StringValue, i.ToString());
@@ -114,7 +114,7 @@ public class ClientResultCollectionTests : SyncAsyncTestBase
     }
 
     [Test]
-    public async Task CanEnumerateModelValuesWithCancellationToken()
+    public void ModelCollectionThrowsIfCancelled()
     {
         MockPipelineResponse response = new();
         response.SetContent(_mockContent);
@@ -130,21 +130,16 @@ public class ClientResultCollectionTests : SyncAsyncTestBase
         // Set it to `cancelled: true` to validate functionality.
         CancellationToken token = new(true);
 
-        int i = 0;
-        await foreach (MockJsonModel model in results.WithCancellation(token))
+        Assert.ThrowsAsync<OperationCanceledException>(async () =>
         {
-            Assert.AreEqual(model.IntValue, i);
-            Assert.AreEqual(model.StringValue, i.ToString());
-
-            i++;
-        }
-
-        // Don't enumerate any because token was cancelled.
-        Assert.AreEqual(i, 0);
+            await foreach (MockJsonModel model in results.WithCancellation(token))
+            {
+            }
+        });
     }
 
     [Test]
-    public async Task CanEnumerateBinaryDataValuesWithCancellationToken()
+    public void BinaryDataCollectionThrowsIfCancelled()
     {
         MockPipelineResponse response = new();
         response.SetContent(_mockContent);
@@ -154,19 +149,12 @@ public class ClientResultCollectionTests : SyncAsyncTestBase
         // Set it to `cancelled: true` to validate functionality.
         CancellationToken token = new(true);
 
-        int i = 0;
-        await foreach (BinaryData value in results.WithCancellation(token))
+        Assert.ThrowsAsync<OperationCanceledException>(async () =>
         {
-            MockJsonModel model = value.ToObjectFromJson<MockJsonModel>();
-
-            Assert.AreEqual(model.IntValue, i);
-            Assert.AreEqual(model.StringValue, i.ToString());
-
-            i++;
-        }
-
-        // Don't enumerate any because token was cancelled.
-        Assert.AreEqual(i, 0);
+            await foreach (BinaryData result in results.WithCancellation(token))
+            {
+            }
+        });
     }
 
     #region Helpers

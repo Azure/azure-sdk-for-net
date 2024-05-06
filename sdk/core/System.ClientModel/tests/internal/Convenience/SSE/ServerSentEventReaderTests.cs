@@ -4,6 +4,7 @@
 using System.ClientModel.Internal;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
@@ -37,6 +38,18 @@ public class ServerSentEventReaderTests
         }
 
         // TODO: Question - should this include the "done" event?  Probably yes?
+    }
+
+    [Test]
+    public void ThrowsIfCancelled()
+    {
+        CancellationToken token = new(true);
+
+        using Stream contentStream = BinaryData.FromString(_mockContent).ToStream();
+        using ServerSentEventReader reader = new(contentStream);
+
+        Assert.ThrowsAsync<OperationCanceledException>(async ()
+            => await reader.TryGetNextEventAsync(token));
     }
 
     #region Helpers

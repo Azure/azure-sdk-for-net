@@ -30,7 +30,7 @@ internal class AsyncSseValueResultCollection<T> : AsyncResultCollection<T>
     private sealed class AsyncSseValueEnumerator : IAsyncEnumerator<T>
     {
         private readonly Func<Task<ClientResult>> _getResultAsync;
-        private readonly AsyncSseValueResultCollection<T> _resultCollection;
+        private readonly AsyncSseValueResultCollection<T> _enumerable;
         private readonly CancellationToken _cancellationToken;
 
         private AsyncServerSentEventEnumerator? _events;
@@ -41,13 +41,13 @@ internal class AsyncSseValueResultCollection<T> : AsyncResultCollection<T>
         // TODO: is null supression the correct pattern here?
         public T Current { get => _current!; }
 
-        public AsyncSseValueEnumerator(Func<Task<ClientResult>> getResultAsync, AsyncSseValueResultCollection<T> resultCollection, CancellationToken cancellationToken)
+        public AsyncSseValueEnumerator(Func<Task<ClientResult>> getResultAsync, AsyncSseValueResultCollection<T> enumerable, CancellationToken cancellationToken)
         {
             Debug.Assert(getResultAsync is not null);
-            Debug.Assert(resultCollection is not null);
+            Debug.Assert(enumerable is not null);
 
             _getResultAsync = getResultAsync!;
-            _resultCollection = resultCollection!;
+            _enumerable = enumerable!;
             _cancellationToken = cancellationToken;
         }
 
@@ -58,12 +58,7 @@ internal class AsyncSseValueResultCollection<T> : AsyncResultCollection<T>
                 throw new ObjectDisposedException(nameof(AsyncSseValueEnumerator));
             }
 
-            if (_cancellationToken.IsCancellationRequested)
-            {
-                // TODO: correct to return false in this case?
-                // Or do we throw TaskCancelledException?
-                return false;
-            }
+            _cancellationToken.ThrowIfCancellationRequested();
 
             // TODO: refactor for clarity
             // Lazily initialize
@@ -73,7 +68,7 @@ internal class AsyncSseValueResultCollection<T> : AsyncResultCollection<T>
                 // the closure and doesn't need to be passed?  Or ... no?
                 ClientResult result = await _getResultAsync().ConfigureAwait(false);
                 PipelineResponse response = result.GetRawResponse();
-                _resultCollection.SetRawResponse(response);
+                _enumerable.SetRawResponse(response);
 
                 if (response.ContentStream is null)
                 {

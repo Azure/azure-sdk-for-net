@@ -3,6 +3,7 @@
 
 using System.ClientModel.Internal;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
@@ -11,7 +12,7 @@ namespace System.ClientModel.Tests.Convenience;
 public class AsyncServerSentEventEnumeratorTests
 {
     [Test]
-    public async Task EnumeratesSingleEvents()
+    public async Task EnumeratesEvents()
     {
         using Stream contentStream = BinaryData.FromString(_mockContent).ToStream();
         AsyncServerSentEventEnumerator enumerator = new(contentStream);
@@ -28,6 +29,17 @@ public class AsyncServerSentEventEnumeratorTests
         }
 
         Assert.AreEqual(i, 3);
+    }
+
+    [Test]
+    public void ThrowsIfCancelled()
+    {
+        CancellationToken token = new(true);
+
+        using Stream contentStream = BinaryData.FromString(_mockContent).ToStream();
+        AsyncServerSentEventEnumerator enumerator = new(contentStream, token);
+
+        Assert.ThrowsAsync<OperationCanceledException>(async () => await enumerator.MoveNextAsync());
     }
 
     // TODO: Add tests for dispose and handling cancellation token
