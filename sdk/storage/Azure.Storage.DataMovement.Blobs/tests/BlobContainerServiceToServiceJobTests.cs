@@ -54,6 +54,30 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             return mock;
         }
 
+        private Mock<PageBlobStorageResource> GetMockPageBlobResource(string blobName)
+        {
+            Mock<PageBlobStorageResource> mock = new Mock<PageBlobStorageResource>();
+            mock.Setup(r => r.Uri).Returns(new Uri($"https://account.blob.core.windows.net/container/{blobName}"));
+            mock.Setup(r => r.ResourceId).Returns("PageBlob");
+            mock.Setup(r => r.GetSourceCheckpointData())
+                .Returns(new MockResourceCheckpointData());
+            mock.Setup(r => r.GetDestinationCheckpointData())
+                .Returns(new MockResourceCheckpointData());
+            return mock;
+        }
+
+        private Mock<AppendBlobStorageResource> GetMockAppendBlobResource(string blobName)
+        {
+            Mock<AppendBlobStorageResource> mock = new Mock<AppendBlobStorageResource>();
+            mock.Setup(r => r.Uri).Returns(new Uri($"https://account.blob.core.windows.net/container/{blobName}"));
+            mock.Setup(r => r.ResourceId).Returns("AppendBlob");
+            mock.Setup(r => r.GetSourceCheckpointData())
+                .Returns(new MockResourceCheckpointData());
+            mock.Setup(r => r.GetDestinationCheckpointData())
+                .Returns(new MockResourceCheckpointData());
+            return mock;
+        }
+
         private static async IAsyncEnumerable<StorageResourceItem> GetStorageResourceItemsAsyncEnumerable(List<StorageResourceItem> items)
         {
             foreach (var item in items)
@@ -113,7 +137,66 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             foreach (var item in destinationItems)
             {
                 Assert.IsTrue(blobItems.Any(b => new BlobUriBuilder(b.Uri).BlobName == new BlobUriBuilder(item.Uri).BlobName));
+                Assert.IsTrue(item is BlockBlobStorageResource);
             }
+        }
+
+        [Test]
+        public async Task ProcessJobToJobPartAsync_AllBlobTypes()
+        {
+            string transferId = Guid.NewGuid().ToString();
+            Mock<BlobStorageResourceContainer> sourceMock = GetMockBlobContainerResource();
+            Mock<BlobStorageResourceContainer> destinationMock = GetMockBlobContainerResource();
+
+            Mock<TransferJobInternal.QueueChunkTaskInternal> mockPartQueueChunkTask = MockQueueInternalTasks.GetQueueChunkTask();
+
+            // Set up default checkpointer with transfer job
+            LocalTransferCheckpointer checkpointer = new(default);
+            await checkpointer.AddNewJobAsync(
+                transferId: transferId,
+                source: sourceMock.Object,
+                destination: destinationMock.Object);
+            // Arrange
+            // list of blobs in container
+            List<StorageResourceItem> blobItems = new List<StorageResourceItem>
+            {
+                GetMockBlockBlobResource("blockblob1").Object,
+                GetMockAppendBlobResource("appendblob1").Object,
+                GetMockPageBlobResource("pageblob1").Object,
+                GetMockBlockBlobResource("blockblob2").Object,
+                GetMockAppendBlobResource("appendblob2").Object,
+                GetMockBlockBlobResource("blockblob3").Object,
+            };
+            sourceMock.Setup(r => r.GetStorageResourcesAsync(It.IsAny<CancellationToken>()))
+                .Returns(GetStorageResourceItemsAsyncEnumerable(blobItems));
+            ServiceToServiceTransferJob transferJob = new ServiceToServiceTransferJob(
+                new DataTransfer(
+                    id: transferId,
+                    transferManager: new TransferManager()),
+                sourceMock.Object,
+                destinationMock.Object,
+                new DataTransferOptions(),
+                mockPartQueueChunkTask.Object,
+                checkpointer,
+                DataTransferErrorMode.StopOnAnyFailure,
+                ArrayPool<byte>.Shared,
+                new ClientDiagnostics(ClientOptions.Default));
+
+            // Act
+            List<StorageResourceItem> destinationItems = new List<StorageResourceItem>();
+            await foreach (JobPartInternal partItem in transferJob.ProcessJobToJobPartAsync())
+            {
+                destinationItems.Add(partItem._destinationResource);
+            }
+
+            // Assert / Verify
+            Assert.AreEqual(blobItems.Count, destinationItems.Count);
+            blobItems.Zip(destinationItems, (b, d) =>
+            {
+                Assert.AreEqual(new BlobUriBuilder(b.Uri).BlobName, new BlobUriBuilder(d.Uri).BlobName);
+                Assert.AreEqual(b.GetType(), d.GetType());
+                return true;
+            });
         }
     }
 }

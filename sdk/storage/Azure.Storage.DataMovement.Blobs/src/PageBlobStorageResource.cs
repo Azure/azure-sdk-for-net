@@ -43,6 +43,10 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </summary>
         protected override long? Length => ResourceProperties?.ResourceLength;
 
+        public PageBlobStorageResource()
+        {
+        }
+
         /// <summary>
         /// The constructor for a new instance of the <see cref="PageBlobStorageResource"/>
         /// class.

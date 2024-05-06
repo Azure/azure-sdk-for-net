@@ -42,6 +42,10 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </summary>
         protected override long? Length => ResourceProperties?.ResourceLength;
 
+        internal AppendBlobStorageResource()
+        {
+        }
+
         /// <summary>
         /// The constructor for a new instance of the <see cref="AppendBlobStorageResource"/>
         /// class.
