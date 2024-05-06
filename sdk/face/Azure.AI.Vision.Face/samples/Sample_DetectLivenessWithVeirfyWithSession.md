@@ -31,7 +31,7 @@ using var fileStream = new FileStream(FaceTestConstant.LocalSampleImage, FileMod
 
 var createResponse = await sessionClient.CreateLivenessWithVerifySessionAsync(parameters, fileStream);
 
-sessionId = createResponse.Value.SessionId;
+var sessionId = createResponse.Value.SessionId;
 Console.WriteLine($"Session created, SessionId: {sessionId}");
 Console.WriteLine($"AuthToken: {createResponse.Value.AuthToken}");
 Console.WriteLine($"VerifyImage.FaceRectangle: {createResponse.Value.VerifyImage.FaceRectangle.Top}, {createResponse.Value.VerifyImage.FaceRectangle.Left}, {createResponse.Value.VerifyImage.FaceRectangle.Width}, {createResponse.Value.VerifyImage.FaceRectangle.Height}");

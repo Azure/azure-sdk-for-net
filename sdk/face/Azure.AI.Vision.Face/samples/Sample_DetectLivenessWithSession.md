@@ -29,7 +29,7 @@ var createContent = new CreateLivenessSessionContent(LivenessOperationMode.Passi
 
 var createResponse = await sessionClient.CreateLivenessSessionAsync(createContent);
 
-sessionId = createResponse.Value.SessionId;
+var sessionId = createResponse.Value.SessionId;
 Console.WriteLine($"Session created, SessionId: {sessionId}");
 Console.WriteLine($"AuthToken: {createResponse.Value.AuthToken}");
 ```

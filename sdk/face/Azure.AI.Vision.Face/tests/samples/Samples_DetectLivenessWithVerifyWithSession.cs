@@ -13,32 +13,41 @@ namespace Azure.AI.Vision.Face.Samples
     public partial class FaceSamples
     {
         [RecordedTest]
-        [TestCase("", true)]
-        //[TestCase("", false)] // Use this case to create a new session and perform liveness detection with liveness SDK
-        //[TestCase("cc3fc6b7-33bd-4137-9e8d-eb83e150c525", false)] // Replace session id with your session which sent underlying liveness request with
-        public async Task SessionSample_DetectLivenessWithVerifySession(string sessionId, bool deleteSession)
+        [TestCase(true)] // Change deleteSession to false to keep the session and perform liveness detection with liveness SDK
+        public async Task SessionSample_DetectLivenessWithVerifySession(bool deleteSession)
         {
             var sessionClient = CreateSessionClient();
 
-            if (string.IsNullOrEmpty(sessionId))
+            #region Snippet:CreateLivenessWithVerifySession
+            var parameters = new CreateLivenessSessionContent(LivenessOperationMode.Passive) {
+                SendResultsToClient = true,
+                DeviceCorrelationId = Guid.NewGuid().ToString(),
+            };
+
+            using var fileStream = new FileStream(FaceTestConstant.LocalSampleImage, FileMode.Open, FileAccess.Read);
+
+            var createResponse = await sessionClient.CreateLivenessWithVerifySessionAsync(parameters, fileStream);
+
+            var sessionId = createResponse.Value.SessionId;
+            Console.WriteLine($"Session created, SessionId: {sessionId}");
+            Console.WriteLine($"AuthToken: {createResponse.Value.AuthToken}");
+            Console.WriteLine($"VerifyImage.FaceRectangle: {createResponse.Value.VerifyImage.FaceRectangle.Top}, {createResponse.Value.VerifyImage.FaceRectangle.Left}, {createResponse.Value.VerifyImage.FaceRectangle.Width}, {createResponse.Value.VerifyImage.FaceRectangle.Height}");
+            Console.WriteLine($"VerifyImage.QualityForRecognition: {createResponse.Value.VerifyImage.QualityForRecognition}");
+            #endregion
+
+            if (deleteSession)
             {
-                #region Snippet:CreateLivenessWithVerifySession
-                var parameters = new CreateLivenessSessionContent(LivenessOperationMode.Passive) {
-                    SendResultsToClient = true,
-                    DeviceCorrelationId = Guid.NewGuid().ToString(),
-                };
-
-                using var fileStream = new FileStream(FaceTestConstant.LocalSampleImage, FileMode.Open, FileAccess.Read);
-
-                var createResponse = await sessionClient.CreateLivenessWithVerifySessionAsync(parameters, fileStream);
-
-                sessionId = createResponse.Value.SessionId;
-                Console.WriteLine($"Session created, SessionId: {sessionId}");
-                Console.WriteLine($"AuthToken: {createResponse.Value.AuthToken}");
-                Console.WriteLine($"VerifyImage.FaceRectangle: {createResponse.Value.VerifyImage.FaceRectangle.Top}, {createResponse.Value.VerifyImage.FaceRectangle.Left}, {createResponse.Value.VerifyImage.FaceRectangle.Width}, {createResponse.Value.VerifyImage.FaceRectangle.Height}");
-                Console.WriteLine($"VerifyImage.QualityForRecognition: {createResponse.Value.VerifyImage.QualityForRecognition}");
+                #region Snippet:DeleteLivenessWithVerifySession
+                await sessionClient.DeleteLivenessWithVerifySessionAsync(sessionId);
                 #endregion
             }
+        }
+
+        [Ignore("Enable this case when you have performed liveness operation with liveness SDK")]
+        [TestCase("cc3fc6b7-33bd-4137-9e8d-eb83e150c525")] // Replace session id with your session which sent underlying liveness request with liveness SDK to get the result
+        public async Task SessionSample_GetDetectLivenessWithVerifySessionResult(string sessionId)
+        {
+            var sessionClient = CreateSessionClient();
 
             #region Snippet:GetLivenessWithVerifySessionResult
             var getResultResponse = await sessionClient.GetLivenessWithVerifySessionResultAsync(sessionId);
@@ -62,13 +71,6 @@ namespace Azure.AI.Vision.Face.Samples
                 WriteLivenessWithVerifySessionAuditEntry(auditEntry);
             }
             #endregion
-
-            if (deleteSession)
-            {
-                #region Snippet:DeleteLivenessWithVerifySession
-                await sessionClient.DeleteLivenessWithVerifySessionAsync(sessionId);
-                #endregion
-            }
         }
 
         #region Snippet:WriteLivenessWithVerifySessionAuditEntry
