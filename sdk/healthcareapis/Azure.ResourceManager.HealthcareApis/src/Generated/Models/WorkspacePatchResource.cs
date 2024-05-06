@@ -11,17 +11,17 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
     /// <summary> Workspace patch properties. </summary>
-    public partial class HealthcareApisWorkspacePatch : HealthcareApisResourceTags
+    public partial class WorkspacePatchResource : HealthcareApisResourceTags
     {
-        /// <summary> Initializes a new instance of <see cref="HealthcareApisWorkspacePatch"/>. </summary>
-        public HealthcareApisWorkspacePatch()
+        /// <summary> Initializes a new instance of <see cref="WorkspacePatchResource"/>. </summary>
+        public WorkspacePatchResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="HealthcareApisWorkspacePatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkspacePatchResource"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HealthcareApisWorkspacePatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(tags, serializedAdditionalRawData)
+        internal WorkspacePatchResource(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(tags, serializedAdditionalRawData)
         {
         }
     }

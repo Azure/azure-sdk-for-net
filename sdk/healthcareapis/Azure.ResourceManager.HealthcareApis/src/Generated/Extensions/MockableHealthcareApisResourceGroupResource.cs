@@ -8,13 +8,25 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.ResourceManager.HealthcareApis.Models;
 
 namespace Azure.ResourceManager.HealthcareApis.Mocking
 {
     /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
     public partial class MockableHealthcareApisResourceGroupResource : ArmResource
     {
+        private ClientDiagnostics _workspacesClientDiagnostics;
+        private WorkspacesRestOperations _workspacesRestClient;
+        private ClientDiagnostics _dicomServicesClientDiagnostics;
+        private DicomServicesRestOperations _dicomServicesRestClient;
+        private ClientDiagnostics _iotConnectorsClientDiagnostics;
+        private IotConnectorsRestOperations _iotConnectorsRestClient;
+        private ClientDiagnostics _fhirServicesClientDiagnostics;
+        private FhirServicesRestOperations _fhirServicesRestClient;
+
         /// <summary> Initializes a new instance of the <see cref="MockableHealthcareApisResourceGroupResource"/> class for mocking. </summary>
         protected MockableHealthcareApisResourceGroupResource()
         {
@@ -26,6 +38,15 @@ namespace Azure.ResourceManager.HealthcareApis.Mocking
         internal MockableHealthcareApisResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
+
+        private ClientDiagnostics WorkspacesClientDiagnostics => _workspacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HealthcareApis", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private WorkspacesRestOperations WorkspacesRestClient => _workspacesRestClient ??= new WorkspacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics DicomServicesClientDiagnostics => _dicomServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HealthcareApis", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private DicomServicesRestOperations DicomServicesRestClient => _dicomServicesRestClient ??= new DicomServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics IotConnectorsClientDiagnostics => _iotConnectorsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HealthcareApis", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private IotConnectorsRestOperations IotConnectorsRestClient => _iotConnectorsRestClient ??= new IotConnectorsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics FhirServicesClientDiagnostics => _fhirServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HealthcareApis", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private FhirServicesRestOperations FhirServicesRestClient => _fhirServicesRestClient ??= new FhirServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -102,11 +123,281 @@ namespace Azure.ResourceManager.HealthcareApis.Mocking
             return GetHealthcareApisServices().Get(resourceName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of HealthcareApisWorkspaceResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of HealthcareApisWorkspaceResources and their operations over a HealthcareApisWorkspaceResource. </returns>
-        public virtual HealthcareApisWorkspaceCollection GetHealthcareApisWorkspaces()
+        /// <summary> Gets a collection of HealthcareApisWorkspacePrivateEndpointConnectionResources in the ResourceGroupResource. </summary>
+        /// <param name="workspaceName"> The name of workspace resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> An object representing collection of HealthcareApisWorkspacePrivateEndpointConnectionResources and their operations over a HealthcareApisWorkspacePrivateEndpointConnectionResource. </returns>
+        public virtual HealthcareApisWorkspacePrivateEndpointConnectionCollection GetHealthcareApisWorkspacePrivateEndpointConnections(string workspaceName)
         {
-            return GetCachedClient(client => new HealthcareApisWorkspaceCollection(client, Id));
+            return new HealthcareApisWorkspacePrivateEndpointConnectionCollection(Client, Id, workspaceName);
+        }
+
+        /// <summary>
+        /// Gets the specified private endpoint connection associated with the workspace.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspacePrivateEndpointConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthcareApisWorkspacePrivateEndpointConnectionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The name of workspace resource. </param>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<HealthcareApisWorkspacePrivateEndpointConnectionResource>> GetHealthcareApisWorkspacePrivateEndpointConnectionAsync(string workspaceName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            return await GetHealthcareApisWorkspacePrivateEndpointConnections(workspaceName).GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the specified private endpoint connection associated with the workspace.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspacePrivateEndpointConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthcareApisWorkspacePrivateEndpointConnectionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The name of workspace resource. </param>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<HealthcareApisWorkspacePrivateEndpointConnectionResource> GetHealthcareApisWorkspacePrivateEndpointConnection(string workspaceName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            return GetHealthcareApisWorkspacePrivateEndpointConnections(workspaceName).Get(privateEndpointConnectionName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of HealthcareApisWorkspacePrivateLinkResources in the ResourceGroupResource. </summary>
+        /// <param name="workspaceName"> The name of workspace resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> An object representing collection of HealthcareApisWorkspacePrivateLinkResources and their operations over a HealthcareApisWorkspacePrivateLinkResource. </returns>
+        public virtual HealthcareApisWorkspacePrivateLinkResourceCollection GetHealthcareApisWorkspacePrivateLinkResources(string workspaceName)
+        {
+            return new HealthcareApisWorkspacePrivateLinkResourceCollection(Client, Id, workspaceName);
+        }
+
+        /// <summary>
+        /// Gets a private link resource that need to be created for a workspace.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/privateLinkResources/{groupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspacePrivateLinkResources_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthcareApisWorkspacePrivateLinkResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The name of workspace resource. </param>
+        /// <param name="groupName"> The name of the private link resource group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="groupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<HealthcareApisWorkspacePrivateLinkResource>> GetHealthcareApisWorkspacePrivateLinkResourceAsync(string workspaceName, string groupName, CancellationToken cancellationToken = default)
+        {
+            return await GetHealthcareApisWorkspacePrivateLinkResources(workspaceName).GetAsync(groupName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a private link resource that need to be created for a workspace.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/privateLinkResources/{groupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspacePrivateLinkResources_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthcareApisWorkspacePrivateLinkResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The name of workspace resource. </param>
+        /// <param name="groupName"> The name of the private link resource group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="groupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<HealthcareApisWorkspacePrivateLinkResource> GetHealthcareApisWorkspacePrivateLinkResource(string workspaceName, string groupName, CancellationToken cancellationToken = default)
+        {
+            return GetHealthcareApisWorkspacePrivateLinkResources(workspaceName).Get(groupName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of HealthcareApisIotFhirDestinationResources in the ResourceGroupResource. </summary>
+        /// <param name="workspaceName"> The name of workspace resource. </param>
+        /// <param name="iotConnectorName"> The name of IoT Connector resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="iotConnectorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="iotConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> An object representing collection of HealthcareApisIotFhirDestinationResources and their operations over a HealthcareApisIotFhirDestinationResource. </returns>
+        public virtual HealthcareApisIotFhirDestinationCollection GetHealthcareApisIotFhirDestinations(string workspaceName, string iotConnectorName)
+        {
+            return new HealthcareApisIotFhirDestinationCollection(Client, Id, workspaceName, iotConnectorName);
+        }
+
+        /// <summary>
+        /// Gets the properties of the specified Iot Connector FHIR destination.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}/fhirdestinations/{fhirDestinationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotConnectorFhirDestination_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthcareApisIotFhirDestinationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The name of workspace resource. </param>
+        /// <param name="iotConnectorName"> The name of IoT Connector resource. </param>
+        /// <param name="fhirDestinationName"> The name of IoT Connector FHIR destination resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/>, <paramref name="iotConnectorName"/> or <paramref name="fhirDestinationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/>, <paramref name="iotConnectorName"/> or <paramref name="fhirDestinationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<HealthcareApisIotFhirDestinationResource>> GetHealthcareApisIotFhirDestinationAsync(string workspaceName, string iotConnectorName, string fhirDestinationName, CancellationToken cancellationToken = default)
+        {
+            return await GetHealthcareApisIotFhirDestinations(workspaceName, iotConnectorName).GetAsync(fhirDestinationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the properties of the specified Iot Connector FHIR destination.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}/fhirdestinations/{fhirDestinationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotConnectorFhirDestination_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthcareApisIotFhirDestinationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The name of workspace resource. </param>
+        /// <param name="iotConnectorName"> The name of IoT Connector resource. </param>
+        /// <param name="fhirDestinationName"> The name of IoT Connector FHIR destination resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/>, <paramref name="iotConnectorName"/> or <paramref name="fhirDestinationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/>, <paramref name="iotConnectorName"/> or <paramref name="fhirDestinationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<HealthcareApisIotFhirDestinationResource> GetHealthcareApisIotFhirDestination(string workspaceName, string iotConnectorName, string fhirDestinationName, CancellationToken cancellationToken = default)
+        {
+            return GetHealthcareApisIotFhirDestinations(workspaceName, iotConnectorName).Get(fhirDestinationName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all the available workspaces under the specified resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_ListByResourceGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-31</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="HealthcareApisWorkspace"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HealthcareApisWorkspace> GetWorkspacesByResourceGroupAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => WorkspacesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => WorkspacesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => HealthcareApisWorkspace.DeserializeHealthcareApisWorkspace(e), WorkspacesClientDiagnostics, Pipeline, "MockableHealthcareApisResourceGroupResource.GetWorkspacesByResourceGroup", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all the available workspaces under the specified resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_ListByResourceGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-31</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="HealthcareApisWorkspace"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HealthcareApisWorkspace> GetWorkspacesByResourceGroup(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => WorkspacesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => WorkspacesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => HealthcareApisWorkspace.DeserializeHealthcareApisWorkspace(e), WorkspacesClientDiagnostics, Pipeline, "MockableHealthcareApisResourceGroupResource.GetWorkspacesByResourceGroup", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -124,20 +415,28 @@ namespace Azure.ResourceManager.HealthcareApis.Mocking
         /// <term>Default Api Version</term>
         /// <description>2024-03-31</description>
         /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthcareApisWorkspaceResource"/></description>
-        /// </item>
         /// </list>
         /// </summary>
         /// <param name="workspaceName"> The name of workspace resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<HealthcareApisWorkspaceResource>> GetHealthcareApisWorkspaceAsync(string workspaceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        public virtual async Task<Response<HealthcareApisWorkspace>> GetWorkspaceAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
-            return await GetHealthcareApisWorkspaces().GetAsync(workspaceName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+
+            using var scope = WorkspacesClientDiagnostics.CreateScope("MockableHealthcareApisResourceGroupResource.GetWorkspace");
+            scope.Start();
+            try
+            {
+                var response = await WorkspacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -155,20 +454,1560 @@ namespace Azure.ResourceManager.HealthcareApis.Mocking
         /// <term>Default Api Version</term>
         /// <description>2024-03-31</description>
         /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The name of workspace resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        public virtual Response<HealthcareApisWorkspace> GetWorkspace(string workspaceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+
+            using var scope = WorkspacesClientDiagnostics.CreateScope("MockableHealthcareApisResourceGroupResource.GetWorkspace");
+            scope.Start();
+            try
+            {
+                var response = WorkspacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates or updates a workspace resource with the specified parameters.
+        /// <list type="bullet">
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HealthcareApisWorkspaceResource"/></description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-31</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="workspaceName"> The name of workspace resource. </param>
+        /// <param name="workspace"> The parameters for creating or updating a healthcare workspace. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="workspace"/> is null. </exception>
+        public virtual async Task<ArmOperation<HealthcareApisWorkspace>> CreateOrUpdateWorkspaceAsync(WaitUntil waitUntil, string workspaceName, HealthcareApisWorkspace workspace, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNull(workspace, nameof(workspace));
+
+            using var scope = WorkspacesClientDiagnostics.CreateScope("MockableHealthcareApisResourceGroupResource.CreateOrUpdateWorkspace");
+            scope.Start();
+            try
+            {
+                var response = await WorkspacesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, workspace, cancellationToken).ConfigureAwait(false);
+                var operation = new HealthcareApisArmOperation<HealthcareApisWorkspace>(new HealthcareApisWorkspaceOperationSource(), WorkspacesClientDiagnostics, Pipeline, WorkspacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, workspace).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates or updates a workspace resource with the specified parameters.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-31</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="workspaceName"> The name of workspace resource. </param>
+        /// <param name="workspace"> The parameters for creating or updating a healthcare workspace. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="workspace"/> is null. </exception>
+        public virtual ArmOperation<HealthcareApisWorkspace> CreateOrUpdateWorkspace(WaitUntil waitUntil, string workspaceName, HealthcareApisWorkspace workspace, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNull(workspace, nameof(workspace));
+
+            using var scope = WorkspacesClientDiagnostics.CreateScope("MockableHealthcareApisResourceGroupResource.CreateOrUpdateWorkspace");
+            scope.Start();
+            try
+            {
+                var response = WorkspacesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, workspace, cancellationToken);
+                var operation = new HealthcareApisArmOperation<HealthcareApisWorkspace>(new HealthcareApisWorkspaceOperationSource(), WorkspacesClientDiagnostics, Pipeline, WorkspacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, workspace).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Patch workspace details.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-31</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="workspaceName"> The name of workspace resource. </param>
+        /// <param name="workspacePatchResource"> The parameters for updating a specified workspace. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="workspacePatchResource"/> is null. </exception>
+        public virtual async Task<ArmOperation<HealthcareApisWorkspace>> UpdateWorkspaceAsync(WaitUntil waitUntil, string workspaceName, WorkspacePatchResource workspacePatchResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNull(workspacePatchResource, nameof(workspacePatchResource));
+
+            using var scope = WorkspacesClientDiagnostics.CreateScope("MockableHealthcareApisResourceGroupResource.UpdateWorkspace");
+            scope.Start();
+            try
+            {
+                var response = await WorkspacesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, workspacePatchResource, cancellationToken).ConfigureAwait(false);
+                var operation = new HealthcareApisArmOperation<HealthcareApisWorkspace>(new HealthcareApisWorkspaceOperationSource(), WorkspacesClientDiagnostics, Pipeline, WorkspacesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, workspacePatchResource).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Patch workspace details.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-31</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="workspaceName"> The name of workspace resource. </param>
+        /// <param name="workspacePatchResource"> The parameters for updating a specified workspace. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="workspacePatchResource"/> is null. </exception>
+        public virtual ArmOperation<HealthcareApisWorkspace> UpdateWorkspace(WaitUntil waitUntil, string workspaceName, WorkspacePatchResource workspacePatchResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNull(workspacePatchResource, nameof(workspacePatchResource));
+
+            using var scope = WorkspacesClientDiagnostics.CreateScope("MockableHealthcareApisResourceGroupResource.UpdateWorkspace");
+            scope.Start();
+            try
+            {
+                var response = WorkspacesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, workspacePatchResource, cancellationToken);
+                var operation = new HealthcareApisArmOperation<HealthcareApisWorkspace>(new HealthcareApisWorkspaceOperationSource(), WorkspacesClientDiagnostics, Pipeline, WorkspacesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, workspacePatchResource).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes a specified workspace.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-31</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="workspaceName"> The name of workspace resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        public virtual async Task<ArmOperation> DeleteWorkspaceAsync(WaitUntil waitUntil, string workspaceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+
+            using var scope = WorkspacesClientDiagnostics.CreateScope("MockableHealthcareApisResourceGroupResource.DeleteWorkspace");
+            scope.Start();
+            try
+            {
+                var response = await WorkspacesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken).ConfigureAwait(false);
+                var operation = new HealthcareApisArmOperation(WorkspacesClientDiagnostics, Pipeline, WorkspacesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes a specified workspace.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-31</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="workspaceName"> The name of workspace resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        public virtual ArmOperation DeleteWorkspace(WaitUntil waitUntil, string workspaceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+
+            using var scope = WorkspacesClientDiagnostics.CreateScope("MockableHealthcareApisResourceGroupResource.DeleteWorkspace");
+            scope.Start();
+            try
+            {
+                var response = WorkspacesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken);
+                var operation = new HealthcareApisArmOperation(WorkspacesClientDiagnostics, Pipeline, WorkspacesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Lists all DICOM Services for the given workspace
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/dicomservices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DicomServices_ListByWorkspace</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-31</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="workspaceName"> The name of workspace resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<HealthcareApisWorkspaceResource> GetHealthcareApisWorkspace(string workspaceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        /// <returns> An async collection of <see cref="DicomService"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DicomService> GetDicomServicesByWorkspaceAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
-            return GetHealthcareApisWorkspaces().Get(workspaceName, cancellationToken);
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DicomServicesRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DicomServicesRestClient.CreateListByWorkspaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, workspaceName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DicomService.DeserializeDicomService(e), DicomServicesClientDiagnostics, Pipeline, "MockableHealthcareApisResourceGroupResource.GetDicomServicesByWorkspace", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all DICOM Services for the given workspace
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/dicomservices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DicomServices_ListByWorkspace</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-31</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The name of workspace resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        /// <returns> A collection of <see cref="DicomService"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DicomService> GetDicomServicesByWorkspace(string workspaceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DicomServicesRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DicomServicesRestClient.CreateListByWorkspaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, workspaceName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DicomService.DeserializeDicomService(e), DicomServicesClientDiagnostics, Pipeline, "MockableHealthcareApisResourceGroupResource.GetDicomServicesByWorkspace", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the properties of the specified DICOM Service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/dicomservices/{dicomServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DicomServices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-31</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The name of workspace resource. </param>
+        /// <param name="dicomServiceName"> The name of DICOM Service resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="dicomServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="dicomServiceName"/> is null. </exception>
+        public virtual async Task<Response<DicomService>> GetDicomServiceAsync(string workspaceName, string dicomServiceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(dicomServiceName, nameof(dicomServiceName));
+
+            using var scope = DicomServicesClientDiagnostics.CreateScope("MockableHealthcareApisResourceGroupResource.GetDicomService");
+            scope.Start();
+            try
+            {
+                var response = await DicomServicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, dicomServiceName, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the properties of the specified DICOM Service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/dicomservices/{dicomServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DicomServices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-31</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The name of workspace resource. </param>
+        /// <param name="dicomServiceName"> The name of DICOM Service resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="dicomServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="dicomServiceName"/> is null. </exception>
+        public virtual Response<DicomService> GetDicomService(string workspaceName, string dicomServiceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(dicomServiceName, nameof(dicomServiceName));
+
+            using var scope = DicomServicesClientDiagnostics.CreateScope("MockableHealthcareApisResourceGroupResource.GetDicomService");
+            scope.Start();
+            try
+            {
+                var response = DicomServicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, dicomServiceName, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates or updates a DICOM Service resource with the specified parameters.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/dicomservices/{dicomServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DicomServices_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-31</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="workspaceName"> The name of workspace resource. </param>
+        /// <param name="dicomServiceName"> The name of DICOM Service resource. </param>
+        /// <param name="dicomservice"> The parameters for creating or updating a Dicom Service resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="dicomServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/>, <paramref name="dicomServiceName"/> or <paramref name="dicomservice"/> is null. </exception>
+        public virtual async Task<ArmOperation<DicomService>> CreateOrUpdateDicomServiceAsync(WaitUntil waitUntil, string workspaceName, string dicomServiceName, DicomService dicomservice, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(dicomServiceName, nameof(dicomServiceName));
+            Argument.AssertNotNull(dicomservice, nameof(dicomservice));
+
+            using var scope = DicomServicesClientDiagnostics.CreateScope("MockableHealthcareApisResourceGroupResource.CreateOrUpdateDicomService");
+            scope.Start();
+            try
+            {
+                var response = await DicomServicesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, dicomServiceName, dicomservice, cancellationToken).ConfigureAwait(false);
+                var operation = new HealthcareApisArmOperation<DicomService>(new DicomServiceOperationSource(), DicomServicesClientDiagnostics, Pipeline, DicomServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, dicomServiceName, dicomservice).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates or updates a DICOM Service resource with the specified parameters.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/dicomservices/{dicomServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DicomServices_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-31</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="workspaceName"> The name of workspace resource. </param>
+        /// <param name="dicomServiceName"> The name of DICOM Service resource. </param>
+        /// <param name="dicomservice"> The parameters for creating or updating a Dicom Service resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="dicomServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/>, <paramref name="dicomServiceName"/> or <paramref name="dicomservice"/> is null. </exception>
+        public virtual ArmOperation<DicomService> CreateOrUpdateDicomService(WaitUntil waitUntil, string workspaceName, string dicomServiceName, DicomService dicomservice, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(dicomServiceName, nameof(dicomServiceName));
+            Argument.AssertNotNull(dicomservice, nameof(dicomservice));
+
+            using var scope = DicomServicesClientDiagnostics.CreateScope("MockableHealthcareApisResourceGroupResource.CreateOrUpdateDicomService");
+            scope.Start();
+            try
+            {
+                var response = DicomServicesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, dicomServiceName, dicomservice, cancellationToken);
+                var operation = new HealthcareApisArmOperation<DicomService>(new DicomServiceOperationSource(), DicomServicesClientDiagnostics, Pipeline, DicomServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, dicomServiceName, dicomservice).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Patch DICOM Service details.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/dicomservices/{dicomServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DicomServices_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-31</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="workspaceName"> The name of workspace resource. </param>
+        /// <param name="dicomServiceName"> The name of DICOM Service resource. </param>
+        /// <param name="dicomservicePatchResource"> The parameters for updating a Dicom Service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="dicomServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/>, <paramref name="dicomServiceName"/> or <paramref name="dicomservicePatchResource"/> is null. </exception>
+        public virtual async Task<ArmOperation<DicomService>> UpdateDicomServiceAsync(WaitUntil waitUntil, string workspaceName, string dicomServiceName, DicomServicePatchResource dicomservicePatchResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(dicomServiceName, nameof(dicomServiceName));
+            Argument.AssertNotNull(dicomservicePatchResource, nameof(dicomservicePatchResource));
+
+            using var scope = DicomServicesClientDiagnostics.CreateScope("MockableHealthcareApisResourceGroupResource.UpdateDicomService");
+            scope.Start();
+            try
+            {
+                var response = await DicomServicesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, dicomServiceName, dicomservicePatchResource, cancellationToken).ConfigureAwait(false);
+                var operation = new HealthcareApisArmOperation<DicomService>(new DicomServiceOperationSource(), DicomServicesClientDiagnostics, Pipeline, DicomServicesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, dicomServiceName, dicomservicePatchResource).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Patch DICOM Service details.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/dicomservices/{dicomServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DicomServices_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-31</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="workspaceName"> The name of workspace resource. </param>
+        /// <param name="dicomServiceName"> The name of DICOM Service resource. </param>
+        /// <param name="dicomservicePatchResource"> The parameters for updating a Dicom Service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="dicomServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/>, <paramref name="dicomServiceName"/> or <paramref name="dicomservicePatchResource"/> is null. </exception>
+        public virtual ArmOperation<DicomService> UpdateDicomService(WaitUntil waitUntil, string workspaceName, string dicomServiceName, DicomServicePatchResource dicomservicePatchResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(dicomServiceName, nameof(dicomServiceName));
+            Argument.AssertNotNull(dicomservicePatchResource, nameof(dicomservicePatchResource));
+
+            using var scope = DicomServicesClientDiagnostics.CreateScope("MockableHealthcareApisResourceGroupResource.UpdateDicomService");
+            scope.Start();
+            try
+            {
+                var response = DicomServicesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, dicomServiceName, dicomservicePatchResource, cancellationToken);
+                var operation = new HealthcareApisArmOperation<DicomService>(new DicomServiceOperationSource(), DicomServicesClientDiagnostics, Pipeline, DicomServicesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, dicomServiceName, dicomservicePatchResource).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes a DICOM Service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/dicomservices/{dicomServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DicomServices_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-31</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="workspaceName"> The name of workspace resource. </param>
+        /// <param name="dicomServiceName"> The name of DICOM Service resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="dicomServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="dicomServiceName"/> is null. </exception>
+        public virtual async Task<ArmOperation> DeleteDicomServiceAsync(WaitUntil waitUntil, string workspaceName, string dicomServiceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(dicomServiceName, nameof(dicomServiceName));
+
+            using var scope = DicomServicesClientDiagnostics.CreateScope("MockableHealthcareApisResourceGroupResource.DeleteDicomService");
+            scope.Start();
+            try
+            {
+                var response = await DicomServicesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, dicomServiceName, cancellationToken).ConfigureAwait(false);
+                var operation = new HealthcareApisArmOperation(DicomServicesClientDiagnostics, Pipeline, DicomServicesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, dicomServiceName).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes a DICOM Service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/dicomservices/{dicomServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DicomServices_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-31</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="workspaceName"> The name of workspace resource. </param>
+        /// <param name="dicomServiceName"> The name of DICOM Service resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="dicomServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="dicomServiceName"/> is null. </exception>
+        public virtual ArmOperation DeleteDicomService(WaitUntil waitUntil, string workspaceName, string dicomServiceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(dicomServiceName, nameof(dicomServiceName));
+
+            using var scope = DicomServicesClientDiagnostics.CreateScope("MockableHealthcareApisResourceGroupResource.DeleteDicomService");
+            scope.Start();
+            try
+            {
+                var response = DicomServicesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, dicomServiceName, cancellationToken);
+                var operation = new HealthcareApisArmOperation(DicomServicesClientDiagnostics, Pipeline, DicomServicesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, dicomServiceName).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Lists all IoT Connectors for the given workspace
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotConnectors_ListByWorkspace</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-31</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The name of workspace resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        /// <returns> An async collection of <see cref="HealthcareApisIotConnector"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HealthcareApisIotConnector> GetIotConnectorsByWorkspaceAsync(string workspaceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => IotConnectorsRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IotConnectorsRestClient.CreateListByWorkspaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, workspaceName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => HealthcareApisIotConnector.DeserializeHealthcareApisIotConnector(e), IotConnectorsClientDiagnostics, Pipeline, "MockableHealthcareApisResourceGroupResource.GetIotConnectorsByWorkspace", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all IoT Connectors for the given workspace
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotConnectors_ListByWorkspace</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-31</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The name of workspace resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        /// <returns> A collection of <see cref="HealthcareApisIotConnector"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HealthcareApisIotConnector> GetIotConnectorsByWorkspace(string workspaceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => IotConnectorsRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IotConnectorsRestClient.CreateListByWorkspaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, workspaceName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => HealthcareApisIotConnector.DeserializeHealthcareApisIotConnector(e), IotConnectorsClientDiagnostics, Pipeline, "MockableHealthcareApisResourceGroupResource.GetIotConnectorsByWorkspace", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the properties of the specified IoT Connector.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotConnectors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-31</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The name of workspace resource. </param>
+        /// <param name="iotConnectorName"> The name of IoT Connector resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="iotConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="iotConnectorName"/> is null. </exception>
+        public virtual async Task<Response<HealthcareApisIotConnector>> GetIotConnectorAsync(string workspaceName, string iotConnectorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(iotConnectorName, nameof(iotConnectorName));
+
+            using var scope = IotConnectorsClientDiagnostics.CreateScope("MockableHealthcareApisResourceGroupResource.GetIotConnector");
+            scope.Start();
+            try
+            {
+                var response = await IotConnectorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, iotConnectorName, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the properties of the specified IoT Connector.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotConnectors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-31</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The name of workspace resource. </param>
+        /// <param name="iotConnectorName"> The name of IoT Connector resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="iotConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="iotConnectorName"/> is null. </exception>
+        public virtual Response<HealthcareApisIotConnector> GetIotConnector(string workspaceName, string iotConnectorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(iotConnectorName, nameof(iotConnectorName));
+
+            using var scope = IotConnectorsClientDiagnostics.CreateScope("MockableHealthcareApisResourceGroupResource.GetIotConnector");
+            scope.Start();
+            try
+            {
+                var response = IotConnectorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, iotConnectorName, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates or updates an IoT Connector resource with the specified parameters.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotConnectors_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-31</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="workspaceName"> The name of workspace resource. </param>
+        /// <param name="iotConnectorName"> The name of IoT Connector resource. </param>
+        /// <param name="iotConnector"> The parameters for creating or updating an IoT Connectors resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="iotConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/>, <paramref name="iotConnectorName"/> or <paramref name="iotConnector"/> is null. </exception>
+        public virtual async Task<ArmOperation<HealthcareApisIotConnector>> CreateOrUpdateIotConnectorAsync(WaitUntil waitUntil, string workspaceName, string iotConnectorName, HealthcareApisIotConnector iotConnector, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(iotConnectorName, nameof(iotConnectorName));
+            Argument.AssertNotNull(iotConnector, nameof(iotConnector));
+
+            using var scope = IotConnectorsClientDiagnostics.CreateScope("MockableHealthcareApisResourceGroupResource.CreateOrUpdateIotConnector");
+            scope.Start();
+            try
+            {
+                var response = await IotConnectorsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, iotConnectorName, iotConnector, cancellationToken).ConfigureAwait(false);
+                var operation = new HealthcareApisArmOperation<HealthcareApisIotConnector>(new HealthcareApisIotConnectorOperationSource(), IotConnectorsClientDiagnostics, Pipeline, IotConnectorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, iotConnectorName, iotConnector).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates or updates an IoT Connector resource with the specified parameters.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotConnectors_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-31</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="workspaceName"> The name of workspace resource. </param>
+        /// <param name="iotConnectorName"> The name of IoT Connector resource. </param>
+        /// <param name="iotConnector"> The parameters for creating or updating an IoT Connectors resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="iotConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/>, <paramref name="iotConnectorName"/> or <paramref name="iotConnector"/> is null. </exception>
+        public virtual ArmOperation<HealthcareApisIotConnector> CreateOrUpdateIotConnector(WaitUntil waitUntil, string workspaceName, string iotConnectorName, HealthcareApisIotConnector iotConnector, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(iotConnectorName, nameof(iotConnectorName));
+            Argument.AssertNotNull(iotConnector, nameof(iotConnector));
+
+            using var scope = IotConnectorsClientDiagnostics.CreateScope("MockableHealthcareApisResourceGroupResource.CreateOrUpdateIotConnector");
+            scope.Start();
+            try
+            {
+                var response = IotConnectorsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, iotConnectorName, iotConnector, cancellationToken);
+                var operation = new HealthcareApisArmOperation<HealthcareApisIotConnector>(new HealthcareApisIotConnectorOperationSource(), IotConnectorsClientDiagnostics, Pipeline, IotConnectorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, iotConnectorName, iotConnector).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Patch an IoT Connector.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotConnectors_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-31</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="workspaceName"> The name of workspace resource. </param>
+        /// <param name="iotConnectorName"> The name of IoT Connector resource. </param>
+        /// <param name="iotConnectorPatchResource"> The parameters for updating an IoT Connector. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="iotConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/>, <paramref name="iotConnectorName"/> or <paramref name="iotConnectorPatchResource"/> is null. </exception>
+        public virtual async Task<ArmOperation<HealthcareApisIotConnector>> UpdateIotConnectorAsync(WaitUntil waitUntil, string workspaceName, string iotConnectorName, IotConnectorPatchResource iotConnectorPatchResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(iotConnectorName, nameof(iotConnectorName));
+            Argument.AssertNotNull(iotConnectorPatchResource, nameof(iotConnectorPatchResource));
+
+            using var scope = IotConnectorsClientDiagnostics.CreateScope("MockableHealthcareApisResourceGroupResource.UpdateIotConnector");
+            scope.Start();
+            try
+            {
+                var response = await IotConnectorsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, iotConnectorName, iotConnectorPatchResource, cancellationToken).ConfigureAwait(false);
+                var operation = new HealthcareApisArmOperation<HealthcareApisIotConnector>(new HealthcareApisIotConnectorOperationSource(), IotConnectorsClientDiagnostics, Pipeline, IotConnectorsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, iotConnectorName, iotConnectorPatchResource).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Patch an IoT Connector.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotConnectors_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-31</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="workspaceName"> The name of workspace resource. </param>
+        /// <param name="iotConnectorName"> The name of IoT Connector resource. </param>
+        /// <param name="iotConnectorPatchResource"> The parameters for updating an IoT Connector. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="iotConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/>, <paramref name="iotConnectorName"/> or <paramref name="iotConnectorPatchResource"/> is null. </exception>
+        public virtual ArmOperation<HealthcareApisIotConnector> UpdateIotConnector(WaitUntil waitUntil, string workspaceName, string iotConnectorName, IotConnectorPatchResource iotConnectorPatchResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(iotConnectorName, nameof(iotConnectorName));
+            Argument.AssertNotNull(iotConnectorPatchResource, nameof(iotConnectorPatchResource));
+
+            using var scope = IotConnectorsClientDiagnostics.CreateScope("MockableHealthcareApisResourceGroupResource.UpdateIotConnector");
+            scope.Start();
+            try
+            {
+                var response = IotConnectorsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, iotConnectorName, iotConnectorPatchResource, cancellationToken);
+                var operation = new HealthcareApisArmOperation<HealthcareApisIotConnector>(new HealthcareApisIotConnectorOperationSource(), IotConnectorsClientDiagnostics, Pipeline, IotConnectorsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, iotConnectorName, iotConnectorPatchResource).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes an IoT Connector.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotConnectors_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-31</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="workspaceName"> The name of workspace resource. </param>
+        /// <param name="iotConnectorName"> The name of IoT Connector resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="iotConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="iotConnectorName"/> is null. </exception>
+        public virtual async Task<ArmOperation> DeleteIotConnectorAsync(WaitUntil waitUntil, string workspaceName, string iotConnectorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(iotConnectorName, nameof(iotConnectorName));
+
+            using var scope = IotConnectorsClientDiagnostics.CreateScope("MockableHealthcareApisResourceGroupResource.DeleteIotConnector");
+            scope.Start();
+            try
+            {
+                var response = await IotConnectorsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, iotConnectorName, cancellationToken).ConfigureAwait(false);
+                var operation = new HealthcareApisArmOperation(IotConnectorsClientDiagnostics, Pipeline, IotConnectorsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, iotConnectorName).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes an IoT Connector.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotConnectors_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-31</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="workspaceName"> The name of workspace resource. </param>
+        /// <param name="iotConnectorName"> The name of IoT Connector resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="iotConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="iotConnectorName"/> is null. </exception>
+        public virtual ArmOperation DeleteIotConnector(WaitUntil waitUntil, string workspaceName, string iotConnectorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(iotConnectorName, nameof(iotConnectorName));
+
+            using var scope = IotConnectorsClientDiagnostics.CreateScope("MockableHealthcareApisResourceGroupResource.DeleteIotConnector");
+            scope.Start();
+            try
+            {
+                var response = IotConnectorsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, iotConnectorName, cancellationToken);
+                var operation = new HealthcareApisArmOperation(IotConnectorsClientDiagnostics, Pipeline, IotConnectorsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, iotConnectorName).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Lists all FHIR Services for the given workspace
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/fhirservices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FhirServices_ListByWorkspace</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-31</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The name of workspace resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        /// <returns> An async collection of <see cref="FhirService"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<FhirService> GetFhirServicesByWorkspaceAsync(string workspaceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => FhirServicesRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FhirServicesRestClient.CreateListByWorkspaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, workspaceName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => FhirService.DeserializeFhirService(e), FhirServicesClientDiagnostics, Pipeline, "MockableHealthcareApisResourceGroupResource.GetFhirServicesByWorkspace", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all FHIR Services for the given workspace
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/fhirservices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FhirServices_ListByWorkspace</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-31</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The name of workspace resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        /// <returns> A collection of <see cref="FhirService"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<FhirService> GetFhirServicesByWorkspace(string workspaceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => FhirServicesRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FhirServicesRestClient.CreateListByWorkspaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, workspaceName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => FhirService.DeserializeFhirService(e), FhirServicesClientDiagnostics, Pipeline, "MockableHealthcareApisResourceGroupResource.GetFhirServicesByWorkspace", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the properties of the specified FHIR Service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/fhirservices/{fhirServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FhirServices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-31</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The name of workspace resource. </param>
+        /// <param name="fhirServiceName"> The name of FHIR Service resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="fhirServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="fhirServiceName"/> is null. </exception>
+        public virtual async Task<Response<FhirService>> GetFhirServiceAsync(string workspaceName, string fhirServiceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(fhirServiceName, nameof(fhirServiceName));
+
+            using var scope = FhirServicesClientDiagnostics.CreateScope("MockableHealthcareApisResourceGroupResource.GetFhirService");
+            scope.Start();
+            try
+            {
+                var response = await FhirServicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, fhirServiceName, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the properties of the specified FHIR Service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/fhirservices/{fhirServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FhirServices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-31</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The name of workspace resource. </param>
+        /// <param name="fhirServiceName"> The name of FHIR Service resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="fhirServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="fhirServiceName"/> is null. </exception>
+        public virtual Response<FhirService> GetFhirService(string workspaceName, string fhirServiceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(fhirServiceName, nameof(fhirServiceName));
+
+            using var scope = FhirServicesClientDiagnostics.CreateScope("MockableHealthcareApisResourceGroupResource.GetFhirService");
+            scope.Start();
+            try
+            {
+                var response = FhirServicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, fhirServiceName, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates or updates a FHIR Service resource with the specified parameters.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/fhirservices/{fhirServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FhirServices_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-31</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="workspaceName"> The name of workspace resource. </param>
+        /// <param name="fhirServiceName"> The name of FHIR Service resource. </param>
+        /// <param name="fhirservice"> The parameters for creating or updating a Fhir Service resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="fhirServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/>, <paramref name="fhirServiceName"/> or <paramref name="fhirservice"/> is null. </exception>
+        public virtual async Task<ArmOperation<FhirService>> CreateOrUpdateFhirServiceAsync(WaitUntil waitUntil, string workspaceName, string fhirServiceName, FhirService fhirservice, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(fhirServiceName, nameof(fhirServiceName));
+            Argument.AssertNotNull(fhirservice, nameof(fhirservice));
+
+            using var scope = FhirServicesClientDiagnostics.CreateScope("MockableHealthcareApisResourceGroupResource.CreateOrUpdateFhirService");
+            scope.Start();
+            try
+            {
+                var response = await FhirServicesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, fhirServiceName, fhirservice, cancellationToken).ConfigureAwait(false);
+                var operation = new HealthcareApisArmOperation<FhirService>(new FhirServiceOperationSource(), FhirServicesClientDiagnostics, Pipeline, FhirServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, fhirServiceName, fhirservice).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates or updates a FHIR Service resource with the specified parameters.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/fhirservices/{fhirServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FhirServices_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-31</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="workspaceName"> The name of workspace resource. </param>
+        /// <param name="fhirServiceName"> The name of FHIR Service resource. </param>
+        /// <param name="fhirservice"> The parameters for creating or updating a Fhir Service resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="fhirServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/>, <paramref name="fhirServiceName"/> or <paramref name="fhirservice"/> is null. </exception>
+        public virtual ArmOperation<FhirService> CreateOrUpdateFhirService(WaitUntil waitUntil, string workspaceName, string fhirServiceName, FhirService fhirservice, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(fhirServiceName, nameof(fhirServiceName));
+            Argument.AssertNotNull(fhirservice, nameof(fhirservice));
+
+            using var scope = FhirServicesClientDiagnostics.CreateScope("MockableHealthcareApisResourceGroupResource.CreateOrUpdateFhirService");
+            scope.Start();
+            try
+            {
+                var response = FhirServicesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, fhirServiceName, fhirservice, cancellationToken);
+                var operation = new HealthcareApisArmOperation<FhirService>(new FhirServiceOperationSource(), FhirServicesClientDiagnostics, Pipeline, FhirServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, fhirServiceName, fhirservice).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Patch FHIR Service details.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/fhirservices/{fhirServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FhirServices_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-31</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="workspaceName"> The name of workspace resource. </param>
+        /// <param name="fhirServiceName"> The name of FHIR Service resource. </param>
+        /// <param name="fhirservicePatchResource"> The parameters for updating a Fhir Service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="fhirServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/>, <paramref name="fhirServiceName"/> or <paramref name="fhirservicePatchResource"/> is null. </exception>
+        public virtual async Task<ArmOperation<FhirService>> UpdateFhirServiceAsync(WaitUntil waitUntil, string workspaceName, string fhirServiceName, FhirServicePatchResource fhirservicePatchResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(fhirServiceName, nameof(fhirServiceName));
+            Argument.AssertNotNull(fhirservicePatchResource, nameof(fhirservicePatchResource));
+
+            using var scope = FhirServicesClientDiagnostics.CreateScope("MockableHealthcareApisResourceGroupResource.UpdateFhirService");
+            scope.Start();
+            try
+            {
+                var response = await FhirServicesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, fhirServiceName, fhirservicePatchResource, cancellationToken).ConfigureAwait(false);
+                var operation = new HealthcareApisArmOperation<FhirService>(new FhirServiceOperationSource(), FhirServicesClientDiagnostics, Pipeline, FhirServicesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, fhirServiceName, fhirservicePatchResource).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Patch FHIR Service details.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/fhirservices/{fhirServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FhirServices_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-31</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="workspaceName"> The name of workspace resource. </param>
+        /// <param name="fhirServiceName"> The name of FHIR Service resource. </param>
+        /// <param name="fhirservicePatchResource"> The parameters for updating a Fhir Service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="fhirServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/>, <paramref name="fhirServiceName"/> or <paramref name="fhirservicePatchResource"/> is null. </exception>
+        public virtual ArmOperation<FhirService> UpdateFhirService(WaitUntil waitUntil, string workspaceName, string fhirServiceName, FhirServicePatchResource fhirservicePatchResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(fhirServiceName, nameof(fhirServiceName));
+            Argument.AssertNotNull(fhirservicePatchResource, nameof(fhirservicePatchResource));
+
+            using var scope = FhirServicesClientDiagnostics.CreateScope("MockableHealthcareApisResourceGroupResource.UpdateFhirService");
+            scope.Start();
+            try
+            {
+                var response = FhirServicesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, fhirServiceName, fhirservicePatchResource, cancellationToken);
+                var operation = new HealthcareApisArmOperation<FhirService>(new FhirServiceOperationSource(), FhirServicesClientDiagnostics, Pipeline, FhirServicesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, fhirServiceName, fhirservicePatchResource).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes a FHIR Service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/fhirservices/{fhirServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FhirServices_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-31</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="workspaceName"> The name of workspace resource. </param>
+        /// <param name="fhirServiceName"> The name of FHIR Service resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="fhirServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="fhirServiceName"/> is null. </exception>
+        public virtual async Task<ArmOperation> DeleteFhirServiceAsync(WaitUntil waitUntil, string workspaceName, string fhirServiceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(fhirServiceName, nameof(fhirServiceName));
+
+            using var scope = FhirServicesClientDiagnostics.CreateScope("MockableHealthcareApisResourceGroupResource.DeleteFhirService");
+            scope.Start();
+            try
+            {
+                var response = await FhirServicesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, fhirServiceName, cancellationToken).ConfigureAwait(false);
+                var operation = new HealthcareApisArmOperation(FhirServicesClientDiagnostics, Pipeline, FhirServicesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, fhirServiceName).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes a FHIR Service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/fhirservices/{fhirServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FhirServices_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-31</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="workspaceName"> The name of workspace resource. </param>
+        /// <param name="fhirServiceName"> The name of FHIR Service resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="fhirServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="fhirServiceName"/> is null. </exception>
+        public virtual ArmOperation DeleteFhirService(WaitUntil waitUntil, string workspaceName, string fhirServiceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(fhirServiceName, nameof(fhirServiceName));
+
+            using var scope = FhirServicesClientDiagnostics.CreateScope("MockableHealthcareApisResourceGroupResource.DeleteFhirService");
+            scope.Start();
+            try
+            {
+                var response = FhirServicesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, fhirServiceName, cancellationToken);
+                var operation = new HealthcareApisArmOperation(FhirServicesClientDiagnostics, Pipeline, FhirServicesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, fhirServiceName).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

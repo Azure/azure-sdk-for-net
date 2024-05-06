@@ -72,41 +72,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HybridContainerServiceNamedAgentPoolProfile"/>. </summary>
-        /// <param name="osType"> The particular KubernetesVersion Image OS Type (Linux, Windows). </param>
-        /// <param name="osSku"> Specifies the OS SKU used by the agent pool. The default is CBLMariner if OSType is Linux. The default is Windows2019 when OSType is Windows. </param>
-        /// <param name="nodeLabels"> The node labels to be persisted across all nodes in agent pool. </param>
-        /// <param name="nodeTaints"> Taints added to new nodes during node pool create and scale. For example, key=value:NoSchedule. </param>
-        /// <param name="maxCount"> The maximum number of nodes for auto-scaling. </param>
-        /// <param name="minCount"> The minimum number of nodes for auto-scaling. </param>
-        /// <param name="enableAutoScaling"> Whether to enable auto-scaler. Default value is false. </param>
-        /// <param name="maxPods"> The maximum number of pods that can run on a node. </param>
-        /// <param name="count"> Number of nodes in the agent pool. The default value is 1. </param>
-        /// <param name="vmSize"> The VM sku size of the agent pool node VMs. </param>
-        /// <param name="kubernetesVersion"> Version of Kubernetes in use by the agent pool. This is inherited from the kubernetesVersion of the provisioned cluster. </param>
-        /// <param name="name"> Unique name of the default agent pool in the context of the provisioned cluster. Default value is &lt;clusterName&gt;-nodepool1. </param>
-        /// <returns> A new <see cref="Models.HybridContainerServiceNamedAgentPoolProfile"/> instance for mocking. </returns>
-        public static HybridContainerServiceNamedAgentPoolProfile HybridContainerServiceNamedAgentPoolProfile(HybridContainerServiceOSType? osType = null, HybridContainerServiceOSSku? osSku = null, IDictionary<string, string> nodeLabels = null, IEnumerable<string> nodeTaints = null, int? maxCount = null, int? minCount = null, bool? enableAutoScaling = null, int? maxPods = null, int? count = null, string vmSize = null, string kubernetesVersion = null, string name = null)
-        {
-            nodeLabels ??= new Dictionary<string, string>();
-            nodeTaints ??= new List<string>();
-
-            return new HybridContainerServiceNamedAgentPoolProfile(
-                osType,
-                osSku,
-                nodeLabels,
-                nodeTaints?.ToList(),
-                maxCount,
-                minCount,
-                enableAutoScaling,
-                maxPods,
-                serializedAdditionalRawData: null,
-                count,
-                vmSize,
-                kubernetesVersion,
-                name);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.AgentPoolUpdateProfile"/>. </summary>
         /// <param name="count"> Number of nodes in the agent pool. The default value is 1. </param>
         /// <param name="vmSize"> The VM sku size of the agent pool node VMs. </param>

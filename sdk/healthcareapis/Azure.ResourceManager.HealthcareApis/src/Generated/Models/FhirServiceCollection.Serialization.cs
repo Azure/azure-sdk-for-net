@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 return null;
             }
             string nextLink = default;
-            IReadOnlyList<FhirServiceData> value = default;
+            IReadOnlyList<FhirService> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     {
                         continue;
                     }
-                    List<FhirServiceData> array = new List<FhirServiceData>();
+                    List<FhirService> array = new List<FhirService>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FhirServiceData.DeserializeFhirServiceData(item, options));
+                        array.Add(FhirService.DeserializeFhirService(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new FhirServiceCollection(nextLink, value ?? new ChangeTrackingList<FhirServiceData>(), serializedAdditionalRawData);
+            return new FhirServiceCollection(nextLink, value ?? new ChangeTrackingList<FhirService>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FhirServiceCollection>.Write(ModelReaderWriterOptions options)

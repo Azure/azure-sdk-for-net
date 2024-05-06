@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <summary> Initializes a new instance of <see cref="FhirServiceCollection"/>. </summary>
         internal FhirServiceCollection()
         {
-            Value = new ChangeTrackingList<FhirServiceData>();
+            Value = new ChangeTrackingList<FhirService>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FhirServiceCollection"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of Fhir Services. </param>
         /// <param name="value"> The list of Fhir Services. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FhirServiceCollection(string nextLink, IReadOnlyList<FhirServiceData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FhirServiceCollection(string nextLink, IReadOnlyList<FhirService> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
@@ -65,6 +65,6 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <summary> The link used to get the next page of Fhir Services. </summary>
         public string NextLink { get; }
         /// <summary> The list of Fhir Services. </summary>
-        public IReadOnlyList<FhirServiceData> Value { get; }
+        public IReadOnlyList<FhirService> Value { get; }
     }
 }

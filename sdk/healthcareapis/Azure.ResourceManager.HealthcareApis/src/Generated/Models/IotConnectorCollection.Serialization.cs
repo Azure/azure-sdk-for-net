@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 return null;
             }
             string nextLink = default;
-            IReadOnlyList<HealthcareApisIotConnectorData> value = default;
+            IReadOnlyList<HealthcareApisIotConnector> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     {
                         continue;
                     }
-                    List<HealthcareApisIotConnectorData> array = new List<HealthcareApisIotConnectorData>();
+                    List<HealthcareApisIotConnector> array = new List<HealthcareApisIotConnector>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HealthcareApisIotConnectorData.DeserializeHealthcareApisIotConnectorData(item, options));
+                        array.Add(HealthcareApisIotConnector.DeserializeHealthcareApisIotConnector(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new IotConnectorCollection(nextLink, value ?? new ChangeTrackingList<HealthcareApisIotConnectorData>(), serializedAdditionalRawData);
+            return new IotConnectorCollection(nextLink, value ?? new ChangeTrackingList<HealthcareApisIotConnector>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotConnectorCollection>.Write(ModelReaderWriterOptions options)

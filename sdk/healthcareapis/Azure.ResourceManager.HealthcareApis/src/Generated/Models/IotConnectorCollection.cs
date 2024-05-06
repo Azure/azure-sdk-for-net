@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <summary> Initializes a new instance of <see cref="IotConnectorCollection"/>. </summary>
         internal IotConnectorCollection()
         {
-            Value = new ChangeTrackingList<HealthcareApisIotConnectorData>();
+            Value = new ChangeTrackingList<HealthcareApisIotConnector>();
         }
 
         /// <summary> Initializes a new instance of <see cref="IotConnectorCollection"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of IoT Connectors. </param>
         /// <param name="value"> The list of IoT Connectors. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IotConnectorCollection(string nextLink, IReadOnlyList<HealthcareApisIotConnectorData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal IotConnectorCollection(string nextLink, IReadOnlyList<HealthcareApisIotConnector> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
@@ -65,6 +65,6 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <summary> The link used to get the next page of IoT Connectors. </summary>
         public string NextLink { get; }
         /// <summary> The list of IoT Connectors. </summary>
-        public IReadOnlyList<HealthcareApisIotConnectorData> Value { get; }
+        public IReadOnlyList<HealthcareApisIotConnector> Value { get; }
     }
 }

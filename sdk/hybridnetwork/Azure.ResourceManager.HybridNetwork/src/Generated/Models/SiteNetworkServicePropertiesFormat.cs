@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="networkServiceDesignVersionResourceReference">
         /// The network service design version resource reference.
         /// Please note <see cref="DeploymentResourceIdReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="OpenDeploymentResourceReference"/> and <see cref="SecretDeploymentResourceReference"/>.
+        /// The available derived classes include <see cref="SecretDeploymentResourceReference"/> and <see cref="OpenDeploymentResourceReference"/>.
         /// </param>
         /// <param name="desiredStateConfigurationGroupValueReferences"> The goal state of the site network service resource. This has references to the configuration group value objects that describe the desired state of the site network service. </param>
         /// <param name="lastStateNetworkServiceDesignVersionName"> The network service design version for the site network service. </param>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <summary>
         /// The network service design version resource reference.
         /// Please note <see cref="DeploymentResourceIdReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="OpenDeploymentResourceReference"/> and <see cref="SecretDeploymentResourceReference"/>.
+        /// The available derived classes include <see cref="SecretDeploymentResourceReference"/> and <see cref="OpenDeploymentResourceReference"/>.
         /// </summary>
         public DeploymentResourceIdReference NetworkServiceDesignVersionResourceReference { get; set; }
         /// <summary> The goal state of the site network service resource. This has references to the configuration group value objects that describe the desired state of the site network service. </summary>

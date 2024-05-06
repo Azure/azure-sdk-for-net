@@ -9,30 +9,22 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.ResourceManager.HealthcareApis.Models;
 
 namespace Azure.ResourceManager.HealthcareApis
 {
-    internal class HealthcareApisWorkspaceOperationSource : IOperationSource<HealthcareApisWorkspaceResource>
+    internal class HealthcareApisWorkspaceOperationSource : IOperationSource<HealthcareApisWorkspace>
     {
-        private readonly ArmClient _client;
-
-        internal HealthcareApisWorkspaceOperationSource(ArmClient client)
-        {
-            _client = client;
-        }
-
-        HealthcareApisWorkspaceResource IOperationSource<HealthcareApisWorkspaceResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        HealthcareApisWorkspace IOperationSource<HealthcareApisWorkspace>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            var data = HealthcareApisWorkspaceData.DeserializeHealthcareApisWorkspaceData(document.RootElement);
-            return new HealthcareApisWorkspaceResource(_client, data);
+            return HealthcareApisWorkspace.DeserializeHealthcareApisWorkspace(document.RootElement);
         }
 
-        async ValueTask<HealthcareApisWorkspaceResource> IOperationSource<HealthcareApisWorkspaceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<HealthcareApisWorkspace> IOperationSource<HealthcareApisWorkspace>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = HealthcareApisWorkspaceData.DeserializeHealthcareApisWorkspaceData(document.RootElement);
-            return new HealthcareApisWorkspaceResource(_client, data);
+            return HealthcareApisWorkspace.DeserializeHealthcareApisWorkspace(document.RootElement);
         }
     }
 }
