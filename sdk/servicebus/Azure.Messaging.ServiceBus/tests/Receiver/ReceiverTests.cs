@@ -8,8 +8,10 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Shared;
 using Azure.Messaging.ServiceBus.Amqp;
 using Azure.Messaging.ServiceBus.Core;
+using Azure.Messaging.ServiceBus.Diagnostics;
 using Moq;
 using NUnit.Framework;
 
@@ -468,8 +470,18 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         public async Task PurgeMessagesHandlesLowCount()
         {
             var expectedDeleteCount = 30;
-            var mockReceiver = new Mock<ServiceBusReceiver>() { CallBase = true };
-            var receiver = mockReceiver.Object;
+            var mockConnection = ServiceBusTestUtilities.CreateMockConnection();
+            var mockReceiver = new Mock<ServiceBusReceiver>(
+                mockConnection.Object,
+                "fake",
+                false,
+                new ServiceBusReceiverOptions(),
+                default(string),
+                false,
+                default(CancellationToken))
+            {
+                CallBase = true
+            };
 
             mockReceiver
                 .SetupSequence(receiver => receiver.DeleteMessagesAsync(
@@ -483,6 +495,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             // operation until the count of messages deleted is less than the
             // maximum allowed.
 
+            var receiver = mockReceiver.Object;
             var deleteCount = await receiver.PurgeMessagesAsync();
             Assert.AreEqual(expectedDeleteCount, deleteCount);
 
@@ -498,8 +511,18 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         public async Task PurgeMessagesEvaluatesReturnedCount()
         {
             var expectedDeleteCount = (ServiceBusReceiver.MaxDeleteMessageCount * 3) - 1;
-            var mockReceiver = new Mock<ServiceBusReceiver>() { CallBase = true };
-            var receiver = mockReceiver.Object;
+            var mockConnection = ServiceBusTestUtilities.CreateMockConnection();
+            var mockReceiver = new Mock<ServiceBusReceiver>(
+                mockConnection.Object,
+                "fake",
+                false,
+                new ServiceBusReceiverOptions(),
+                default(string),
+                false,
+                default(CancellationToken))
+            {
+                CallBase = true
+            };
 
             mockReceiver
                 .SetupSequence(receiver => receiver.DeleteMessagesAsync(
@@ -515,6 +538,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             // operation until the count of messages deleted is less than the
             // maximum allowed.
 
+            var receiver = mockReceiver.Object;
             var deleteCount = await receiver.PurgeMessagesAsync();
             Assert.AreEqual(expectedDeleteCount, deleteCount);
 
@@ -531,8 +555,18 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         {
             var expectedDeleteCount = 2;
             var expectedDate = new DateTimeOffset(2015, 10, 27, 0, 0, 0, 0, TimeSpan.Zero);
-            var mockReceiver = new Mock<ServiceBusReceiver>() { CallBase = true };
-            var receiver = mockReceiver.Object;
+            var mockConnection = ServiceBusTestUtilities.CreateMockConnection();
+            var mockReceiver = new Mock<ServiceBusReceiver>(
+                mockConnection.Object,
+                "fake",
+                false,
+                new ServiceBusReceiverOptions(),
+                default(string),
+                false,
+                default(CancellationToken))
+            {
+                CallBase = true
+            };
 
             mockReceiver
                 .SetupSequence(receiver => receiver.DeleteMessagesAsync(
@@ -546,6 +580,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             // operation until the count of messages deleted is less than the
             // maximum allowed.
 
+            var receiver = mockReceiver.Object;
             var deleteCount = await receiver.PurgeMessagesAsync(expectedDate);
             Assert.AreEqual(expectedDeleteCount, deleteCount);
 
@@ -562,8 +597,18 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         {
             var expectedDeleteCount = (ServiceBusReceiver.MaxDeleteMessageCount * 4) -1;
             var expectedDate = new DateTimeOffset(2015, 10, 27, 0, 0, 0, 0, TimeSpan.Zero);
-            var mockReceiver = new Mock<ServiceBusReceiver>() { CallBase = true };
-            var receiver = mockReceiver.Object;
+            var mockConnection = ServiceBusTestUtilities.CreateMockConnection();
+            var mockReceiver = new Mock<ServiceBusReceiver>(
+                mockConnection.Object,
+                "fake",
+                false,
+                new ServiceBusReceiverOptions(),
+                default(string),
+                false,
+                default(CancellationToken))
+            {
+                CallBase = true
+            };
 
             mockReceiver
                 .SetupSequence(receiver => receiver.DeleteMessagesAsync(
@@ -580,6 +625,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             // operation until the count of messages deleted is less than the
             // maximum allowed.
 
+            var receiver = mockReceiver.Object;
             var deleteCount = await receiver.PurgeMessagesAsync(expectedDate);
             Assert.AreEqual(expectedDeleteCount, deleteCount);
 
