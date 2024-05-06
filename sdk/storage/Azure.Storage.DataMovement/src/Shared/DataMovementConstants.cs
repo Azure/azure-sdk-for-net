@@ -160,7 +160,6 @@ namespace Azure.Storage.DataMovement
             internal const string Metadata = "Metadata";
             internal const string FileAttributes = "FileAttributes";
             internal const string FilePermissionKey = "FilePermissionKey";
-            internal const string DirectoryMetadata = "DirectoryMetadata";
         }
     }
 }

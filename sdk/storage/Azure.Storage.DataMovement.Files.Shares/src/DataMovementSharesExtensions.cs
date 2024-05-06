@@ -52,15 +52,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
                         : default
                     : options?.FileMetadata?.Value;
 
-        public static Metadata GetDirectoryMetadata(
-            this ShareFileStorageResourceOptions options,
-            Dictionary<string, object> properties)
-            => (options?.DirectoryMetadata?.Preserve ?? true)
-                    ? properties?.TryGetValue(DataMovementConstants.ResourceProperties.DirectoryMetadata, out object metadata) == true
-                        ? (Metadata)metadata
-                        : default
-            : options?.DirectoryMetadata?.Value;
-
         public static FileSmbProperties GetFileSmbProperties(
             this ShareFileStorageResourceOptions options,
             StorageResourceItemProperties properties)

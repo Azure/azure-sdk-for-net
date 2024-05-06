@@ -400,8 +400,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 { DataMovementConstants.ResourceProperties.FilePermissionKey, DefaultFilePermissionKey },
                 { DataMovementConstants.ResourceProperties.CreationTime, DefaultFileCreatedOn },
                 { DataMovementConstants.ResourceProperties.ChangedOnTime, DefaultFileChangedOn },
-                { DataMovementConstants.ResourceProperties.Metadata, DefaultFileMetadata },
-                { DataMovementConstants.ResourceProperties.DirectoryMetadata, DefaultDirectoryMetadata }
+                { DataMovementConstants.ResourceProperties.Metadata, DefaultFileMetadata }
             };
 
             Mock<ShareFileClient> mock = await CopyFromStreamPreserveProperties_Internal(
@@ -459,8 +458,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 { DataMovementConstants.ResourceProperties.FilePermissionKey, DefaultFilePermissionKey },
                 { DataMovementConstants.ResourceProperties.CreationTime, DefaultFileCreatedOn },
                 { DataMovementConstants.ResourceProperties.ChangedOnTime, DefaultFileChangedOn },
-                { DataMovementConstants.ResourceProperties.Metadata, DefaultFileMetadata },
-                { DataMovementConstants.ResourceProperties.DirectoryMetadata, DefaultDirectoryMetadata }
+                { DataMovementConstants.ResourceProperties.Metadata, DefaultFileMetadata }
             };
 
             Mock<ShareFileClient> mock = await CopyFromStreamPreserveProperties_Internal(
@@ -531,8 +529,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 { DataMovementConstants.ResourceProperties.FilePermissionKey, DefaultFilePermissionKey },
                 { DataMovementConstants.ResourceProperties.CreationTime, DefaultFileCreatedOn },
                 { DataMovementConstants.ResourceProperties.ChangedOnTime, DefaultFileChangedOn },
-                { DataMovementConstants.ResourceProperties.Metadata, DefaultFileMetadata },
-                { DataMovementConstants.ResourceProperties.DirectoryMetadata, DefaultDirectoryMetadata }
+                { DataMovementConstants.ResourceProperties.Metadata, DefaultFileMetadata }
             };
 
             Mock<ShareFileClient> mock = await CopyFromStreamPreserveProperties_Internal(
@@ -809,8 +806,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 { DataMovementConstants.ResourceProperties.FilePermissionKey, DefaultFilePermissionKey },
                 { DataMovementConstants.ResourceProperties.CreationTime, DefaultFileCreatedOn },
                 { DataMovementConstants.ResourceProperties.ChangedOnTime, DefaultFileChangedOn },
-                { DataMovementConstants.ResourceProperties.Metadata, DefaultFileMetadata },
-                { DataMovementConstants.ResourceProperties.DirectoryMetadata, DefaultDirectoryMetadata }
+                { DataMovementConstants.ResourceProperties.Metadata, DefaultFileMetadata }
             };
 
             // Act
@@ -871,8 +867,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 { DataMovementConstants.ResourceProperties.FilePermissionKey, DefaultFilePermissionKey },
                 { DataMovementConstants.ResourceProperties.CreationTime, DefaultFileCreatedOn },
                 { DataMovementConstants.ResourceProperties.ChangedOnTime, DefaultFileChangedOn },
-                { DataMovementConstants.ResourceProperties.Metadata, DefaultFileMetadata },
-                { DataMovementConstants.ResourceProperties.DirectoryMetadata, DefaultDirectoryMetadata }
+                { DataMovementConstants.ResourceProperties.Metadata, DefaultFileMetadata }
             };
 
             // Act
@@ -946,8 +941,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 { DataMovementConstants.ResourceProperties.FilePermissionKey, DefaultFilePermissionKey },
                 { DataMovementConstants.ResourceProperties.CreationTime, DefaultFileCreatedOn },
                 { DataMovementConstants.ResourceProperties.ChangedOnTime, DefaultFileChangedOn },
-                { DataMovementConstants.ResourceProperties.Metadata, DefaultFileMetadata },
-                { DataMovementConstants.ResourceProperties.DirectoryMetadata, DefaultDirectoryMetadata }
+                { DataMovementConstants.ResourceProperties.Metadata, DefaultFileMetadata }
             };
 
             // Act
@@ -1241,8 +1235,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 { DataMovementConstants.ResourceProperties.FilePermissionKey, DefaultFilePermissionKey },
                 { DataMovementConstants.ResourceProperties.CreationTime, DefaultFileCreatedOn },
                 { DataMovementConstants.ResourceProperties.ChangedOnTime, DefaultFileChangedOn },
-                { DataMovementConstants.ResourceProperties.Metadata, DefaultFileMetadata },
-                { DataMovementConstants.ResourceProperties.DirectoryMetadata, DefaultDirectoryMetadata }
+                { DataMovementConstants.ResourceProperties.Metadata, DefaultFileMetadata }
             };
 
             // Act
@@ -1303,8 +1296,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 { DataMovementConstants.ResourceProperties.FilePermissionKey, DefaultFilePermissionKey },
                 { DataMovementConstants.ResourceProperties.CreationTime, DefaultFileCreatedOn },
                 { DataMovementConstants.ResourceProperties.ChangedOnTime, DefaultFileChangedOn },
-                { DataMovementConstants.ResourceProperties.Metadata, DefaultFileMetadata },
-                { DataMovementConstants.ResourceProperties.DirectoryMetadata, DefaultDirectoryMetadata }
+                { DataMovementConstants.ResourceProperties.Metadata, DefaultFileMetadata }
             };
 
             // Act
@@ -1378,8 +1370,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 { DataMovementConstants.ResourceProperties.FilePermissionKey, DefaultFilePermissionKey },
                 { DataMovementConstants.ResourceProperties.CreationTime, DefaultFileCreatedOn },
                 { DataMovementConstants.ResourceProperties.ChangedOnTime, DefaultFileChangedOn },
-                { DataMovementConstants.ResourceProperties.Metadata, DefaultFileMetadata },
-                { DataMovementConstants.ResourceProperties.DirectoryMetadata, DefaultDirectoryMetadata }
+                { DataMovementConstants.ResourceProperties.Metadata, DefaultFileMetadata }
             };
 
             // Act
