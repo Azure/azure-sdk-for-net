@@ -105,22 +105,22 @@ namespace Azure.Health.Insights.RadiologyInsights
             {
                 return null;
             }
-            DocumentType type = default;
+            ClinicalDocumentContentType type = default;
             ClinicalDocumentType? clinicalType = default;
             string id = default;
             string language = default;
             DateTimeOffset? createdAt = default;
-            IList<DocumentAuthor> authors = default;
+            IList<ClinicalDocumentAuthor> authors = default;
             SpecialtyType? specialtyType = default;
             DocumentAdministrativeMetadata administrativeMetadata = default;
-            DocumentContent content = default;
+            ClinicalDocumentContent content = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
                 {
-                    type = new DocumentType(property.Value.GetString());
+                    type = new ClinicalDocumentContentType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("clinicalType"u8))
@@ -157,10 +157,10 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    List<DocumentAuthor> array = new List<DocumentAuthor>();
+                    List<ClinicalDocumentAuthor> array = new List<ClinicalDocumentAuthor>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentAuthor.DeserializeDocumentAuthor(item, options));
+                        array.Add(ClinicalDocumentAuthor.DeserializeClinicalDocumentAuthor(item, options));
                     }
                     authors = array;
                     continue;
@@ -185,7 +185,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 }
                 if (property.NameEquals("content"u8))
                 {
-                    content = DocumentContent.DeserializeDocumentContent(property.Value, options);
+                    content = ClinicalDocumentContent.DeserializeClinicalDocumentContent(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -200,7 +200,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 id,
                 language,
                 createdAt,
-                authors ?? new ChangeTrackingList<DocumentAuthor>(),
+                authors ?? new ChangeTrackingList<ClinicalDocumentAuthor>(),
                 specialtyType,
                 administrativeMetadata,
                 content,

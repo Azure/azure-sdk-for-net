@@ -122,6 +122,42 @@ RadiologyInsightsData radiologyInsightsData = new RadiologyInsightsData(new Pati
                             Id = "<id>",
                             Extension = {default},
                         }},
+<<<<<<< HEAD
+=======
+                        Tag = {default},
+                    },
+                    ImplicitRules = "<implicitRules>",
+                    Language = "<language>",
+                }},
+            },
+            Encounters = {new PatientEncounter("<id>")
+            {
+                Period = new TimePeriod
+                {
+                    Start = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+                    End = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+                },
+                Class = EncounterClass.InPatient,
+            }},
+            PatientDocuments = {new PatientDocument(ClinicalDocumentContentType.Note, "<id>", new ClinicalDocumentContent(DocumentContentSourceType.Inline, "<value>"))
+            {
+                ClinicalType = ClinicalDocumentType.Consultation,
+                Language = "<language>",
+                CreatedAt = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+                Authors = {new ClinicalDocumentAuthor
+                {
+                    Id = "<id>",
+                    FullName = "<fullName>",
+                }},
+                SpecialtyType = SpecialtyType.Pathology,
+                AdministrativeMetadata = new DocumentAdministrativeMetadata
+                {
+                    OrderedProcedures = {new OrderedProcedure
+                    {
+                        Code = default,
+                        Description = "<description>",
+                        Extension = {default},
+>>>>>>> b3f3b9ca9b3 (changes for new commit id)
                     }},
                     Tag = {default},
                 },
@@ -309,6 +345,42 @@ RadiologyInsightsData radiologyInsightsData = new RadiologyInsightsData(new Pati
                             Id = "<id>",
                             Extension = {default},
                         }},
+<<<<<<< HEAD
+=======
+                        Tag = {default},
+                    },
+                    ImplicitRules = "<implicitRules>",
+                    Language = "<language>",
+                }},
+            },
+            Encounters = {new PatientEncounter("<id>")
+            {
+                Period = new TimePeriod
+                {
+                    Start = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+                    End = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+                },
+                Class = EncounterClass.InPatient,
+            }},
+            PatientDocuments = {new PatientDocument(ClinicalDocumentContentType.Note, "<id>", new ClinicalDocumentContent(DocumentContentSourceType.Inline, "<value>"))
+            {
+                ClinicalType = ClinicalDocumentType.Consultation,
+                Language = "<language>",
+                CreatedAt = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+                Authors = {new ClinicalDocumentAuthor
+                {
+                    Id = "<id>",
+                    FullName = "<fullName>",
+                }},
+                SpecialtyType = SpecialtyType.Pathology,
+                AdministrativeMetadata = new DocumentAdministrativeMetadata
+                {
+                    OrderedProcedures = {new OrderedProcedure
+                    {
+                        Code = default,
+                        Description = "<description>",
+                        Extension = {default},
+>>>>>>> b3f3b9ca9b3 (changes for new commit id)
                     }},
                     Tag = {default},
                 },

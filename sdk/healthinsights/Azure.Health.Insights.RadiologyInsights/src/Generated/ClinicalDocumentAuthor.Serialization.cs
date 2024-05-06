@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.Health.Insights.RadiologyInsights
 {
-    public partial class DocumentAuthor : IUtf8JsonSerializable, IJsonModel<DocumentAuthor>
+    public partial class ClinicalDocumentAuthor : IUtf8JsonSerializable, IJsonModel<ClinicalDocumentAuthor>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DocumentAuthor>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClinicalDocumentAuthor>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<DocumentAuthor>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ClinicalDocumentAuthor>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DocumentAuthor>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ClinicalDocumentAuthor>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DocumentAuthor)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ClinicalDocumentAuthor)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,19 +54,19 @@ namespace Azure.Health.Insights.RadiologyInsights
             writer.WriteEndObject();
         }
 
-        DocumentAuthor IJsonModel<DocumentAuthor>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ClinicalDocumentAuthor IJsonModel<ClinicalDocumentAuthor>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DocumentAuthor>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ClinicalDocumentAuthor>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DocumentAuthor)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ClinicalDocumentAuthor)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDocumentAuthor(document.RootElement, options);
+            return DeserializeClinicalDocumentAuthor(document.RootElement, options);
         }
 
-        internal static DocumentAuthor DeserializeDocumentAuthor(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ClinicalDocumentAuthor DeserializeClinicalDocumentAuthor(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -96,46 +96,46 @@ namespace Azure.Health.Insights.RadiologyInsights
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DocumentAuthor(id, fullName, serializedAdditionalRawData);
+            return new ClinicalDocumentAuthor(id, fullName, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<DocumentAuthor>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ClinicalDocumentAuthor>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DocumentAuthor>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ClinicalDocumentAuthor>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DocumentAuthor)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClinicalDocumentAuthor)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DocumentAuthor IPersistableModel<DocumentAuthor>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ClinicalDocumentAuthor IPersistableModel<ClinicalDocumentAuthor>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DocumentAuthor>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ClinicalDocumentAuthor>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeDocumentAuthor(document.RootElement, options);
+                        return DeserializeClinicalDocumentAuthor(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DocumentAuthor)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClinicalDocumentAuthor)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DocumentAuthor>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ClinicalDocumentAuthor>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static DocumentAuthor FromResponse(Response response)
+        internal static ClinicalDocumentAuthor FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeDocumentAuthor(document.RootElement);
+            return DeserializeClinicalDocumentAuthor(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

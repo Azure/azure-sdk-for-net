@@ -185,8 +185,8 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
                 }
             };
             List<PatientEncounter> encounterList = new() { encounter };
-            DocumentContent documentContent = new(DocumentContentSourceType.Inline, DOC_CONTENT);
-            PatientDocument patientDocument = new(DocumentType.Note, "doc2", documentContent)
+            ClinicalDocumentContent documentContent = new(DocumentContentSourceType.Inline, DOC_CONTENT);
+            PatientDocument patientDocument = new(ClinicalDocumentContentType.Note, "doc2", documentContent)
             {
                 ClinicalType = ClinicalDocumentType.RadiologyReport,
                 CreatedAt = new System.DateTime(2021, 08, 28),

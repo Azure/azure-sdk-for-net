@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Health.Insights.RadiologyInsights
 {
     /// <summary> Document author. </summary>
-    public partial class DocumentAuthor
+    public partial class ClinicalDocumentAuthor
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,16 +45,16 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DocumentAuthor"/>. </summary>
-        public DocumentAuthor()
+        /// <summary> Initializes a new instance of <see cref="ClinicalDocumentAuthor"/>. </summary>
+        public ClinicalDocumentAuthor()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentAuthor"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClinicalDocumentAuthor"/>. </summary>
         /// <param name="id"> author id. </param>
         /// <param name="fullName"> Text representation of the full name. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentAuthor(string id, string fullName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ClinicalDocumentAuthor(string id, string fullName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             FullName = fullName;
