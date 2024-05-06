@@ -11,19 +11,19 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
     /// <summary> Unknown version of ExtendedUeInfoProperties. </summary>
-    internal partial class UnknownExtendedUEInfoProperties : ExtendedUEInfoProperties
+    internal partial class UnknownExtendedUeInfoProperties : ExtendedUEInfoProperties
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownExtendedUEInfoProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownExtendedUeInfoProperties"/>. </summary>
         /// <param name="ratType"> RAT Type. </param>
         /// <param name="lastReadOn"> The timestamp of last UE info read from the packet core (UTC). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownExtendedUEInfoProperties(RatType ratType, DateTimeOffset? lastReadOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(ratType, lastReadOn, serializedAdditionalRawData)
+        internal UnknownExtendedUeInfoProperties(RatType ratType, DateTimeOffset? lastReadOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(ratType, lastReadOn, serializedAdditionalRawData)
         {
             RatType = ratType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="UnknownExtendedUEInfoProperties"/> for deserialization. </summary>
-        internal UnknownExtendedUEInfoProperties()
+        /// <summary> Initializes a new instance of <see cref="UnknownExtendedUeInfoProperties"/> for deserialization. </summary>
+        internal UnknownExtendedUeInfoProperties()
         {
         }
     }
