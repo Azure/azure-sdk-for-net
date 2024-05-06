@@ -1,10 +1,11 @@
 # Release History
 
-## 1.3.0 (2024-04-30)
+## 1.3.0 (2024-05-06)
 
 ### Features Added
 
-- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details..
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Add `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
 - Update api version to 2024-02-01
 - Add log-scrubbing support for waf
 - Add GroupBy support for waf custom rule

@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.FrontDoor.Tests.Helpers
             {
                 new WebApplicationRuleMatchCondition(WebApplicationRuleMatchVariable.RemoteAddr, WebApplicationRuleMatchOperator.IPMatch, new List<String>(){ "192.168.1.0/24", "10.0.0.0/24"})
             };
-                    IEnumerable<WebApplicationRuleMatchCondition> matchConditions2 = new List<WebApplicationRuleMatchCondition>()
+            IEnumerable<WebApplicationRuleMatchCondition> matchConditions2 = new List<WebApplicationRuleMatchCondition>()
             {
                 new WebApplicationRuleMatchCondition(WebApplicationRuleMatchVariable.RemoteAddr, WebApplicationRuleMatchOperator.GeoMatch, new List<String>(){ "CH"}),
                 new WebApplicationRuleMatchCondition(WebApplicationRuleMatchVariable.RequestHeader, WebApplicationRuleMatchOperator.Contains, new List<String>(){ "windows" })
