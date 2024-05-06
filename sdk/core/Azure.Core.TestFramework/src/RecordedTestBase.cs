@@ -143,6 +143,7 @@ namespace Azure.Core.TestFramework
         public List<string> SanitizersToRemove { get; } = new()
         {
             "AZSDK1007", // SAS URL - this is added separately in BodyRegexSanitizers
+            "AZSDK1008",
             "AZSDK2003", // Location header
             "AZSDK2006", // x-ms-rename-source
             "AZSDK2007", // x-ms-file-rename-source
