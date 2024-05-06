@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    [PersistableModelProxy(typeof(UnknownChannel))]
+    [PersistableModelProxy(typeof(UnknownBotChannelProperties))]
     public partial class BotChannelProperties : IUtf8JsonSerializable, IJsonModel<BotChannelProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BotChannelProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -92,28 +92,28 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AcsChatChannel": return AcsChatChannel.DeserializeAcsChatChannel(element, options);
                     case "AlexaChannel": return AlexaChannel.DeserializeAlexaChannel(element, options);
-                    case "DirectLineChannel": return DirectLineChannel.DeserializeDirectLineChannel(element, options);
-                    case "DirectLineSpeechChannel": return DirectLineSpeechChannel.DeserializeDirectLineSpeechChannel(element, options);
-                    case "EmailChannel": return EmailChannel.DeserializeEmailChannel(element, options);
                     case "FacebookChannel": return FacebookChannel.DeserializeFacebookChannel(element, options);
-                    case "KikChannel": return KikChannel.DeserializeKikChannel(element, options);
-                    case "LineChannel": return LineChannel.DeserializeLineChannel(element, options);
-                    case "M365Extensions": return M365Extensions.DeserializeM365Extensions(element, options);
-                    case "MsTeamsChannel": return MsTeamsChannel.DeserializeMsTeamsChannel(element, options);
-                    case "Omnichannel": return Omnichannel.DeserializeOmnichannel(element, options);
+                    case "EmailChannel": return EmailChannel.DeserializeEmailChannel(element, options);
                     case "OutlookChannel": return OutlookChannel.DeserializeOutlookChannel(element, options);
-                    case "SearchAssistant": return SearchAssistant.DeserializeSearchAssistant(element, options);
+                    case "MsTeamsChannel": return MsTeamsChannel.DeserializeMsTeamsChannel(element, options);
                     case "SkypeChannel": return SkypeChannel.DeserializeSkypeChannel(element, options);
-                    case "SlackChannel": return SlackChannel.DeserializeSlackChannel(element, options);
-                    case "SmsChannel": return SmsChannel.DeserializeSmsChannel(element, options);
-                    case "TelegramChannel": return TelegramChannel.DeserializeTelegramChannel(element, options);
-                    case "TelephonyChannel": return TelephonyChannel.DeserializeTelephonyChannel(element, options);
+                    case "KikChannel": return KikChannel.DeserializeKikChannel(element, options);
                     case "WebChatChannel": return WebChatChannel.DeserializeWebChatChannel(element, options);
+                    case "DirectLineChannel": return DirectLineChannel.DeserializeDirectLineChannel(element, options);
+                    case "TelegramChannel": return TelegramChannel.DeserializeTelegramChannel(element, options);
+                    case "SmsChannel": return SmsChannel.DeserializeSmsChannel(element, options);
+                    case "SlackChannel": return SlackChannel.DeserializeSlackChannel(element, options);
+                    case "LineChannel": return LineChannel.DeserializeLineChannel(element, options);
+                    case "DirectLineSpeechChannel": return DirectLineSpeechChannel.DeserializeDirectLineSpeechChannel(element, options);
+                    case "Omnichannel": return Omnichannel.DeserializeOmnichannel(element, options);
+                    case "TelephonyChannel": return TelephonyChannel.DeserializeTelephonyChannel(element, options);
+                    case "AcsChatChannel": return AcsChatChannel.DeserializeAcsChatChannel(element, options);
+                    case "SearchAssistant": return SearchAssistant.DeserializeSearchAssistant(element, options);
+                    case "M365Extensions": return M365Extensions.DeserializeM365Extensions(element, options);
                 }
             }
-            return UnknownChannel.DeserializeUnknownChannel(element, options);
+            return UnknownBotChannelProperties.DeserializeUnknownBotChannelProperties(element, options);
         }
 
         BinaryData IPersistableModel<BotChannelProperties>.Write(ModelReaderWriterOptions options)
