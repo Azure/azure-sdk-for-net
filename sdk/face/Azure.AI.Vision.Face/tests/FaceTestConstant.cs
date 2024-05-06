@@ -19,5 +19,10 @@ namespace Azure.AI.Vision.Face.Tests
         public const string UrlFamily1Mom2Image = "https://raw.githubusercontent.com/Azure-Samples/cognitive-services-sample-data-files/master/Face/images/Family1-Mom2.jpg";
         public const string UrlFamily1Son1Image = "https://raw.githubusercontent.com/Azure-Samples/cognitive-services-sample-data-files/master/Face/images/Family1-Son1.jpg";
         public const string UrlFamily1Son2Image = "https://raw.githubusercontent.com/Azure-Samples/cognitive-services-sample-data-files/master/Face/images/Family1-Son2.jpg";
+        public const string UrlFamily1Daughter1Image = "https://raw.githubusercontent.com/Azure-Samples/cognitive-services-sample-data-files/master/Face/images/Family1-Daughter1.jpg";
+        public const string UrlFamily1Daughter2Image = "https://raw.githubusercontent.com/Azure-Samples/cognitive-services-sample-data-files/master/Face/images/Family1-Daughter2.jpg";
+        public const string UrlFamily1Daughter3Image = "https://raw.githubusercontent.com/Azure-Samples/cognitive-services-sample-data-files/master/Face/images/Family1-Daughter3.jpg";
+        public const string UrlFamily2Lady1Image = "https://raw.githubusercontent.com/Azure-Samples/cognitive-services-sample-data-files/master/Face/images/Family2-Lady1.jpg";
+        public const string UrlFamily2Lady2Image = "https://raw.githubusercontent.com/Azure-Samples/cognitive-services-sample-data-files/master/Face/images/Family2-Lady2.jpg";
     }
 }
