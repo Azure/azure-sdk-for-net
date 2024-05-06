@@ -28,12 +28,28 @@ public abstract class AsyncResultCollection<T> : ClientResult, IAsyncEnumerable<
     public static AsyncResultCollection<TValue> Create<TValue>(PipelineResponse response, CancellationToken cancellationToken = default)
         where TValue : IJsonModel<TValue>
     {
-        return StreamingClientResult<TValue>.CreateStreaming<TValue>(response, cancellationToken);
+        Argument.AssertNotNull(response, nameof(response));
+
+        if (response.ContentStream is null)
+        {
+            throw new ArgumentException("Unable to create result from response with null ContentStream", nameof(response));
+        }
+
+        // TODO: correct pattern for cancellation token
+        return new AsyncSseValueResultCollection<TValue>(response);
     }
 
     public static AsyncResultCollection<BinaryData> Create(PipelineResponse response, CancellationToken cancellationToken = default)
     {
-        return StreamingClientResult<BinaryData>.CreateStreaming(response, cancellationToken);
+        Argument.AssertNotNull(response, nameof(response));
+
+        if (response.ContentStream is null)
+        {
+            throw new ArgumentException("Unable to create result from response with null ContentStream", nameof(response));
+        }
+
+        // TODO: correct pattern for cancellation token
+        return new AsyncSseDataResultCollection(response);
     }
 }
 #pragma warning restore CS1591 // public XML comments

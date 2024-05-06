@@ -58,6 +58,8 @@ public class ClientResult
     /// from <see cref="GetRawResponse"/>.</param>
     protected void SetRawResponse(PipelineResponse response)
     {
+        Argument.AssertNotNull(response, nameof(response));
+
         _response = response;
     }
 

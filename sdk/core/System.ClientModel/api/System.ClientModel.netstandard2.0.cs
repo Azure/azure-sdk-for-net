@@ -7,10 +7,12 @@ namespace System.ClientModel
         public static implicit operator System.ClientModel.ApiKeyCredential (string key) { throw null; }
         public void Update(string key) { }
     }
-    public abstract partial class AsyncClientResultCollection<T> : System.ClientModel.ClientResult, System.Collections.Generic.IAsyncEnumerable<T>
+    public abstract partial class AsyncResultCollection<T> : System.ClientModel.ClientResult, System.Collections.Generic.IAsyncEnumerable<T>
     {
-        protected internal AsyncClientResultCollection(System.ClientModel.Primitives.PipelineResponse response) : base (default(System.ClientModel.Primitives.PipelineResponse)) { }
-        public static System.ClientModel.AsyncClientResultCollection<TValue> Create<TValue>(System.ClientModel.Primitives.PipelineResponse response) where TValue : System.ClientModel.Primitives.IJsonModel<TValue> { throw null; }
+        protected internal AsyncResultCollection() : base (default(System.ClientModel.Primitives.PipelineResponse)) { }
+        protected internal AsyncResultCollection(System.ClientModel.Primitives.PipelineResponse response) : base (default(System.ClientModel.Primitives.PipelineResponse)) { }
+        public static System.ClientModel.AsyncResultCollection<System.BinaryData> Create(System.ClientModel.Primitives.PipelineResponse response, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.ClientModel.AsyncResultCollection<TValue> Create<TValue>(System.ClientModel.Primitives.PipelineResponse response, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) where TValue : System.ClientModel.Primitives.IJsonModel<TValue> { throw null; }
         public abstract System.Collections.Generic.IAsyncEnumerator<T> GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     }
     public abstract partial class BinaryContent : System.IDisposable

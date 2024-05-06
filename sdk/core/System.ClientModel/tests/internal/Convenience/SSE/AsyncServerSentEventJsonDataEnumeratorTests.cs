@@ -2,28 +2,27 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Internal;
-using System.IO;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using ClientModel.Tests.Mocks;
 using NUnit.Framework;
 
 namespace System.ClientModel.Tests.Convenience;
 
+// TODO: rename test file
 public class AsyncServerSentEventJsonDataEnumeratorTests
 {
     [Test]
     public async Task EnumeratesSingleEvents()
     {
-        Stream contentStream = BinaryData.FromString(_mockContent).ToStream();
-        using ServerSentEventReader reader = new(contentStream);
-        using AsyncServerSentEventEnumerator eventEnumerator = new(reader);
-        using AsyncServerSentEventJsonDataEnumerator<MockJsonModel> modelEnumerator = new(eventEnumerator);
+        MockPipelineResponse response = new();
+        response.SetContent(_mockContent);
+
+        AsyncSseValueResultCollection<MockJsonModel> models = new(response);
 
         int i = 0;
-        while (await modelEnumerator.MoveNextAsync())
+        await foreach (MockJsonModel model in models)
         {
-            MockJsonModel model = modelEnumerator.Current;
-
             Assert.AreEqual(model.IntValue, i);
             Assert.AreEqual(model.StringValue, i.ToString());
 
