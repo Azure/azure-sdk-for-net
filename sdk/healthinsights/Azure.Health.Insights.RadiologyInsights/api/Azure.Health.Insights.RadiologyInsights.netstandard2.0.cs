@@ -9,6 +9,48 @@ namespace Azure.Health.Insights.RadiologyInsights
         string System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.RadiologyInsights.AgeMismatchInference>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.RadiologyInsights.AgeMismatchInference>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class ClinicalDocumentAuthor : System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.RadiologyInsights.ClinicalDocumentAuthor>, System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.RadiologyInsights.ClinicalDocumentAuthor>
+    {
+        public ClinicalDocumentAuthor() { }
+        public string FullName { get { throw null; } set { } }
+        public string Id { get { throw null; } set { } }
+        Azure.Health.Insights.RadiologyInsights.ClinicalDocumentAuthor System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.RadiologyInsights.ClinicalDocumentAuthor>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.RadiologyInsights.ClinicalDocumentAuthor>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Health.Insights.RadiologyInsights.ClinicalDocumentAuthor System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.RadiologyInsights.ClinicalDocumentAuthor>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.RadiologyInsights.ClinicalDocumentAuthor>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.RadiologyInsights.ClinicalDocumentAuthor>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ClinicalDocumentContent : System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.RadiologyInsights.ClinicalDocumentContent>, System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.RadiologyInsights.ClinicalDocumentContent>
+    {
+        public ClinicalDocumentContent(Azure.Health.Insights.RadiologyInsights.DocumentContentSourceType sourceType, string value) { }
+        public Azure.Health.Insights.RadiologyInsights.DocumentContentSourceType SourceType { get { throw null; } set { } }
+        public string Value { get { throw null; } set { } }
+        Azure.Health.Insights.RadiologyInsights.ClinicalDocumentContent System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.RadiologyInsights.ClinicalDocumentContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.RadiologyInsights.ClinicalDocumentContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Health.Insights.RadiologyInsights.ClinicalDocumentContent System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.RadiologyInsights.ClinicalDocumentContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.RadiologyInsights.ClinicalDocumentContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.RadiologyInsights.ClinicalDocumentContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ClinicalDocumentContentType : System.IEquatable<Azure.Health.Insights.RadiologyInsights.ClinicalDocumentContentType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ClinicalDocumentContentType(string value) { throw null; }
+        public static Azure.Health.Insights.RadiologyInsights.ClinicalDocumentContentType Dicom { get { throw null; } }
+        public static Azure.Health.Insights.RadiologyInsights.ClinicalDocumentContentType FhirBundle { get { throw null; } }
+        public static Azure.Health.Insights.RadiologyInsights.ClinicalDocumentContentType GenomicSequencing { get { throw null; } }
+        public static Azure.Health.Insights.RadiologyInsights.ClinicalDocumentContentType Note { get { throw null; } }
+        public bool Equals(Azure.Health.Insights.RadiologyInsights.ClinicalDocumentContentType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Health.Insights.RadiologyInsights.ClinicalDocumentContentType left, Azure.Health.Insights.RadiologyInsights.ClinicalDocumentContentType right) { throw null; }
+        public static implicit operator Azure.Health.Insights.RadiologyInsights.ClinicalDocumentContentType (string value) { throw null; }
+        public static bool operator !=(Azure.Health.Insights.RadiologyInsights.ClinicalDocumentContentType left, Azure.Health.Insights.RadiologyInsights.ClinicalDocumentContentType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ClinicalDocumentType : System.IEquatable<Azure.Health.Insights.RadiologyInsights.ClinicalDocumentType>
     {
@@ -77,28 +119,6 @@ namespace Azure.Health.Insights.RadiologyInsights
         string System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.RadiologyInsights.DocumentAdministrativeMetadata>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.RadiologyInsights.DocumentAdministrativeMetadata>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DocumentAuthor : System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.RadiologyInsights.DocumentAuthor>, System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.RadiologyInsights.DocumentAuthor>
-    {
-        public DocumentAuthor() { }
-        public string FullName { get { throw null; } set { } }
-        public string Id { get { throw null; } set { } }
-        Azure.Health.Insights.RadiologyInsights.DocumentAuthor System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.RadiologyInsights.DocumentAuthor>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.RadiologyInsights.DocumentAuthor>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Health.Insights.RadiologyInsights.DocumentAuthor System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.RadiologyInsights.DocumentAuthor>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.RadiologyInsights.DocumentAuthor>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.RadiologyInsights.DocumentAuthor>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class DocumentContent : System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.RadiologyInsights.DocumentContent>, System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.RadiologyInsights.DocumentContent>
-    {
-        public DocumentContent(Azure.Health.Insights.RadiologyInsights.DocumentContentSourceType sourceType, string value) { }
-        public Azure.Health.Insights.RadiologyInsights.DocumentContentSourceType SourceType { get { throw null; } set { } }
-        public string Value { get { throw null; } set { } }
-        Azure.Health.Insights.RadiologyInsights.DocumentContent System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.RadiologyInsights.DocumentContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.RadiologyInsights.DocumentContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Health.Insights.RadiologyInsights.DocumentContent System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.RadiologyInsights.DocumentContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.RadiologyInsights.DocumentContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.RadiologyInsights.DocumentContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DocumentContentSourceType : System.IEquatable<Azure.Health.Insights.RadiologyInsights.DocumentContentSourceType>
     {
@@ -115,26 +135,6 @@ namespace Azure.Health.Insights.RadiologyInsights
         public static bool operator ==(Azure.Health.Insights.RadiologyInsights.DocumentContentSourceType left, Azure.Health.Insights.RadiologyInsights.DocumentContentSourceType right) { throw null; }
         public static implicit operator Azure.Health.Insights.RadiologyInsights.DocumentContentSourceType (string value) { throw null; }
         public static bool operator !=(Azure.Health.Insights.RadiologyInsights.DocumentContentSourceType left, Azure.Health.Insights.RadiologyInsights.DocumentContentSourceType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DocumentType : System.IEquatable<Azure.Health.Insights.RadiologyInsights.DocumentType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public DocumentType(string value) { throw null; }
-        public static Azure.Health.Insights.RadiologyInsights.DocumentType Dicom { get { throw null; } }
-        public static Azure.Health.Insights.RadiologyInsights.DocumentType FhirBundle { get { throw null; } }
-        public static Azure.Health.Insights.RadiologyInsights.DocumentType GenomicSequencing { get { throw null; } }
-        public static Azure.Health.Insights.RadiologyInsights.DocumentType Note { get { throw null; } }
-        public bool Equals(Azure.Health.Insights.RadiologyInsights.DocumentType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Health.Insights.RadiologyInsights.DocumentType left, Azure.Health.Insights.RadiologyInsights.DocumentType right) { throw null; }
-        public static implicit operator Azure.Health.Insights.RadiologyInsights.DocumentType (string value) { throw null; }
-        public static bool operator !=(Azure.Health.Insights.RadiologyInsights.DocumentType left, Azure.Health.Insights.RadiologyInsights.DocumentType right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -709,16 +709,16 @@ namespace Azure.Health.Insights.RadiologyInsights
     }
     public partial class PatientDocument : System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.RadiologyInsights.PatientDocument>, System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.RadiologyInsights.PatientDocument>
     {
-        public PatientDocument(Azure.Health.Insights.RadiologyInsights.DocumentType type, string id, Azure.Health.Insights.RadiologyInsights.DocumentContent content) { }
+        public PatientDocument(Azure.Health.Insights.RadiologyInsights.ClinicalDocumentContentType type, string id, Azure.Health.Insights.RadiologyInsights.ClinicalDocumentContent content) { }
         public Azure.Health.Insights.RadiologyInsights.DocumentAdministrativeMetadata AdministrativeMetadata { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.Health.Insights.RadiologyInsights.DocumentAuthor> Authors { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Health.Insights.RadiologyInsights.ClinicalDocumentAuthor> Authors { get { throw null; } }
         public Azure.Health.Insights.RadiologyInsights.ClinicalDocumentType? ClinicalType { get { throw null; } set { } }
-        public Azure.Health.Insights.RadiologyInsights.DocumentContent Content { get { throw null; } set { } }
+        public Azure.Health.Insights.RadiologyInsights.ClinicalDocumentContent Content { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedAt { get { throw null; } set { } }
         public string Id { get { throw null; } set { } }
         public string Language { get { throw null; } set { } }
         public Azure.Health.Insights.RadiologyInsights.SpecialtyType? SpecialtyType { get { throw null; } set { } }
-        public Azure.Health.Insights.RadiologyInsights.DocumentType Type { get { throw null; } set { } }
+        public Azure.Health.Insights.RadiologyInsights.ClinicalDocumentContentType Type { get { throw null; } set { } }
         Azure.Health.Insights.RadiologyInsights.PatientDocument System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.RadiologyInsights.PatientDocument>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.RadiologyInsights.PatientDocument>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.RadiologyInsights.PatientDocument System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.RadiologyInsights.PatientDocument>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
