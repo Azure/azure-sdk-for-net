@@ -947,6 +947,12 @@
 # ServiceLabel: %Network - CDN %Mgmt
 # ServiceOwners:                                                   @ptnan7
 
+# PRLabel: %Network - Front Door
+/sdk/frontdoor/Azure.ResourceManager.*/                            @ptnan7
+
+# ServiceLabel: %Network - Front Door %Mgmt
+# ServiceOwners:                                                   @ptnan7
+
 # ServiceLabel: %Recovery Services Backup %Mgmt
 # ServiceOwners:                                                   @Daya-Patil
 
