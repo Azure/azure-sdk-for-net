@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MySql.Tests
     public class MySqlFlexibleServerTests: MySqlManagementTestBase
     {
         public MySqlFlexibleServerTests(bool isAsync)
-            : base(isAsync)
+            : base(isAsync)//,RecordedTestMode.Record)
         {
             BodyKeySanitizers.Add(new BodyKeySanitizer("https://fakeaccout.blob.windows.core.net/fakecontainer") { JsonPath = "properties.importSourceProperties.storageUrl" });
             BodyKeySanitizers.Add(new BodyKeySanitizer(SanitizeValue) { JsonPath = "properties.importSourceProperties.sasToken" });
@@ -24,7 +24,6 @@ namespace Azure.ResourceManager.MySql.Tests
 
         [TestCase]
         [RecordedTest]
-        [LiveOnly(Reason = "https://github.com/Azure/azure-sdk-for-net/issues/43400")]
         public async Task CreateGetList()
         {
             // Create
@@ -61,7 +60,6 @@ namespace Azure.ResourceManager.MySql.Tests
 
         [TestCase]
         [RecordedTest]
-        [LiveOnly(Reason = "https://github.com/Azure/azure-sdk-for-net/issues/43400")]
         public async Task CreateUpdateGetDelete()
         {
             // Create
@@ -103,7 +101,6 @@ namespace Azure.ResourceManager.MySql.Tests
 
         [TestCase]
         [RecordedTest]
-        [LiveOnly(Reason = "https://github.com/Azure/azure-sdk-for-net/issues/43400")]
         public async Task ImportFromStorageCreate()
         {
             // Create import from storage server
