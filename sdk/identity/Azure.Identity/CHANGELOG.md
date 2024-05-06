@@ -1,15 +1,13 @@
 # Release History
 
-## 1.12.0-beta.2 (Unreleased)
+## 1.12.0-beta.2 (2024-05-07)
 
 ### Features Added
 - `ClientAssertionCredentialOptions` now supports `TokenCachePersistenceOptions` for configuring token cache persistence.
-
-### Breaking Changes
+- Added `AzurePipelinesCredential` for authenticating with Azure Pipelines service connections.
 
 ### Bugs Fixed
-
-### Other Changes
+- Fixed a regression in `DefaultAzureCredential` probe request behavior for IMDS managed identity environments. [#43796](https://github.com/Azure/azure-sdk-for-net/issues/43796)
 
 ## 1.12.0-beta.1 (2024-04-23)
 

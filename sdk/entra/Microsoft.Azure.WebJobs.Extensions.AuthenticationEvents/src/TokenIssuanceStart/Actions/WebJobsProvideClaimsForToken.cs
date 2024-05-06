@@ -15,7 +15,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceS
         /// <value>The claims.</value>
         [JsonPropertyName("claims")]
         [Required]
-        public List<WebjobsAuthenticationEventsTokenClaim> Claims { get; } = new List<WebjobsAuthenticationEventsTokenClaim>();
+        public List<WebJobsAuthenticationEventsTokenClaim> Claims { get; } = new List<WebJobsAuthenticationEventsTokenClaim>();
 
         /// <summary>Gets the type of the action of WebJobsProvideClaimsForToken.</summary>
         /// <value>The type of the action.</value>
@@ -27,7 +27,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceS
         public WebJobsProvideClaimsForToken() { }
         /// <summary>Initializes a new instance of the <see cref="WebJobsProvideClaimsForToken" /> class.</summary>
         /// <param name="claim">A collection of claims to add.</param>
-        public WebJobsProvideClaimsForToken(params WebjobsAuthenticationEventsTokenClaim[] claim)
+        public WebJobsProvideClaimsForToken(params WebJobsAuthenticationEventsTokenClaim[] claim)
         {
             if (claim != null)
             {
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceS
         /// <param name="Values">The claim values.</param>
         public void AddClaim(string Id, params string[] Values)
         {
-            Claims.Add(new WebjobsAuthenticationEventsTokenClaim(Id, Values));
+            Claims.Add(new WebJobsAuthenticationEventsTokenClaim(Id, Values));
         }
 
         /// <summary>Builds the action body.</summary>

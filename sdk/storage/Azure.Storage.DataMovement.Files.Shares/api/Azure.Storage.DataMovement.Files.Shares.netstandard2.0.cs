@@ -36,7 +36,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
         public Azure.Storage.DataMovement.DataTransferProperty<string> ContentType { get { throw null; } set { } }
         public Azure.Storage.Files.Shares.Models.ShareFileRequestConditions DestinationConditions { get { throw null; } set { } }
         public Azure.Storage.DataMovement.DataTransferProperty<System.Collections.Generic.IDictionary<string, string>> DirectoryMetadata { get { throw null; } set { } }
-        public Azure.Storage.DownloadTransferValidationOptions DownloadTransferValidationOptions { get { throw null; } set { } }
         public Azure.Storage.DataMovement.DataTransferProperty<Azure.Storage.Files.Shares.Models.NtfsFileAttributes?> FileAttributes { get { throw null; } set { } }
         public Azure.Storage.DataMovement.DataTransferProperty<System.DateTimeOffset?> FileChangedOn { get { throw null; } set { } }
         public Azure.Storage.DataMovement.DataTransferProperty<System.DateTimeOffset?> FileCreatedOn { get { throw null; } set { } }
@@ -45,7 +44,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
         public string FilePermissionKey { get { throw null; } set { } }
         public string FilePermissions { get { throw null; } set { } }
         public Azure.Storage.Files.Shares.Models.ShareFileRequestConditions SourceConditions { get { throw null; } set { } }
-        public Azure.Storage.UploadTransferValidationOptions UploadTransferValidationOptions { get { throw null; } set { } }
     }
 }
 namespace Azure.Storage.Files.Shares

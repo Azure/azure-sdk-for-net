@@ -83,7 +83,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
             => new()
             {
                 Conditions = options?.DestinationConditions,
-                TransferValidation = options?.UploadTransferValidationOptions,
             };
 
         internal static ShareFileUploadRangeOptions ToShareFileUploadRangeOptions(
@@ -91,11 +90,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
             => new()
             {
                 Conditions = options?.DestinationConditions,
-                TransferValidation = options?.UploadTransferValidationOptions,
-                // If the FileLastWrittenOn is set, we should preserve the last written time of the file.
-                // which was set when the file was created.
-                // If the FileLastWrittenOn is not set, and preserve is not set to true, default to false.
-                // We default to false, because we are doing an upload from local file in this instance.
                 FileLastWrittenMode = (options?.FileLastWrittenOn?.Value != default) || (options?.FileLastWrittenOn?.Preserve ?? false)
                     ? FileLastWrittenMode.Preserve
                     : default
@@ -176,7 +170,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
             {
                 Range = range,
                 Conditions = options?.SourceConditions,
-                TransferValidation = options?.DownloadTransferValidationOptions,
             };
 
         internal static StorageResourceReadStreamResult ToStorageResourceReadStreamResult(
