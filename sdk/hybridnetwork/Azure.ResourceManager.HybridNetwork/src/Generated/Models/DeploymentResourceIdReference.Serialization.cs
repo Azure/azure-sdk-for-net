@@ -70,8 +70,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Open": return OpenDeploymentResourceReference.DeserializeOpenDeploymentResourceReference(element, options);
                     case "Secret": return SecretDeploymentResourceReference.DeserializeSecretDeploymentResourceReference(element, options);
+                    case "Open": return OpenDeploymentResourceReference.DeserializeOpenDeploymentResourceReference(element, options);
                 }
             }
             return UnknownDeploymentResourceIdReference.DeserializeUnknownDeploymentResourceIdReference(element, options);

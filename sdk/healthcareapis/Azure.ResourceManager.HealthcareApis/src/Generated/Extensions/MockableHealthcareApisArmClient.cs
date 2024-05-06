@@ -95,42 +95,6 @@ namespace Azure.ResourceManager.HealthcareApis.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="HealthcareApisWorkspaceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HealthcareApisWorkspaceResource.CreateResourceIdentifier" /> to create a <see cref="HealthcareApisWorkspaceResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HealthcareApisWorkspaceResource"/> object. </returns>
-        public virtual HealthcareApisWorkspaceResource GetHealthcareApisWorkspaceResource(ResourceIdentifier id)
-        {
-            HealthcareApisWorkspaceResource.ValidateResourceId(id);
-            return new HealthcareApisWorkspaceResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="DicomServiceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DicomServiceResource.CreateResourceIdentifier" /> to create a <see cref="DicomServiceResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DicomServiceResource"/> object. </returns>
-        public virtual DicomServiceResource GetDicomServiceResource(ResourceIdentifier id)
-        {
-            DicomServiceResource.ValidateResourceId(id);
-            return new DicomServiceResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="HealthcareApisIotConnectorResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HealthcareApisIotConnectorResource.CreateResourceIdentifier" /> to create a <see cref="HealthcareApisIotConnectorResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HealthcareApisIotConnectorResource"/> object. </returns>
-        public virtual HealthcareApisIotConnectorResource GetHealthcareApisIotConnectorResource(ResourceIdentifier id)
-        {
-            HealthcareApisIotConnectorResource.ValidateResourceId(id);
-            return new HealthcareApisIotConnectorResource(Client, id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="HealthcareApisIotFhirDestinationResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="HealthcareApisIotFhirDestinationResource.CreateResourceIdentifier" /> to create a <see cref="HealthcareApisIotFhirDestinationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -140,18 +104,6 @@ namespace Azure.ResourceManager.HealthcareApis.Mocking
         {
             HealthcareApisIotFhirDestinationResource.ValidateResourceId(id);
             return new HealthcareApisIotFhirDestinationResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="FhirServiceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FhirServiceResource.CreateResourceIdentifier" /> to create a <see cref="FhirServiceResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FhirServiceResource"/> object. </returns>
-        public virtual FhirServiceResource GetFhirServiceResource(ResourceIdentifier id)
-        {
-            FhirServiceResource.ValidateResourceId(id);
-            return new FhirServiceResource(Client, id);
         }
     }
 }

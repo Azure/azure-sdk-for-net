@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "ArmTemplate": return AzureCoreNetworkFunctionArmTemplateApplication.DeserializeAzureCoreNetworkFunctionArmTemplateApplication(element, options);
                     case "VhdImageFile": return AzureCoreNetworkFunctionVhdApplication.DeserializeAzureCoreNetworkFunctionVhdApplication(element, options);
+                    case "ArmTemplate": return AzureCoreNetworkFunctionArmTemplateApplication.DeserializeAzureCoreNetworkFunctionArmTemplateApplication(element, options);
                 }
             }
             return UnknownAzureCoreNetworkFunctionApplication.DeserializeUnknownAzureCoreNetworkFunctionApplication(element, options);

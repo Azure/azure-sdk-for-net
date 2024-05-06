@@ -10,21 +10,20 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.HealthcareApis.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.HealthcareApis
+namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    public partial class FhirServiceData : IUtf8JsonSerializable, IJsonModel<FhirServiceData>
+    public partial class FhirService : IUtf8JsonSerializable, IJsonModel<FhirService>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FhirServiceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FhirService>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<FhirServiceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<FhirService>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FhirServiceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FhirService>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FhirServiceData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(FhirService)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,16 +32,10 @@ namespace Azure.ResourceManager.HealthcareApis
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
-            if (Optional.IsDefined(Identity))
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
-                writer.WritePropertyName("identity"u8);
-                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                JsonSerializer.Serialize(writer, Identity, serializeOptions);
-            }
-            if (Optional.IsDefined(ETag))
-            {
-                writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag.Value.ToString());
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -54,28 +47,6 @@ namespace Azure.ResourceManager.HealthcareApis
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
-            }
-            writer.WritePropertyName("location"u8);
-            writer.WriteStringValue(Location);
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ResourceType);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
-            {
-                writer.WritePropertyName("systemData"u8);
-                JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -163,19 +134,19 @@ namespace Azure.ResourceManager.HealthcareApis
             writer.WriteEndObject();
         }
 
-        FhirServiceData IJsonModel<FhirServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        FhirService IJsonModel<FhirService>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FhirServiceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FhirService>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FhirServiceData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(FhirService)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeFhirServiceData(document.RootElement, options);
+            return DeserializeFhirService(document.RootElement, options);
         }
 
-        internal static FhirServiceData DeserializeFhirServiceData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static FhirService DeserializeFhirService(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -184,14 +155,8 @@ namespace Azure.ResourceManager.HealthcareApis
                 return null;
             }
             FhirServiceKind? kind = default;
-            ManagedServiceIdentity identity = default;
-            ETag? etag = default;
-            IDictionary<string, string> tags = default;
-            AzureLocation location = default;
-            ResourceIdentifier id = default;
-            string name = default;
-            ResourceType type = default;
             SystemData systemData = default;
+            IDictionary<string, string> tags = default;
             HealthcareApisProvisioningState? provisioningState = default;
             FhirServiceAcrConfiguration acrConfiguration = default;
             FhirServiceAuthenticationConfiguration authenticationConfiguration = default;
@@ -217,23 +182,13 @@ namespace Azure.ResourceManager.HealthcareApis
                     kind = new FhirServiceKind(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("identity"u8))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
-                    continue;
-                }
-                if (property.NameEquals("etag"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    etag = new ETag(property.Value.GetString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -248,35 +203,6 @@ namespace Azure.ResourceManager.HealthcareApis
                         dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("location"u8))
-                {
-                    location = new AzureLocation(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("id"u8))
-                {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -410,14 +336,11 @@ namespace Azure.ResourceManager.HealthcareApis
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new FhirServiceData(
-                id,
-                name,
-                type,
-                systemData,
+            return new FhirService(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
+                serializedAdditionalRawData,
                 kind,
+                systemData,
                 provisioningState,
                 acrConfiguration,
                 authenticationConfiguration,
@@ -429,41 +352,38 @@ namespace Azure.ResourceManager.HealthcareApis
                 resourceVersionPolicyConfiguration,
                 importConfiguration,
                 implementationGuidesConfiguration,
-                encryption,
-                identity,
-                etag,
-                serializedAdditionalRawData);
+                encryption);
         }
 
-        BinaryData IPersistableModel<FhirServiceData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<FhirService>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FhirServiceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FhirService>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FhirServiceData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FhirService)} does not support writing '{options.Format}' format.");
             }
         }
 
-        FhirServiceData IPersistableModel<FhirServiceData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        FhirService IPersistableModel<FhirService>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FhirServiceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FhirService>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeFhirServiceData(document.RootElement, options);
+                        return DeserializeFhirService(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FhirServiceData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FhirService)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<FhirServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<FhirService>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

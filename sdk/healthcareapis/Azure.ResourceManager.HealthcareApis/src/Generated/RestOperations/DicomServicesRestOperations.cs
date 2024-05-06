@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<Models.DicomServiceCollection>> ListByWorkspaceAsync(string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        public async Task<Response<DicomServiceCollection>> ListByWorkspaceAsync(string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 case 200:
                     {
-                        Models.DicomServiceCollection value = default;
+                        DicomServiceCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Models.DicomServiceCollection.DeserializeDicomServiceCollection(document.RootElement);
+                        value = DicomServiceCollection.DeserializeDicomServiceCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<Models.DicomServiceCollection> ListByWorkspace(string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        public Response<DicomServiceCollection> ListByWorkspace(string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -120,9 +120,9 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 case 200:
                     {
-                        Models.DicomServiceCollection value = default;
+                        DicomServiceCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Models.DicomServiceCollection.DeserializeDicomServiceCollection(document.RootElement);
+                        value = DicomServiceCollection.DeserializeDicomServiceCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="dicomServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="dicomServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DicomServiceData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string dicomServiceName, CancellationToken cancellationToken = default)
+        public async Task<Response<DicomService>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string dicomServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -189,13 +189,11 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 case 200:
                     {
-                        DicomServiceData value = default;
+                        DicomService value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DicomServiceData.DeserializeDicomServiceData(document.RootElement);
+                        value = DicomService.DeserializeDicomService(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((DicomServiceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -209,7 +207,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="dicomServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="dicomServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DicomServiceData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string dicomServiceName, CancellationToken cancellationToken = default)
+        public Response<DicomService> Get(string subscriptionId, string resourceGroupName, string workspaceName, string dicomServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -222,19 +220,17 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 case 200:
                     {
-                        DicomServiceData value = default;
+                        DicomService value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DicomServiceData.DeserializeDicomServiceData(document.RootElement);
+                        value = DicomService.DeserializeDicomService(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((DicomServiceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string dicomServiceName, DicomServiceData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string dicomServiceName, DicomService dicomservice)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -250,7 +246,7 @@ namespace Azure.ResourceManager.HealthcareApis
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string dicomServiceName, DicomServiceData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string dicomServiceName, DicomService dicomservice)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -270,7 +266,7 @@ namespace Azure.ResourceManager.HealthcareApis
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(dicomservice, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -281,19 +277,19 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="resourceGroupName"> The name of the resource group that contains the service instance. </param>
         /// <param name="workspaceName"> The name of workspace resource. </param>
         /// <param name="dicomServiceName"> The name of DICOM Service resource. </param>
-        /// <param name="data"> The parameters for creating or updating a Dicom Service resource. </param>
+        /// <param name="dicomservice"> The parameters for creating or updating a Dicom Service resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="dicomServiceName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="dicomServiceName"/> or <paramref name="dicomservice"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="dicomServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string dicomServiceName, DicomServiceData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string dicomServiceName, DicomService dicomservice, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
             Argument.AssertNotNullOrEmpty(dicomServiceName, nameof(dicomServiceName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(dicomservice, nameof(dicomservice));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, workspaceName, dicomServiceName, data);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, workspaceName, dicomServiceName, dicomservice);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -311,19 +307,19 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="resourceGroupName"> The name of the resource group that contains the service instance. </param>
         /// <param name="workspaceName"> The name of workspace resource. </param>
         /// <param name="dicomServiceName"> The name of DICOM Service resource. </param>
-        /// <param name="data"> The parameters for creating or updating a Dicom Service resource. </param>
+        /// <param name="dicomservice"> The parameters for creating or updating a Dicom Service resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="dicomServiceName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="dicomServiceName"/> or <paramref name="dicomservice"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="dicomServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string dicomServiceName, DicomServiceData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string dicomServiceName, DicomService dicomservice, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
             Argument.AssertNotNullOrEmpty(dicomServiceName, nameof(dicomServiceName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(dicomservice, nameof(dicomservice));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, workspaceName, dicomServiceName, data);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, workspaceName, dicomServiceName, dicomservice);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -336,7 +332,7 @@ namespace Azure.ResourceManager.HealthcareApis
             }
         }
 
-        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string dicomServiceName, DicomServicePatch patch)
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string dicomServiceName, DicomServicePatchResource dicomservicePatchResource)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -352,7 +348,7 @@ namespace Azure.ResourceManager.HealthcareApis
             return uri;
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string dicomServiceName, DicomServicePatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string dicomServiceName, DicomServicePatchResource dicomservicePatchResource)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -372,7 +368,7 @@ namespace Azure.ResourceManager.HealthcareApis
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(dicomservicePatchResource, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -383,19 +379,19 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="resourceGroupName"> The name of the resource group that contains the service instance. </param>
         /// <param name="workspaceName"> The name of workspace resource. </param>
         /// <param name="dicomServiceName"> The name of DICOM Service resource. </param>
-        /// <param name="patch"> The parameters for updating a Dicom Service. </param>
+        /// <param name="dicomservicePatchResource"> The parameters for updating a Dicom Service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="dicomServiceName"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="dicomServiceName"/> or <paramref name="dicomservicePatchResource"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="dicomServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string dicomServiceName, DicomServicePatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string dicomServiceName, DicomServicePatchResource dicomservicePatchResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
             Argument.AssertNotNullOrEmpty(dicomServiceName, nameof(dicomServiceName));
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(dicomservicePatchResource, nameof(dicomservicePatchResource));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, workspaceName, dicomServiceName, patch);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, workspaceName, dicomServiceName, dicomservicePatchResource);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -412,19 +408,19 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="resourceGroupName"> The name of the resource group that contains the service instance. </param>
         /// <param name="workspaceName"> The name of workspace resource. </param>
         /// <param name="dicomServiceName"> The name of DICOM Service resource. </param>
-        /// <param name="patch"> The parameters for updating a Dicom Service. </param>
+        /// <param name="dicomservicePatchResource"> The parameters for updating a Dicom Service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="dicomServiceName"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="dicomServiceName"/> or <paramref name="dicomservicePatchResource"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="dicomServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string workspaceName, string dicomServiceName, DicomServicePatch patch, CancellationToken cancellationToken = default)
+        public Response Update(string subscriptionId, string resourceGroupName, string workspaceName, string dicomServiceName, DicomServicePatchResource dicomservicePatchResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
             Argument.AssertNotNullOrEmpty(dicomServiceName, nameof(dicomServiceName));
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(dicomservicePatchResource, nameof(dicomservicePatchResource));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, workspaceName, dicomServiceName, patch);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, workspaceName, dicomServiceName, dicomservicePatchResource);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -560,7 +556,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<Models.DicomServiceCollection>> ListByWorkspaceNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        public async Task<Response<DicomServiceCollection>> ListByWorkspaceNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -573,9 +569,9 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 case 200:
                     {
-                        Models.DicomServiceCollection value = default;
+                        DicomServiceCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Models.DicomServiceCollection.DeserializeDicomServiceCollection(document.RootElement);
+                        value = DicomServiceCollection.DeserializeDicomServiceCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -591,7 +587,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<Models.DicomServiceCollection> ListByWorkspaceNextPage(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        public Response<DicomServiceCollection> ListByWorkspaceNextPage(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -604,9 +600,9 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 case 200:
                     {
-                        Models.DicomServiceCollection value = default;
+                        DicomServiceCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Models.DicomServiceCollection.DeserializeDicomServiceCollection(document.RootElement);
+                        value = DicomServiceCollection.DeserializeDicomServiceCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

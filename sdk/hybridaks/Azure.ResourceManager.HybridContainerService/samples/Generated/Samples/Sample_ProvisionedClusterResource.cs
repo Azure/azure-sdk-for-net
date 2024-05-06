@@ -91,9 +91,6 @@ KeyData = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCY.......",
 {
 new HybridContainerServiceNamedAgentPoolProfile()
 {
-Count = 1,
-VmSize = "Standard_A4_v2",
-Name = "default-nodepool-1",
 OSType = HybridContainerServiceOSType.Linux,
 NodeLabels =
 {

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.HealthcareApis.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.HealthcareApis.Samples
 {
@@ -29,17 +30,17 @@ namespace Azure.ResourceManager.HealthcareApis.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this HealthcareApisIotConnectorResource created on azure
-            // for more information of creating HealthcareApisIotConnectorResource, please refer to the document of HealthcareApisIotConnectorResource
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
             string subscriptionId = "subid";
             string resourceGroupName = "testRG";
-            string workspaceName = "workspace1";
-            string iotConnectorName = "blue";
-            ResourceIdentifier healthcareApisIotConnectorResourceId = HealthcareApisIotConnectorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, iotConnectorName);
-            HealthcareApisIotConnectorResource healthcareApisIotConnector = client.GetHealthcareApisIotConnectorResource(healthcareApisIotConnectorResourceId);
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this HealthcareApisIotFhirDestinationResource
-            HealthcareApisIotFhirDestinationCollection collection = healthcareApisIotConnector.GetHealthcareApisIotFhirDestinations();
+            string workspaceName = "workspace1";
+            string iotConnectorName = "blue";
+            HealthcareApisIotFhirDestinationCollection collection = resourceGroupResource.GetHealthcareApisIotFhirDestinations(workspaceName, iotConnectorName);
 
             // invoke the operation and iterate over the result
             await foreach (HealthcareApisIotFhirDestinationResource item in collection.GetAllAsync())
@@ -67,17 +68,17 @@ namespace Azure.ResourceManager.HealthcareApis.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this HealthcareApisIotConnectorResource created on azure
-            // for more information of creating HealthcareApisIotConnectorResource, please refer to the document of HealthcareApisIotConnectorResource
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
             string subscriptionId = "subid";
             string resourceGroupName = "testRG";
-            string workspaceName = "workspace1";
-            string iotConnectorName = "blue";
-            ResourceIdentifier healthcareApisIotConnectorResourceId = HealthcareApisIotConnectorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, iotConnectorName);
-            HealthcareApisIotConnectorResource healthcareApisIotConnector = client.GetHealthcareApisIotConnectorResource(healthcareApisIotConnectorResourceId);
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this HealthcareApisIotFhirDestinationResource
-            HealthcareApisIotFhirDestinationCollection collection = healthcareApisIotConnector.GetHealthcareApisIotFhirDestinations();
+            string workspaceName = "workspace1";
+            string iotConnectorName = "blue";
+            HealthcareApisIotFhirDestinationCollection collection = resourceGroupResource.GetHealthcareApisIotFhirDestinations(workspaceName, iotConnectorName);
 
             // invoke the operation
             string fhirDestinationName = "dest1";
@@ -103,17 +104,17 @@ namespace Azure.ResourceManager.HealthcareApis.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this HealthcareApisIotConnectorResource created on azure
-            // for more information of creating HealthcareApisIotConnectorResource, please refer to the document of HealthcareApisIotConnectorResource
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
             string subscriptionId = "subid";
             string resourceGroupName = "testRG";
-            string workspaceName = "workspace1";
-            string iotConnectorName = "blue";
-            ResourceIdentifier healthcareApisIotConnectorResourceId = HealthcareApisIotConnectorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, iotConnectorName);
-            HealthcareApisIotConnectorResource healthcareApisIotConnector = client.GetHealthcareApisIotConnectorResource(healthcareApisIotConnectorResourceId);
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this HealthcareApisIotFhirDestinationResource
-            HealthcareApisIotFhirDestinationCollection collection = healthcareApisIotConnector.GetHealthcareApisIotFhirDestinations();
+            string workspaceName = "workspace1";
+            string iotConnectorName = "blue";
+            HealthcareApisIotFhirDestinationCollection collection = resourceGroupResource.GetHealthcareApisIotFhirDestinations(workspaceName, iotConnectorName);
 
             // invoke the operation
             string fhirDestinationName = "dest1";
@@ -135,17 +136,17 @@ namespace Azure.ResourceManager.HealthcareApis.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this HealthcareApisIotConnectorResource created on azure
-            // for more information of creating HealthcareApisIotConnectorResource, please refer to the document of HealthcareApisIotConnectorResource
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
             string subscriptionId = "subid";
             string resourceGroupName = "testRG";
-            string workspaceName = "workspace1";
-            string iotConnectorName = "blue";
-            ResourceIdentifier healthcareApisIotConnectorResourceId = HealthcareApisIotConnectorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, iotConnectorName);
-            HealthcareApisIotConnectorResource healthcareApisIotConnector = client.GetHealthcareApisIotConnectorResource(healthcareApisIotConnectorResourceId);
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this HealthcareApisIotFhirDestinationResource
-            HealthcareApisIotFhirDestinationCollection collection = healthcareApisIotConnector.GetHealthcareApisIotFhirDestinations();
+            string workspaceName = "workspace1";
+            string iotConnectorName = "blue";
+            HealthcareApisIotFhirDestinationCollection collection = resourceGroupResource.GetHealthcareApisIotFhirDestinations(workspaceName, iotConnectorName);
 
             // invoke the operation
             string fhirDestinationName = "dest1";
@@ -179,17 +180,17 @@ namespace Azure.ResourceManager.HealthcareApis.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this HealthcareApisIotConnectorResource created on azure
-            // for more information of creating HealthcareApisIotConnectorResource, please refer to the document of HealthcareApisIotConnectorResource
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
             string subscriptionId = "subid";
             string resourceGroupName = "testRG";
-            string workspaceName = "workspace1";
-            string iotConnectorName = "blue";
-            ResourceIdentifier healthcareApisIotConnectorResourceId = HealthcareApisIotConnectorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, iotConnectorName);
-            HealthcareApisIotConnectorResource healthcareApisIotConnector = client.GetHealthcareApisIotConnectorResource(healthcareApisIotConnectorResourceId);
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this HealthcareApisIotFhirDestinationResource
-            HealthcareApisIotFhirDestinationCollection collection = healthcareApisIotConnector.GetHealthcareApisIotFhirDestinations();
+            string workspaceName = "workspace1";
+            string iotConnectorName = "blue";
+            HealthcareApisIotFhirDestinationCollection collection = resourceGroupResource.GetHealthcareApisIotFhirDestinations(workspaceName, iotConnectorName);
 
             // invoke the operation
             string fhirDestinationName = "dest1";

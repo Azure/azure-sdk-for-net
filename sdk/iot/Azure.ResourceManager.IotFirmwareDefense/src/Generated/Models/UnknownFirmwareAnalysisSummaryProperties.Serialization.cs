@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    internal partial class UnknownSummaryResourceProperties : IUtf8JsonSerializable, IJsonModel<FirmwareAnalysisSummaryProperties>
+    internal partial class UnknownFirmwareAnalysisSummaryProperties : IUtf8JsonSerializable, IJsonModel<FirmwareAnalysisSummaryProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FirmwareAnalysisSummaryProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             return DeserializeFirmwareAnalysisSummaryProperties(document.RootElement, options);
         }
 
-        internal static UnknownSummaryResourceProperties DeserializeUnknownSummaryResourceProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UnknownFirmwareAnalysisSummaryProperties DeserializeUnknownFirmwareAnalysisSummaryProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownSummaryResourceProperties(summaryType, serializedAdditionalRawData);
+            return new UnknownFirmwareAnalysisSummaryProperties(summaryType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirmwareAnalysisSummaryProperties>.Write(ModelReaderWriterOptions options)
