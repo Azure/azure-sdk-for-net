@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    internal partial class UnknownScalingTrigger : IUtf8JsonSerializable, IJsonModel<ManagedServiceScalingTrigger>
+    internal partial class UnknownManagedServiceScalingTrigger : IUtf8JsonSerializable, IJsonModel<ManagedServiceScalingTrigger>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedServiceScalingTrigger>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return DeserializeManagedServiceScalingTrigger(document.RootElement, options);
         }
 
-        internal static UnknownScalingTrigger DeserializeUnknownScalingTrigger(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UnknownManagedServiceScalingTrigger DeserializeUnknownManagedServiceScalingTrigger(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownScalingTrigger(kind, serializedAdditionalRawData);
+            return new UnknownManagedServiceScalingTrigger(kind, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedServiceScalingTrigger>.Write(ModelReaderWriterOptions options)

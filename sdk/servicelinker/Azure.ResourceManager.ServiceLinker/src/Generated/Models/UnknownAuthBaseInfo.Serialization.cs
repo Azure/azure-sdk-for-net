@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    internal partial class UnknownAuthInfoBase : IUtf8JsonSerializable, IJsonModel<AuthBaseInfo>
+    internal partial class UnknownAuthBaseInfo : IUtf8JsonSerializable, IJsonModel<AuthBaseInfo>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AuthBaseInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             return DeserializeAuthBaseInfo(document.RootElement, options);
         }
 
-        internal static UnknownAuthInfoBase DeserializeUnknownAuthInfoBase(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UnknownAuthBaseInfo DeserializeUnknownAuthBaseInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownAuthInfoBase(authType, serializedAdditionalRawData);
+            return new UnknownAuthBaseInfo(authType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AuthBaseInfo>.Write(ModelReaderWriterOptions options)

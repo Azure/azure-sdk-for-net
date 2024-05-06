@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    [PersistableModelProxy(typeof(UnknownTargetServiceBase))]
+    [PersistableModelProxy(typeof(UnknownTargetServiceBaseInfo))]
     public partial class TargetServiceBaseInfo : IUtf8JsonSerializable, IJsonModel<TargetServiceBaseInfo>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TargetServiceBaseInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     case "ConfluentSchemaRegistry": return ConfluentSchemaRegistryInfo.DeserializeConfluentSchemaRegistryInfo(element, options);
                 }
             }
-            return UnknownTargetServiceBase.DeserializeUnknownTargetServiceBase(element, options);
+            return UnknownTargetServiceBaseInfo.DeserializeUnknownTargetServiceBaseInfo(element, options);
         }
 
         BinaryData IPersistableModel<TargetServiceBaseInfo>.Write(ModelReaderWriterOptions options)

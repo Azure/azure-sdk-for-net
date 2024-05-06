@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    [PersistableModelProxy(typeof(UnknownAzureResourcePropertiesBase))]
+    [PersistableModelProxy(typeof(UnknownAzureResourceBaseProperties))]
     public partial class AzureResourceBaseProperties : IUtf8JsonSerializable, IJsonModel<AzureResourceBaseProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureResourceBaseProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     case "KeyVault": return AzureKeyVaultProperties.DeserializeAzureKeyVaultProperties(element, options);
                 }
             }
-            return UnknownAzureResourcePropertiesBase.DeserializeUnknownAzureResourcePropertiesBase(element, options);
+            return UnknownAzureResourceBaseProperties.DeserializeUnknownAzureResourceBaseProperties(element, options);
         }
 
         BinaryData IPersistableModel<AzureResourceBaseProperties>.Write(ModelReaderWriterOptions options)

@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    [PersistableModelProxy(typeof(UnknownPartition))]
+    [PersistableModelProxy(typeof(UnknownManagedServicePartitionScheme))]
     public partial class ManagedServicePartitionScheme : IUtf8JsonSerializable, IJsonModel<ManagedServicePartitionScheme>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedServicePartitionScheme>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     case "UniformInt64Range": return UniformInt64RangePartitionScheme.DeserializeUniformInt64RangePartitionScheme(element, options);
                 }
             }
-            return UnknownPartition.DeserializeUnknownPartition(element, options);
+            return UnknownManagedServicePartitionScheme.DeserializeUnknownManagedServicePartitionScheme(element, options);
         }
 
         BinaryData IPersistableModel<ManagedServicePartitionScheme>.Write(ModelReaderWriterOptions options)

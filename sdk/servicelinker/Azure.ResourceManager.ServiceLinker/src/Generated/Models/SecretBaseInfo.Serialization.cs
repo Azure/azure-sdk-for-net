@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    [PersistableModelProxy(typeof(UnknownSecretInfoBase))]
+    [PersistableModelProxy(typeof(UnknownSecretBaseInfo))]
     public partial class SecretBaseInfo : IUtf8JsonSerializable, IJsonModel<SecretBaseInfo>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecretBaseInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "rawValue": return RawValueSecretInfo.DeserializeRawValueSecretInfo(element, options);
                     case "keyVaultSecretReference": return KeyVaultSecretReferenceSecretInfo.DeserializeKeyVaultSecretReferenceSecretInfo(element, options);
                     case "keyVaultSecretUri": return KeyVaultSecretUriSecretInfo.DeserializeKeyVaultSecretUriSecretInfo(element, options);
-                    case "rawValue": return RawValueSecretInfo.DeserializeRawValueSecretInfo(element, options);
                 }
             }
-            return UnknownSecretInfoBase.DeserializeUnknownSecretInfoBase(element, options);
+            return UnknownSecretBaseInfo.DeserializeUnknownSecretBaseInfo(element, options);
         }
 
         BinaryData IPersistableModel<SecretBaseInfo>.Write(ModelReaderWriterOptions options)

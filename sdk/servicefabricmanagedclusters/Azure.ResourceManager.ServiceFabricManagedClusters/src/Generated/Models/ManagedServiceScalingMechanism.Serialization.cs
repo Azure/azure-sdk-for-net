@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    [PersistableModelProxy(typeof(UnknownScalingMechanism))]
+    [PersistableModelProxy(typeof(UnknownManagedServiceScalingMechanism))]
     public partial class ManagedServiceScalingMechanism : IUtf8JsonSerializable, IJsonModel<ManagedServiceScalingMechanism>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedServiceScalingMechanism>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     case "ScalePartitionInstanceCount": return PartitionInstanceCountScalingMechanism.DeserializePartitionInstanceCountScalingMechanism(element, options);
                 }
             }
-            return UnknownScalingMechanism.DeserializeUnknownScalingMechanism(element, options);
+            return UnknownManagedServiceScalingMechanism.DeserializeUnknownManagedServiceScalingMechanism(element, options);
         }
 
         BinaryData IPersistableModel<ManagedServiceScalingMechanism>.Write(ModelReaderWriterOptions options)
