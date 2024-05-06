@@ -506,6 +506,12 @@
 # AzureSdkOwners:                                                  @jsquire
 # ServiceOwners:                                                   @serkantkaraca @sjkwak
 
+# PRLabel: %Extension - WCF
+/sdk/extension-wcf/                                                @mconnew @subhra231
+
+# ServiceLabel: %Extension - WCF
+# ServiceOwners:                                                   @mconnew @subhra231
+
 # ServiceLabel: %Functions
 # AzureSdkOwners:                                                  @JoshLove-msft
 # ServiceOwners:                                                   @ahmedelnably @fabiocav
@@ -964,12 +970,6 @@
 
 # Reviewers to double check any API changes
 /sdk/**/api/                                                       @KrzysztofCwalina @tg-msft
-
-# PRLabel: %Extension - WCF
-/sdk/extension-wcf/                                                @mconnew @subhra231
-
-# ServiceLabel: %Extension - WCF
-# ServiceOwners:                                                   @mconnew @subhra231
 
 # ######## Eng Sys ########
 /eng/                                                              @hallipr @weshaggard @benbp
