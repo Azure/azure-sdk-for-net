@@ -80,6 +80,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             using var listener = new TestActivitySourceListener(source => source.Name.StartsWith(DiagnosticProperty.DiagnosticNamespace));
             await InvokeUpdateCheckpointAsync(mockProcessor.Object, mockContext.Object.PartitionId, 998, default);
+            await InvokeOldUpdateCheckpointAsync(mockProcessor.Object, mockContext.Object.PartitionId, 998, 774, default);
 
             Assert.IsEmpty(listener.Activities);
         }
@@ -90,7 +91,9 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task UpdateCheckpointAsyncCreatesScope()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task UpdateCheckpointAsyncCreatesScope(bool useOldCheckpoint)
         {
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
@@ -114,7 +117,14 @@ namespace Azure.Messaging.EventHubs.Tests
             using var _ = SetAppConfigSwitch();
 
             using var listener = new TestActivitySourceListener(source => source.Name.StartsWith(DiagnosticProperty.DiagnosticNamespace));
-            await InvokeUpdateCheckpointAsync(mockProcessor.Object, mockContext.Object.PartitionId, 998, default);
+            if (useOldCheckpoint)
+            {
+                await InvokeOldUpdateCheckpointAsync(mockProcessor.Object, mockContext.Object.PartitionId, 998, 778, default);
+            }
+            else
+            {
+                await InvokeUpdateCheckpointAsync(mockProcessor.Object, mockContext.Object.PartitionId, 998, default);
+            }
 
             await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
@@ -308,6 +318,28 @@ namespace Azure.Messaging.EventHubs.Tests
                 typeof(EventProcessorClient)
                     .GetMethod("UpdateCheckpointAsync", BindingFlags.Instance | BindingFlags.NonPublic, new Type[] { typeof(string), typeof(CheckpointPosition), typeof(CancellationToken) })
                     .Invoke(target, new object[] { partitionId, new CheckpointPosition(sequenceNumber), cancellationToken });
+
+        /// <summary>
+        ///   Invokes the protected UpdateCheckpointAsync method on the processor client.
+        /// </summary>
+        ///
+        /// <param name="target">The client whose method to invoke.</param>
+        /// <param name="partitionId">The identifier of the partition the checkpoint is for.</param>
+        /// <param name="offset">The offset to associate with the checkpoint, indicating that a processor should begin reading form the next event in the stream.</param>
+        /// <param name="sequenceNumber">An optional sequence number to associate with the checkpoint, intended as informational metadata.  The <paramref name="offset" /> will be used for positioning when events are read.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal a request to cancel the operation.</param>
+        ///
+        /// <returns>The translated options.</returns>
+        ///
+        private static Task InvokeOldUpdateCheckpointAsync(EventProcessorClient target,
+                                                        string partitionId,
+                                                        long offset,
+                                                        long sequenceNumber,
+                                                        CancellationToken cancellationToken) =>
+            (Task)
+                typeof(EventProcessorClient)
+                    .GetMethod("UpdateCheckpointAsync", BindingFlags.Instance | BindingFlags.NonPublic, new Type[] { typeof(string), typeof(long), typeof(long), typeof(CancellationToken) })
+                    .Invoke(target, new object[] { partitionId, offset, sequenceNumber, cancellationToken });
 
         /// <summary>
         /// Sets and returns the app config switch to enable Activity Source. The switch must be disposed at the end of the test.
