@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> IP Community add operation properties. </summary>
-    public partial class IPCommunityAddOperationProperties
+    internal partial class IPCommunityAddOperationProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary>
     /// Describes the basic properties for encoding the input video.
     /// Please note <see cref="MediaVideoBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="H264Video"/>, <see cref="H265Video"/>, <see cref="MediaImageBase"/>, <see cref="JpgImage"/> and <see cref="PngImage"/>.
+    /// The available derived classes include <see cref="H265Video"/>, <see cref="JpgImage"/>, <see cref="PngImage"/>, <see cref="MediaImageBase"/> and <see cref="H264Video"/>.
     /// </summary>
     public partial class MediaVideoBase : MediaCodecBase
     {

@@ -48,14 +48,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new MachineLearningUsageName(value, localizedValue, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningError"/>. </summary>
-        /// <param name="error"> The error object. </param>
-        /// <returns> A new <see cref="Models.MachineLearningError"/> instance for mocking. </returns>
-        public static MachineLearningError MachineLearningError(ResponseError error = null)
-        {
-            return new MachineLearningError(error, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.MachineLearningVmSize"/>. </summary>
         /// <param name="name"> The name of the virtual machine size. </param>
         /// <param name="family"> The family name of the virtual machine size. </param>
@@ -166,13 +158,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="location"> The location. </param>
         /// <param name="identity"> The identity of the resource. </param>
         /// <param name="sku"> The sku of the workspace. </param>
-        /// <param name="properties">
-        /// Compute properties
-        /// Please note <see cref="Models.MachineLearningComputeProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.MachineLearningAksCompute"/>, <see cref="Models.AmlCompute"/>, <see cref="Models.MachineLearningComputeInstance"/>, <see cref="Models.MachineLearningDatabricksCompute"/>, <see cref="Models.MachineLearningDataFactoryCompute"/>, <see cref="Models.MachineLearningDataLakeAnalytics"/>, <see cref="Models.MachineLearningHDInsightCompute"/>, <see cref="Models.MachineLearningKubernetesCompute"/>, <see cref="Models.MachineLearningSynapseSpark"/> and <see cref="Models.MachineLearningVirtualMachineCompute"/>.
-        /// </param>
         /// <returns> A new <see cref="MachineLearning.MachineLearningComputeData"/> instance for mocking. </returns>
-        public static MachineLearningComputeData MachineLearningComputeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, MachineLearningSku sku = null, MachineLearningComputeProperties properties = null)
+        public static MachineLearningComputeData MachineLearningComputeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, MachineLearningSku sku = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -185,37 +172,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 location,
                 identity,
                 sku,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningComputeProperties"/>. </summary>
-        /// <param name="computeType"> The type of compute. </param>
-        /// <param name="computeLocation"> Location for the underlying compute. </param>
-        /// <param name="provisioningState"> The provision state of the cluster. Valid values are Unknown, Updating, Provisioning, Succeeded, and Failed. </param>
-        /// <param name="description"> The description of the Machine Learning compute. </param>
-        /// <param name="createdOn"> The time at which the compute was created. </param>
-        /// <param name="modifiedOn"> The time at which the compute was last modified. </param>
-        /// <param name="resourceId"> ARM resource id of the underlying compute. </param>
-        /// <param name="provisioningErrors"> Errors during provisioning. </param>
-        /// <param name="isAttachedCompute"> Indicating whether the compute was provisioned by user and brought from outside if true, or machine learning service provisioned it if false. </param>
-        /// <param name="disableLocalAuth"> Opt-out of local authentication and ensure customers can use only MSI and AAD exclusively for authentication. </param>
-        /// <returns> A new <see cref="Models.MachineLearningComputeProperties"/> instance for mocking. </returns>
-        public static MachineLearningComputeProperties MachineLearningComputeProperties(string computeType = null, string computeLocation = null, MachineLearningProvisioningState? provisioningState = null, string description = null, DateTimeOffset? createdOn = null, DateTimeOffset? modifiedOn = null, ResourceIdentifier resourceId = null, IEnumerable<MachineLearningError> provisioningErrors = null, bool? isAttachedCompute = null, bool? disableLocalAuth = null)
-        {
-            provisioningErrors ??= new List<MachineLearningError>();
-
-            return new UnknownCompute(
-                computeType == null ? default : new ComputeType(computeType),
-                computeLocation,
-                provisioningState,
-                description,
-                createdOn,
-                modifiedOn,
-                resourceId,
-                provisioningErrors?.ToList(),
-                isAttachedCompute,
-                disableLocalAuth,
                 serializedAdditionalRawData: null);
         }
 
@@ -521,7 +477,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="properties">
         /// [Required] Additional attributes of the entity.
         /// Please note <see cref="MachineLearningDataVersionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MachineLearningTable"/>, <see cref="MachineLearningUriFileDataVersion"/> and <see cref="MachineLearningUriFolderDataVersion"/>.
+        /// The available derived classes include <see cref="DataImport"/>, <see cref="MachineLearningTable"/>, <see cref="MachineLearningUriFileDataVersion"/> and <see cref="MachineLearningUriFolderDataVersion"/>.
         /// </param>
         /// <returns> A new <see cref="MachineLearning.MachineLearningDataVersionData"/> instance for mocking. </returns>
         public static MachineLearningDataVersionData MachineLearningDataVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MachineLearningDataVersionProperties properties = null)
@@ -964,7 +920,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="model">
         /// Reference to the model asset for the endpoint deployment.
         /// Please note <see cref="MachineLearningAssetReferenceBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MachineLearningDataPathAssetReference"/>, <see cref="MachineLearningIdAssetReference"/> and <see cref="MachineLearningOutputPathAssetReference"/>.
+        /// The available derived classes include <see cref="MachineLearningIdAssetReference"/>, <see cref="MachineLearningDataPathAssetReference"/> and <see cref="MachineLearningOutputPathAssetReference"/>.
         /// </param>
         /// <param name="outputAction"> Indicates how the output will be organized. </param>
         /// <param name="outputFileName"> Customized output file name for append_row output action. </param>
@@ -1295,7 +1251,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="properties">
         /// [Required] Additional attributes of the entity.
         /// Please note <see cref="Models.MachineLearningJobProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.AutoMLJob"/>, <see cref="Models.MachineLearningCommandJob"/>, <see cref="Models.LabelingJobProperties"/>, <see cref="Models.MachineLearningPipelineJob"/>, <see cref="Models.SparkJob"/> and <see cref="Models.MachineLearningSweepJob"/>.
+        /// The available derived classes include <see cref="Models.LabelingJobProperties"/>, <see cref="Models.AutoMLJob"/>, <see cref="Models.MachineLearningCommandJob"/>, <see cref="Models.MachineLearningPipelineJob"/>, <see cref="Models.SparkJob"/> and <see cref="Models.MachineLearningSweepJob"/>.
         /// </param>
         /// <returns> A new <see cref="MachineLearning.MachineLearningJobData"/> instance for mocking. </returns>
         public static MachineLearningJobData MachineLearningJobData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MachineLearningJobProperties properties = null)
@@ -1762,7 +1718,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="action">
         /// [Required] Specifies the action of the schedule
         /// Please note <see cref="MachineLearningScheduleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MachineLearningJobScheduleAction"/>, <see cref="CreateMonitorAction"/>, <see cref="ImportDataAction"/> and <see cref="MachineLearningEndpointScheduleAction"/>.
+        /// The available derived classes include <see cref="CreateMonitorAction"/>, <see cref="MachineLearningEndpointScheduleAction"/>, <see cref="ImportDataAction"/> and <see cref="MachineLearningJobScheduleAction"/>.
         /// </param>
         /// <param name="displayName"> Display name of schedule. </param>
         /// <param name="isEnabled"> Is the schedule enabled?. </param>
@@ -1770,7 +1726,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="trigger">
         /// [Required] Specifies the trigger details
         /// Please note <see cref="MachineLearningTriggerBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CronTrigger"/> and <see cref="MachineLearningRecurrenceTrigger"/>.
+        /// The available derived classes include <see cref="MachineLearningRecurrenceTrigger"/> and <see cref="CronTrigger"/>.
         /// </param>
         /// <returns> A new <see cref="Models.MachineLearningScheduleProperties"/> instance for mocking. </returns>
         public static MachineLearningScheduleProperties MachineLearningScheduleProperties(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, MachineLearningScheduleAction action = null, string displayName = null, bool? isEnabled = null, MachineLearningScheduleProvisioningStatus? provisioningState = null, MachineLearningTriggerBase trigger = null)
@@ -2300,261 +2256,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningAksCompute"/>. </summary>
-        /// <param name="computeLocation"> Location for the underlying compute. </param>
-        /// <param name="provisioningState"> The provision state of the cluster. Valid values are Unknown, Updating, Provisioning, Succeeded, and Failed. </param>
-        /// <param name="description"> The description of the Machine Learning compute. </param>
-        /// <param name="createdOn"> The time at which the compute was created. </param>
-        /// <param name="modifiedOn"> The time at which the compute was last modified. </param>
-        /// <param name="resourceId"> ARM resource id of the underlying compute. </param>
-        /// <param name="provisioningErrors"> Errors during provisioning. </param>
-        /// <param name="isAttachedCompute"> Indicating whether the compute was provisioned by user and brought from outside if true, or machine learning service provisioned it if false. </param>
-        /// <param name="disableLocalAuth"> Opt-out of local authentication and ensure customers can use only MSI and AAD exclusively for authentication. </param>
-        /// <param name="properties"> AKS properties. </param>
-        /// <returns> A new <see cref="Models.MachineLearningAksCompute"/> instance for mocking. </returns>
-        public static MachineLearningAksCompute MachineLearningAksCompute(string computeLocation = null, MachineLearningProvisioningState? provisioningState = null, string description = null, DateTimeOffset? createdOn = null, DateTimeOffset? modifiedOn = null, ResourceIdentifier resourceId = null, IEnumerable<MachineLearningError> provisioningErrors = null, bool? isAttachedCompute = null, bool? disableLocalAuth = null, MachineLearningAksComputeProperties properties = null)
-        {
-            provisioningErrors ??= new List<MachineLearningError>();
-
-            return new MachineLearningAksCompute(
-                ComputeType.Aks,
-                computeLocation,
-                provisioningState,
-                description,
-                createdOn,
-                modifiedOn,
-                resourceId,
-                provisioningErrors?.ToList(),
-                isAttachedCompute,
-                disableLocalAuth,
-                serializedAdditionalRawData: null,
-                properties);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningAksComputeProperties"/>. </summary>
-        /// <param name="clusterFqdn"> Cluster full qualified domain name. </param>
-        /// <param name="systemServices"> System services. </param>
-        /// <param name="agentCount"> Number of agents. </param>
-        /// <param name="agentVmSize"> Agent virtual machine size. </param>
-        /// <param name="clusterPurpose"> Intended usage of the cluster. </param>
-        /// <param name="sslConfiguration"> SSL configuration. </param>
-        /// <param name="aksNetworkingConfiguration"> AKS networking configuration for vnet. </param>
-        /// <param name="loadBalancerType"> Load Balancer Type. </param>
-        /// <param name="loadBalancerSubnet"> Load Balancer Subnet. </param>
-        /// <returns> A new <see cref="Models.MachineLearningAksComputeProperties"/> instance for mocking. </returns>
-        public static MachineLearningAksComputeProperties MachineLearningAksComputeProperties(string clusterFqdn = null, IEnumerable<MachineLearningComputeSystemService> systemServices = null, int? agentCount = null, string agentVmSize = null, MachineLearningClusterPurpose? clusterPurpose = null, MachineLearningSslConfiguration sslConfiguration = null, MachineLearningAksNetworkingConfiguration aksNetworkingConfiguration = null, MachineLearningLoadBalancerType? loadBalancerType = null, string loadBalancerSubnet = null)
-        {
-            systemServices ??= new List<MachineLearningComputeSystemService>();
-
-            return new MachineLearningAksComputeProperties(
-                clusterFqdn,
-                systemServices?.ToList(),
-                agentCount,
-                agentVmSize,
-                clusterPurpose,
-                sslConfiguration,
-                aksNetworkingConfiguration,
-                loadBalancerType,
-                loadBalancerSubnet,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningComputeSystemService"/>. </summary>
-        /// <param name="systemServiceType"> The type of this system service. </param>
-        /// <param name="publicIPAddress"> Public IP address. </param>
-        /// <param name="version"> The version for this type. </param>
-        /// <returns> A new <see cref="Models.MachineLearningComputeSystemService"/> instance for mocking. </returns>
-        public static MachineLearningComputeSystemService MachineLearningComputeSystemService(string systemServiceType = null, string publicIPAddress = null, string version = null)
-        {
-            return new MachineLearningComputeSystemService(systemServiceType, publicIPAddress, version, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningKubernetesCompute"/>. </summary>
-        /// <param name="computeLocation"> Location for the underlying compute. </param>
-        /// <param name="provisioningState"> The provision state of the cluster. Valid values are Unknown, Updating, Provisioning, Succeeded, and Failed. </param>
-        /// <param name="description"> The description of the Machine Learning compute. </param>
-        /// <param name="createdOn"> The time at which the compute was created. </param>
-        /// <param name="modifiedOn"> The time at which the compute was last modified. </param>
-        /// <param name="resourceId"> ARM resource id of the underlying compute. </param>
-        /// <param name="provisioningErrors"> Errors during provisioning. </param>
-        /// <param name="isAttachedCompute"> Indicating whether the compute was provisioned by user and brought from outside if true, or machine learning service provisioned it if false. </param>
-        /// <param name="disableLocalAuth"> Opt-out of local authentication and ensure customers can use only MSI and AAD exclusively for authentication. </param>
-        /// <param name="properties"> Properties of Kubernetes. </param>
-        /// <returns> A new <see cref="Models.MachineLearningKubernetesCompute"/> instance for mocking. </returns>
-        public static MachineLearningKubernetesCompute MachineLearningKubernetesCompute(string computeLocation = null, MachineLearningProvisioningState? provisioningState = null, string description = null, DateTimeOffset? createdOn = null, DateTimeOffset? modifiedOn = null, ResourceIdentifier resourceId = null, IEnumerable<MachineLearningError> provisioningErrors = null, bool? isAttachedCompute = null, bool? disableLocalAuth = null, MachineLearningKubernetesProperties properties = null)
-        {
-            provisioningErrors ??= new List<MachineLearningError>();
-
-            return new MachineLearningKubernetesCompute(
-                ComputeType.Kubernetes,
-                computeLocation,
-                provisioningState,
-                description,
-                createdOn,
-                modifiedOn,
-                resourceId,
-                provisioningErrors?.ToList(),
-                isAttachedCompute,
-                disableLocalAuth,
-                serializedAdditionalRawData: null,
-                properties);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.AmlComputeProperties"/>. </summary>
-        /// <param name="osType"> Compute OS Type. </param>
-        /// <param name="vmSize"> Virtual Machine Size. </param>
-        /// <param name="vmPriority"> Virtual Machine priority. </param>
-        /// <param name="virtualMachineImageId"> Virtual Machine image for AML Compute - windows only. </param>
-        /// <param name="isolatedNetwork"> Network is isolated or not. </param>
-        /// <param name="scaleSettings"> Scale settings for AML Compute. </param>
-        /// <param name="userAccountCredentials"> Credentials for an administrator user account that will be created on each compute node. </param>
-        /// <param name="subnetId"> Virtual network subnet resource ID the compute nodes belong to. </param>
-        /// <param name="remoteLoginPortPublicAccess"> State of the public SSH port. Possible values are: Disabled - Indicates that the public ssh port is closed on all nodes of the cluster. Enabled - Indicates that the public ssh port is open on all nodes of the cluster. NotSpecified - Indicates that the public ssh port is closed on all nodes of the cluster if VNet is defined, else is open all public nodes. It can be default only during cluster creation time, after creation it will be either enabled or disabled. </param>
-        /// <param name="allocationState"> Allocation state of the compute. Possible values are: steady - Indicates that the compute is not resizing. There are no changes to the number of compute nodes in the compute in progress. A compute enters this state when it is created and when no operations are being performed on the compute to change the number of compute nodes. resizing - Indicates that the compute is resizing; that is, compute nodes are being added to or removed from the compute. </param>
-        /// <param name="allocationStateTransitionOn"> The time at which the compute entered its current allocation state. </param>
-        /// <param name="errors"> Collection of errors encountered by various compute nodes during node setup. </param>
-        /// <param name="currentNodeCount"> The number of compute nodes currently assigned to the compute. </param>
-        /// <param name="targetNodeCount"> The target number of compute nodes for the compute. If the allocationState is resizing, this property denotes the target node count for the ongoing resize operation. If the allocationState is steady, this property denotes the target node count for the previous resize operation. </param>
-        /// <param name="nodeStateCounts"> Counts of various node states on the compute. </param>
-        /// <param name="enableNodePublicIP"> Enable or disable node public IP address provisioning. Possible values are: Possible values are: true - Indicates that the compute nodes will have public IPs provisioned. false - Indicates that the compute nodes will have a private endpoint and no public IPs. </param>
-        /// <param name="propertyBag"> A property bag containing additional properties. </param>
-        /// <returns> A new <see cref="Models.AmlComputeProperties"/> instance for mocking. </returns>
-        public static AmlComputeProperties AmlComputeProperties(MachineLearningOSType? osType = null, string vmSize = null, MachineLearningVmPriority? vmPriority = null, string virtualMachineImageId = null, bool? isolatedNetwork = null, AmlComputeScaleSettings scaleSettings = null, MachineLearningUserAccountCredentials userAccountCredentials = null, ResourceIdentifier subnetId = null, MachineLearningRemoteLoginPortPublicAccess? remoteLoginPortPublicAccess = null, MachineLearningAllocationState? allocationState = null, DateTimeOffset? allocationStateTransitionOn = null, IEnumerable<MachineLearningError> errors = null, int? currentNodeCount = null, int? targetNodeCount = null, MachineLearningNodeStateCounts nodeStateCounts = null, bool? enableNodePublicIP = null, BinaryData propertyBag = null)
-        {
-            errors ??= new List<MachineLearningError>();
-
-            return new AmlComputeProperties(
-                osType,
-                vmSize,
-                vmPriority,
-                virtualMachineImageId != null ? new VirtualMachineImage(virtualMachineImageId, serializedAdditionalRawData: null) : null,
-                isolatedNetwork,
-                scaleSettings,
-                userAccountCredentials,
-                subnetId != null ? new ResourceId(subnetId, serializedAdditionalRawData: null) : null,
-                remoteLoginPortPublicAccess,
-                allocationState,
-                allocationStateTransitionOn,
-                errors?.ToList(),
-                currentNodeCount,
-                targetNodeCount,
-                nodeStateCounts,
-                enableNodePublicIP,
-                propertyBag,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningNodeStateCounts"/>. </summary>
-        /// <param name="idleNodeCount"> Number of compute nodes in idle state. </param>
-        /// <param name="runningNodeCount"> Number of compute nodes which are running jobs. </param>
-        /// <param name="preparingNodeCount"> Number of compute nodes which are being prepared. </param>
-        /// <param name="unusableNodeCount"> Number of compute nodes which are in unusable state. </param>
-        /// <param name="leavingNodeCount"> Number of compute nodes which are leaving the amlCompute. </param>
-        /// <param name="preemptedNodeCount"> Number of compute nodes which are in preempted state. </param>
-        /// <returns> A new <see cref="Models.MachineLearningNodeStateCounts"/> instance for mocking. </returns>
-        public static MachineLearningNodeStateCounts MachineLearningNodeStateCounts(int? idleNodeCount = null, int? runningNodeCount = null, int? preparingNodeCount = null, int? unusableNodeCount = null, int? leavingNodeCount = null, int? preemptedNodeCount = null)
-        {
-            return new MachineLearningNodeStateCounts(
-                idleNodeCount,
-                runningNodeCount,
-                preparingNodeCount,
-                unusableNodeCount,
-                leavingNodeCount,
-                preemptedNodeCount,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.AmlCompute"/>. </summary>
-        /// <param name="computeLocation"> Location for the underlying compute. </param>
-        /// <param name="provisioningState"> The provision state of the cluster. Valid values are Unknown, Updating, Provisioning, Succeeded, and Failed. </param>
-        /// <param name="description"> The description of the Machine Learning compute. </param>
-        /// <param name="createdOn"> The time at which the compute was created. </param>
-        /// <param name="modifiedOn"> The time at which the compute was last modified. </param>
-        /// <param name="resourceId"> ARM resource id of the underlying compute. </param>
-        /// <param name="provisioningErrors"> Errors during provisioning. </param>
-        /// <param name="isAttachedCompute"> Indicating whether the compute was provisioned by user and brought from outside if true, or machine learning service provisioned it if false. </param>
-        /// <param name="disableLocalAuth"> Opt-out of local authentication and ensure customers can use only MSI and AAD exclusively for authentication. </param>
-        /// <param name="properties"> Properties of AmlCompute. </param>
-        /// <returns> A new <see cref="Models.AmlCompute"/> instance for mocking. </returns>
-        public static AmlCompute AmlCompute(string computeLocation = null, MachineLearningProvisioningState? provisioningState = null, string description = null, DateTimeOffset? createdOn = null, DateTimeOffset? modifiedOn = null, ResourceIdentifier resourceId = null, IEnumerable<MachineLearningError> provisioningErrors = null, bool? isAttachedCompute = null, bool? disableLocalAuth = null, AmlComputeProperties properties = null)
-        {
-            provisioningErrors ??= new List<MachineLearningError>();
-
-            return new AmlCompute(
-                ComputeType.AmlCompute,
-                computeLocation,
-                provisioningState,
-                description,
-                createdOn,
-                modifiedOn,
-                resourceId,
-                provisioningErrors?.ToList(),
-                isAttachedCompute,
-                disableLocalAuth,
-                serializedAdditionalRawData: null,
-                properties);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningComputeInstanceSshSettings"/>. </summary>
-        /// <param name="sshPublicAccess"> State of the public SSH port. Possible values are: Disabled - Indicates that the public ssh port is closed on this instance. Enabled - Indicates that the public ssh port is open and accessible according to the VNet/subnet policy if applicable. </param>
-        /// <param name="adminUserName"> Describes the admin user name. </param>
-        /// <param name="sshPort"> Describes the port for connecting through SSH. </param>
-        /// <param name="adminPublicKey"> Specifies the SSH rsa public key file as a string. Use "ssh-keygen -t rsa -b 2048" to generate your SSH key pairs. </param>
-        /// <returns> A new <see cref="Models.MachineLearningComputeInstanceSshSettings"/> instance for mocking. </returns>
-        public static MachineLearningComputeInstanceSshSettings MachineLearningComputeInstanceSshSettings(MachineLearningSshPublicAccess? sshPublicAccess = null, string adminUserName = null, int? sshPort = null, string adminPublicKey = null)
-        {
-            return new MachineLearningComputeInstanceSshSettings(sshPublicAccess, adminUserName, sshPort, adminPublicKey, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ImageMetadata"/>. </summary>
-        /// <param name="currentImageVersion"> Specifies the current operating system image version this compute instance is running on. </param>
-        /// <param name="latestImageVersion"> Specifies the latest available operating system image version. </param>
-        /// <param name="isLatestOSImageVersion"> Specifies whether this compute instance is running on the latest operating system image. </param>
-        /// <returns> A new <see cref="Models.ImageMetadata"/> instance for mocking. </returns>
-        public static ImageMetadata ImageMetadata(string currentImageVersion = null, string latestImageVersion = null, bool? isLatestOSImageVersion = null)
-        {
-            return new ImageMetadata(currentImageVersion, latestImageVersion, isLatestOSImageVersion, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningComputeInstanceConnectivityEndpoints"/>. </summary>
-        /// <param name="publicIPAddress"> Public IP Address of this ComputeInstance. </param>
-        /// <param name="privateIPAddress"> Private IP Address of this ComputeInstance (local to the VNET in which the compute instance is deployed). </param>
-        /// <returns> A new <see cref="Models.MachineLearningComputeInstanceConnectivityEndpoints"/> instance for mocking. </returns>
-        public static MachineLearningComputeInstanceConnectivityEndpoints MachineLearningComputeInstanceConnectivityEndpoints(string publicIPAddress = null, string privateIPAddress = null)
-        {
-            return new MachineLearningComputeInstanceConnectivityEndpoints(publicIPAddress, privateIPAddress, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningComputeInstanceApplication"/>. </summary>
-        /// <param name="displayName"> Name of the ComputeInstance application. </param>
-        /// <param name="endpointUri"> Application' endpoint URI. </param>
-        /// <returns> A new <see cref="Models.MachineLearningComputeInstanceApplication"/> instance for mocking. </returns>
-        public static MachineLearningComputeInstanceApplication MachineLearningComputeInstanceApplication(string displayName = null, Uri endpointUri = null)
-        {
-            return new MachineLearningComputeInstanceApplication(displayName, endpointUri, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningComputeInstanceCreatedBy"/>. </summary>
-        /// <param name="userName"> Name of the user. </param>
-        /// <param name="userOrgId"> Uniquely identifies user' Azure Active Directory organization. </param>
-        /// <param name="userId"> Uniquely identifies the user within his/her organization. </param>
-        /// <returns> A new <see cref="Models.MachineLearningComputeInstanceCreatedBy"/> instance for mocking. </returns>
-        public static MachineLearningComputeInstanceCreatedBy MachineLearningComputeInstanceCreatedBy(string userName = null, string userOrgId = null, string userId = null)
-        {
-            return new MachineLearningComputeInstanceCreatedBy(userName, userOrgId, userId, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningComputeInstanceLastOperation"/>. </summary>
-        /// <param name="operationName"> Name of the last operation. </param>
-        /// <param name="operationOn"> Time of the last operation. </param>
-        /// <param name="operationStatus"> Operation status. </param>
-        /// <param name="operationTrigger"> Trigger of operation. </param>
-        /// <returns> A new <see cref="Models.MachineLearningComputeInstanceLastOperation"/> instance for mocking. </returns>
-        public static MachineLearningComputeInstanceLastOperation MachineLearningComputeInstanceLastOperation(MachineLearningOperationName? operationName = null, DateTimeOffset? operationOn = null, MachineLearningOperationStatus? operationStatus = null, MachineLearningOperationTrigger? operationTrigger = null)
-        {
-            return new MachineLearningComputeInstanceLastOperation(operationName, operationOn, operationStatus, operationTrigger, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.MachineLearningComputeStartStopSchedule"/>. </summary>
         /// <param name="id"> A system assigned id for the schedule. </param>
         /// <param name="provisioningStatus"> The current deployment state of schedule. </param>
@@ -2577,315 +2278,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 cronSchedule,
                 schedule,
                 serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningComputeInstanceContainer"/>. </summary>
-        /// <param name="name"> Name of the ComputeInstance container. </param>
-        /// <param name="autosave"> Auto save settings. </param>
-        /// <param name="gpu"> Information of GPU. </param>
-        /// <param name="network"> network of this container. </param>
-        /// <param name="environment"> Environment information of this container. </param>
-        /// <param name="services"> services of this containers. </param>
-        /// <returns> A new <see cref="Models.MachineLearningComputeInstanceContainer"/> instance for mocking. </returns>
-        public static MachineLearningComputeInstanceContainer MachineLearningComputeInstanceContainer(string name = null, MachineLearningComputeInstanceAutosave? autosave = null, string gpu = null, MachineLearningNetwork? network = null, MachineLearningComputeInstanceEnvironmentInfo environment = null, IEnumerable<BinaryData> services = null)
-        {
-            services ??= new List<BinaryData>();
-
-            return new MachineLearningComputeInstanceContainer(
-                name,
-                autosave,
-                gpu,
-                network,
-                environment,
-                services?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningComputeInstanceEnvironmentInfo"/>. </summary>
-        /// <param name="name"> name of environment. </param>
-        /// <param name="version"> version of environment. </param>
-        /// <returns> A new <see cref="Models.MachineLearningComputeInstanceEnvironmentInfo"/> instance for mocking. </returns>
-        public static MachineLearningComputeInstanceEnvironmentInfo MachineLearningComputeInstanceEnvironmentInfo(string name = null, string version = null)
-        {
-            return new MachineLearningComputeInstanceEnvironmentInfo(name, version, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningComputeInstanceDataDisk"/>. </summary>
-        /// <param name="caching"> Caching type of Data Disk. </param>
-        /// <param name="diskSizeGB"> The initial disk size in gigabytes. </param>
-        /// <param name="lun"> The lun is used to uniquely identify each data disk. If attaching multiple disks, each should have a distinct lun. </param>
-        /// <param name="storageAccountType"> type of this storage account. </param>
-        /// <returns> A new <see cref="Models.MachineLearningComputeInstanceDataDisk"/> instance for mocking. </returns>
-        public static MachineLearningComputeInstanceDataDisk MachineLearningComputeInstanceDataDisk(MachineLearningCachingType? caching = null, int? diskSizeGB = null, int? lun = null, MachineLearningStorageAccountType? storageAccountType = null)
-        {
-            return new MachineLearningComputeInstanceDataDisk(caching, diskSizeGB, lun, storageAccountType, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningComputeInstanceDataMount"/>. </summary>
-        /// <param name="source"> Source of the ComputeInstance data mount. </param>
-        /// <param name="sourceType"> Data source type. </param>
-        /// <param name="mountName"> name of the ComputeInstance data mount. </param>
-        /// <param name="mountAction"> Mount Action. </param>
-        /// <param name="createdBy"> who this data mount created by. </param>
-        /// <param name="mountPath"> Path of this data mount. </param>
-        /// <param name="mountState"> Mount state. </param>
-        /// <param name="mountedOn"> The time when the disk mounted. </param>
-        /// <param name="error"> Error of this data mount. </param>
-        /// <returns> A new <see cref="Models.MachineLearningComputeInstanceDataMount"/> instance for mocking. </returns>
-        public static MachineLearningComputeInstanceDataMount MachineLearningComputeInstanceDataMount(string source = null, MachineLearningSourceType? sourceType = null, string mountName = null, MachineLearningMountAction? mountAction = null, string createdBy = null, string mountPath = null, MachineLearningMountState? mountState = null, DateTimeOffset? mountedOn = null, string error = null)
-        {
-            return new MachineLearningComputeInstanceDataMount(
-                source,
-                sourceType,
-                mountName,
-                mountAction,
-                createdBy,
-                mountPath,
-                mountState,
-                mountedOn,
-                error,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningComputeInstance"/>. </summary>
-        /// <param name="computeLocation"> Location for the underlying compute. </param>
-        /// <param name="provisioningState"> The provision state of the cluster. Valid values are Unknown, Updating, Provisioning, Succeeded, and Failed. </param>
-        /// <param name="description"> The description of the Machine Learning compute. </param>
-        /// <param name="createdOn"> The time at which the compute was created. </param>
-        /// <param name="modifiedOn"> The time at which the compute was last modified. </param>
-        /// <param name="resourceId"> ARM resource id of the underlying compute. </param>
-        /// <param name="provisioningErrors"> Errors during provisioning. </param>
-        /// <param name="isAttachedCompute"> Indicating whether the compute was provisioned by user and brought from outside if true, or machine learning service provisioned it if false. </param>
-        /// <param name="disableLocalAuth"> Opt-out of local authentication and ensure customers can use only MSI and AAD exclusively for authentication. </param>
-        /// <param name="properties"> Properties of ComputeInstance. </param>
-        /// <returns> A new <see cref="Models.MachineLearningComputeInstance"/> instance for mocking. </returns>
-        public static MachineLearningComputeInstance MachineLearningComputeInstance(string computeLocation = null, MachineLearningProvisioningState? provisioningState = null, string description = null, DateTimeOffset? createdOn = null, DateTimeOffset? modifiedOn = null, ResourceIdentifier resourceId = null, IEnumerable<MachineLearningError> provisioningErrors = null, bool? isAttachedCompute = null, bool? disableLocalAuth = null, MachineLearningComputeInstanceProperties properties = null)
-        {
-            provisioningErrors ??= new List<MachineLearningError>();
-
-            return new MachineLearningComputeInstance(
-                ComputeType.ComputeInstance,
-                computeLocation,
-                provisioningState,
-                description,
-                createdOn,
-                modifiedOn,
-                resourceId,
-                provisioningErrors?.ToList(),
-                isAttachedCompute,
-                disableLocalAuth,
-                serializedAdditionalRawData: null,
-                properties);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningVirtualMachineCompute"/>. </summary>
-        /// <param name="computeLocation"> Location for the underlying compute. </param>
-        /// <param name="provisioningState"> The provision state of the cluster. Valid values are Unknown, Updating, Provisioning, Succeeded, and Failed. </param>
-        /// <param name="description"> The description of the Machine Learning compute. </param>
-        /// <param name="createdOn"> The time at which the compute was created. </param>
-        /// <param name="modifiedOn"> The time at which the compute was last modified. </param>
-        /// <param name="resourceId"> ARM resource id of the underlying compute. </param>
-        /// <param name="provisioningErrors"> Errors during provisioning. </param>
-        /// <param name="isAttachedCompute"> Indicating whether the compute was provisioned by user and brought from outside if true, or machine learning service provisioned it if false. </param>
-        /// <param name="disableLocalAuth"> Opt-out of local authentication and ensure customers can use only MSI and AAD exclusively for authentication. </param>
-        /// <param name="properties"></param>
-        /// <returns> A new <see cref="Models.MachineLearningVirtualMachineCompute"/> instance for mocking. </returns>
-        public static MachineLearningVirtualMachineCompute MachineLearningVirtualMachineCompute(string computeLocation = null, MachineLearningProvisioningState? provisioningState = null, string description = null, DateTimeOffset? createdOn = null, DateTimeOffset? modifiedOn = null, ResourceIdentifier resourceId = null, IEnumerable<MachineLearningError> provisioningErrors = null, bool? isAttachedCompute = null, bool? disableLocalAuth = null, MachineLearningVirtualMachineProperties properties = null)
-        {
-            provisioningErrors ??= new List<MachineLearningError>();
-
-            return new MachineLearningVirtualMachineCompute(
-                ComputeType.VirtualMachine,
-                computeLocation,
-                provisioningState,
-                description,
-                createdOn,
-                modifiedOn,
-                resourceId,
-                provisioningErrors?.ToList(),
-                isAttachedCompute,
-                disableLocalAuth,
-                serializedAdditionalRawData: null,
-                properties);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningHDInsightCompute"/>. </summary>
-        /// <param name="computeLocation"> Location for the underlying compute. </param>
-        /// <param name="provisioningState"> The provision state of the cluster. Valid values are Unknown, Updating, Provisioning, Succeeded, and Failed. </param>
-        /// <param name="description"> The description of the Machine Learning compute. </param>
-        /// <param name="createdOn"> The time at which the compute was created. </param>
-        /// <param name="modifiedOn"> The time at which the compute was last modified. </param>
-        /// <param name="resourceId"> ARM resource id of the underlying compute. </param>
-        /// <param name="provisioningErrors"> Errors during provisioning. </param>
-        /// <param name="isAttachedCompute"> Indicating whether the compute was provisioned by user and brought from outside if true, or machine learning service provisioned it if false. </param>
-        /// <param name="disableLocalAuth"> Opt-out of local authentication and ensure customers can use only MSI and AAD exclusively for authentication. </param>
-        /// <param name="properties"> HDInsight compute properties. </param>
-        /// <returns> A new <see cref="Models.MachineLearningHDInsightCompute"/> instance for mocking. </returns>
-        public static MachineLearningHDInsightCompute MachineLearningHDInsightCompute(string computeLocation = null, MachineLearningProvisioningState? provisioningState = null, string description = null, DateTimeOffset? createdOn = null, DateTimeOffset? modifiedOn = null, ResourceIdentifier resourceId = null, IEnumerable<MachineLearningError> provisioningErrors = null, bool? isAttachedCompute = null, bool? disableLocalAuth = null, MachineLearningHDInsightProperties properties = null)
-        {
-            provisioningErrors ??= new List<MachineLearningError>();
-
-            return new MachineLearningHDInsightCompute(
-                ComputeType.HDInsight,
-                computeLocation,
-                provisioningState,
-                description,
-                createdOn,
-                modifiedOn,
-                resourceId,
-                provisioningErrors?.ToList(),
-                isAttachedCompute,
-                disableLocalAuth,
-                serializedAdditionalRawData: null,
-                properties);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningDataFactoryCompute"/>. </summary>
-        /// <param name="computeLocation"> Location for the underlying compute. </param>
-        /// <param name="provisioningState"> The provision state of the cluster. Valid values are Unknown, Updating, Provisioning, Succeeded, and Failed. </param>
-        /// <param name="description"> The description of the Machine Learning compute. </param>
-        /// <param name="createdOn"> The time at which the compute was created. </param>
-        /// <param name="modifiedOn"> The time at which the compute was last modified. </param>
-        /// <param name="resourceId"> ARM resource id of the underlying compute. </param>
-        /// <param name="provisioningErrors"> Errors during provisioning. </param>
-        /// <param name="isAttachedCompute"> Indicating whether the compute was provisioned by user and brought from outside if true, or machine learning service provisioned it if false. </param>
-        /// <param name="disableLocalAuth"> Opt-out of local authentication and ensure customers can use only MSI and AAD exclusively for authentication. </param>
-        /// <returns> A new <see cref="Models.MachineLearningDataFactoryCompute"/> instance for mocking. </returns>
-        public static MachineLearningDataFactoryCompute MachineLearningDataFactoryCompute(string computeLocation = null, MachineLearningProvisioningState? provisioningState = null, string description = null, DateTimeOffset? createdOn = null, DateTimeOffset? modifiedOn = null, ResourceIdentifier resourceId = null, IEnumerable<MachineLearningError> provisioningErrors = null, bool? isAttachedCompute = null, bool? disableLocalAuth = null)
-        {
-            provisioningErrors ??= new List<MachineLearningError>();
-
-            return new MachineLearningDataFactoryCompute(
-                ComputeType.DataFactory,
-                computeLocation,
-                provisioningState,
-                description,
-                createdOn,
-                modifiedOn,
-                resourceId,
-                provisioningErrors?.ToList(),
-                isAttachedCompute,
-                disableLocalAuth,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningDatabricksCompute"/>. </summary>
-        /// <param name="computeLocation"> Location for the underlying compute. </param>
-        /// <param name="provisioningState"> The provision state of the cluster. Valid values are Unknown, Updating, Provisioning, Succeeded, and Failed. </param>
-        /// <param name="description"> The description of the Machine Learning compute. </param>
-        /// <param name="createdOn"> The time at which the compute was created. </param>
-        /// <param name="modifiedOn"> The time at which the compute was last modified. </param>
-        /// <param name="resourceId"> ARM resource id of the underlying compute. </param>
-        /// <param name="provisioningErrors"> Errors during provisioning. </param>
-        /// <param name="isAttachedCompute"> Indicating whether the compute was provisioned by user and brought from outside if true, or machine learning service provisioned it if false. </param>
-        /// <param name="disableLocalAuth"> Opt-out of local authentication and ensure customers can use only MSI and AAD exclusively for authentication. </param>
-        /// <param name="properties"> Properties of Databricks. </param>
-        /// <returns> A new <see cref="Models.MachineLearningDatabricksCompute"/> instance for mocking. </returns>
-        public static MachineLearningDatabricksCompute MachineLearningDatabricksCompute(string computeLocation = null, MachineLearningProvisioningState? provisioningState = null, string description = null, DateTimeOffset? createdOn = null, DateTimeOffset? modifiedOn = null, ResourceIdentifier resourceId = null, IEnumerable<MachineLearningError> provisioningErrors = null, bool? isAttachedCompute = null, bool? disableLocalAuth = null, MachineLearningDatabricksProperties properties = null)
-        {
-            provisioningErrors ??= new List<MachineLearningError>();
-
-            return new MachineLearningDatabricksCompute(
-                ComputeType.Databricks,
-                computeLocation,
-                provisioningState,
-                description,
-                createdOn,
-                modifiedOn,
-                resourceId,
-                provisioningErrors?.ToList(),
-                isAttachedCompute,
-                disableLocalAuth,
-                serializedAdditionalRawData: null,
-                properties);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningDataLakeAnalytics"/>. </summary>
-        /// <param name="computeLocation"> Location for the underlying compute. </param>
-        /// <param name="provisioningState"> The provision state of the cluster. Valid values are Unknown, Updating, Provisioning, Succeeded, and Failed. </param>
-        /// <param name="description"> The description of the Machine Learning compute. </param>
-        /// <param name="createdOn"> The time at which the compute was created. </param>
-        /// <param name="modifiedOn"> The time at which the compute was last modified. </param>
-        /// <param name="resourceId"> ARM resource id of the underlying compute. </param>
-        /// <param name="provisioningErrors"> Errors during provisioning. </param>
-        /// <param name="isAttachedCompute"> Indicating whether the compute was provisioned by user and brought from outside if true, or machine learning service provisioned it if false. </param>
-        /// <param name="disableLocalAuth"> Opt-out of local authentication and ensure customers can use only MSI and AAD exclusively for authentication. </param>
-        /// <param name="dataLakeStoreAccountName"></param>
-        /// <returns> A new <see cref="Models.MachineLearningDataLakeAnalytics"/> instance for mocking. </returns>
-        public static MachineLearningDataLakeAnalytics MachineLearningDataLakeAnalytics(string computeLocation = null, MachineLearningProvisioningState? provisioningState = null, string description = null, DateTimeOffset? createdOn = null, DateTimeOffset? modifiedOn = null, ResourceIdentifier resourceId = null, IEnumerable<MachineLearningError> provisioningErrors = null, bool? isAttachedCompute = null, bool? disableLocalAuth = null, string dataLakeStoreAccountName = null)
-        {
-            provisioningErrors ??= new List<MachineLearningError>();
-
-            return new MachineLearningDataLakeAnalytics(
-                ComputeType.DataLakeAnalytics,
-                computeLocation,
-                provisioningState,
-                description,
-                createdOn,
-                modifiedOn,
-                resourceId,
-                provisioningErrors?.ToList(),
-                isAttachedCompute,
-                disableLocalAuth,
-                serializedAdditionalRawData: null,
-                dataLakeStoreAccountName != null ? new MachineLearningDataLakeAnalyticsProperties(dataLakeStoreAccountName, serializedAdditionalRawData: null) : null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningSynapseSpark"/>. </summary>
-        /// <param name="computeLocation"> Location for the underlying compute. </param>
-        /// <param name="provisioningState"> The provision state of the cluster. Valid values are Unknown, Updating, Provisioning, Succeeded, and Failed. </param>
-        /// <param name="description"> The description of the Machine Learning compute. </param>
-        /// <param name="createdOn"> The time at which the compute was created. </param>
-        /// <param name="modifiedOn"> The time at which the compute was last modified. </param>
-        /// <param name="resourceId"> ARM resource id of the underlying compute. </param>
-        /// <param name="provisioningErrors"> Errors during provisioning. </param>
-        /// <param name="isAttachedCompute"> Indicating whether the compute was provisioned by user and brought from outside if true, or machine learning service provisioned it if false. </param>
-        /// <param name="disableLocalAuth"> Opt-out of local authentication and ensure customers can use only MSI and AAD exclusively for authentication. </param>
-        /// <param name="properties"></param>
-        /// <returns> A new <see cref="Models.MachineLearningSynapseSpark"/> instance for mocking. </returns>
-        public static MachineLearningSynapseSpark MachineLearningSynapseSpark(string computeLocation = null, MachineLearningProvisioningState? provisioningState = null, string description = null, DateTimeOffset? createdOn = null, DateTimeOffset? modifiedOn = null, ResourceIdentifier resourceId = null, IEnumerable<MachineLearningError> provisioningErrors = null, bool? isAttachedCompute = null, bool? disableLocalAuth = null, MachineLearningSynapseSparkProperties properties = null)
-        {
-            provisioningErrors ??= new List<MachineLearningError>();
-
-            return new MachineLearningSynapseSpark(
-                ComputeType.SynapseSpark,
-                computeLocation,
-                provisioningState,
-                description,
-                createdOn,
-                modifiedOn,
-                resourceId,
-                provisioningErrors?.ToList(),
-                isAttachedCompute,
-                disableLocalAuth,
-                serializedAdditionalRawData: null,
-                properties);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningAksComputeSecrets"/>. </summary>
-        /// <param name="userKubeConfig"> Content of kubeconfig file that can be used to connect to the Kubernetes cluster. </param>
-        /// <param name="adminKubeConfig"> Content of kubeconfig file that can be used to connect to the Kubernetes cluster. </param>
-        /// <param name="imagePullSecretName"> Image registry pull secret. </param>
-        /// <returns> A new <see cref="Models.MachineLearningAksComputeSecrets"/> instance for mocking. </returns>
-        public static MachineLearningAksComputeSecrets MachineLearningAksComputeSecrets(string userKubeConfig = null, string adminKubeConfig = null, string imagePullSecretName = null)
-        {
-            return new MachineLearningAksComputeSecrets(ComputeType.Aks, serializedAdditionalRawData: null, userKubeConfig, adminKubeConfig, imagePullSecretName);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningVirtualMachineSecrets"/>. </summary>
-        /// <param name="administratorAccount"> Admin credentials for virtual machine. </param>
-        /// <returns> A new <see cref="Models.MachineLearningVirtualMachineSecrets"/> instance for mocking. </returns>
-        public static MachineLearningVirtualMachineSecrets MachineLearningVirtualMachineSecrets(MachineLearningVmSshCredentials administratorAccount = null)
-        {
-            return new MachineLearningVirtualMachineSecrets(ComputeType.VirtualMachine, serializedAdditionalRawData: null, administratorAccount);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningDatabricksComputeSecrets"/>. </summary>
-        /// <param name="databricksAccessToken"> access token for databricks account. </param>
-        /// <returns> A new <see cref="Models.MachineLearningDatabricksComputeSecrets"/> instance for mocking. </returns>
-        public static MachineLearningDatabricksComputeSecrets MachineLearningDatabricksComputeSecrets(string databricksAccessToken = null)
-        {
-            return new MachineLearningDatabricksComputeSecrets(ComputeType.Databricks, serializedAdditionalRawData: null, databricksAccessToken);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AutoMLJob"/>. </summary>
@@ -2977,10 +2369,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="endpoint"> Azure cloud endpoint for the storage account. </param>
         /// <param name="protocol"> Protocol used to communicate with the storage account. </param>
         /// <param name="serviceDataAccessAuthIdentity"> Indicates which identity to use to authenticate service data access to customer's storage. </param>
-        /// <param name="resourceGroup"> Azure Resource Group name. </param>
-        /// <param name="subscriptionId"> Azure Subscription Id. </param>
         /// <returns> A new <see cref="Models.MachineLearningAzureBlobDatastore"/> instance for mocking. </returns>
-        public static MachineLearningAzureBlobDatastore MachineLearningAzureBlobDatastore(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, MachineLearningDatastoreCredentials credentials = null, IntellectualProperty intellectualProperty = null, bool? isDefault = null, string accountName = null, string containerName = null, string endpoint = null, string protocol = null, MachineLearningServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity = null, string resourceGroup = null, string subscriptionId = null)
+        public static MachineLearningAzureBlobDatastore MachineLearningAzureBlobDatastore(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, MachineLearningDatastoreCredentials credentials = null, IntellectualProperty intellectualProperty = null, bool? isDefault = null, string accountName = null, string containerName = null, string endpoint = null, string protocol = null, MachineLearningServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity = null)
         {
             properties ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
@@ -2998,9 +2388,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 containerName,
                 endpoint,
                 protocol,
-                serviceDataAccessAuthIdentity,
-                resourceGroup,
-                subscriptionId);
+                serviceDataAccessAuthIdentity);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MachineLearningAzureDataLakeGen1Datastore"/>. </summary>
@@ -3016,10 +2404,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="isDefault"> Readonly property to indicate if datastore is the workspace default datastore. </param>
         /// <param name="serviceDataAccessAuthIdentity"> Indicates which identity to use to authenticate service data access to customer's storage. </param>
         /// <param name="storeName"> [Required] Azure Data Lake store name. </param>
-        /// <param name="resourceGroup"> Azure Resource Group name. </param>
-        /// <param name="subscriptionId"> Azure Subscription Id. </param>
         /// <returns> A new <see cref="Models.MachineLearningAzureDataLakeGen1Datastore"/> instance for mocking. </returns>
-        public static MachineLearningAzureDataLakeGen1Datastore MachineLearningAzureDataLakeGen1Datastore(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, MachineLearningDatastoreCredentials credentials = null, IntellectualProperty intellectualProperty = null, bool? isDefault = null, MachineLearningServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity = null, string storeName = null, string resourceGroup = null, string subscriptionId = null)
+        public static MachineLearningAzureDataLakeGen1Datastore MachineLearningAzureDataLakeGen1Datastore(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, MachineLearningDatastoreCredentials credentials = null, IntellectualProperty intellectualProperty = null, bool? isDefault = null, MachineLearningServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity = null, string storeName = null)
         {
             properties ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
@@ -3034,9 +2420,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 intellectualProperty,
                 isDefault,
                 serviceDataAccessAuthIdentity,
-                storeName,
-                resourceGroup,
-                subscriptionId);
+                storeName);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MachineLearningAzureDataLakeGen2Datastore"/>. </summary>
@@ -3055,10 +2439,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="filesystem"> [Required] The name of the Data Lake Gen2 filesystem. </param>
         /// <param name="protocol"> Protocol used to communicate with the storage account. </param>
         /// <param name="serviceDataAccessAuthIdentity"> Indicates which identity to use to authenticate service data access to customer's storage. </param>
-        /// <param name="resourceGroup"> Azure Resource Group name. </param>
-        /// <param name="subscriptionId"> Azure Subscription Id. </param>
         /// <returns> A new <see cref="Models.MachineLearningAzureDataLakeGen2Datastore"/> instance for mocking. </returns>
-        public static MachineLearningAzureDataLakeGen2Datastore MachineLearningAzureDataLakeGen2Datastore(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, MachineLearningDatastoreCredentials credentials = null, IntellectualProperty intellectualProperty = null, bool? isDefault = null, string accountName = null, string endpoint = null, string filesystem = null, string protocol = null, MachineLearningServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity = null, string resourceGroup = null, string subscriptionId = null)
+        public static MachineLearningAzureDataLakeGen2Datastore MachineLearningAzureDataLakeGen2Datastore(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, MachineLearningDatastoreCredentials credentials = null, IntellectualProperty intellectualProperty = null, bool? isDefault = null, string accountName = null, string endpoint = null, string filesystem = null, string protocol = null, MachineLearningServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity = null)
         {
             properties ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
@@ -3076,9 +2458,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 endpoint,
                 filesystem,
                 protocol,
-                serviceDataAccessAuthIdentity,
-                resourceGroup,
-                subscriptionId);
+                serviceDataAccessAuthIdentity);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MachineLearningAzureFileDatastore"/>. </summary>
@@ -3097,10 +2477,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="fileShareName"> [Required] The name of the Azure file share that the datastore points to. </param>
         /// <param name="protocol"> Protocol used to communicate with the storage account. </param>
         /// <param name="serviceDataAccessAuthIdentity"> Indicates which identity to use to authenticate service data access to customer's storage. </param>
-        /// <param name="resourceGroup"> Azure Resource Group name. </param>
-        /// <param name="subscriptionId"> Azure Subscription Id. </param>
         /// <returns> A new <see cref="Models.MachineLearningAzureFileDatastore"/> instance for mocking. </returns>
-        public static MachineLearningAzureFileDatastore MachineLearningAzureFileDatastore(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, MachineLearningDatastoreCredentials credentials = null, IntellectualProperty intellectualProperty = null, bool? isDefault = null, string accountName = null, string endpoint = null, string fileShareName = null, string protocol = null, MachineLearningServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity = null, string resourceGroup = null, string subscriptionId = null)
+        public static MachineLearningAzureFileDatastore MachineLearningAzureFileDatastore(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, MachineLearningDatastoreCredentials credentials = null, IntellectualProperty intellectualProperty = null, bool? isDefault = null, string accountName = null, string endpoint = null, string fileShareName = null, string protocol = null, MachineLearningServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity = null)
         {
             properties ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
@@ -3118,9 +2496,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 endpoint,
                 fileShareName,
                 protocol,
-                serviceDataAccessAuthIdentity,
-                resourceGroup,
-                subscriptionId);
+                serviceDataAccessAuthIdentity);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CocoExportSummary"/>. </summary>
@@ -3179,7 +2555,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="inputs">
         /// Mapping of input data bindings used in the job.
         /// Please note <see cref="MachineLearningJobInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MachineLearningCustomModelJobInput"/>, <see cref="MachineLearningLiteralJobInput"/>, <see cref="MachineLearningFlowModelJobInput"/>, <see cref="MachineLearningTableJobInput"/>, <see cref="MachineLearningTritonModelJobInput"/>, <see cref="MachineLearningUriFileJobInput"/> and <see cref="MachineLearningUriFolderJobInput"/>.
+        /// The available derived classes include <see cref="MachineLearningTableJobInput"/>, <see cref="MachineLearningCustomModelJobInput"/>, <see cref="MachineLearningFlowModelJobInput"/>, <see cref="MachineLearningLiteralJobInput"/>, <see cref="MachineLearningTritonModelJobInput"/>, <see cref="MachineLearningUriFileJobInput"/> and <see cref="MachineLearningUriFolderJobInput"/>.
         /// </param>
         /// <param name="limits"> Command Job limit. </param>
         /// <param name="outputs">
@@ -3474,7 +2850,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="inputs">
         /// Inputs for the pipeline job.
         /// Please note <see cref="MachineLearningJobInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MachineLearningCustomModelJobInput"/>, <see cref="MachineLearningLiteralJobInput"/>, <see cref="MachineLearningFlowModelJobInput"/>, <see cref="MachineLearningTableJobInput"/>, <see cref="MachineLearningTritonModelJobInput"/>, <see cref="MachineLearningUriFileJobInput"/> and <see cref="MachineLearningUriFolderJobInput"/>.
+        /// The available derived classes include <see cref="MachineLearningTableJobInput"/>, <see cref="MachineLearningCustomModelJobInput"/>, <see cref="MachineLearningFlowModelJobInput"/>, <see cref="MachineLearningLiteralJobInput"/>, <see cref="MachineLearningTritonModelJobInput"/>, <see cref="MachineLearningUriFileJobInput"/> and <see cref="MachineLearningUriFolderJobInput"/>.
         /// </param>
         /// <param name="jobs"> Jobs construct the Pipeline Job. </param>
         /// <param name="outputs">
@@ -3562,7 +2938,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="inputs">
         /// Mapping of input data bindings used in the job.
         /// Please note <see cref="MachineLearningJobInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MachineLearningCustomModelJobInput"/>, <see cref="MachineLearningLiteralJobInput"/>, <see cref="MachineLearningFlowModelJobInput"/>, <see cref="MachineLearningTableJobInput"/>, <see cref="MachineLearningTritonModelJobInput"/>, <see cref="MachineLearningUriFileJobInput"/> and <see cref="MachineLearningUriFolderJobInput"/>.
+        /// The available derived classes include <see cref="MachineLearningTableJobInput"/>, <see cref="MachineLearningCustomModelJobInput"/>, <see cref="MachineLearningFlowModelJobInput"/>, <see cref="MachineLearningLiteralJobInput"/>, <see cref="MachineLearningTritonModelJobInput"/>, <see cref="MachineLearningUriFileJobInput"/> and <see cref="MachineLearningUriFolderJobInput"/>.
         /// </param>
         /// <param name="jars"> Jar files used in the job. </param>
         /// <param name="outputs">
@@ -3649,7 +3025,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="inputs">
         /// Mapping of input data bindings used in the job.
         /// Please note <see cref="MachineLearningJobInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MachineLearningCustomModelJobInput"/>, <see cref="MachineLearningLiteralJobInput"/>, <see cref="MachineLearningFlowModelJobInput"/>, <see cref="MachineLearningTableJobInput"/>, <see cref="MachineLearningTritonModelJobInput"/>, <see cref="MachineLearningUriFileJobInput"/> and <see cref="MachineLearningUriFolderJobInput"/>.
+        /// The available derived classes include <see cref="MachineLearningTableJobInput"/>, <see cref="MachineLearningCustomModelJobInput"/>, <see cref="MachineLearningFlowModelJobInput"/>, <see cref="MachineLearningLiteralJobInput"/>, <see cref="MachineLearningTritonModelJobInput"/>, <see cref="MachineLearningUriFileJobInput"/> and <see cref="MachineLearningUriFolderJobInput"/>.
         /// </param>
         /// <param name="limits"> Sweep Job limit. </param>
         /// <param name="objective"> [Required] Optimization objective. </param>
@@ -3714,30 +3090,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Primary metric for Text-Classification-Multilabel task.
         /// Currently only Accuracy is supported as primary metric, hence user need not set it explicitly.
         /// </param>
-        /// <param name="featurizationDatasetLanguage"> Featurization inputs needed for AutoML job. </param>
-        /// <param name="fixedParameters"> Model/training parameters that will remain constant throughout training. </param>
-        /// <param name="limitSettings"> Execution constraints for AutoMLJob. </param>
-        /// <param name="searchSpace"> Search space for sampling different combinations of models and their hyperparameters. </param>
-        /// <param name="sweepSettings"> Settings for model sweeping and hyperparameter tuning. </param>
-        /// <param name="validationData"> Validation data inputs. </param>
         /// <returns> A new <see cref="Models.TextClassificationMultilabel"/> instance for mocking. </returns>
-        public static TextClassificationMultilabel TextClassificationMultilabel(MachineLearningLogVerbosity? logVerbosity = null, string targetColumnName = null, MachineLearningTableJobInput trainingData = null, ClassificationMultilabelPrimaryMetric? primaryMetric = null, string featurizationDatasetLanguage = null, NlpFixedParameters fixedParameters = null, NlpVerticalLimitSettings limitSettings = null, IEnumerable<NlpParameterSubspace> searchSpace = null, NlpSweepSettings sweepSettings = null, MachineLearningTableJobInput validationData = null)
+        public static TextClassificationMultilabel TextClassificationMultilabel(MachineLearningLogVerbosity? logVerbosity = null, string targetColumnName = null, MachineLearningTableJobInput trainingData = null, ClassificationMultilabelPrimaryMetric? primaryMetric = null)
         {
-            searchSpace ??= new List<NlpParameterSubspace>();
-
             return new TextClassificationMultilabel(
                 logVerbosity,
                 targetColumnName,
                 TaskType.TextClassificationMultilabel,
                 trainingData,
                 serializedAdditionalRawData: null,
-                primaryMetric,
-                featurizationDatasetLanguage != null ? new NlpVerticalFeaturizationSettings(featurizationDatasetLanguage, serializedAdditionalRawData: null) : null,
-                fixedParameters,
-                limitSettings,
-                searchSpace?.ToList(),
-                sweepSettings,
-                validationData);
+                primaryMetric);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TextNer"/>. </summary>
@@ -3751,30 +3113,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Primary metric for Text-NER task.
         /// Only 'Accuracy' is supported for Text-NER, so user need not set this explicitly.
         /// </param>
-        /// <param name="featurizationDatasetLanguage"> Featurization inputs needed for AutoML job. </param>
-        /// <param name="fixedParameters"> Model/training parameters that will remain constant throughout training. </param>
-        /// <param name="limitSettings"> Execution constraints for AutoMLJob. </param>
-        /// <param name="searchSpace"> Search space for sampling different combinations of models and their hyperparameters. </param>
-        /// <param name="sweepSettings"> Settings for model sweeping and hyperparameter tuning. </param>
-        /// <param name="validationData"> Validation data inputs. </param>
         /// <returns> A new <see cref="Models.TextNer"/> instance for mocking. </returns>
-        public static TextNer TextNer(MachineLearningLogVerbosity? logVerbosity = null, string targetColumnName = null, MachineLearningTableJobInput trainingData = null, ClassificationPrimaryMetric? primaryMetric = null, string featurizationDatasetLanguage = null, NlpFixedParameters fixedParameters = null, NlpVerticalLimitSettings limitSettings = null, IEnumerable<NlpParameterSubspace> searchSpace = null, NlpSweepSettings sweepSettings = null, MachineLearningTableJobInput validationData = null)
+        public static TextNer TextNer(MachineLearningLogVerbosity? logVerbosity = null, string targetColumnName = null, MachineLearningTableJobInput trainingData = null, ClassificationPrimaryMetric? primaryMetric = null)
         {
-            searchSpace ??= new List<NlpParameterSubspace>();
-
             return new TextNer(
                 logVerbosity,
                 targetColumnName,
                 TaskType.TextNER,
                 trainingData,
                 serializedAdditionalRawData: null,
-                primaryMetric,
-                featurizationDatasetLanguage != null ? new NlpVerticalFeaturizationSettings(featurizationDatasetLanguage, serializedAdditionalRawData: null) : null,
-                fixedParameters,
-                limitSettings,
-                searchSpace?.ToList(),
-                sweepSettings,
-                validationData);
+                primaryMetric);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ServiceTagDestination"/>. </summary>

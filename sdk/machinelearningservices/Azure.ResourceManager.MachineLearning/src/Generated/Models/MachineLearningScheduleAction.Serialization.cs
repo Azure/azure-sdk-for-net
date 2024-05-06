@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    [PersistableModelProxy(typeof(UnknownScheduleActionBase))]
+    [PersistableModelProxy(typeof(UnknownMachineLearningScheduleAction))]
     public partial class MachineLearningScheduleAction : IUtf8JsonSerializable, IJsonModel<MachineLearningScheduleAction>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningScheduleAction>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -70,13 +70,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "CreateJob": return MachineLearningJobScheduleAction.DeserializeMachineLearningJobScheduleAction(element, options);
                     case "CreateMonitor": return CreateMonitorAction.DeserializeCreateMonitorAction(element, options);
-                    case "ImportData": return ImportDataAction.DeserializeImportDataAction(element, options);
                     case "InvokeBatchEndpoint": return MachineLearningEndpointScheduleAction.DeserializeMachineLearningEndpointScheduleAction(element, options);
+                    case "ImportData": return ImportDataAction.DeserializeImportDataAction(element, options);
+                    case "CreateJob": return MachineLearningJobScheduleAction.DeserializeMachineLearningJobScheduleAction(element, options);
                 }
             }
-            return UnknownScheduleActionBase.DeserializeUnknownScheduleActionBase(element, options);
+            return UnknownMachineLearningScheduleAction.DeserializeUnknownMachineLearningScheduleAction(element, options);
         }
 
         BinaryData IPersistableModel<MachineLearningScheduleAction>.Write(ModelReaderWriterOptions options)

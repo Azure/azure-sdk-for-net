@@ -45,14 +45,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="isDefault"> Readonly property to indicate if datastore is the workspace default datastore. </param>
         /// <param name="serviceDataAccessAuthIdentity"> Indicates which identity to use to authenticate service data access to customer's storage. </param>
         /// <param name="storeName"> [Required] Azure Data Lake store name. </param>
-        /// <param name="resourceGroup"> Azure Resource Group name. </param>
-        /// <param name="subscriptionId"> Azure Subscription Id. </param>
-        internal MachineLearningAzureDataLakeGen1Datastore(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, MachineLearningDatastoreCredentials credentials, DatastoreType datastoreType, IntellectualProperty intellectualProperty, bool? isDefault, MachineLearningServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity, string storeName, string resourceGroup, string subscriptionId) : base(description, properties, tags, serializedAdditionalRawData, credentials, datastoreType, intellectualProperty, isDefault)
+        internal MachineLearningAzureDataLakeGen1Datastore(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, MachineLearningDatastoreCredentials credentials, DatastoreType datastoreType, IntellectualProperty intellectualProperty, bool? isDefault, MachineLearningServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity, string storeName) : base(description, properties, tags, serializedAdditionalRawData, credentials, datastoreType, intellectualProperty, isDefault)
         {
             ServiceDataAccessAuthIdentity = serviceDataAccessAuthIdentity;
             StoreName = storeName;
-            ResourceGroup = resourceGroup;
-            SubscriptionId = subscriptionId;
             DatastoreType = datastoreType;
         }
 
@@ -65,9 +61,5 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public MachineLearningServiceDataAccessAuthIdentity? ServiceDataAccessAuthIdentity { get; set; }
         /// <summary> [Required] Azure Data Lake store name. </summary>
         public string StoreName { get; set; }
-        /// <summary> Azure Resource Group name. </summary>
-        public string ResourceGroup { get; set; }
-        /// <summary> Azure Subscription Id. </summary>
-        public string SubscriptionId { get; set; }
     }
 }

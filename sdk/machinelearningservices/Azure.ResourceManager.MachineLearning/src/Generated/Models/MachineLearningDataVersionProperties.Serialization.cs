@@ -165,12 +165,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "uri_folder": return DataImport.DeserializeDataImport(element, options);
                     case "mltable": return MachineLearningTable.DeserializeMachineLearningTable(element, options);
                     case "uri_file": return MachineLearningUriFileDataVersion.DeserializeMachineLearningUriFileDataVersion(element, options);
                     case "uri_folder": return MachineLearningUriFolderDataVersion.DeserializeMachineLearningUriFolderDataVersion(element, options);
                 }
             }
-            return UnknownDataVersionBase.DeserializeUnknownDataVersionBase(element, options);
+            return UnknownMachineLearningDataVersionProperties.DeserializeUnknownMachineLearningDataVersionProperties(element, options);
         }
 
         BinaryData IPersistableModel<MachineLearningDataVersionProperties>.Write(ModelReaderWriterOptions options)

@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     case "Managed": return MachineLearningManagedOnlineDeployment.DeserializeMachineLearningManagedOnlineDeployment(element, options);
                 }
             }
-            return UnknownOnlineDeployment.DeserializeUnknownOnlineDeployment(element, options);
+            return UnknownMachineLearningOnlineDeploymentProperties.DeserializeUnknownMachineLearningOnlineDeploymentProperties(element, options);
         }
 
         BinaryData IPersistableModel<MachineLearningOnlineDeploymentProperties>.Write(ModelReaderWriterOptions options)

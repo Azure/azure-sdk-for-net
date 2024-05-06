@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     case "OneLake": return OneLakeDatastore.DeserializeOneLakeDatastore(element, options);
                 }
             }
-            return UnknownDatastore.DeserializeUnknownDatastore(element, options);
+            return UnknownMachineLearningDatastoreProperties.DeserializeUnknownMachineLearningDatastoreProperties(element, options);
         }
 
         BinaryData IPersistableModel<MachineLearningDatastoreProperties>.Write(ModelReaderWriterOptions options)

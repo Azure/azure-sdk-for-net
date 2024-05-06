@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    [PersistableModelProxy(typeof(UnknownTriggerBase))]
+    [PersistableModelProxy(typeof(UnknownMachineLearningTriggerBase))]
     public partial class MachineLearningTriggerBase : IUtf8JsonSerializable, IJsonModel<MachineLearningTriggerBase>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningTriggerBase>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Cron": return CronTrigger.DeserializeCronTrigger(element, options);
                     case "Recurrence": return MachineLearningRecurrenceTrigger.DeserializeMachineLearningRecurrenceTrigger(element, options);
+                    case "Cron": return CronTrigger.DeserializeCronTrigger(element, options);
                 }
             }
-            return UnknownTriggerBase.DeserializeUnknownTriggerBase(element, options);
+            return UnknownMachineLearningTriggerBase.DeserializeUnknownMachineLearningTriggerBase(element, options);
         }
 
         BinaryData IPersistableModel<MachineLearningTriggerBase>.Write(ModelReaderWriterOptions options)

@@ -26,11 +26,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AdministratorAccount))
-            {
-                writer.WritePropertyName("administratorAccount"u8);
-                writer.WriteObjectValue(AdministratorAccount, options);
-            }
             writer.WritePropertyName("computeType"u8);
             writer.WriteStringValue(ComputeType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -71,21 +66,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            MachineLearningVmSshCredentials administratorAccount = default;
             ComputeType computeType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("administratorAccount"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    administratorAccount = MachineLearningVmSshCredentials.DeserializeMachineLearningVmSshCredentials(property.Value, options);
-                    continue;
-                }
                 if (property.NameEquals("computeType"u8))
                 {
                     computeType = new ComputeType(property.Value.GetString());
@@ -97,7 +82,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MachineLearningVirtualMachineSecrets(computeType, serializedAdditionalRawData, administratorAccount);
+            return new MachineLearningVirtualMachineSecrets(computeType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningVirtualMachineSecrets>.Write(ModelReaderWriterOptions options)

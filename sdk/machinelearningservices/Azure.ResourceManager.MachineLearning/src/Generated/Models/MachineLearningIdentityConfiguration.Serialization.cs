@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    [PersistableModelProxy(typeof(UnknownIdentityConfiguration))]
+    [PersistableModelProxy(typeof(UnknownMachineLearningIdentityConfiguration))]
     public partial class MachineLearningIdentityConfiguration : IUtf8JsonSerializable, IJsonModel<MachineLearningIdentityConfiguration>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningIdentityConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     case "UserIdentity": return MachineLearningUserIdentity.DeserializeMachineLearningUserIdentity(element, options);
                 }
             }
-            return UnknownIdentityConfiguration.DeserializeUnknownIdentityConfiguration(element, options);
+            return UnknownMachineLearningIdentityConfiguration.DeserializeUnknownMachineLearningIdentityConfiguration(element, options);
         }
 
         BinaryData IPersistableModel<MachineLearningIdentityConfiguration>.Write(ModelReaderWriterOptions options)

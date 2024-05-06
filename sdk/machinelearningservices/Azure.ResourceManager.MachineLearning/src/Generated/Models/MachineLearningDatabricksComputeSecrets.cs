@@ -22,14 +22,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of <see cref="MachineLearningDatabricksComputeSecrets"/>. </summary>
         /// <param name="computeType"> The type of compute. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="databricksAccessToken"> access token for databricks account. </param>
-        internal MachineLearningDatabricksComputeSecrets(ComputeType computeType, IDictionary<string, BinaryData> serializedAdditionalRawData, string databricksAccessToken) : base(computeType, serializedAdditionalRawData)
+        internal MachineLearningDatabricksComputeSecrets(ComputeType computeType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(computeType, serializedAdditionalRawData)
         {
-            DatabricksAccessToken = databricksAccessToken;
             ComputeType = computeType;
         }
-
-        /// <summary> access token for databricks account. </summary>
-        public string DatabricksAccessToken { get; }
     }
 }

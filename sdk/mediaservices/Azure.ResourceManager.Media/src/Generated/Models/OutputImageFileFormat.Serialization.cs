@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Media.Models
                     case "#Microsoft.Media.PngFormat": return PngFormat.DeserializePngFormat(element, options);
                 }
             }
-            string odataType = "#Microsoft.Media.ImageFormat";
+            string odataType = default;
             string filenamePattern = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();

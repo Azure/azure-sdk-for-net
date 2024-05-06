@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -25,37 +24,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix. </param>
         /// <param name="secondaryIPv6Prefix"> Secondary IPv6 Address Prefix. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="mtu"> MTU to use for option A peering. </param>
-        /// <param name="vlanId"> Vlan identifier. Example : 501. </param>
-        /// <param name="fabricAsn"> Fabric ASN number. Example 65001. </param>
-        /// <param name="peerAsn"> Peer ASN number.Example : 28. </param>
-        /// <param name="bfdConfiguration"> BFD configuration properties. </param>
-        /// <param name="ingressAclId"> Ingress Acl. ARM resource ID of Access Control Lists. </param>
-        /// <param name="egressAclId"> Egress Acl. ARM resource ID of Access Control Lists. </param>
-        internal ExternalNetworkPatchOptionAProperties(string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix, IDictionary<string, BinaryData> serializedAdditionalRawData, int? mtu, int? vlanId, long? fabricAsn, long? peerAsn, BfdConfiguration bfdConfiguration, ResourceIdentifier ingressAclId, ResourceIdentifier egressAclId) : base(primaryIPv4Prefix, primaryIPv6Prefix, secondaryIPv4Prefix, secondaryIPv6Prefix, serializedAdditionalRawData)
+        internal ExternalNetworkPatchOptionAProperties(string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(primaryIPv4Prefix, primaryIPv6Prefix, secondaryIPv4Prefix, secondaryIPv6Prefix, serializedAdditionalRawData)
         {
-            Mtu = mtu;
-            VlanId = vlanId;
-            FabricAsn = fabricAsn;
-            PeerAsn = peerAsn;
-            BfdConfiguration = bfdConfiguration;
-            IngressAclId = ingressAclId;
-            EgressAclId = egressAclId;
         }
-
-        /// <summary> MTU to use for option A peering. </summary>
-        public int? Mtu { get; set; }
-        /// <summary> Vlan identifier. Example : 501. </summary>
-        public int? VlanId { get; set; }
-        /// <summary> Fabric ASN number. Example 65001. </summary>
-        public long? FabricAsn { get; }
-        /// <summary> Peer ASN number.Example : 28. </summary>
-        public long? PeerAsn { get; set; }
-        /// <summary> BFD configuration properties. </summary>
-        public BfdConfiguration BfdConfiguration { get; set; }
-        /// <summary> Ingress Acl. ARM resource ID of Access Control Lists. </summary>
-        public ResourceIdentifier IngressAclId { get; set; }
-        /// <summary> Egress Acl. ARM resource ID of Access Control Lists. </summary>
-        public ResourceIdentifier EgressAclId { get; set; }
     }
 }

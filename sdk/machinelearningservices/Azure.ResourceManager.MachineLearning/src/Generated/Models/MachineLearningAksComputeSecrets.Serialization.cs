@@ -26,28 +26,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(UserKubeConfig))
-            {
-                writer.WritePropertyName("userKubeConfig"u8);
-                writer.WriteStringValue(UserKubeConfig);
-            }
-            if (Optional.IsDefined(AdminKubeConfig))
-            {
-                writer.WritePropertyName("adminKubeConfig"u8);
-                writer.WriteStringValue(AdminKubeConfig);
-            }
-            if (Optional.IsDefined(ImagePullSecretName))
-            {
-                if (ImagePullSecretName != null)
-                {
-                    writer.WritePropertyName("imagePullSecretName"u8);
-                    writer.WriteStringValue(ImagePullSecretName);
-                }
-                else
-                {
-                    writer.WriteNull("imagePullSecretName");
-                }
-            }
             writer.WritePropertyName("computeType"u8);
             writer.WriteStringValue(ComputeType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -88,34 +66,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            string userKubeConfig = default;
-            string adminKubeConfig = default;
-            string imagePullSecretName = default;
             ComputeType computeType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("userKubeConfig"u8))
-                {
-                    userKubeConfig = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("adminKubeConfig"u8))
-                {
-                    adminKubeConfig = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("imagePullSecretName"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        imagePullSecretName = null;
-                        continue;
-                    }
-                    imagePullSecretName = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("computeType"u8))
                 {
                     computeType = new ComputeType(property.Value.GetString());
@@ -127,7 +82,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MachineLearningAksComputeSecrets(computeType, serializedAdditionalRawData, userKubeConfig, adminKubeConfig, imagePullSecretName);
+            return new MachineLearningAksComputeSecrets(computeType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningAksComputeSecrets>.Write(ModelReaderWriterOptions options)

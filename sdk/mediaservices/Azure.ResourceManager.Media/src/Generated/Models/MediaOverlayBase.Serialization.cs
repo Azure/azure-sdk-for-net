@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    [PersistableModelProxy(typeof(UnknownOverlay))]
+    [PersistableModelProxy(typeof(UnknownMediaOverlayBase))]
     public partial class MediaOverlayBase : IUtf8JsonSerializable, IJsonModel<MediaOverlayBase>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaOverlayBase>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Media.Models
                     case "#Microsoft.Media.VideoOverlay": return VideoOverlay.DeserializeVideoOverlay(element, options);
                 }
             }
-            return UnknownOverlay.DeserializeUnknownOverlay(element, options);
+            return UnknownMediaOverlayBase.DeserializeUnknownMediaOverlayBase(element, options);
         }
 
         BinaryData IPersistableModel<MediaOverlayBase>.Write(ModelReaderWriterOptions options)

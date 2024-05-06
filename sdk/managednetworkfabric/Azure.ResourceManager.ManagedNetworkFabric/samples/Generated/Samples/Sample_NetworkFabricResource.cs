@@ -79,10 +79,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
                 FabricAsn = 12345,
                 TerminalServerConfiguration = new NetworkFabricPatchablePropertiesTerminalServerConfiguration()
                 {
-                    PrimaryIPv4Prefix = "10.0.0.12/30",
-                    PrimaryIPv6Prefix = "4FFE:FFFF:0:CD30::a8/127",
-                    SecondaryIPv4Prefix = "40.0.0.14/30",
-                    SecondaryIPv6Prefix = "6FFE:FFFF:0:CD30::ac/127",
                     Username = "username1",
                     Password = "xxxxxxxx",
                     SerialNumber = "1234567",
@@ -125,10 +121,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
                         },
                         OptionAProperties = new VpnConfigurationPatchableOptionAProperties()
                         {
-                            PrimaryIPv4Prefix = "10.0.0.12/30",
-                            PrimaryIPv6Prefix = "4FFE:FFFF:0:CD30::a8/127",
-                            SecondaryIPv4Prefix = "20.0.0.13/30",
-                            SecondaryIPv6Prefix = "6FFE:FFFF:0:CD30::ac/127",
                             Mtu = 1501,
                             VlanId = 3001,
                             PeerAsn = 1235,
@@ -175,10 +167,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
                         },
                         OptionAProperties = new VpnConfigurationPatchableOptionAProperties()
                         {
-                            PrimaryIPv4Prefix = "10.0.0.14/30",
-                            PrimaryIPv6Prefix = "2FFE:FFFF:0:CD30::a7/126",
-                            SecondaryIPv4Prefix = "10.0.0.15/30",
-                            SecondaryIPv6Prefix = "2FFE:FFFF:0:CD30::ac/126",
                             Mtu = 1500,
                             VlanId = 3000,
                             PeerAsn = 61234,

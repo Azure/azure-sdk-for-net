@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    [PersistableModelProxy(typeof(UnknownEarlyTerminationPolicy))]
+    [PersistableModelProxy(typeof(UnknownMachineLearningEarlyTerminationPolicy))]
     public partial class MachineLearningEarlyTerminationPolicy : IUtf8JsonSerializable, IJsonModel<MachineLearningEarlyTerminationPolicy>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningEarlyTerminationPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     case "TruncationSelection": return TruncationSelectionPolicy.DeserializeTruncationSelectionPolicy(element, options);
                 }
             }
-            return UnknownEarlyTerminationPolicy.DeserializeUnknownEarlyTerminationPolicy(element, options);
+            return UnknownMachineLearningEarlyTerminationPolicy.DeserializeUnknownMachineLearningEarlyTerminationPolicy(element, options);
         }
 
         BinaryData IPersistableModel<MachineLearningEarlyTerminationPolicy>.Write(ModelReaderWriterOptions options)
