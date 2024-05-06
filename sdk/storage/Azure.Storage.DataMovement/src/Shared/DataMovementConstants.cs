@@ -148,6 +148,7 @@ namespace Azure.Storage.DataMovement
             internal const string AccessTier = "AccessTier";
             internal const string BlobType = "BlobType";
             internal const string CreationTime = "CreationTime";
+            internal const string ChangedOnTime = "ChangedOnTime";
             internal const string ContentType = "ContentType";
             internal const string ContentHash = "ContentHash";
             internal const string ContentEncoding = "ContentEncoding";
@@ -157,6 +158,8 @@ namespace Azure.Storage.DataMovement
             internal const string ETag = "ETag";
             internal const string LastModified = "LastModified";
             internal const string Metadata = "Metadata";
+            internal const string FileAttributes = "FileAttributes";
+            internal const string FilePermissionKey = "FilePermissionKey";
         }
     }
 }

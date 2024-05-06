@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
         {
             return new ConfidentialLedgerProperties(properties.LedgerName, properties.LedgerUri,
                 properties.IdentityServiceUri, properties.LedgerInternalNamespace, properties.RunningState, properties.LedgerType,
-                properties.ProvisioningState, securityPrincipals, properties.CertBasedSecurityPrincipals, null);
+                properties.ProvisioningState, null, securityPrincipals, properties.CertBasedSecurityPrincipals, null);
         }
 
         /// <summary>

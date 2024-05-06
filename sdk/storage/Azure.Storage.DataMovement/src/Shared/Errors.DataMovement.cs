@@ -3,7 +3,6 @@
 
 using System;
 using System.IO;
-using Azure.Storage.DataMovement;
 
 namespace Azure.Storage
 {

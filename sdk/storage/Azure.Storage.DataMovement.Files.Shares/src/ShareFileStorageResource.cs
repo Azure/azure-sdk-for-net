@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -56,6 +57,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         internal async Task CreateAsync(
             bool overwrite,
             long maxSize,
+            StorageResourceItemProperties properties,
             CancellationToken cancellationToken)
         {
             if (!overwrite)
@@ -69,13 +71,16 @@ namespace Azure.Storage.DataMovement.Files.Shares
                     throw Errors.ShareFileAlreadyExists(ShareFileClient.Path);
                 }
             }
+            ShareFileHttpHeaders httpHeaders = _options?.GetShareFileHttpHeaders(properties?.RawProperties);
+            IDictionary<string, string> metadata = _options?.GetFileMetadata(properties?.RawProperties);
+            FileSmbProperties smbProperties = _options?.GetFileSmbProperties(properties);
             await ShareFileClient.CreateAsync(
                     maxSize: maxSize,
-                    httpHeaders: _options.HttpHeaders,
-                    metadata: _options.FileMetadata,
-                    smbProperties: _options.SmbProperties,
-                    filePermission: _options.FilePermissions,
-                    conditions: _options.DestinationConditions,
+                    httpHeaders: httpHeaders,
+                    metadata: metadata,
+                    smbProperties: smbProperties,
+                    filePermission: _options?.FilePermissions,
+                    conditions: _options?.DestinationConditions,
                     cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
@@ -100,7 +105,11 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
             if (range.Offset == 0)
             {
-                await CreateAsync(overwrite, completeLength, cancellationToken).ConfigureAwait(false);
+                await CreateAsync(
+                    overwrite,
+                    completeLength,
+                    options?.SourceProperties,
+                    cancellationToken).ConfigureAwait(false);
                 if (range.Length == 0)
                 {
                     return;
@@ -111,7 +120,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 sourceUri: sourceResource.Uri,
                 range: range,
                 sourceRange: range,
-                options: _options.ToShareFileUploadRangeFromUriOptions(options?.SourceAuthentication),
+                options: _options?.ToShareFileUploadRangeFromUriOptions(options?.SourceAuthentication),
                 cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
@@ -130,7 +139,11 @@ namespace Azure.Storage.DataMovement.Files.Shares
             // Create the File beforehand if it hasn't been created
             if (position == 0)
             {
-                await CreateAsync(overwrite, completeLength, cancellationToken).ConfigureAwait(false);
+                await CreateAsync(
+                    overwrite,
+                    completeLength,
+                    options?.SourceProperties,
+                    cancellationToken).ConfigureAwait(false);
                 if (completeLength == 0)
                 {
                     return;
@@ -141,7 +154,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             await ShareFileClient.UploadRangeAsync(
                 new HttpRange(position, streamLength),
                 stream,
-                _options.ToShareFileUploadRangeOptions(),
+                _options?.ToShareFileUploadRangeOptions(),
                 cancellationToken).ConfigureAwait(false);
         }
 
@@ -153,14 +166,18 @@ namespace Azure.Storage.DataMovement.Files.Shares
             CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
-            await CreateAsync(overwrite, completeLength, cancellationToken).ConfigureAwait(false);
+            await CreateAsync(
+                overwrite,
+                completeLength,
+                options?.SourceProperties,
+                cancellationToken).ConfigureAwait(false);
             if (completeLength > 0)
             {
                 await ShareFileClient.UploadRangeFromUriAsync(
                     sourceUri: sourceResource.Uri,
                     range: new HttpRange(0, completeLength),
                     sourceRange: new HttpRange(0, completeLength),
-                    options: _options.ToShareFileUploadRangeFromUriOptions(options?.SourceAuthentication),
+                    options: _options?.ToShareFileUploadRangeFromUriOptions(options?.SourceAuthentication),
                     cancellationToken: cancellationToken).ConfigureAwait(false);
             }
         }
@@ -180,7 +197,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             Response<ShareFileProperties> response = await ShareFileClient.GetPropertiesAsync(
-                conditions: _options.SourceConditions,
+                conditions: _options?.SourceConditions,
                 cancellationToken: cancellationToken).ConfigureAwait(false);
             if (ResourceProperties == default)
             {
@@ -196,7 +213,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             Response<ShareFileDownloadInfo> response = await ShareFileClient.DownloadAsync(
-                _options.ToShareFileDownloadOptions(new HttpRange(position, length)),
+                _options?.ToShareFileDownloadOptions(new HttpRange(position, length)),
                 cancellationToken).ConfigureAwait(false);
             return response.Value.ToStorageResourceReadStreamResult();
         }
@@ -208,7 +225,19 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         protected override StorageResourceCheckpointData GetDestinationCheckpointData()
         {
-            return new ShareFileDestinationCheckpointData(null, null, null, null);
+            return new ShareFileDestinationCheckpointData(
+                contentType: _options?.ContentType,
+                contentEncoding: _options?.ContentEncoding,
+                contentLanguage: _options?.ContentLanguage,
+                contentDisposition: _options?.ContentDisposition,
+                cacheControl: _options?.CacheControl,
+                fileAttributes: _options?.FileAttributes,
+                filePermissionKey: _options?.FilePermissionKey,
+                fileCreatedOn: _options?.FileCreatedOn,
+                fileLastWrittenOn: _options?.FileLastWrittenOn,
+                fileChangedOn: _options?.FileChangedOn,
+                fileMetadata: _options?.FileMetadata,
+                directoryMetadata: _options?.DirectoryMetadata);
         }
     }
 

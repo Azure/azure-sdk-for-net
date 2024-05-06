@@ -23,7 +23,7 @@ namespace Azure.Storage.DataMovement
         /// Represents the value of the DataTransferProperty.
         /// </summary>
         /// <remarks>
-        /// This property can be accessed only if the property as been set. (HasValue is true).
+        /// This property can be accessed only if the property as been set. If <see cref="DataTransferProperty.Preserve"/> is set to true, the value will be null."/>
         /// </remarks>
         public virtual T? Value {
             get => _value;

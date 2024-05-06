@@ -6,6 +6,7 @@
 - Improved upload and copying chunking strategy for large Share Files to improve speed
 
 ### Breaking Changes
+  - Removed `DownloadTransferValidationOptions` and `UploadTransferValidationOptions` from `ShareFileStorageResourceOptions`.
 
 ### Bugs Fixed
 
