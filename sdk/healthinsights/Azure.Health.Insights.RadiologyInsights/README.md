@@ -21,7 +21,7 @@ Use the client library for to:
 Install the Azure Health Insights client Radiology Insights library for .NET with [NuGet][nuget]:
 
 ```dotnetcli
-dotnet add package Azure.Health.Insights.RadiologyInsights --prerelease
+dotnet add package Azure.Health.Insights.RadiologyInsights
 ```
 
 This table shows the relationship between SDK versions and supported API versions of the service:
