@@ -431,6 +431,22 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             AssertEquals(deserialized, CreateNoPreserveValues());
         }
+
+        [Test]
+        public void Deserialize_IncorrectSchemaVersion()
+        {
+            int incorrectSchemaVersion = 1;
+            ShareFileDestinationCheckpointData data = CreatePreserveValues();
+            data.Version = incorrectSchemaVersion;
+
+            using MemoryStream dataStream = new MemoryStream(DataMovementShareConstants.DestinationCheckpointData.VariableLengthStartIndex);
+            data.SerializeInternal(dataStream);
+            dataStream.Position = 0;
+            TestHelper.AssertExpectedException(
+                () => ShareFileDestinationCheckpointData.Deserialize(dataStream),
+                new ArgumentException($"The checkpoint file schema version {incorrectSchemaVersion} is not supported by this version of the SDK."));
+        }
+
         [Test]
         public void RoundTrip()
         {
