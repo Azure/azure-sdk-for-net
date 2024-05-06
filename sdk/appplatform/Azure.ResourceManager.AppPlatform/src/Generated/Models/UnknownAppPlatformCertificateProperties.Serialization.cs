@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    internal partial class UnknownCertificateProperties : IUtf8JsonSerializable, IJsonModel<AppPlatformCertificateProperties>
+    internal partial class UnknownAppPlatformCertificateProperties : IUtf8JsonSerializable, IJsonModel<AppPlatformCertificateProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformCertificateProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return DeserializeAppPlatformCertificateProperties(document.RootElement, options);
         }
 
-        internal static UnknownCertificateProperties DeserializeUnknownCertificateProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UnknownAppPlatformCertificateProperties DeserializeUnknownAppPlatformCertificateProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownCertificateProperties(
+            return new UnknownAppPlatformCertificateProperties(
                 type,
                 thumbprint,
                 issuer,

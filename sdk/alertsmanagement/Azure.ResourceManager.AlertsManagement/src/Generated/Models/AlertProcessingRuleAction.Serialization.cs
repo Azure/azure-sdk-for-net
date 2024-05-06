@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    [PersistableModelProxy(typeof(UnknownAction))]
+    [PersistableModelProxy(typeof(UnknownAlertProcessingRuleAction))]
     public partial class AlertProcessingRuleAction : IUtf8JsonSerializable, IJsonModel<AlertProcessingRuleAction>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AlertProcessingRuleAction>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     case "RemoveAllActionGroups": return AlertProcessingRuleRemoveAllGroupsAction.DeserializeAlertProcessingRuleRemoveAllGroupsAction(element, options);
                 }
             }
-            return UnknownAction.DeserializeUnknownAction(element, options);
+            return UnknownAlertProcessingRuleAction.DeserializeUnknownAlertProcessingRuleAction(element, options);
         }
 
         BinaryData IPersistableModel<AlertProcessingRuleAction>.Write(ModelReaderWriterOptions options)

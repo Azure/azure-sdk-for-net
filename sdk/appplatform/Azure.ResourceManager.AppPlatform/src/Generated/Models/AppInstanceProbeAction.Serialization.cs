@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    [PersistableModelProxy(typeof(UnknownProbeAction))]
+    [PersistableModelProxy(typeof(UnknownAppInstanceProbeAction))]
     public partial class AppInstanceProbeAction : IUtf8JsonSerializable, IJsonModel<AppInstanceProbeAction>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppInstanceProbeAction>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "ExecAction": return AppInstanceExecAction.DeserializeAppInstanceExecAction(element, options);
                     case "HTTPGetAction": return AppInstanceHttpGetAction.DeserializeAppInstanceHttpGetAction(element, options);
+                    case "ExecAction": return AppInstanceExecAction.DeserializeAppInstanceExecAction(element, options);
                     case "TCPSocketAction": return AppInstanceTcpSocketAction.DeserializeAppInstanceTcpSocketAction(element, options);
                 }
             }
-            return UnknownProbeAction.DeserializeUnknownProbeAction(element, options);
+            return UnknownAppInstanceProbeAction.DeserializeUnknownAppInstanceProbeAction(element, options);
         }
 
         BinaryData IPersistableModel<AppInstanceProbeAction>.Write(ModelReaderWriterOptions options)

@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    internal partial class UnknownAlertsMetaDataProperties : IUtf8JsonSerializable, IJsonModel<ServiceAlertMetadataProperties>
+    internal partial class UnknownServiceAlertMetadataProperties : IUtf8JsonSerializable, IJsonModel<ServiceAlertMetadataProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceAlertMetadataProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             return DeserializeServiceAlertMetadataProperties(document.RootElement, options);
         }
 
-        internal static UnknownAlertsMetaDataProperties DeserializeUnknownAlertsMetaDataProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UnknownServiceAlertMetadataProperties DeserializeUnknownServiceAlertMetadataProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownAlertsMetaDataProperties(metadataIdentifier, serializedAdditionalRawData);
+            return new UnknownServiceAlertMetadataProperties(metadataIdentifier, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceAlertMetadataProperties>.Write(ModelReaderWriterOptions options)

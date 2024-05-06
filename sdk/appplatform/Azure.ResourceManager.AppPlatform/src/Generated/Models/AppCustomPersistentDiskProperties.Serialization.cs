@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    [PersistableModelProxy(typeof(UnknownCustomPersistentDiskProperties))]
+    [PersistableModelProxy(typeof(UnknownAppCustomPersistentDiskProperties))]
     public partial class AppCustomPersistentDiskProperties : IUtf8JsonSerializable, IJsonModel<AppCustomPersistentDiskProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppCustomPersistentDiskProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     case "AzureFileVolume": return AppPlatformAzureFileVolume.DeserializeAppPlatformAzureFileVolume(element, options);
                 }
             }
-            return UnknownCustomPersistentDiskProperties.DeserializeUnknownCustomPersistentDiskProperties(element, options);
+            return UnknownAppCustomPersistentDiskProperties.DeserializeUnknownAppCustomPersistentDiskProperties(element, options);
         }
 
         BinaryData IPersistableModel<AppCustomPersistentDiskProperties>.Write(ModelReaderWriterOptions options)

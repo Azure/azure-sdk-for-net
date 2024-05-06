@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <param name="source">
         /// Uploaded source information of the deployment.
         /// Please note <see cref="AppPlatformUserSourceInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AppPlatformBuildResultUserSourceInfo"/>, <see cref="AppPlatformCustomContainerUserSourceInfo"/>, <see cref="JarUploadedUserSourceInfo"/>, <see cref="NetCoreZipUploadedUserSourceInfo"/>, <see cref="SourceUploadedUserSourceInfo"/> and <see cref="AppPlatformUploadedUserSourceInfo"/>.
+        /// The available derived classes include <see cref="JarUploadedUserSourceInfo"/>, <see cref="SourceUploadedUserSourceInfo"/>, <see cref="NetCoreZipUploadedUserSourceInfo"/>, <see cref="AppPlatformUploadedUserSourceInfo"/>, <see cref="AppPlatformBuildResultUserSourceInfo"/> and <see cref="AppPlatformCustomContainerUserSourceInfo"/>.
         /// </param>
         /// <param name="deploymentSettings"> Deployment settings of the Deployment. </param>
         /// <param name="provisioningState"> Provisioning state of the Deployment. </param>
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary>
         /// Uploaded source information of the deployment.
         /// Please note <see cref="AppPlatformUserSourceInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AppPlatformBuildResultUserSourceInfo"/>, <see cref="AppPlatformCustomContainerUserSourceInfo"/>, <see cref="JarUploadedUserSourceInfo"/>, <see cref="NetCoreZipUploadedUserSourceInfo"/>, <see cref="SourceUploadedUserSourceInfo"/> and <see cref="AppPlatformUploadedUserSourceInfo"/>.
+        /// The available derived classes include <see cref="JarUploadedUserSourceInfo"/>, <see cref="SourceUploadedUserSourceInfo"/>, <see cref="NetCoreZipUploadedUserSourceInfo"/>, <see cref="AppPlatformUploadedUserSourceInfo"/>, <see cref="AppPlatformBuildResultUserSourceInfo"/> and <see cref="AppPlatformCustomContainerUserSourceInfo"/>.
         /// </summary>
         public AppPlatformUserSourceInfo Source { get; set; }
         /// <summary> Deployment settings of the Deployment. </summary>

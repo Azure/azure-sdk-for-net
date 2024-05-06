@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary>
     /// Source with uploaded location
     /// Please note <see cref="AppPlatformUploadedUserSourceInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="JarUploadedUserSourceInfo"/>, <see cref="NetCoreZipUploadedUserSourceInfo"/> and <see cref="SourceUploadedUserSourceInfo"/>.
+    /// The available derived classes include <see cref="JarUploadedUserSourceInfo"/>, <see cref="SourceUploadedUserSourceInfo"/> and <see cref="NetCoreZipUploadedUserSourceInfo"/>.
     /// </summary>
     public partial class AppPlatformUploadedUserSourceInfo : AppPlatformUserSourceInfo
     {

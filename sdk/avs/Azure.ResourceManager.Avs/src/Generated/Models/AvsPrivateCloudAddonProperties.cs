@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary>
     /// The properties of an addon
     /// Please note <see cref="AvsPrivateCloudAddonProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AddonArcProperties"/>, <see cref="AddonHcxProperties"/>, <see cref="AddonSrmProperties"/> and <see cref="AddonVrProperties"/>.
+    /// The available derived classes include <see cref="AddonSrmProperties"/>, <see cref="AddonVrProperties"/>, <see cref="AddonHcxProperties"/> and <see cref="AddonArcProperties"/>.
     /// </summary>
     public abstract partial class AvsPrivateCloudAddonProperties
     {

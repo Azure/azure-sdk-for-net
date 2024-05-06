@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ScVmm.Models
 {
-    internal partial class UnknownInventoryItemProperties : IUtf8JsonSerializable, IJsonModel<ScVmmInventoryItemProperties>
+    internal partial class UnknownScVmmInventoryItemProperties : IUtf8JsonSerializable, IJsonModel<ScVmmInventoryItemProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScVmmInventoryItemProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ScVmm.Models
             return DeserializeScVmmInventoryItemProperties(document.RootElement, options);
         }
 
-        internal static UnknownInventoryItemProperties DeserializeUnknownInventoryItemProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UnknownScVmmInventoryItemProperties DeserializeUnknownScVmmInventoryItemProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ScVmm.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownInventoryItemProperties(
+            return new UnknownScVmmInventoryItemProperties(
                 inventoryType,
                 managedResourceId,
                 uuid,

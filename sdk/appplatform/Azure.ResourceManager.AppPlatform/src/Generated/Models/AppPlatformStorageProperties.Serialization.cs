@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    [PersistableModelProxy(typeof(UnknownStorageProperties))]
+    [PersistableModelProxy(typeof(UnknownAppPlatformStorageProperties))]
     public partial class AppPlatformStorageProperties : IUtf8JsonSerializable, IJsonModel<AppPlatformStorageProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformStorageProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     case "StorageAccount": return AppPlatformStorageAccount.DeserializeAppPlatformStorageAccount(element, options);
                 }
             }
-            return UnknownStorageProperties.DeserializeUnknownStorageProperties(element, options);
+            return UnknownAppPlatformStorageProperties.DeserializeUnknownAppPlatformStorageProperties(element, options);
         }
 
         BinaryData IPersistableModel<AppPlatformStorageProperties>.Write(ModelReaderWriterOptions options)

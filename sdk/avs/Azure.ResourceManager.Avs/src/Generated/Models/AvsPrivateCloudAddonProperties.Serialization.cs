@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    [PersistableModelProxy(typeof(UnknownAddonProperties))]
+    [PersistableModelProxy(typeof(UnknownAvsPrivateCloudAddonProperties))]
     public partial class AvsPrivateCloudAddonProperties : IUtf8JsonSerializable, IJsonModel<AvsPrivateCloudAddonProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvsPrivateCloudAddonProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -75,13 +75,13 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Arc": return AddonArcProperties.DeserializeAddonArcProperties(element, options);
-                    case "HCX": return AddonHcxProperties.DeserializeAddonHcxProperties(element, options);
                     case "SRM": return AddonSrmProperties.DeserializeAddonSrmProperties(element, options);
                     case "VR": return AddonVrProperties.DeserializeAddonVrProperties(element, options);
+                    case "HCX": return AddonHcxProperties.DeserializeAddonHcxProperties(element, options);
+                    case "Arc": return AddonArcProperties.DeserializeAddonArcProperties(element, options);
                 }
             }
-            return UnknownAddonProperties.DeserializeUnknownAddonProperties(element, options);
+            return UnknownAvsPrivateCloudAddonProperties.DeserializeUnknownAvsPrivateCloudAddonProperties(element, options);
         }
 
         BinaryData IPersistableModel<AvsPrivateCloudAddonProperties>.Write(ModelReaderWriterOptions options)

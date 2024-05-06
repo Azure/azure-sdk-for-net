@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    [PersistableModelProxy(typeof(UnknownUserSourceInfo))]
+    [PersistableModelProxy(typeof(UnknownAppPlatformUserSourceInfo))]
     public partial class AppPlatformUserSourceInfo : IUtf8JsonSerializable, IJsonModel<AppPlatformUserSourceInfo>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformUserSourceInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -75,15 +75,15 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "Jar": return JarUploadedUserSourceInfo.DeserializeJarUploadedUserSourceInfo(element, options);
+                    case "Source": return SourceUploadedUserSourceInfo.DeserializeSourceUploadedUserSourceInfo(element, options);
+                    case "NetCoreZip": return NetCoreZipUploadedUserSourceInfo.DeserializeNetCoreZipUploadedUserSourceInfo(element, options);
+                    case "UploadedUserSourceInfo": return AppPlatformUploadedUserSourceInfo.DeserializeAppPlatformUploadedUserSourceInfo(element, options);
                     case "BuildResult": return AppPlatformBuildResultUserSourceInfo.DeserializeAppPlatformBuildResultUserSourceInfo(element, options);
                     case "Container": return AppPlatformCustomContainerUserSourceInfo.DeserializeAppPlatformCustomContainerUserSourceInfo(element, options);
-                    case "Jar": return JarUploadedUserSourceInfo.DeserializeJarUploadedUserSourceInfo(element, options);
-                    case "NetCoreZip": return NetCoreZipUploadedUserSourceInfo.DeserializeNetCoreZipUploadedUserSourceInfo(element, options);
-                    case "Source": return SourceUploadedUserSourceInfo.DeserializeSourceUploadedUserSourceInfo(element, options);
-                    case "UploadedUserSourceInfo": return AppPlatformUploadedUserSourceInfo.DeserializeAppPlatformUploadedUserSourceInfo(element, options);
                 }
             }
-            return UnknownUserSourceInfo.DeserializeUnknownUserSourceInfo(element, options);
+            return UnknownAppPlatformUserSourceInfo.DeserializeUnknownAppPlatformUserSourceInfo(element, options);
         }
 
         BinaryData IPersistableModel<AppPlatformUserSourceInfo>.Write(ModelReaderWriterOptions options)
