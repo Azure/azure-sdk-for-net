@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(SupportExportData))
+            if (options.Format != "W" && Optional.IsDefined(IsExportDataSupported))
             {
                 writer.WritePropertyName("SupportExportData"u8);
-                writer.WriteBooleanValue(SupportExportData.Value);
+                writer.WriteBooleanValue(IsExportDataSupported.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(BurstThrottlePolicy))
             {
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportExportData), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsExportDataSupported), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  SupportExportData: ");
@@ -338,10 +338,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
             else
             {
-                if (Optional.IsDefined(SupportExportData))
+                if (Optional.IsDefined(IsExportDataSupported))
                 {
                     builder.Append("  SupportExportData: ");
-                    var boolValue = SupportExportData.Value == true ? "true" : "false";
+                    var boolValue = IsExportDataSupported.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }

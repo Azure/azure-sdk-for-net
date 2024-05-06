@@ -45,8 +45,8 @@
     and [System.Net.Http](https://learn.microsoft.com/en-in/dotnet/core/diagnostics/built-in-metrics-system-net#systemnethttp).
   * For environments targetting `.NET 7.0` and below, distro uses ASP.NET Core and HTTP Client Instrumentation.
     Detailed metrics information can be found in the
-    [ASP.NET Core Instrumentation](https://github.com/open-telemetry/opentelemetry-dotnet/blob/main/src/OpenTelemetry.Instrumentation.AspNetCore/README.md#list-of-metrics-produced)
-    and [HTTP Client Instrumentation](https://github.com/open-telemetry/opentelemetry-dotnet/blob/main/src/OpenTelemetry.Instrumentation.Http/README.md#list-of-metrics-produced)
+    [ASP.NET Core Instrumentation](https://github.com/open-telemetry/opentelemetry-dotnet/blob/Instrumentation.AspNetCore-1.7.1/src/OpenTelemetry.Instrumentation.AspNetCore/README.md#list-of-metrics-produced)
+    and [HTTP Client Instrumentation](https://github.com/open-telemetry/opentelemetry-dotnet/blob/Instrumentation.Http-1.7.1/src/OpenTelemetry.Instrumentation.Http/README.md#list-of-metrics-produced)
     documentation.
   ([#42307](https://github.com/Azure/azure-sdk-for-net/pull/42307))
 
@@ -100,6 +100,18 @@
 * Updated the vendored code in the `OpenTelemetry.ResourceDetectors.Azure`
   resource detector to include the Azure Container Apps resource detector.
   ([#41803](https://github.com/Azure/azure-sdk-for-net/pull/41803))
+
+## 1.1.1 (2024-04-26)
+
+### Other Changes
+
+* Update OpenTelemetry dependencies.
+  ([#43432](https://github.com/Azure/azure-sdk-for-net/pull/43432))
+  - OpenTelemetry 1.8.1
+  - OpenTelemetry.Extensions.Hosting 1.8.1
+  - OpenTelemetry.Instrumentation.AspNetCore 1.8.1
+  - OpenTelemetry.Instrumentation.Http 1.8.1
+  - This update is a response to [CVE-2024-32028](https://nvd.nist.gov/vuln/detail/CVE-2024-32028)
 
 ## 1.1.0 (2024-01-25)
 

@@ -32,6 +32,11 @@ namespace Azure.ResourceManager.EventHubs.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                writer.WriteObjectValue(Identity, options);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(StorageAccountResourceId))
@@ -104,6 +109,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 return null;
             }
             string name = default;
+            EventHubsCaptureIdentity identity = default;
             ResourceIdentifier storageAccountResourceId = default;
             string blobContainer = default;
             string archiveNameFormat = default;
@@ -117,6 +123,15 @@ namespace Azure.ResourceManager.EventHubs.Models
                 if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = EventHubsCaptureIdentity.DeserializeEventHubsCaptureIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -177,6 +192,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             serializedAdditionalRawData = rawDataDictionary;
             return new EventHubDestination(
                 name,
+                identity,
                 storageAccountResourceId,
                 blobContainer,
                 archiveNameFormat,
@@ -217,6 +233,21 @@ namespace Azure.ResourceManager.EventHubs.Models
                     {
                         builder.AppendLine($"'{Name}'");
                     }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Identity), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  identity: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Identity))
+                {
+                    builder.Append("  identity: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Identity, options, 2, false, "  identity: ");
                 }
             }
 
