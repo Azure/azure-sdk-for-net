@@ -122,7 +122,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         /// <param name="sequenceNumber">The sequence number associated with the checkpoint being written.</param>
         /// <param name="offset">The offset associated with the checkpoint being written.</param>
         ///
-        [Event(23, Level = EventLevel.Verbose, Message = "Starting to perform a checkpoint update for partition '{0}' by processor instance with identifier '{1}' for Event Hub: {2} and Consumer Group: {3} at Sequence Number {4} Offset: {5}.")]
+        [Event(23, Level = EventLevel.Verbose, Message = "Starting to perform a checkpoint update for partition '{0}' by processor instance with identifier '{1}' for Event Hub: {2} and Consumer Group: {3} with Sequence Number {4}, Offset: {5}.")]
         public virtual void UpdateCheckpointStart(string partitionId,
                                                   string identifier,
                                                   string eventHubName,
@@ -147,7 +147,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         /// <param name="sequenceNumber">The sequence number associated with the checkpoint being written.</param>
         /// <param name="offset">The offset associated with the checkpoint being written.</param>
         ///
-        [Event(24, Level = EventLevel.Verbose, Message = "Completed performing a checkpoint update for partition '{0}' by processor instance with identifier '{1}' for Event Hub: {2} and Consumer Group: {3} at Sequence Number: {4} Offset: {5}.")]
+        [Event(24, Level = EventLevel.Verbose, Message = "Completed performing a checkpoint update for partition '{0}' by processor instance with identifier '{1}' for Event Hub: {2} and Consumer Group: {3} with Sequence Number: {4}, Offset: {5}.")]
         public virtual void UpdateCheckpointComplete(string partitionId,
                                                      string identifier,
                                                      string eventHubName,

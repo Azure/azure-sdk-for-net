@@ -1305,8 +1305,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         protected virtual async Task<string[]> ListPartitionIdsAsync(EventHubConnection connection,
                                                                      CancellationToken cancellationToken)
         {
-            await Task.Yield();
-            return Properties.PartitionIds;
+            return Task.FromResult(Properties.PartitionIds);
         }
 
         /// <summary>
