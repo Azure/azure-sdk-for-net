@@ -3,7 +3,6 @@
 ## 2.0.0-beta.1 (2024-05-07)
 
 ### Features Added
-- Added Synchronous document translation API: {RESOURCE}/translator/document:translate?api-version=[Date]. 
 - `documenttranslate` is the method added to submit a single/synchronous document translation request to the Document Translation service.
 - `DocumentTranslateContent` has been added to specify the `documenttranslate` request content.
 - Added `getSupportedFormats` that returns a list of supported documents and glossaries by the Document Translation service.
