@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    internal partial class UnknownOSConfiguration : IUtf8JsonSerializable, IJsonModel<SapOSConfiguration>
+    internal partial class UnknownSapOSConfiguration : IUtf8JsonSerializable, IJsonModel<SapOSConfiguration>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapOSConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Workloads.Models
             return DeserializeSapOSConfiguration(document.RootElement, options);
         }
 
-        internal static UnknownOSConfiguration DeserializeUnknownOSConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UnknownSapOSConfiguration DeserializeUnknownSapOSConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownOSConfiguration(osType, serializedAdditionalRawData);
+            return new UnknownSapOSConfiguration(osType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SapOSConfiguration>.Write(ModelReaderWriterOptions options)

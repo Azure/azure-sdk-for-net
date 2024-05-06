@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    [PersistableModelProxy(typeof(UnknownOSConfiguration))]
+    [PersistableModelProxy(typeof(UnknownSapOSConfiguration))]
     public partial class SapOSConfiguration : IUtf8JsonSerializable, IJsonModel<SapOSConfiguration>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapOSConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Linux": return SapLinuxConfiguration.DeserializeSapLinuxConfiguration(element, options);
                     case "Windows": return SapWindowsConfiguration.DeserializeSapWindowsConfiguration(element, options);
+                    case "Linux": return SapLinuxConfiguration.DeserializeSapLinuxConfiguration(element, options);
                 }
             }
-            return UnknownOSConfiguration.DeserializeUnknownOSConfiguration(element, options);
+            return UnknownSapOSConfiguration.DeserializeUnknownSapOSConfiguration(element, options);
         }
 
         BinaryData IPersistableModel<SapOSConfiguration>.Write(ModelReaderWriterOptions options)
