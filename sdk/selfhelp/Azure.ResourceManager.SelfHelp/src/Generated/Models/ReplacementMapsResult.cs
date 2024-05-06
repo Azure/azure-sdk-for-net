@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SelfHelp.Models
 {
     /// <summary> Solution replacement maps. </summary>
-    public partial class ReplacementMapsSesult
+    public partial class ReplacementMapsResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,20 +45,20 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ReplacementMapsSesult"/>. </summary>
-        internal ReplacementMapsSesult()
+        /// <summary> Initializes a new instance of <see cref="ReplacementMapsResult"/>. </summary>
+        internal ReplacementMapsResult()
         {
             WebResults = new ChangeTrackingList<KBWebResult>();
             Videos = new ChangeTrackingList<SelfHelpVideo>();
             VideoGroups = new ChangeTrackingList<VideoGroupDetail>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ReplacementMapsSesult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReplacementMapsResult"/>. </summary>
         /// <param name="webResults"> Solution AzureKB results. </param>
         /// <param name="videos"> Video solutions, which have the power to engage the customer by stimulating their senses. </param>
         /// <param name="videoGroups"> Group of Videos. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ReplacementMapsSesult(IReadOnlyList<KBWebResult> webResults, IReadOnlyList<SelfHelpVideo> videos, IReadOnlyList<VideoGroupDetail> videoGroups, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ReplacementMapsResult(IReadOnlyList<KBWebResult> webResults, IReadOnlyList<SelfHelpVideo> videos, IReadOnlyList<VideoGroupDetail> videoGroups, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             WebResults = webResults;
             Videos = videos;

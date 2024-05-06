@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    public partial class ReplacementMapsSesult : IUtf8JsonSerializable, IJsonModel<ReplacementMapsSesult>
+    public partial class ReplacementMapsResult : IUtf8JsonSerializable, IJsonModel<ReplacementMapsResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReplacementMapsSesult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReplacementMapsResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ReplacementMapsSesult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ReplacementMapsResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ReplacementMapsSesult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ReplacementMapsResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReplacementMapsSesult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ReplacementMapsResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,19 +74,19 @@ namespace Azure.ResourceManager.SelfHelp.Models
             writer.WriteEndObject();
         }
 
-        ReplacementMapsSesult IJsonModel<ReplacementMapsSesult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ReplacementMapsResult IJsonModel<ReplacementMapsResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ReplacementMapsSesult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ReplacementMapsResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReplacementMapsSesult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ReplacementMapsResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeReplacementMapsSesult(document.RootElement, options);
+            return DeserializeReplacementMapsResult(document.RootElement, options);
         }
 
-        internal static ReplacementMapsSesult DeserializeReplacementMapsSesult(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ReplacementMapsResult DeserializeReplacementMapsResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -149,38 +149,38 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ReplacementMapsSesult(webResults ?? new ChangeTrackingList<KBWebResult>(), videos ?? new ChangeTrackingList<SelfHelpVideo>(), videoGroups ?? new ChangeTrackingList<VideoGroupDetail>(), serializedAdditionalRawData);
+            return new ReplacementMapsResult(webResults ?? new ChangeTrackingList<KBWebResult>(), videos ?? new ChangeTrackingList<SelfHelpVideo>(), videoGroups ?? new ChangeTrackingList<VideoGroupDetail>(), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ReplacementMapsSesult>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ReplacementMapsResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ReplacementMapsSesult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ReplacementMapsResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ReplacementMapsSesult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReplacementMapsResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ReplacementMapsSesult IPersistableModel<ReplacementMapsSesult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ReplacementMapsResult IPersistableModel<ReplacementMapsResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ReplacementMapsSesult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ReplacementMapsResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeReplacementMapsSesult(document.RootElement, options);
+                        return DeserializeReplacementMapsResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReplacementMapsSesult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReplacementMapsResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ReplacementMapsSesult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ReplacementMapsResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             string solutionId = default;
             string title = default;
             string content = default;
-            ReplacementMapsSesult replacementMaps = default;
+            ReplacementMapsResult replacementMaps = default;
             IReadOnlyList<SolutionSection> sections = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                             {
                                 continue;
                             }
-                            replacementMaps = ReplacementMapsSesult.DeserializeReplacementMapsSesult(property0.Value, options);
+                            replacementMaps = ReplacementMapsResult.DeserializeReplacementMapsResult(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("sections"u8))

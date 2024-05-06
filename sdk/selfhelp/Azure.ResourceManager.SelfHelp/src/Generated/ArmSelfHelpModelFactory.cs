@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="replacementMaps"> Solution replacement maps. </param>
         /// <param name="sections"> List of section object. </param>
         /// <returns> A new <see cref="Models.SelfHelpSolutionResult"/> instance for mocking. </returns>
-        public static SelfHelpSolutionResult SelfHelpSolutionResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string solutionId = null, string title = null, string content = null, ReplacementMapsSesult replacementMaps = null, IEnumerable<SolutionSection> sections = null)
+        public static SelfHelpSolutionResult SelfHelpSolutionResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string solutionId = null, string title = null, string content = null, ReplacementMapsResult replacementMaps = null, IEnumerable<SolutionSection> sections = null)
         {
             sections ??= new List<SolutionSection>();
 
@@ -545,18 +545,18 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ReplacementMapsSesult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ReplacementMapsResult"/>. </summary>
         /// <param name="webResults"> Solution AzureKB results. </param>
         /// <param name="videos"> Video solutions, which have the power to engage the customer by stimulating their senses. </param>
         /// <param name="videoGroups"> Group of Videos. </param>
-        /// <returns> A new <see cref="Models.ReplacementMapsSesult"/> instance for mocking. </returns>
-        public static ReplacementMapsSesult ReplacementMapsSesult(IEnumerable<KBWebResult> webResults = null, IEnumerable<SelfHelpVideo> videos = null, IEnumerable<VideoGroupDetail> videoGroups = null)
+        /// <returns> A new <see cref="Models.ReplacementMapsResult"/> instance for mocking. </returns>
+        public static ReplacementMapsResult ReplacementMapsResult(IEnumerable<KBWebResult> webResults = null, IEnumerable<SelfHelpVideo> videos = null, IEnumerable<VideoGroupDetail> videoGroups = null)
         {
             webResults ??= new List<KBWebResult>();
             videos ??= new List<SelfHelpVideo>();
             videoGroups ??= new List<VideoGroupDetail>();
 
-            return new ReplacementMapsSesult(webResults?.ToList(), videos?.ToList(), videoGroups?.ToList(), serializedAdditionalRawData: null);
+            return new ReplacementMapsResult(webResults?.ToList(), videos?.ToList(), videoGroups?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SolutionSection"/>. </summary>
@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="content"> Solution sections content. </param>
         /// <param name="replacementMaps"> Solution replacement maps. </param>
         /// <returns> A new <see cref="Models.SolutionSection"/> instance for mocking. </returns>
-        public static SolutionSection SolutionSection(string title = null, string content = null, ReplacementMapsSesult replacementMaps = null)
+        public static SolutionSection SolutionSection(string title = null, string content = null, ReplacementMapsResult replacementMaps = null)
         {
             return new SolutionSection(title, content, replacementMaps, serializedAdditionalRawData: null);
         }

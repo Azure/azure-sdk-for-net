@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="replacementMaps"> Solution replacement maps. </param>
         /// <param name="sections"> List of section object. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SelfHelpSolutionResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string solutionId, string title, string content, ReplacementMapsSesult replacementMaps, IReadOnlyList<SolutionSection> sections, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SelfHelpSolutionResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string solutionId, string title, string content, ReplacementMapsResult replacementMaps, IReadOnlyList<SolutionSection> sections, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             SolutionId = solutionId;
             Title = title;
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <summary> The HTML content that needs to be rendered and shown to customer. </summary>
         public string Content { get; }
         /// <summary> Solution replacement maps. </summary>
-        public ReplacementMapsSesult ReplacementMaps { get; }
+        public ReplacementMapsResult ReplacementMaps { get; }
         /// <summary> List of section object. </summary>
         public IReadOnlyList<SolutionSection> Sections { get; }
     }

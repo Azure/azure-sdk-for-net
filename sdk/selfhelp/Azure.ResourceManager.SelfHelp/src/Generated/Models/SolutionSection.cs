@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="content"> Solution sections content. </param>
         /// <param name="replacementMaps"> Solution replacement maps. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SolutionSection(string title, string content, ReplacementMapsSesult replacementMaps, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SolutionSection(string title, string content, ReplacementMapsResult replacementMaps, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Title = title;
             Content = content;
@@ -68,6 +68,6 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <summary> Solution sections content. </summary>
         public string Content { get; }
         /// <summary> Solution replacement maps. </summary>
-        public ReplacementMapsSesult ReplacementMaps { get; }
+        public ReplacementMapsResult ReplacementMaps { get; }
     }
 }

@@ -104,7 +104,7 @@ rename-mapping:
   QuestionContentType: TroubleshooterQuestionContentType
   QuestionType: TroubleshooterQuestionType
   ReplacementMaps: SolutionReplacementMaps
-  ReplacementMapsSelfHelp: ReplacementMapsSesult
+  ReplacementMapsSelfHelp: ReplacementMapsResult
   ResultType: KBSearchResultType
   SearchResult: KBSearchResult
   SectionSelfHelp: SolutionSection
