@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <summary> Search for relevant Azure Diagnostics, Solutions and Troubleshooters using a natural language issue summary. </summary>
         /// <param name="content"> Request body for discovering solutions using NLP. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<DiscoveryNlpResponse>> PostAsync(DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DiscoveryNlpResult>> PostAsync(DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
         {
             using var message = CreatePostRequest(content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -78,9 +78,9 @@ namespace Azure.ResourceManager.SelfHelp
             {
                 case 200:
                     {
-                        DiscoveryNlpResponse value = default;
+                        DiscoveryNlpResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DiscoveryNlpResponse.DeserializeDiscoveryNlpResponse(document.RootElement);
+                        value = DiscoveryNlpResult.DeserializeDiscoveryNlpResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <summary> Search for relevant Azure Diagnostics, Solutions and Troubleshooters using a natural language issue summary. </summary>
         /// <param name="content"> Request body for discovering solutions using NLP. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<DiscoveryNlpResponse> Post(DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
+        public Response<DiscoveryNlpResult> Post(DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
         {
             using var message = CreatePostRequest(content);
             _pipeline.Send(message, cancellationToken);
@@ -99,9 +99,9 @@ namespace Azure.ResourceManager.SelfHelp
             {
                 case 200:
                     {
-                        DiscoveryNlpResponse value = default;
+                        DiscoveryNlpResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DiscoveryNlpResponse.DeserializeDiscoveryNlpResponse(document.RootElement);
+                        value = DiscoveryNlpResult.DeserializeDiscoveryNlpResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

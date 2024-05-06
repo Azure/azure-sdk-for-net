@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SelfHelp.Samples
                 ResourceId = "subscriptions/0d0fcd2e-c4fd-4349-8497-200edb3923c6/resourceGroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-non-read",
                 ServiceId = "0d0fcd2e-c4fd-4349-8497-200edb39s3ca",
             };
-            await foreach (SolutionNlpMetadataResource item in subscriptionResource.PostDiscoverySolutionNLPSubscriptionScopesAsync(content: content))
+            await foreach (SolutionNlpMetadata item in subscriptionResource.PostDiscoverySolutionNLPSubscriptionScopesAsync(content: content))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

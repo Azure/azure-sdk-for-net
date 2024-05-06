@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.SelfHelp
     /// <summary>
     /// A class representing the SelfHelpSolution data model.
     /// Solution response.
-    /// Serialized Name: SolutionResource
     /// </summary>
     public partial class SelfHelpSolutionData : ResourceData
     {
@@ -55,7 +54,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <summary> Initializes a new instance of <see cref="SelfHelpSolutionData"/>. </summary>
         public SelfHelpSolutionData()
         {
-            TriggerCriteria = new ChangeTrackingList<TriggerCriterion>();
+            TriggerCriteria = new ChangeTrackingList<SolutionTriggerCriterion>();
             Parameters = new ChangeTrackingDictionary<string, string>();
             Sections = new ChangeTrackingList<SelfHelpSection>();
         }
@@ -65,40 +64,16 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="triggerCriteria">
-        /// Solution request trigger criteria
-        /// Serialized Name: SolutionResource.properties.triggerCriteria
-        /// </param>
-        /// <param name="parameters">
-        /// Client input parameters to run Solution
-        /// Serialized Name: SolutionResource.properties.parameters
-        /// </param>
-        /// <param name="solutionId">
-        /// Solution Id to identify single solution.
-        /// Serialized Name: SolutionResource.properties.solutionId
-        /// </param>
-        /// <param name="provisioningState">
-        /// Status of solution provisioning.
-        /// Serialized Name: SolutionResource.properties.provisioningState
-        /// </param>
-        /// <param name="title">
-        /// The title.
-        /// Serialized Name: SolutionResource.properties.title
-        /// </param>
-        /// <param name="content">
-        /// The HTML content that needs to be rendered and shown to customer.
-        /// Serialized Name: SolutionResource.properties.content
-        /// </param>
-        /// <param name="replacementMaps">
-        /// Solution replacement maps.
-        /// Serialized Name: SolutionResource.properties.replacementMaps
-        /// </param>
-        /// <param name="sections">
-        /// List of section object.
-        /// Serialized Name: SolutionResource.properties.sections
-        /// </param>
+        /// <param name="triggerCriteria"> Solution request trigger criteria. </param>
+        /// <param name="parameters"> Client input parameters to run Solution. </param>
+        /// <param name="solutionId"> Solution Id to identify single solution. </param>
+        /// <param name="provisioningState"> Status of solution provisioning. </param>
+        /// <param name="title"> The title. </param>
+        /// <param name="content"> The HTML content that needs to be rendered and shown to customer. </param>
+        /// <param name="replacementMaps"> Solution replacement maps. </param>
+        /// <param name="sections"> List of section object. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SelfHelpSolutionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<TriggerCriterion> triggerCriteria, IDictionary<string, string> parameters, string solutionId, SolutionProvisioningState? provisioningState, string title, string content, ReplacementMaps replacementMaps, IReadOnlyList<SelfHelpSection> sections, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SelfHelpSolutionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<SolutionTriggerCriterion> triggerCriteria, IDictionary<string, string> parameters, string solutionId, SolutionProvisioningState? provisioningState, string title, string content, SolutionReplacementMaps replacementMaps, IReadOnlyList<SelfHelpSection> sections, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             TriggerCriteria = triggerCriteria;
             Parameters = parameters;
@@ -111,45 +86,21 @@ namespace Azure.ResourceManager.SelfHelp
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Solution request trigger criteria
-        /// Serialized Name: SolutionResource.properties.triggerCriteria
-        /// </summary>
-        public IList<TriggerCriterion> TriggerCriteria { get; }
-        /// <summary>
-        /// Client input parameters to run Solution
-        /// Serialized Name: SolutionResource.properties.parameters
-        /// </summary>
+        /// <summary> Solution request trigger criteria. </summary>
+        public IList<SolutionTriggerCriterion> TriggerCriteria { get; }
+        /// <summary> Client input parameters to run Solution. </summary>
         public IDictionary<string, string> Parameters { get; }
-        /// <summary>
-        /// Solution Id to identify single solution.
-        /// Serialized Name: SolutionResource.properties.solutionId
-        /// </summary>
+        /// <summary> Solution Id to identify single solution. </summary>
         public string SolutionId { get; }
-        /// <summary>
-        /// Status of solution provisioning.
-        /// Serialized Name: SolutionResource.properties.provisioningState
-        /// </summary>
+        /// <summary> Status of solution provisioning. </summary>
         public SolutionProvisioningState? ProvisioningState { get; }
-        /// <summary>
-        /// The title.
-        /// Serialized Name: SolutionResource.properties.title
-        /// </summary>
+        /// <summary> The title. </summary>
         public string Title { get; }
-        /// <summary>
-        /// The HTML content that needs to be rendered and shown to customer.
-        /// Serialized Name: SolutionResource.properties.content
-        /// </summary>
+        /// <summary> The HTML content that needs to be rendered and shown to customer. </summary>
         public string Content { get; }
-        /// <summary>
-        /// Solution replacement maps.
-        /// Serialized Name: SolutionResource.properties.replacementMaps
-        /// </summary>
-        public ReplacementMaps ReplacementMaps { get; }
-        /// <summary>
-        /// List of section object.
-        /// Serialized Name: SolutionResource.properties.sections
-        /// </summary>
+        /// <summary> Solution replacement maps. </summary>
+        public SolutionReplacementMaps ReplacementMaps { get; }
+        /// <summary> List of section object. </summary>
         public IReadOnlyList<SelfHelpSection> Sections { get; }
     }
 }

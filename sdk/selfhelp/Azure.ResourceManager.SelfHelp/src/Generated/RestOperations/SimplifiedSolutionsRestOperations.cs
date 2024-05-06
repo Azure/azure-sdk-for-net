@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.SelfHelp
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateCreateRequestUri(string scope, string simplifiedSolutionsResourceName, SimplifiedSolutionsResourceData data)
+        internal RequestUriBuilder CreateCreateRequestUri(string scope, string simplifiedSolutionsResourceName, SelfHelpSimplifiedSolutionData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SelfHelp
             return uri;
         }
 
-        internal HttpMessage CreateCreateRequest(string scope, string simplifiedSolutionsResourceName, SimplifiedSolutionsResourceData data)
+        internal HttpMessage CreateCreateRequest(string scope, string simplifiedSolutionsResourceName, SelfHelpSimplifiedSolutionData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="simplifiedSolutionsResourceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="simplifiedSolutionsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateAsync(string scope, string simplifiedSolutionsResourceName, SimplifiedSolutionsResourceData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateAsync(string scope, string simplifiedSolutionsResourceName, SelfHelpSimplifiedSolutionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(simplifiedSolutionsResourceName, nameof(simplifiedSolutionsResourceName));
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="simplifiedSolutionsResourceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="simplifiedSolutionsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Create(string scope, string simplifiedSolutionsResourceName, SimplifiedSolutionsResourceData data, CancellationToken cancellationToken = default)
+        public Response Create(string scope, string simplifiedSolutionsResourceName, SelfHelpSimplifiedSolutionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(simplifiedSolutionsResourceName, nameof(simplifiedSolutionsResourceName));
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="simplifiedSolutionsResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="simplifiedSolutionsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SimplifiedSolutionsResourceData>> GetAsync(string scope, string simplifiedSolutionsResourceName, CancellationToken cancellationToken = default)
+        public async Task<Response<SelfHelpSimplifiedSolutionData>> GetAsync(string scope, string simplifiedSolutionsResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(simplifiedSolutionsResourceName, nameof(simplifiedSolutionsResourceName));
@@ -166,13 +166,13 @@ namespace Azure.ResourceManager.SelfHelp
             {
                 case 200:
                     {
-                        SimplifiedSolutionsResourceData value = default;
+                        SelfHelpSimplifiedSolutionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SimplifiedSolutionsResourceData.DeserializeSimplifiedSolutionsResourceData(document.RootElement);
+                        value = SelfHelpSimplifiedSolutionData.DeserializeSelfHelpSimplifiedSolutionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SimplifiedSolutionsResourceData)null, message.Response);
+                    return Response.FromValue((SelfHelpSimplifiedSolutionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="simplifiedSolutionsResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="simplifiedSolutionsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SimplifiedSolutionsResourceData> Get(string scope, string simplifiedSolutionsResourceName, CancellationToken cancellationToken = default)
+        public Response<SelfHelpSimplifiedSolutionData> Get(string scope, string simplifiedSolutionsResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(simplifiedSolutionsResourceName, nameof(simplifiedSolutionsResourceName));
@@ -195,13 +195,13 @@ namespace Azure.ResourceManager.SelfHelp
             {
                 case 200:
                     {
-                        SimplifiedSolutionsResourceData value = default;
+                        SelfHelpSimplifiedSolutionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SimplifiedSolutionsResourceData.DeserializeSimplifiedSolutionsResourceData(document.RootElement);
+                        value = SelfHelpSimplifiedSolutionData.DeserializeSelfHelpSimplifiedSolutionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SimplifiedSolutionsResourceData)null, message.Response);
+                    return Response.FromValue((SelfHelpSimplifiedSolutionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

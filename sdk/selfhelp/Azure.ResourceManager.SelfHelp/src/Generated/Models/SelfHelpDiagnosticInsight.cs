@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    /// <summary>
-    /// Detailed insights(s) obtained via the invocation of an insight diagnostic
-    /// Serialized Name: Insight
-    /// </summary>
+    /// <summary> Detailed insights(s) obtained via the invocation of an insight diagnostic. </summary>
     public partial class SelfHelpDiagnosticInsight
     {
         /// <summary>
@@ -54,22 +51,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SelfHelpDiagnosticInsight"/>. </summary>
-        /// <param name="id">
-        /// Article id.
-        /// Serialized Name: Insight.id
-        /// </param>
-        /// <param name="title">
-        /// This insight's title.
-        /// Serialized Name: Insight.title
-        /// </param>
-        /// <param name="results">
-        /// Detailed result content.
-        /// Serialized Name: Insight.results
-        /// </param>
-        /// <param name="insightImportanceLevel">
-        /// Importance level of the insight.
-        /// Serialized Name: Insight.importanceLevel
-        /// </param>
+        /// <param name="id"> Article id. </param>
+        /// <param name="title"> This insight's title. </param>
+        /// <param name="results"> Detailed result content. </param>
+        /// <param name="insightImportanceLevel"> Importance level of the insight. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SelfHelpDiagnosticInsight(string id, string title, string results, SelfHelpImportanceLevel? insightImportanceLevel, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -80,25 +65,13 @@ namespace Azure.ResourceManager.SelfHelp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Article id.
-        /// Serialized Name: Insight.id
-        /// </summary>
+        /// <summary> Article id. </summary>
         public string Id { get; }
-        /// <summary>
-        /// This insight's title.
-        /// Serialized Name: Insight.title
-        /// </summary>
+        /// <summary> This insight's title. </summary>
         public string Title { get; }
-        /// <summary>
-        /// Detailed result content.
-        /// Serialized Name: Insight.results
-        /// </summary>
+        /// <summary> Detailed result content. </summary>
         public string Results { get; }
-        /// <summary>
-        /// Importance level of the insight.
-        /// Serialized Name: Insight.importanceLevel
-        /// </summary>
+        /// <summary> Importance level of the insight. </summary>
         public SelfHelpImportanceLevel? InsightImportanceLevel { get; }
     }
 }

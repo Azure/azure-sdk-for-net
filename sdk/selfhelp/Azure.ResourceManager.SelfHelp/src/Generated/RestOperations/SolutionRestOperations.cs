@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.SelfHelp
             }
         }
 
-        internal RequestUriBuilder CreateWarmUpRequestUri(string scope, string solutionResourceName, SolutionWarmUpRequestBody solutionWarmUpRequestBody)
+        internal RequestUriBuilder CreateWarmUpRequestUri(string scope, string solutionResourceName, SolutionWarmUpContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.SelfHelp
             return uri;
         }
 
-        internal HttpMessage CreateWarmUpRequest(string scope, string solutionResourceName, SolutionWarmUpRequestBody solutionWarmUpRequestBody)
+        internal HttpMessage CreateWarmUpRequest(string scope, string solutionResourceName, SolutionWarmUpContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -320,12 +320,12 @@ namespace Azure.ResourceManager.SelfHelp
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            if (solutionWarmUpRequestBody != null)
+            if (content != null)
             {
                 request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(solutionWarmUpRequestBody, ModelSerializationExtensions.WireOptions);
-                request.Content = content;
+                var content0 = new Utf8JsonRequestContent();
+                content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
+                request.Content = content0;
             }
             _userAgent.Apply(message);
             return message;
@@ -334,16 +334,16 @@ namespace Azure.ResourceManager.SelfHelp
         /// <summary> Warm up the solution resource by preloading asynchronous diagnostics results into cache. </summary>
         /// <param name="scope"> scope = resourceUri of affected resource.&lt;br/&gt; For example: /subscriptions/0d0fcd2e-c4fd-4349-8497-200edb3923c6/resourcegroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-non-read. </param>
         /// <param name="solutionResourceName"> Solution resource Name. </param>
-        /// <param name="solutionWarmUpRequestBody"> The required request body for warming up a solution resource. </param>
+        /// <param name="content"> The required request body for warming up a solution resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="solutionResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="solutionResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> WarmUpAsync(string scope, string solutionResourceName, SolutionWarmUpRequestBody solutionWarmUpRequestBody = null, CancellationToken cancellationToken = default)
+        public async Task<Response> WarmUpAsync(string scope, string solutionResourceName, SolutionWarmUpContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(solutionResourceName, nameof(solutionResourceName));
 
-            using var message = CreateWarmUpRequest(scope, solutionResourceName, solutionWarmUpRequestBody);
+            using var message = CreateWarmUpRequest(scope, solutionResourceName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -357,16 +357,16 @@ namespace Azure.ResourceManager.SelfHelp
         /// <summary> Warm up the solution resource by preloading asynchronous diagnostics results into cache. </summary>
         /// <param name="scope"> scope = resourceUri of affected resource.&lt;br/&gt; For example: /subscriptions/0d0fcd2e-c4fd-4349-8497-200edb3923c6/resourcegroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-non-read. </param>
         /// <param name="solutionResourceName"> Solution resource Name. </param>
-        /// <param name="solutionWarmUpRequestBody"> The required request body for warming up a solution resource. </param>
+        /// <param name="content"> The required request body for warming up a solution resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="solutionResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="solutionResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response WarmUp(string scope, string solutionResourceName, SolutionWarmUpRequestBody solutionWarmUpRequestBody = null, CancellationToken cancellationToken = default)
+        public Response WarmUp(string scope, string solutionResourceName, SolutionWarmUpContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(solutionResourceName, nameof(solutionResourceName));
 
-            using var message = CreateWarmUpRequest(scope, solutionResourceName, solutionWarmUpRequestBody);
+            using var message = CreateWarmUpRequest(scope, solutionResourceName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

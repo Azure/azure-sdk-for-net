@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    /// <summary>
-    /// The status of the resource.
-    /// Serialized Name: ResponseOption
-    /// </summary>
+    /// <summary> The status of the resource. </summary>
     public partial class ResponseConfig
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ResponseConfig"/>. </summary>
-        /// <param name="key">
-        /// Unique string.
-        /// Serialized Name: ResponseOption.key
-        /// </param>
-        /// <param name="value">
-        /// Option description
-        /// Serialized Name: ResponseOption.value
-        /// </param>
+        /// <param name="key"> Unique string. </param>
+        /// <param name="value"> Option description. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ResponseConfig(string key, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,15 +61,9 @@ namespace Azure.ResourceManager.SelfHelp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Unique string.
-        /// Serialized Name: ResponseOption.key
-        /// </summary>
+        /// <summary> Unique string. </summary>
         public string Key { get; }
-        /// <summary>
-        /// Option description
-        /// Serialized Name: ResponseOption.value
-        /// </summary>
+        /// <summary> Option description. </summary>
         public string Value { get; }
     }
 }

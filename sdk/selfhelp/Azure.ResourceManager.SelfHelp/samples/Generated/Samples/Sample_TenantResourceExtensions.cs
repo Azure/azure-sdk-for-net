@@ -15,6 +15,57 @@ namespace Azure.ResourceManager.SelfHelp.Samples
 {
     public partial class Sample_TenantResourceExtensions
     {
+        // List DiscoverySolutions at resource scope
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetSelfHelpDiscoverySolutions_ListDiscoverySolutionsAtResourceScope()
+        {
+            // Generated from example definition: specification/help/resource-manager/Microsoft.Help/preview/2024-03-01-preview/examples/ListDiscoverySolutionsAtTenantScope.json
+            // this example is just showing the usage of "DiscoverySolution_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this TenantResource created on azure
+            // for more information of creating TenantResource, please refer to the document of TenantResource
+            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+
+            // invoke the operation and iterate over the result
+            string filter = "ProblemClassificationId eq 'SampleProblemClassificationId1'";
+            await foreach (SelfHelpSolutionMetadata item in tenantResource.GetSelfHelpDiscoverySolutionsAsync(filter: filter))
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine($"Succeeded");
+        }
+
+        // Solution_Get
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetSelfHelpSolutionById_SolutionGet()
+        {
+            // Generated from example definition: specification/help/resource-manager/Microsoft.Help/preview/2024-03-01-preview/examples/SelfHelpSolution_Get.json
+            // this example is just showing the usage of "SolutionSelfHelp_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this TenantResource created on azure
+            // for more information of creating TenantResource, please refer to the document of TenantResource
+            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+
+            // invoke the operation
+            string solutionId = "SolutionId1";
+            SelfHelpSolutionResult result = await tenantResource.GetSelfHelpSolutionByIdAsync(solutionId);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
         // Discovery Solutions using issue summary and service id.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
@@ -38,7 +89,7 @@ namespace Azure.ResourceManager.SelfHelp.Samples
                 ResourceId = "subscriptions/0d0fcd2e-c4fd-4349-8497-200edb3923c6/resourceGroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-non-read",
                 ServiceId = "0d0fcd2e-c4fd-4349-8497-200edb39s3ca",
             };
-            await foreach (SolutionNlpMetadataResource item in tenantResource.PostDiscoverySolutionNLPTenantScopesAsync(content: content))
+            await foreach (SolutionNlpMetadata item in tenantResource.PostDiscoverySolutionNLPTenantScopesAsync(content: content))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    /// <summary>
-    /// Metadata Properties
-    /// Serialized Name: SolutionMetadataProperties
-    /// </summary>
+    /// <summary> Metadata Properties. </summary>
     public partial class SolutionMetadataProperties
     {
         /// <summary>
@@ -55,24 +52,12 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SolutionMetadataProperties"/>. </summary>
-        /// <param name="solutionId">
-        /// Solution Id.
-        /// Serialized Name: SolutionMetadataProperties.solutionId
-        /// </param>
-        /// <param name="solutionType">
-        /// Solution Type.
-        /// Serialized Name: SolutionMetadataProperties.solutionType
-        /// </param>
-        /// <param name="description">
-        /// A detailed description of solution.
-        /// Serialized Name: SolutionMetadataProperties.description
-        /// </param>
-        /// <param name="requiredInputs">
-        /// Required parameters for invoking this particular solution.
-        /// Serialized Name: SolutionMetadataProperties.requiredInputs
-        /// </param>
+        /// <param name="solutionId"> Solution Id. </param>
+        /// <param name="solutionType"> Solution Type. </param>
+        /// <param name="description"> A detailed description of solution. </param>
+        /// <param name="requiredInputs"> Required parameters for invoking this particular solution. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SolutionMetadataProperties(string solutionId, SolutionType? solutionType, string description, IReadOnlyList<string> requiredInputs, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SolutionMetadataProperties(string solutionId, SelfHelpSolutionType? solutionType, string description, IReadOnlyList<string> requiredInputs, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SolutionId = solutionId;
             SolutionType = solutionType;
@@ -81,25 +66,13 @@ namespace Azure.ResourceManager.SelfHelp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Solution Id.
-        /// Serialized Name: SolutionMetadataProperties.solutionId
-        /// </summary>
+        /// <summary> Solution Id. </summary>
         public string SolutionId { get; set; }
-        /// <summary>
-        /// Solution Type.
-        /// Serialized Name: SolutionMetadataProperties.solutionType
-        /// </summary>
-        public SolutionType? SolutionType { get; }
-        /// <summary>
-        /// A detailed description of solution.
-        /// Serialized Name: SolutionMetadataProperties.description
-        /// </summary>
+        /// <summary> Solution Type. </summary>
+        public SelfHelpSolutionType? SolutionType { get; }
+        /// <summary> A detailed description of solution. </summary>
         public string Description { get; }
-        /// <summary>
-        /// Required parameters for invoking this particular solution.
-        /// Serialized Name: SolutionMetadataProperties.requiredInputs
-        /// </summary>
+        /// <summary> Required parameters for invoking this particular solution. </summary>
         public IReadOnlyList<string> RequiredInputs { get; }
     }
 }

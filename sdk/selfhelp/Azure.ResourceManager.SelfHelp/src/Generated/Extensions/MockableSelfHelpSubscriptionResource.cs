@@ -59,11 +59,11 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// </summary>
         /// <param name="content"> Request body for discovering solutions using NLP. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SolutionNlpMetadataResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SolutionNlpMetadataResource> PostDiscoverySolutionNLPSubscriptionScopesAsync(DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SolutionNlpMetadata"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SolutionNlpMetadata> PostDiscoverySolutionNLPSubscriptionScopesAsync(DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DiscoverySolutionNLPSubscriptionScopeRestClient.CreatePostRequest(Id.SubscriptionId, content);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => SolutionNlpMetadataResource.DeserializeSolutionNlpMetadataResource(e), DiscoverySolutionNLPSubscriptionScopeClientDiagnostics, Pipeline, "MockableSelfHelpSubscriptionResource.PostDiscoverySolutionNLPSubscriptionScopes", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => SolutionNlpMetadata.DeserializeSolutionNlpMetadata(e), DiscoverySolutionNLPSubscriptionScopeClientDiagnostics, Pipeline, "MockableSelfHelpSubscriptionResource.PostDiscoverySolutionNLPSubscriptionScopes", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// </summary>
         /// <param name="content"> Request body for discovering solutions using NLP. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SolutionNlpMetadataResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SolutionNlpMetadataResource> PostDiscoverySolutionNLPSubscriptionScopes(DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SolutionNlpMetadata"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SolutionNlpMetadata> PostDiscoverySolutionNLPSubscriptionScopes(DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DiscoverySolutionNLPSubscriptionScopeRestClient.CreatePostRequest(Id.SubscriptionId, content);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => SolutionNlpMetadataResource.DeserializeSolutionNlpMetadataResource(e), DiscoverySolutionNLPSubscriptionScopeClientDiagnostics, Pipeline, "MockableSelfHelpSubscriptionResource.PostDiscoverySolutionNLPSubscriptionScopes", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => SolutionNlpMetadata.DeserializeSolutionNlpMetadata(e), DiscoverySolutionNLPSubscriptionScopeClientDiagnostics, Pipeline, "MockableSelfHelpSubscriptionResource.PostDiscoverySolutionNLPSubscriptionScopes", "value", null, cancellationToken);
         }
     }
 }

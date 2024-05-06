@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    /// <summary>
-    /// Troubleshooter step input response validation properties
-    /// Serialized Name: ResponseValidationProperties
-    /// </summary>
+    /// <summary> Troubleshooter step input response validation properties. </summary>
     public partial class ResponseValidationProperties
     {
         /// <summary>
@@ -54,28 +51,13 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ResponseValidationProperties"/>. </summary>
-        /// <param name="regex">
-        /// Regex used for the input validation.
-        /// Serialized Name: ResponseValidationProperties.regex
-        /// </param>
-        /// <param name="validationScope">
-        /// Validation scope
-        /// Serialized Name: ResponseValidationProperties.validationScope
-        /// </param>
-        /// <param name="isRequired">
-        /// Default True
-        /// Serialized Name: ResponseValidationProperties.isRequired
-        /// </param>
-        /// <param name="validationErrorMessage">
-        /// Validation Error Message.
-        /// Serialized Name: ResponseValidationProperties.validationErrorMessage
-        /// </param>
-        /// <param name="maxLength">
-        /// Max text input (open Ended Text).
-        /// Serialized Name: ResponseValidationProperties.maxLength
-        /// </param>
+        /// <param name="regex"> Regex used for the input validation. </param>
+        /// <param name="validationScope"> Validation scope. </param>
+        /// <param name="isRequired"> Default True. </param>
+        /// <param name="validationErrorMessage"> Validation Error Message. </param>
+        /// <param name="maxLength"> Max text input (open Ended Text). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResponseValidationProperties(string regex, ValidationScope? validationScope, bool? isRequired, string validationErrorMessage, long? maxLength, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ResponseValidationProperties(string regex, TroubleshooterValidationScope? validationScope, bool? isRequired, string validationErrorMessage, long? maxLength, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Regex = regex;
             ValidationScope = validationScope;
@@ -85,30 +67,15 @@ namespace Azure.ResourceManager.SelfHelp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Regex used for the input validation.
-        /// Serialized Name: ResponseValidationProperties.regex
-        /// </summary>
+        /// <summary> Regex used for the input validation. </summary>
         public string Regex { get; }
-        /// <summary>
-        /// Validation scope
-        /// Serialized Name: ResponseValidationProperties.validationScope
-        /// </summary>
-        public ValidationScope? ValidationScope { get; }
-        /// <summary>
-        /// Default True
-        /// Serialized Name: ResponseValidationProperties.isRequired
-        /// </summary>
+        /// <summary> Validation scope. </summary>
+        public TroubleshooterValidationScope? ValidationScope { get; }
+        /// <summary> Default True. </summary>
         public bool? IsRequired { get; }
-        /// <summary>
-        /// Validation Error Message.
-        /// Serialized Name: ResponseValidationProperties.validationErrorMessage
-        /// </summary>
+        /// <summary> Validation Error Message. </summary>
         public string ValidationErrorMessage { get; }
-        /// <summary>
-        /// Max text input (open Ended Text).
-        /// Serialized Name: ResponseValidationProperties.maxLength
-        /// </summary>
+        /// <summary> Max text input (open Ended Text). </summary>
         public long? MaxLength { get; }
     }
 }

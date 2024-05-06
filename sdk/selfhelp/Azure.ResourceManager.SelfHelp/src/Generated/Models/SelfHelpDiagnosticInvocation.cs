@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    /// <summary>
-    /// Solution Invocation with additional params needed for invocation.
-    /// Serialized Name: DiagnosticInvocation
-    /// </summary>
+    /// <summary> Solution Invocation with additional params needed for invocation. </summary>
     public partial class SelfHelpDiagnosticInvocation
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SelfHelpDiagnosticInvocation"/>. </summary>
-        /// <param name="solutionId">
-        /// Solution Id to invoke.
-        /// Serialized Name: DiagnosticInvocation.solutionId
-        /// </param>
-        /// <param name="additionalParameters">
-        /// Additional parameters required to invoke the solutionId.
-        /// Serialized Name: DiagnosticInvocation.additionalParameters
-        /// </param>
+        /// <param name="solutionId"> Solution Id to invoke. </param>
+        /// <param name="additionalParameters"> Additional parameters required to invoke the solutionId. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SelfHelpDiagnosticInvocation(string solutionId, IDictionary<string, string> additionalParameters, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,15 +62,9 @@ namespace Azure.ResourceManager.SelfHelp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Solution Id to invoke.
-        /// Serialized Name: DiagnosticInvocation.solutionId
-        /// </summary>
+        /// <summary> Solution Id to invoke. </summary>
         public string SolutionId { get; set; }
-        /// <summary>
-        /// Additional parameters required to invoke the solutionId.
-        /// Serialized Name: DiagnosticInvocation.additionalParameters
-        /// </summary>
+        /// <summary> Additional parameters required to invoke the solutionId. </summary>
         public IDictionary<string, string> AdditionalParameters { get; }
     }
 }

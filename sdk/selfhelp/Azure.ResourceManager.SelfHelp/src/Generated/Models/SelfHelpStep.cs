@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    /// <summary>
-    /// Troubleshooter step
-    /// Serialized Name: Step
-    /// </summary>
+    /// <summary> Troubleshooter step. </summary>
     public partial class SelfHelpStep
     {
         /// <summary>
@@ -51,55 +48,25 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <summary> Initializes a new instance of <see cref="SelfHelpStep"/>. </summary>
         internal SelfHelpStep()
         {
-            Inputs = new ChangeTrackingList<StepInput>();
+            Inputs = new ChangeTrackingList<TroubleshooterStepInput>();
             Insights = new ChangeTrackingList<SelfHelpDiagnosticInsight>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SelfHelpStep"/>. </summary>
-        /// <param name="id">
-        /// Unique step id.
-        /// Serialized Name: Step.id
-        /// </param>
-        /// <param name="title">
-        /// Step title.
-        /// Serialized Name: Step.title
-        /// </param>
-        /// <param name="description">
-        /// Step description.
-        /// Serialized Name: Step.description
-        /// </param>
-        /// <param name="guidance">
-        /// Get or sets the Step guidance.
-        /// Serialized Name: Step.guidance
-        /// </param>
-        /// <param name="executionStatus">
-        /// Status of Troubleshooter Step execution.
-        /// Serialized Name: Step.executionStatus
-        /// </param>
-        /// <param name="executionStatusDescription">
-        /// This field has more detailed status description of the execution status.
-        /// Serialized Name: Step.executionStatusDescription
-        /// </param>
-        /// <param name="stepType">
-        /// Type of Troubleshooting step.
-        /// Serialized Name: Step.type
-        /// </param>
-        /// <param name="isLastStep">
-        /// is this last step of the workflow.
-        /// Serialized Name: Step.isLastStep
-        /// </param>
-        /// <param name="inputs"> Serialized Name: Step.inputs. </param>
-        /// <param name="automatedCheckResults">
-        /// Only for AutomatedStep type
-        /// Serialized Name: Step.automatedCheckResults
-        /// </param>
-        /// <param name="insights"> Serialized Name: Step.insights. </param>
-        /// <param name="error">
-        /// The error detail.
-        /// Serialized Name: Step.error
-        /// </param>
+        /// <param name="id"> Unique step id. </param>
+        /// <param name="title"> Step title. </param>
+        /// <param name="description"> Step description. </param>
+        /// <param name="guidance"> Get or sets the Step guidance. </param>
+        /// <param name="executionStatus"> Status of Troubleshooter Step execution. </param>
+        /// <param name="executionStatusDescription"> This field has more detailed status description of the execution status. </param>
+        /// <param name="stepType"> Type of Troubleshooting step. </param>
+        /// <param name="isLastStep"> is this last step of the workflow. </param>
+        /// <param name="inputs"></param>
+        /// <param name="automatedCheckResults"> Only for AutomatedStep type. </param>
+        /// <param name="insights"></param>
+        /// <param name="error"> The error detail. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SelfHelpStep(string id, string title, string description, string guidance, ExecutionStatus? executionStatus, string executionStatusDescription, SelfHelpType? stepType, bool? isLastStep, IReadOnlyList<StepInput> inputs, AutomatedCheckResult automatedCheckResults, IReadOnlyList<SelfHelpDiagnosticInsight> insights, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SelfHelpStep(string id, string title, string description, string guidance, TroubleshooterExecutionStatus? executionStatus, string executionStatusDescription, SelfHelpType? stepType, bool? isLastStep, IReadOnlyList<TroubleshooterStepInput> inputs, AutomatedCheckResult automatedCheckResults, IReadOnlyList<SelfHelpDiagnosticInsight> insights, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Title = title;
@@ -116,59 +83,29 @@ namespace Azure.ResourceManager.SelfHelp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Unique step id.
-        /// Serialized Name: Step.id
-        /// </summary>
+        /// <summary> Unique step id. </summary>
         public string Id { get; }
-        /// <summary>
-        /// Step title.
-        /// Serialized Name: Step.title
-        /// </summary>
+        /// <summary> Step title. </summary>
         public string Title { get; }
-        /// <summary>
-        /// Step description.
-        /// Serialized Name: Step.description
-        /// </summary>
+        /// <summary> Step description. </summary>
         public string Description { get; }
-        /// <summary>
-        /// Get or sets the Step guidance.
-        /// Serialized Name: Step.guidance
-        /// </summary>
+        /// <summary> Get or sets the Step guidance. </summary>
         public string Guidance { get; }
-        /// <summary>
-        /// Status of Troubleshooter Step execution.
-        /// Serialized Name: Step.executionStatus
-        /// </summary>
-        public ExecutionStatus? ExecutionStatus { get; }
-        /// <summary>
-        /// This field has more detailed status description of the execution status.
-        /// Serialized Name: Step.executionStatusDescription
-        /// </summary>
+        /// <summary> Status of Troubleshooter Step execution. </summary>
+        public TroubleshooterExecutionStatus? ExecutionStatus { get; }
+        /// <summary> This field has more detailed status description of the execution status. </summary>
         public string ExecutionStatusDescription { get; }
-        /// <summary>
-        /// Type of Troubleshooting step.
-        /// Serialized Name: Step.type
-        /// </summary>
+        /// <summary> Type of Troubleshooting step. </summary>
         public SelfHelpType? StepType { get; }
-        /// <summary>
-        /// is this last step of the workflow.
-        /// Serialized Name: Step.isLastStep
-        /// </summary>
+        /// <summary> is this last step of the workflow. </summary>
         public bool? IsLastStep { get; }
-        /// <summary> Serialized Name: Step.inputs. </summary>
-        public IReadOnlyList<StepInput> Inputs { get; }
-        /// <summary>
-        /// Only for AutomatedStep type
-        /// Serialized Name: Step.automatedCheckResults
-        /// </summary>
+        /// <summary> Gets the inputs. </summary>
+        public IReadOnlyList<TroubleshooterStepInput> Inputs { get; }
+        /// <summary> Only for AutomatedStep type. </summary>
         public AutomatedCheckResult AutomatedCheckResults { get; }
-        /// <summary> Serialized Name: Step.insights. </summary>
+        /// <summary> Gets the insights. </summary>
         public IReadOnlyList<SelfHelpDiagnosticInsight> Insights { get; }
-        /// <summary>
-        /// The error detail.
-        /// Serialized Name: Step.error
-        /// </summary>
+        /// <summary> The error detail. </summary>
         public ResponseError Error { get; }
     }
 }

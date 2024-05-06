@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    /// <summary>
-    /// Status of solution provisioning.
-    /// Serialized Name: SolutionProvisioningState
-    /// </summary>
+    /// <summary> Status of solution provisioning. </summary>
     public readonly partial struct SolutionProvisioningState : IEquatable<SolutionProvisioningState>
     {
         private readonly string _value;
@@ -31,30 +28,15 @@ namespace Azure.ResourceManager.SelfHelp.Models
         private const string RunningValue = "Running";
         private const string CanceledValue = "Canceled";
 
-        /// <summary>
-        /// All Solutions in the Batch succeeded.
-        /// Serialized Name: SolutionProvisioningState.Succeeded
-        /// </summary>
+        /// <summary> All Solutions in the Batch succeeded. </summary>
         public static SolutionProvisioningState Succeeded { get; } = new SolutionProvisioningState(SucceededValue);
-        /// <summary>
-        /// Some Solutions are still running or failed.
-        /// Serialized Name: SolutionProvisioningState.PartialComplete
-        /// </summary>
+        /// <summary> Some Solutions are still running or failed. </summary>
         public static SolutionProvisioningState PartialComplete { get; } = new SolutionProvisioningState(PartialCompleteValue);
-        /// <summary>
-        /// All Solutions failed to run.
-        /// Serialized Name: SolutionProvisioningState.Failed
-        /// </summary>
+        /// <summary> All Solutions failed to run. </summary>
         public static SolutionProvisioningState Failed { get; } = new SolutionProvisioningState(FailedValue);
-        /// <summary>
-        /// All Solutions are still running.
-        /// Serialized Name: SolutionProvisioningState.Running
-        /// </summary>
+        /// <summary> All Solutions are still running. </summary>
         public static SolutionProvisioningState Running { get; } = new SolutionProvisioningState(RunningValue);
-        /// <summary>
-        /// When Solutions request gets canceled.
-        /// Serialized Name: SolutionProvisioningState.Canceled
-        /// </summary>
+        /// <summary> When Solutions request gets canceled. </summary>
         public static SolutionProvisioningState Canceled { get; } = new SolutionProvisioningState(CanceledValue);
         /// <summary> Determines if two <see cref="SolutionProvisioningState"/> values are the same. </summary>
         public static bool operator ==(SolutionProvisioningState left, SolutionProvisioningState right) => left.Equals(right);

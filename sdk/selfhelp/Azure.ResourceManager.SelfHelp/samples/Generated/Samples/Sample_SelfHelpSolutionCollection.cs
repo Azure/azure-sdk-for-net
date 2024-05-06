@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SelfHelp.Samples
             {
                 TriggerCriteria =
 {
-new TriggerCriterion()
+new SolutionTriggerCriterion()
 {
 Name = SelfHelpName.SolutionId,
 Value = "SolutionId1",

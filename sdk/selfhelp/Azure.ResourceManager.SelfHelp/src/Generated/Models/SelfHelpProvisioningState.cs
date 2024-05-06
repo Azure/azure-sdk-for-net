@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    /// <summary>
-    /// Status of diagnostic provisioning.
-    /// Serialized Name: DiagnosticProvisioningState
-    /// </summary>
+    /// <summary> Status of diagnostic provisioning. </summary>
     public readonly partial struct SelfHelpProvisioningState : IEquatable<SelfHelpProvisioningState>
     {
         private readonly string _value;
@@ -31,30 +28,15 @@ namespace Azure.ResourceManager.SelfHelp.Models
         private const string RunningValue = "Running";
         private const string CanceledValue = "Canceled";
 
-        /// <summary>
-        /// All Diagnostics in the Batch succeeded.
-        /// Serialized Name: DiagnosticProvisioningState.Succeeded
-        /// </summary>
+        /// <summary> All Diagnostics in the Batch succeeded. </summary>
         public static SelfHelpProvisioningState Succeeded { get; } = new SelfHelpProvisioningState(SucceededValue);
-        /// <summary>
-        /// Some Diagnostics are still running or failed.
-        /// Serialized Name: DiagnosticProvisioningState.PartialComplete
-        /// </summary>
+        /// <summary> Some Diagnostics are still running or failed. </summary>
         public static SelfHelpProvisioningState PartialComplete { get; } = new SelfHelpProvisioningState(PartialCompleteValue);
-        /// <summary>
-        /// All Diagnostics failed to run.
-        /// Serialized Name: DiagnosticProvisioningState.Failed
-        /// </summary>
+        /// <summary> All Diagnostics failed to run. </summary>
         public static SelfHelpProvisioningState Failed { get; } = new SelfHelpProvisioningState(FailedValue);
-        /// <summary>
-        /// All Diagnostics are still running.
-        /// Serialized Name: DiagnosticProvisioningState.Running
-        /// </summary>
+        /// <summary> All Diagnostics are still running. </summary>
         public static SelfHelpProvisioningState Running { get; } = new SelfHelpProvisioningState(RunningValue);
-        /// <summary>
-        /// When Diagnostic request gets canceled.
-        /// Serialized Name: DiagnosticProvisioningState.Canceled
-        /// </summary>
+        /// <summary> When Diagnostic request gets canceled. </summary>
         public static SelfHelpProvisioningState Canceled { get; } = new SelfHelpProvisioningState(CanceledValue);
         /// <summary> Determines if two <see cref="SelfHelpProvisioningState"/> values are the same. </summary>
         public static bool operator ==(SelfHelpProvisioningState left, SelfHelpProvisioningState right) => left.Equals(right);

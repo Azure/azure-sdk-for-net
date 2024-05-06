@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    /// <summary>
-    /// Only for AutomatedStep type
-    /// Serialized Name: AutomatedCheckResult
-    /// </summary>
+    /// <summary> Only for AutomatedStep type. </summary>
     public partial class AutomatedCheckResult
     {
         /// <summary>
@@ -54,22 +51,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AutomatedCheckResult"/>. </summary>
-        /// <param name="version">
-        /// Version for automated check result
-        /// Serialized Name: AutomatedCheckResult.version
-        /// </param>
-        /// <param name="status">
-        /// Status for automated check result
-        /// Serialized Name: AutomatedCheckResult.status
-        /// </param>
-        /// <param name="result">
-        /// Insight Article Content
-        /// Serialized Name: AutomatedCheckResult.result
-        /// </param>
-        /// <param name="resultType">
-        /// Type of Result.
-        /// Serialized Name: AutomatedCheckResult.type
-        /// </param>
+        /// <param name="version"> Version for automated check result. </param>
+        /// <param name="status"> Status for automated check result. </param>
+        /// <param name="result"> Insight Article Content. </param>
+        /// <param name="resultType"> Type of Result. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AutomatedCheckResult(string version, string status, string result, AutomatedCheckResultType? resultType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -80,25 +65,13 @@ namespace Azure.ResourceManager.SelfHelp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Version for automated check result
-        /// Serialized Name: AutomatedCheckResult.version
-        /// </summary>
+        /// <summary> Version for automated check result. </summary>
         public string Version { get; }
-        /// <summary>
-        /// Status for automated check result
-        /// Serialized Name: AutomatedCheckResult.status
-        /// </summary>
+        /// <summary> Status for automated check result. </summary>
         public string Status { get; }
-        /// <summary>
-        /// Insight Article Content
-        /// Serialized Name: AutomatedCheckResult.result
-        /// </summary>
+        /// <summary> Insight Article Content. </summary>
         public string Result { get; }
-        /// <summary>
-        /// Type of Result.
-        /// Serialized Name: AutomatedCheckResult.type
-        /// </summary>
+        /// <summary> Type of Result. </summary>
         public AutomatedCheckResultType? ResultType { get; }
     }
 }

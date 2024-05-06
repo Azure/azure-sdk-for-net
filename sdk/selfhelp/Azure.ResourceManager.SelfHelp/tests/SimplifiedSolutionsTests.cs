@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.SelfHelp.Tests
             var resourceName = "DiagRpGwPubDev";
             var solutionResourceName = Recording.GenerateAssetName("testResource");
             ResourceIdentifier scope = new ResourceIdentifier($"/subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{resourceName}");
-            SimplifiedSolutionsResourceData resourceData = CreateSimplifiedSolutionResourceData(scope);
+            SelfHelpSimplifiedSolutionData resourceData = CreateSelfHelpSimplifiedSolutionData(scope);
 
-            var createSolutionData = await Client.GetSimplifiedSolutionsResources(scope).CreateOrUpdateAsync(WaitUntil.Started, solutionResourceName, resourceData);
+            var createSolutionData = await Client.GetSelfHelpSimplifiedSolutions(scope).CreateOrUpdateAsync(WaitUntil.Started, solutionResourceName, resourceData);
             Assert.NotNull(createSolutionData);
 
-            var readSolutionData = await Client.GetSimplifiedSolutionsResourceAsync(scope, solutionResourceName);
+            var readSolutionData = await Client.GetSelfHelpSimplifiedSolutionAsync(scope, solutionResourceName);
             Assert.NotNull(readSolutionData);
         }
 
-        private SimplifiedSolutionsResourceData CreateSimplifiedSolutionResourceData(ResourceIdentifier scope)
+        private SelfHelpSimplifiedSolutionData CreateSelfHelpSimplifiedSolutionData(ResourceIdentifier scope)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>()
             {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.SelfHelp.Tests
 
             List<SelfHelpSection> sections = new List<SelfHelpSection>();
             ResourceType resourceType = new ResourceType("Microsoft.KeyVault/vaults");
-            var data = new SimplifiedSolutionsResourceData(scope, null, resourceType, null, solutionId, parameters, null, null, null, null, null);
+            var data = new SelfHelpSimplifiedSolutionData(scope, null, resourceType, null, solutionId, parameters, null, null, null, null, null);
 
             return data;
         }

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    /// <summary>
-    /// Solutions metrics based chart
-    /// Serialized Name: MetricsBasedChart
-    /// </summary>
+    /// <summary> Solutions metrics based chart. </summary>
     public partial class MetricsBasedChart
     {
         /// <summary>
@@ -54,32 +51,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MetricsBasedChart"/>. </summary>
-        /// <param name="name">
-        /// Chart name
-        /// Serialized Name: MetricsBasedChart.name
-        /// </param>
-        /// <param name="aggregationType">
-        /// Allowed values are Sum, Avg, Count, Min, Max. Default is Sum
-        /// Serialized Name: MetricsBasedChart.aggregationType
-        /// </param>
-        /// <param name="timeSpanDuration">
-        /// Time span duration
-        /// Serialized Name: MetricsBasedChart.timeSpanDuration
-        /// </param>
-        /// <param name="title">
-        /// Chart title
-        /// Serialized Name: MetricsBasedChart.title
-        /// </param>
-        /// <param name="filterGroup">
-        /// Filter group
-        /// Serialized Name: MetricsBasedChart.filterGroup
-        /// </param>
-        /// <param name="replacementKey">
-        /// Place holder used in HTML Content replace control with the content
-        /// Serialized Name: MetricsBasedChart.replacementKey
-        /// </param>
+        /// <param name="name"> Chart name. </param>
+        /// <param name="aggregationType"> Allowed values are Sum, Avg, Count, Min, Max. Default is Sum. </param>
+        /// <param name="timeSpanDuration"> Time span duration. </param>
+        /// <param name="title"> Chart title. </param>
+        /// <param name="filterGroup"> Filter group. </param>
+        /// <param name="replacementKey"> Place holder used in HTML Content replace control with the content. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MetricsBasedChart(string name, AggregationType? aggregationType, TimeSpan? timeSpanDuration, string title, FilterGroup filterGroup, string replacementKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MetricsBasedChart(string name, ChartAggregationType? aggregationType, TimeSpan? timeSpanDuration, string title, ChartFilterGroup filterGroup, string replacementKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             AggregationType = aggregationType;
@@ -90,44 +69,23 @@ namespace Azure.ResourceManager.SelfHelp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Chart name
-        /// Serialized Name: MetricsBasedChart.name
-        /// </summary>
+        /// <summary> Chart name. </summary>
         public string Name { get; }
-        /// <summary>
-        /// Allowed values are Sum, Avg, Count, Min, Max. Default is Sum
-        /// Serialized Name: MetricsBasedChart.aggregationType
-        /// </summary>
-        public AggregationType? AggregationType { get; }
-        /// <summary>
-        /// Time span duration
-        /// Serialized Name: MetricsBasedChart.timeSpanDuration
-        /// </summary>
+        /// <summary> Allowed values are Sum, Avg, Count, Min, Max. Default is Sum. </summary>
+        public ChartAggregationType? AggregationType { get; }
+        /// <summary> Time span duration. </summary>
         public TimeSpan? TimeSpanDuration { get; }
-        /// <summary>
-        /// Chart title
-        /// Serialized Name: MetricsBasedChart.title
-        /// </summary>
+        /// <summary> Chart title. </summary>
         public string Title { get; }
-        /// <summary>
-        /// Filter group
-        /// Serialized Name: MetricsBasedChart.filterGroup
-        /// </summary>
-        internal FilterGroup FilterGroup { get; }
-        /// <summary>
-        /// List of filters
-        /// Serialized Name: FilterGroup.filter
-        /// </summary>
+        /// <summary> Filter group. </summary>
+        internal ChartFilterGroup FilterGroup { get; }
+        /// <summary> List of filters. </summary>
         public IReadOnlyList<SelfHelpFilter> Filter
         {
             get => FilterGroup?.Filter;
         }
 
-        /// <summary>
-        /// Place holder used in HTML Content replace control with the content
-        /// Serialized Name: MetricsBasedChart.replacementKey
-        /// </summary>
+        /// <summary> Place holder used in HTML Content replace control with the content. </summary>
         public string ReplacementKey { get; }
     }
 }

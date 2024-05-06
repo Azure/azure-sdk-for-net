@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    /// <summary>
-    /// Service Classification result object.
-    /// Serialized Name: ClassificationService
-    /// </summary>
+    /// <summary> Service Classification result object. </summary>
     public partial class ClassificationService
     {
         /// <summary>
@@ -56,18 +53,9 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ClassificationService"/>. </summary>
-        /// <param name="serviceId">
-        /// Azure resource Id of the service.
-        /// Serialized Name: ClassificationService.serviceId
-        /// </param>
-        /// <param name="displayName">
-        /// Localized name of the azure service.
-        /// Serialized Name: ClassificationService.displayName
-        /// </param>
-        /// <param name="resourceTypes">
-        /// List of applicable ARM resource types for this service.
-        /// Serialized Name: ClassificationService.resourceTypes
-        /// </param>
+        /// <param name="serviceId"> Azure resource Id of the service. </param>
+        /// <param name="displayName"> Localized name of the azure service. </param>
+        /// <param name="resourceTypes"> List of applicable ARM resource types for this service. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ClassificationService(ResourceIdentifier serviceId, string displayName, IList<string> resourceTypes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -77,20 +65,11 @@ namespace Azure.ResourceManager.SelfHelp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Azure resource Id of the service.
-        /// Serialized Name: ClassificationService.serviceId
-        /// </summary>
+        /// <summary> Azure resource Id of the service. </summary>
         public ResourceIdentifier ServiceId { get; }
-        /// <summary>
-        /// Localized name of the azure service.
-        /// Serialized Name: ClassificationService.displayName
-        /// </summary>
+        /// <summary> Localized name of the azure service. </summary>
         public string DisplayName { get; }
-        /// <summary>
-        /// List of applicable ARM resource types for this service.
-        /// Serialized Name: ClassificationService.resourceTypes
-        /// </summary>
+        /// <summary> List of applicable ARM resource types for this service. </summary>
         public IList<string> ResourceTypes { get; }
     }
 }

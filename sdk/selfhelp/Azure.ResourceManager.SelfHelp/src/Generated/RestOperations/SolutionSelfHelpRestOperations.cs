@@ -11,6 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.SelfHelp.Models;
 
 namespace Azure.ResourceManager.SelfHelp
 {
@@ -66,7 +67,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="solutionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="solutionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SolutionResourceSelfHelpData>> GetAsync(string solutionId, CancellationToken cancellationToken = default)
+        public async Task<Response<SelfHelpSolutionResult>> GetAsync(string solutionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(solutionId, nameof(solutionId));
 
@@ -76,13 +77,11 @@ namespace Azure.ResourceManager.SelfHelp
             {
                 case 200:
                     {
-                        SolutionResourceSelfHelpData value = default;
+                        SelfHelpSolutionResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SolutionResourceSelfHelpData.DeserializeSolutionResourceSelfHelpData(document.RootElement);
+                        value = SelfHelpSolutionResult.DeserializeSelfHelpSolutionResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((SolutionResourceSelfHelpData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -93,7 +92,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="solutionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="solutionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SolutionResourceSelfHelpData> Get(string solutionId, CancellationToken cancellationToken = default)
+        public Response<SelfHelpSolutionResult> Get(string solutionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(solutionId, nameof(solutionId));
 
@@ -103,13 +102,11 @@ namespace Azure.ResourceManager.SelfHelp
             {
                 case 200:
                     {
-                        SolutionResourceSelfHelpData value = default;
+                        SelfHelpSolutionResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SolutionResourceSelfHelpData.DeserializeSolutionResourceSelfHelpData(document.RootElement);
+                        value = SelfHelpSolutionResult.DeserializeSelfHelpSolutionResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((SolutionResourceSelfHelpData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

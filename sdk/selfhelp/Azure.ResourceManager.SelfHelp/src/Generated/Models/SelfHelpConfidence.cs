@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    /// <summary>
-    /// Confidence of the search result.
-    /// Serialized Name: Confidence
-    /// </summary>
+    /// <summary> Confidence of the search result. </summary>
     public readonly partial struct SelfHelpConfidence : IEquatable<SelfHelpConfidence>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.SelfHelp.Models
         private const string MediumValue = "Medium";
         private const string HighValue = "High";
 
-        /// <summary>
-        /// Low
-        /// Serialized Name: Confidence.Low
-        /// </summary>
+        /// <summary> Low. </summary>
         public static SelfHelpConfidence Low { get; } = new SelfHelpConfidence(LowValue);
-        /// <summary>
-        /// Medium
-        /// Serialized Name: Confidence.Medium
-        /// </summary>
+        /// <summary> Medium. </summary>
         public static SelfHelpConfidence Medium { get; } = new SelfHelpConfidence(MediumValue);
-        /// <summary>
-        /// High
-        /// Serialized Name: Confidence.High
-        /// </summary>
+        /// <summary> High. </summary>
         public static SelfHelpConfidence High { get; } = new SelfHelpConfidence(HighValue);
         /// <summary> Determines if two <see cref="SelfHelpConfidence"/> values are the same. </summary>
         public static bool operator ==(SelfHelpConfidence left, SelfHelpConfidence right) => left.Equals(right);

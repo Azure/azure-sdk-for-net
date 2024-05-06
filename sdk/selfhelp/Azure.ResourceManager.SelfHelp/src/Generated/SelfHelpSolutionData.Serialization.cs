@@ -149,13 +149,13 @@ namespace Azure.ResourceManager.SelfHelp
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            IList<TriggerCriterion> triggerCriteria = default;
+            IList<SolutionTriggerCriterion> triggerCriteria = default;
             IDictionary<string, string> parameters = default;
             string solutionId = default;
             SolutionProvisioningState? provisioningState = default;
             string title = default;
             string content = default;
-            ReplacementMaps replacementMaps = default;
+            SolutionReplacementMaps replacementMaps = default;
             IReadOnlyList<SelfHelpSection> sections = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -200,10 +200,10 @@ namespace Azure.ResourceManager.SelfHelp
                             {
                                 continue;
                             }
-                            List<TriggerCriterion> array = new List<TriggerCriterion>();
+                            List<SolutionTriggerCriterion> array = new List<SolutionTriggerCriterion>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(TriggerCriterion.DeserializeTriggerCriterion(item, options));
+                                array.Add(SolutionTriggerCriterion.DeserializeSolutionTriggerCriterion(item, options));
                             }
                             triggerCriteria = array;
                             continue;
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.SelfHelp
                             {
                                 continue;
                             }
-                            replacementMaps = ReplacementMaps.DeserializeReplacementMaps(property0.Value, options);
+                            replacementMaps = SolutionReplacementMaps.DeserializeSolutionReplacementMaps(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("sections"u8))
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.SelfHelp
                 name,
                 type,
                 systemData,
-                triggerCriteria ?? new ChangeTrackingList<TriggerCriterion>(),
+                triggerCriteria ?? new ChangeTrackingList<SolutionTriggerCriterion>(),
                 parameters ?? new ChangeTrackingDictionary<string, string>(),
                 solutionId,
                 provisioningState,

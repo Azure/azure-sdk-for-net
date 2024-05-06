@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    /// <summary>
-    /// Importance level of the insight.
-    /// Serialized Name: ImportanceLevel
-    /// </summary>
+    /// <summary> Importance level of the insight. </summary>
     public readonly partial struct SelfHelpImportanceLevel : IEquatable<SelfHelpImportanceLevel>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.SelfHelp.Models
         private const string WarningValue = "Warning";
         private const string InformationValue = "Information";
 
-        /// <summary>
-        /// A critical insight has been found after running the diagnostic.
-        /// Serialized Name: ImportanceLevel.Critical
-        /// </summary>
+        /// <summary> A critical insight has been found after running the diagnostic. </summary>
         public static SelfHelpImportanceLevel Critical { get; } = new SelfHelpImportanceLevel(CriticalValue);
-        /// <summary>
-        /// A warning insight has been found after running the diagnostic.
-        /// Serialized Name: ImportanceLevel.Warning
-        /// </summary>
+        /// <summary> A warning insight has been found after running the diagnostic. </summary>
         public static SelfHelpImportanceLevel Warning { get; } = new SelfHelpImportanceLevel(WarningValue);
-        /// <summary>
-        /// An information insight has been found after running the diagnostic.
-        /// Serialized Name: ImportanceLevel.Information
-        /// </summary>
+        /// <summary> An information insight has been found after running the diagnostic. </summary>
         public static SelfHelpImportanceLevel Information { get; } = new SelfHelpImportanceLevel(InformationValue);
         /// <summary> Determines if two <see cref="SelfHelpImportanceLevel"/> values are the same. </summary>
         public static bool operator ==(SelfHelpImportanceLevel left, SelfHelpImportanceLevel right) => left.Equals(right);

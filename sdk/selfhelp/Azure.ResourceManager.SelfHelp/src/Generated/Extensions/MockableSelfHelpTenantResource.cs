@@ -20,6 +20,8 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
     {
         private ClientDiagnostics _discoverySolutionClientDiagnostics;
         private DiscoverySolutionRestOperations _discoverySolutionRestClient;
+        private ClientDiagnostics _solutionSelfHelpClientDiagnostics;
+        private SolutionSelfHelpRestOperations _solutionSelfHelpRestClient;
         private ClientDiagnostics _discoverySolutionNLPTenantScopeClientDiagnostics;
         private DiscoverySolutionNLPTenantScopeRestOperations _discoverySolutionNLPTenantScopeRestClient;
 
@@ -37,6 +39,8 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
 
         private ClientDiagnostics DiscoverySolutionClientDiagnostics => _discoverySolutionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SelfHelp", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private DiscoverySolutionRestOperations DiscoverySolutionRestClient => _discoverySolutionRestClient ??= new DiscoverySolutionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics SolutionSelfHelpClientDiagnostics => _solutionSelfHelpClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SelfHelp", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private SolutionSelfHelpRestOperations SolutionSelfHelpRestClient => _solutionSelfHelpRestClient ??= new SolutionSelfHelpRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics DiscoverySolutionNLPTenantScopeClientDiagnostics => _discoverySolutionNLPTenantScopeClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SelfHelp", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private DiscoverySolutionNLPTenantScopeRestOperations DiscoverySolutionNLPTenantScopeRestClient => _discoverySolutionNLPTenantScopeRestClient ??= new DiscoverySolutionNLPTenantScopeRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
@@ -44,75 +48,6 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
-        }
-
-        /// <summary> Gets a collection of SolutionResourceSelfHelpResources in the TenantResource. </summary>
-        /// <returns> An object representing collection of SolutionResourceSelfHelpResources and their operations over a SolutionResourceSelfHelpResource. </returns>
-        public virtual SolutionResourceSelfHelpCollection GetSolutionResourceSelfHelps()
-        {
-            return GetCachedClient(client => new SolutionResourceSelfHelpCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets Self Help Solutions for a given solutionId. Self Help Solutions consist of rich instructional video tutorials, links and guides to public documentation related to a specific problem that enables users to troubleshoot Azure issues.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Help/selfHelp/{solutionId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SolutionSelfHelp_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SolutionResourceSelfHelpResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="solutionId"> SolutionId is a unique id to identify a solution. You can retrieve the solution id using the Discovery api - https://learn.microsoft.com/en-us/rest/api/help/discovery-solution/list?view=rest-help-2023-09-01-preview&amp;tabs=HTTP. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="solutionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="solutionId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<SolutionResourceSelfHelpResource>> GetSolutionResourceSelfHelpAsync(string solutionId, CancellationToken cancellationToken = default)
-        {
-            return await GetSolutionResourceSelfHelps().GetAsync(solutionId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets Self Help Solutions for a given solutionId. Self Help Solutions consist of rich instructional video tutorials, links and guides to public documentation related to a specific problem that enables users to troubleshoot Azure issues.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Help/selfHelp/{solutionId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SolutionSelfHelp_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SolutionResourceSelfHelpResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="solutionId"> SolutionId is a unique id to identify a solution. You can retrieve the solution id using the Discovery api - https://learn.microsoft.com/en-us/rest/api/help/discovery-solution/list?view=rest-help-2023-09-01-preview&amp;tabs=HTTP. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="solutionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="solutionId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<SolutionResourceSelfHelpResource> GetSolutionResourceSelfHelp(string solutionId, CancellationToken cancellationToken = default)
-        {
-            return GetSolutionResourceSelfHelps().Get(solutionId, cancellationToken);
         }
 
         /// <summary>
@@ -172,15 +107,15 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         }
 
         /// <summary>
-        /// Search for relevant Azure Diagnostics, Solutions and Troubleshooters using a natural language issue summary.
+        /// Gets Self Help Solutions for a given solutionId. Self Help Solutions consist of rich instructional video tutorials, links and guides to public documentation related to a specific problem that enables users to troubleshoot Azure issues.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Help/discoverSolutions</description>
+        /// <description>/providers/Microsoft.Help/selfHelp/{solutionId}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DiscoverySolutionNLPTenantScope_Post</description>
+        /// <description>SolutionSelfHelp_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -188,13 +123,65 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> Request body for discovering solutions using NLP. </param>
+        /// <param name="solutionId"> SolutionId is a unique id to identify a solution. You can retrieve the solution id using the Discovery api - https://learn.microsoft.com/en-us/rest/api/help/discovery-solution/list?view=rest-help-2023-09-01-preview&amp;tabs=HTTP. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SolutionNlpMetadataResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SolutionNlpMetadataResource> PostDiscoverySolutionNLPTenantScopesAsync(DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="solutionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="solutionId"/> is null. </exception>
+        public virtual async Task<Response<SelfHelpSolutionResult>> GetSelfHelpSolutionByIdAsync(string solutionId, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DiscoverySolutionNLPTenantScopeRestClient.CreatePostRequest(content);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => SolutionNlpMetadataResource.DeserializeSolutionNlpMetadataResource(e), DiscoverySolutionNLPTenantScopeClientDiagnostics, Pipeline, "MockableSelfHelpTenantResource.PostDiscoverySolutionNLPTenantScopes", "value", null, cancellationToken);
+            Argument.AssertNotNullOrEmpty(solutionId, nameof(solutionId));
+
+            using var scope = SolutionSelfHelpClientDiagnostics.CreateScope("MockableSelfHelpTenantResource.GetSelfHelpSolutionById");
+            scope.Start();
+            try
+            {
+                var response = await SolutionSelfHelpRestClient.GetAsync(solutionId, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets Self Help Solutions for a given solutionId. Self Help Solutions consist of rich instructional video tutorials, links and guides to public documentation related to a specific problem that enables users to troubleshoot Azure issues.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Help/selfHelp/{solutionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SolutionSelfHelp_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="solutionId"> SolutionId is a unique id to identify a solution. You can retrieve the solution id using the Discovery api - https://learn.microsoft.com/en-us/rest/api/help/discovery-solution/list?view=rest-help-2023-09-01-preview&amp;tabs=HTTP. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="solutionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="solutionId"/> is null. </exception>
+        public virtual Response<SelfHelpSolutionResult> GetSelfHelpSolutionById(string solutionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(solutionId, nameof(solutionId));
+
+            using var scope = SolutionSelfHelpClientDiagnostics.CreateScope("MockableSelfHelpTenantResource.GetSelfHelpSolutionById");
+            scope.Start();
+            try
+            {
+                var response = SolutionSelfHelpRestClient.Get(solutionId, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -216,11 +203,37 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// </summary>
         /// <param name="content"> Request body for discovering solutions using NLP. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SolutionNlpMetadataResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SolutionNlpMetadataResource> PostDiscoverySolutionNLPTenantScopes(DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SolutionNlpMetadata"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SolutionNlpMetadata> PostDiscoverySolutionNLPTenantScopesAsync(DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DiscoverySolutionNLPTenantScopeRestClient.CreatePostRequest(content);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => SolutionNlpMetadataResource.DeserializeSolutionNlpMetadataResource(e), DiscoverySolutionNLPTenantScopeClientDiagnostics, Pipeline, "MockableSelfHelpTenantResource.PostDiscoverySolutionNLPTenantScopes", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => SolutionNlpMetadata.DeserializeSolutionNlpMetadata(e), DiscoverySolutionNLPTenantScopeClientDiagnostics, Pipeline, "MockableSelfHelpTenantResource.PostDiscoverySolutionNLPTenantScopes", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Search for relevant Azure Diagnostics, Solutions and Troubleshooters using a natural language issue summary.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Help/discoverSolutions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DiscoverySolutionNLPTenantScope_Post</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> Request body for discovering solutions using NLP. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SolutionNlpMetadata"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SolutionNlpMetadata> PostDiscoverySolutionNLPTenantScopes(DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DiscoverySolutionNLPTenantScopeRestClient.CreatePostRequest(content);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => SolutionNlpMetadata.DeserializeSolutionNlpMetadata(e), DiscoverySolutionNLPTenantScopeClientDiagnostics, Pipeline, "MockableSelfHelpTenantResource.PostDiscoverySolutionNLPTenantScopes", "value", null, cancellationToken);
         }
     }
 }

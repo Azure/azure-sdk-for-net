@@ -280,15 +280,15 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="solutionWarmUpRequestBody"> The required request body for warming up a solution resource. </param>
+        /// <param name="content"> The required request body for warming up a solution resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> WarmUpAsync(SolutionWarmUpRequestBody solutionWarmUpRequestBody = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> WarmUpAsync(SolutionWarmUpContent content = null, CancellationToken cancellationToken = default)
         {
             using var scope = _selfHelpSolutionSolutionClientDiagnostics.CreateScope("SelfHelpSolutionResource.WarmUp");
             scope.Start();
             try
             {
-                var response = await _selfHelpSolutionSolutionRestClient.WarmUpAsync(Id.Parent, Id.Name, solutionWarmUpRequestBody, cancellationToken).ConfigureAwait(false);
+                var response = await _selfHelpSolutionSolutionRestClient.WarmUpAsync(Id.Parent, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -319,15 +319,15 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="solutionWarmUpRequestBody"> The required request body for warming up a solution resource. </param>
+        /// <param name="content"> The required request body for warming up a solution resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response WarmUp(SolutionWarmUpRequestBody solutionWarmUpRequestBody = null, CancellationToken cancellationToken = default)
+        public virtual Response WarmUp(SolutionWarmUpContent content = null, CancellationToken cancellationToken = default)
         {
             using var scope = _selfHelpSolutionSolutionClientDiagnostics.CreateScope("SelfHelpSolutionResource.WarmUp");
             scope.Start();
             try
             {
-                var response = _selfHelpSolutionSolutionRestClient.WarmUp(Id.Parent, Id.Name, solutionWarmUpRequestBody, cancellationToken);
+                var response = _selfHelpSolutionSolutionRestClient.WarmUp(Id.Parent, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

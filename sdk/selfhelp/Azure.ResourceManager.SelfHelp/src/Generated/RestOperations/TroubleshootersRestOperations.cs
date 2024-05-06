@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SelfHelp
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateCreateRequestUri(string scope, string troubleshooterName, TroubleshooterResourceData data)
+        internal RequestUriBuilder CreateCreateRequestUri(string scope, string troubleshooterName, SelfHelpTroubleshooterData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.SelfHelp
             return uri;
         }
 
-        internal HttpMessage CreateCreateRequest(string scope, string troubleshooterName, TroubleshooterResourceData data)
+        internal HttpMessage CreateCreateRequest(string scope, string troubleshooterName, SelfHelpTroubleshooterData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="troubleshooterName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="troubleshooterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TroubleshooterResourceData>> CreateAsync(string scope, string troubleshooterName, TroubleshooterResourceData data, CancellationToken cancellationToken = default)
+        public async Task<Response<SelfHelpTroubleshooterData>> CreateAsync(string scope, string troubleshooterName, SelfHelpTroubleshooterData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(troubleshooterName, nameof(troubleshooterName));
@@ -90,9 +90,9 @@ namespace Azure.ResourceManager.SelfHelp
                 case 200:
                 case 201:
                     {
-                        TroubleshooterResourceData value = default;
+                        SelfHelpTroubleshooterData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TroubleshooterResourceData.DeserializeTroubleshooterResourceData(document.RootElement);
+                        value = SelfHelpTroubleshooterData.DeserializeSelfHelpTroubleshooterData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="troubleshooterName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="troubleshooterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TroubleshooterResourceData> Create(string scope, string troubleshooterName, TroubleshooterResourceData data, CancellationToken cancellationToken = default)
+        public Response<SelfHelpTroubleshooterData> Create(string scope, string troubleshooterName, SelfHelpTroubleshooterData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(troubleshooterName, nameof(troubleshooterName));
@@ -120,9 +120,9 @@ namespace Azure.ResourceManager.SelfHelp
                 case 200:
                 case 201:
                     {
-                        TroubleshooterResourceData value = default;
+                        SelfHelpTroubleshooterData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TroubleshooterResourceData.DeserializeTroubleshooterResourceData(document.RootElement);
+                        value = SelfHelpTroubleshooterData.DeserializeSelfHelpTroubleshooterData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="troubleshooterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="troubleshooterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TroubleshooterResourceData>> GetAsync(string scope, string troubleshooterName, CancellationToken cancellationToken = default)
+        public async Task<Response<SelfHelpTroubleshooterData>> GetAsync(string scope, string troubleshooterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(troubleshooterName, nameof(troubleshooterName));
@@ -177,13 +177,13 @@ namespace Azure.ResourceManager.SelfHelp
             {
                 case 200:
                     {
-                        TroubleshooterResourceData value = default;
+                        SelfHelpTroubleshooterData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TroubleshooterResourceData.DeserializeTroubleshooterResourceData(document.RootElement);
+                        value = SelfHelpTroubleshooterData.DeserializeSelfHelpTroubleshooterData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((TroubleshooterResourceData)null, message.Response);
+                    return Response.FromValue((SelfHelpTroubleshooterData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="troubleshooterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="troubleshooterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TroubleshooterResourceData> Get(string scope, string troubleshooterName, CancellationToken cancellationToken = default)
+        public Response<SelfHelpTroubleshooterData> Get(string scope, string troubleshooterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(troubleshooterName, nameof(troubleshooterName));
@@ -206,19 +206,19 @@ namespace Azure.ResourceManager.SelfHelp
             {
                 case 200:
                     {
-                        TroubleshooterResourceData value = default;
+                        SelfHelpTroubleshooterData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TroubleshooterResourceData.DeserializeTroubleshooterResourceData(document.RootElement);
+                        value = SelfHelpTroubleshooterData.DeserializeSelfHelpTroubleshooterData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((TroubleshooterResourceData)null, message.Response);
+                    return Response.FromValue((SelfHelpTroubleshooterData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateContinueRequestUri(string scope, string troubleshooterName, ContinueRequestBody continueRequestBody)
+        internal RequestUriBuilder CreateContinueRequestUri(string scope, string troubleshooterName, TroubleshooterContinueContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.SelfHelp
             return uri;
         }
 
-        internal HttpMessage CreateContinueRequest(string scope, string troubleshooterName, ContinueRequestBody continueRequestBody)
+        internal HttpMessage CreateContinueRequest(string scope, string troubleshooterName, TroubleshooterContinueContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -246,12 +246,12 @@ namespace Azure.ResourceManager.SelfHelp
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            if (continueRequestBody != null)
+            if (content != null)
             {
                 request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(continueRequestBody, ModelSerializationExtensions.WireOptions);
-                request.Content = content;
+                var content0 = new Utf8JsonRequestContent();
+                content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
+                request.Content = content0;
             }
             _userAgent.Apply(message);
             return message;
@@ -260,16 +260,16 @@ namespace Azure.ResourceManager.SelfHelp
         /// <summary> Uses ‘stepId’ and ‘responses’ as the trigger to continue the troubleshooting steps for the respective troubleshooter resource name. &lt;br/&gt;Continue API is used to provide inputs that are required for the specific troubleshooter to progress into the next step in the process. This API is used after the Troubleshooter has been created using the Create API. </summary>
         /// <param name="scope"> scope = resourceUri of affected resource.&lt;br/&gt; For example: /subscriptions/0d0fcd2e-c4fd-4349-8497-200edb3923c6/resourcegroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-non-read. </param>
         /// <param name="troubleshooterName"> Troubleshooter resource Name. </param>
-        /// <param name="continueRequestBody"> The required request body for going to next step in Troubleshooter resource. </param>
+        /// <param name="content"> The required request body for going to next step in Troubleshooter resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="troubleshooterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="troubleshooterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ContinueAsync(string scope, string troubleshooterName, ContinueRequestBody continueRequestBody = null, CancellationToken cancellationToken = default)
+        public async Task<Response> ContinueAsync(string scope, string troubleshooterName, TroubleshooterContinueContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(troubleshooterName, nameof(troubleshooterName));
 
-            using var message = CreateContinueRequest(scope, troubleshooterName, continueRequestBody);
+            using var message = CreateContinueRequest(scope, troubleshooterName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -283,16 +283,16 @@ namespace Azure.ResourceManager.SelfHelp
         /// <summary> Uses ‘stepId’ and ‘responses’ as the trigger to continue the troubleshooting steps for the respective troubleshooter resource name. &lt;br/&gt;Continue API is used to provide inputs that are required for the specific troubleshooter to progress into the next step in the process. This API is used after the Troubleshooter has been created using the Create API. </summary>
         /// <param name="scope"> scope = resourceUri of affected resource.&lt;br/&gt; For example: /subscriptions/0d0fcd2e-c4fd-4349-8497-200edb3923c6/resourcegroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-non-read. </param>
         /// <param name="troubleshooterName"> Troubleshooter resource Name. </param>
-        /// <param name="continueRequestBody"> The required request body for going to next step in Troubleshooter resource. </param>
+        /// <param name="content"> The required request body for going to next step in Troubleshooter resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="troubleshooterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="troubleshooterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Continue(string scope, string troubleshooterName, ContinueRequestBody continueRequestBody = null, CancellationToken cancellationToken = default)
+        public Response Continue(string scope, string troubleshooterName, TroubleshooterContinueContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(troubleshooterName, nameof(troubleshooterName));
 
-            using var message = CreateContinueRequest(scope, troubleshooterName, continueRequestBody);
+            using var message = CreateContinueRequest(scope, troubleshooterName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

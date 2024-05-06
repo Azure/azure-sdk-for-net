@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.SelfHelp.Tests
 
         private SelfHelpSolutionData CreateSelfHelpSolutionData(ResourceIdentifier scope)
         {
-            List<TriggerCriterion> triggerCriterionList = new List<TriggerCriterion>()
+            List<SolutionTriggerCriterion> triggerCriterionList = new List<SolutionTriggerCriterion>()
             {
-                new TriggerCriterion
+                new SolutionTriggerCriterion
                 {
                     Name = "SolutionId",
                     Value = "keyvault-lostdeletedkeys-apollo-solution"

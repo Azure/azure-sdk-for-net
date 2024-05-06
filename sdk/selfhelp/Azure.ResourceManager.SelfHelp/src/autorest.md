@@ -8,22 +8,19 @@ csharp: true
 library-name: SelfHelp
 namespace: Azure.ResourceManager.SelfHelp
 require: https://github.com/Azure/azure-rest-api-specs/blob/b38632bbd56247985cb0493b128ba048e5fee16b/specification/help/resource-manager/readme.md
-tag: package-2024-03-01-preview
+#tag: package-2024-03-01-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
   output-folder: $(this-folder)/../samples/Generated
   clear-output-folder: true
-  skipped-operations:
-  - Diagnostics_CheckNameAvailability
-  - DiscoverySolution_List
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
 
-mgmt-debug:
-  show-serialized-names: true
+#mgmt-debug:
+#  show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -54,6 +51,9 @@ acronym-mapping:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+
+request-path-is-non-resource:
+  - /providers/Microsoft.Help/selfHelp/{solutionId}
 
 list-exception:
 - /{scope}/providers/Microsoft.Help/diagnostics/{diagnosticsResourceName}
@@ -92,10 +92,35 @@ rename-mapping:
   ResponseOption: ResponseConfig
   DiscoveryNlpRequest: DiscoveryNlpContent
   SolutionResource: SelfHelpSolution
+  SolutionResourceSelfHelp: SelfHelpSolutionResult
+  SolutionNlpMetadataResource: SolutionNlpMetadata
+  SimplifiedSolutionsResource: SelfHelpSimplifiedSolution
+  TroubleshooterResource: SelfHelpTroubleshooter
+  AggregationType: ChartAggregationType
+  FilterGroup: ChartFilterGroup
+  ContinueRequestBody: TroubleshooterContinueContent
+  DiscoveryNlpResponse: DiscoveryNlpResult
+  ExecutionStatus: TroubleshooterExecutionStatus
+  QuestionContentType: TroubleshooterQuestionContentType
+  QuestionType: TroubleshooterQuestionType
+  ReplacementMaps: SolutionReplacementMaps
+  ReplacementMapsSelfHelp: ReplacementMapsSesult
+  ResultType: KBSearchResultType
+  SearchResult: KBSearchResult
+  SectionSelfHelp: SolutionSection
+  SolutionType: SelfHelpSolutionType
+  SolutionWarmUpRequestBody: SolutionWarmUpContent
+  StepInput: TroubleshooterStepInput
+  TriggerCriterion: SolutionTriggerCriterion
+  ValidationScope: TroubleshooterValidationScope
+  ValidationScope.URLFormat: UrlFormat
+  VideoGroup: VideoGroupDetail
+  WebResult: KBWebResult
 
 override-operation-name:
   CheckNameAvailability_Post: CheckSelfHelpNameAvailability
   DiscoverySolution_List: GetSelfHelpDiscoverySolutions
+  SolutionSelfHelp_Get: GetSelfHelpSolutionById
 
 directive:
   - from: help.json
