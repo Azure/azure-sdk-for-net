@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary>
     /// Output for the task that migrates Schema for SQL Server databases to Azure SQL databases
     /// Please note <see cref="MigrateSchemaSqlServerSqlDBTaskOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel"/>, <see cref="MigrateSchemaSqlTaskOutputError"/>, <see cref="MigrateSchemaSqlServerSqlDBTaskOutputMigrationLevel"/> and <see cref="MigrateSchemaSqlServerSqlDBTaskOutputError"/>.
+    /// The available derived classes include <see cref="MigrateSchemaSqlServerSqlDBTaskOutputMigrationLevel"/>, <see cref="MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel"/>, <see cref="MigrateSchemaSqlServerSqlDBTaskOutputError"/> and <see cref="MigrateSchemaSqlTaskOutputError"/>.
     /// </summary>
     public abstract partial class MigrateSchemaSqlServerSqlDBTaskOutput
     {

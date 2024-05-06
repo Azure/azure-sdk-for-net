@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="commands">
         /// Array of command properties.
         /// Please note <see cref="CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MongoDBCancelCommand"/>, <see cref="MongoDBFinishCommand"/>, <see cref="MigrateMISyncCompleteCommandProperties"/>, <see cref="MigrateSyncCompleteCommandProperties"/> and <see cref="MongoDBRestartCommand"/>.
+        /// The available derived classes include <see cref="MigrateSyncCompleteCommandProperties"/>, <see cref="MigrateMISyncCompleteCommandProperties"/>, <see cref="MongoDBCancelCommand"/>, <see cref="MongoDBFinishCommand"/> and <see cref="MongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="output">
         /// Task output. This is ignored if submitted.
         /// Please note <see cref="MigrateSqlServerSqlDBTaskOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MigrateSqlServerSqlDBTaskOutputDatabaseLevel"/>, <see cref="MigrateSqlServerSqlDBTaskOutputError"/>, <see cref="MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult"/>, <see cref="MigrateSqlServerSqlDBTaskOutputMigrationLevel"/>, <see cref="MigrateSqlServerSqlDBTaskOutputValidationResult"/> and <see cref="MigrateSqlServerSqlDBTaskOutputTableLevel"/>.
+        /// The available derived classes include <see cref="MigrateSqlServerSqlDBTaskOutputMigrationLevel"/>, <see cref="MigrateSqlServerSqlDBTaskOutputDatabaseLevel"/>, <see cref="MigrateSqlServerSqlDBTaskOutputTableLevel"/>, <see cref="MigrateSqlServerSqlDBTaskOutputError"/>, <see cref="MigrateSqlServerSqlDBTaskOutputValidationResult"/> and <see cref="MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult"/>.
         /// </param>
         /// <param name="taskId"> task id. </param>
         /// <param name="isCloneable"> whether the task can be cloned or not. </param>
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary>
         /// Task output. This is ignored if submitted.
         /// Please note <see cref="MigrateSqlServerSqlDBTaskOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MigrateSqlServerSqlDBTaskOutputDatabaseLevel"/>, <see cref="MigrateSqlServerSqlDBTaskOutputError"/>, <see cref="MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult"/>, <see cref="MigrateSqlServerSqlDBTaskOutputMigrationLevel"/>, <see cref="MigrateSqlServerSqlDBTaskOutputValidationResult"/> and <see cref="MigrateSqlServerSqlDBTaskOutputTableLevel"/>.
+        /// The available derived classes include <see cref="MigrateSqlServerSqlDBTaskOutputMigrationLevel"/>, <see cref="MigrateSqlServerSqlDBTaskOutputDatabaseLevel"/>, <see cref="MigrateSqlServerSqlDBTaskOutputTableLevel"/>, <see cref="MigrateSqlServerSqlDBTaskOutputError"/>, <see cref="MigrateSqlServerSqlDBTaskOutputValidationResult"/> and <see cref="MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult"/>.
         /// </summary>
         public IReadOnlyList<MigrateSqlServerSqlDBTaskOutput> Output { get; }
         /// <summary> task id. </summary>

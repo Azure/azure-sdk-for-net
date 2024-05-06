@@ -28,21 +28,6 @@ namespace Azure.ResourceManager.DeviceUpdate
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ETag))
-            {
-                writer.WritePropertyName("eTag"u8);
-                writer.WriteStringValue(ETag);
-            }
-            if (Optional.IsDefined(RemotePrivateEndpoint))
-            {
-                writer.WritePropertyName("remotePrivateEndpoint"u8);
-                writer.WriteObjectValue(RemotePrivateEndpoint, options);
-            }
-            if (Optional.IsDefined(Status))
-            {
-                writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status);
-            }
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
@@ -109,9 +94,6 @@ namespace Azure.ResourceManager.DeviceUpdate
             {
                 return null;
             }
-            string eTag = default;
-            DeviceUpdateRemotePrivateEndpoint remotePrivateEndpoint = default;
-            string status = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -121,25 +103,6 @@ namespace Azure.ResourceManager.DeviceUpdate
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("eTag"u8))
-                {
-                    eTag = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("remotePrivateEndpoint"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    remotePrivateEndpoint = DeviceUpdateRemotePrivateEndpoint.DeserializeDeviceUpdateRemotePrivateEndpoint(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("status"u8))
-                {
-                    status = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -197,9 +160,6 @@ namespace Azure.ResourceManager.DeviceUpdate
                 type,
                 systemData,
                 provisioningState,
-                eTag,
-                remotePrivateEndpoint,
-                status,
                 serializedAdditionalRawData);
         }
 

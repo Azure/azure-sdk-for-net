@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <returns> A new <see cref="Models.EdgeOrderProductMeterDetails"/> instance for mocking. </returns>
         public static EdgeOrderProductMeterDetails EdgeOrderProductMeterDetails(string billingType = null, double? multiplier = null, EdgeOrderProductChargingType? chargingType = null)
         {
-            return new UnknownMeterDetails(billingType == null ? default : new BillingType(billingType), multiplier, chargingType, serializedAdditionalRawData: null);
+            return new UnknownEdgeOrderProductMeterDetails(billingType == null ? default : new BillingType(billingType), multiplier, chargingType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ProductAvailabilityInformation"/>. </summary>
