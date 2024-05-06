@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <param name="softwareConfiguration">
         /// The software configuration.
         /// Please note <see cref="SapSoftwareConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ExternalInstallationSoftwareConfiguration"/>, <see cref="SapInstallWithoutOSConfigSoftwareConfiguration"/> and <see cref="ServiceInitiatedSoftwareConfiguration"/>.
+        /// The available derived classes include <see cref="ServiceInitiatedSoftwareConfiguration"/>, <see cref="SapInstallWithoutOSConfigSoftwareConfiguration"/> and <see cref="ExternalInstallationSoftwareConfiguration"/>.
         /// </param>
         internal DeploymentConfiguration(SapConfigurationType configurationType, IDictionary<string, BinaryData> serializedAdditionalRawData, AzureLocation? appLocation, InfrastructureConfiguration infrastructureConfiguration, SapSoftwareConfiguration softwareConfiguration) : base(configurationType, serializedAdditionalRawData)
         {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary>
         /// The software configuration.
         /// Please note <see cref="SapSoftwareConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ExternalInstallationSoftwareConfiguration"/>, <see cref="SapInstallWithoutOSConfigSoftwareConfiguration"/> and <see cref="ServiceInitiatedSoftwareConfiguration"/>.
+        /// The available derived classes include <see cref="ServiceInitiatedSoftwareConfiguration"/>, <see cref="SapInstallWithoutOSConfigSoftwareConfiguration"/> and <see cref="ExternalInstallationSoftwareConfiguration"/>.
         /// </summary>
         public SapSoftwareConfiguration SoftwareConfiguration { get; set; }
     }
