@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.SelfHelp.Tests
     public class TroubleshooterTests : SelfHelpManagementTestBase
     {
         private bool isAsync = true;
-        public TroubleshooterTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
+        public TroubleshooterTests(bool isAsync) : base(isAsync) //, RecordedTestMode.Record)
         {
             this.isAsync = isAsync;
         }
@@ -36,11 +36,11 @@ namespace Azure.ResourceManager.SelfHelp.Tests
             //3.Push the recordings to the assets-sdk
             if (isAsync)
             {
-                troubleshooterResourceName = "0c16f71c-e791-4da2-80d7-f93ddfa2c223";
+                troubleshooterResourceName = "0c16f71c-e791-4da2-80d7-f93ddfa2c226";
             }
             else
             {
-                troubleshooterResourceName = "cc5feaab-3b50-40b9-aaa4-754b6b5e3823";
+                troubleshooterResourceName = "cc5feaab-3b50-40b9-aaa4-754b6b5e3826";
             }
 
             ResourceIdentifier scope = new ResourceIdentifier($"/subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{resourceName}");

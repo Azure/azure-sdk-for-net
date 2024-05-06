@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
+using Azure.Core.TestFramework;
 using Azure.ResourceManager.SelfHelp.Models;
 using NUnit.Framework;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace Azure.ResourceManager.SelfHelp.Tests
 {
     public class SimplifiedSolutionsTests : SelfHelpManagementTestBase
     {
-        public SimplifiedSolutionsTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
+        public SimplifiedSolutionsTests(bool isAsync) : base(isAsync) //, RecordedTestMode.Record)
         {
         }
 

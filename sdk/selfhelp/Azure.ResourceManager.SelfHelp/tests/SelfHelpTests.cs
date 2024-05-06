@@ -4,12 +4,13 @@
 using Azure.Core;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using Azure.Core.TestFramework;
 
 namespace Azure.ResourceManager.SelfHelp.Tests
 {
     public class SelfHelpTests : SelfHelpManagementTestBase
     {
-        public SelfHelpTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
+        public SelfHelpTests(bool isAsync) : base(isAsync) //, RecordedTestMode.Record)
         {
         }
 

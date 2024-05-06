@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.SelfHelp.Tests
 {
     public class DiscoverySolutionNLPTests : SelfHelpManagementTestBase
     {
-        public DiscoverySolutionNLPTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
+        public DiscoverySolutionNLPTests(bool isAsync) : base(isAsync) //, RecordedTestMode.Record)
         {
         }
 
