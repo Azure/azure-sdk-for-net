@@ -1236,7 +1236,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(eventData, Is.Not.Null, "The event should have been created.");
             Assert.That(eventData.EventBody, Is.Not.Null, "The event should have a body.");
             Assert.That(eventData.Properties.Count, Is.EqualTo(message.ApplicationProperties.Map.Count()), "The event should have a set of properties.");
-            Assert.That(eventData.Offset, Is.EqualTo(offset), "The offset should match.");
+            Assert.That(eventData.Offset, Is.EqualTo(sequenceNumber), "The offset should match.");
             Assert.That(eventData.SequenceNumber, Is.EqualTo(sequenceNumber), "The sequence number should match.");
             Assert.That(eventData.EnqueuedTime, Is.EqualTo(enqueuedTime), "The enqueue time should match.");
             Assert.That(eventData.PartitionKey, Is.EqualTo(partitionKey), "The partition key should match.");
@@ -1322,7 +1322,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(eventData, Is.Not.Null, "The event should have been created.");
             Assert.That(eventData.EventBody, Is.Not.Null, "The event should have a body.");
             Assert.That(eventData.Properties.Count, Is.EqualTo(message.ApplicationProperties.Map.Count()), "The event should have a set of properties.");
-            Assert.That(eventData.Offset, Is.EqualTo(offset), "The offset should match.");
+            Assert.That(eventData.Offset, Is.EqualTo(sequenceNumber), "The offset should match.");
             Assert.That(eventData.SequenceNumber, Is.EqualTo(sequenceNumber), "The sequence number should match.");
             Assert.That(eventData.EnqueuedTime, Is.EqualTo(enqueuedTime), "The enqueue time should match.");
             Assert.That(eventData.PartitionKey, Is.EqualTo(partitionKey), "The partition key should match.");
@@ -1568,13 +1568,13 @@ namespace Azure.Messaging.EventHubs.Tests
 
             using var message = AmqpMessage.Create();
             message.ApplicationProperties.Map.Add("Test", propertyValue);
-            message.MessageAnnotations.Map.Add(AmqpProperty.Offset, propertyValue.ToString());
+            message.MessageAnnotations.Map.Add(AmqpProperty.SequenceNumber, propertyValue.ToString());
 
             var eventData = new AmqpMessageConverter().CreateEventFromMessage(message);
             Assert.That(eventData, Is.Not.Null, "The event should have been created.");
             Assert.That(eventData.Properties.Count, Is.EqualTo(message.ApplicationProperties.Map.Count()), "There should have been properties present.");
             Assert.That(eventData.Properties.First().Value, Is.EqualTo(propertyValue), "The application property should have been populated.");
-            Assert.That(eventData.Offset, Is.EqualTo(propertyValue), "The offset should have been populated.");
+            Assert.That(eventData.SequenceNumber, Is.EqualTo(propertyValue), "The offset should have been populated.");
         }
 
         /// <summary>

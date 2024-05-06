@@ -1658,7 +1658,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var retryOptions = new EventHubsRetryOptions { MaximumRetries = 0, MaximumDelay = TimeSpan.FromMilliseconds(5) };
             var options = new EventProcessorOptions { TrackLastEnqueuedEventProperties = false, RetryOptions = retryOptions };
             var partition = new EventProcessorPartition { PartitionId = "4" };
-            var lastEventBatch = new List<EventData> { new EventData(new BinaryData(Array.Empty<byte>())), new EventData(new BinaryData(Array.Empty<byte>()), offset: 9987) };
+            var lastEventBatch = new List<EventData> { new EventData(new BinaryData(Array.Empty<byte>())), new EventData(new BinaryData(Array.Empty<byte>()), sequenceNumber: 9987) };
             var initialStartingPosition = EventPosition.FromSequenceNumber(332);
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var mockConnection = Mock.Of<EventHubConnection>();

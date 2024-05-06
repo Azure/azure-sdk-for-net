@@ -177,7 +177,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(eventData.SystemProperties, Is.EquivalentTo(systemProperties), "The system properties should have been set.");
             Assert.That(eventData.PartitionKey, Is.EqualTo(partitionKey), "The partition key should have been set.");
             Assert.That(eventData.SequenceNumber, Is.EqualTo(sequenceNumber), "The sequence number should have been set.");
-            Assert.That(eventData.Offset, Is.EqualTo(offset), "The offset should have been set.");
+            Assert.That(eventData.Offset, Is.EqualTo(sequenceNumber), "The offset should have been set to the sequence number.");
             Assert.That(eventData.EnqueuedTime, Is.EqualTo(enqueueTime), "The sequence number should have been set.");
         }
 
