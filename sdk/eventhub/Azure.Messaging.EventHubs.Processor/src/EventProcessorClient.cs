@@ -922,11 +922,6 @@ namespace Azure.Messaging.EventHubs
 
             Logger.UpdateCheckpointStart(partitionId, Identifier, EventHubName, ConsumerGroup, sequenceNumber?.ToString(), offset.ToString());
 
-            if (GeoReplicationCount > 1)
-            {
-                Logger.UpdateCheckpointMissingInformationForGeoReplicatedEventHub(Identifier, EventHubName, offset.ToString(), sequenceNumber?.ToString());
-            }
-
             using var scope = ClientDiagnostics.CreateScope(DiagnosticProperty.EventProcessorCheckpointActivityName, ActivityKind.Internal);
             scope.Start();
 

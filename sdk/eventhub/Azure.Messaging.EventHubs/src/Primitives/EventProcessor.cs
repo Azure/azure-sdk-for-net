@@ -207,10 +207,10 @@ namespace Azure.Messaging.EventHubs.Primitives
         protected EventHubsRetryPolicy RetryPolicy { get; }
 
         /// <summary>
-        ///    The total number of replicas, including the primary, of the Event Hubs namespace. If this value is 1, then geo-replication is not enabled.
+        ///    The properties associated with the Event Hub being read from. This value is updated in each load balancing cycle.
         /// </summary>
         ///
-        protected int? GeoReplicationCount { get;  }
+        protected EventHubProperties Properties { get; private set; }
 
         /// <summary>
         ///   Indicates whether or not this event processor should instrument batch event processing calls with distributed tracing.
@@ -1102,7 +1102,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         {
             if (sequenceNumber.HasValue)
             {
-                if (GeoReplicationCount > 1)
+                if (Properties.IsGeoReplicationEnabled)
                 {
                     Logger.UpdateCheckpointMissingInformationForGeoReplicatedEventHub(Identifier, EventHubName, offset.ToString(), sequenceNumber?.ToString());
                 }
@@ -1307,8 +1307,11 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <returns>The set of identifiers for the Event Hub partitions.</returns>
         ///
         protected virtual async Task<string[]> ListPartitionIdsAsync(EventHubConnection connection,
-                                                                     CancellationToken cancellationToken) =>
-            await connection.GetPartitionIdsAsync(RetryPolicy, cancellationToken).ConfigureAwait(false);
+                                                                     CancellationToken cancellationToken)
+        {
+            await Task.Yield();
+            return Properties.PartitionIds;
+        }
 
         /// <summary>
         ///   Allows reporting that a partition was stolen by another event consumer causing ownership
@@ -1645,6 +1648,7 @@ namespace Azure.Messaging.EventHubs.Primitives
 
                     try
                     {
+                        Properties = await connection.GetPropertiesAsync(RetryPolicy, cancellationToken).ConfigureAwait(false);
                         partitionIds = await ListPartitionIdsAsync(connection, cancellationToken).ConfigureAwait(false);
                     }
                     catch (Exception ex) when (ex.IsNotType<TaskCanceledException>())

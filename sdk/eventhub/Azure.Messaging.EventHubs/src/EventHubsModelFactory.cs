@@ -42,13 +42,13 @@ namespace Azure.Messaging.EventHubs
         /// <param name="name">The name of the Event Hub.</param>
         /// <param name="createdOn">The date and time at which the Event Hub was created.</param>
         /// <param name="partitionIds">The set of unique identifiers for each partition.</param>
-        /// <param name="geoReplicationFactor">The total number of replicas, including the primary, of the Event Hubs namespace.</param>
+        /// <param name="isGeoReplicationEnabled">True if geo replication is enabled on the Event Hubs namespace.</param>
         ///
         public static EventHubProperties EventHubProperties(string name,
                                                             DateTimeOffset createdOn,
                                                             string[] partitionIds,
-                                                            int geoReplicationFactor) =>
-           new EventHubProperties(name, createdOn, partitionIds, geoReplicationFactor);
+                                                            bool isGeoReplicationEnabled) =>
+           new EventHubProperties(name, createdOn, partitionIds, isGeoReplicationEnabled);
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="PartitionProperties"/> class.

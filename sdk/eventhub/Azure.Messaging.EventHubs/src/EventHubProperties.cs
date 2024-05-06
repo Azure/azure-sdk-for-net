@@ -32,10 +32,9 @@ namespace Azure.Messaging.EventHubs
         public string[] PartitionIds { get; }
 
         /// <summary>
-        /// The total number of replicas, including the primary of the Event Hubs namespace. If this value is 1,
-        /// then geo-replication is not enabled.
+        /// If the Event Hubs namespace has geo-replication enabled.
         /// </summary>
-        public int GeoReplicationCount { get; }
+        public bool IsGeoReplicationEnabled { get; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="EventHubProperties"/> class.
@@ -62,17 +61,17 @@ namespace Azure.Messaging.EventHubs
         /// <param name="name">The name of the Event Hub.</param>
         /// <param name="createdOn">The date and time at which the Event Hub was created.</param>
         /// <param name="partitionIds">The set of unique identifiers for each partition.</param>
-        /// <param name="geoReplicationCount">The total number of replicas including the primary of the Event Hubs namespace.</param>
+        /// <param name="isGeoReplicationEnabled">The total number of replicas including the primary of the Event Hubs namespace.</param>
         ///
         protected internal EventHubProperties(string name,
                                               DateTimeOffset createdOn,
                                               string[] partitionIds,
-                                              int geoReplicationCount)
+                                              bool isGeoReplicationEnabled)
         {
             Name = name;
             CreatedOn = createdOn;
             PartitionIds = partitionIds;
-            GeoReplicationCount = geoReplicationCount;
+            IsGeoReplicationEnabled = isGeoReplicationEnabled;
         }
 
         /// <summary>

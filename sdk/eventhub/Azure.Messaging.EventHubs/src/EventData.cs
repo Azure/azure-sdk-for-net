@@ -292,7 +292,7 @@ namespace Azure.Messaging.EventHubs
         ///   when not populated is <see cref="long.MinValue"/>.
         /// </value>
         ///
-        public long Offset => _amqpMessage.GetOffset(long.MinValue);
+        public long Offset => _amqpMessage.GetSequenceNumber(long.MinValue);
 
         /// <summary>
         ///   The date and time, in UTC, of when the event was enqueued in the Event Hub partition.
