@@ -181,7 +181,7 @@ namespace Azure.Storage.Files.Shares.Models
                 IsServerEncrypted = isServerEncrypted,
                 SmbProperties = new FileSmbProperties
                 {
-                    FileAttributes = ShareExtensions.ToFileAttributes(fileAttributes),
+                    FileAttributes = ShareModelExtensions.ToFileAttributes(fileAttributes),
                     FilePermissionKey = filePermissionKey,
                     FileCreatedOn = fileCreationTime,
                     FileLastWrittenOn = fileLastWriteTime,
