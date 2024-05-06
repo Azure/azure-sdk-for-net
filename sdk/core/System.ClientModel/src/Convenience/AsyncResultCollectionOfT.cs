@@ -5,7 +5,6 @@ using System.ClientModel.Internal;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace System.ClientModel;
 
@@ -26,18 +25,9 @@ public abstract class AsyncResultCollection<T> : ClientResult, IAsyncEnumerable<
     {
     }
 
-    #region Factory methods
+    #region Factory method
 
-    // TODO: Consider signature: `public static ClientResultCollection<T> Create<TValue>(PipelineResponse response) where TValue : IJsonModel<T>` ?
     // TODO: terminal event can be a model type as well ... are we happy using string for now and adding an overload if needed later?
-    public static AsyncResultCollection<TValue> Create<TValue>(Func<Task<ClientResult>> getResultAsync)
-        where TValue : IJsonModel<TValue>
-    {
-        Argument.AssertNotNull(getResultAsync, nameof(getResultAsync));
-
-        return new AsyncSseValueResultCollection<TValue>(getResultAsync);
-    }
-
     public static AsyncResultCollection<BinaryData> Create(PipelineResponse response)
     {
         Argument.AssertNotNull(response, nameof(response));

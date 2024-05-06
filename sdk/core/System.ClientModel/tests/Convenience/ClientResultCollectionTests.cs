@@ -16,61 +16,6 @@ public class ClientResultCollectionTests : SyncAsyncTestBase
     {
     }
 
-    // TODO: add tests for protocol methods we need to pass parameters to
-    // to show this method signature works with closures as expected.
-
-    [Test]
-    public async Task CreatesAsyncResultCollection()
-    {
-        MockPipelineResponse response = new();
-        response.SetContent("[DONE]");
-
-        async Task<ClientResult> getResultAsync()
-        {
-            // TODO: simulate async correctly
-            await Task.Delay(0);
-            return ClientResult.FromResponse(response);
-        }
-
-        var results = AsyncResultCollection<MockJsonModel>.Create<MockJsonModel>(getResultAsync);
-
-        bool empty = true;
-        await foreach (MockJsonModel result in results)
-        {
-            empty = false;
-        }
-
-        Assert.IsNotNull(results);
-        Assert.AreEqual(results.GetRawResponse(), response);
-        Assert.IsTrue(empty);
-    }
-
-    [Test]
-    public async Task CanEnumerateModelValues()
-    {
-        MockPipelineResponse response = new();
-        response.SetContent(_mockContent);
-
-        Func<Task<ClientResult>> getResultAsync = async () =>
-        {
-            await Task.Delay(0);
-            return ClientResult.FromResponse(response);
-        };
-
-        var results = AsyncResultCollection<MockJsonModel>.Create<MockJsonModel>(getResultAsync);
-
-        int i = 0;
-        await foreach (MockJsonModel model in results)
-        {
-            Assert.AreEqual(model.IntValue, i);
-            Assert.AreEqual(model.StringValue, i.ToString());
-
-            i++;
-        }
-
-        Assert.AreEqual(i, 3);
-    }
-
     [Test]
     public async Task CanEnumerateBinaryDataValues()
     {
@@ -90,6 +35,25 @@ public class ClientResultCollectionTests : SyncAsyncTestBase
         }
 
         Assert.AreEqual(i, 3);
+    }
+
+    [Test]
+    public void BinaryDataCollectionThrowsIfCancelled()
+    {
+        MockPipelineResponse response = new();
+        response.SetContent(_mockContent);
+
+        var results = AsyncResultCollection<BinaryData>.Create(response);
+
+        // Set it to `cancelled: true` to validate functionality.
+        CancellationToken token = new(true);
+
+        Assert.ThrowsAsync<OperationCanceledException>(async () =>
+        {
+            await foreach (BinaryData result in results.WithCancellation(token))
+            {
+            }
+        });
     }
 
     [Test]
@@ -114,44 +78,52 @@ public class ClientResultCollectionTests : SyncAsyncTestBase
     }
 
     [Test]
-    public void ModelCollectionThrowsIfCancelled()
+    public async Task CreatesAsyncResultCollection()
     {
-        MockPipelineResponse response = new();
-        response.SetContent(_mockContent);
+        MockClient client = new();
+        AsyncResultCollection<MockJsonModel> models = client.GetModelsStreamingAsync("[DONE]");
 
-        Func<Task<ClientResult>> getResultAsync = async () =>
+        bool empty = true;
+        await foreach (MockJsonModel model in models)
         {
-            await Task.Delay(0);
-            return ClientResult.FromResponse(response);
-        };
+            empty = false;
+        }
 
-        var results = AsyncResultCollection<MockJsonModel>.Create<MockJsonModel>(getResultAsync);
-
-        // Set it to `cancelled: true` to validate functionality.
-        CancellationToken token = new(true);
-
-        Assert.ThrowsAsync<OperationCanceledException>(async () =>
-        {
-            await foreach (MockJsonModel model in results.WithCancellation(token))
-            {
-            }
-        });
+        Assert.IsNotNull(models);
+        Assert.AreEqual(models.GetRawResponse().Content.ToString(), "[DONE]");
+        Assert.IsTrue(empty);
     }
 
     [Test]
-    public void BinaryDataCollectionThrowsIfCancelled()
+    public async Task CanEnumerateModelValues()
     {
-        MockPipelineResponse response = new();
-        response.SetContent(_mockContent);
+        MockClient client = new MockClient();
+        AsyncResultCollection<MockJsonModel> models = client.GetModelsStreamingAsync(_mockContent);
 
-        var results = AsyncResultCollection<BinaryData>.Create(response);
+        int i = 0;
+        await foreach (MockJsonModel model in models)
+        {
+            Assert.AreEqual(model.IntValue, i);
+            Assert.AreEqual(model.StringValue, i.ToString());
+
+            i++;
+        }
+
+        Assert.AreEqual(i, 3);
+    }
+
+    [Test]
+    public void ModelCollectionThrowsIfCancelled()
+    {
+        MockClient client = new MockClient();
+        AsyncResultCollection<MockJsonModel> models = client.GetModelsStreamingAsync(_mockContent);
 
         // Set it to `cancelled: true` to validate functionality.
         CancellationToken token = new(true);
 
         Assert.ThrowsAsync<OperationCanceledException>(async () =>
         {
-            await foreach (BinaryData result in results.WithCancellation(token))
+            await foreach (MockJsonModel model in models.WithCancellation(token))
             {
             }
         });

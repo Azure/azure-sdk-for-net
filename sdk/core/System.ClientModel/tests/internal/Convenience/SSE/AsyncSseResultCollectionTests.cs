@@ -13,58 +13,6 @@ namespace System.ClientModel.Tests.Convenience;
 public class AsyncSseResultCollectionTests
 {
     [Test]
-    public async Task ValueCollectionEnumeratesValues()
-    {
-        MockPipelineResponse response = new();
-        response.SetContent(_mockContent);
-
-        async Task<ClientResult> getResultAsync()
-        {
-            // TODO: simulate async correctly
-            await Task.Delay(0);
-            return ClientResult.FromResponse(response);
-        }
-
-        AsyncSseValueResultCollection<MockJsonModel> models = new(getResultAsync);
-
-        int i = 0;
-        await foreach (MockJsonModel model in models)
-        {
-            Assert.AreEqual(model.IntValue, i);
-            Assert.AreEqual(model.StringValue, i.ToString());
-
-            i++;
-        }
-
-        Assert.AreEqual(i, 3);
-    }
-
-    [Test]
-    public void ValueCollectionThrowsIfCancelled()
-    {
-        MockPipelineResponse response = new();
-        response.SetContent(_mockContent);
-
-        async Task<ClientResult> getResultAsync()
-        {
-            // TODO: simulate async correctly
-            await Task.Delay(0);
-            return ClientResult.FromResponse(response);
-        }
-
-        AsyncSseValueResultCollection<MockJsonModel> models = new(getResultAsync);
-
-        CancellationToken token = new(true);
-
-        Assert.ThrowsAsync<OperationCanceledException>(async () =>
-        {
-            await foreach (MockJsonModel model in models.WithCancellation(token))
-            {
-            }
-        });
-    }
-
-    [Test]
     public async Task BinaryDataCollectionEnumeratesData()
     {
         MockPipelineResponse response = new();

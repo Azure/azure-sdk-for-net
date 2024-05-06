@@ -12,7 +12,6 @@ namespace System.ClientModel
         protected internal AsyncResultCollection() : base (default(System.ClientModel.Primitives.PipelineResponse)) { }
         protected internal AsyncResultCollection(System.ClientModel.Primitives.PipelineResponse response) : base (default(System.ClientModel.Primitives.PipelineResponse)) { }
         public static System.ClientModel.AsyncResultCollection<System.BinaryData> Create(System.ClientModel.Primitives.PipelineResponse response) { throw null; }
-        public static System.ClientModel.AsyncResultCollection<TValue> Create<TValue>(System.Func<System.Threading.Tasks.Task<System.ClientModel.ClientResult>> getResultAsync) where TValue : System.ClientModel.Primitives.IJsonModel<TValue> { throw null; }
         public abstract System.Collections.Generic.IAsyncEnumerator<T> GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     }
     public abstract partial class BinaryContent : System.IDisposable

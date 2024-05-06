@@ -5,6 +5,7 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -97,8 +98,80 @@ public class MockClient
                 return _protocolMethod(_content, /*options:*/ default);
             }
 
-            AsyncResultCollection<MockJsonModel> enumerable = Create<MockJsonModel>(getResultAsync);
-            return enumerable.GetAsyncEnumerator(cancellationToken);
+            return new AsyncMockJsonModelEnumerator(getResultAsync, this, cancellationToken);
+        }
+
+        private sealed class AsyncMockJsonModelEnumerator : IAsyncEnumerator<MockJsonModel>
+        {
+            private readonly Func<Task<ClientResult>> _getResultAsync;
+            private readonly MockJsonModelCollection _enumerable;
+            private readonly CancellationToken _cancellationToken;
+
+            private IAsyncEnumerator<BinaryData>? _events;
+            private MockJsonModel? _current;
+
+            private bool _started;
+
+            public AsyncMockJsonModelEnumerator(Func<Task<ClientResult>> getResultAsync, MockJsonModelCollection enumerable, CancellationToken cancellationToken)
+            {
+                Debug.Assert(getResultAsync is not null);
+                Debug.Assert(enumerable is not null);
+
+                _getResultAsync = getResultAsync!;
+                _enumerable = enumerable!;
+                _cancellationToken = cancellationToken;
+            }
+
+            MockJsonModel IAsyncEnumerator<MockJsonModel>.Current
+                => _current!;
+
+            async ValueTask<bool> IAsyncEnumerator<MockJsonModel>.MoveNextAsync()
+            {
+                if (_events is null && _started)
+                {
+                    throw new ObjectDisposedException(nameof(AsyncMockJsonModelEnumerator));
+                }
+
+                _cancellationToken.ThrowIfCancellationRequested();
+
+                // TODO: refactor for clarity
+                // Lazily initialize
+                if (_events is null)
+                {
+                    ClientResult result = await _getResultAsync().ConfigureAwait(false);
+                    PipelineResponse response = result.GetRawResponse();
+                    _enumerable.SetRawResponse(response);
+
+                    if (response.ContentStream is null)
+                    {
+                        throw new ArgumentException("Unable to create result from response with null ContentStream", nameof(response));
+                    }
+
+                    AsyncResultCollection<BinaryData> events = Create(response);
+                    _events = events.GetAsyncEnumerator();
+                    _started = true;
+                }
+
+                if (await _events.MoveNextAsync().ConfigureAwait(false))
+                {
+                    MockJsonModel? model = ModelReaderWriter.Read<MockJsonModel>(_events.Current);
+
+                    // TODO: should we stop iterating if we can't deserialize?
+                    if (model is null)
+                    {
+                        _current = default;
+                        return false;
+                    }
+
+                    _current = model;
+                    return true;
+                }
+
+                _current = default;
+                return false;
+            }
+
+            ValueTask IAsyncDisposable.DisposeAsync() => new();
         }
     }
 }
