@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Arc": return AddonArcProperties.DeserializeAddonArcProperties(element, options);
-                    case "HCX": return AddonHcxProperties.DeserializeAddonHcxProperties(element, options);
                     case "SRM": return AddonSrmProperties.DeserializeAddonSrmProperties(element, options);
                     case "VR": return AddonVrProperties.DeserializeAddonVrProperties(element, options);
+                    case "HCX": return AddonHcxProperties.DeserializeAddonHcxProperties(element, options);
+                    case "Arc": return AddonArcProperties.DeserializeAddonArcProperties(element, options);
                 }
             }
             return UnknownAddonProperties.DeserializeUnknownAddonProperties(element, options);

@@ -95,8 +95,8 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "RELAY": return WorkloadNetworkDhcpRelay.DeserializeWorkloadNetworkDhcpRelay(element, options);
                     case "SERVER": return WorkloadNetworkDhcpServer.DeserializeWorkloadNetworkDhcpServer(element, options);
+                    case "RELAY": return WorkloadNetworkDhcpRelay.DeserializeWorkloadNetworkDhcpRelay(element, options);
                 }
             }
             return UnknownWorkloadNetworkDhcpEntity.DeserializeUnknownWorkloadNetworkDhcpEntity(element, options);
