@@ -23,7 +23,7 @@ public abstract class AsyncResultCollection<T> : ClientResult, IAsyncEnumerable<
     public abstract IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = default);
 
     // TODO: take CancellationToken -- question -- does the cancellation token go here or to the enumerator?
-    //public static ClientResultCollection<T> Create<TValue>(PipelineResponse response) where TValue : IJsonModel<T>
+    // TODO: Consider signature: `public static ClientResultCollection<T> Create<TValue>(PipelineResponse response) where TValue : IJsonModel<T>` ?
     // TODO: terminal event can be a model type as well ... are we happy using string for now and adding an overload if needed later?
     public static AsyncResultCollection<TValue> Create<TValue>(PipelineResponse response, CancellationToken cancellationToken = default)
         where TValue : IJsonModel<TValue>

@@ -4,46 +4,43 @@
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace System.ClientModel.Internal;
 
-internal class AsyncSseDataResultCollection : AsyncResultCollection<BinaryData>
+internal class AsyncSseValueResultCollection<T> : AsyncResultCollection<T>
+    where T : IJsonModel<T>
 {
-    // Note: this one doesn't delay sending the request because it's used
-    // with protocol methods.
-    public AsyncSseDataResultCollection(PipelineResponse response) : base(response)
+    // TODO: delay sending request
+    public AsyncSseValueResultCollection(PipelineResponse response) : base(response)
     {
-        Argument.AssertNotNull(response, nameof(response));
     }
 
-    public override IAsyncEnumerator<BinaryData> GetAsyncEnumerator(CancellationToken cancellationToken = default)
+    public override IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = default)
     {
         PipelineResponse response = GetRawResponse();
 
         // We validate that response.ContentStream is non-null in
-        // AsyncResultCollection.Create method.
+        // AsyncResultCollection.Create factory method.
         Debug.Assert(response.ContentStream is not null);
 
         ServerSentEventReader reader = new(response.ContentStream!);
         AsyncServerSentEventEnumerator sseEnumerator = new(reader, cancellationToken);
-        return new AsyncSseDataEnumerator(sseEnumerator);
+        return new AsyncSseValueEnumerator(sseEnumerator);
     }
 
-    // TODO: probably change the name back to AsyncSseBinaryDataEnumerator.
-    // Right now, I want to reason about it as "the thing that enumerates data elements as BinaryData."
-    private class AsyncSseDataEnumerator : IAsyncEnumerator<BinaryData>, IDisposable, IAsyncDisposable
+    private class AsyncSseValueEnumerator : IAsyncEnumerator<T>, IDisposable, IAsyncDisposable
     {
         private readonly AsyncServerSentEventEnumerator _eventEnumerator;
 
-        private BinaryData? _current;
+        private T? _current;
 
         // TODO: is null supression the correct pattern here?
-        public BinaryData Current { get => _current!; }
+        public T Current { get => _current!; }
 
-        public AsyncSseDataEnumerator(AsyncServerSentEventEnumerator eventEnumerator)
+        public AsyncSseValueEnumerator(AsyncServerSentEventEnumerator eventEnumerator)
         {
             Argument.AssertNotNull(eventEnumerator, nameof(eventEnumerator));
 
@@ -54,17 +51,26 @@ internal class AsyncSseDataResultCollection : AsyncResultCollection<BinaryData>
         {
             if (await _eventEnumerator.MoveNextAsync().ConfigureAwait(false))
             {
-                char[] chars = _eventEnumerator.Current.Data.ToArray();
-                byte[] bytes = Encoding.UTF8.GetBytes(chars);
-                _current = new BinaryData(bytes);
-                return true;
-            }
+                using JsonDocument eventDocument = JsonDocument.Parse(_eventEnumerator.Current.Data);
+                BinaryData eventData = BinaryData.FromObjectAsJson(eventDocument.RootElement);
+                T? jsonData = ModelReaderWriter.Read<T>(eventData);
 
-            _current = null;
+                // TODO: should we stop iterating if we can't deserialize?
+                if (jsonData is null)
+                {
+                    _current = default;
+                    return false;
+                }
+
+                if (jsonData is T singleInstanceData)
+                {
+                    _current = singleInstanceData;
+                    return true;
+                }
+            }
             return false;
         }
 
-        // TODO: implement this pattern correctly.
         public async ValueTask DisposeAsync()
         {
             await _eventEnumerator.DisposeAsync().ConfigureAwait(false);
