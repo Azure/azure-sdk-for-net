@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
 using Azure.Core;
@@ -101,6 +102,7 @@ namespace Azure.Provisioning
         /// <param name="isLiteral">Is the output literal.</param>
         /// <param name="isSecure">Is the output secure.</param>
         /// <returns>The <see cref="Output"/>.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public Output AddOutput(string outputName, Expression<Func<T, object?>> propertySelector, bool isLiteral = false, bool isSecure = false)
             => AddOutput(outputName, BicepKind.String, propertySelector, isLiteral, isSecure);
 
@@ -129,6 +131,7 @@ namespace Azure.Provisioning
         /// <param name="isLiteral">Is the output literal.</param>
         /// <param name="isSecure">Is the output secure.</param>
         /// <returns>The <see cref="Output"/>.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public Output AddOutput(string outputName, string formattedString, Expression<Func<T, object?>> propertySelector, bool isLiteral = false, bool isSecure = false)
             => AddOutput(outputName, BicepKind.String, formattedString, propertySelector, isLiteral, isSecure);
 

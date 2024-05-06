@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace Azure.Provisioning
@@ -92,6 +93,7 @@ namespace Azure.Provisioning
         /// <param name="description">The parameter description.</param>
         /// <param name="defaultValue">The parameter defaultValue.</param>
         /// <param name="isSecure">Is the parameter secure.</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public Parameter(string name, string? description = default, object? defaultValue = default, bool isSecure = false)
             : this(name, BicepKind.String, description, defaultValue, isSecure)
         {
