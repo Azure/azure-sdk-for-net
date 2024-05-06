@@ -7,8 +7,7 @@ Azure.Provisioning contains the core functionality for the Azure Provisioning li
 
 ### Install the package
 
-Install the specific service libraries for .NET with [NuGet](https://www.nuget.
-org/ ) required for your application.
+Install the specific service libraries for .NET with [NuGet](https://www.nuget.org/) required for your application.
 
 ```dotnetcli
 dotnet add package Azure.Provisioning.AppConfiguration
