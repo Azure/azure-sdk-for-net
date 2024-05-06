@@ -142,7 +142,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void NonIdempotentStatePropertyAcessorsDeferToTheAmqpMessage()
+        public void NonIdempotentStatePropertyAccessorsDeferToTheAmqpMessage()
         {
             var sequenceNumber = 123L;
             var offset = 456L;
@@ -158,7 +158,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(message.Body.TryGetData(out var messageBody), Is.True, "The message body should have been read.");
             Assert.That(eventData.EventBody.ToArray(), Is.EquivalentTo(messageBody.First().ToArray()), "The message body should match.");
             Assert.That(eventData.Properties, Is.EquivalentTo(message.ApplicationProperties), "The application properties should match.");
-            Assert.That(eventData.Offset, Is.EqualTo(offset), "The offset should match.");
+            Assert.That(eventData.Offset, Is.EqualTo(sequenceNumber), "The offset should match.");
             Assert.That(eventData.SequenceNumber, Is.EqualTo(sequenceNumber), "The sequence number should match.");
             Assert.That(eventData.EnqueuedTime, Is.EqualTo(enqueueTime), "The enqueued time should match.");
             Assert.That(eventData.PartitionKey, Is.EqualTo(partitionKey), "The partition key should match.");

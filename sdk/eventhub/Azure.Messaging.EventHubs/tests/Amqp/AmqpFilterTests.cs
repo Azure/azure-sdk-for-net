@@ -43,13 +43,14 @@ namespace Azure.Messaging.EventHubs.Tests
             // Set all properties for the event position.
 
             var offset = 1;
+            var sequenceNumber = 222;
             var position = EventPosition.FromOffset(offset);
             position.SequenceNumber = "222";
             position.EnqueuedTime = DateTimeOffset.Parse("2015-10-27T12:00:00Z");
 
             var filter = AmqpFilter.BuildFilterExpression(position);
             Assert.That(filter, Contains.Substring(AmqpFilter.SequenceNumberName), "The sequence number should have precedence for filtering.");
-            Assert.That(filter, Contains.Substring(offset.ToString()), "The offset value should be present in the filter.");
+            Assert.That(filter, Contains.Substring(sequenceNumber.ToString()), "The offset value should be present in the filter.");
         }
 
         /// <summary>
