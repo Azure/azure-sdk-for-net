@@ -32,27 +32,31 @@ internal class AsyncSseDataResultCollection : AsyncResultCollection<BinaryData>
         return new AsyncSseDataEnumerator(sseEnumerator);
     }
 
-    private class AsyncSseDataEnumerator : IAsyncEnumerator<BinaryData>, IDisposable, IAsyncDisposable
+    private sealed class AsyncSseDataEnumerator : IAsyncEnumerator<BinaryData>
     {
-        private readonly AsyncServerSentEventEnumerator _eventEnumerator;
-
+        private AsyncServerSentEventEnumerator? _events;
         private BinaryData? _current;
 
         // TODO: is null supression the correct pattern here?
         public BinaryData Current { get => _current!; }
 
-        public AsyncSseDataEnumerator(AsyncServerSentEventEnumerator eventEnumerator)
+        public AsyncSseDataEnumerator(AsyncServerSentEventEnumerator events)
         {
-            Argument.AssertNotNull(eventEnumerator, nameof(eventEnumerator));
+            Debug.Assert(events is not null);
 
-            _eventEnumerator = eventEnumerator;
+            _events = events;
         }
 
         public async ValueTask<bool> MoveNextAsync()
         {
-            if (await _eventEnumerator.MoveNextAsync().ConfigureAwait(false))
+            if (_events is null)
             {
-                char[] chars = _eventEnumerator.Current.Data.ToArray();
+                throw new ObjectDisposedException(nameof(AsyncSseDataEnumerator));
+            }
+
+            if (await _events.MoveNextAsync().ConfigureAwait(false))
+            {
+                char[] chars = _events.Current.Data.ToArray();
                 byte[] bytes = Encoding.UTF8.GetBytes(chars);
                 _current = new BinaryData(bytes);
                 return true;
@@ -62,15 +66,20 @@ internal class AsyncSseDataResultCollection : AsyncResultCollection<BinaryData>
             return false;
         }
 
-        // TODO: implement this pattern correctly.
         public async ValueTask DisposeAsync()
         {
-            await _eventEnumerator.DisposeAsync().ConfigureAwait(false);
+            await DisposeAsyncCore().ConfigureAwait(false);
+
+            GC.SuppressFinalize(this);
         }
 
-        public void Dispose()
+        private async ValueTask DisposeAsyncCore()
         {
-            _eventEnumerator.Dispose();
+            if (_events is not null)
+            {
+                await _events.DisposeAsync().ConfigureAwait(false);
+                _events = null;
+            }
         }
     }
 }

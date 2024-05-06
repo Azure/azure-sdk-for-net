@@ -27,13 +27,15 @@ internal class AsyncSseValueResultCollection<T> : AsyncResultCollection<T>
         return new AsyncSseValueEnumerator(_getResultAsync, this);
     }
 
-    private class AsyncSseValueEnumerator : IAsyncEnumerator<T>, IDisposable, IAsyncDisposable
+    private sealed class AsyncSseValueEnumerator : IAsyncEnumerator<T>
     {
         private readonly Func<Task<ClientResult>> _getResultAsync;
         private readonly AsyncSseValueResultCollection<T> _resultCollection;
 
-        private AsyncServerSentEventEnumerator? _eventEnumerator;
+        private AsyncServerSentEventEnumerator? _events;
         private T? _current;
+
+        private bool _started;
 
         // TODO: is null supression the correct pattern here?
         public T Current { get => _current!; }
@@ -49,10 +51,15 @@ internal class AsyncSseValueResultCollection<T> : AsyncResultCollection<T>
 
         public async ValueTask<bool> MoveNextAsync()
         {
-            // Lazily initialize
             // TODO: refactor for clarity
-            if (_eventEnumerator is null)
+            if (_events is null)
             {
+                if (_started)
+                {
+                    throw new ObjectDisposedException(nameof(AsyncSseValueEnumerator));
+                }
+
+                // Lazily initialize
                 ClientResult result = await _getResultAsync().ConfigureAwait(false);
                 PipelineResponse response = result.GetRawResponse();
 
@@ -62,16 +69,17 @@ internal class AsyncSseValueResultCollection<T> : AsyncResultCollection<T>
                 }
 
                 _resultCollection.SetRawResponse(response);
+                _started = true;
 
                 ServerSentEventReader reader = new(response.ContentStream!);
 
                 // TODO: correct pattern for cancellation token.
-                _eventEnumerator = new(reader /*, cancellationToken */);
+                _events = new(reader /*, cancellationToken */);
             }
 
-            if (await _eventEnumerator.MoveNextAsync().ConfigureAwait(false))
+            if (await _events.MoveNextAsync().ConfigureAwait(false))
             {
-                using JsonDocument eventDocument = JsonDocument.Parse(_eventEnumerator.Current.Data);
+                using JsonDocument eventDocument = JsonDocument.Parse(_events.Current.Data);
                 BinaryData eventData = BinaryData.FromObjectAsJson(eventDocument.RootElement);
                 T? jsonData = ModelReaderWriter.Read<T>(eventData);
 
@@ -94,17 +102,18 @@ internal class AsyncSseValueResultCollection<T> : AsyncResultCollection<T>
 
         public async ValueTask DisposeAsync()
         {
-            // TODO: implement dispose async correctly
-            var enumerator = _eventEnumerator;
-            if (enumerator is not null)
-            {
-                await enumerator.DisposeAsync().ConfigureAwait(false);
-            }
+            await DisposeAsyncCore().ConfigureAwait(false);
+
+            GC.SuppressFinalize(this);
         }
 
-        public void Dispose()
+        private async ValueTask DisposeAsyncCore()
         {
-            _eventEnumerator?.Dispose();
+            if (_events is not null)
+            {
+                await _events.DisposeAsync().ConfigureAwait(false);
+                _events = null;
+            }
         }
     }
 }

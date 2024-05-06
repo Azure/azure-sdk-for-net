@@ -11,9 +11,8 @@ namespace System.ClientModel.Internal;
 // TODO: Different sync and async readers to dispose differently?
 internal sealed class ServerSentEventReader : IDisposable, IAsyncDisposable
 {
-    private readonly Stream _stream;
-    private readonly StreamReader _reader;
-    private bool _disposedValue;
+    private Stream? _stream;
+    private StreamReader? _reader;
 
     public ServerSentEventReader(Stream stream)
     {
@@ -31,11 +30,17 @@ internal sealed class ServerSentEventReader : IDisposable, IAsyncDisposable
     /// </returns>
     public ServerSentEvent? TryGetNextEvent(CancellationToken cancellationToken = default)
     {
+        if (_reader is null)
+        {
+            throw new ObjectDisposedException(nameof(ServerSentEventReader));
+        }
+
         List<ServerSentEventField> fields = new();
 
         while (!cancellationToken.IsCancellationRequested)
         {
             string? line = _reader.ReadLine();
+
             if (line == null)
             {
                 // A null line indicates end of input
@@ -73,11 +78,17 @@ internal sealed class ServerSentEventReader : IDisposable, IAsyncDisposable
     /// </returns>
     public async Task<ServerSentEvent?> TryGetNextEventAsync(CancellationToken cancellationToken = default)
     {
+        if (_reader is null)
+        {
+            throw new ObjectDisposedException(nameof(ServerSentEventReader));
+        }
+
         List<ServerSentEventField> fields = new();
 
         while (!cancellationToken.IsCancellationRequested)
         {
             string? line = await _reader.ReadLineAsync().ConfigureAwait(false);
+
             if (line == null)
             {
                 // A null line indicates end of input
@@ -112,27 +123,45 @@ internal sealed class ServerSentEventReader : IDisposable, IAsyncDisposable
 
     private void Dispose(bool disposing)
     {
-        if (!_disposedValue)
+        if (disposing)
         {
-            if (disposing)
-            {
-                _reader.Dispose();
-                _stream.Dispose();
-            }
+            _reader?.Dispose();
+            _reader = null;
 
-            _disposedValue = true;
+            _stream?.Dispose();
+            _stream = null;
         }
     }
 
-    // TODO: get this pattern right
     public async ValueTask DisposeAsync()
     {
-#if NETSTANDARD2_0
-        // TODO: is this the right pattern for calling sync methods in
-        // async contexts?
-        await Task.Run(_stream.Dispose).ConfigureAwait(false);
-#else
-        await _stream.DisposeAsync().ConfigureAwait(false);
-#endif
+        await DisposeAsyncCore().ConfigureAwait(false);
+
+        Dispose(disposing: false);
+        GC.SuppressFinalize(this);
+    }
+
+    private async ValueTask DisposeAsyncCore()
+    {
+        if (_reader is IAsyncDisposable reader)
+        {
+            await reader.DisposeAsync().ConfigureAwait(false);
+        }
+        else
+        {
+            _reader?.Dispose();
+        }
+
+        if (_stream is IAsyncDisposable stream)
+        {
+            await stream.DisposeAsync().ConfigureAwait(false);
+        }
+        else
+        {
+            _stream?.Dispose();
+        }
+
+        _reader = null;
+        _stream = null;
     }
 }

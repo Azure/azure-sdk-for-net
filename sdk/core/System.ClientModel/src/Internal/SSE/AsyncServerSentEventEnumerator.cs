@@ -7,14 +7,13 @@ using System.Threading.Tasks;
 
 namespace System.ClientModel.Internal;
 
-internal sealed class AsyncServerSentEventEnumerator : IAsyncEnumerator<ServerSentEvent>, IDisposable, IAsyncDisposable
+internal sealed class AsyncServerSentEventEnumerator : IAsyncEnumerator<ServerSentEvent>
 {
     // TODO: make this configurable per coming from TypeSpec
     private static readonly ReadOnlyMemory<char> _doneToken = "[DONE]".AsMemory();
 
-    private readonly ServerSentEventReader _reader;
     private readonly CancellationToken _cancellationToken;
-    private bool _disposedValue;
+    private ServerSentEventReader? _reader;
 
     public ServerSentEvent Current { get; private set; }
 
@@ -26,6 +25,11 @@ internal sealed class AsyncServerSentEventEnumerator : IAsyncEnumerator<ServerSe
 
     public async ValueTask<bool> MoveNextAsync()
     {
+        if (_reader is null)
+        {
+            throw new ObjectDisposedException(nameof(AsyncServerSentEventEnumerator));
+        }
+
         ServerSentEvent? nextEvent = await _reader.TryGetNextEventAsync(_cancellationToken).ConfigureAwait(false);
         if (nextEvent.HasValue)
         {
@@ -33,35 +37,27 @@ internal sealed class AsyncServerSentEventEnumerator : IAsyncEnumerator<ServerSe
             {
                 return false;
             }
+
             Current = nextEvent.Value;
             return true;
         }
+
         return false;
     }
 
-    private void Dispose(bool disposing)
+    public async ValueTask DisposeAsync()
     {
-        if (!_disposedValue)
-        {
-            if (disposing)
-            {
-                _reader.Dispose();
-            }
+        await DisposeAsyncCore().ConfigureAwait(false);
 
-            _disposedValue = true;
-        }
-    }
-
-    public void Dispose()
-    {
-        // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-        Dispose(disposing: true);
         GC.SuppressFinalize(this);
     }
 
-    public ValueTask DisposeAsync()
+    private async ValueTask DisposeAsyncCore()
     {
-        Dispose();
-        return new ValueTask();
+        if (_reader is not null)
+        {
+            await _reader.DisposeAsync().ConfigureAwait(false);
+            _reader = null;
+        }
     }
 }
