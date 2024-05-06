@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.1 (2024-05-07)
+## 2.0.0-beta.1 (2024-05-07)
 
 ### Features Added
 - Added Synchronous document translation API: {RESOURCE}/translator/document:translate?api-version=[Date]. 
