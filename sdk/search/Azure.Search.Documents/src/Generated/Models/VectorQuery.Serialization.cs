@@ -37,6 +37,16 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("oversampling"u8);
                 writer.WriteNumberValue(Oversampling.Value);
             }
+            if (Optional.IsDefined(Weight))
+            {
+                writer.WritePropertyName("weight"u8);
+                writer.WriteNumberValue(Weight.Value);
+            }
+            if (Optional.IsDefined(Threshold))
+            {
+                writer.WritePropertyName("threshold"u8);
+                writer.WriteObjectValue(Threshold);
+            }
             writer.WriteEndObject();
         }
 
@@ -50,6 +60,8 @@ namespace Azure.Search.Documents.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "imageBinary": return VectorizableImageBinaryQuery.DeserializeVectorizableImageBinaryQuery(element);
+                    case "imageUrl": return VectorizableImageUrlQuery.DeserializeVectorizableImageUrlQuery(element);
                     case "text": return VectorizableTextQuery.DeserializeVectorizableTextQuery(element);
                     case "vector": return VectorizedQuery.DeserializeVectorizedQuery(element);
                 }

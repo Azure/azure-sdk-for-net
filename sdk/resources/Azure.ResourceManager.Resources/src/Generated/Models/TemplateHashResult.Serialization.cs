@@ -112,15 +112,16 @@ namespace Azure.ResourceManager.Resources.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinifiedTemplate), out propertyOverride);
-            if (Optional.IsDefined(MinifiedTemplate) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  minifiedTemplate: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MinifiedTemplate))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  minifiedTemplate: ");
                     if (MinifiedTemplate.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -134,15 +135,16 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TemplateHash), out propertyOverride);
-            if (Optional.IsDefined(TemplateHash) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  templateHash: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TemplateHash))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  templateHash: ");
                     if (TemplateHash.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
