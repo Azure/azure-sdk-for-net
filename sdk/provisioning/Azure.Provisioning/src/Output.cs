@@ -17,7 +17,7 @@ namespace Azure.Provisioning
         /// <summary>
         /// Gets the value of the output.
         /// </summary>
-        public object Value { get; }
+        public string Value { get; }
         /// <summary>
         /// Gets a value indicating whether the output is a literal value.
         /// </summary>

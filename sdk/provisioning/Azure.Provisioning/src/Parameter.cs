@@ -52,7 +52,7 @@ namespace Azure.Provisioning
         /// <summary>
         /// The value of the parameter.
         /// </summary>
-        public object? Value { get; }
+        public string? Value { get; }
 
         /// <summary>
         /// The source of the parameter.
@@ -74,7 +74,7 @@ namespace Azure.Provisioning
             Output = output;
         }
 
-        internal Parameter(string name, string? description, object? defaultValue, bool isSecure, IConstruct source, object? value, Output? output)
+        internal Parameter(string name, string? description, object? defaultValue, bool isSecure, IConstruct source, string? value, Output? output)
         {
             Name = name;
             Description = description;
@@ -89,11 +89,23 @@ namespace Azure.Provisioning
         /// Initializes a new instance of the <see cref="Parameter"/>.
         /// </summary>
         /// <param name="name">The parameter name.</param>
+        /// <param name="description">The parameter description.</param>
+        /// <param name="defaultValue">The parameter defaultValue.</param>
+        /// <param name="isSecure">Is the parameter secure.</param>
+        public Parameter(string name, string? description = default, object? defaultValue = default, bool isSecure = false)
+            : this(name, BicepKind.String, description, defaultValue, isSecure)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Parameter"/>.
+        /// </summary>
+        /// <param name="name">The parameter name.</param>
         /// <param name="kind">The parameter kind.</param>
         /// <param name="description">The parameter description.</param>
         /// <param name="defaultValue">The parameter defaultValue.</param>
         /// <param name="isSecure">Is the parameter secure.</param>
-        public Parameter(string name, BicepKind kind = BicepKind.String, string? description = default, object? defaultValue = default, bool isSecure = false)
+        public Parameter(string name, BicepKind kind, string? description = default, object? defaultValue = default, bool isSecure = false)
         {
             Name = name;
             Kind = kind;
@@ -101,6 +113,7 @@ namespace Azure.Provisioning
             DefaultValue = defaultValue;
             IsSecure = isSecure;
         }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Parameter"/>.
         /// </summary>

@@ -2,7 +2,8 @@
 
   <PropertyGroup>
     <Description>Azure.Provisioning.Storage simplifies declarative resource provisioning in .NET for Azure Storage.</Description>
-    <Version>0.1.0</Version>
+    <Version>0.2.0-beta.1</Version>
+    <ApiCompatVersion>0.1.0</ApiCompatVersion>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);AZC0001</NoWarn>
   </PropertyGroup>

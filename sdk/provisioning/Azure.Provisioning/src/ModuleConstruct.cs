@@ -194,10 +194,10 @@ namespace Azure.Provisioning
             {
                 value = output.Kind switch
                 {
-                    BicepKind.Bool => output.Value.ToString()!.ToLower(),
-                    BicepKind.Int => output.Value.ToString()!,
-                    BicepKind.Array => output.Value.ToString()!,
-                    BicepKind.Object => output.Value.ToString()!,
+                    BicepKind.Bool => output.Value.ToLower(),
+                    BicepKind.Int => output.Value,
+                    BicepKind.Array => output.Value,
+                    BicepKind.Object => output.Value,
                     BicepKind.String => $"'{output.Value}'",
                     _ => throw new NotSupportedException("Invalid output kind.")
                 };

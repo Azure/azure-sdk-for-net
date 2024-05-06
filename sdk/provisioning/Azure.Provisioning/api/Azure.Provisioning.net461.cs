@@ -77,7 +77,7 @@ namespace Azure.Provisioning
         public bool IsSecure { get { throw null; } }
         public Azure.Provisioning.BicepKind Kind { get { throw null; } }
         public string Name { get { throw null; } }
-        public object Value { get { throw null; } }
+        public string Value { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct Parameter
@@ -85,7 +85,8 @@ namespace Azure.Provisioning
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public Parameter(Azure.Provisioning.Output output) { throw null; }
-        public Parameter(string name, Azure.Provisioning.BicepKind kind = Azure.Provisioning.BicepKind.String, string? description = null, object? defaultValue = null, bool isSecure = false) { throw null; }
+        public Parameter(string name, Azure.Provisioning.BicepKind kind, string? description = null, object? defaultValue = null, bool isSecure = false) { throw null; }
+        public Parameter(string name, string? description = null, object? defaultValue = null, bool isSecure = false) { throw null; }
         public object? DefaultValue { get { throw null; } }
         public string? Description { get { throw null; } }
         public bool IsFromOutput { get { throw null; } }
@@ -93,7 +94,7 @@ namespace Azure.Provisioning
         public Azure.Provisioning.BicepKind Kind { get { throw null; } }
         public string Name { get { throw null; } }
         public Azure.Provisioning.IConstruct? Source { get { throw null; } }
-        public object? Value { get { throw null; } }
+        public string? Value { get { throw null; } }
     }
     public static partial class ProvisioningExtensions
     {
@@ -126,8 +127,10 @@ namespace Azure.Provisioning
     {
         protected Resource(Azure.Provisioning.IConstruct scope, Azure.Provisioning.Resource? parent, string resourceName, Azure.Core.ResourceType resourceType, string version, System.Func<string, T> createProperties, bool isExisting = false) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, object>)) { }
         public T Properties { get { throw null; } }
-        public Azure.Provisioning.Output AddOutput(string outputName, System.Linq.Expressions.Expression<System.Func<T, object?>> propertySelector, bool isLiteral = false, bool isSecure = false, Azure.Provisioning.BicepKind kind = Azure.Provisioning.BicepKind.String) { throw null; }
-        public Azure.Provisioning.Output AddOutput(string outputName, string formattedString, System.Linq.Expressions.Expression<System.Func<T, object?>> propertySelector, bool isLiteral = false, bool isSecure = false, Azure.Provisioning.BicepKind kind = Azure.Provisioning.BicepKind.String) { throw null; }
+        public Azure.Provisioning.Output AddOutput(string outputName, Azure.Provisioning.BicepKind kind, System.Linq.Expressions.Expression<System.Func<T, object?>> propertySelector, bool isLiteral = false, bool isSecure = false) { throw null; }
+        public Azure.Provisioning.Output AddOutput(string outputName, Azure.Provisioning.BicepKind kind, string formattedString, System.Linq.Expressions.Expression<System.Func<T, object?>> propertySelector, bool isLiteral = false, bool isSecure = false) { throw null; }
+        public Azure.Provisioning.Output AddOutput(string outputName, System.Linq.Expressions.Expression<System.Func<T, object?>> propertySelector, bool isLiteral = false, bool isSecure = false) { throw null; }
+        public Azure.Provisioning.Output AddOutput(string outputName, string formattedString, System.Linq.Expressions.Expression<System.Func<T, object?>> propertySelector, bool isLiteral = false, bool isSecure = false) { throw null; }
         public void AssignProperty(System.Linq.Expressions.Expression<System.Func<T, object?>> propertySelector, Azure.Provisioning.Parameter parameter) { }
         public void AssignProperty(System.Linq.Expressions.Expression<System.Func<T, object?>> propertySelector, string propertyValue) { }
     }
