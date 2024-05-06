@@ -59,12 +59,12 @@ namespace Azure.Messaging.EventHubs
 
             if (!string.IsNullOrEmpty(eventPosition.SequenceNumber))
             {
-                return $"{SequenceNumberName} {(eventPosition.IsInclusive ? ">=" : ">")} {eventPosition.SequenceNumber}";
+                return $"{ SequenceNumberName } {(eventPosition.IsInclusive ? ">=" : ">")} {eventPosition.SequenceNumber}";
             }
 
             if (!string.IsNullOrEmpty(eventPosition.Offset))
             {
-                return $"{ OffsetName } { (eventPosition.IsInclusive ? ">=" : ">") } { eventPosition.Offset }";
+                return $"{ SequenceNumberName } { (eventPosition.IsInclusive ? ">=" : ">") } { eventPosition.Offset }";
             }
 
             if (eventPosition.EnqueuedTime.HasValue)

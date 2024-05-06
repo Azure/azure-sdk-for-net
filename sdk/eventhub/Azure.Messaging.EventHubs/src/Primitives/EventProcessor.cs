@@ -1102,10 +1102,6 @@ namespace Azure.Messaging.EventHubs.Primitives
         {
             if (sequenceNumber.HasValue)
             {
-                if (Properties.IsGeoReplicationEnabled)
-                {
-                    Logger.UpdateCheckpointMissingInformationForGeoReplicatedEventHub(Identifier, EventHubName, offset.ToString(), sequenceNumber?.ToString());
-                }
                 return UpdateCheckpointAsync(partitionId, new CheckpointPosition(sequenceNumber.Value), cancellationToken);
             }
 
