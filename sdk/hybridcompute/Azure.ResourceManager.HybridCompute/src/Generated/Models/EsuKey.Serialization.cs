@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 return null;
             }
             Optional<string> sku = default;
-            Optional<string> licenseStatus = default;
+            Optional<int> licenseStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -29,11 +29,15 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 if (property.NameEquals("licenseStatus"u8))
                 {
-                    licenseStatus = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    licenseStatus = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new EsuKey(sku.Value, licenseStatus.Value);
+            return new EsuKey(sku.Value, Optional.ToNullable(licenseStatus));
         }
     }
 }

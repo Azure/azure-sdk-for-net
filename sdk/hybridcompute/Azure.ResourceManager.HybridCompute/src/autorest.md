@@ -231,7 +231,23 @@ directive:
           }
         }
       }
-  
+
+  # change type of license status to be int - remove later 
+  - from : HybridCompute.json
+    where: $.definitions.EsuKey.properties
+    transform: >-
+      return {
+        "sku": {
+          "type": "string",
+          "description": "SKU number."
+        },
+        "licenseStatus": {
+          "type": "integer",
+          "format": "int32",
+          "description": "The current status of the license profile key."
+        }
+      }
+
   # remove cmdlets
   - where:
       subject: NetworkProfile

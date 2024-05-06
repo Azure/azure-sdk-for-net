@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Initializes a new instance of <see cref="EsuKey"/>. </summary>
         /// <param name="sku"> SKU number. </param>
         /// <param name="licenseStatus"> The current status of the license profile key. </param>
-        internal EsuKey(string sku, string licenseStatus)
+        internal EsuKey(string sku, int? licenseStatus)
         {
             Sku = sku;
             LicenseStatus = licenseStatus;
@@ -27,6 +27,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> SKU number. </summary>
         public string Sku { get; }
         /// <summary> The current status of the license profile key. </summary>
-        public string LicenseStatus { get; }
+        public int? LicenseStatus { get; }
     }
 }
