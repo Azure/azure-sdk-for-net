@@ -1,5 +1,12 @@
 # Release History
 
+
+## 1.0.0-beta.8 (2024-05-06)
+
+### Bugs Fixed
+
+- Fixed format type of ESU license status from string to integer
+
 ## 1.0.0-beta.7 (2024-01-03)
 
 ### Features Added
