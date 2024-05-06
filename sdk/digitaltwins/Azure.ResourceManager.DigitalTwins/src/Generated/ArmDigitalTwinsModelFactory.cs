@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         /// <param name="properties">
         /// DigitalTwinsInstance endpoint resource properties.
         /// Please note <see cref="Models.DigitalTwinsEndpointResourceProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.DigitalTwinsEventGridProperties"/>, <see cref="Models.DigitalTwinsEventHubProperties"/> and <see cref="Models.DigitalTwinsServiceBusProperties"/>.
+        /// The available derived classes include <see cref="Models.DigitalTwinsServiceBusProperties"/>, <see cref="Models.DigitalTwinsEventHubProperties"/> and <see cref="Models.DigitalTwinsEventGridProperties"/>.
         /// </param>
         /// <returns> A new <see cref="DigitalTwins.DigitalTwinsEndpointResourceData"/> instance for mocking. </returns>
         public static DigitalTwinsEndpointResourceData DigitalTwinsEndpointResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DigitalTwinsEndpointResourceProperties properties = null)

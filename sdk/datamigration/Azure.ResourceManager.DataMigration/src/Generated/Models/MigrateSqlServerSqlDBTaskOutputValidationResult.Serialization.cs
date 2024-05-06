@@ -26,27 +26,6 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(MigrationId))
-            {
-                writer.WritePropertyName("migrationId"u8);
-                writer.WriteStringValue(MigrationId);
-            }
-            if (Optional.IsCollectionDefined(SummaryResults))
-            {
-                writer.WritePropertyName("summaryResults"u8);
-                writer.WriteStartObject();
-                foreach (var item in SummaryResults)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
-                }
-                writer.WriteEndObject();
-            }
-            if (options.Format != "W" && Optional.IsDefined(Status))
-            {
-                writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.Value.ToString());
-            }
             if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
@@ -92,43 +71,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            string migrationId = default;
-            IReadOnlyDictionary<string, MigrationValidationDatabaseSummaryResult> summaryResults = default;
-            ValidationStatus? status = default;
             string id = default;
             string resultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("migrationId"u8))
-                {
-                    migrationId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("summaryResults"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, MigrationValidationDatabaseSummaryResult> dictionary = new Dictionary<string, MigrationValidationDatabaseSummaryResult>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, MigrationValidationDatabaseSummaryResult.DeserializeMigrationValidationDatabaseSummaryResult(property0.Value, options));
-                    }
-                    summaryResults = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("status"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    status = new ValidationStatus(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
@@ -145,13 +93,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MigrateSqlServerSqlDBTaskOutputValidationResult(
-                id,
-                resultType,
-                serializedAdditionalRawData,
-                migrationId,
-                summaryResults ?? new ChangeTrackingDictionary<string, MigrationValidationDatabaseSummaryResult>(),
-                status);
+            return new MigrateSqlServerSqlDBTaskOutputValidationResult(id, resultType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MigrateSqlServerSqlDBTaskOutputValidationResult>.Write(ModelReaderWriterOptions options)

@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    [PersistableModelProxy(typeof(UnknownMongoDBProgress))]
+    [PersistableModelProxy(typeof(UnknownMongoDbProgress))]
     public partial class MongoDBProgress : IUtf8JsonSerializable, IJsonModel<MongoDBProgress>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MongoDBProgress>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     case "Migration": return MongoDBMigrationProgress.DeserializeMongoDBMigrationProgress(element, options);
                 }
             }
-            return UnknownMongoDBProgress.DeserializeUnknownMongoDBProgress(element, options);
+            return UnknownMongoDbProgress.DeserializeUnknownMongoDbProgress(element, options);
         }
 
         BinaryData IPersistableModel<MongoDBProgress>.Write(ModelReaderWriterOptions options)

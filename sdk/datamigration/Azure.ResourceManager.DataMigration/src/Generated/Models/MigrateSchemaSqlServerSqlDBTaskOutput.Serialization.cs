@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    [PersistableModelProxy(typeof(UnknownMigrateSchemaSqlServerSqlDBTaskOutput))]
+    [PersistableModelProxy(typeof(UnknownMigrateSchemaSqlServerSqlDbTaskOutput))]
     public partial class MigrateSchemaSqlServerSqlDBTaskOutput : IUtf8JsonSerializable, IJsonModel<MigrateSchemaSqlServerSqlDBTaskOutput>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateSchemaSqlServerSqlDBTaskOutput>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -75,13 +75,13 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "DatabaseLevelOutput": return MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel.DeserializeMigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel(element, options);
-                    case "ErrorOutput": return MigrateSchemaSqlTaskOutputError.DeserializeMigrateSchemaSqlTaskOutputError(element, options);
                     case "MigrationLevelOutput": return MigrateSchemaSqlServerSqlDBTaskOutputMigrationLevel.DeserializeMigrateSchemaSqlServerSqlDBTaskOutputMigrationLevel(element, options);
+                    case "DatabaseLevelOutput": return MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel.DeserializeMigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel(element, options);
                     case "SchemaErrorOutput": return MigrateSchemaSqlServerSqlDBTaskOutputError.DeserializeMigrateSchemaSqlServerSqlDBTaskOutputError(element, options);
+                    case "ErrorOutput": return MigrateSchemaSqlTaskOutputError.DeserializeMigrateSchemaSqlTaskOutputError(element, options);
                 }
             }
-            return UnknownMigrateSchemaSqlServerSqlDBTaskOutput.DeserializeUnknownMigrateSchemaSqlServerSqlDBTaskOutput(element, options);
+            return UnknownMigrateSchemaSqlServerSqlDbTaskOutput.DeserializeUnknownMigrateSchemaSqlServerSqlDbTaskOutput(element, options);
         }
 
         BinaryData IPersistableModel<MigrateSchemaSqlServerSqlDBTaskOutput>.Write(ModelReaderWriterOptions options)

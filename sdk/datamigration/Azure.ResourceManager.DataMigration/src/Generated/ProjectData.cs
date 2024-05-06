@@ -73,12 +73,12 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="sourceConnectionInfo">
         /// Information for connecting to source
         /// Please note <see cref="ConnectionInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MISqlConnectionInfo"/>, <see cref="MongoDBConnectionInfo"/>, <see cref="MySqlConnectionInfo"/>, <see cref="OracleConnectionInfo"/>, <see cref="PostgreSqlConnectionInfo"/> and <see cref="SqlConnectionInfo"/>.
+        /// The available derived classes include <see cref="MongoDBConnectionInfo"/>, <see cref="SqlConnectionInfo"/>, <see cref="MySqlConnectionInfo"/>, <see cref="OracleConnectionInfo"/>, <see cref="PostgreSqlConnectionInfo"/> and <see cref="MISqlConnectionInfo"/>.
         /// </param>
         /// <param name="targetConnectionInfo">
         /// Information for connecting to target
         /// Please note <see cref="ConnectionInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MISqlConnectionInfo"/>, <see cref="MongoDBConnectionInfo"/>, <see cref="MySqlConnectionInfo"/>, <see cref="OracleConnectionInfo"/>, <see cref="PostgreSqlConnectionInfo"/> and <see cref="SqlConnectionInfo"/>.
+        /// The available derived classes include <see cref="MongoDBConnectionInfo"/>, <see cref="SqlConnectionInfo"/>, <see cref="MySqlConnectionInfo"/>, <see cref="OracleConnectionInfo"/>, <see cref="PostgreSqlConnectionInfo"/> and <see cref="MISqlConnectionInfo"/>.
         /// </param>
         /// <param name="databasesInfo"> List of DatabaseInfo. </param>
         /// <param name="provisioningState"> The project's provisioning state. </param>
@@ -115,13 +115,13 @@ namespace Azure.ResourceManager.DataMigration
         /// <summary>
         /// Information for connecting to source
         /// Please note <see cref="ConnectionInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MISqlConnectionInfo"/>, <see cref="MongoDBConnectionInfo"/>, <see cref="MySqlConnectionInfo"/>, <see cref="OracleConnectionInfo"/>, <see cref="PostgreSqlConnectionInfo"/> and <see cref="SqlConnectionInfo"/>.
+        /// The available derived classes include <see cref="MongoDBConnectionInfo"/>, <see cref="SqlConnectionInfo"/>, <see cref="MySqlConnectionInfo"/>, <see cref="OracleConnectionInfo"/>, <see cref="PostgreSqlConnectionInfo"/> and <see cref="MISqlConnectionInfo"/>.
         /// </summary>
         public ConnectionInfo SourceConnectionInfo { get; set; }
         /// <summary>
         /// Information for connecting to target
         /// Please note <see cref="ConnectionInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MISqlConnectionInfo"/>, <see cref="MongoDBConnectionInfo"/>, <see cref="MySqlConnectionInfo"/>, <see cref="OracleConnectionInfo"/>, <see cref="PostgreSqlConnectionInfo"/> and <see cref="SqlConnectionInfo"/>.
+        /// The available derived classes include <see cref="MongoDBConnectionInfo"/>, <see cref="SqlConnectionInfo"/>, <see cref="MySqlConnectionInfo"/>, <see cref="OracleConnectionInfo"/>, <see cref="PostgreSqlConnectionInfo"/> and <see cref="MISqlConnectionInfo"/>.
         /// </summary>
         public ConnectionInfo TargetConnectionInfo { get; set; }
         /// <summary> List of DatabaseInfo. </summary>

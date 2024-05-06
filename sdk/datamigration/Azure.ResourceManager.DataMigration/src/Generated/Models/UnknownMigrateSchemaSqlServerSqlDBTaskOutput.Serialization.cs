@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    internal partial class UnknownMigrateSchemaSqlServerSqlDBTaskOutput : IUtf8JsonSerializable, IJsonModel<MigrateSchemaSqlServerSqlDBTaskOutput>
+    internal partial class UnknownMigrateSchemaSqlServerSqlDbTaskOutput : IUtf8JsonSerializable, IJsonModel<MigrateSchemaSqlServerSqlDBTaskOutput>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateSchemaSqlServerSqlDBTaskOutput>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return DeserializeMigrateSchemaSqlServerSqlDBTaskOutput(document.RootElement, options);
         }
 
-        internal static UnknownMigrateSchemaSqlServerSqlDBTaskOutput DeserializeUnknownMigrateSchemaSqlServerSqlDBTaskOutput(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UnknownMigrateSchemaSqlServerSqlDbTaskOutput DeserializeUnknownMigrateSchemaSqlServerSqlDbTaskOutput(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownMigrateSchemaSqlServerSqlDBTaskOutput(id, resultType, serializedAdditionalRawData);
+            return new UnknownMigrateSchemaSqlServerSqlDbTaskOutput(id, resultType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MigrateSchemaSqlServerSqlDBTaskOutput>.Write(ModelReaderWriterOptions options)
