@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -35,8 +36,7 @@ internal sealed class ServerSentEventReader : IDisposable, IAsyncDisposable
             throw new ObjectDisposedException(nameof(ServerSentEventReader));
         }
 
-        List<ServerSentEventField> fields = new();
-
+        List<ServerSentEventField>? fields = default;
         while (!cancellationToken.IsCancellationRequested)
         {
             string? line = _reader.ReadLine();
@@ -48,9 +48,11 @@ internal sealed class ServerSentEventReader : IDisposable, IAsyncDisposable
             }
             else if (line.Length == 0)
             {
+                Debug.Assert(fields is not null);
+
                 // An empty line should dispatch an event for pending accumulated fields
-                ServerSentEvent nextEvent = new(fields);
-                fields = new();
+                ServerSentEvent nextEvent = new(fields!);
+                fields = default;
                 return nextEvent;
             }
             else if (line[0] == ':')
@@ -61,6 +63,7 @@ internal sealed class ServerSentEventReader : IDisposable, IAsyncDisposable
             else
             {
                 // Otherwise, process the the field + value and accumulate it for the next dispatched event
+                fields ??= new();
                 fields.Add(new ServerSentEventField(line));
             }
         }
@@ -83,8 +86,7 @@ internal sealed class ServerSentEventReader : IDisposable, IAsyncDisposable
             throw new ObjectDisposedException(nameof(ServerSentEventReader));
         }
 
-        List<ServerSentEventField> fields = new();
-
+        List<ServerSentEventField>? fields = default;
         while (!cancellationToken.IsCancellationRequested)
         {
             string? line = await _reader.ReadLineAsync().ConfigureAwait(false);
@@ -96,8 +98,11 @@ internal sealed class ServerSentEventReader : IDisposable, IAsyncDisposable
             }
             else if (line.Length == 0)
             {
+                Debug.Assert(fields is not null);
+
                 // An empty line should dispatch an event for pending accumulated fields
-                ServerSentEvent nextEvent = new(fields);
+                ServerSentEvent nextEvent = new(fields!);
+                fields = default;
                 return nextEvent;
             }
             else if (line[0] == ':')
@@ -108,6 +113,7 @@ internal sealed class ServerSentEventReader : IDisposable, IAsyncDisposable
             else
             {
                 // Otherwise, process the the field + value and accumulate it for the next dispatched event
+                fields ??= new();
                 fields.Add(new ServerSentEventField(line));
             }
         }

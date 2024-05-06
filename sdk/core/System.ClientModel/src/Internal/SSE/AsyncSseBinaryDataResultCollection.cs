@@ -4,17 +4,18 @@
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace System.ClientModel.Internal;
 
-internal class AsyncSseDataResultCollection : AsyncResultCollection<BinaryData>
+internal class AsyncSseBinaryDataResultCollection : AsyncResultCollection<BinaryData>
 {
     // Note: this one doesn't delay sending the request because it's used
     // with protocol methods.
-    public AsyncSseDataResultCollection(PipelineResponse response) : base(response)
+    public AsyncSseBinaryDataResultCollection(PipelineResponse response) : base(response)
     {
         Argument.AssertNotNull(response, nameof(response));
     }
@@ -27,28 +28,36 @@ internal class AsyncSseDataResultCollection : AsyncResultCollection<BinaryData>
         // AsyncResultCollection.Create factory method.
         Debug.Assert(response.ContentStream is not null);
 
-        ServerSentEventReader reader = new(response.ContentStream!);
-        AsyncServerSentEventEnumerator sseEnumerator = new(reader, cancellationToken);
-        return new AsyncSseDataEnumerator(sseEnumerator);
+        return new AsyncSseDataEnumerator(response.ContentStream!, cancellationToken);
     }
 
     private sealed class AsyncSseDataEnumerator : IAsyncEnumerator<BinaryData>
     {
         private AsyncServerSentEventEnumerator? _events;
         private BinaryData? _current;
+        private readonly CancellationToken _cancellationToken;
 
         // TODO: is null supression the correct pattern here?
         public BinaryData Current { get => _current!; }
 
-        public AsyncSseDataEnumerator(AsyncServerSentEventEnumerator events)
+        public AsyncSseDataEnumerator(Stream contentStream, CancellationToken cancellationToken)
         {
-            Debug.Assert(events is not null);
+            Debug.Assert(contentStream is not null);
 
-            _events = events;
+            // TODO: concerns about passing cancellationToken twice?
+            _events = new(contentStream!, cancellationToken);
+            _cancellationToken = cancellationToken;
         }
 
         public async ValueTask<bool> MoveNextAsync()
         {
+            if (_cancellationToken.IsCancellationRequested)
+            {
+                // TODO: correct to return false in this case?
+                // Or do we throw TaskCancelledException?
+                return false;
+            }
+
             if (_events is null)
             {
                 throw new ObjectDisposedException(nameof(AsyncSseDataEnumerator));

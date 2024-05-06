@@ -12,40 +12,46 @@ namespace System.ClientModel;
 #pragma warning disable CS1591 // public XML comments
 public abstract class AsyncResultCollection<T> : ClientResult, IAsyncEnumerable<T>
 {
-    // Overload for sending request lazily
+    // Constructor overload for collection implementations that postpone
+    // sending a request until GetAsyncEnumerator is called. This will typically
+    // be used by collections returned from client convenience methods.
     protected internal AsyncResultCollection() : base(default)
     {
     }
 
+    // Constructor overload for collection implementations where the service
+    // has returned a response.  This will typically be used by collections
+    // created from the return result of a client's protocol method.
     protected internal AsyncResultCollection(PipelineResponse response) : base(response)
     {
     }
 
-    public abstract IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = default);
+    #region Factory methods
 
-    // TODO: take CancellationToken -- question -- does the cancellation token go here or to the enumerator?
     // TODO: Consider signature: `public static ClientResultCollection<T> Create<TValue>(PipelineResponse response) where TValue : IJsonModel<T>` ?
     // TODO: terminal event can be a model type as well ... are we happy using string for now and adding an overload if needed later?
-    public static AsyncResultCollection<TValue> Create<TValue>(Func<Task<ClientResult>> getResultAsync, CancellationToken cancellationToken = default)
+    public static AsyncResultCollection<TValue> Create<TValue>(Func<Task<ClientResult>> getResultAsync)
         where TValue : IJsonModel<TValue>
     {
         Argument.AssertNotNull(getResultAsync, nameof(getResultAsync));
 
-        // TODO: correct pattern for cancellation token
         return new AsyncSseValueResultCollection<TValue>(getResultAsync);
     }
 
-    public static AsyncResultCollection<BinaryData> Create(PipelineResponse response, CancellationToken cancellationToken = default)
+    public static AsyncResultCollection<BinaryData> Create(PipelineResponse response)
     {
         Argument.AssertNotNull(response, nameof(response));
 
         if (response.ContentStream is null)
         {
-            throw new ArgumentException("Unable to create result from response with null ContentStream", nameof(response));
+            throw new ArgumentException("Unable to create result collection from PipelineResponse with null ContentStream", nameof(response));
         }
 
-        // TODO: correct pattern for cancellation token
-        return new AsyncSseDataResultCollection(response);
+        return new AsyncSseBinaryDataResultCollection(response);
     }
+
+    #endregion
+
+    public abstract IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = default);
 }
 #pragma warning restore CS1591 // public XML comments

@@ -13,9 +13,8 @@ public class AsyncServerSentEventEnumeratorTests
     [Test]
     public async Task EnumeratesSingleEvents()
     {
-        Stream contentStream = BinaryData.FromString(_mockContent).ToStream();
-        using ServerSentEventReader reader = new(contentStream);
-        using AsyncServerSentEventEnumerator enumerator = new(reader);
+        using Stream contentStream = BinaryData.FromString(_mockContent).ToStream();
+        AsyncServerSentEventEnumerator enumerator = new(contentStream);
 
         int i = 0;
         while (await enumerator.MoveNextAsync())

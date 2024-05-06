@@ -90,14 +90,14 @@ public class MockClient
 
         public override IAsyncEnumerator<MockJsonModel> GetAsyncEnumerator(CancellationToken cancellationToken = default)
         {
-            Func<Task<ClientResult>> getResultAsync = async () =>
+            async Task<ClientResult> getResultAsync()
             {
                 // TODO: simulate async correctly
-                await Task.Delay(0);
+                await Task.Delay(0, cancellationToken);
                 return _protocolMethod(_content, /*options:*/ default);
-            };
+            }
 
-            AsyncResultCollection<MockJsonModel> enumerable = Create<MockJsonModel>(getResultAsync, cancellationToken);
+            AsyncResultCollection<MockJsonModel> enumerable = Create<MockJsonModel>(getResultAsync);
             return enumerable.GetAsyncEnumerator(cancellationToken);
         }
     }

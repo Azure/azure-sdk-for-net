@@ -18,7 +18,14 @@ public class AsyncServerSentEventJsonDataEnumeratorTests
         MockPipelineResponse response = new();
         response.SetContent(_mockContent);
 
-        AsyncSseValueResultCollection<MockJsonModel> models = new(response);
+        async Task<ClientResult> getResultAsync()
+        {
+            // TODO: simulate async correctly
+            await Task.Delay(0);
+            return ClientResult.FromResponse(response);
+        }
+
+        AsyncSseValueResultCollection<MockJsonModel> models = new(getResultAsync);
 
         int i = 0;
         await foreach (MockJsonModel model in models)
