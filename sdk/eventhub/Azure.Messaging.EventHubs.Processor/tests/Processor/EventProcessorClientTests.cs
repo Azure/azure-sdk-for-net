@@ -1526,13 +1526,22 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void UpdateCheckpointRespectsTheCancellationToken()
+        [TestCase(true)]
+        [TestCase(false)]
+        public void UpdateCheckpointRespectsTheCancellationToken(bool useOldCheckpoint)
         {
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
 
             var processorClient = new TestEventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
-            Assert.That(async () => await processorClient.InvokeUpdateCheckpointAsync("0", new CheckpointPosition(123), cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
+            if (useOldCheckpoint)
+            {
+                Assert.That(async () => await processorClient.InvokeOldUpdateCheckpointAsync("0", 456, 123, cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
+            }
+            else
+            {
+                Assert.That(async () => await processorClient.InvokeUpdateCheckpointAsync("0", new CheckpointPosition(123), cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
+            }
         }
 
         /// <summary>
