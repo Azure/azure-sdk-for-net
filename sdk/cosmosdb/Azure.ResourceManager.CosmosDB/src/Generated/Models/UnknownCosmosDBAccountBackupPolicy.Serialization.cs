@@ -14,7 +14,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    internal partial class UnknownBackupPolicy : IUtf8JsonSerializable, IJsonModel<CosmosDBAccountBackupPolicy>
+    internal partial class UnknownCosmosDBAccountBackupPolicy : IUtf8JsonSerializable, IJsonModel<CosmosDBAccountBackupPolicy>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBAccountBackupPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             return DeserializeCosmosDBAccountBackupPolicy(document.RootElement, options);
         }
 
-        internal static UnknownBackupPolicy DeserializeUnknownBackupPolicy(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UnknownCosmosDBAccountBackupPolicy DeserializeUnknownCosmosDBAccountBackupPolicy(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownBackupPolicy(type, migrationState, serializedAdditionalRawData);
+            return new UnknownCosmosDBAccountBackupPolicy(type, migrationState, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

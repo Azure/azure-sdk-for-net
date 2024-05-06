@@ -14,7 +14,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    [PersistableModelProxy(typeof(UnknownBackupPolicy))]
+    [PersistableModelProxy(typeof(UnknownCosmosDBAccountBackupPolicy))]
     public partial class CosmosDBAccountBackupPolicy : IUtf8JsonSerializable, IJsonModel<CosmosDBAccountBackupPolicy>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBAccountBackupPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -77,11 +77,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Continuous": return ContinuousModeBackupPolicy.DeserializeContinuousModeBackupPolicy(element, options);
                     case "Periodic": return PeriodicModeBackupPolicy.DeserializePeriodicModeBackupPolicy(element, options);
+                    case "Continuous": return ContinuousModeBackupPolicy.DeserializeContinuousModeBackupPolicy(element, options);
                 }
             }
-            return UnknownBackupPolicy.DeserializeUnknownBackupPolicy(element, options);
+            return UnknownCosmosDBAccountBackupPolicy.DeserializeUnknownCosmosDBAccountBackupPolicy(element, options);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

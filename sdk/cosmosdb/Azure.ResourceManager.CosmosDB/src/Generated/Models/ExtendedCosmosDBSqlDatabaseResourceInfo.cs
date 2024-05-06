@@ -28,16 +28,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="colls"> A system generated property that specified the addressable path of the collections resource. </param>
         /// <param name="users"> A system generated property that specifies the addressable path of the users resource. </param>
-        /// <param name="rid"> A system generated property. A unique identifier. </param>
-        /// <param name="timestamp"> A system generated property that denotes the last updated timestamp of the resource. </param>
-        /// <param name="etag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
-        internal ExtendedCosmosDBSqlDatabaseResourceInfo(string databaseName, ResourceRestoreParameters restoreParameters, CosmosDBAccountCreateMode? createMode, IDictionary<string, BinaryData> serializedAdditionalRawData, string colls, string users, string rid, float? timestamp, ETag? etag) : base(databaseName, restoreParameters, createMode, serializedAdditionalRawData)
+        internal ExtendedCosmosDBSqlDatabaseResourceInfo(string databaseName, ResourceRestoreParameters restoreParameters, CosmosDBAccountCreateMode? createMode, IDictionary<string, BinaryData> serializedAdditionalRawData, string colls, string users) : base(databaseName, restoreParameters, createMode, serializedAdditionalRawData)
         {
             Colls = colls;
             Users = users;
-            Rid = rid;
-            Timestamp = timestamp;
-            ETag = etag;
         }
 
         /// <summary> Initializes a new instance of <see cref="ExtendedCosmosDBSqlDatabaseResourceInfo"/> for deserialization. </summary>
@@ -51,14 +45,5 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> A system generated property that specifies the addressable path of the users resource. </summary>
         [WirePath("_users")]
         public string Users { get; set; }
-        /// <summary> A system generated property. A unique identifier. </summary>
-        [WirePath("_rid")]
-        public string Rid { get; }
-        /// <summary> A system generated property that denotes the last updated timestamp of the resource. </summary>
-        [WirePath("_ts")]
-        public float? Timestamp { get; }
-        /// <summary> A system generated property representing the resource etag required for optimistic concurrency control. </summary>
-        [WirePath("_etag")]
-        public ETag? ETag { get; }
     }
 }
