@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    /// <summary> Result type of the search result. </summary>
+    /// <summary>
+    /// Result type of the search result.
+    /// Serialized Name: ResultType
+    /// </summary>
     public readonly partial struct ResultType : IEquatable<ResultType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.SelfHelp.Models
         private const string CommunityValue = "Community";
         private const string DocumentationValue = "Documentation";
 
-        /// <summary> Community. </summary>
+        /// <summary>
+        /// Community
+        /// Serialized Name: ResultType.Community
+        /// </summary>
         public static ResultType Community { get; } = new ResultType(CommunityValue);
-        /// <summary> Documentation. </summary>
+        /// <summary>
+        /// Documentation
+        /// Serialized Name: ResultType.Documentation
+        /// </summary>
         public static ResultType Documentation { get; } = new ResultType(DocumentationValue);
         /// <summary> Determines if two <see cref="ResultType"/> values are the same. </summary>
         public static bool operator ==(ResultType left, ResultType right) => left.Equals(right);

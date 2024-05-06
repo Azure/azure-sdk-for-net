@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    /// <summary> Solution WarmUpRequest body. </summary>
+    /// <summary>
+    /// Solution WarmUpRequest body
+    /// Serialized Name: SolutionWarmUpRequestBody
+    /// </summary>
     public partial class SolutionWarmUpRequestBody
     {
         /// <summary>
@@ -52,7 +55,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SolutionWarmUpRequestBody"/>. </summary>
-        /// <param name="parameters"> Dictionary of &lt;string&gt;. </param>
+        /// <param name="parameters">
+        /// Dictionary of &lt;string&gt;
+        /// Serialized Name: SolutionWarmUpRequestBody.parameters
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SolutionWarmUpRequestBody(IDictionary<string, string> parameters, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -60,7 +66,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Dictionary of &lt;string&gt;. </summary>
+        /// <summary>
+        /// Dictionary of &lt;string&gt;
+        /// Serialized Name: SolutionWarmUpRequestBody.parameters
+        /// </summary>
         public IDictionary<string, string> Parameters { get; }
     }
 }

@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    /// <summary> Nlp Metadata resource. </summary>
+    /// <summary>
+    /// Nlp Metadata resource
+    /// Serialized Name: SolutionNlpMetadataResource
+    /// </summary>
     public partial class SolutionNlpMetadataResource : ResourceData
     {
         /// <summary>
@@ -59,12 +62,30 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="problemTitle"> Title of the problem classification. </param>
-        /// <param name="problemDescription"> Description of the problem classification. </param>
-        /// <param name="serviceId"> Id of the service (https://learn.microsoft.com/en-us/rest/api/support/services?view=rest-support-2020-04-01) that may be used to create a support ticket. </param>
-        /// <param name="problemClassificationId"> Id of the ProblemClassification (https://learn.microsoft.com/en-us/rest/api/support/problem-classifications?view=rest-support-2020-04-01) that may be used to create a support ticket. </param>
-        /// <param name="solutions"> The list of solution metadata. </param>
-        /// <param name="relatedServices"> The set of services that are most likely related to the request. If relatedServices is included in the response then solutions may not be discovered until the client calls a second time specifying one of the service Ids in the relatedServices object. </param>
+        /// <param name="problemTitle">
+        /// Title of the problem classification.
+        /// Serialized Name: SolutionNlpMetadataResource.properties.problemTitle
+        /// </param>
+        /// <param name="problemDescription">
+        /// Description of the problem classification.
+        /// Serialized Name: SolutionNlpMetadataResource.properties.problemDescription
+        /// </param>
+        /// <param name="serviceId">
+        /// Id of the service (https://learn.microsoft.com/en-us/rest/api/support/services?view=rest-support-2020-04-01) that may be used to create a support ticket.
+        /// Serialized Name: SolutionNlpMetadataResource.properties.serviceId
+        /// </param>
+        /// <param name="problemClassificationId">
+        /// Id of the ProblemClassification (https://learn.microsoft.com/en-us/rest/api/support/problem-classifications?view=rest-support-2020-04-01) that may be used to create a support ticket.
+        /// Serialized Name: SolutionNlpMetadataResource.properties.problemClassificationId
+        /// </param>
+        /// <param name="solutions">
+        /// The list of solution metadata.
+        /// Serialized Name: SolutionNlpMetadataResource.properties.solutions
+        /// </param>
+        /// <param name="relatedServices">
+        /// The set of services that are most likely related to the request. If relatedServices is included in the response then solutions may not be discovered until the client calls a second time specifying one of the service Ids in the relatedServices object.
+        /// Serialized Name: SolutionNlpMetadataResource.properties.relatedServices
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SolutionNlpMetadataResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string problemTitle, string problemDescription, string serviceId, string problemClassificationId, IList<SolutionMetadataProperties> solutions, IList<ClassificationService> relatedServices, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -77,17 +98,35 @@ namespace Azure.ResourceManager.SelfHelp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Title of the problem classification. </summary>
+        /// <summary>
+        /// Title of the problem classification.
+        /// Serialized Name: SolutionNlpMetadataResource.properties.problemTitle
+        /// </summary>
         public string ProblemTitle { get; set; }
-        /// <summary> Description of the problem classification. </summary>
+        /// <summary>
+        /// Description of the problem classification.
+        /// Serialized Name: SolutionNlpMetadataResource.properties.problemDescription
+        /// </summary>
         public string ProblemDescription { get; set; }
-        /// <summary> Id of the service (https://learn.microsoft.com/en-us/rest/api/support/services?view=rest-support-2020-04-01) that may be used to create a support ticket. </summary>
+        /// <summary>
+        /// Id of the service (https://learn.microsoft.com/en-us/rest/api/support/services?view=rest-support-2020-04-01) that may be used to create a support ticket.
+        /// Serialized Name: SolutionNlpMetadataResource.properties.serviceId
+        /// </summary>
         public string ServiceId { get; set; }
-        /// <summary> Id of the ProblemClassification (https://learn.microsoft.com/en-us/rest/api/support/problem-classifications?view=rest-support-2020-04-01) that may be used to create a support ticket. </summary>
+        /// <summary>
+        /// Id of the ProblemClassification (https://learn.microsoft.com/en-us/rest/api/support/problem-classifications?view=rest-support-2020-04-01) that may be used to create a support ticket.
+        /// Serialized Name: SolutionNlpMetadataResource.properties.problemClassificationId
+        /// </summary>
         public string ProblemClassificationId { get; set; }
-        /// <summary> The list of solution metadata. </summary>
+        /// <summary>
+        /// The list of solution metadata.
+        /// Serialized Name: SolutionNlpMetadataResource.properties.solutions
+        /// </summary>
         public IList<SolutionMetadataProperties> Solutions { get; }
-        /// <summary> The set of services that are most likely related to the request. If relatedServices is included in the response then solutions may not be discovered until the client calls a second time specifying one of the service Ids in the relatedServices object. </summary>
+        /// <summary>
+        /// The set of services that are most likely related to the request. If relatedServices is included in the response then solutions may not be discovered until the client calls a second time specifying one of the service Ids in the relatedServices object.
+        /// Serialized Name: SolutionNlpMetadataResource.properties.relatedServices
+        /// </summary>
         public IList<ClassificationService> RelatedServices { get; }
     }
 }

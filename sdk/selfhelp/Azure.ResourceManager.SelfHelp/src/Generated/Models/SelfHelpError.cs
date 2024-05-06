@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    /// <summary> Error definition. </summary>
+    /// <summary>
+    /// Error definition.
+    /// Serialized Name: Error
+    /// </summary>
     public partial class SelfHelpError
     {
         /// <summary>
@@ -52,10 +55,22 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SelfHelpError"/>. </summary>
-        /// <param name="code"> Service specific error code which serves as the substatus for the HTTP error code. </param>
-        /// <param name="errorType"> Service specific error type which serves as additional context for the error herein. </param>
-        /// <param name="message"> Description of the error. </param>
-        /// <param name="details"> An array of additional nested error response info objects, as described by this contract. </param>
+        /// <param name="code">
+        /// Service specific error code which serves as the substatus for the HTTP error code.
+        /// Serialized Name: Error.code
+        /// </param>
+        /// <param name="errorType">
+        /// Service specific error type which serves as additional context for the error herein.
+        /// Serialized Name: Error.type
+        /// </param>
+        /// <param name="message">
+        /// Description of the error.
+        /// Serialized Name: Error.message
+        /// </param>
+        /// <param name="details">
+        /// An array of additional nested error response info objects, as described by this contract.
+        /// Serialized Name: Error.details
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SelfHelpError(string code, string errorType, string message, IReadOnlyList<SelfHelpError> details, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -66,13 +81,25 @@ namespace Azure.ResourceManager.SelfHelp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Service specific error code which serves as the substatus for the HTTP error code. </summary>
+        /// <summary>
+        /// Service specific error code which serves as the substatus for the HTTP error code.
+        /// Serialized Name: Error.code
+        /// </summary>
         public string Code { get; }
-        /// <summary> Service specific error type which serves as additional context for the error herein. </summary>
+        /// <summary>
+        /// Service specific error type which serves as additional context for the error herein.
+        /// Serialized Name: Error.type
+        /// </summary>
         public string ErrorType { get; }
-        /// <summary> Description of the error. </summary>
+        /// <summary>
+        /// Description of the error.
+        /// Serialized Name: Error.message
+        /// </summary>
         public string Message { get; }
-        /// <summary> An array of additional nested error response info objects, as described by this contract. </summary>
+        /// <summary>
+        /// An array of additional nested error response info objects, as described by this contract.
+        /// Serialized Name: Error.details
+        /// </summary>
         public IReadOnlyList<SelfHelpError> Details { get; }
     }
 }

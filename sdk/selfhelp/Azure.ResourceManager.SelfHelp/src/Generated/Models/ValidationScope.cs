@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    /// <summary> Validation scope. </summary>
+    /// <summary>
+    /// Validation scope
+    /// Serialized Name: ValidationScope
+    /// </summary>
     public readonly partial struct ValidationScope : IEquatable<ValidationScope>
     {
         private readonly string _value;
@@ -28,15 +31,30 @@ namespace Azure.ResourceManager.SelfHelp.Models
         private const string IPAddressFormatValue = "IpAddressFormat";
         private const string NumberOnlyFormatValue = "NumberOnlyFormat";
 
-        /// <summary> None. </summary>
+        /// <summary>
+        /// None
+        /// Serialized Name: ValidationScope.None
+        /// </summary>
         public static ValidationScope None { get; } = new ValidationScope(NoneValue);
-        /// <summary> URLFormat. </summary>
+        /// <summary>
+        /// URLFormat
+        /// Serialized Name: ValidationScope.URLFormat
+        /// </summary>
         public static ValidationScope URLFormat { get; } = new ValidationScope(URLFormatValue);
-        /// <summary> GuidFormat. </summary>
+        /// <summary>
+        /// GuidFormat
+        /// Serialized Name: ValidationScope.GuidFormat
+        /// </summary>
         public static ValidationScope GuidFormat { get; } = new ValidationScope(GuidFormatValue);
-        /// <summary> IpAddressFormat. </summary>
+        /// <summary>
+        /// IpAddressFormat
+        /// Serialized Name: ValidationScope.IpAddressFormat
+        /// </summary>
         public static ValidationScope IPAddressFormat { get; } = new ValidationScope(IPAddressFormatValue);
-        /// <summary> NumberOnlyFormat. </summary>
+        /// <summary>
+        /// NumberOnlyFormat
+        /// Serialized Name: ValidationScope.NumberOnlyFormat
+        /// </summary>
         public static ValidationScope NumberOnlyFormat { get; } = new ValidationScope(NumberOnlyFormatValue);
         /// <summary> Determines if two <see cref="ValidationScope"/> values are the same. </summary>
         public static bool operator ==(ValidationScope left, ValidationScope right) => left.Equals(right);

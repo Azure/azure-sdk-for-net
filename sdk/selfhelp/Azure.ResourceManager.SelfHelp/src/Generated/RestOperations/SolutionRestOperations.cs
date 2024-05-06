@@ -36,7 +36,19 @@ namespace Azure.ResourceManager.SelfHelp
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCreateRequest(string scope, string solutionResourceName, SolutionResourceData data)
+        internal RequestUriBuilder CreateCreateRequestUri(string scope, string solutionResourceName, SelfHelpSolutionData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Help/solutions/", false);
+            uri.AppendPath(solutionResourceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateCreateRequest(string scope, string solutionResourceName, SelfHelpSolutionData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -65,7 +77,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="solutionResourceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="solutionResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateAsync(string scope, string solutionResourceName, SolutionResourceData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateAsync(string scope, string solutionResourceName, SelfHelpSolutionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(solutionResourceName, nameof(solutionResourceName));
@@ -90,7 +102,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="solutionResourceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="solutionResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Create(string scope, string solutionResourceName, SolutionResourceData data, CancellationToken cancellationToken = default)
+        public Response Create(string scope, string solutionResourceName, SelfHelpSolutionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(solutionResourceName, nameof(solutionResourceName));
@@ -106,6 +118,18 @@ namespace Azure.ResourceManager.SelfHelp
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string scope, string solutionResourceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Help/solutions/", false);
+            uri.AppendPath(solutionResourceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string scope, string solutionResourceName)
@@ -132,7 +156,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="solutionResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="solutionResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SolutionResourceData>> GetAsync(string scope, string solutionResourceName, CancellationToken cancellationToken = default)
+        public async Task<Response<SelfHelpSolutionData>> GetAsync(string scope, string solutionResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(solutionResourceName, nameof(solutionResourceName));
@@ -143,13 +167,13 @@ namespace Azure.ResourceManager.SelfHelp
             {
                 case 200:
                     {
-                        SolutionResourceData value = default;
+                        SelfHelpSolutionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SolutionResourceData.DeserializeSolutionResourceData(document.RootElement);
+                        value = SelfHelpSolutionData.DeserializeSelfHelpSolutionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SolutionResourceData)null, message.Response);
+                    return Response.FromValue((SelfHelpSolutionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -161,7 +185,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="solutionResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="solutionResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SolutionResourceData> Get(string scope, string solutionResourceName, CancellationToken cancellationToken = default)
+        public Response<SelfHelpSolutionData> Get(string scope, string solutionResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(solutionResourceName, nameof(solutionResourceName));
@@ -172,19 +196,31 @@ namespace Azure.ResourceManager.SelfHelp
             {
                 case 200:
                     {
-                        SolutionResourceData value = default;
+                        SelfHelpSolutionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SolutionResourceData.DeserializeSolutionResourceData(document.RootElement);
+                        value = SelfHelpSolutionData.DeserializeSelfHelpSolutionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SolutionResourceData)null, message.Response);
+                    return Response.FromValue((SelfHelpSolutionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string scope, string solutionResourceName, SolutionResourcePatch patch)
+        internal RequestUriBuilder CreateUpdateRequestUri(string scope, string solutionResourceName, SelfHelpSolutionPatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Help/solutions/", false);
+            uri.AppendPath(solutionResourceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateUpdateRequest(string scope, string solutionResourceName, SelfHelpSolutionPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -213,7 +249,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="solutionResourceName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="solutionResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string scope, string solutionResourceName, SolutionResourcePatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string scope, string solutionResourceName, SelfHelpSolutionPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(solutionResourceName, nameof(solutionResourceName));
@@ -238,7 +274,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="solutionResourceName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="solutionResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string scope, string solutionResourceName, SolutionResourcePatch patch, CancellationToken cancellationToken = default)
+        public Response Update(string scope, string solutionResourceName, SelfHelpSolutionPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(solutionResourceName, nameof(solutionResourceName));
@@ -254,6 +290,19 @@ namespace Azure.ResourceManager.SelfHelp
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateWarmUpRequestUri(string scope, string solutionResourceName, SolutionWarmUpRequestBody solutionWarmUpRequestBody)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Help/solutions/", false);
+            uri.AppendPath(solutionResourceName, true);
+            uri.AppendPath("/warmup", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateWarmUpRequest(string scope, string solutionResourceName, SolutionWarmUpRequestBody solutionWarmUpRequestBody)

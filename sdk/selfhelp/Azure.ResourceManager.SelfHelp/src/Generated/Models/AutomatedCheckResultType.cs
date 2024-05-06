@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    /// <summary> Type of Result. </summary>
+    /// <summary>
+    /// Type of Result.
+    /// Serialized Name: AutomatedCheckResultType
+    /// </summary>
     public readonly partial struct AutomatedCheckResultType : IEquatable<AutomatedCheckResultType>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.SelfHelp.Models
         private const string ErrorValue = "Error";
         private const string InformationValue = "Information";
 
-        /// <summary> Success. </summary>
+        /// <summary>
+        /// Success
+        /// Serialized Name: AutomatedCheckResultType.Success
+        /// </summary>
         public static AutomatedCheckResultType Success { get; } = new AutomatedCheckResultType(SuccessValue);
-        /// <summary> Warning. </summary>
+        /// <summary>
+        /// Warning
+        /// Serialized Name: AutomatedCheckResultType.Warning
+        /// </summary>
         public static AutomatedCheckResultType Warning { get; } = new AutomatedCheckResultType(WarningValue);
-        /// <summary> Error. </summary>
+        /// <summary>
+        /// Error
+        /// Serialized Name: AutomatedCheckResultType.Error
+        /// </summary>
         public static AutomatedCheckResultType Error { get; } = new AutomatedCheckResultType(ErrorValue);
-        /// <summary> Information. </summary>
+        /// <summary>
+        /// Information
+        /// Serialized Name: AutomatedCheckResultType.Information
+        /// </summary>
         public static AutomatedCheckResultType Information { get; } = new AutomatedCheckResultType(InformationValue);
         /// <summary> Determines if two <see cref="AutomatedCheckResultType"/> values are the same. </summary>
         public static bool operator ==(AutomatedCheckResultType left, AutomatedCheckResultType right) => left.Equals(right);

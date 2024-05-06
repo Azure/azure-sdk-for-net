@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    /// <summary> Troubleshooters in Solutions. </summary>
+    /// <summary>
+    /// Troubleshooters in Solutions
+    /// Serialized Name: SolutionsTroubleshooters
+    /// </summary>
     public partial class SolutionsTroubleshooters
     {
         /// <summary>
@@ -51,9 +54,18 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SolutionsTroubleshooters"/>. </summary>
-        /// <param name="solutionId"> Solution Id to identify single Solutions Troubleshooter. </param>
-        /// <param name="title"> Troubleshooter title. </param>
-        /// <param name="summary"> Troubleshooter summary. </param>
+        /// <param name="solutionId">
+        /// Solution Id to identify single Solutions Troubleshooter
+        /// Serialized Name: SolutionsTroubleshooters.solutionId
+        /// </param>
+        /// <param name="title">
+        /// Troubleshooter title
+        /// Serialized Name: SolutionsTroubleshooters.title
+        /// </param>
+        /// <param name="summary">
+        /// Troubleshooter summary
+        /// Serialized Name: SolutionsTroubleshooters.summary
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SolutionsTroubleshooters(string solutionId, string title, string summary, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,11 +75,20 @@ namespace Azure.ResourceManager.SelfHelp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Solution Id to identify single Solutions Troubleshooter. </summary>
+        /// <summary>
+        /// Solution Id to identify single Solutions Troubleshooter
+        /// Serialized Name: SolutionsTroubleshooters.solutionId
+        /// </summary>
         public string SolutionId { get; }
-        /// <summary> Troubleshooter title. </summary>
+        /// <summary>
+        /// Troubleshooter title
+        /// Serialized Name: SolutionsTroubleshooters.title
+        /// </summary>
         public string Title { get; }
-        /// <summary> Troubleshooter summary. </summary>
+        /// <summary>
+        /// Troubleshooter summary
+        /// Serialized Name: SolutionsTroubleshooters.summary
+        /// </summary>
         public string Summary { get; }
     }
 }

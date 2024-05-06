@@ -120,29 +120,31 @@ namespace Azure.ResourceManager.Search.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Enforcement), out propertyOverride);
-            if (Optional.IsDefined(Enforcement) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  enforcement: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Enforcement))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  enforcement: ");
                     builder.AppendLine($"'{Enforcement.Value.ToSerialString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EncryptionComplianceStatus), out propertyOverride);
-            if (Optional.IsDefined(EncryptionComplianceStatus) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  encryptionComplianceStatus: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EncryptionComplianceStatus))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  encryptionComplianceStatus: ");
                     builder.AppendLine($"'{EncryptionComplianceStatus.Value.ToSerialString()}'");
                 }
             }

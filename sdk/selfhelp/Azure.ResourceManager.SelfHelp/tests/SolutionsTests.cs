@@ -25,16 +25,16 @@ namespace Azure.ResourceManager.SelfHelp.Tests
             var resourceName = "DiagRpGwPubDev";
             var solutionResourceName = Recording.GenerateAssetName("testResource");
             ResourceIdentifier scope = new ResourceIdentifier($"/subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{resourceName}");
-            SolutionResourceData resourceData = CreateSolutionResourceData(scope);
+            SelfHelpSolutionData resourceData = CreateSelfHelpSolutionData(scope);
 
-            var createSolutionData = await Client.GetSolutionResources(scope).CreateOrUpdateAsync(WaitUntil.Started, solutionResourceName, resourceData);
+            var createSolutionData = await Client.GetSelfHelpSolutions(scope).CreateOrUpdateAsync(WaitUntil.Started, solutionResourceName, resourceData);
             Assert.NotNull(createSolutionData);
 
-            var readSolutionData = await Client.GetSolutionResourceAsync(scope, solutionResourceName);
+            var readSolutionData = await Client.GetSelfHelpSolutionAsync(scope, solutionResourceName);
             Assert.NotNull(readSolutionData);
         }
 
-        private SolutionResourceData CreateSolutionResourceData(ResourceIdentifier scope)
+        private SelfHelpSolutionData CreateSelfHelpSolutionData(ResourceIdentifier scope)
         {
             List<TriggerCriterion> triggerCriterionList = new List<TriggerCriterion>()
             {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.SelfHelp.Tests
 
             List<SelfHelpSection> sections = new List<SelfHelpSection>();
             ResourceType resourceType = new ResourceType("Microsoft.KeyVault/vaults");
-            var data = new SolutionResourceData(scope, null, resourceType, null, triggerCriterionList, parameters, null, null, null, null, null, null, null);
+            var data = new SelfHelpSolutionData(scope, null, resourceType, null, triggerCriterionList, parameters, null, null, null, null, null, null, null);
 
             return data;
         }

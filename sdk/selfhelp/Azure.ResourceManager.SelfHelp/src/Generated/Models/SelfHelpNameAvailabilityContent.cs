@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    /// <summary> The check availability request body. </summary>
+    /// <summary>
+    /// The check availability request body.
+    /// Serialized Name: CheckNameAvailabilityRequest
+    /// </summary>
     public partial class SelfHelpNameAvailabilityContent
     {
         /// <summary>
@@ -52,8 +55,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SelfHelpNameAvailabilityContent"/>. </summary>
-        /// <param name="resourceName"> The name of the resource for which availability needs to be checked. </param>
-        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="resourceName">
+        /// The name of the resource for which availability needs to be checked.
+        /// Serialized Name: CheckNameAvailabilityRequest.name
+        /// </param>
+        /// <param name="resourceType">
+        /// The resource type.
+        /// Serialized Name: CheckNameAvailabilityRequest.type
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SelfHelpNameAvailabilityContent(string resourceName, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +71,15 @@ namespace Azure.ResourceManager.SelfHelp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The name of the resource for which availability needs to be checked. </summary>
+        /// <summary>
+        /// The name of the resource for which availability needs to be checked.
+        /// Serialized Name: CheckNameAvailabilityRequest.name
+        /// </summary>
         public string ResourceName { get; set; }
-        /// <summary> The resource type. </summary>
+        /// <summary>
+        /// The resource type.
+        /// Serialized Name: CheckNameAvailabilityRequest.type
+        /// </summary>
         public ResourceType? ResourceType { get; set; }
     }
 }

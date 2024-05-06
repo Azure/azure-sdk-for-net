@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    /// <summary> VideoGroup video detail. </summary>
+    /// <summary>
+    /// VideoGroup video detail
+    /// Serialized Name: VideoGroupVideo
+    /// </summary>
     public partial class VideoGroupVideo
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="VideoGroupVideo"/>. </summary>
-        /// <param name="src"> Link to the video. </param>
-        /// <param name="title"> Title of the video. </param>
+        /// <param name="src">
+        /// Link to the video
+        /// Serialized Name: VideoGroupVideo.src
+        /// </param>
+        /// <param name="title">
+        /// Title of the video
+        /// Serialized Name: VideoGroupVideo.title
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal VideoGroupVideo(string src, string title, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,9 +70,15 @@ namespace Azure.ResourceManager.SelfHelp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Link to the video. </summary>
+        /// <summary>
+        /// Link to the video
+        /// Serialized Name: VideoGroupVideo.src
+        /// </summary>
         public string Src { get; }
-        /// <summary> Title of the video. </summary>
+        /// <summary>
+        /// Title of the video
+        /// Serialized Name: VideoGroupVideo.title
+        /// </summary>
         public string Title { get; }
     }
 }

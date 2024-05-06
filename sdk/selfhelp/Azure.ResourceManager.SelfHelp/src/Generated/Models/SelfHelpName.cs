@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    /// <summary> Trigger criterion name. </summary>
+    /// <summary>
+    /// Trigger criterion name.
+    /// Serialized Name: Name
+    /// </summary>
     public readonly partial struct SelfHelpName : IEquatable<SelfHelpName>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.SelfHelp.Models
         private const string ProblemClassificationIdValue = "ProblemClassificationId";
         private const string ReplacementKeyValue = "ReplacementKey";
 
-        /// <summary> SolutionId. </summary>
+        /// <summary>
+        /// SolutionId
+        /// Serialized Name: Name.SolutionId
+        /// </summary>
         public static SelfHelpName SolutionId { get; } = new SelfHelpName(SolutionIdValue);
-        /// <summary> ProblemClassificationId. </summary>
+        /// <summary>
+        /// ProblemClassificationId
+        /// Serialized Name: Name.ProblemClassificationId
+        /// </summary>
         public static SelfHelpName ProblemClassificationId { get; } = new SelfHelpName(ProblemClassificationIdValue);
-        /// <summary> ReplacementKey. </summary>
+        /// <summary>
+        /// ReplacementKey
+        /// Serialized Name: Name.ReplacementKey
+        /// </summary>
         public static SelfHelpName ReplacementKey { get; } = new SelfHelpName(ReplacementKeyValue);
         /// <summary> Determines if two <see cref="SelfHelpName"/> values are the same. </summary>
         public static bool operator ==(SelfHelpName left, SelfHelpName right) => left.Equals(right);

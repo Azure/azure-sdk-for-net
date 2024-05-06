@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    /// <summary> Default is Text. </summary>
+    /// <summary>
+    /// Default is Text.
+    /// Serialized Name: QuestionContentType
+    /// </summary>
     public readonly partial struct QuestionContentType : IEquatable<QuestionContentType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.SelfHelp.Models
         private const string HtmlValue = "Html";
         private const string MarkdownValue = "Markdown";
 
-        /// <summary> Text. </summary>
+        /// <summary>
+        /// Text
+        /// Serialized Name: QuestionContentType.Text
+        /// </summary>
         public static QuestionContentType Text { get; } = new QuestionContentType(TextValue);
-        /// <summary> Html. </summary>
+        /// <summary>
+        /// Html
+        /// Serialized Name: QuestionContentType.Html
+        /// </summary>
         public static QuestionContentType Html { get; } = new QuestionContentType(HtmlValue);
-        /// <summary> Markdown. </summary>
+        /// <summary>
+        /// Markdown
+        /// Serialized Name: QuestionContentType.Markdown
+        /// </summary>
         public static QuestionContentType Markdown { get; } = new QuestionContentType(MarkdownValue);
         /// <summary> Determines if two <see cref="QuestionContentType"/> values are the same. </summary>
         public static bool operator ==(QuestionContentType left, QuestionContentType right) => left.Equals(right);

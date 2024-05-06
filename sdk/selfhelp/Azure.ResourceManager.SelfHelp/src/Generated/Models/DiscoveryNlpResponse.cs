@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    /// <summary> Successfully fetched list of solution metadata. </summary>
+    /// <summary>
+    /// Successfully fetched list of solution metadata.
+    /// Serialized Name: DiscoveryNlpResponse
+    /// </summary>
     internal partial class DiscoveryNlpResponse
     {
         /// <summary>
@@ -52,7 +55,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DiscoveryNlpResponse"/>. </summary>
-        /// <param name="value"> The list of solution metadata. </param>
+        /// <param name="value">
+        /// The list of solution metadata.
+        /// Serialized Name: DiscoveryNlpResponse.value
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DiscoveryNlpResponse(IReadOnlyList<SolutionNlpMetadataResource> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -60,7 +66,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The list of solution metadata. </summary>
+        /// <summary>
+        /// The list of solution metadata.
+        /// Serialized Name: DiscoveryNlpResponse.value
+        /// </summary>
         public IReadOnlyList<SolutionNlpMetadataResource> Value { get; }
     }
 }

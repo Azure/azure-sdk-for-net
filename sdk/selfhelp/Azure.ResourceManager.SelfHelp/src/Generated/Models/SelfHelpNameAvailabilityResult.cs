@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    /// <summary> Response for whether the requested resource name is available or not. </summary>
+    /// <summary>
+    /// Response for whether the requested resource name is available or not.
+    /// Serialized Name: CheckNameAvailabilityResponse
+    /// </summary>
     public partial class SelfHelpNameAvailabilityResult
     {
         /// <summary>
@@ -51,9 +54,18 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SelfHelpNameAvailabilityResult"/>. </summary>
-        /// <param name="isNameAvailable"> Returns true or false depending on the availability of the name. </param>
-        /// <param name="reason"> Reason for why value is not available. This field is returned if nameAvailable is false. </param>
-        /// <param name="message"> Gets an error message explaining the 'reason' value with more details. This field is returned iif nameAvailable is false. </param>
+        /// <param name="isNameAvailable">
+        /// Returns true or false depending on the availability of the name
+        /// Serialized Name: CheckNameAvailabilityResponse.nameAvailable
+        /// </param>
+        /// <param name="reason">
+        /// Reason for why value is not available. This field is returned if nameAvailable is false.
+        /// Serialized Name: CheckNameAvailabilityResponse.reason
+        /// </param>
+        /// <param name="message">
+        /// Gets an error message explaining the 'reason' value with more details. This field is returned iif nameAvailable is false.
+        /// Serialized Name: CheckNameAvailabilityResponse.message
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SelfHelpNameAvailabilityResult(bool? isNameAvailable, string reason, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,11 +75,20 @@ namespace Azure.ResourceManager.SelfHelp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Returns true or false depending on the availability of the name. </summary>
+        /// <summary>
+        /// Returns true or false depending on the availability of the name
+        /// Serialized Name: CheckNameAvailabilityResponse.nameAvailable
+        /// </summary>
         public bool? IsNameAvailable { get; }
-        /// <summary> Reason for why value is not available. This field is returned if nameAvailable is false. </summary>
+        /// <summary>
+        /// Reason for why value is not available. This field is returned if nameAvailable is false.
+        /// Serialized Name: CheckNameAvailabilityResponse.reason
+        /// </summary>
         public string Reason { get; }
-        /// <summary> Gets an error message explaining the 'reason' value with more details. This field is returned iif nameAvailable is false. </summary>
+        /// <summary>
+        /// Gets an error message explaining the 'reason' value with more details. This field is returned iif nameAvailable is false.
+        /// Serialized Name: CheckNameAvailabilityResponse.message
+        /// </summary>
         public string Message { get; }
     }
 }

@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    /// <summary> Troubleshooter ContinueRequest body. </summary>
+    /// <summary>
+    /// Troubleshooter ContinueRequest body.
+    /// Serialized Name: ContinueRequestBody
+    /// </summary>
     public partial class ContinueRequestBody
     {
         /// <summary>
@@ -52,8 +55,11 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContinueRequestBody"/>. </summary>
-        /// <param name="stepId"> Unique id of the result. </param>
-        /// <param name="responses"></param>
+        /// <param name="stepId">
+        /// Unique id of the result.
+        /// Serialized Name: ContinueRequestBody.stepId
+        /// </param>
+        /// <param name="responses"> Serialized Name: ContinueRequestBody.responses. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ContinueRequestBody(string stepId, IList<TroubleshooterResult> responses, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +68,12 @@ namespace Azure.ResourceManager.SelfHelp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Unique id of the result. </summary>
+        /// <summary>
+        /// Unique id of the result.
+        /// Serialized Name: ContinueRequestBody.stepId
+        /// </summary>
         public string StepId { get; set; }
-        /// <summary> Gets the responses. </summary>
+        /// <summary> Serialized Name: ContinueRequestBody.responses. </summary>
         public IList<TroubleshooterResult> Responses { get; }
     }
 }

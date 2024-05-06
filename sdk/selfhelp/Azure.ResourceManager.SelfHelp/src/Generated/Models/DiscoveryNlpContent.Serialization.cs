@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDiscoveryNlpRequest(document.RootElement, options);
+            return DeserializeDiscoveryNlpContent(document.RootElement, options);
         }
 
-        internal static DiscoveryNlpContent DeserializeDiscoveryNlpRequest(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static DiscoveryNlpContent DeserializeDiscoveryNlpContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeDiscoveryNlpRequest(document.RootElement, options);
+                        return DeserializeDiscoveryNlpContent(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(DiscoveryNlpContent)} does not support reading '{options.Format}' format.");

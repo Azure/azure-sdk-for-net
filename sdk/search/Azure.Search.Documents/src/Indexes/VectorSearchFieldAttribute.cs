@@ -30,6 +30,10 @@ namespace Azure.Search.Documents.Indexes
         /// </summary>
         public bool IsHidden { get; set; }
 
+        /// <summary> The encoding format to interpret the field contents. </summary>
+        /// <value> String values from <see cref="VectorEncodingFormat.Values">LexicalAnalyzerName</see>. </value>
+        public string VectorEncodingFormat { get; set; }
+
         /// <inheritdoc/>
         void ISearchFieldAttribute.SetField(SearchField field) => SetField(field);
 
@@ -40,6 +44,10 @@ namespace Azure.Search.Documents.Indexes
             field.VectorSearchDimensions = VectorSearchDimensions;
             field.VectorSearchProfileName = VectorSearchProfileName;
             field.IsStored = IsStored;
+            if (VectorEncodingFormat != null)
+            {
+                field.VectorEncodingFormat = VectorEncodingFormat;
+            }
         }
     }
 }

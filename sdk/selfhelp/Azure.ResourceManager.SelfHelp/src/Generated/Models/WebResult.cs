@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    /// <summary> AzureKB web result. </summary>
+    /// <summary>
+    /// AzureKB web result
+    /// Serialized Name: WebResult
+    /// </summary>
     public partial class WebResult
     {
         /// <summary>
@@ -52,8 +55,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WebResult"/>. </summary>
-        /// <param name="replacementKey"> Place holder used in HTML Content replace control with the content. </param>
-        /// <param name="searchResults"> AzureKB search results. </param>
+        /// <param name="replacementKey">
+        /// Place holder used in HTML Content replace control with the content
+        /// Serialized Name: WebResult.replacementKey
+        /// </param>
+        /// <param name="searchResults">
+        /// AzureKB search results
+        /// Serialized Name: WebResult.searchResults
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WebResult(string replacementKey, IReadOnlyList<SearchResult> searchResults, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +71,15 @@ namespace Azure.ResourceManager.SelfHelp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Place holder used in HTML Content replace control with the content. </summary>
+        /// <summary>
+        /// Place holder used in HTML Content replace control with the content
+        /// Serialized Name: WebResult.replacementKey
+        /// </summary>
         public string ReplacementKey { get; }
-        /// <summary> AzureKB search results. </summary>
+        /// <summary>
+        /// AzureKB search results
+        /// Serialized Name: WebResult.searchResults
+        /// </summary>
         public IReadOnlyList<SearchResult> SearchResults { get; }
     }
 }

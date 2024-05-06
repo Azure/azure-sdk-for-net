@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    /// <summary> Filter group. </summary>
+    /// <summary>
+    /// Filter group
+    /// Serialized Name: FilterGroup
+    /// </summary>
     internal partial class FilterGroup
     {
         /// <summary>
@@ -52,7 +55,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FilterGroup"/>. </summary>
-        /// <param name="filter"> List of filters. </param>
+        /// <param name="filter">
+        /// List of filters
+        /// Serialized Name: FilterGroup.filter
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FilterGroup(IReadOnlyList<SelfHelpFilter> filter, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -60,7 +66,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of filters. </summary>
+        /// <summary>
+        /// List of filters
+        /// Serialized Name: FilterGroup.filter
+        /// </summary>
         public IReadOnlyList<SelfHelpFilter> Filter { get; }
     }
 }

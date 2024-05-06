@@ -93,7 +93,12 @@ Write-Host "Updated or created a release work item for a package release with th
 Write-Host "  Lanuage: $($workItem.fields['Custom.Language'])"
 Write-Host "  Version: $($workItem.fields['Custom.PackageVersionMajorMinor'])"
 Write-Host "  Package: $($workItem.fields['Custom.Package'])"
-Write-Host "  AssignedTo: $($workItem.fields['System.AssignedTo']["uniqueName"])"
+if ($workItem.fields['System.AssignedTo']) {
+  Write-Host "  AssignedTo: $($workItem.fields['System.AssignedTo']["uniqueName"])"
+}
+else {
+  Write-Host "  AssignedTo: unassigned"
+}
 Write-Host "  PackageDisplayName: $($workItem.fields['Custom.PackageDisplayName'])"
 Write-Host "  ServiceName: $($workItem.fields['Custom.ServiceName'])"
 Write-Host "  PackageType: $($workItem.fields['Custom.PackageType'])"

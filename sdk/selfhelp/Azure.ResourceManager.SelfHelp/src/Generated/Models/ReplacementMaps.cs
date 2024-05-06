@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    /// <summary> Solution replacement maps. </summary>
+    /// <summary>
+    /// Solution replacement maps.
+    /// Serialized Name: ReplacementMaps
+    /// </summary>
     public partial class ReplacementMaps
     {
         /// <summary>
@@ -57,12 +60,30 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ReplacementMaps"/>. </summary>
-        /// <param name="webResults"> Solution AzureKB results. </param>
-        /// <param name="diagnostics"> Solution diagnostics results. </param>
-        /// <param name="troubleshooters"> Solutions Troubleshooters. </param>
-        /// <param name="metricsBasedCharts"> Solution metrics based charts. </param>
-        /// <param name="videos"> Video solutions, which have the power to engage the customer by stimulating their senses. </param>
-        /// <param name="videoGroups"> Group of Videos. </param>
+        /// <param name="webResults">
+        /// Solution AzureKB results
+        /// Serialized Name: ReplacementMaps.webResults
+        /// </param>
+        /// <param name="diagnostics">
+        /// Solution diagnostics results.
+        /// Serialized Name: ReplacementMaps.diagnostics
+        /// </param>
+        /// <param name="troubleshooters">
+        /// Solutions Troubleshooters
+        /// Serialized Name: ReplacementMaps.troubleshooters
+        /// </param>
+        /// <param name="metricsBasedCharts">
+        /// Solution metrics based charts
+        /// Serialized Name: ReplacementMaps.metricsBasedCharts
+        /// </param>
+        /// <param name="videos">
+        /// Video solutions, which have the power to engage the customer by stimulating their senses
+        /// Serialized Name: ReplacementMaps.videos
+        /// </param>
+        /// <param name="videoGroups">
+        /// Group of Videos
+        /// Serialized Name: ReplacementMaps.videoGroups
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ReplacementMaps(IReadOnlyList<WebResult> webResults, IReadOnlyList<SolutionsDiagnostic> diagnostics, IReadOnlyList<SolutionsTroubleshooters> troubleshooters, IReadOnlyList<MetricsBasedChart> metricsBasedCharts, IReadOnlyList<SelfHelpVideo> videos, IReadOnlyList<VideoGroup> videoGroups, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,17 +96,35 @@ namespace Azure.ResourceManager.SelfHelp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Solution AzureKB results. </summary>
+        /// <summary>
+        /// Solution AzureKB results
+        /// Serialized Name: ReplacementMaps.webResults
+        /// </summary>
         public IReadOnlyList<WebResult> WebResults { get; }
-        /// <summary> Solution diagnostics results. </summary>
+        /// <summary>
+        /// Solution diagnostics results.
+        /// Serialized Name: ReplacementMaps.diagnostics
+        /// </summary>
         public IReadOnlyList<SolutionsDiagnostic> Diagnostics { get; }
-        /// <summary> Solutions Troubleshooters. </summary>
+        /// <summary>
+        /// Solutions Troubleshooters
+        /// Serialized Name: ReplacementMaps.troubleshooters
+        /// </summary>
         public IReadOnlyList<SolutionsTroubleshooters> Troubleshooters { get; }
-        /// <summary> Solution metrics based charts. </summary>
+        /// <summary>
+        /// Solution metrics based charts
+        /// Serialized Name: ReplacementMaps.metricsBasedCharts
+        /// </summary>
         public IReadOnlyList<MetricsBasedChart> MetricsBasedCharts { get; }
-        /// <summary> Video solutions, which have the power to engage the customer by stimulating their senses. </summary>
+        /// <summary>
+        /// Video solutions, which have the power to engage the customer by stimulating their senses
+        /// Serialized Name: ReplacementMaps.videos
+        /// </summary>
         public IReadOnlyList<SelfHelpVideo> Videos { get; }
-        /// <summary> Group of Videos. </summary>
+        /// <summary>
+        /// Group of Videos
+        /// Serialized Name: ReplacementMaps.videoGroups
+        /// </summary>
         public IReadOnlyList<VideoGroup> VideoGroups { get; }
     }
 }

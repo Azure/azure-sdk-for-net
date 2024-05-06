@@ -295,6 +295,7 @@ namespace Azure.Data.Tables.Tests
                             LongPrimitive = (long)int.MaxValue + n,
                             LongPrimitiveN = (long)int.MaxValue + n,
                             RenamableStringProperty = string.Format("{0:0000}", n),
+                            DataMemberImplictNameProperty = string.Format("{0:0000}", n)
                         };
                     })
                 .ToList();
@@ -487,6 +488,9 @@ namespace Azure.Data.Tables.Tests
 
             [DataMember(Name = "SomeNewName")]
             public string RenamableStringProperty { get; set; }
+
+            [DataMember]
+            public string DataMemberImplictNameProperty { get; set; }
 
             public Guid? GuidNull
             {

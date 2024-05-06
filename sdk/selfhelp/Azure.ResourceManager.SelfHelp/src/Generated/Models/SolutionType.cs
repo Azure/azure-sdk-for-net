@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    /// <summary> Solution Type. </summary>
+    /// <summary>
+    /// Solution Type.
+    /// Serialized Name: SolutionType
+    /// </summary>
     public readonly partial struct SolutionType : IEquatable<SolutionType>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.SelfHelp.Models
         private const string TroubleshootersValue = "Troubleshooters";
         private const string SelfHelpValue = "SelfHelp";
 
-        /// <summary> Diagnostics resource type. </summary>
+        /// <summary>
+        /// Diagnostics resource type.
+        /// Serialized Name: SolutionType.Diagnostics
+        /// </summary>
         public static SolutionType Diagnostics { get; } = new SolutionType(DiagnosticsValue);
-        /// <summary> Solutions resource type. </summary>
+        /// <summary>
+        /// Solutions resource type.
+        /// Serialized Name: SolutionType.Solutions
+        /// </summary>
         public static SolutionType Solutions { get; } = new SolutionType(SolutionsValue);
-        /// <summary> Troubleshooters resource type. </summary>
+        /// <summary>
+        /// Troubleshooters resource type.
+        /// Serialized Name: SolutionType.Troubleshooters
+        /// </summary>
         public static SolutionType Troubleshooters { get; } = new SolutionType(TroubleshootersValue);
-        /// <summary> SelfHelp resource type. </summary>
+        /// <summary>
+        /// SelfHelp resource type.
+        /// Serialized Name: SolutionType.SelfHelp
+        /// </summary>
         public static SolutionType SelfHelp { get; } = new SolutionType(SelfHelpValue);
         /// <summary> Determines if two <see cref="SolutionType"/> values are the same. </summary>
         public static bool operator ==(SolutionType left, SolutionType right) => left.Equals(right);

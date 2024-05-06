@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    /// <summary> Allowed values are Sum, Avg, Count, Min, Max. Default is Sum. </summary>
+    /// <summary>
+    /// Allowed values are Sum, Avg, Count, Min, Max. Default is Sum
+    /// Serialized Name: AggregationType
+    /// </summary>
     public readonly partial struct AggregationType : IEquatable<AggregationType>
     {
         private readonly string _value;
@@ -28,15 +31,30 @@ namespace Azure.ResourceManager.SelfHelp.Models
         private const string MinValue = "Min";
         private const string MaxValue = "Max";
 
-        /// <summary> Sum. </summary>
+        /// <summary>
+        /// Sum
+        /// Serialized Name: AggregationType.Sum
+        /// </summary>
         public static AggregationType Sum { get; } = new AggregationType(SumValue);
-        /// <summary> Avg. </summary>
+        /// <summary>
+        /// Avg
+        /// Serialized Name: AggregationType.Avg
+        /// </summary>
         public static AggregationType Avg { get; } = new AggregationType(AvgValue);
-        /// <summary> Count. </summary>
+        /// <summary>
+        /// Count
+        /// Serialized Name: AggregationType.Count
+        /// </summary>
         public static AggregationType Count { get; } = new AggregationType(CountValue);
-        /// <summary> Min. </summary>
+        /// <summary>
+        /// Min
+        /// Serialized Name: AggregationType.Min
+        /// </summary>
         public static AggregationType Min { get; } = new AggregationType(MinValue);
-        /// <summary> Max. </summary>
+        /// <summary>
+        /// Max
+        /// Serialized Name: AggregationType.Max
+        /// </summary>
         public static AggregationType Max { get; } = new AggregationType(MaxValue);
         /// <summary> Determines if two <see cref="AggregationType"/> values are the same. </summary>
         public static bool operator ==(AggregationType left, AggregationType right) => left.Equals(right);

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    /// <summary> Type of Question. </summary>
+    /// <summary>
+    /// Type of Question
+    /// Serialized Name: QuestionType
+    /// </summary>
     public readonly partial struct QuestionType : IEquatable<QuestionType>
     {
         private readonly string _value;
@@ -29,17 +32,35 @@ namespace Azure.ResourceManager.SelfHelp.Models
         private const string DateTimePickerValue = "DateTimePicker";
         private const string MultiSelectValue = "MultiSelect";
 
-        /// <summary> SingleChoice radio button. </summary>
+        /// <summary>
+        /// SingleChoice radio button
+        /// Serialized Name: QuestionType.RadioButton
+        /// </summary>
         public static QuestionType RadioButton { get; } = new QuestionType(RadioButtonValue);
-        /// <summary> SingleChoice dropdown. </summary>
+        /// <summary>
+        /// SingleChoice dropdown.
+        /// Serialized Name: QuestionType.Dropdown
+        /// </summary>
         public static QuestionType Dropdown { get; } = new QuestionType(DropdownValue);
-        /// <summary> Text Input. </summary>
+        /// <summary>
+        /// Text Input
+        /// Serialized Name: QuestionType.TextInput
+        /// </summary>
         public static QuestionType TextInput { get; } = new QuestionType(TextInputValue);
-        /// <summary> MultiLineInfoBox. </summary>
+        /// <summary>
+        /// MultiLineInfoBox
+        /// Serialized Name: QuestionType.MultiLineInfoBox
+        /// </summary>
         public static QuestionType MultiLineInfoBox { get; } = new QuestionType(MultiLineInfoBoxValue);
-        /// <summary> DateTime Picker. </summary>
+        /// <summary>
+        /// DateTime Picker
+        /// Serialized Name: QuestionType.DateTimePicker
+        /// </summary>
         public static QuestionType DateTimePicker { get; } = new QuestionType(DateTimePickerValue);
-        /// <summary> Multi Select. </summary>
+        /// <summary>
+        /// Multi Select
+        /// Serialized Name: QuestionType.MultiSelect
+        /// </summary>
         public static QuestionType MultiSelect { get; } = new QuestionType(MultiSelectValue);
         /// <summary> Determines if two <see cref="QuestionType"/> values are the same. </summary>
         public static bool operator ==(QuestionType left, QuestionType right) => left.Equals(right);

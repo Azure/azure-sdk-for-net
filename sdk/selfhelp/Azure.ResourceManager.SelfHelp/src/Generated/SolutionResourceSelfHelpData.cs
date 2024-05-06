@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.SelfHelp
     /// <summary>
     /// A class representing the SolutionResourceSelfHelp data model.
     /// Self Help Solution response.
+    /// Serialized Name: SolutionResourceSelfHelp
     /// </summary>
     public partial class SolutionResourceSelfHelpData : ResourceData
     {
@@ -62,11 +63,26 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="solutionId"> SolutionId is a unique id to identify a solution. You can retrieve the solution id using the Discovery api - https://learn.microsoft.com/en-us/rest/api/help/discovery-solution/list?view=rest-help-2023-09-01-preview&amp;tabs=HTTP. </param>
-        /// <param name="title"> The title. </param>
-        /// <param name="content"> The HTML content that needs to be rendered and shown to customer. </param>
-        /// <param name="replacementMaps"> Solution replacement maps. </param>
-        /// <param name="sections"> List of section object. </param>
+        /// <param name="solutionId">
+        /// SolutionId is a unique id to identify a solution. You can retrieve the solution id using the Discovery api - https://learn.microsoft.com/en-us/rest/api/help/discovery-solution/list?view=rest-help-2023-09-01-preview&amp;tabs=HTTP
+        /// Serialized Name: SolutionResourceSelfHelp.properties.solutionId
+        /// </param>
+        /// <param name="title">
+        /// The title.
+        /// Serialized Name: SolutionResourceSelfHelp.properties.title
+        /// </param>
+        /// <param name="content">
+        /// The HTML content that needs to be rendered and shown to customer.
+        /// Serialized Name: SolutionResourceSelfHelp.properties.content
+        /// </param>
+        /// <param name="replacementMaps">
+        /// Solution replacement maps.
+        /// Serialized Name: SolutionResourceSelfHelp.properties.replacementMaps
+        /// </param>
+        /// <param name="sections">
+        /// List of section object.
+        /// Serialized Name: SolutionResourceSelfHelp.properties.sections
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SolutionResourceSelfHelpData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string solutionId, string title, string content, ReplacementMapsSelfHelp replacementMaps, IReadOnlyList<SectionSelfHelp> sections, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -78,15 +94,30 @@ namespace Azure.ResourceManager.SelfHelp
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> SolutionId is a unique id to identify a solution. You can retrieve the solution id using the Discovery api - https://learn.microsoft.com/en-us/rest/api/help/discovery-solution/list?view=rest-help-2023-09-01-preview&amp;tabs=HTTP. </summary>
+        /// <summary>
+        /// SolutionId is a unique id to identify a solution. You can retrieve the solution id using the Discovery api - https://learn.microsoft.com/en-us/rest/api/help/discovery-solution/list?view=rest-help-2023-09-01-preview&amp;tabs=HTTP
+        /// Serialized Name: SolutionResourceSelfHelp.properties.solutionId
+        /// </summary>
         public string SolutionId { get; }
-        /// <summary> The title. </summary>
+        /// <summary>
+        /// The title.
+        /// Serialized Name: SolutionResourceSelfHelp.properties.title
+        /// </summary>
         public string Title { get; }
-        /// <summary> The HTML content that needs to be rendered and shown to customer. </summary>
+        /// <summary>
+        /// The HTML content that needs to be rendered and shown to customer.
+        /// Serialized Name: SolutionResourceSelfHelp.properties.content
+        /// </summary>
         public string Content { get; }
-        /// <summary> Solution replacement maps. </summary>
+        /// <summary>
+        /// Solution replacement maps.
+        /// Serialized Name: SolutionResourceSelfHelp.properties.replacementMaps
+        /// </summary>
         public ReplacementMapsSelfHelp ReplacementMaps { get; }
-        /// <summary> List of section object. </summary>
+        /// <summary>
+        /// List of section object.
+        /// Serialized Name: SolutionResourceSelfHelp.properties.sections
+        /// </summary>
         public IReadOnlyList<SectionSelfHelp> Sections { get; }
     }
 }

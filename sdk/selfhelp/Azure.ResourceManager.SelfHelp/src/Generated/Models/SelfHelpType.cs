@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    /// <summary> Type of Troubleshooting step. </summary>
+    /// <summary>
+    /// Type of Troubleshooting step.
+    /// Serialized Name: Type
+    /// </summary>
     public readonly partial struct SelfHelpType : IEquatable<SelfHelpType>
     {
         private readonly string _value;
@@ -28,15 +31,30 @@ namespace Azure.ResourceManager.SelfHelp.Models
         private const string AutomatedCheckValue = "AutomatedCheck";
         private const string InputValue = "Input";
 
-        /// <summary> Decision. </summary>
+        /// <summary>
+        /// Decision
+        /// Serialized Name: Type.Decision
+        /// </summary>
         public static SelfHelpType Decision { get; } = new SelfHelpType(DecisionValue);
-        /// <summary> Solution. </summary>
+        /// <summary>
+        /// Solution
+        /// Serialized Name: Type.Solution
+        /// </summary>
         public static SelfHelpType Solution { get; } = new SelfHelpType(SolutionValue);
-        /// <summary> Insight. </summary>
+        /// <summary>
+        /// Insight
+        /// Serialized Name: Type.Insight
+        /// </summary>
         public static SelfHelpType Insight { get; } = new SelfHelpType(InsightValue);
-        /// <summary> AutomatedCheck. </summary>
+        /// <summary>
+        /// AutomatedCheck
+        /// Serialized Name: Type.AutomatedCheck
+        /// </summary>
         public static SelfHelpType AutomatedCheck { get; } = new SelfHelpType(AutomatedCheckValue);
-        /// <summary> Input. </summary>
+        /// <summary>
+        /// Input
+        /// Serialized Name: Type.Input
+        /// </summary>
         public static SelfHelpType Input { get; } = new SelfHelpType(InputValue);
         /// <summary> Determines if two <see cref="SelfHelpType"/> values are the same. </summary>
         public static bool operator ==(SelfHelpType left, SelfHelpType right) => left.Equals(right);

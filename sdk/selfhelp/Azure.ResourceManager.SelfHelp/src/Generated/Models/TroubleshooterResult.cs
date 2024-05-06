@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    /// <summary> User Response for Troubleshooter continue request. </summary>
+    /// <summary>
+    /// User Response for Troubleshooter continue request
+    /// Serialized Name: TroubleshooterResponse
+    /// </summary>
     public partial class TroubleshooterResult
     {
         /// <summary>
@@ -51,9 +54,18 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="TroubleshooterResult"/>. </summary>
-        /// <param name="questionId"> id of the question. </param>
-        /// <param name="questionType"> Type of Question. </param>
-        /// <param name="response"> Response key for SingleInput. For Multi-line test/open ended question it is free form text. </param>
+        /// <param name="questionId">
+        /// id of the question.
+        /// Serialized Name: TroubleshooterResponse.questionId
+        /// </param>
+        /// <param name="questionType">
+        /// Type of Question
+        /// Serialized Name: TroubleshooterResponse.questionType
+        /// </param>
+        /// <param name="response">
+        /// Response key for SingleInput. For Multi-line test/open ended question it is free form text
+        /// Serialized Name: TroubleshooterResponse.response
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal TroubleshooterResult(string questionId, QuestionType? questionType, string response, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,11 +75,20 @@ namespace Azure.ResourceManager.SelfHelp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> id of the question. </summary>
+        /// <summary>
+        /// id of the question.
+        /// Serialized Name: TroubleshooterResponse.questionId
+        /// </summary>
         public string QuestionId { get; set; }
-        /// <summary> Type of Question. </summary>
+        /// <summary>
+        /// Type of Question
+        /// Serialized Name: TroubleshooterResponse.questionType
+        /// </summary>
         public QuestionType? QuestionType { get; set; }
-        /// <summary> Response key for SingleInput. For Multi-line test/open ended question it is free form text. </summary>
+        /// <summary>
+        /// Response key for SingleInput. For Multi-line test/open ended question it is free form text
+        /// Serialized Name: TroubleshooterResponse.response
+        /// </summary>
         public string Response { get; set; }
     }
 }

@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.SelfHelp
     /// <summary>
     /// A class representing the SelfHelpDiagnostic data model.
     /// Diagnostic resource
+    /// Serialized Name: DiagnosticResource
     /// </summary>
     public partial class SelfHelpDiagnosticData : ResourceData
     {
@@ -64,11 +65,26 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="globalParameters"> Global parameters is an optional map which can be used to add key and  value to request body to improve the diagnostics results. </param>
-        /// <param name="insights"> SolutionIds that are needed to be invoked. </param>
-        /// <param name="acceptedOn"> Diagnostic Request Accepted time. </param>
-        /// <param name="provisioningState"> Status of diagnostic provisioning. </param>
-        /// <param name="diagnostics"> Array of Diagnostics. </param>
+        /// <param name="globalParameters">
+        /// Global parameters is an optional map which can be used to add key and  value to request body to improve the diagnostics results
+        /// Serialized Name: DiagnosticResource.properties.globalParameters
+        /// </param>
+        /// <param name="insights">
+        /// SolutionIds that are needed to be invoked.
+        /// Serialized Name: DiagnosticResource.properties.insights
+        /// </param>
+        /// <param name="acceptedOn">
+        /// Diagnostic Request Accepted time.
+        /// Serialized Name: DiagnosticResource.properties.acceptedAt
+        /// </param>
+        /// <param name="provisioningState">
+        /// Status of diagnostic provisioning.
+        /// Serialized Name: DiagnosticResource.properties.provisioningState
+        /// </param>
+        /// <param name="diagnostics">
+        /// Array of Diagnostics.
+        /// Serialized Name: DiagnosticResource.properties.diagnostics
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SelfHelpDiagnosticData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> globalParameters, IList<SelfHelpDiagnosticInvocation> insights, DateTimeOffset? acceptedOn, SelfHelpProvisioningState? provisioningState, IReadOnlyList<SelfHelpDiagnosticInfo> diagnostics, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -80,15 +96,30 @@ namespace Azure.ResourceManager.SelfHelp
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Global parameters is an optional map which can be used to add key and  value to request body to improve the diagnostics results. </summary>
+        /// <summary>
+        /// Global parameters is an optional map which can be used to add key and  value to request body to improve the diagnostics results
+        /// Serialized Name: DiagnosticResource.properties.globalParameters
+        /// </summary>
         public IDictionary<string, string> GlobalParameters { get; }
-        /// <summary> SolutionIds that are needed to be invoked. </summary>
+        /// <summary>
+        /// SolutionIds that are needed to be invoked.
+        /// Serialized Name: DiagnosticResource.properties.insights
+        /// </summary>
         public IList<SelfHelpDiagnosticInvocation> Insights { get; }
-        /// <summary> Diagnostic Request Accepted time. </summary>
+        /// <summary>
+        /// Diagnostic Request Accepted time.
+        /// Serialized Name: DiagnosticResource.properties.acceptedAt
+        /// </summary>
         public DateTimeOffset? AcceptedOn { get; }
-        /// <summary> Status of diagnostic provisioning. </summary>
+        /// <summary>
+        /// Status of diagnostic provisioning.
+        /// Serialized Name: DiagnosticResource.properties.provisioningState
+        /// </summary>
         public SelfHelpProvisioningState? ProvisioningState { get; }
-        /// <summary> Array of Diagnostics. </summary>
+        /// <summary>
+        /// Array of Diagnostics.
+        /// Serialized Name: DiagnosticResource.properties.diagnostics
+        /// </summary>
         public IReadOnlyList<SelfHelpDiagnosticInfo> Diagnostics { get; }
     }
 }

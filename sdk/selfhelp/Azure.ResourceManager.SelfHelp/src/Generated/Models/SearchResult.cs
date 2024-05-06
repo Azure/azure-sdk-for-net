@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    /// <summary> Details of an AzureKB search result. </summary>
+    /// <summary>
+    /// Details of an AzureKB search result.
+    /// Serialized Name: SearchResult
+    /// </summary>
     public partial class SearchResult
     {
         /// <summary>
@@ -51,14 +54,38 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SearchResult"/>. </summary>
-        /// <param name="solutionId"> Unique id of the result. </param>
-        /// <param name="content"> Content of the search result. </param>
-        /// <param name="title"> Title of the search result. </param>
-        /// <param name="confidence"> Confidence of the search result. </param>
-        /// <param name="source"> Source of the search result. </param>
-        /// <param name="resultType"> Result type of the search result. </param>
-        /// <param name="rank"> rank of the search result. </param>
-        /// <param name="link"> Link to the document. </param>
+        /// <param name="solutionId">
+        /// Unique id of the result.
+        /// Serialized Name: SearchResult.solutionId
+        /// </param>
+        /// <param name="content">
+        /// Content of the search result.
+        /// Serialized Name: SearchResult.content
+        /// </param>
+        /// <param name="title">
+        /// Title of the search result.
+        /// Serialized Name: SearchResult.title
+        /// </param>
+        /// <param name="confidence">
+        /// Confidence of the search result.
+        /// Serialized Name: SearchResult.confidence
+        /// </param>
+        /// <param name="source">
+        /// Source of the search result.
+        /// Serialized Name: SearchResult.source
+        /// </param>
+        /// <param name="resultType">
+        /// Result type of the search result.
+        /// Serialized Name: SearchResult.resultType
+        /// </param>
+        /// <param name="rank">
+        /// rank of the search result
+        /// Serialized Name: SearchResult.rank
+        /// </param>
+        /// <param name="link">
+        /// Link to the document.
+        /// Serialized Name: SearchResult.link
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SearchResult(string solutionId, string content, string title, SelfHelpConfidence? confidence, string source, ResultType? resultType, int? rank, string link, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -73,21 +100,45 @@ namespace Azure.ResourceManager.SelfHelp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Unique id of the result. </summary>
+        /// <summary>
+        /// Unique id of the result.
+        /// Serialized Name: SearchResult.solutionId
+        /// </summary>
         public string SolutionId { get; }
-        /// <summary> Content of the search result. </summary>
+        /// <summary>
+        /// Content of the search result.
+        /// Serialized Name: SearchResult.content
+        /// </summary>
         public string Content { get; }
-        /// <summary> Title of the search result. </summary>
+        /// <summary>
+        /// Title of the search result.
+        /// Serialized Name: SearchResult.title
+        /// </summary>
         public string Title { get; }
-        /// <summary> Confidence of the search result. </summary>
+        /// <summary>
+        /// Confidence of the search result.
+        /// Serialized Name: SearchResult.confidence
+        /// </summary>
         public SelfHelpConfidence? Confidence { get; }
-        /// <summary> Source of the search result. </summary>
+        /// <summary>
+        /// Source of the search result.
+        /// Serialized Name: SearchResult.source
+        /// </summary>
         public string Source { get; }
-        /// <summary> Result type of the search result. </summary>
+        /// <summary>
+        /// Result type of the search result.
+        /// Serialized Name: SearchResult.resultType
+        /// </summary>
         public ResultType? ResultType { get; }
-        /// <summary> rank of the search result. </summary>
+        /// <summary>
+        /// rank of the search result
+        /// Serialized Name: SearchResult.rank
+        /// </summary>
         public int? Rank { get; }
-        /// <summary> Link to the document. </summary>
+        /// <summary>
+        /// Link to the document.
+        /// Serialized Name: SearchResult.link
+        /// </summary>
         public string Link { get; }
     }
 }

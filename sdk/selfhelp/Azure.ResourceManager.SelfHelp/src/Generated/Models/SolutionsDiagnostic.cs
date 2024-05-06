@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    /// <summary> Solutions Diagnostic. </summary>
+    /// <summary>
+    /// Solutions Diagnostic
+    /// Serialized Name: SolutionsDiagnostic
+    /// </summary>
     public partial class SolutionsDiagnostic
     {
         /// <summary>
@@ -53,13 +56,34 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SolutionsDiagnostic"/>. </summary>
-        /// <param name="solutionId"> Solution Id to identify single Solutions Diagnostic. </param>
-        /// <param name="status"> Denotes the status of the diagnostic resource. </param>
-        /// <param name="statusDetails"> Details of the status. </param>
-        /// <param name="replacementKey"> Place holder used in HTML Content replace control with the content. </param>
-        /// <param name="estimatedCompletionTime"> Diagnostics estimated completion time in minutes. </param>
-        /// <param name="requiredParameters"> Required parameters of this item. </param>
-        /// <param name="insights"> Diagnostic insights. </param>
+        /// <param name="solutionId">
+        /// Solution Id to identify single Solutions Diagnostic
+        /// Serialized Name: SolutionsDiagnostic.solutionId
+        /// </param>
+        /// <param name="status">
+        /// Denotes the status of the diagnostic resource.
+        /// Serialized Name: SolutionsDiagnostic.status
+        /// </param>
+        /// <param name="statusDetails">
+        /// Details of the status
+        /// Serialized Name: SolutionsDiagnostic.statusDetails
+        /// </param>
+        /// <param name="replacementKey">
+        /// Place holder used in HTML Content replace control with the content
+        /// Serialized Name: SolutionsDiagnostic.replacementKey
+        /// </param>
+        /// <param name="estimatedCompletionTime">
+        /// Diagnostics estimated completion time in minutes
+        /// Serialized Name: SolutionsDiagnostic.estimatedCompletionTime
+        /// </param>
+        /// <param name="requiredParameters">
+        /// Required parameters of this item
+        /// Serialized Name: SolutionsDiagnostic.requiredParameters
+        /// </param>
+        /// <param name="insights">
+        /// Diagnostic insights
+        /// Serialized Name: SolutionsDiagnostic.insights
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SolutionsDiagnostic(string solutionId, SelfHelpDiagnosticStatus? status, string statusDetails, string replacementKey, string estimatedCompletionTime, IReadOnlyList<string> requiredParameters, IReadOnlyList<SelfHelpDiagnosticInsight> insights, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -73,19 +97,40 @@ namespace Azure.ResourceManager.SelfHelp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Solution Id to identify single Solutions Diagnostic. </summary>
+        /// <summary>
+        /// Solution Id to identify single Solutions Diagnostic
+        /// Serialized Name: SolutionsDiagnostic.solutionId
+        /// </summary>
         public string SolutionId { get; }
-        /// <summary> Denotes the status of the diagnostic resource. </summary>
+        /// <summary>
+        /// Denotes the status of the diagnostic resource.
+        /// Serialized Name: SolutionsDiagnostic.status
+        /// </summary>
         public SelfHelpDiagnosticStatus? Status { get; }
-        /// <summary> Details of the status. </summary>
+        /// <summary>
+        /// Details of the status
+        /// Serialized Name: SolutionsDiagnostic.statusDetails
+        /// </summary>
         public string StatusDetails { get; }
-        /// <summary> Place holder used in HTML Content replace control with the content. </summary>
+        /// <summary>
+        /// Place holder used in HTML Content replace control with the content
+        /// Serialized Name: SolutionsDiagnostic.replacementKey
+        /// </summary>
         public string ReplacementKey { get; }
-        /// <summary> Diagnostics estimated completion time in minutes. </summary>
+        /// <summary>
+        /// Diagnostics estimated completion time in minutes
+        /// Serialized Name: SolutionsDiagnostic.estimatedCompletionTime
+        /// </summary>
         public string EstimatedCompletionTime { get; }
-        /// <summary> Required parameters of this item. </summary>
+        /// <summary>
+        /// Required parameters of this item
+        /// Serialized Name: SolutionsDiagnostic.requiredParameters
+        /// </summary>
         public IReadOnlyList<string> RequiredParameters { get; }
-        /// <summary> Diagnostic insights. </summary>
+        /// <summary>
+        /// Diagnostic insights
+        /// Serialized Name: SolutionsDiagnostic.insights
+        /// </summary>
         public IReadOnlyList<SelfHelpDiagnosticInsight> Insights { get; }
     }
 }

@@ -8,7 +8,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         public static Azure.ResourceManager.AppComplianceAutomation.ReportResourceCollection GetReportResources(this Azure.ResourceManager.Resources.TenantResource tenantResource) { throw null; }
         public static Azure.ResourceManager.AppComplianceAutomation.SnapshotResource GetSnapshotResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class ReportResource : Azure.ResourceManager.ArmResource
+    public partial class ReportResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.ReportResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.ReportResourceData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ReportResource() { }
@@ -22,6 +22,11 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         public virtual Azure.Response<Azure.ResourceManager.AppComplianceAutomation.SnapshotResource> GetSnapshotResource(string snapshotName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppComplianceAutomation.SnapshotResource>> GetSnapshotResourceAsync(string snapshotName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.AppComplianceAutomation.SnapshotResourceCollection GetSnapshotResources() { throw null; }
+        Azure.ResourceManager.AppComplianceAutomation.ReportResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.ReportResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.ReportResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppComplianceAutomation.ReportResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.ReportResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.ReportResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.ReportResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppComplianceAutomation.ReportResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppComplianceAutomation.Models.ReportResourcePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppComplianceAutomation.ReportResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppComplianceAutomation.Models.ReportResourcePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -52,7 +57,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.ReportResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.ReportResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SnapshotResource : Azure.ResourceManager.ArmResource
+    public partial class SnapshotResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.SnapshotResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.SnapshotResourceData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected SnapshotResource() { }
@@ -63,6 +68,11 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppComplianceAutomation.Models.DownloadResponse>> DownloadAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppComplianceAutomation.Models.SnapshotDownloadContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppComplianceAutomation.SnapshotResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppComplianceAutomation.SnapshotResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.AppComplianceAutomation.SnapshotResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.SnapshotResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppComplianceAutomation.SnapshotResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppComplianceAutomation.SnapshotResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.SnapshotResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.SnapshotResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppComplianceAutomation.SnapshotResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SnapshotResourceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppComplianceAutomation.SnapshotResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppComplianceAutomation.SnapshotResource>, System.Collections.IEnumerable
     {

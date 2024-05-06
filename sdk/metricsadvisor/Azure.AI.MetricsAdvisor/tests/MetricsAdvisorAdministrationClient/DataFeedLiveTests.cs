@@ -1537,7 +1537,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Assert.That(concreteDataSource.DataSourceKind, Is.EqualTo(DataFeedSourceKind.LogAnalytics));
                 Assert.That(concreteDataSource.WorkspaceId, Is.EqualTo(DataSourceWorkspaceId));
                 Assert.That(concreteDataSource.Query, Is.EqualTo(DataSourceQuery));
-                Assert.That(concreteDataSource.ClientId, Is.EqualTo(DataSourceClientId));
+                Assert.That(concreteDataSource.ClientId, Is.EqualTo(SanitizeValue));
                 Assert.That(concreteDataSource.TenantId, Is.EqualTo(DataSourceTenantId));
             }
             else if (expectedKind == nameof(DataFeedSourceKind.MongoDb))

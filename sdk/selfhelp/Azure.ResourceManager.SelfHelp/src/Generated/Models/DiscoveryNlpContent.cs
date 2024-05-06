@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    /// <summary> Discover NLP request. </summary>
+    /// <summary>
+    /// Discover NLP request.
+    /// Serialized Name: DiscoveryNlpRequest
+    /// </summary>
     public partial class DiscoveryNlpContent
     {
         /// <summary>
@@ -46,7 +49,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DiscoveryNlpContent"/>. </summary>
-        /// <param name="issueSummary"> Natural language description of the issue. </param>
+        /// <param name="issueSummary">
+        /// Natural language description of the issue.
+        /// Serialized Name: DiscoveryNlpRequest.issueSummary
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="issueSummary"/> is null. </exception>
         public DiscoveryNlpContent(string issueSummary)
         {
@@ -56,10 +62,22 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DiscoveryNlpContent"/>. </summary>
-        /// <param name="issueSummary"> Natural language description of the issue. </param>
-        /// <param name="resourceId"> ARM resource Id of the resource that is having the issue. </param>
-        /// <param name="serviceId"> ARM service Id of the service that is having the issue. For more information on service Id see https://learn.microsoft.com/rest/api/support/services/list?tabs=HTTP. </param>
-        /// <param name="additionalContext"> Additional information in the form of a string. </param>
+        /// <param name="issueSummary">
+        /// Natural language description of the issue.
+        /// Serialized Name: DiscoveryNlpRequest.issueSummary
+        /// </param>
+        /// <param name="resourceId">
+        /// ARM resource Id of the resource that is having the issue.
+        /// Serialized Name: DiscoveryNlpRequest.resourceId
+        /// </param>
+        /// <param name="serviceId">
+        /// ARM service Id of the service that is having the issue. For more information on service Id see https://learn.microsoft.com/rest/api/support/services/list?tabs=HTTP.
+        /// Serialized Name: DiscoveryNlpRequest.serviceId
+        /// </param>
+        /// <param name="additionalContext">
+        /// Additional information in the form of a string.
+        /// Serialized Name: DiscoveryNlpRequest.additionalContext
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DiscoveryNlpContent(string issueSummary, string resourceId, string serviceId, string additionalContext, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,13 +93,25 @@ namespace Azure.ResourceManager.SelfHelp.Models
         {
         }
 
-        /// <summary> Natural language description of the issue. </summary>
+        /// <summary>
+        /// Natural language description of the issue.
+        /// Serialized Name: DiscoveryNlpRequest.issueSummary
+        /// </summary>
         public string IssueSummary { get; }
-        /// <summary> ARM resource Id of the resource that is having the issue. </summary>
+        /// <summary>
+        /// ARM resource Id of the resource that is having the issue.
+        /// Serialized Name: DiscoveryNlpRequest.resourceId
+        /// </summary>
         public string ResourceId { get; set; }
-        /// <summary> ARM service Id of the service that is having the issue. For more information on service Id see https://learn.microsoft.com/rest/api/support/services/list?tabs=HTTP. </summary>
+        /// <summary>
+        /// ARM service Id of the service that is having the issue. For more information on service Id see https://learn.microsoft.com/rest/api/support/services/list?tabs=HTTP.
+        /// Serialized Name: DiscoveryNlpRequest.serviceId
+        /// </summary>
         public string ServiceId { get; set; }
-        /// <summary> Additional information in the form of a string. </summary>
+        /// <summary>
+        /// Additional information in the form of a string.
+        /// Serialized Name: DiscoveryNlpRequest.additionalContext
+        /// </summary>
         public string AdditionalContext { get; set; }
     }
 }

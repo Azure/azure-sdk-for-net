@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.SelfHelp
     /// <summary>
     /// A class representing the SimplifiedSolutionsResource data model.
     /// Simplified Solutions response.
+    /// Serialized Name: SimplifiedSolutionsResource
     /// </summary>
     public partial class SimplifiedSolutionsResourceData : ResourceData
     {
@@ -63,12 +64,30 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="solutionId"> Solution Id to identify single Simplified Solution. </param>
-        /// <param name="parameters"> Client input parameters to run Simplified Solutions. </param>
-        /// <param name="title"> The title. </param>
-        /// <param name="appendix"> Additional parameter response for Simplified Solutions. </param>
-        /// <param name="content"> The HTML content that needs to be rendered and shown to customer. </param>
-        /// <param name="provisioningState"> Status of Simplified Solution provisioning. </param>
+        /// <param name="solutionId">
+        /// Solution Id to identify single Simplified Solution.
+        /// Serialized Name: SimplifiedSolutionsResource.properties.solutionId
+        /// </param>
+        /// <param name="parameters">
+        /// Client input parameters to run Simplified Solutions
+        /// Serialized Name: SimplifiedSolutionsResource.properties.parameters
+        /// </param>
+        /// <param name="title">
+        /// The title.
+        /// Serialized Name: SimplifiedSolutionsResource.properties.title
+        /// </param>
+        /// <param name="appendix">
+        /// Additional parameter response for Simplified Solutions
+        /// Serialized Name: SimplifiedSolutionsResource.properties.appendix
+        /// </param>
+        /// <param name="content">
+        /// The HTML content that needs to be rendered and shown to customer.
+        /// Serialized Name: SimplifiedSolutionsResource.properties.content
+        /// </param>
+        /// <param name="provisioningState">
+        /// Status of Simplified Solution provisioning.
+        /// Serialized Name: SimplifiedSolutionsResource.properties.provisioningState
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SimplifiedSolutionsResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string solutionId, IDictionary<string, string> parameters, string title, IReadOnlyDictionary<string, string> appendix, string content, SolutionProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -81,17 +100,35 @@ namespace Azure.ResourceManager.SelfHelp
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Solution Id to identify single Simplified Solution. </summary>
+        /// <summary>
+        /// Solution Id to identify single Simplified Solution.
+        /// Serialized Name: SimplifiedSolutionsResource.properties.solutionId
+        /// </summary>
         public string SolutionId { get; set; }
-        /// <summary> Client input parameters to run Simplified Solutions. </summary>
+        /// <summary>
+        /// Client input parameters to run Simplified Solutions
+        /// Serialized Name: SimplifiedSolutionsResource.properties.parameters
+        /// </summary>
         public IDictionary<string, string> Parameters { get; }
-        /// <summary> The title. </summary>
+        /// <summary>
+        /// The title.
+        /// Serialized Name: SimplifiedSolutionsResource.properties.title
+        /// </summary>
         public string Title { get; }
-        /// <summary> Additional parameter response for Simplified Solutions. </summary>
+        /// <summary>
+        /// Additional parameter response for Simplified Solutions
+        /// Serialized Name: SimplifiedSolutionsResource.properties.appendix
+        /// </summary>
         public IReadOnlyDictionary<string, string> Appendix { get; }
-        /// <summary> The HTML content that needs to be rendered and shown to customer. </summary>
+        /// <summary>
+        /// The HTML content that needs to be rendered and shown to customer.
+        /// Serialized Name: SimplifiedSolutionsResource.properties.content
+        /// </summary>
         public string Content { get; }
-        /// <summary> Status of Simplified Solution provisioning. </summary>
+        /// <summary>
+        /// Status of Simplified Solution provisioning.
+        /// Serialized Name: SimplifiedSolutionsResource.properties.provisioningState
+        /// </summary>
         public SolutionProvisioningState? ProvisioningState { get; }
     }
 }

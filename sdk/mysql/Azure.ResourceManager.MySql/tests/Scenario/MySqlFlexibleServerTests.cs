@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MySql.Tests
     public class MySqlFlexibleServerTests: MySqlManagementTestBase
     {
         public MySqlFlexibleServerTests(bool isAsync)
-            : base(isAsync)
+            : base(isAsync)//,RecordedTestMode.Record)
         {
             BodyKeySanitizers.Add(new BodyKeySanitizer("https://fakeaccout.blob.windows.core.net/fakecontainer") { JsonPath = "properties.importSourceProperties.storageUrl" });
             BodyKeySanitizers.Add(new BodyKeySanitizer(SanitizeValue) { JsonPath = "properties.importSourceProperties.sasToken" });

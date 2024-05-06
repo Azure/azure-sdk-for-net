@@ -117,12 +117,12 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
             return GetSelfHelpDiagnostics(scope).Get(diagnosticsResourceName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SolutionResources in the ArmClient. </summary>
+        /// <summary> Gets a collection of SelfHelpSolutionResources in the ArmClient. </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of SolutionResources and their operations over a SolutionResource. </returns>
-        public virtual SolutionResourceCollection GetSolutionResources(ResourceIdentifier scope)
+        /// <returns> An object representing collection of SelfHelpSolutionResources and their operations over a SelfHelpSolutionResource. </returns>
+        public virtual SelfHelpSolutionCollection GetSelfHelpSolutions(ResourceIdentifier scope)
         {
-            return new SolutionResourceCollection(Client, scope);
+            return new SelfHelpSolutionCollection(Client, scope);
         }
 
         /// <summary>
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SolutionResource"/></description>
+        /// <description><see cref="SelfHelpSolutionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -152,9 +152,9 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="solutionResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="solutionResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SolutionResource>> GetSolutionResourceAsync(ResourceIdentifier scope, string solutionResourceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SelfHelpSolutionResource>> GetSelfHelpSolutionAsync(ResourceIdentifier scope, string solutionResourceName, CancellationToken cancellationToken = default)
         {
-            return await GetSolutionResources(scope).GetAsync(solutionResourceName, cancellationToken).ConfigureAwait(false);
+            return await GetSelfHelpSolutions(scope).GetAsync(solutionResourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SolutionResource"/></description>
+        /// <description><see cref="SelfHelpSolutionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,9 +184,9 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="solutionResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="solutionResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SolutionResource> GetSolutionResource(ResourceIdentifier scope, string solutionResourceName, CancellationToken cancellationToken = default)
+        public virtual Response<SelfHelpSolutionResource> GetSelfHelpSolution(ResourceIdentifier scope, string solutionResourceName, CancellationToken cancellationToken = default)
         {
-            return GetSolutionResources(scope).Get(solutionResourceName, cancellationToken);
+            return GetSelfHelpSolutions(scope).Get(solutionResourceName, cancellationToken);
         }
 
         /// <summary> Gets a collection of SimplifiedSolutionsResources in the ArmClient. </summary>
@@ -423,15 +423,15 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SolutionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SolutionResource.CreateResourceIdentifier" /> to create a <see cref="SolutionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="SelfHelpSolutionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SelfHelpSolutionResource.CreateResourceIdentifier" /> to create a <see cref="SelfHelpSolutionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SolutionResource"/> object. </returns>
-        public virtual SolutionResource GetSolutionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SelfHelpSolutionResource"/> object. </returns>
+        public virtual SelfHelpSolutionResource GetSelfHelpSolutionResource(ResourceIdentifier id)
         {
-            SolutionResource.ValidateResourceId(id);
-            return new SolutionResource(Client, id);
+            SelfHelpSolutionResource.ValidateResourceId(id);
+            return new SelfHelpSolutionResource(Client, id);
         }
 
         /// <summary>

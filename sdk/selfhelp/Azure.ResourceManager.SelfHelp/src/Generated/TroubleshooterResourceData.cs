@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.SelfHelp
     /// <summary>
     /// A class representing the TroubleshooterResource data model.
     /// Troubleshooter response.
+    /// Serialized Name: TroubleshooterResource
     /// </summary>
     public partial class TroubleshooterResourceData : ResourceData
     {
@@ -63,10 +64,22 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="solutionId"> Solution Id to identify single troubleshooter. </param>
-        /// <param name="parameters"> Client input parameters to run Troubleshooter Resource. </param>
-        /// <param name="provisioningState"> Status of troubleshooter provisioning. </param>
-        /// <param name="steps"> List of step object. </param>
+        /// <param name="solutionId">
+        /// Solution Id to identify single troubleshooter.
+        /// Serialized Name: TroubleshooterResource.properties.solutionId
+        /// </param>
+        /// <param name="parameters">
+        /// Client input parameters to run Troubleshooter Resource
+        /// Serialized Name: TroubleshooterResource.properties.parameters
+        /// </param>
+        /// <param name="provisioningState">
+        /// Status of troubleshooter provisioning.
+        /// Serialized Name: TroubleshooterResource.properties.provisioningState
+        /// </param>
+        /// <param name="steps">
+        /// List of step object.
+        /// Serialized Name: TroubleshooterResource.properties.steps
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal TroubleshooterResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string solutionId, IDictionary<string, string> parameters, TroubleshooterProvisioningState? provisioningState, IReadOnlyList<SelfHelpStep> steps, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -77,13 +90,25 @@ namespace Azure.ResourceManager.SelfHelp
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Solution Id to identify single troubleshooter. </summary>
+        /// <summary>
+        /// Solution Id to identify single troubleshooter.
+        /// Serialized Name: TroubleshooterResource.properties.solutionId
+        /// </summary>
         public string SolutionId { get; set; }
-        /// <summary> Client input parameters to run Troubleshooter Resource. </summary>
+        /// <summary>
+        /// Client input parameters to run Troubleshooter Resource
+        /// Serialized Name: TroubleshooterResource.properties.parameters
+        /// </summary>
         public IDictionary<string, string> Parameters { get; }
-        /// <summary> Status of troubleshooter provisioning. </summary>
+        /// <summary>
+        /// Status of troubleshooter provisioning.
+        /// Serialized Name: TroubleshooterResource.properties.provisioningState
+        /// </summary>
         public TroubleshooterProvisioningState? ProvisioningState { get; }
-        /// <summary> List of step object. </summary>
+        /// <summary>
+        /// List of step object.
+        /// Serialized Name: TroubleshooterResource.properties.steps
+        /// </summary>
         public IReadOnlyList<SelfHelpStep> Steps { get; }
     }
 }

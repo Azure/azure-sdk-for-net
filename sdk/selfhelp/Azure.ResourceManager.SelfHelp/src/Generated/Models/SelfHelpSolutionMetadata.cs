@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    /// <summary> Metadata resource. </summary>
+    /// <summary>
+    /// Metadata resource
+    /// Serialized Name: SolutionMetadataResource
+    /// </summary>
     public partial class SelfHelpSolutionMetadata : ResourceData
     {
         /// <summary>
@@ -58,7 +61,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="solutions"> List of metadata. </param>
+        /// <param name="solutions">
+        /// List of metadata.
+        /// Serialized Name: SolutionMetadataResource.properties.solutions
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SelfHelpSolutionMetadata(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<SolutionMetadataProperties> solutions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -66,7 +72,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of metadata. </summary>
+        /// <summary>
+        /// List of metadata.
+        /// Serialized Name: SolutionMetadataResource.properties.solutions
+        /// </summary>
         public IList<SolutionMetadataProperties> Solutions { get; }
     }
 }

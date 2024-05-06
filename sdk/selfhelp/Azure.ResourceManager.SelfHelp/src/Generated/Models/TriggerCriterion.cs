@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    /// <summary> Solution request trigger criterion. SolutionId/ProblemClassificationId is the only supported trigger type for Solution PUT request. ReplacementKey is the only supported trigger type for Solution PATCH request. </summary>
+    /// <summary>
+    /// Solution request trigger criterion. SolutionId/ProblemClassificationId is the only supported trigger type for Solution PUT request. ReplacementKey is the only supported trigger type for Solution PATCH request.
+    /// Serialized Name: TriggerCriterion
+    /// </summary>
     public partial class TriggerCriterion
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="TriggerCriterion"/>. </summary>
-        /// <param name="name"> Trigger criterion name. </param>
-        /// <param name="value"> Trigger criterion value. </param>
+        /// <param name="name">
+        /// Trigger criterion name.
+        /// Serialized Name: TriggerCriterion.name
+        /// </param>
+        /// <param name="value">
+        /// Trigger criterion value.
+        /// Serialized Name: TriggerCriterion.value
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal TriggerCriterion(SelfHelpName? name, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,9 +70,15 @@ namespace Azure.ResourceManager.SelfHelp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Trigger criterion name. </summary>
+        /// <summary>
+        /// Trigger criterion name.
+        /// Serialized Name: TriggerCriterion.name
+        /// </summary>
         public SelfHelpName? Name { get; set; }
-        /// <summary> Trigger criterion value. </summary>
+        /// <summary>
+        /// Trigger criterion value.
+        /// Serialized Name: TriggerCriterion.value
+        /// </summary>
         public string Value { get; set; }
     }
 }

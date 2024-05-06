@@ -85,7 +85,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webSiteSlotHybridConnectionWebAppsRestClient.CreateOrUpdateRelayServiceConnectionSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, entityName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<WebSiteSlotHybridConnectionResource>(Response.FromValue(new WebSiteSlotHybridConnectionResource(Client, response), response.GetRawResponse()));
+                var uri = _webSiteSlotHybridConnectionWebAppsRestClient.CreateCreateOrUpdateRelayServiceConnectionSlotRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, entityName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppServiceArmOperation<WebSiteSlotHybridConnectionResource>(Response.FromValue(new WebSiteSlotHybridConnectionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -134,7 +136,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webSiteSlotHybridConnectionWebAppsRestClient.CreateOrUpdateRelayServiceConnectionSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, entityName, data, cancellationToken);
-                var operation = new AppServiceArmOperation<WebSiteSlotHybridConnectionResource>(Response.FromValue(new WebSiteSlotHybridConnectionResource(Client, response), response.GetRawResponse()));
+                var uri = _webSiteSlotHybridConnectionWebAppsRestClient.CreateCreateOrUpdateRelayServiceConnectionSlotRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, entityName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppServiceArmOperation<WebSiteSlotHybridConnectionResource>(Response.FromValue(new WebSiteSlotHybridConnectionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

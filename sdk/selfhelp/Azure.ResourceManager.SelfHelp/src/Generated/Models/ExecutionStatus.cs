@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    /// <summary> Status of Troubleshooter Step execution. </summary>
+    /// <summary>
+    /// Status of Troubleshooter Step execution.
+    /// Serialized Name: ExecutionStatus
+    /// </summary>
     public readonly partial struct ExecutionStatus : IEquatable<ExecutionStatus>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.SelfHelp.Models
         private const string FailedValue = "Failed";
         private const string WarningValue = "Warning";
 
-        /// <summary> Step execution succeeded. </summary>
+        /// <summary>
+        /// Step execution succeeded.
+        /// Serialized Name: ExecutionStatus.Success
+        /// </summary>
         public static ExecutionStatus Success { get; } = new ExecutionStatus(SuccessValue);
-        /// <summary> Step execution running. </summary>
+        /// <summary>
+        /// Step execution running
+        /// Serialized Name: ExecutionStatus.Running
+        /// </summary>
         public static ExecutionStatus Running { get; } = new ExecutionStatus(RunningValue);
-        /// <summary> Step execution failed. </summary>
+        /// <summary>
+        /// Step execution failed
+        /// Serialized Name: ExecutionStatus.Failed
+        /// </summary>
         public static ExecutionStatus Failed { get; } = new ExecutionStatus(FailedValue);
-        /// <summary> Step execution warning. </summary>
+        /// <summary>
+        /// Step execution warning
+        /// Serialized Name: ExecutionStatus.Warning
+        /// </summary>
         public static ExecutionStatus Warning { get; } = new ExecutionStatus(WarningValue);
         /// <summary> Determines if two <see cref="ExecutionStatus"/> values are the same. </summary>
         public static bool operator ==(ExecutionStatus left, ExecutionStatus right) => left.Equals(right);

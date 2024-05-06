@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    /// <summary> Details of step input. </summary>
+    /// <summary>
+    /// Details of step input.
+    /// Serialized Name: StepInput
+    /// </summary>
     public partial class StepInput
     {
         /// <summary>
@@ -52,16 +55,43 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="StepInput"/>. </summary>
-        /// <param name="questionId"> Use Index as QuestionId. </param>
-        /// <param name="questionType"> Type of Question. </param>
-        /// <param name="questionTitle"> Question title. </param>
-        /// <param name="questionContent"> User question content. </param>
-        /// <param name="questionContentType"> Default is Text. </param>
-        /// <param name="responseHint"> Place holder text for response hints. </param>
-        /// <param name="recommendedOption"> Result of Automate step. </param>
-        /// <param name="selectedOptionValue"> Text of response that was selected. </param>
-        /// <param name="responseValidationProperties"> Troubleshooter step input response validation properties. </param>
-        /// <param name="responseOptions"></param>
+        /// <param name="questionId">
+        /// Use Index as QuestionId.
+        /// Serialized Name: StepInput.questionId
+        /// </param>
+        /// <param name="questionType">
+        /// Type of Question
+        /// Serialized Name: StepInput.questionType
+        /// </param>
+        /// <param name="questionTitle">
+        /// Question title
+        /// Serialized Name: StepInput.questionTitle
+        /// </param>
+        /// <param name="questionContent">
+        /// User question content.
+        /// Serialized Name: StepInput.questionContent
+        /// </param>
+        /// <param name="questionContentType">
+        /// Default is Text.
+        /// Serialized Name: StepInput.questionContentType
+        /// </param>
+        /// <param name="responseHint">
+        /// Place holder text for response hints.
+        /// Serialized Name: StepInput.responseHint
+        /// </param>
+        /// <param name="recommendedOption">
+        /// Result of Automate step.
+        /// Serialized Name: StepInput.recommendedOption
+        /// </param>
+        /// <param name="selectedOptionValue">
+        /// Text of response that was selected.
+        /// Serialized Name: StepInput.selectedOptionValue
+        /// </param>
+        /// <param name="responseValidationProperties">
+        /// Troubleshooter step input response validation properties
+        /// Serialized Name: StepInput.responseValidationProperties
+        /// </param>
+        /// <param name="responseOptions"> Serialized Name: StepInput.responseOptions. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal StepInput(string questionId, QuestionType? questionType, string questionTitle, string questionContent, QuestionContentType? questionContentType, string responseHint, string recommendedOption, string selectedOptionValue, ResponseValidationProperties responseValidationProperties, IReadOnlyList<ResponseConfig> responseOptions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -78,25 +108,52 @@ namespace Azure.ResourceManager.SelfHelp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Use Index as QuestionId. </summary>
+        /// <summary>
+        /// Use Index as QuestionId.
+        /// Serialized Name: StepInput.questionId
+        /// </summary>
         public string QuestionId { get; }
-        /// <summary> Type of Question. </summary>
+        /// <summary>
+        /// Type of Question
+        /// Serialized Name: StepInput.questionType
+        /// </summary>
         public QuestionType? QuestionType { get; }
-        /// <summary> Question title. </summary>
+        /// <summary>
+        /// Question title
+        /// Serialized Name: StepInput.questionTitle
+        /// </summary>
         public string QuestionTitle { get; }
-        /// <summary> User question content. </summary>
+        /// <summary>
+        /// User question content.
+        /// Serialized Name: StepInput.questionContent
+        /// </summary>
         public string QuestionContent { get; }
-        /// <summary> Default is Text. </summary>
+        /// <summary>
+        /// Default is Text.
+        /// Serialized Name: StepInput.questionContentType
+        /// </summary>
         public QuestionContentType? QuestionContentType { get; }
-        /// <summary> Place holder text for response hints. </summary>
+        /// <summary>
+        /// Place holder text for response hints.
+        /// Serialized Name: StepInput.responseHint
+        /// </summary>
         public string ResponseHint { get; }
-        /// <summary> Result of Automate step. </summary>
+        /// <summary>
+        /// Result of Automate step.
+        /// Serialized Name: StepInput.recommendedOption
+        /// </summary>
         public string RecommendedOption { get; }
-        /// <summary> Text of response that was selected. </summary>
+        /// <summary>
+        /// Text of response that was selected.
+        /// Serialized Name: StepInput.selectedOptionValue
+        /// </summary>
         public string SelectedOptionValue { get; }
-        /// <summary> Troubleshooter step input response validation properties. </summary>
+        /// <summary>
+        /// Troubleshooter step input response validation properties
+        /// Serialized Name: StepInput.responseValidationProperties
+        /// </summary>
         public ResponseValidationProperties ResponseValidationProperties { get; }
-        /// <summary> Gets the response options. </summary>
+        /// <summary> Serialized Name: StepInput.responseOptions. </summary>
         public IReadOnlyList<ResponseConfig> ResponseOptions { get; }
     }
 }

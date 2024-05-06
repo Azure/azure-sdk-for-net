@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    /// <summary> Status of troubleshooter provisioning. </summary>
+    /// <summary>
+    /// Status of troubleshooter provisioning.
+    /// Serialized Name: TroubleshooterProvisioningState
+    /// </summary>
     public readonly partial struct TroubleshooterProvisioningState : IEquatable<TroubleshooterProvisioningState>
     {
         private readonly string _value;
@@ -28,15 +31,30 @@ namespace Azure.ResourceManager.SelfHelp.Models
         private const string RunningValue = "Running";
         private const string AutoContinueValue = "AutoContinue";
 
-        /// <summary> Succeeded. </summary>
+        /// <summary>
+        /// Succeeded
+        /// Serialized Name: TroubleshooterProvisioningState.Succeeded
+        /// </summary>
         public static TroubleshooterProvisioningState Succeeded { get; } = new TroubleshooterProvisioningState(SucceededValue);
-        /// <summary> Failed. </summary>
+        /// <summary>
+        /// Failed
+        /// Serialized Name: TroubleshooterProvisioningState.Failed
+        /// </summary>
         public static TroubleshooterProvisioningState Failed { get; } = new TroubleshooterProvisioningState(FailedValue);
-        /// <summary> Canceled. </summary>
+        /// <summary>
+        /// Canceled
+        /// Serialized Name: TroubleshooterProvisioningState.Canceled
+        /// </summary>
         public static TroubleshooterProvisioningState Canceled { get; } = new TroubleshooterProvisioningState(CanceledValue);
-        /// <summary> Running. </summary>
+        /// <summary>
+        /// Running
+        /// Serialized Name: TroubleshooterProvisioningState.Running
+        /// </summary>
         public static TroubleshooterProvisioningState Running { get; } = new TroubleshooterProvisioningState(RunningValue);
-        /// <summary> AutoContinue. </summary>
+        /// <summary>
+        /// AutoContinue
+        /// Serialized Name: TroubleshooterProvisioningState.AutoContinue
+        /// </summary>
         public static TroubleshooterProvisioningState AutoContinue { get; } = new TroubleshooterProvisioningState(AutoContinueValue);
         /// <summary> Determines if two <see cref="TroubleshooterProvisioningState"/> values are the same. </summary>
         public static bool operator ==(TroubleshooterProvisioningState left, TroubleshooterProvisioningState right) => left.Equals(right);

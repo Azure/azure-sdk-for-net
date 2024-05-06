@@ -17,9 +17,18 @@ namespace Azure.ResourceManager.SelfHelp.Models
     public static partial class ArmSelfHelpModelFactory
     {
         /// <summary> Initializes a new instance of <see cref="Models.SelfHelpNameAvailabilityResult"/>. </summary>
-        /// <param name="isNameAvailable"> Returns true or false depending on the availability of the name. </param>
-        /// <param name="reason"> Reason for why value is not available. This field is returned if nameAvailable is false. </param>
-        /// <param name="message"> Gets an error message explaining the 'reason' value with more details. This field is returned iif nameAvailable is false. </param>
+        /// <param name="isNameAvailable">
+        /// Returns true or false depending on the availability of the name
+        /// Serialized Name: CheckNameAvailabilityResponse.nameAvailable
+        /// </param>
+        /// <param name="reason">
+        /// Reason for why value is not available. This field is returned if nameAvailable is false.
+        /// Serialized Name: CheckNameAvailabilityResponse.reason
+        /// </param>
+        /// <param name="message">
+        /// Gets an error message explaining the 'reason' value with more details. This field is returned iif nameAvailable is false.
+        /// Serialized Name: CheckNameAvailabilityResponse.message
+        /// </param>
         /// <returns> A new <see cref="Models.SelfHelpNameAvailabilityResult"/> instance for mocking. </returns>
         public static SelfHelpNameAvailabilityResult SelfHelpNameAvailabilityResult(bool? isNameAvailable = null, string reason = null, string message = null)
         {
@@ -31,11 +40,26 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="globalParameters"> Global parameters is an optional map which can be used to add key and  value to request body to improve the diagnostics results. </param>
-        /// <param name="insights"> SolutionIds that are needed to be invoked. </param>
-        /// <param name="acceptedOn"> Diagnostic Request Accepted time. </param>
-        /// <param name="provisioningState"> Status of diagnostic provisioning. </param>
-        /// <param name="diagnostics"> Array of Diagnostics. </param>
+        /// <param name="globalParameters">
+        /// Global parameters is an optional map which can be used to add key and  value to request body to improve the diagnostics results
+        /// Serialized Name: DiagnosticResource.properties.globalParameters
+        /// </param>
+        /// <param name="insights">
+        /// SolutionIds that are needed to be invoked.
+        /// Serialized Name: DiagnosticResource.properties.insights
+        /// </param>
+        /// <param name="acceptedOn">
+        /// Diagnostic Request Accepted time.
+        /// Serialized Name: DiagnosticResource.properties.acceptedAt
+        /// </param>
+        /// <param name="provisioningState">
+        /// Status of diagnostic provisioning.
+        /// Serialized Name: DiagnosticResource.properties.provisioningState
+        /// </param>
+        /// <param name="diagnostics">
+        /// Array of Diagnostics.
+        /// Serialized Name: DiagnosticResource.properties.diagnostics
+        /// </param>
         /// <returns> A new <see cref="SelfHelp.SelfHelpDiagnosticData"/> instance for mocking. </returns>
         public static SelfHelpDiagnosticData SelfHelpDiagnosticData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> globalParameters = null, IEnumerable<SelfHelpDiagnosticInvocation> insights = null, DateTimeOffset? acceptedOn = null, SelfHelpProvisioningState? provisioningState = null, IEnumerable<SelfHelpDiagnosticInfo> diagnostics = null)
         {
@@ -57,10 +81,22 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SelfHelpDiagnosticInfo"/>. </summary>
-        /// <param name="solutionId"> Solution Id. </param>
-        /// <param name="status"> Denotes the status of the diagnostic resource. </param>
-        /// <param name="insights"> The problems (if any) detected by this insight. </param>
-        /// <param name="error"> Error definition. </param>
+        /// <param name="solutionId">
+        /// Solution Id
+        /// Serialized Name: Diagnostic.solutionId
+        /// </param>
+        /// <param name="status">
+        /// Denotes the status of the diagnostic resource.
+        /// Serialized Name: Diagnostic.status
+        /// </param>
+        /// <param name="insights">
+        /// The problems (if any) detected by this insight.
+        /// Serialized Name: Diagnostic.insights
+        /// </param>
+        /// <param name="error">
+        /// Error definition.
+        /// Serialized Name: Diagnostic.error
+        /// </param>
         /// <returns> A new <see cref="Models.SelfHelpDiagnosticInfo"/> instance for mocking. </returns>
         public static SelfHelpDiagnosticInfo SelfHelpDiagnosticInfo(string solutionId = null, SelfHelpDiagnosticStatus? status = null, IEnumerable<SelfHelpDiagnosticInsight> insights = null, SelfHelpError error = null)
         {
@@ -70,10 +106,22 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SelfHelpError"/>. </summary>
-        /// <param name="code"> Service specific error code which serves as the substatus for the HTTP error code. </param>
-        /// <param name="errorType"> Service specific error type which serves as additional context for the error herein. </param>
-        /// <param name="message"> Description of the error. </param>
-        /// <param name="details"> An array of additional nested error response info objects, as described by this contract. </param>
+        /// <param name="code">
+        /// Service specific error code which serves as the substatus for the HTTP error code.
+        /// Serialized Name: Error.code
+        /// </param>
+        /// <param name="errorType">
+        /// Service specific error type which serves as additional context for the error herein.
+        /// Serialized Name: Error.type
+        /// </param>
+        /// <param name="message">
+        /// Description of the error.
+        /// Serialized Name: Error.message
+        /// </param>
+        /// <param name="details">
+        /// An array of additional nested error response info objects, as described by this contract.
+        /// Serialized Name: Error.details
+        /// </param>
         /// <returns> A new <see cref="Models.SelfHelpError"/> instance for mocking. </returns>
         public static SelfHelpError SelfHelpError(string code = null, string errorType = null, string message = null, IEnumerable<SelfHelpError> details = null)
         {
@@ -87,7 +135,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="solutions"> List of metadata. </param>
+        /// <param name="solutions">
+        /// List of metadata.
+        /// Serialized Name: SolutionMetadataResource.properties.solutions
+        /// </param>
         /// <returns> A new <see cref="Models.SelfHelpSolutionMetadata"/> instance for mocking. </returns>
         public static SelfHelpSolutionMetadata SelfHelpSolutionMetadata(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<SolutionMetadataProperties> solutions = null)
         {
@@ -103,10 +154,22 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SolutionMetadataProperties"/>. </summary>
-        /// <param name="solutionId"> Solution Id. </param>
-        /// <param name="solutionType"> Solution Type. </param>
-        /// <param name="description"> A detailed description of solution. </param>
-        /// <param name="requiredInputs"> Required parameters for invoking this particular solution. </param>
+        /// <param name="solutionId">
+        /// Solution Id.
+        /// Serialized Name: SolutionMetadataProperties.solutionId
+        /// </param>
+        /// <param name="solutionType">
+        /// Solution Type.
+        /// Serialized Name: SolutionMetadataProperties.solutionType
+        /// </param>
+        /// <param name="description">
+        /// A detailed description of solution.
+        /// Serialized Name: SolutionMetadataProperties.description
+        /// </param>
+        /// <param name="requiredInputs">
+        /// Required parameters for invoking this particular solution.
+        /// Serialized Name: SolutionMetadataProperties.requiredInputs
+        /// </param>
         /// <returns> A new <see cref="Models.SolutionMetadataProperties"/> instance for mocking. </returns>
         public static SolutionMetadataProperties SolutionMetadataProperties(string solutionId = null, SolutionType? solutionType = null, string description = null, IEnumerable<string> requiredInputs = null)
         {
@@ -115,27 +178,51 @@ namespace Azure.ResourceManager.SelfHelp.Models
             return new SolutionMetadataProperties(solutionId, solutionType, description, requiredInputs?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="SelfHelp.SolutionResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelfHelp.SelfHelpSolutionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="triggerCriteria"> Solution request trigger criteria. </param>
-        /// <param name="parameters"> Client input parameters to run Solution. </param>
-        /// <param name="solutionId"> Solution Id to identify single solution. </param>
-        /// <param name="provisioningState"> Status of solution provisioning. </param>
-        /// <param name="title"> The title. </param>
-        /// <param name="content"> The HTML content that needs to be rendered and shown to customer. </param>
-        /// <param name="replacementMaps"> Solution replacement maps. </param>
-        /// <param name="sections"> List of section object. </param>
-        /// <returns> A new <see cref="SelfHelp.SolutionResourceData"/> instance for mocking. </returns>
-        public static SolutionResourceData SolutionResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<TriggerCriterion> triggerCriteria = null, IDictionary<string, string> parameters = null, string solutionId = null, SolutionProvisioningState? provisioningState = null, string title = null, string content = null, ReplacementMaps replacementMaps = null, IEnumerable<SelfHelpSection> sections = null)
+        /// <param name="triggerCriteria">
+        /// Solution request trigger criteria
+        /// Serialized Name: SolutionResource.properties.triggerCriteria
+        /// </param>
+        /// <param name="parameters">
+        /// Client input parameters to run Solution
+        /// Serialized Name: SolutionResource.properties.parameters
+        /// </param>
+        /// <param name="solutionId">
+        /// Solution Id to identify single solution.
+        /// Serialized Name: SolutionResource.properties.solutionId
+        /// </param>
+        /// <param name="provisioningState">
+        /// Status of solution provisioning.
+        /// Serialized Name: SolutionResource.properties.provisioningState
+        /// </param>
+        /// <param name="title">
+        /// The title.
+        /// Serialized Name: SolutionResource.properties.title
+        /// </param>
+        /// <param name="content">
+        /// The HTML content that needs to be rendered and shown to customer.
+        /// Serialized Name: SolutionResource.properties.content
+        /// </param>
+        /// <param name="replacementMaps">
+        /// Solution replacement maps.
+        /// Serialized Name: SolutionResource.properties.replacementMaps
+        /// </param>
+        /// <param name="sections">
+        /// List of section object.
+        /// Serialized Name: SolutionResource.properties.sections
+        /// </param>
+        /// <returns> A new <see cref="SelfHelp.SelfHelpSolutionData"/> instance for mocking. </returns>
+        public static SelfHelpSolutionData SelfHelpSolutionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<TriggerCriterion> triggerCriteria = null, IDictionary<string, string> parameters = null, string solutionId = null, SolutionProvisioningState? provisioningState = null, string title = null, string content = null, ReplacementMaps replacementMaps = null, IEnumerable<SelfHelpSection> sections = null)
         {
             triggerCriteria ??= new List<TriggerCriterion>();
             parameters ??= new Dictionary<string, string>();
             sections ??= new List<SelfHelpSection>();
 
-            return new SolutionResourceData(
+            return new SelfHelpSolutionData(
                 id,
                 name,
                 resourceType,
@@ -152,12 +239,30 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ReplacementMaps"/>. </summary>
-        /// <param name="webResults"> Solution AzureKB results. </param>
-        /// <param name="diagnostics"> Solution diagnostics results. </param>
-        /// <param name="troubleshooters"> Solutions Troubleshooters. </param>
-        /// <param name="metricsBasedCharts"> Solution metrics based charts. </param>
-        /// <param name="videos"> Video solutions, which have the power to engage the customer by stimulating their senses. </param>
-        /// <param name="videoGroups"> Group of Videos. </param>
+        /// <param name="webResults">
+        /// Solution AzureKB results
+        /// Serialized Name: ReplacementMaps.webResults
+        /// </param>
+        /// <param name="diagnostics">
+        /// Solution diagnostics results.
+        /// Serialized Name: ReplacementMaps.diagnostics
+        /// </param>
+        /// <param name="troubleshooters">
+        /// Solutions Troubleshooters
+        /// Serialized Name: ReplacementMaps.troubleshooters
+        /// </param>
+        /// <param name="metricsBasedCharts">
+        /// Solution metrics based charts
+        /// Serialized Name: ReplacementMaps.metricsBasedCharts
+        /// </param>
+        /// <param name="videos">
+        /// Video solutions, which have the power to engage the customer by stimulating their senses
+        /// Serialized Name: ReplacementMaps.videos
+        /// </param>
+        /// <param name="videoGroups">
+        /// Group of Videos
+        /// Serialized Name: ReplacementMaps.videoGroups
+        /// </param>
         /// <returns> A new <see cref="Models.ReplacementMaps"/> instance for mocking. </returns>
         public static ReplacementMaps ReplacementMaps(IEnumerable<WebResult> webResults = null, IEnumerable<SolutionsDiagnostic> diagnostics = null, IEnumerable<SolutionsTroubleshooters> troubleshooters = null, IEnumerable<MetricsBasedChart> metricsBasedCharts = null, IEnumerable<SelfHelpVideo> videos = null, IEnumerable<VideoGroup> videoGroups = null)
         {
@@ -179,8 +284,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.WebResult"/>. </summary>
-        /// <param name="replacementKey"> Place holder used in HTML Content replace control with the content. </param>
-        /// <param name="searchResults"> AzureKB search results. </param>
+        /// <param name="replacementKey">
+        /// Place holder used in HTML Content replace control with the content
+        /// Serialized Name: WebResult.replacementKey
+        /// </param>
+        /// <param name="searchResults">
+        /// AzureKB search results
+        /// Serialized Name: WebResult.searchResults
+        /// </param>
         /// <returns> A new <see cref="Models.WebResult"/> instance for mocking. </returns>
         public static WebResult WebResult(string replacementKey = null, IEnumerable<SearchResult> searchResults = null)
         {
@@ -190,14 +301,38 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SearchResult"/>. </summary>
-        /// <param name="solutionId"> Unique id of the result. </param>
-        /// <param name="content"> Content of the search result. </param>
-        /// <param name="title"> Title of the search result. </param>
-        /// <param name="confidence"> Confidence of the search result. </param>
-        /// <param name="source"> Source of the search result. </param>
-        /// <param name="resultType"> Result type of the search result. </param>
-        /// <param name="rank"> rank of the search result. </param>
-        /// <param name="link"> Link to the document. </param>
+        /// <param name="solutionId">
+        /// Unique id of the result.
+        /// Serialized Name: SearchResult.solutionId
+        /// </param>
+        /// <param name="content">
+        /// Content of the search result.
+        /// Serialized Name: SearchResult.content
+        /// </param>
+        /// <param name="title">
+        /// Title of the search result.
+        /// Serialized Name: SearchResult.title
+        /// </param>
+        /// <param name="confidence">
+        /// Confidence of the search result.
+        /// Serialized Name: SearchResult.confidence
+        /// </param>
+        /// <param name="source">
+        /// Source of the search result.
+        /// Serialized Name: SearchResult.source
+        /// </param>
+        /// <param name="resultType">
+        /// Result type of the search result.
+        /// Serialized Name: SearchResult.resultType
+        /// </param>
+        /// <param name="rank">
+        /// rank of the search result
+        /// Serialized Name: SearchResult.rank
+        /// </param>
+        /// <param name="link">
+        /// Link to the document.
+        /// Serialized Name: SearchResult.link
+        /// </param>
         /// <returns> A new <see cref="Models.SearchResult"/> instance for mocking. </returns>
         public static SearchResult SearchResult(string solutionId = null, string content = null, string title = null, SelfHelpConfidence? confidence = null, string source = null, ResultType? resultType = null, int? rank = null, string link = null)
         {
@@ -214,13 +349,34 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SolutionsDiagnostic"/>. </summary>
-        /// <param name="solutionId"> Solution Id to identify single Solutions Diagnostic. </param>
-        /// <param name="status"> Denotes the status of the diagnostic resource. </param>
-        /// <param name="statusDetails"> Details of the status. </param>
-        /// <param name="replacementKey"> Place holder used in HTML Content replace control with the content. </param>
-        /// <param name="estimatedCompletionTime"> Diagnostics estimated completion time in minutes. </param>
-        /// <param name="requiredParameters"> Required parameters of this item. </param>
-        /// <param name="insights"> Diagnostic insights. </param>
+        /// <param name="solutionId">
+        /// Solution Id to identify single Solutions Diagnostic
+        /// Serialized Name: SolutionsDiagnostic.solutionId
+        /// </param>
+        /// <param name="status">
+        /// Denotes the status of the diagnostic resource.
+        /// Serialized Name: SolutionsDiagnostic.status
+        /// </param>
+        /// <param name="statusDetails">
+        /// Details of the status
+        /// Serialized Name: SolutionsDiagnostic.statusDetails
+        /// </param>
+        /// <param name="replacementKey">
+        /// Place holder used in HTML Content replace control with the content
+        /// Serialized Name: SolutionsDiagnostic.replacementKey
+        /// </param>
+        /// <param name="estimatedCompletionTime">
+        /// Diagnostics estimated completion time in minutes
+        /// Serialized Name: SolutionsDiagnostic.estimatedCompletionTime
+        /// </param>
+        /// <param name="requiredParameters">
+        /// Required parameters of this item
+        /// Serialized Name: SolutionsDiagnostic.requiredParameters
+        /// </param>
+        /// <param name="insights">
+        /// Diagnostic insights
+        /// Serialized Name: SolutionsDiagnostic.insights
+        /// </param>
         /// <returns> A new <see cref="Models.SolutionsDiagnostic"/> instance for mocking. </returns>
         public static SolutionsDiagnostic SolutionsDiagnostic(string solutionId = null, SelfHelpDiagnosticStatus? status = null, string statusDetails = null, string replacementKey = null, string estimatedCompletionTime = null, IEnumerable<string> requiredParameters = null, IEnumerable<SelfHelpDiagnosticInsight> insights = null)
         {
@@ -239,9 +395,18 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SolutionsTroubleshooters"/>. </summary>
-        /// <param name="solutionId"> Solution Id to identify single Solutions Troubleshooter. </param>
-        /// <param name="title"> Troubleshooter title. </param>
-        /// <param name="summary"> Troubleshooter summary. </param>
+        /// <param name="solutionId">
+        /// Solution Id to identify single Solutions Troubleshooter
+        /// Serialized Name: SolutionsTroubleshooters.solutionId
+        /// </param>
+        /// <param name="title">
+        /// Troubleshooter title
+        /// Serialized Name: SolutionsTroubleshooters.title
+        /// </param>
+        /// <param name="summary">
+        /// Troubleshooter summary
+        /// Serialized Name: SolutionsTroubleshooters.summary
+        /// </param>
         /// <returns> A new <see cref="Models.SolutionsTroubleshooters"/> instance for mocking. </returns>
         public static SolutionsTroubleshooters SolutionsTroubleshooters(string solutionId = null, string title = null, string summary = null)
         {
@@ -249,12 +414,30 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MetricsBasedChart"/>. </summary>
-        /// <param name="name"> Chart name. </param>
-        /// <param name="aggregationType"> Allowed values are Sum, Avg, Count, Min, Max. Default is Sum. </param>
-        /// <param name="timeSpanDuration"> Time span duration. </param>
-        /// <param name="title"> Chart title. </param>
-        /// <param name="filter"> Filter group. </param>
-        /// <param name="replacementKey"> Place holder used in HTML Content replace control with the content. </param>
+        /// <param name="name">
+        /// Chart name
+        /// Serialized Name: MetricsBasedChart.name
+        /// </param>
+        /// <param name="aggregationType">
+        /// Allowed values are Sum, Avg, Count, Min, Max. Default is Sum
+        /// Serialized Name: MetricsBasedChart.aggregationType
+        /// </param>
+        /// <param name="timeSpanDuration">
+        /// Time span duration
+        /// Serialized Name: MetricsBasedChart.timeSpanDuration
+        /// </param>
+        /// <param name="title">
+        /// Chart title
+        /// Serialized Name: MetricsBasedChart.title
+        /// </param>
+        /// <param name="filter">
+        /// Filter group
+        /// Serialized Name: MetricsBasedChart.filterGroup
+        /// </param>
+        /// <param name="replacementKey">
+        /// Place holder used in HTML Content replace control with the content
+        /// Serialized Name: MetricsBasedChart.replacementKey
+        /// </param>
         /// <returns> A new <see cref="Models.MetricsBasedChart"/> instance for mocking. </returns>
         public static MetricsBasedChart MetricsBasedChart(string name = null, AggregationType? aggregationType = null, TimeSpan? timeSpanDuration = null, string title = null, IEnumerable<SelfHelpFilter> filter = null, string replacementKey = null)
         {
@@ -271,9 +454,18 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SelfHelpFilter"/>. </summary>
-        /// <param name="name"> Filter name. </param>
-        /// <param name="values"> Filter values. </param>
-        /// <param name="operator"> Filter operator. </param>
+        /// <param name="name">
+        /// Filter name
+        /// Serialized Name: Filter.name
+        /// </param>
+        /// <param name="values">
+        /// Filter values
+        /// Serialized Name: Filter.values
+        /// </param>
+        /// <param name="operator">
+        /// Filter operator
+        /// Serialized Name: Filter.operator
+        /// </param>
         /// <returns> A new <see cref="Models.SelfHelpFilter"/> instance for mocking. </returns>
         public static SelfHelpFilter SelfHelpFilter(string name = null, string values = null, string @operator = null)
         {
@@ -281,9 +473,18 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SelfHelpVideo"/>. </summary>
-        /// <param name="src"> Link to the video. </param>
-        /// <param name="title"> Title of the video. </param>
-        /// <param name="replacementKey"> Place holder used in HTML Content replace control with the insight content. </param>
+        /// <param name="src">
+        /// Link to the video
+        /// Serialized Name: VideoGroupVideo.src
+        /// </param>
+        /// <param name="title">
+        /// Title of the video
+        /// Serialized Name: VideoGroupVideo.title
+        /// </param>
+        /// <param name="replacementKey">
+        /// Place holder used in HTML Content replace control with the insight content
+        /// Serialized Name: Video.replacementKey
+        /// </param>
         /// <returns> A new <see cref="Models.SelfHelpVideo"/> instance for mocking. </returns>
         public static SelfHelpVideo SelfHelpVideo(string src = null, string title = null, string replacementKey = null)
         {
@@ -291,8 +492,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VideoGroupVideo"/>. </summary>
-        /// <param name="src"> Link to the video. </param>
-        /// <param name="title"> Title of the video. </param>
+        /// <param name="src">
+        /// Link to the video
+        /// Serialized Name: VideoGroupVideo.src
+        /// </param>
+        /// <param name="title">
+        /// Title of the video
+        /// Serialized Name: VideoGroupVideo.title
+        /// </param>
         /// <returns> A new <see cref="Models.VideoGroupVideo"/> instance for mocking. </returns>
         public static VideoGroupVideo VideoGroupVideo(string src = null, string title = null)
         {
@@ -300,8 +507,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VideoGroup"/>. </summary>
-        /// <param name="videos"> List of videos will be shown to customers. </param>
-        /// <param name="replacementKey"> Place holder used in HTML Content replace control with the insight content. </param>
+        /// <param name="videos">
+        /// List of videos will be shown to customers
+        /// Serialized Name: VideoGroup.videos
+        /// </param>
+        /// <param name="replacementKey">
+        /// Place holder used in HTML Content replace control with the insight content
+        /// Serialized Name: VideoGroup.replacementKey
+        /// </param>
         /// <returns> A new <see cref="Models.VideoGroup"/> instance for mocking. </returns>
         public static VideoGroup VideoGroup(IEnumerable<VideoGroupVideo> videos = null, string replacementKey = null)
         {
@@ -311,32 +524,65 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SelfHelpSection"/>. </summary>
-        /// <param name="title"> Solution sections title. </param>
-        /// <param name="content"> Solution sections content. </param>
-        /// <param name="replacementMaps"> Solution replacement maps. </param>
+        /// <param name="title">
+        /// Solution sections title.
+        /// Serialized Name: Section.title
+        /// </param>
+        /// <param name="content">
+        /// Solution sections content.
+        /// Serialized Name: Section.content
+        /// </param>
+        /// <param name="replacementMaps">
+        /// Solution replacement maps.
+        /// Serialized Name: Section.replacementMaps
+        /// </param>
         /// <returns> A new <see cref="Models.SelfHelpSection"/> instance for mocking. </returns>
         public static SelfHelpSection SelfHelpSection(string title = null, string content = null, ReplacementMaps replacementMaps = null)
         {
             return new SelfHelpSection(title, content, replacementMaps, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SolutionResourcePatch"/>. </summary>
-        /// <param name="triggerCriteria"> Solution request trigger criteria. </param>
-        /// <param name="parameters"> Client input parameters to run Solution. </param>
-        /// <param name="solutionId"> Solution Id to identify single solution. </param>
-        /// <param name="provisioningState"> Status of solution provisioning. </param>
-        /// <param name="title"> The title. </param>
-        /// <param name="content"> The HTML content that needs to be rendered and shown to customer. </param>
-        /// <param name="replacementMaps"> Solution replacement maps. </param>
-        /// <param name="sections"> List of section object. </param>
-        /// <returns> A new <see cref="Models.SolutionResourcePatch"/> instance for mocking. </returns>
-        public static SolutionResourcePatch SolutionResourcePatch(IEnumerable<TriggerCriterion> triggerCriteria = null, IDictionary<string, string> parameters = null, string solutionId = null, SolutionProvisioningState? provisioningState = null, string title = null, string content = null, ReplacementMaps replacementMaps = null, IEnumerable<SelfHelpSection> sections = null)
+        /// <summary> Initializes a new instance of <see cref="Models.SelfHelpSolutionPatch"/>. </summary>
+        /// <param name="triggerCriteria">
+        /// Solution request trigger criteria
+        /// Serialized Name: SolutionPatchRequestBody.properties.triggerCriteria
+        /// </param>
+        /// <param name="parameters">
+        /// Client input parameters to run Solution
+        /// Serialized Name: SolutionPatchRequestBody.properties.parameters
+        /// </param>
+        /// <param name="solutionId">
+        /// Solution Id to identify single solution.
+        /// Serialized Name: SolutionPatchRequestBody.properties.solutionId
+        /// </param>
+        /// <param name="provisioningState">
+        /// Status of solution provisioning.
+        /// Serialized Name: SolutionPatchRequestBody.properties.provisioningState
+        /// </param>
+        /// <param name="title">
+        /// The title.
+        /// Serialized Name: SolutionPatchRequestBody.properties.title
+        /// </param>
+        /// <param name="content">
+        /// The HTML content that needs to be rendered and shown to customer.
+        /// Serialized Name: SolutionPatchRequestBody.properties.content
+        /// </param>
+        /// <param name="replacementMaps">
+        /// Solution replacement maps.
+        /// Serialized Name: SolutionPatchRequestBody.properties.replacementMaps
+        /// </param>
+        /// <param name="sections">
+        /// List of section object.
+        /// Serialized Name: SolutionPatchRequestBody.properties.sections
+        /// </param>
+        /// <returns> A new <see cref="Models.SelfHelpSolutionPatch"/> instance for mocking. </returns>
+        public static SelfHelpSolutionPatch SelfHelpSolutionPatch(IEnumerable<TriggerCriterion> triggerCriteria = null, IDictionary<string, string> parameters = null, string solutionId = null, SolutionProvisioningState? provisioningState = null, string title = null, string content = null, ReplacementMaps replacementMaps = null, IEnumerable<SelfHelpSection> sections = null)
         {
             triggerCriteria ??= new List<TriggerCriterion>();
             parameters ??= new Dictionary<string, string>();
             sections ??= new List<SelfHelpSection>();
 
-            return new SolutionResourcePatch(
+            return new SelfHelpSolutionPatch(
                 triggerCriteria?.ToList(),
                 parameters,
                 solutionId,
@@ -353,12 +599,30 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="solutionId"> Solution Id to identify single Simplified Solution. </param>
-        /// <param name="parameters"> Client input parameters to run Simplified Solutions. </param>
-        /// <param name="title"> The title. </param>
-        /// <param name="appendix"> Additional parameter response for Simplified Solutions. </param>
-        /// <param name="content"> The HTML content that needs to be rendered and shown to customer. </param>
-        /// <param name="provisioningState"> Status of Simplified Solution provisioning. </param>
+        /// <param name="solutionId">
+        /// Solution Id to identify single Simplified Solution.
+        /// Serialized Name: SimplifiedSolutionsResource.properties.solutionId
+        /// </param>
+        /// <param name="parameters">
+        /// Client input parameters to run Simplified Solutions
+        /// Serialized Name: SimplifiedSolutionsResource.properties.parameters
+        /// </param>
+        /// <param name="title">
+        /// The title.
+        /// Serialized Name: SimplifiedSolutionsResource.properties.title
+        /// </param>
+        /// <param name="appendix">
+        /// Additional parameter response for Simplified Solutions
+        /// Serialized Name: SimplifiedSolutionsResource.properties.appendix
+        /// </param>
+        /// <param name="content">
+        /// The HTML content that needs to be rendered and shown to customer.
+        /// Serialized Name: SimplifiedSolutionsResource.properties.content
+        /// </param>
+        /// <param name="provisioningState">
+        /// Status of Simplified Solution provisioning.
+        /// Serialized Name: SimplifiedSolutionsResource.properties.provisioningState
+        /// </param>
         /// <returns> A new <see cref="SelfHelp.SimplifiedSolutionsResourceData"/> instance for mocking. </returns>
         public static SimplifiedSolutionsResourceData SimplifiedSolutionsResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string solutionId = null, IDictionary<string, string> parameters = null, string title = null, IReadOnlyDictionary<string, string> appendix = null, string content = null, SolutionProvisioningState? provisioningState = null)
         {
@@ -384,10 +648,22 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="solutionId"> Solution Id to identify single troubleshooter. </param>
-        /// <param name="parameters"> Client input parameters to run Troubleshooter Resource. </param>
-        /// <param name="provisioningState"> Status of troubleshooter provisioning. </param>
-        /// <param name="steps"> List of step object. </param>
+        /// <param name="solutionId">
+        /// Solution Id to identify single troubleshooter.
+        /// Serialized Name: TroubleshooterResource.properties.solutionId
+        /// </param>
+        /// <param name="parameters">
+        /// Client input parameters to run Troubleshooter Resource
+        /// Serialized Name: TroubleshooterResource.properties.parameters
+        /// </param>
+        /// <param name="provisioningState">
+        /// Status of troubleshooter provisioning.
+        /// Serialized Name: TroubleshooterResource.properties.provisioningState
+        /// </param>
+        /// <param name="steps">
+        /// List of step object.
+        /// Serialized Name: TroubleshooterResource.properties.steps
+        /// </param>
         /// <returns> A new <see cref="SelfHelp.TroubleshooterResourceData"/> instance for mocking. </returns>
         public static TroubleshooterResourceData TroubleshooterResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string solutionId = null, IDictionary<string, string> parameters = null, TroubleshooterProvisioningState? provisioningState = null, IEnumerable<SelfHelpStep> steps = null)
         {
@@ -407,18 +683,48 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SelfHelpStep"/>. </summary>
-        /// <param name="id"> Unique step id. </param>
-        /// <param name="title"> Step title. </param>
-        /// <param name="description"> Step description. </param>
-        /// <param name="guidance"> Get or sets the Step guidance. </param>
-        /// <param name="executionStatus"> Status of Troubleshooter Step execution. </param>
-        /// <param name="executionStatusDescription"> This field has more detailed status description of the execution status. </param>
-        /// <param name="stepType"> Type of Troubleshooting step. </param>
-        /// <param name="isLastStep"> is this last step of the workflow. </param>
-        /// <param name="inputs"></param>
-        /// <param name="automatedCheckResults"> Only for AutomatedStep type. </param>
-        /// <param name="insights"></param>
-        /// <param name="error"> The error detail. </param>
+        /// <param name="id">
+        /// Unique step id.
+        /// Serialized Name: Step.id
+        /// </param>
+        /// <param name="title">
+        /// Step title.
+        /// Serialized Name: Step.title
+        /// </param>
+        /// <param name="description">
+        /// Step description.
+        /// Serialized Name: Step.description
+        /// </param>
+        /// <param name="guidance">
+        /// Get or sets the Step guidance.
+        /// Serialized Name: Step.guidance
+        /// </param>
+        /// <param name="executionStatus">
+        /// Status of Troubleshooter Step execution.
+        /// Serialized Name: Step.executionStatus
+        /// </param>
+        /// <param name="executionStatusDescription">
+        /// This field has more detailed status description of the execution status.
+        /// Serialized Name: Step.executionStatusDescription
+        /// </param>
+        /// <param name="stepType">
+        /// Type of Troubleshooting step.
+        /// Serialized Name: Step.type
+        /// </param>
+        /// <param name="isLastStep">
+        /// is this last step of the workflow.
+        /// Serialized Name: Step.isLastStep
+        /// </param>
+        /// <param name="inputs"> Serialized Name: Step.inputs. </param>
+        /// <param name="automatedCheckResults">
+        /// Only for AutomatedStep type
+        /// Serialized Name: Step.automatedCheckResults
+        /// </param>
+        /// <param name="insights"> Serialized Name: Step.insights. </param>
+        /// <param name="error">
+        /// The error detail.
+        /// Serialized Name: Step.error
+        /// </param>
         /// <returns> A new <see cref="Models.SelfHelpStep"/> instance for mocking. </returns>
         public static SelfHelpStep SelfHelpStep(string id = null, string title = null, string description = null, string guidance = null, ExecutionStatus? executionStatus = null, string executionStatusDescription = null, SelfHelpType? stepType = null, bool? isLastStep = null, IEnumerable<StepInput> inputs = null, AutomatedCheckResult automatedCheckResults = null, IEnumerable<SelfHelpDiagnosticInsight> insights = null, ResponseError error = null)
         {
@@ -442,16 +748,43 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StepInput"/>. </summary>
-        /// <param name="questionId"> Use Index as QuestionId. </param>
-        /// <param name="questionType"> Type of Question. </param>
-        /// <param name="questionTitle"> Question title. </param>
-        /// <param name="questionContent"> User question content. </param>
-        /// <param name="questionContentType"> Default is Text. </param>
-        /// <param name="responseHint"> Place holder text for response hints. </param>
-        /// <param name="recommendedOption"> Result of Automate step. </param>
-        /// <param name="selectedOptionValue"> Text of response that was selected. </param>
-        /// <param name="responseValidationProperties"> Troubleshooter step input response validation properties. </param>
-        /// <param name="responseOptions"></param>
+        /// <param name="questionId">
+        /// Use Index as QuestionId.
+        /// Serialized Name: StepInput.questionId
+        /// </param>
+        /// <param name="questionType">
+        /// Type of Question
+        /// Serialized Name: StepInput.questionType
+        /// </param>
+        /// <param name="questionTitle">
+        /// Question title
+        /// Serialized Name: StepInput.questionTitle
+        /// </param>
+        /// <param name="questionContent">
+        /// User question content.
+        /// Serialized Name: StepInput.questionContent
+        /// </param>
+        /// <param name="questionContentType">
+        /// Default is Text.
+        /// Serialized Name: StepInput.questionContentType
+        /// </param>
+        /// <param name="responseHint">
+        /// Place holder text for response hints.
+        /// Serialized Name: StepInput.responseHint
+        /// </param>
+        /// <param name="recommendedOption">
+        /// Result of Automate step.
+        /// Serialized Name: StepInput.recommendedOption
+        /// </param>
+        /// <param name="selectedOptionValue">
+        /// Text of response that was selected.
+        /// Serialized Name: StepInput.selectedOptionValue
+        /// </param>
+        /// <param name="responseValidationProperties">
+        /// Troubleshooter step input response validation properties
+        /// Serialized Name: StepInput.responseValidationProperties
+        /// </param>
+        /// <param name="responseOptions"> Serialized Name: StepInput.responseOptions. </param>
         /// <returns> A new <see cref="Models.StepInput"/> instance for mocking. </returns>
         public static StepInput StepInput(string questionId = null, QuestionType? questionType = null, string questionTitle = null, string questionContent = null, QuestionContentType? questionContentType = null, string responseHint = null, string recommendedOption = null, string selectedOptionValue = null, ResponseValidationProperties responseValidationProperties = null, IEnumerable<ResponseConfig> responseOptions = null)
         {
@@ -472,11 +805,26 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ResponseValidationProperties"/>. </summary>
-        /// <param name="regex"> Regex used for the input validation. </param>
-        /// <param name="validationScope"> Validation scope. </param>
-        /// <param name="isRequired"> Default True. </param>
-        /// <param name="validationErrorMessage"> Validation Error Message. </param>
-        /// <param name="maxLength"> Max text input (open Ended Text). </param>
+        /// <param name="regex">
+        /// Regex used for the input validation.
+        /// Serialized Name: ResponseValidationProperties.regex
+        /// </param>
+        /// <param name="validationScope">
+        /// Validation scope
+        /// Serialized Name: ResponseValidationProperties.validationScope
+        /// </param>
+        /// <param name="isRequired">
+        /// Default True
+        /// Serialized Name: ResponseValidationProperties.isRequired
+        /// </param>
+        /// <param name="validationErrorMessage">
+        /// Validation Error Message.
+        /// Serialized Name: ResponseValidationProperties.validationErrorMessage
+        /// </param>
+        /// <param name="maxLength">
+        /// Max text input (open Ended Text).
+        /// Serialized Name: ResponseValidationProperties.maxLength
+        /// </param>
         /// <returns> A new <see cref="Models.ResponseValidationProperties"/> instance for mocking. </returns>
         public static ResponseValidationProperties ResponseValidationProperties(string regex = null, ValidationScope? validationScope = null, bool? isRequired = null, string validationErrorMessage = null, long? maxLength = null)
         {
@@ -490,8 +838,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ResponseConfig"/>. </summary>
-        /// <param name="key"> Unique string. </param>
-        /// <param name="value"> Option description. </param>
+        /// <param name="key">
+        /// Unique string.
+        /// Serialized Name: ResponseOption.key
+        /// </param>
+        /// <param name="value">
+        /// Option description
+        /// Serialized Name: ResponseOption.value
+        /// </param>
         /// <returns> A new <see cref="Models.ResponseConfig"/> instance for mocking. </returns>
         public static ResponseConfig ResponseConfig(string key = null, string value = null)
         {
@@ -499,10 +853,22 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AutomatedCheckResult"/>. </summary>
-        /// <param name="version"> Version for automated check result. </param>
-        /// <param name="status"> Status for automated check result. </param>
-        /// <param name="result"> Insight Article Content. </param>
-        /// <param name="resultType"> Type of Result. </param>
+        /// <param name="version">
+        /// Version for automated check result
+        /// Serialized Name: AutomatedCheckResult.version
+        /// </param>
+        /// <param name="status">
+        /// Status for automated check result
+        /// Serialized Name: AutomatedCheckResult.status
+        /// </param>
+        /// <param name="result">
+        /// Insight Article Content
+        /// Serialized Name: AutomatedCheckResult.result
+        /// </param>
+        /// <param name="resultType">
+        /// Type of Result.
+        /// Serialized Name: AutomatedCheckResult.type
+        /// </param>
         /// <returns> A new <see cref="Models.AutomatedCheckResult"/> instance for mocking. </returns>
         public static AutomatedCheckResult AutomatedCheckResult(string version = null, string status = null, string result = null, AutomatedCheckResultType? resultType = null)
         {
@@ -510,7 +876,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RestartTroubleshooterResult"/>. </summary>
-        /// <param name="troubleshooterResourceName"> Updated TroubleshooterResource Name . </param>
+        /// <param name="troubleshooterResourceName">
+        /// Updated TroubleshooterResource Name .
+        /// Serialized Name: RestartTroubleshooterResponse.troubleshooterResourceName
+        /// </param>
         /// <returns> A new <see cref="Models.RestartTroubleshooterResult"/> instance for mocking. </returns>
         public static RestartTroubleshooterResult RestartTroubleshooterResult(string troubleshooterResourceName = null)
         {
@@ -522,11 +891,26 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="solutionId"> SolutionId is a unique id to identify a solution. You can retrieve the solution id using the Discovery api - https://learn.microsoft.com/en-us/rest/api/help/discovery-solution/list?view=rest-help-2023-09-01-preview&amp;tabs=HTTP. </param>
-        /// <param name="title"> The title. </param>
-        /// <param name="content"> The HTML content that needs to be rendered and shown to customer. </param>
-        /// <param name="replacementMaps"> Solution replacement maps. </param>
-        /// <param name="sections"> List of section object. </param>
+        /// <param name="solutionId">
+        /// SolutionId is a unique id to identify a solution. You can retrieve the solution id using the Discovery api - https://learn.microsoft.com/en-us/rest/api/help/discovery-solution/list?view=rest-help-2023-09-01-preview&amp;tabs=HTTP
+        /// Serialized Name: SolutionResourceSelfHelp.properties.solutionId
+        /// </param>
+        /// <param name="title">
+        /// The title.
+        /// Serialized Name: SolutionResourceSelfHelp.properties.title
+        /// </param>
+        /// <param name="content">
+        /// The HTML content that needs to be rendered and shown to customer.
+        /// Serialized Name: SolutionResourceSelfHelp.properties.content
+        /// </param>
+        /// <param name="replacementMaps">
+        /// Solution replacement maps.
+        /// Serialized Name: SolutionResourceSelfHelp.properties.replacementMaps
+        /// </param>
+        /// <param name="sections">
+        /// List of section object.
+        /// Serialized Name: SolutionResourceSelfHelp.properties.sections
+        /// </param>
         /// <returns> A new <see cref="SelfHelp.SolutionResourceSelfHelpData"/> instance for mocking. </returns>
         public static SolutionResourceSelfHelpData SolutionResourceSelfHelpData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string solutionId = null, string title = null, string content = null, ReplacementMapsSelfHelp replacementMaps = null, IEnumerable<SectionSelfHelp> sections = null)
         {
@@ -546,9 +930,18 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ReplacementMapsSelfHelp"/>. </summary>
-        /// <param name="webResults"> Solution AzureKB results. </param>
-        /// <param name="videos"> Video solutions, which have the power to engage the customer by stimulating their senses. </param>
-        /// <param name="videoGroups"> Group of Videos. </param>
+        /// <param name="webResults">
+        /// Solution AzureKB results
+        /// Serialized Name: ReplacementMapsSelfHelp.webResults
+        /// </param>
+        /// <param name="videos">
+        /// Video solutions, which have the power to engage the customer by stimulating their senses
+        /// Serialized Name: ReplacementMapsSelfHelp.videos
+        /// </param>
+        /// <param name="videoGroups">
+        /// Group of Videos
+        /// Serialized Name: ReplacementMapsSelfHelp.videoGroups
+        /// </param>
         /// <returns> A new <see cref="Models.ReplacementMapsSelfHelp"/> instance for mocking. </returns>
         public static ReplacementMapsSelfHelp ReplacementMapsSelfHelp(IEnumerable<WebResult> webResults = null, IEnumerable<SelfHelpVideo> videos = null, IEnumerable<VideoGroup> videoGroups = null)
         {
@@ -560,9 +953,18 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SectionSelfHelp"/>. </summary>
-        /// <param name="title"> Solution sections title. </param>
-        /// <param name="content"> Solution sections content. </param>
-        /// <param name="replacementMaps"> Solution replacement maps. </param>
+        /// <param name="title">
+        /// Solution sections title.
+        /// Serialized Name: SectionSelfHelp.title
+        /// </param>
+        /// <param name="content">
+        /// Solution sections content.
+        /// Serialized Name: SectionSelfHelp.content
+        /// </param>
+        /// <param name="replacementMaps">
+        /// Solution replacement maps.
+        /// Serialized Name: SectionSelfHelp.replacementMaps
+        /// </param>
         /// <returns> A new <see cref="Models.SectionSelfHelp"/> instance for mocking. </returns>
         public static SectionSelfHelp SectionSelfHelp(string title = null, string content = null, ReplacementMapsSelfHelp replacementMaps = null)
         {
@@ -570,12 +972,24 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DiscoveryNlpContent"/>. </summary>
-        /// <param name="issueSummary"> Natural language description of the issue. </param>
-        /// <param name="resourceId"> ARM resource Id of the resource that is having the issue. </param>
-        /// <param name="serviceId"> ARM service Id of the service that is having the issue. For more information on service Id see https://learn.microsoft.com/rest/api/support/services/list?tabs=HTTP. </param>
-        /// <param name="additionalContext"> Additional information in the form of a string. </param>
+        /// <param name="issueSummary">
+        /// Natural language description of the issue.
+        /// Serialized Name: DiscoveryNlpRequest.issueSummary
+        /// </param>
+        /// <param name="resourceId">
+        /// ARM resource Id of the resource that is having the issue.
+        /// Serialized Name: DiscoveryNlpRequest.resourceId
+        /// </param>
+        /// <param name="serviceId">
+        /// ARM service Id of the service that is having the issue. For more information on service Id see https://learn.microsoft.com/rest/api/support/services/list?tabs=HTTP.
+        /// Serialized Name: DiscoveryNlpRequest.serviceId
+        /// </param>
+        /// <param name="additionalContext">
+        /// Additional information in the form of a string.
+        /// Serialized Name: DiscoveryNlpRequest.additionalContext
+        /// </param>
         /// <returns> A new <see cref="Models.DiscoveryNlpContent"/> instance for mocking. </returns>
-        public static DiscoveryNlpContent DiscoveryNlpRequest(string issueSummary = null, string resourceId = null, string serviceId = null, string additionalContext = null)
+        public static DiscoveryNlpContent DiscoveryNlpContent(string issueSummary = null, string resourceId = null, string serviceId = null, string additionalContext = null)
         {
             return new DiscoveryNlpContent(issueSummary, resourceId, serviceId, additionalContext, serializedAdditionalRawData: null);
         }
@@ -585,12 +999,30 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="problemTitle"> Title of the problem classification. </param>
-        /// <param name="problemDescription"> Description of the problem classification. </param>
-        /// <param name="serviceId"> Id of the service (https://learn.microsoft.com/en-us/rest/api/support/services?view=rest-support-2020-04-01) that may be used to create a support ticket. </param>
-        /// <param name="problemClassificationId"> Id of the ProblemClassification (https://learn.microsoft.com/en-us/rest/api/support/problem-classifications?view=rest-support-2020-04-01) that may be used to create a support ticket. </param>
-        /// <param name="solutions"> The list of solution metadata. </param>
-        /// <param name="relatedServices"> The set of services that are most likely related to the request. If relatedServices is included in the response then solutions may not be discovered until the client calls a second time specifying one of the service Ids in the relatedServices object. </param>
+        /// <param name="problemTitle">
+        /// Title of the problem classification.
+        /// Serialized Name: SolutionNlpMetadataResource.properties.problemTitle
+        /// </param>
+        /// <param name="problemDescription">
+        /// Description of the problem classification.
+        /// Serialized Name: SolutionNlpMetadataResource.properties.problemDescription
+        /// </param>
+        /// <param name="serviceId">
+        /// Id of the service (https://learn.microsoft.com/en-us/rest/api/support/services?view=rest-support-2020-04-01) that may be used to create a support ticket.
+        /// Serialized Name: SolutionNlpMetadataResource.properties.serviceId
+        /// </param>
+        /// <param name="problemClassificationId">
+        /// Id of the ProblemClassification (https://learn.microsoft.com/en-us/rest/api/support/problem-classifications?view=rest-support-2020-04-01) that may be used to create a support ticket.
+        /// Serialized Name: SolutionNlpMetadataResource.properties.problemClassificationId
+        /// </param>
+        /// <param name="solutions">
+        /// The list of solution metadata.
+        /// Serialized Name: SolutionNlpMetadataResource.properties.solutions
+        /// </param>
+        /// <param name="relatedServices">
+        /// The set of services that are most likely related to the request. If relatedServices is included in the response then solutions may not be discovered until the client calls a second time specifying one of the service Ids in the relatedServices object.
+        /// Serialized Name: SolutionNlpMetadataResource.properties.relatedServices
+        /// </param>
         /// <returns> A new <see cref="Models.SolutionNlpMetadataResource"/> instance for mocking. </returns>
         public static SolutionNlpMetadataResource SolutionNlpMetadataResource(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string problemTitle = null, string problemDescription = null, string serviceId = null, string problemClassificationId = null, IEnumerable<SolutionMetadataProperties> solutions = null, IEnumerable<ClassificationService> relatedServices = null)
         {
@@ -612,9 +1044,18 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ClassificationService"/>. </summary>
-        /// <param name="serviceId"> Azure resource Id of the service. </param>
-        /// <param name="displayName"> Localized name of the azure service. </param>
-        /// <param name="resourceTypes"> List of applicable ARM resource types for this service. </param>
+        /// <param name="serviceId">
+        /// Azure resource Id of the service.
+        /// Serialized Name: ClassificationService.serviceId
+        /// </param>
+        /// <param name="displayName">
+        /// Localized name of the azure service.
+        /// Serialized Name: ClassificationService.displayName
+        /// </param>
+        /// <param name="resourceTypes">
+        /// List of applicable ARM resource types for this service.
+        /// Serialized Name: ClassificationService.resourceTypes
+        /// </param>
         /// <returns> A new <see cref="Models.ClassificationService"/> instance for mocking. </returns>
         public static ClassificationService ClassificationService(ResourceIdentifier serviceId = null, string displayName = null, IEnumerable<string> resourceTypes = null)
         {

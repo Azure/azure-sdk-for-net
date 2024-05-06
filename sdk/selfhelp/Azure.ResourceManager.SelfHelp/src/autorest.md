@@ -22,8 +22,8 @@ modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
 
-#mgmt-debug:
-#  show-serialized-names: true
+mgmt-debug:
+  show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -90,6 +90,8 @@ rename-mapping:
   RestartTroubleshooterResponse: RestartTroubleshooterResult
   TroubleshooterResponse: TroubleshooterResult
   ResponseOption: ResponseConfig
+  DiscoveryNlpRequest: DiscoveryNlpContent
+  SolutionResource: SelfHelpSolution
 
 override-operation-name:
   CheckNameAvailability_Post: CheckSelfHelpNameAvailability

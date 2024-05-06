@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    /// <summary> Video group detail. </summary>
+    /// <summary>
+    /// Video group detail
+    /// Serialized Name: VideoGroup
+    /// </summary>
     public partial class VideoGroup
     {
         /// <summary>
@@ -52,8 +55,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="VideoGroup"/>. </summary>
-        /// <param name="videos"> List of videos will be shown to customers. </param>
-        /// <param name="replacementKey"> Place holder used in HTML Content replace control with the insight content. </param>
+        /// <param name="videos">
+        /// List of videos will be shown to customers
+        /// Serialized Name: VideoGroup.videos
+        /// </param>
+        /// <param name="replacementKey">
+        /// Place holder used in HTML Content replace control with the insight content
+        /// Serialized Name: VideoGroup.replacementKey
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal VideoGroup(IReadOnlyList<VideoGroupVideo> videos, string replacementKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +71,15 @@ namespace Azure.ResourceManager.SelfHelp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of videos will be shown to customers. </summary>
+        /// <summary>
+        /// List of videos will be shown to customers
+        /// Serialized Name: VideoGroup.videos
+        /// </summary>
         public IReadOnlyList<VideoGroupVideo> Videos { get; }
-        /// <summary> Place holder used in HTML Content replace control with the insight content. </summary>
+        /// <summary>
+        /// Place holder used in HTML Content replace control with the insight content
+        /// Serialized Name: VideoGroup.replacementKey
+        /// </summary>
         public string ReplacementKey { get; }
     }
 }

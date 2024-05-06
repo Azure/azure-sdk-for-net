@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    /// <summary> Filter criterion. </summary>
+    /// <summary>
+    /// Filter criterion
+    /// Serialized Name: Filter
+    /// </summary>
     public partial class SelfHelpFilter
     {
         /// <summary>
@@ -51,9 +54,18 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SelfHelpFilter"/>. </summary>
-        /// <param name="name"> Filter name. </param>
-        /// <param name="values"> Filter values. </param>
-        /// <param name="operator"> Filter operator. </param>
+        /// <param name="name">
+        /// Filter name
+        /// Serialized Name: Filter.name
+        /// </param>
+        /// <param name="values">
+        /// Filter values
+        /// Serialized Name: Filter.values
+        /// </param>
+        /// <param name="operator">
+        /// Filter operator
+        /// Serialized Name: Filter.operator
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SelfHelpFilter(string name, string values, string @operator, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,11 +75,20 @@ namespace Azure.ResourceManager.SelfHelp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Filter name. </summary>
+        /// <summary>
+        /// Filter name
+        /// Serialized Name: Filter.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> Filter values. </summary>
+        /// <summary>
+        /// Filter values
+        /// Serialized Name: Filter.values
+        /// </summary>
         public string Values { get; }
-        /// <summary> Filter operator. </summary>
+        /// <summary>
+        /// Filter operator
+        /// Serialized Name: Filter.operator
+        /// </summary>
         public string Operator { get; }
     }
 }

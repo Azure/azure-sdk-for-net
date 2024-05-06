@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    /// <summary> Solution replacement maps. </summary>
+    /// <summary>
+    /// Solution replacement maps.
+    /// Serialized Name: ReplacementMapsSelfHelp
+    /// </summary>
     public partial class ReplacementMapsSelfHelp
     {
         /// <summary>
@@ -54,9 +57,18 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ReplacementMapsSelfHelp"/>. </summary>
-        /// <param name="webResults"> Solution AzureKB results. </param>
-        /// <param name="videos"> Video solutions, which have the power to engage the customer by stimulating their senses. </param>
-        /// <param name="videoGroups"> Group of Videos. </param>
+        /// <param name="webResults">
+        /// Solution AzureKB results
+        /// Serialized Name: ReplacementMapsSelfHelp.webResults
+        /// </param>
+        /// <param name="videos">
+        /// Video solutions, which have the power to engage the customer by stimulating their senses
+        /// Serialized Name: ReplacementMapsSelfHelp.videos
+        /// </param>
+        /// <param name="videoGroups">
+        /// Group of Videos
+        /// Serialized Name: ReplacementMapsSelfHelp.videoGroups
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ReplacementMapsSelfHelp(IReadOnlyList<WebResult> webResults, IReadOnlyList<SelfHelpVideo> videos, IReadOnlyList<VideoGroup> videoGroups, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -66,11 +78,20 @@ namespace Azure.ResourceManager.SelfHelp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Solution AzureKB results. </summary>
+        /// <summary>
+        /// Solution AzureKB results
+        /// Serialized Name: ReplacementMapsSelfHelp.webResults
+        /// </summary>
         public IReadOnlyList<WebResult> WebResults { get; }
-        /// <summary> Video solutions, which have the power to engage the customer by stimulating their senses. </summary>
+        /// <summary>
+        /// Video solutions, which have the power to engage the customer by stimulating their senses
+        /// Serialized Name: ReplacementMapsSelfHelp.videos
+        /// </summary>
         public IReadOnlyList<SelfHelpVideo> Videos { get; }
-        /// <summary> Group of Videos. </summary>
+        /// <summary>
+        /// Group of Videos
+        /// Serialized Name: ReplacementMapsSelfHelp.videoGroups
+        /// </summary>
         public IReadOnlyList<VideoGroup> VideoGroups { get; }
     }
 }

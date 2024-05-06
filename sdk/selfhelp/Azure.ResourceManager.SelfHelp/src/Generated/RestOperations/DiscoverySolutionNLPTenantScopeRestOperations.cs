@@ -36,7 +36,16 @@ namespace Azure.ResourceManager.SelfHelp
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreatePostRequest(DiscoveryNlpContent discoverSolutionRequest)
+        internal RequestUriBuilder CreatePostRequestUri(DiscoveryNlpContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Help/discoverSolutions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreatePostRequest(DiscoveryNlpContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -47,23 +56,23 @@ namespace Azure.ResourceManager.SelfHelp
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            if (discoverSolutionRequest != null)
+            if (content != null)
             {
                 request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(discoverSolutionRequest, ModelSerializationExtensions.WireOptions);
-                request.Content = content;
+                var content0 = new Utf8JsonRequestContent();
+                content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
+                request.Content = content0;
             }
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Search for relevant Azure Diagnostics, Solutions and Troubleshooters using a natural language issue summary. </summary>
-        /// <param name="discoverSolutionRequest"> Request body for discovering solutions using NLP. </param>
+        /// <param name="content"> Request body for discovering solutions using NLP. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<DiscoveryNlpResponse>> PostAsync(DiscoveryNlpContent discoverSolutionRequest = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DiscoveryNlpResponse>> PostAsync(DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreatePostRequest(discoverSolutionRequest);
+            using var message = CreatePostRequest(content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -80,11 +89,11 @@ namespace Azure.ResourceManager.SelfHelp
         }
 
         /// <summary> Search for relevant Azure Diagnostics, Solutions and Troubleshooters using a natural language issue summary. </summary>
-        /// <param name="discoverSolutionRequest"> Request body for discovering solutions using NLP. </param>
+        /// <param name="content"> Request body for discovering solutions using NLP. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<DiscoveryNlpResponse> Post(DiscoveryNlpContent discoverSolutionRequest = null, CancellationToken cancellationToken = default)
+        public Response<DiscoveryNlpResponse> Post(DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreatePostRequest(discoverSolutionRequest);
+            using var message = CreatePostRequest(content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
