@@ -82,15 +82,16 @@ namespace Azure.Identity.Tests
             _listener.EnableEvents(AzureIdentityEventSource.Singleton, EventLevel.Verbose);
 
             var token = Guid.NewGuid().ToString();
-            TransportParams transportParams = new()
+            TransportConfig transportConfig = new()
             {
                 TokenFactory = req => token
             };
-            var factory = MockTokenTransportFactory(transportParams);
+            var factory = MockTokenTransportFactory(transportConfig);
             var mockTransport = new MockTransport(factory);
 
             var config = new CommonCredentialTestConfig()
             {
+                TransportConfig = transportConfig,
                 Transport = mockTransport,
                 TenantId = TenantId,
                 IsUnsafeSupportLoggingEnabled = isSupportLoggingEnabled
@@ -100,7 +101,7 @@ namespace Azure.Identity.Tests
             {
                 Assert.Ignore($"{credential.GetType().Name} is not an MSAL credential.");
             }
-            transportParams.IsPubClient = CredentialTestHelpers.IsCredentialTypePubClient(credential);
+            transportConfig.IsPubClient = CredentialTestHelpers.IsCredentialTypePubClient(credential);
             AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default, null), default);
 
             Assert.AreEqual(token, actualToken.Token);
@@ -123,25 +124,26 @@ namespace Azure.Identity.Tests
 
             var token = Guid.NewGuid().ToString();
             // Configure the transport
-            TransportParams transportParams = new()
+            TransportConfig transportConfig = new()
             {
                 TokenFactory = req => token
             };
-            transportParams.RequestValidator = req => transportParams.CalledDiscoveryEndpoint |= req.Uri.Path.Contains("discovery/instance");
-            var factory = MockTokenTransportFactory(transportParams);
+            transportConfig.RequestValidator = req => transportConfig.CalledDiscoveryEndpoint |= req.Uri.Path.Contains("discovery/instance");
+            var factory = MockTokenTransportFactory(transportConfig);
             var mockTransport = new MockTransport(factory);
 
             var config = new CommonCredentialTestConfig()
             {
+                TransportConfig = transportConfig,
                 DisableInstanceDiscovery = disable,
                 Transport = mockTransport,
                 TenantId = TenantId,
             };
             var credential = GetTokenCredential(config);
-            transportParams.IsPubClient = CredentialTestHelpers.IsCredentialTypePubClient(credential);
+            transportConfig.IsPubClient = CredentialTestHelpers.IsCredentialTypePubClient(credential);
             AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default, null), default);
 
-            Assert.AreNotEqual(disable, transportParams.CalledDiscoveryEndpoint);
+            Assert.AreNotEqual(disable, transportConfig.CalledDiscoveryEndpoint);
             Assert.AreEqual(token, actualToken.Token);
         }
 
@@ -151,16 +153,17 @@ namespace Azure.Identity.Tests
             // Configure the transport
             var token = Guid.NewGuid().ToString();
             string resolvedTenantId = TenantId;
-            TransportParams transportParams = new()
+            TransportConfig transportConfig = new()
             {
                 TokenFactory = req => token
             };
-            var factory = MockTokenTransportFactory(transportParams);
+            var factory = MockTokenTransportFactory(transportConfig);
             var mockTransport = new MockTransport(factory);
 
             var mockResolver = new Mock<TenantIdResolverBase>() { CallBase = true };
             var config = new CommonCredentialTestConfig()
             {
+                TransportConfig = transportConfig,
                 Transport = mockTransport,
                 TenantId = TenantId,
                 RequestContext = new TokenRequestContext(MockScopes.Default, tenantId: Guid.NewGuid().ToString()),
@@ -169,7 +172,7 @@ namespace Azure.Identity.Tests
             };
             var credential = GetTokenCredential(config);
 
-            transportParams.IsPubClient = CredentialTestHelpers.IsCredentialTypePubClient(credential);
+            transportConfig.IsPubClient = CredentialTestHelpers.IsCredentialTypePubClient(credential);
 
             // Assert that Resolver is called and that the resolved tenant is the expected tenant
             mockResolver.Setup(r => r.Resolve(It.IsAny<string>(), It.IsAny<TokenRequestContext>(), It.IsAny<string[]>())).Callback<string, TokenRequestContext, IList<string>>((tenantId, context, additionalTenants) =>
@@ -187,7 +190,7 @@ namespace Azure.Identity.Tests
             var token = Guid.NewGuid().ToString();
             bool observedCae = false;
             bool observedNoCae = false;
-            TransportParams transportParams = new()
+            TransportConfig transportConfig = new()
             {
                 TokenFactory = req => token,
                 RequestValidator = req =>
@@ -220,11 +223,12 @@ namespace Azure.Identity.Tests
                     }
                 }
             };
-            var factory = MockTokenTransportFactory(transportParams);
+            var factory = MockTokenTransportFactory(transportConfig);
             var mockTransport = new MockTransport(factory);
 
             var config = new CommonCredentialTestConfig()
             {
+                TransportConfig = transportConfig,
                 Transport = mockTransport,
                 TenantId = TenantId,
             };
@@ -233,7 +237,7 @@ namespace Azure.Identity.Tests
             {
                 Assert.Ignore("EnableCAE tests do not apply to the non-MSAL credentials.");
             }
-            transportParams.IsPubClient = CredentialTestHelpers.IsCredentialTypePubClient(credential);
+            transportConfig.IsPubClient = CredentialTestHelpers.IsCredentialTypePubClient(credential);
 
             // First call with EnableCae = false
             using (HttpPipeline.CreateClientRequestIdScope("disableCae"))
@@ -269,7 +273,7 @@ namespace Azure.Identity.Tests
             // Configure the transport
             var token = Guid.NewGuid().ToString();
             const string Claims = "myClaims";
-            TransportParams transportParams = new()
+            TransportConfig transportConfig = new()
             {
                 TokenFactory = req => token,
                 RequestValidator = req =>
@@ -297,11 +301,12 @@ namespace Azure.Identity.Tests
                     }
                 }
             };
-            var factory = MockTokenTransportFactory(transportParams);
+            var factory = MockTokenTransportFactory(transportConfig);
             var mockTransport = new MockTransport(factory);
 
             var config = new CommonCredentialTestConfig()
             {
+                TransportConfig = transportConfig,
                 Transport = mockTransport,
                 TenantId = TenantId,
                 RedirectUri = new Uri("http://localhost:8400/")
@@ -311,7 +316,7 @@ namespace Azure.Identity.Tests
             {
                 Assert.Ignore("EnableCAE tests do not apply to the non-MSAL credentials.");
             }
-            transportParams.IsPubClient = CredentialTestHelpers.IsCredentialTypePubClient(credential);
+            transportConfig.IsPubClient = CredentialTestHelpers.IsCredentialTypePubClient(credential);
 
             using (HttpPipeline.CreateClientRequestIdScope("NoClaims"))
             {
@@ -336,16 +341,17 @@ namespace Azure.Identity.Tests
                 Assert.Ignore($"{typeof(TCredOptions).Name} does not implement {nameof(ISupportsTokenCachePersistenceOptions)}");
             }
 
-            TransportParams transportParams = new()
+            TransportConfig transportConfig = new()
             {
                 TokenFactory = req => Guid.NewGuid().ToString()
             };
-            var factory = MockTokenTransportFactory(transportParams);
+            var factory = MockTokenTransportFactory(transportConfig);
             var mockTransport = new MockTransport(factory);
             var cache = new MemoryTokenCache();
 
             var config = new CommonCredentialTestConfig()
             {
+                TransportConfig = transportConfig,
                 Transport = mockTransport,
                 TenantId = TenantId,
                 TokenCachePersistenceOptions = cache,
@@ -363,7 +369,7 @@ namespace Azure.Identity.Tests
             {
                 Assert.Ignore($"{credential.GetType().Name} is not an MSAL credential.");
             }
-            transportParams.IsPubClient = CredentialTestHelpers.IsCredentialTypePubClient(credential);
+            transportConfig.IsPubClient = CredentialTestHelpers.IsCredentialTypePubClient(credential);
 
             // Fetch a token to populate the cache
             AccessToken actualToken1 = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default, null), default);
@@ -464,8 +470,15 @@ namespace Azure.Identity.Tests
                     claimsIsVerified = true;
                     return new ValueTask<AuthenticationResult>(result);
                 });
+
+            var token = Guid.NewGuid().ToString();
+            TransportConfig transportConfig = new()
+            {
+                TokenFactory = req => token,
+            };
             var config = new CommonCredentialTestConfig()
             {
+                TransportConfig = transportConfig,
                 TenantId = TenantId,
                 MockPublicMsalClient = msalPub,
                 MockConfidentialMsalClient = msalConf,
@@ -484,15 +497,16 @@ namespace Azure.Identity.Tests
             Assert.True(claimsIsVerified);
         }
 
-        public class TransportParams
+        public class TransportConfig
         {
             public bool CalledDiscoveryEndpoint { get; set; }
             public bool IsPubClient { get; set; }
             public Action<MockRequest> RequestValidator { get; set; }
             public Func<MockRequest, string> TokenFactory { get; set; }
+            public Action<MockRequest, MockResponse> ResponseHandler { get; set; }
         }
 
-        public static Func<MockRequest, MockResponse> MockTokenTransportFactory(TransportParams transportParams)
+        public static Func<MockRequest, MockResponse> MockTokenTransportFactory(TransportConfig transportConfig)
         {
             return req =>
             {
@@ -505,20 +519,30 @@ namespace Azure.Identity.Tests
                 {
                     response.SetContent(UserrealmResponse);
                 }
-                else
+                else if (req.Uri.Path.Contains("/common/discovery/instance"))
                 {
-                    if (transportParams.IsPubClient || typeof(TCredOptions) == typeof(AuthorizationCodeCredentialOptions) || typeof(TCredOptions) == typeof(OnBehalfOfCredentialOptions))
+                    transportConfig.CalledDiscoveryEndpoint = true;
+                    response.SetContent(CredentialTestHelpers.CreateMockInstanceDiscoveryResponse());
+                }
+                else if (req.Uri.Path.EndsWith("/token"))
+                {
+                    if (transportConfig.IsPubClient || typeof(TCredOptions) == typeof(AuthorizationCodeCredentialOptions) || typeof(TCredOptions) == typeof(OnBehalfOfCredentialOptions))
                     {
-                        response = CredentialTestHelpers.CreateMockMsalTokenResponse(200, transportParams.TokenFactory?.Invoke(req) ?? Guid.NewGuid().ToString(), TenantId, ExpectedUsername, ObjectId);
+                        response = CredentialTestHelpers.CreateMockMsalTokenResponse(200, transportConfig.TokenFactory?.Invoke(req) ?? Guid.NewGuid().ToString(), TenantId, ExpectedUsername, ObjectId);
                     }
                     else
                     {
-                        response.SetContent($"{{\"token_type\": \"Bearer\",\"expires_in\": 9999,\"ext_expires_in\": 9999,\"access_token\": \"{transportParams.TokenFactory?.Invoke(req) ?? Guid.NewGuid().ToString()}\" }}");
+                        response.SetContent($"{{\"token_type\": \"Bearer\",\"expires_in\": 9999,\"ext_expires_in\": 9999,\"access_token\": \"{transportConfig.TokenFactory?.Invoke(req) ?? Guid.NewGuid().ToString()}\" }}");
                     }
                 }
-                if (transportParams.RequestValidator != null)
+                else if (transportConfig.ResponseHandler != null)
                 {
-                    transportParams.RequestValidator(req);
+                    transportConfig.ResponseHandler(req, response);
+                }
+
+                if (transportConfig.RequestValidator != null)
+                {
+                    transportConfig.RequestValidator(req);
                 }
                 return response;
             };
@@ -711,6 +735,7 @@ namespace Azure.Identity.Tests
             public Uri RedirectUri { get; set; }
             public TokenCachePersistenceOptions TokenCachePersistenceOptions { get; set; }
             public AuthenticationRecord AuthenticationRecord { get; set; }
+            public TransportConfig TransportConfig { get; set; }
             internal TenantIdResolverBase TestTentantIdResolver { get; set; }
             internal MockMsalConfidentialClient MockConfidentialMsalClient { get; set; }
             internal MockMsalPublicClient MockPublicMsalClient { get; set; }
