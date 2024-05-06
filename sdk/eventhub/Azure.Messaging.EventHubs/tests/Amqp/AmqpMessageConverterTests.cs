@@ -1901,6 +1901,66 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 { AmqpManagement.ResponseMap.Name, name },
                 { AmqpManagement.ResponseMap.CreatedAt, created.UtcDateTime },
+                { AmqpManagement.ResponseMap.PartitionIdentifiers, identifiers },
+                { AmqpManagement.ResponseMap.GeoReplicationFactor, 5 }
+            };
+
+            using var response = AmqpMessage.Create(new AmqpValue { Value = body });
+            EventHubProperties properties = converter.CreateEventHubPropertiesFromResponse(response);
+
+            Assert.That(properties, Is.Not.Null, "The properties should have been created");
+            Assert.That(properties.Name, Is.EqualTo(name), "The name should match");
+            Assert.That(properties.CreatedOn, Is.EqualTo(created), "The created date should match");
+            Assert.That(properties.PartitionIds, Is.EquivalentTo(identifiers), "The set of partition identifiers should match");
+            Assert.That(properties.IsGeoReplicationEnabled, Is.True, "The geo-replication flag should be set");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpMessageConverter.CreateEventHubPropertiesFromResponse" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void CreateEventHubPropertiesFromResponseCreatesThePropertiesGeoDRNotEnabled()
+        {
+            var name = "SomeName";
+            var created = DateTimeOffset.Parse("2015-10-27T00:00:00z");
+            var identifiers = new[] { "0", "1", "2" };
+            var converter = new AmqpMessageConverter();
+            var body = new AmqpMap
+            {
+                { AmqpManagement.ResponseMap.Name, name },
+                { AmqpManagement.ResponseMap.CreatedAt, created.UtcDateTime },
+                { AmqpManagement.ResponseMap.PartitionIdentifiers, identifiers },
+                { AmqpManagement.ResponseMap.GeoReplicationFactor, 1 }
+            };
+
+            using var response = AmqpMessage.Create(new AmqpValue { Value = body });
+            EventHubProperties properties = converter.CreateEventHubPropertiesFromResponse(response);
+
+            Assert.That(properties, Is.Not.Null, "The properties should have been created");
+            Assert.That(properties.Name, Is.EqualTo(name), "The name should match");
+            Assert.That(properties.CreatedOn, Is.EqualTo(created), "The created date should match");
+            Assert.That(properties.PartitionIds, Is.EquivalentTo(identifiers), "The set of partition identifiers should match");
+            Assert.That(properties.IsGeoReplicationEnabled, Is.False, "The geo-replication flag should be set");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpMessageConverter.CreateEventHubPropertiesFromResponse" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void CreateEventHubPropertiesFromResponseCreatesThePropertiesBackCompat()
+        {
+            var name = "SomeName";
+            var created = DateTimeOffset.Parse("2015-10-27T00:00:00z");
+            var identifiers = new[] { "0", "1", "2" };
+            var converter = new AmqpMessageConverter();
+            var body = new AmqpMap
+            {
+                { AmqpManagement.ResponseMap.Name, name },
+                { AmqpManagement.ResponseMap.CreatedAt, created.UtcDateTime },
                 { AmqpManagement.ResponseMap.PartitionIdentifiers, identifiers }
             };
 
@@ -1911,6 +1971,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(properties.Name, Is.EqualTo(name), "The name should match");
             Assert.That(properties.CreatedOn, Is.EqualTo(created), "The created date should match");
             Assert.That(properties.PartitionIds, Is.EquivalentTo(identifiers), "The set of partition identifiers should match");
+            Assert.That(properties.IsGeoReplicationEnabled, Is.False, "The geo-replication flag should be set");
         }
 
         /// <summary>
