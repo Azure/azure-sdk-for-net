@@ -189,11 +189,11 @@ LedgerRoleName = ConfidentialLedgerRoleName.Reader,
             ConfidentialLedgerResource confidentialLedger = client.GetConfidentialLedgerResource(confidentialLedgerResourceId);
 
             // invoke the operation
-            ConfidentialLedgerBackup confidentialLedger0 = new ConfidentialLedgerBackup(new Uri("DummySASUri"))
+            ConfidentialLedgerBackupContent content = new ConfidentialLedgerBackupContent(new Uri("DummySASUri"))
             {
                 RestoreRegion = "EastUS",
             };
-            ArmOperation<ConfidentialLedgerBackupResult> lro = await confidentialLedger.BackupAsync(WaitUntil.Completed, confidentialLedger0);
+            ArmOperation<ConfidentialLedgerBackupResult> lro = await confidentialLedger.BackupAsync(WaitUntil.Completed, content);
             ConfidentialLedgerBackupResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -221,8 +221,8 @@ LedgerRoleName = ConfidentialLedgerRoleName.Reader,
             ConfidentialLedgerResource confidentialLedger = client.GetConfidentialLedgerResource(confidentialLedgerResourceId);
 
             // invoke the operation
-            ConfidentialLedgerRestore confidentialLedger0 = new ConfidentialLedgerRestore("DummyFileShareName", "EastUS", new Uri("DummySASUri"));
-            ArmOperation<ConfidentialLedgerRestoreResult> lro = await confidentialLedger.RestoreAsync(WaitUntil.Completed, confidentialLedger0);
+            ConfidentialLedgerRestoreContent content = new ConfidentialLedgerRestoreContent("DummyFileShareName", "EastUS", new Uri("DummySASUri"));
+            ArmOperation<ConfidentialLedgerRestoreResult> lro = await confidentialLedger.RestoreAsync(WaitUntil.Completed, content);
             ConfidentialLedgerRestoreResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");

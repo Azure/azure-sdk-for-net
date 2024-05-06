@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Samples
                 Properties = new ConfidentialLedgerProperties()
                 {
                     LedgerType = ConfidentialLedgerType.Public,
-                    LedgerSku = LedgerSku.Standard,
+                    LedgerSku = ConfidentialLedgerSku.Standard,
                     AadBasedSecurityPrincipals =
 {
 new AadBasedSecurityPrincipal()

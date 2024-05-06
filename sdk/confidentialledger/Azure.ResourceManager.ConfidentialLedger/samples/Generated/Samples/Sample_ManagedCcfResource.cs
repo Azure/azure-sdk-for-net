@@ -175,11 +175,11 @@ namespace Azure.ResourceManager.ConfidentialLedger.Samples
             ManagedCcfResource managedCcf = client.GetManagedCcfResource(managedCcfResourceId);
 
             // invoke the operation
-            ManagedCcfBackup managedCcf0 = new ManagedCcfBackup(new Uri("DummySASUri"))
+            ManagedCcfBackupContent content = new ManagedCcfBackupContent(new Uri("DummySASUri"))
             {
                 RestoreRegion = "EastUS",
             };
-            ArmOperation<ManagedCcfBackupResult> lro = await managedCcf.BackupAsync(WaitUntil.Completed, managedCcf0);
+            ArmOperation<ManagedCcfBackupResult> lro = await managedCcf.BackupAsync(WaitUntil.Completed, content);
             ManagedCcfBackupResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -207,8 +207,8 @@ namespace Azure.ResourceManager.ConfidentialLedger.Samples
             ManagedCcfResource managedCcf = client.GetManagedCcfResource(managedCcfResourceId);
 
             // invoke the operation
-            ManagedCcfRestore managedCcf0 = new ManagedCcfRestore("DummyFileShareName", "EastUS", new Uri("DummySASUri"));
-            ArmOperation<ManagedCcfRestoreResult> lro = await managedCcf.RestoreAsync(WaitUntil.Completed, managedCcf0);
+            ManagedCcfRestoreContent content = new ManagedCcfRestoreContent("DummyFileShareName", "EastUS", new Uri("DummySASUri"));
+            ArmOperation<ManagedCcfRestoreResult> lro = await managedCcf.RestoreAsync(WaitUntil.Completed, content);
             ManagedCcfRestoreResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");

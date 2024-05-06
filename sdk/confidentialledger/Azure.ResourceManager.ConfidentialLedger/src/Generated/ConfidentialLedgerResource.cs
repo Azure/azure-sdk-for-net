@@ -368,19 +368,19 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="confidentialLedger"> Confidential Ledger Backup Request Body. </param>
+        /// <param name="content"> Confidential Ledger Backup Request Body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="confidentialLedger"/> is null. </exception>
-        public virtual async Task<ArmOperation<ConfidentialLedgerBackupResult>> BackupAsync(WaitUntil waitUntil, ConfidentialLedgerBackup confidentialLedger, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<ConfidentialLedgerBackupResult>> BackupAsync(WaitUntil waitUntil, ConfidentialLedgerBackupContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(confidentialLedger, nameof(confidentialLedger));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _confidentialLedgerLedgerClientDiagnostics.CreateScope("ConfidentialLedgerResource.Backup");
             scope.Start();
             try
             {
-                var response = await _confidentialLedgerLedgerRestClient.BackupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, confidentialLedger, cancellationToken).ConfigureAwait(false);
-                var operation = new ConfidentialLedgerArmOperation<ConfidentialLedgerBackupResult>(new ConfidentialLedgerBackupResultOperationSource(), _confidentialLedgerLedgerClientDiagnostics, Pipeline, _confidentialLedgerLedgerRestClient.CreateBackupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, confidentialLedger).Request, response, OperationFinalStateVia.Location);
+                var response = await _confidentialLedgerLedgerRestClient.BackupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new ConfidentialLedgerArmOperation<ConfidentialLedgerBackupResult>(new ConfidentialLedgerBackupResultOperationSource(), _confidentialLedgerLedgerClientDiagnostics, Pipeline, _confidentialLedgerLedgerRestClient.CreateBackupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -414,19 +414,19 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="confidentialLedger"> Confidential Ledger Backup Request Body. </param>
+        /// <param name="content"> Confidential Ledger Backup Request Body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="confidentialLedger"/> is null. </exception>
-        public virtual ArmOperation<ConfidentialLedgerBackupResult> Backup(WaitUntil waitUntil, ConfidentialLedgerBackup confidentialLedger, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<ConfidentialLedgerBackupResult> Backup(WaitUntil waitUntil, ConfidentialLedgerBackupContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(confidentialLedger, nameof(confidentialLedger));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _confidentialLedgerLedgerClientDiagnostics.CreateScope("ConfidentialLedgerResource.Backup");
             scope.Start();
             try
             {
-                var response = _confidentialLedgerLedgerRestClient.Backup(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, confidentialLedger, cancellationToken);
-                var operation = new ConfidentialLedgerArmOperation<ConfidentialLedgerBackupResult>(new ConfidentialLedgerBackupResultOperationSource(), _confidentialLedgerLedgerClientDiagnostics, Pipeline, _confidentialLedgerLedgerRestClient.CreateBackupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, confidentialLedger).Request, response, OperationFinalStateVia.Location);
+                var response = _confidentialLedgerLedgerRestClient.Backup(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new ConfidentialLedgerArmOperation<ConfidentialLedgerBackupResult>(new ConfidentialLedgerBackupResultOperationSource(), _confidentialLedgerLedgerClientDiagnostics, Pipeline, _confidentialLedgerLedgerRestClient.CreateBackupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -460,19 +460,19 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="confidentialLedger"> Confidential Ledger Restore Request Body. </param>
+        /// <param name="content"> Confidential Ledger Restore Request Body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="confidentialLedger"/> is null. </exception>
-        public virtual async Task<ArmOperation<ConfidentialLedgerRestoreResult>> RestoreAsync(WaitUntil waitUntil, ConfidentialLedgerRestore confidentialLedger, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<ConfidentialLedgerRestoreResult>> RestoreAsync(WaitUntil waitUntil, ConfidentialLedgerRestoreContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(confidentialLedger, nameof(confidentialLedger));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _confidentialLedgerLedgerClientDiagnostics.CreateScope("ConfidentialLedgerResource.Restore");
             scope.Start();
             try
             {
-                var response = await _confidentialLedgerLedgerRestClient.RestoreAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, confidentialLedger, cancellationToken).ConfigureAwait(false);
-                var operation = new ConfidentialLedgerArmOperation<ConfidentialLedgerRestoreResult>(new ConfidentialLedgerRestoreResultOperationSource(), _confidentialLedgerLedgerClientDiagnostics, Pipeline, _confidentialLedgerLedgerRestClient.CreateRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, confidentialLedger).Request, response, OperationFinalStateVia.Location);
+                var response = await _confidentialLedgerLedgerRestClient.RestoreAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new ConfidentialLedgerArmOperation<ConfidentialLedgerRestoreResult>(new ConfidentialLedgerRestoreResultOperationSource(), _confidentialLedgerLedgerClientDiagnostics, Pipeline, _confidentialLedgerLedgerRestClient.CreateRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -506,19 +506,19 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="confidentialLedger"> Confidential Ledger Restore Request Body. </param>
+        /// <param name="content"> Confidential Ledger Restore Request Body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="confidentialLedger"/> is null. </exception>
-        public virtual ArmOperation<ConfidentialLedgerRestoreResult> Restore(WaitUntil waitUntil, ConfidentialLedgerRestore confidentialLedger, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<ConfidentialLedgerRestoreResult> Restore(WaitUntil waitUntil, ConfidentialLedgerRestoreContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(confidentialLedger, nameof(confidentialLedger));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _confidentialLedgerLedgerClientDiagnostics.CreateScope("ConfidentialLedgerResource.Restore");
             scope.Start();
             try
             {
-                var response = _confidentialLedgerLedgerRestClient.Restore(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, confidentialLedger, cancellationToken);
-                var operation = new ConfidentialLedgerArmOperation<ConfidentialLedgerRestoreResult>(new ConfidentialLedgerRestoreResultOperationSource(), _confidentialLedgerLedgerClientDiagnostics, Pipeline, _confidentialLedgerLedgerRestClient.CreateRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, confidentialLedger).Request, response, OperationFinalStateVia.Location);
+                var response = _confidentialLedgerLedgerRestClient.Restore(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new ConfidentialLedgerArmOperation<ConfidentialLedgerRestoreResult>(new ConfidentialLedgerRestoreResultOperationSource(), _confidentialLedgerLedgerClientDiagnostics, Pipeline, _confidentialLedgerLedgerRestClient.CreateRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

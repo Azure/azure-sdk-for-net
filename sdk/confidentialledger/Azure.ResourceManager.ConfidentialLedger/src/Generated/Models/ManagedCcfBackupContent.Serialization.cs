@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Models
 {
-    public partial class ConfidentialLedgerBackup : IUtf8JsonSerializable, IJsonModel<ConfidentialLedgerBackup>
+    public partial class ManagedCcfBackupContent : IUtf8JsonSerializable, IJsonModel<ManagedCcfBackupContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConfidentialLedgerBackup>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedCcfBackupContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ConfidentialLedgerBackup>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ManagedCcfBackupContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConfidentialLedgerBackup>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedCcfBackupContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfidentialLedgerBackup)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedCcfBackupContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,19 +51,19 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             writer.WriteEndObject();
         }
 
-        ConfidentialLedgerBackup IJsonModel<ConfidentialLedgerBackup>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ManagedCcfBackupContent IJsonModel<ManagedCcfBackupContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConfidentialLedgerBackup>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedCcfBackupContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfidentialLedgerBackup)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedCcfBackupContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeConfidentialLedgerBackup(document.RootElement, options);
+            return DeserializeManagedCcfBackupContent(document.RootElement, options);
         }
 
-        internal static ConfidentialLedgerBackup DeserializeConfidentialLedgerBackup(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ManagedCcfBackupContent DeserializeManagedCcfBackupContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -93,38 +93,38 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ConfidentialLedgerBackup(restoreRegion, uri, serializedAdditionalRawData);
+            return new ManagedCcfBackupContent(restoreRegion, uri, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ConfidentialLedgerBackup>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ManagedCcfBackupContent>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConfidentialLedgerBackup>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedCcfBackupContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConfidentialLedgerBackup)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedCcfBackupContent)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ConfidentialLedgerBackup IPersistableModel<ConfidentialLedgerBackup>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ManagedCcfBackupContent IPersistableModel<ManagedCcfBackupContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConfidentialLedgerBackup>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedCcfBackupContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeConfidentialLedgerBackup(document.RootElement, options);
+                        return DeserializeManagedCcfBackupContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConfidentialLedgerBackup)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedCcfBackupContent)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ConfidentialLedgerBackup>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ManagedCcfBackupContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

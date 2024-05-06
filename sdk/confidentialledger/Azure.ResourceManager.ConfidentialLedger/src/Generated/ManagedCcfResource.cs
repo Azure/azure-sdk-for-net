@@ -368,19 +368,19 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="managedCcf"> Managed CCF Backup Request Body. </param>
+        /// <param name="content"> Managed CCF Backup Request Body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managedCcf"/> is null. </exception>
-        public virtual async Task<ArmOperation<ManagedCcfBackupResult>> BackupAsync(WaitUntil waitUntil, ManagedCcfBackup managedCcf, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<ManagedCcfBackupResult>> BackupAsync(WaitUntil waitUntil, ManagedCcfBackupContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(managedCcf, nameof(managedCcf));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _managedCcfManagedCcfClientDiagnostics.CreateScope("ManagedCcfResource.Backup");
             scope.Start();
             try
             {
-                var response = await _managedCcfManagedCcfRestClient.BackupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedCcf, cancellationToken).ConfigureAwait(false);
-                var operation = new ConfidentialLedgerArmOperation<ManagedCcfBackupResult>(new ManagedCcfBackupResultOperationSource(), _managedCcfManagedCcfClientDiagnostics, Pipeline, _managedCcfManagedCcfRestClient.CreateBackupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedCcf).Request, response, OperationFinalStateVia.Location);
+                var response = await _managedCcfManagedCcfRestClient.BackupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new ConfidentialLedgerArmOperation<ManagedCcfBackupResult>(new ManagedCcfBackupResultOperationSource(), _managedCcfManagedCcfClientDiagnostics, Pipeline, _managedCcfManagedCcfRestClient.CreateBackupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -414,19 +414,19 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="managedCcf"> Managed CCF Backup Request Body. </param>
+        /// <param name="content"> Managed CCF Backup Request Body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managedCcf"/> is null. </exception>
-        public virtual ArmOperation<ManagedCcfBackupResult> Backup(WaitUntil waitUntil, ManagedCcfBackup managedCcf, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<ManagedCcfBackupResult> Backup(WaitUntil waitUntil, ManagedCcfBackupContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(managedCcf, nameof(managedCcf));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _managedCcfManagedCcfClientDiagnostics.CreateScope("ManagedCcfResource.Backup");
             scope.Start();
             try
             {
-                var response = _managedCcfManagedCcfRestClient.Backup(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedCcf, cancellationToken);
-                var operation = new ConfidentialLedgerArmOperation<ManagedCcfBackupResult>(new ManagedCcfBackupResultOperationSource(), _managedCcfManagedCcfClientDiagnostics, Pipeline, _managedCcfManagedCcfRestClient.CreateBackupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedCcf).Request, response, OperationFinalStateVia.Location);
+                var response = _managedCcfManagedCcfRestClient.Backup(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new ConfidentialLedgerArmOperation<ManagedCcfBackupResult>(new ManagedCcfBackupResultOperationSource(), _managedCcfManagedCcfClientDiagnostics, Pipeline, _managedCcfManagedCcfRestClient.CreateBackupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -460,19 +460,19 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="managedCcf"> Managed CCF Restore Request Body. </param>
+        /// <param name="content"> Managed CCF Restore Request Body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managedCcf"/> is null. </exception>
-        public virtual async Task<ArmOperation<ManagedCcfRestoreResult>> RestoreAsync(WaitUntil waitUntil, ManagedCcfRestore managedCcf, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<ManagedCcfRestoreResult>> RestoreAsync(WaitUntil waitUntil, ManagedCcfRestoreContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(managedCcf, nameof(managedCcf));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _managedCcfManagedCcfClientDiagnostics.CreateScope("ManagedCcfResource.Restore");
             scope.Start();
             try
             {
-                var response = await _managedCcfManagedCcfRestClient.RestoreAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedCcf, cancellationToken).ConfigureAwait(false);
-                var operation = new ConfidentialLedgerArmOperation<ManagedCcfRestoreResult>(new ManagedCcfRestoreResultOperationSource(), _managedCcfManagedCcfClientDiagnostics, Pipeline, _managedCcfManagedCcfRestClient.CreateRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedCcf).Request, response, OperationFinalStateVia.Location);
+                var response = await _managedCcfManagedCcfRestClient.RestoreAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new ConfidentialLedgerArmOperation<ManagedCcfRestoreResult>(new ManagedCcfRestoreResultOperationSource(), _managedCcfManagedCcfClientDiagnostics, Pipeline, _managedCcfManagedCcfRestClient.CreateRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -506,19 +506,19 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="managedCcf"> Managed CCF Restore Request Body. </param>
+        /// <param name="content"> Managed CCF Restore Request Body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managedCcf"/> is null. </exception>
-        public virtual ArmOperation<ManagedCcfRestoreResult> Restore(WaitUntil waitUntil, ManagedCcfRestore managedCcf, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<ManagedCcfRestoreResult> Restore(WaitUntil waitUntil, ManagedCcfRestoreContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(managedCcf, nameof(managedCcf));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _managedCcfManagedCcfClientDiagnostics.CreateScope("ManagedCcfResource.Restore");
             scope.Start();
             try
             {
-                var response = _managedCcfManagedCcfRestClient.Restore(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedCcf, cancellationToken);
-                var operation = new ConfidentialLedgerArmOperation<ManagedCcfRestoreResult>(new ManagedCcfRestoreResultOperationSource(), _managedCcfManagedCcfClientDiagnostics, Pipeline, _managedCcfManagedCcfRestClient.CreateRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedCcf).Request, response, OperationFinalStateVia.Location);
+                var response = _managedCcfManagedCcfRestClient.Restore(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new ConfidentialLedgerArmOperation<ManagedCcfRestoreResult>(new ManagedCcfRestoreResultOperationSource(), _managedCcfManagedCcfClientDiagnostics, Pipeline, _managedCcfManagedCcfRestClient.CreateRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

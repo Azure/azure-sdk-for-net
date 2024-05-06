@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Models
 {
-    /// <summary> Object representing Restore properties of Managed CCF Resource. </summary>
-    public partial class ManagedCcfRestore
+    /// <summary> Object representing Restore properties of a Confidential Ledger Resource. </summary>
+    public partial class ConfidentialLedgerRestoreContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ManagedCcfRestore"/>. </summary>
-        /// <param name="fileShareName"> Fileshare where the managed CCF resource backup is stored. </param>
-        /// <param name="restoreRegion"> The region the managed CCF resource is being restored to. </param>
-        /// <param name="uri"> SAS URI used to access the backup Fileshare. </param>
+        /// <summary> Initializes a new instance of <see cref="ConfidentialLedgerRestoreContent"/>. </summary>
+        /// <param name="fileShareName"> Fileshare where the ledger backup is stored. </param>
+        /// <param name="restoreRegion"> The region the ledger is being restored to. </param>
+        /// <param name="uri"> SAS URI used to access the backup fileshare. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileShareName"/>, <paramref name="restoreRegion"/> or <paramref name="uri"/> is null. </exception>
-        public ManagedCcfRestore(string fileShareName, string restoreRegion, Uri uri)
+        public ConfidentialLedgerRestoreContent(string fileShareName, string restoreRegion, Uri uri)
         {
             Argument.AssertNotNull(fileShareName, nameof(fileShareName));
             Argument.AssertNotNull(restoreRegion, nameof(restoreRegion));
@@ -61,12 +61,12 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             Uri = uri;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedCcfRestore"/>. </summary>
-        /// <param name="fileShareName"> Fileshare where the managed CCF resource backup is stored. </param>
-        /// <param name="restoreRegion"> The region the managed CCF resource is being restored to. </param>
-        /// <param name="uri"> SAS URI used to access the backup Fileshare. </param>
+        /// <summary> Initializes a new instance of <see cref="ConfidentialLedgerRestoreContent"/>. </summary>
+        /// <param name="fileShareName"> Fileshare where the ledger backup is stored. </param>
+        /// <param name="restoreRegion"> The region the ledger is being restored to. </param>
+        /// <param name="uri"> SAS URI used to access the backup fileshare. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedCcfRestore(string fileShareName, string restoreRegion, Uri uri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConfidentialLedgerRestoreContent(string fileShareName, string restoreRegion, Uri uri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FileShareName = fileShareName;
             RestoreRegion = restoreRegion;
@@ -74,16 +74,16 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedCcfRestore"/> for deserialization. </summary>
-        internal ManagedCcfRestore()
+        /// <summary> Initializes a new instance of <see cref="ConfidentialLedgerRestoreContent"/> for deserialization. </summary>
+        internal ConfidentialLedgerRestoreContent()
         {
         }
 
-        /// <summary> Fileshare where the managed CCF resource backup is stored. </summary>
+        /// <summary> Fileshare where the ledger backup is stored. </summary>
         public string FileShareName { get; }
-        /// <summary> The region the managed CCF resource is being restored to. </summary>
+        /// <summary> The region the ledger is being restored to. </summary>
         public string RestoreRegion { get; }
-        /// <summary> SAS URI used to access the backup Fileshare. </summary>
+        /// <summary> SAS URI used to access the backup fileshare. </summary>
         public Uri Uri { get; }
     }
 }

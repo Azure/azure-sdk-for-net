@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Models
 {
-    /// <summary> Object representing Backup properties of a Managed CCF Resource. </summary>
-    public partial class ManagedCcfBackup
+    /// <summary> Object representing Restore properties of Managed CCF Resource. </summary>
+    public partial class ManagedCcfRestoreContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,34 +45,44 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ManagedCcfBackup"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedCcfRestoreContent"/>. </summary>
+        /// <param name="fileShareName"> Fileshare where the managed CCF resource backup is stored. </param>
+        /// <param name="restoreRegion"> The region the managed CCF resource is being restored to. </param>
         /// <param name="uri"> SAS URI used to access the backup Fileshare. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
-        public ManagedCcfBackup(Uri uri)
+        /// <exception cref="ArgumentNullException"> <paramref name="fileShareName"/>, <paramref name="restoreRegion"/> or <paramref name="uri"/> is null. </exception>
+        public ManagedCcfRestoreContent(string fileShareName, string restoreRegion, Uri uri)
         {
+            Argument.AssertNotNull(fileShareName, nameof(fileShareName));
+            Argument.AssertNotNull(restoreRegion, nameof(restoreRegion));
             Argument.AssertNotNull(uri, nameof(uri));
 
+            FileShareName = fileShareName;
+            RestoreRegion = restoreRegion;
             Uri = uri;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedCcfBackup"/>. </summary>
-        /// <param name="restoreRegion"> The region where the backup of the managed CCF resource will eventually be restored to. </param>
+        /// <summary> Initializes a new instance of <see cref="ManagedCcfRestoreContent"/>. </summary>
+        /// <param name="fileShareName"> Fileshare where the managed CCF resource backup is stored. </param>
+        /// <param name="restoreRegion"> The region the managed CCF resource is being restored to. </param>
         /// <param name="uri"> SAS URI used to access the backup Fileshare. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedCcfBackup(string restoreRegion, Uri uri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedCcfRestoreContent(string fileShareName, string restoreRegion, Uri uri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            FileShareName = fileShareName;
             RestoreRegion = restoreRegion;
             Uri = uri;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedCcfBackup"/> for deserialization. </summary>
-        internal ManagedCcfBackup()
+        /// <summary> Initializes a new instance of <see cref="ManagedCcfRestoreContent"/> for deserialization. </summary>
+        internal ManagedCcfRestoreContent()
         {
         }
 
-        /// <summary> The region where the backup of the managed CCF resource will eventually be restored to. </summary>
-        public string RestoreRegion { get; set; }
+        /// <summary> Fileshare where the managed CCF resource backup is stored. </summary>
+        public string FileShareName { get; }
+        /// <summary> The region the managed CCF resource is being restored to. </summary>
+        public string RestoreRegion { get; }
         /// <summary> SAS URI used to access the backup Fileshare. </summary>
         public Uri Uri { get; }
     }

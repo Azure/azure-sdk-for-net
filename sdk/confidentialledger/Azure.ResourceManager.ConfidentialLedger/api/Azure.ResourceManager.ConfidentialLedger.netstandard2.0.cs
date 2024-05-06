@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.ConfidentialLedger
         public virtual bool HasData { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.ConfidentialLedger.ConfidentialLedgerResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ConfidentialLedger.ConfidentialLedgerResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerBackupResult> Backup(Azure.WaitUntil waitUntil, Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerBackup confidentialLedger, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerBackupResult>> BackupAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerBackup confidentialLedger, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerBackupResult> Backup(Azure.WaitUntil waitUntil, Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerBackupContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerBackupResult>> BackupAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerBackupContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string ledgerName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -61,8 +61,8 @@ namespace Azure.ResourceManager.ConfidentialLedger
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ConfidentialLedger.ConfidentialLedgerResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ConfidentialLedger.ConfidentialLedgerResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ConfidentialLedger.ConfidentialLedgerResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerRestoreResult> Restore(Azure.WaitUntil waitUntil, Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerRestore confidentialLedger, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerRestoreResult>> RestoreAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerRestore confidentialLedger, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerRestoreResult> Restore(Azure.WaitUntil waitUntil, Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerRestoreContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerRestoreResult>> RestoreAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerRestoreContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ConfidentialLedger.ConfidentialLedgerResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ConfidentialLedger.ConfidentialLedgerResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.ConfidentialLedger.ConfidentialLedgerData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConfidentialLedger.ConfidentialLedgerData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -108,8 +108,8 @@ namespace Azure.ResourceManager.ConfidentialLedger
         public virtual bool HasData { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.ConfidentialLedger.ManagedCcfResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ConfidentialLedger.ManagedCcfResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfBackupResult> Backup(Azure.WaitUntil waitUntil, Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfBackup managedCcf, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfBackupResult>> BackupAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfBackup managedCcf, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfBackupResult> Backup(Azure.WaitUntil waitUntil, Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfBackupContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfBackupResult>> BackupAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfBackupContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string appName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -117,8 +117,8 @@ namespace Azure.ResourceManager.ConfidentialLedger
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ConfidentialLedger.ManagedCcfResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ConfidentialLedger.ManagedCcfResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ConfidentialLedger.ManagedCcfResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfRestoreResult> Restore(Azure.WaitUntil waitUntil, Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfRestore managedCcf, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfRestoreResult>> RestoreAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfRestore managedCcf, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfRestoreResult> Restore(Azure.WaitUntil waitUntil, Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfRestoreContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfRestoreResult>> RestoreAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfRestoreContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ConfidentialLedger.ManagedCcfResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ConfidentialLedger.ManagedCcfResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.ConfidentialLedger.ManagedCcfData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConfidentialLedger.ManagedCcfData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -175,13 +175,13 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
     }
     public static partial class ArmConfidentialLedgerModelFactory
     {
-        public static Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerBackup ConfidentialLedgerBackup(string restoreRegion = null, System.Uri uri = null) { throw null; }
+        public static Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerBackupContent ConfidentialLedgerBackupContent(string restoreRegion = null, System.Uri uri = null) { throw null; }
         public static Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerBackupResult ConfidentialLedgerBackupResult(string message = null) { throw null; }
         public static Azure.ResourceManager.ConfidentialLedger.ConfidentialLedgerData ConfidentialLedgerData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerProperties properties = null) { throw null; }
         public static Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerNameAvailabilityResult ConfidentialLedgerNameAvailabilityResult(bool? isNameAvailable = default(bool?), Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerNameUnavailableReason? reason = default(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerNameUnavailableReason?), string message = null) { throw null; }
-        public static Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerProperties ConfidentialLedgerProperties(string ledgerName = null, System.Uri ledgerUri = null, System.Uri identityServiceUri = null, string ledgerInternalNamespace = null, Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerRunningState? runningState = default(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerRunningState?), Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerType? ledgerType = default(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerType?), Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerProvisioningState? provisioningState = default(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerProvisioningState?), Azure.ResourceManager.ConfidentialLedger.Models.LedgerSku? ledgerSku = default(Azure.ResourceManager.ConfidentialLedger.Models.LedgerSku?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ConfidentialLedger.Models.AadBasedSecurityPrincipal> aadBasedSecurityPrincipals = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ConfidentialLedger.Models.CertBasedSecurityPrincipal> certBasedSecurityPrincipals = null) { throw null; }
+        public static Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerProperties ConfidentialLedgerProperties(string ledgerName = null, System.Uri ledgerUri = null, System.Uri identityServiceUri = null, string ledgerInternalNamespace = null, Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerRunningState? runningState = default(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerRunningState?), Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerType? ledgerType = default(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerType?), Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerProvisioningState? provisioningState = default(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerProvisioningState?), Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerSku? ledgerSku = default(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerSku?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ConfidentialLedger.Models.AadBasedSecurityPrincipal> aadBasedSecurityPrincipals = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ConfidentialLedger.Models.CertBasedSecurityPrincipal> certBasedSecurityPrincipals = null) { throw null; }
         public static Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerRestoreResult ConfidentialLedgerRestoreResult(string message = null) { throw null; }
-        public static Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfBackup ManagedCcfBackup(string restoreRegion = null, System.Uri uri = null) { throw null; }
+        public static Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfBackupContent ManagedCcfBackupContent(string restoreRegion = null, System.Uri uri = null) { throw null; }
         public static Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfBackupResult ManagedCcfBackupResult(string message = null) { throw null; }
         public static Azure.ResourceManager.ConfidentialLedger.ManagedCcfData ManagedCcfData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfProperties properties = null) { throw null; }
         public static Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfProperties ManagedCcfProperties(string appName = null, System.Uri appUri = null, System.Uri identityServiceUri = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerMemberIdentityCertificate> memberIdentityCertificates = null, Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerDeploymentType deploymentType = null, Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerRunningState? runningState = default(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerRunningState?), Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerProvisioningState? provisioningState = default(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerProvisioningState?), int? nodeCount = default(int?)) { throw null; }
@@ -198,16 +198,16 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.CertBasedSecurityPrincipal>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.CertBasedSecurityPrincipal>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ConfidentialLedgerBackup : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerBackup>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerBackup>
+    public partial class ConfidentialLedgerBackupContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerBackupContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerBackupContent>
     {
-        public ConfidentialLedgerBackup(System.Uri uri) { }
+        public ConfidentialLedgerBackupContent(System.Uri uri) { }
         public string RestoreRegion { get { throw null; } set { } }
         public System.Uri Uri { get { throw null; } }
-        Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerBackup System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerBackup>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerBackup>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerBackup System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerBackup>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerBackup>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerBackup>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerBackupContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerBackupContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerBackupContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerBackupContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerBackupContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerBackupContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerBackupContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ConfidentialLedgerBackupResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerBackupResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerBackupResult>
     {
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         public System.Uri IdentityServiceUri { get { throw null; } }
         public string LedgerInternalNamespace { get { throw null; } }
         public string LedgerName { get { throw null; } }
-        public Azure.ResourceManager.ConfidentialLedger.Models.LedgerSku? LedgerSku { get { throw null; } set { } }
+        public Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerSku? LedgerSku { get { throw null; } set { } }
         public Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerType? LedgerType { get { throw null; } set { } }
         public System.Uri LedgerUri { get { throw null; } }
         public Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerProvisioningState? ProvisioningState { get { throw null; } }
@@ -343,17 +343,17 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         public static bool operator !=(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerProvisioningState left, Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ConfidentialLedgerRestore : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerRestore>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerRestore>
+    public partial class ConfidentialLedgerRestoreContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerRestoreContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerRestoreContent>
     {
-        public ConfidentialLedgerRestore(string fileShareName, string restoreRegion, System.Uri uri) { }
+        public ConfidentialLedgerRestoreContent(string fileShareName, string restoreRegion, System.Uri uri) { }
         public string FileShareName { get { throw null; } }
         public string RestoreRegion { get { throw null; } }
         public System.Uri Uri { get { throw null; } }
-        Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerRestore System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerRestore>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerRestore>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerRestore System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerRestore>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerRestore>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerRestore>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerRestoreContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerRestoreContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerRestoreContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerRestoreContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerRestoreContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerRestoreContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerRestoreContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ConfidentialLedgerRestoreResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerRestoreResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerRestoreResult>
     {
@@ -406,6 +406,25 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ConfidentialLedgerSku : System.IEquatable<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerSku>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ConfidentialLedgerSku(string value) { throw null; }
+        public static Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerSku Basic { get { throw null; } }
+        public static Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerSku Standard { get { throw null; } }
+        public static Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerSku Unknown { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerSku other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerSku left, Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerSku right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerSku (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerSku left, Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerSku right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ConfidentialLedgerType : System.IEquatable<Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerType>
     {
         private readonly object _dummy;
@@ -424,35 +443,16 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         public static bool operator !=(Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerType left, Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct LedgerSku : System.IEquatable<Azure.ResourceManager.ConfidentialLedger.Models.LedgerSku>
+    public partial class ManagedCcfBackupContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfBackupContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfBackupContent>
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public LedgerSku(string value) { throw null; }
-        public static Azure.ResourceManager.ConfidentialLedger.Models.LedgerSku Basic { get { throw null; } }
-        public static Azure.ResourceManager.ConfidentialLedger.Models.LedgerSku Standard { get { throw null; } }
-        public static Azure.ResourceManager.ConfidentialLedger.Models.LedgerSku Unknown { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ConfidentialLedger.Models.LedgerSku other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ConfidentialLedger.Models.LedgerSku left, Azure.ResourceManager.ConfidentialLedger.Models.LedgerSku right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ConfidentialLedger.Models.LedgerSku (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ConfidentialLedger.Models.LedgerSku left, Azure.ResourceManager.ConfidentialLedger.Models.LedgerSku right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class ManagedCcfBackup : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfBackup>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfBackup>
-    {
-        public ManagedCcfBackup(System.Uri uri) { }
+        public ManagedCcfBackupContent(System.Uri uri) { }
         public string RestoreRegion { get { throw null; } set { } }
         public System.Uri Uri { get { throw null; } }
-        Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfBackup System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfBackup>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfBackup>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfBackup System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfBackup>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfBackup>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfBackup>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfBackupContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfBackupContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfBackupContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfBackupContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfBackupContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfBackupContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfBackupContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ManagedCcfBackupResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfBackupResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfBackupResult>
     {
@@ -481,17 +481,17 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ManagedCcfRestore : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfRestore>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfRestore>
+    public partial class ManagedCcfRestoreContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfRestoreContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfRestoreContent>
     {
-        public ManagedCcfRestore(string fileShareName, string restoreRegion, System.Uri uri) { }
+        public ManagedCcfRestoreContent(string fileShareName, string restoreRegion, System.Uri uri) { }
         public string FileShareName { get { throw null; } }
         public string RestoreRegion { get { throw null; } }
         public System.Uri Uri { get { throw null; } }
-        Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfRestore System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfRestore>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfRestore>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfRestore System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfRestore>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfRestore>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfRestore>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfRestoreContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfRestoreContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfRestoreContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfRestoreContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfRestoreContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfRestoreContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfRestoreContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ManagedCcfRestoreResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfRestoreResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfRestoreResult>
     {

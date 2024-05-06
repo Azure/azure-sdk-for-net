@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         /// <param name="aadBasedSecurityPrincipals"> Array of all AAD based Security Principals. </param>
         /// <param name="certBasedSecurityPrincipals"> Array of all cert based Security Principals. </param>
         /// <returns> A new <see cref="Models.ConfidentialLedgerProperties"/> instance for mocking. </returns>
-        public static ConfidentialLedgerProperties ConfidentialLedgerProperties(string ledgerName = null, Uri ledgerUri = null, Uri identityServiceUri = null, string ledgerInternalNamespace = null, ConfidentialLedgerRunningState? runningState = null, ConfidentialLedgerType? ledgerType = null, ConfidentialLedgerProvisioningState? provisioningState = null, LedgerSku? ledgerSku = null, IEnumerable<AadBasedSecurityPrincipal> aadBasedSecurityPrincipals = null, IEnumerable<CertBasedSecurityPrincipal> certBasedSecurityPrincipals = null)
+        public static ConfidentialLedgerProperties ConfidentialLedgerProperties(string ledgerName = null, Uri ledgerUri = null, Uri identityServiceUri = null, string ledgerInternalNamespace = null, ConfidentialLedgerRunningState? runningState = null, ConfidentialLedgerType? ledgerType = null, ConfidentialLedgerProvisioningState? provisioningState = null, ConfidentialLedgerSku? ledgerSku = null, IEnumerable<AadBasedSecurityPrincipal> aadBasedSecurityPrincipals = null, IEnumerable<CertBasedSecurityPrincipal> certBasedSecurityPrincipals = null)
         {
             aadBasedSecurityPrincipals ??= new List<AadBasedSecurityPrincipal>();
             certBasedSecurityPrincipals ??= new List<CertBasedSecurityPrincipal>();
@@ -81,13 +81,13 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConfidentialLedgerBackup"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConfidentialLedgerBackupContent"/>. </summary>
         /// <param name="restoreRegion"> The region where the backup of the ledger will eventually be restored to. </param>
         /// <param name="uri"> SAS URI used to access the backup Fileshare. </param>
-        /// <returns> A new <see cref="Models.ConfidentialLedgerBackup"/> instance for mocking. </returns>
-        public static ConfidentialLedgerBackup ConfidentialLedgerBackup(string restoreRegion = null, Uri uri = null)
+        /// <returns> A new <see cref="Models.ConfidentialLedgerBackupContent"/> instance for mocking. </returns>
+        public static ConfidentialLedgerBackupContent ConfidentialLedgerBackupContent(string restoreRegion = null, Uri uri = null)
         {
-            return new ConfidentialLedgerBackup(restoreRegion, uri, serializedAdditionalRawData: null);
+            return new ConfidentialLedgerBackupContent(restoreRegion, uri, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConfidentialLedgerBackupResult"/>. </summary>
@@ -156,13 +156,13 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ManagedCcfBackup"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedCcfBackupContent"/>. </summary>
         /// <param name="restoreRegion"> The region where the backup of the managed CCF resource will eventually be restored to. </param>
         /// <param name="uri"> SAS URI used to access the backup Fileshare. </param>
-        /// <returns> A new <see cref="Models.ManagedCcfBackup"/> instance for mocking. </returns>
-        public static ManagedCcfBackup ManagedCcfBackup(string restoreRegion = null, Uri uri = null)
+        /// <returns> A new <see cref="Models.ManagedCcfBackupContent"/> instance for mocking. </returns>
+        public static ManagedCcfBackupContent ManagedCcfBackupContent(string restoreRegion = null, Uri uri = null)
         {
-            return new ManagedCcfBackup(restoreRegion, uri, serializedAdditionalRawData: null);
+            return new ManagedCcfBackupContent(restoreRegion, uri, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ManagedCcfBackupResult"/>. </summary>

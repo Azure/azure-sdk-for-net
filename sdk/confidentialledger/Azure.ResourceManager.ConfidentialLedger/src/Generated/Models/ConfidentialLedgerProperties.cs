@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         /// <param name="aadBasedSecurityPrincipals"> Array of all AAD based Security Principals. </param>
         /// <param name="certBasedSecurityPrincipals"> Array of all cert based Security Principals. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConfidentialLedgerProperties(string ledgerName, Uri ledgerUri, Uri identityServiceUri, string ledgerInternalNamespace, ConfidentialLedgerRunningState? runningState, ConfidentialLedgerType? ledgerType, ConfidentialLedgerProvisioningState? provisioningState, LedgerSku? ledgerSku, IList<AadBasedSecurityPrincipal> aadBasedSecurityPrincipals, IList<CertBasedSecurityPrincipal> certBasedSecurityPrincipals, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConfidentialLedgerProperties(string ledgerName, Uri ledgerUri, Uri identityServiceUri, string ledgerInternalNamespace, ConfidentialLedgerRunningState? runningState, ConfidentialLedgerType? ledgerType, ConfidentialLedgerProvisioningState? provisioningState, ConfidentialLedgerSku? ledgerSku, IList<AadBasedSecurityPrincipal> aadBasedSecurityPrincipals, IList<CertBasedSecurityPrincipal> certBasedSecurityPrincipals, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LedgerName = ledgerName;
             LedgerUri = ledgerUri;
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         /// <summary> Provisioning state of Ledger Resource. </summary>
         public ConfidentialLedgerProvisioningState? ProvisioningState { get; }
         /// <summary> SKU associated with the ledger. </summary>
-        public LedgerSku? LedgerSku { get; set; }
+        public ConfidentialLedgerSku? LedgerSku { get; set; }
         /// <summary> Array of all AAD based Security Principals. </summary>
         public IList<AadBasedSecurityPrincipal> AadBasedSecurityPrincipals { get; }
         /// <summary> Array of all cert based Security Principals. </summary>

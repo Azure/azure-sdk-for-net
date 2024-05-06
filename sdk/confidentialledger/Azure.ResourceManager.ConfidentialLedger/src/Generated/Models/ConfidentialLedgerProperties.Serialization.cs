@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             ConfidentialLedgerRunningState? runningState = default;
             ConfidentialLedgerType? ledgerType = default;
             ConfidentialLedgerProvisioningState? provisioningState = default;
-            LedgerSku? ledgerSku = default;
+            ConfidentialLedgerSku? ledgerSku = default;
             IList<AadBasedSecurityPrincipal> aadBasedSecurityPrincipals = default;
             IList<CertBasedSecurityPrincipal> certBasedSecurityPrincipals = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                     {
                         continue;
                     }
-                    ledgerSku = new LedgerSku(property.Value.GetString());
+                    ledgerSku = new ConfidentialLedgerSku(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("aadBasedSecurityPrincipals"u8))
