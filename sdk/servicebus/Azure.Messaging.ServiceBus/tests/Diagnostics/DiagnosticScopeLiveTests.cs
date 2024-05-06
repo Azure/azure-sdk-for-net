@@ -176,10 +176,15 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 await sender.SendMessagesAsync(batch);
                 AssertSendActivities(useSessions, sender, messages);
 
-                // delete all messages
-                await receiver.PurgeMessagesAsync();
+                // delete a message
+                await receiver.DeleteMessagesAsync(1);
                 var deleteScope = _listener.AssertAndRemoveScope(DiagnosticProperty.DeleteActivityName);
                 AssertCommonTags(deleteScope.Activity, receiver.EntityPath, receiver.FullyQualifiedNamespace);
+
+                // purge all messages
+                await receiver.PurgeMessagesAsync();
+                var purgeScope = _listener.AssertAndRemoveScope(DiagnosticProperty.PurgeActivityName);
+                AssertCommonTags(purgeScope.Activity, receiver.EntityPath, receiver.FullyQualifiedNamespace);
             };
         }
 
