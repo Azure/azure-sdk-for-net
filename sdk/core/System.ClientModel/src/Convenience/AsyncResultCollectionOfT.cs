@@ -5,13 +5,14 @@ using System.ClientModel.Internal;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace System.ClientModel;
 
 #pragma warning disable CS1591 // public XML comments
 public abstract class AsyncResultCollection<T> : ClientResult, IAsyncEnumerable<T>
 {
-    // Overload for  lazily sending request
+    // Overload for sending request lazily
     protected internal AsyncResultCollection() : base(default)
     {
     }
@@ -25,18 +26,13 @@ public abstract class AsyncResultCollection<T> : ClientResult, IAsyncEnumerable<
     // TODO: take CancellationToken -- question -- does the cancellation token go here or to the enumerator?
     // TODO: Consider signature: `public static ClientResultCollection<T> Create<TValue>(PipelineResponse response) where TValue : IJsonModel<T>` ?
     // TODO: terminal event can be a model type as well ... are we happy using string for now and adding an overload if needed later?
-    public static AsyncResultCollection<TValue> Create<TValue>(PipelineResponse response, CancellationToken cancellationToken = default)
+    public static AsyncResultCollection<TValue> Create<TValue>(Func<Task<ClientResult>> getResultAsync, CancellationToken cancellationToken = default)
         where TValue : IJsonModel<TValue>
     {
-        Argument.AssertNotNull(response, nameof(response));
-
-        if (response.ContentStream is null)
-        {
-            throw new ArgumentException("Unable to create result from response with null ContentStream", nameof(response));
-        }
+        Argument.AssertNotNull(getResultAsync, nameof(getResultAsync));
 
         // TODO: correct pattern for cancellation token
-        return new AsyncSseValueResultCollection<TValue>(response);
+        return new AsyncSseValueResultCollection<TValue>(getResultAsync);
     }
 
     public static AsyncResultCollection<BinaryData> Create(PipelineResponse response, CancellationToken cancellationToken = default)

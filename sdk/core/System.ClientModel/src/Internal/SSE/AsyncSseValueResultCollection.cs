@@ -13,42 +13,62 @@ namespace System.ClientModel.Internal;
 internal class AsyncSseValueResultCollection<T> : AsyncResultCollection<T>
     where T : IJsonModel<T>
 {
-    // TODO: delay sending request
-    public AsyncSseValueResultCollection(PipelineResponse response) : base(response)
+    private readonly Func<Task<ClientResult>> _getResultAsync;
+
+    public AsyncSseValueResultCollection(Func<Task<ClientResult>> getResultAsync) : base()
     {
+        Debug.Assert(getResultAsync is not null);
+
+        _getResultAsync = getResultAsync!;
     }
 
     public override IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = default)
     {
-        PipelineResponse response = GetRawResponse();
-
-        // We validate that response.ContentStream is non-null in
-        // AsyncResultCollection.Create factory method.
-        Debug.Assert(response.ContentStream is not null);
-
-        ServerSentEventReader reader = new(response.ContentStream!);
-        AsyncServerSentEventEnumerator sseEnumerator = new(reader, cancellationToken);
-        return new AsyncSseValueEnumerator(sseEnumerator);
+        return new AsyncSseValueEnumerator(_getResultAsync, this);
     }
 
     private class AsyncSseValueEnumerator : IAsyncEnumerator<T>, IDisposable, IAsyncDisposable
     {
-        private readonly AsyncServerSentEventEnumerator _eventEnumerator;
+        private readonly Func<Task<ClientResult>> _getResultAsync;
+        private readonly AsyncSseValueResultCollection<T> _resultCollection;
 
+        private AsyncServerSentEventEnumerator? _eventEnumerator;
         private T? _current;
 
         // TODO: is null supression the correct pattern here?
         public T Current { get => _current!; }
 
-        public AsyncSseValueEnumerator(AsyncServerSentEventEnumerator eventEnumerator)
+        public AsyncSseValueEnumerator(Func<Task<ClientResult>> getResultAsync, AsyncSseValueResultCollection<T> resultCollection)
         {
-            Argument.AssertNotNull(eventEnumerator, nameof(eventEnumerator));
+            Debug.Assert(getResultAsync is not null);
+            Debug.Assert(resultCollection is not null);
 
-            _eventEnumerator = eventEnumerator;
+            _getResultAsync = getResultAsync!;
+            _resultCollection = resultCollection!;
         }
 
         public async ValueTask<bool> MoveNextAsync()
         {
+            // Lazily initialize
+            // TODO: refactor for clarity
+            if (_eventEnumerator is null)
+            {
+                ClientResult result = await _getResultAsync().ConfigureAwait(false);
+                PipelineResponse response = result.GetRawResponse();
+
+                if (response.ContentStream is null)
+                {
+                    throw new ArgumentException("Unable to create result from response with null ContentStream", nameof(response));
+                }
+
+                _resultCollection.SetRawResponse(response);
+
+                ServerSentEventReader reader = new(response.ContentStream!);
+
+                // TODO: correct pattern for cancellation token.
+                _eventEnumerator = new(reader /*, cancellationToken */);
+            }
+
             if (await _eventEnumerator.MoveNextAsync().ConfigureAwait(false))
             {
                 using JsonDocument eventDocument = JsonDocument.Parse(_eventEnumerator.Current.Data);
@@ -68,17 +88,23 @@ internal class AsyncSseValueResultCollection<T> : AsyncResultCollection<T>
                     return true;
                 }
             }
+
             return false;
         }
 
         public async ValueTask DisposeAsync()
         {
-            await _eventEnumerator.DisposeAsync().ConfigureAwait(false);
+            // TODO: implement dispose async correctly
+            var enumerator = _eventEnumerator;
+            if (enumerator is not null)
+            {
+                await enumerator.DisposeAsync().ConfigureAwait(false);
+            }
         }
 
         public void Dispose()
         {
-            _eventEnumerator.Dispose();
+            _eventEnumerator?.Dispose();
         }
     }
 }

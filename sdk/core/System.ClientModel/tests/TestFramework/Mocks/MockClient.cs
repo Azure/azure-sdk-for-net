@@ -6,6 +6,7 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 
 namespace ClientModel.Tests.Mocks;
@@ -89,9 +90,14 @@ public class MockClient
 
         public override IAsyncEnumerator<MockJsonModel> GetAsyncEnumerator(CancellationToken cancellationToken = default)
         {
-            ClientResult result = _protocolMethod(_content, /*options:*/ default);
-            PipelineResponse response = result.GetRawResponse();
-            AsyncResultCollection<MockJsonModel> enumerable = Create<MockJsonModel>(response, cancellationToken);
+            Func<Task<ClientResult>> getResultAsync = async () =>
+            {
+                // TODO: simulate async correctly
+                await Task.Delay(0);
+                return _protocolMethod(_content, /*options:*/ default);
+            };
+
+            AsyncResultCollection<MockJsonModel> enumerable = Create<MockJsonModel>(getResultAsync, cancellationToken);
             return enumerable.GetAsyncEnumerator(cancellationToken);
         }
     }

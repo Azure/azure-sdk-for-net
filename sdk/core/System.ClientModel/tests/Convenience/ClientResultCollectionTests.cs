@@ -15,13 +15,23 @@ public class ClientResultCollectionTests : SyncAsyncTestBase
     {
     }
 
+    // TODO: add tests for protocol methods we need to pass parameters to
+    // to show this method signature works with closures as expected.
+
     [Test]
     public async Task CreatesAsyncResultCollection()
     {
         MockPipelineResponse response = new();
         response.SetContent("[DONE]");
 
-        var results = AsyncResultCollection<MockJsonModel>.Create<MockJsonModel>(response);
+        Func<Task<ClientResult>> getResultAsync = async () =>
+        {
+            // TODO: simulate async correctly
+            await Task.Delay(0);
+            return ClientResult.FromResponse(response);
+        };
+
+        var results = AsyncResultCollection<MockJsonModel>.Create<MockJsonModel>(getResultAsync);
 
         bool empty = true;
         await foreach (MockJsonModel result in results)
@@ -39,7 +49,14 @@ public class ClientResultCollectionTests : SyncAsyncTestBase
     {
         MockPipelineResponse response = new();
         response.SetContent(_mockContent);
-        var results = AsyncResultCollection<MockJsonModel>.Create<MockJsonModel>(response);
+
+        Func<Task<ClientResult>> getResultAsync = async () =>
+        {
+            await Task.Delay(0);
+            return ClientResult.FromResponse(response);
+        };
+
+        var results = AsyncResultCollection<MockJsonModel>.Create<MockJsonModel>(getResultAsync);
 
         int i = 0;
         await foreach (MockJsonModel model in results)
