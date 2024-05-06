@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="presetOverride">
         /// A preset used to override the preset in the corresponding transform output.
         /// Please note <see cref="MediaTransformPreset"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AudioAnalyzerPreset"/>, <see cref="BuiltInStandardEncoderPreset"/>, <see cref="StandardEncoderPreset"/> and <see cref="VideoAnalyzerPreset"/>.
+        /// The available derived classes include <see cref="VideoAnalyzerPreset"/>, <see cref="AudioAnalyzerPreset"/>, <see cref="BuiltInStandardEncoderPreset"/> and <see cref="StandardEncoderPreset"/>.
         /// </param>
         /// <param name="state"> Describes the state of the JobOutput. </param>
         /// <param name="progress"> If the JobOutput is in a Processing state, this contains the Job completion percentage. The value is an estimate and not intended to be used to predict Job completion times. To determine if the JobOutput is complete, use the State property. </param>

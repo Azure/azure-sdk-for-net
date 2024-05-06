@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The SamplingAlgorithmType. </summary>
-    public readonly partial struct SamplingAlgorithmType : IEquatable<SamplingAlgorithmType>
+    internal readonly partial struct SamplingAlgorithmType : IEquatable<SamplingAlgorithmType>
     {
         private readonly string _value;
 

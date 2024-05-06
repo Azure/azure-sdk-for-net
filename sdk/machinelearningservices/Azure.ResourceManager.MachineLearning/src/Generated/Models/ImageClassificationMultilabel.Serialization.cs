@@ -31,73 +31,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("primaryMetric"u8);
                 writer.WriteStringValue(PrimaryMetric.Value.ToString());
             }
-            if (Optional.IsDefined(ModelSettings))
-            {
-                if (ModelSettings != null)
-                {
-                    writer.WritePropertyName("modelSettings"u8);
-                    writer.WriteObjectValue(ModelSettings, options);
-                }
-                else
-                {
-                    writer.WriteNull("modelSettings");
-                }
-            }
-            if (Optional.IsCollectionDefined(SearchSpace))
-            {
-                if (SearchSpace != null)
-                {
-                    writer.WritePropertyName("searchSpace"u8);
-                    writer.WriteStartArray();
-                    foreach (var item in SearchSpace)
-                    {
-                        writer.WriteObjectValue(item, options);
-                    }
-                    writer.WriteEndArray();
-                }
-                else
-                {
-                    writer.WriteNull("searchSpace");
-                }
-            }
-            writer.WritePropertyName("limitSettings"u8);
-            writer.WriteObjectValue(LimitSettings, options);
-            if (Optional.IsDefined(SweepSettings))
-            {
-                if (SweepSettings != null)
-                {
-                    writer.WritePropertyName("sweepSettings"u8);
-                    writer.WriteObjectValue(SweepSettings, options);
-                }
-                else
-                {
-                    writer.WriteNull("sweepSettings");
-                }
-            }
-            if (Optional.IsDefined(ValidationData))
-            {
-                if (ValidationData != null)
-                {
-                    writer.WritePropertyName("validationData"u8);
-                    writer.WriteObjectValue(ValidationData, options);
-                }
-                else
-                {
-                    writer.WriteNull("validationData");
-                }
-            }
-            if (Optional.IsDefined(ValidationDataSize))
-            {
-                if (ValidationDataSize != null)
-                {
-                    writer.WritePropertyName("validationDataSize"u8);
-                    writer.WriteNumberValue(ValidationDataSize.Value);
-                }
-                else
-                {
-                    writer.WriteNull("validationDataSize");
-                }
-            }
             if (Optional.IsDefined(LogVerbosity))
             {
                 writer.WritePropertyName("logVerbosity"u8);
@@ -158,12 +91,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             ClassificationMultilabelPrimaryMetric? primaryMetric = default;
-            ImageModelSettingsClassification modelSettings = default;
-            IList<ImageModelDistributionSettingsClassification> searchSpace = default;
-            ImageLimitSettings limitSettings = default;
-            ImageSweepSettings sweepSettings = default;
-            MachineLearningTableJobInput validationData = default;
-            double? validationDataSize = default;
             MachineLearningLogVerbosity? logVerbosity = default;
             string targetColumnName = default;
             TaskType taskType = default;
@@ -179,66 +106,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     primaryMetric = new ClassificationMultilabelPrimaryMetric(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("modelSettings"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        modelSettings = null;
-                        continue;
-                    }
-                    modelSettings = ImageModelSettingsClassification.DeserializeImageModelSettingsClassification(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("searchSpace"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        searchSpace = null;
-                        continue;
-                    }
-                    List<ImageModelDistributionSettingsClassification> array = new List<ImageModelDistributionSettingsClassification>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ImageModelDistributionSettingsClassification.DeserializeImageModelDistributionSettingsClassification(item, options));
-                    }
-                    searchSpace = array;
-                    continue;
-                }
-                if (property.NameEquals("limitSettings"u8))
-                {
-                    limitSettings = ImageLimitSettings.DeserializeImageLimitSettings(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("sweepSettings"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        sweepSettings = null;
-                        continue;
-                    }
-                    sweepSettings = ImageSweepSettings.DeserializeImageSweepSettings(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("validationData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        validationData = null;
-                        continue;
-                    }
-                    validationData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("validationDataSize"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        validationDataSize = null;
-                        continue;
-                    }
-                    validationDataSize = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("logVerbosity"u8))
@@ -282,13 +149,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 taskType,
                 trainingData,
                 serializedAdditionalRawData,
-                primaryMetric,
-                modelSettings,
-                searchSpace ?? new ChangeTrackingList<ImageModelDistributionSettingsClassification>(),
-                limitSettings,
-                sweepSettings,
-                validationData,
-                validationDataSize);
+                primaryMetric);
         }
 
         BinaryData IPersistableModel<ImageClassificationMultilabel>.Write(ModelReaderWriterOptions options)

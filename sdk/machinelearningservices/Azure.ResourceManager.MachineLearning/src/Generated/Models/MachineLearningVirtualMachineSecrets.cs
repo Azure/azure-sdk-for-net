@@ -22,14 +22,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of <see cref="MachineLearningVirtualMachineSecrets"/>. </summary>
         /// <param name="computeType"> The type of compute. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="administratorAccount"> Admin credentials for virtual machine. </param>
-        internal MachineLearningVirtualMachineSecrets(ComputeType computeType, IDictionary<string, BinaryData> serializedAdditionalRawData, MachineLearningVmSshCredentials administratorAccount) : base(computeType, serializedAdditionalRawData)
+        internal MachineLearningVirtualMachineSecrets(ComputeType computeType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(computeType, serializedAdditionalRawData)
         {
-            AdministratorAccount = administratorAccount;
             ComputeType = computeType;
         }
-
-        /// <summary> Admin credentials for virtual machine. </summary>
-        public MachineLearningVmSshCredentials AdministratorAccount { get; }
     }
 }

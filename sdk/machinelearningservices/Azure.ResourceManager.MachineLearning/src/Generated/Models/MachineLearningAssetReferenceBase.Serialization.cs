@@ -70,8 +70,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "DataPath": return MachineLearningDataPathAssetReference.DeserializeMachineLearningDataPathAssetReference(element, options);
                     case "Id": return MachineLearningIdAssetReference.DeserializeMachineLearningIdAssetReference(element, options);
+                    case "DataPath": return MachineLearningDataPathAssetReference.DeserializeMachineLearningDataPathAssetReference(element, options);
                     case "OutputPath": return MachineLearningOutputPathAssetReference.DeserializeMachineLearningOutputPathAssetReference(element, options);
                 }
             }

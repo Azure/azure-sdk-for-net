@@ -26,26 +26,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrimaryIPv4Prefix))
-            {
-                writer.WritePropertyName("primaryIpv4Prefix"u8);
-                writer.WriteStringValue(PrimaryIPv4Prefix);
-            }
-            if (Optional.IsDefined(PrimaryIPv6Prefix))
-            {
-                writer.WritePropertyName("primaryIpv6Prefix"u8);
-                writer.WriteStringValue(PrimaryIPv6Prefix);
-            }
-            if (Optional.IsDefined(SecondaryIPv4Prefix))
-            {
-                writer.WritePropertyName("secondaryIpv4Prefix"u8);
-                writer.WriteStringValue(SecondaryIPv4Prefix);
-            }
-            if (Optional.IsDefined(SecondaryIPv6Prefix))
-            {
-                writer.WritePropertyName("secondaryIpv6Prefix"u8);
-                writer.WriteStringValue(SecondaryIPv6Prefix);
-            }
             if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
@@ -99,10 +79,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            string primaryIPv4Prefix = default;
-            string primaryIPv6Prefix = default;
-            string secondaryIPv4Prefix = default;
-            string secondaryIPv6Prefix = default;
             string username = default;
             string password = default;
             string serialNumber = default;
@@ -110,26 +86,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("primaryIpv4Prefix"u8))
-                {
-                    primaryIPv4Prefix = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("primaryIpv6Prefix"u8))
-                {
-                    primaryIPv6Prefix = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("secondaryIpv4Prefix"u8))
-                {
-                    secondaryIPv4Prefix = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("secondaryIpv6Prefix"u8))
-                {
-                    secondaryIPv6Prefix = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("username"u8))
                 {
                     username = property.Value.GetString();
@@ -151,15 +107,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NetworkFabricPatchablePropertiesTerminalServerConfiguration(
-                username,
-                password,
-                serialNumber,
-                serializedAdditionalRawData,
-                primaryIPv4Prefix,
-                primaryIPv6Prefix,
-                secondaryIPv4Prefix,
-                secondaryIPv6Prefix);
+            return new NetworkFabricPatchablePropertiesTerminalServerConfiguration(username, password, serialNumber, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkFabricPatchablePropertiesTerminalServerConfiguration>.Write(ModelReaderWriterOptions options)

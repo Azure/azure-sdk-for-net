@@ -76,16 +76,16 @@ namespace Azure.ResourceManager.Media.Models
                 switch (discriminator.GetString())
                 {
                     case "#Microsoft.Media.AacAudio": return AacAudio.DeserializeAacAudio(element, options);
-                    case "#Microsoft.Media.Audio": return MediaAudioBase.DeserializeMediaAudioBase(element, options);
-                    case "#Microsoft.Media.CopyAudio": return CodecCopyAudio.DeserializeCodecCopyAudio(element, options);
-                    case "#Microsoft.Media.CopyVideo": return CodecCopyVideo.DeserializeCodecCopyVideo(element, options);
                     case "#Microsoft.Media.DDAudio": return DDAudio.DeserializeDDAudio(element, options);
-                    case "#Microsoft.Media.H264Video": return H264Video.DeserializeH264Video(element, options);
+                    case "#Microsoft.Media.Audio": return MediaAudioBase.DeserializeMediaAudioBase(element, options);
                     case "#Microsoft.Media.H265Video": return H265Video.DeserializeH265Video(element, options);
-                    case "#Microsoft.Media.Image": return MediaImageBase.DeserializeMediaImageBase(element, options);
                     case "#Microsoft.Media.JpgImage": return JpgImage.DeserializeJpgImage(element, options);
                     case "#Microsoft.Media.PngImage": return PngImage.DeserializePngImage(element, options);
+                    case "#Microsoft.Media.Image": return MediaImageBase.DeserializeMediaImageBase(element, options);
+                    case "#Microsoft.Media.H264Video": return H264Video.DeserializeH264Video(element, options);
                     case "#Microsoft.Media.Video": return MediaVideoBase.DeserializeMediaVideoBase(element, options);
+                    case "#Microsoft.Media.CopyVideo": return CodecCopyVideo.DeserializeCodecCopyVideo(element, options);
+                    case "#Microsoft.Media.CopyAudio": return CodecCopyAudio.DeserializeCodecCopyAudio(element, options);
                 }
             }
             return UnknownCodec.DeserializeUnknownCodec(element, options);

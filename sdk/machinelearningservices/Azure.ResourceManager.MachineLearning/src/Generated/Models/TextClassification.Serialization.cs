@@ -31,83 +31,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("primaryMetric"u8);
                 writer.WriteStringValue(PrimaryMetric.Value.ToString());
             }
-            if (Optional.IsDefined(FeaturizationSettings))
-            {
-                if (FeaturizationSettings != null)
-                {
-                    writer.WritePropertyName("featurizationSettings"u8);
-                    writer.WriteObjectValue(FeaturizationSettings, options);
-                }
-                else
-                {
-                    writer.WriteNull("featurizationSettings");
-                }
-            }
-            if (Optional.IsDefined(FixedParameters))
-            {
-                if (FixedParameters != null)
-                {
-                    writer.WritePropertyName("fixedParameters"u8);
-                    writer.WriteObjectValue(FixedParameters, options);
-                }
-                else
-                {
-                    writer.WriteNull("fixedParameters");
-                }
-            }
-            if (Optional.IsDefined(LimitSettings))
-            {
-                if (LimitSettings != null)
-                {
-                    writer.WritePropertyName("limitSettings"u8);
-                    writer.WriteObjectValue(LimitSettings, options);
-                }
-                else
-                {
-                    writer.WriteNull("limitSettings");
-                }
-            }
-            if (Optional.IsCollectionDefined(SearchSpace))
-            {
-                if (SearchSpace != null)
-                {
-                    writer.WritePropertyName("searchSpace"u8);
-                    writer.WriteStartArray();
-                    foreach (var item in SearchSpace)
-                    {
-                        writer.WriteObjectValue(item, options);
-                    }
-                    writer.WriteEndArray();
-                }
-                else
-                {
-                    writer.WriteNull("searchSpace");
-                }
-            }
-            if (Optional.IsDefined(SweepSettings))
-            {
-                if (SweepSettings != null)
-                {
-                    writer.WritePropertyName("sweepSettings"u8);
-                    writer.WriteObjectValue(SweepSettings, options);
-                }
-                else
-                {
-                    writer.WriteNull("sweepSettings");
-                }
-            }
-            if (Optional.IsDefined(ValidationData))
-            {
-                if (ValidationData != null)
-                {
-                    writer.WritePropertyName("validationData"u8);
-                    writer.WriteObjectValue(ValidationData, options);
-                }
-                else
-                {
-                    writer.WriteNull("validationData");
-                }
-            }
             if (Optional.IsDefined(LogVerbosity))
             {
                 writer.WritePropertyName("logVerbosity"u8);
@@ -168,12 +91,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             ClassificationPrimaryMetric? primaryMetric = default;
-            NlpVerticalFeaturizationSettings featurizationSettings = default;
-            NlpFixedParameters fixedParameters = default;
-            NlpVerticalLimitSettings limitSettings = default;
-            IList<NlpParameterSubspace> searchSpace = default;
-            NlpSweepSettings sweepSettings = default;
-            MachineLearningTableJobInput validationData = default;
             MachineLearningLogVerbosity? logVerbosity = default;
             string targetColumnName = default;
             TaskType taskType = default;
@@ -189,71 +106,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     primaryMetric = new ClassificationPrimaryMetric(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("featurizationSettings"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        featurizationSettings = null;
-                        continue;
-                    }
-                    featurizationSettings = NlpVerticalFeaturizationSettings.DeserializeNlpVerticalFeaturizationSettings(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("fixedParameters"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        fixedParameters = null;
-                        continue;
-                    }
-                    fixedParameters = NlpFixedParameters.DeserializeNlpFixedParameters(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("limitSettings"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        limitSettings = null;
-                        continue;
-                    }
-                    limitSettings = NlpVerticalLimitSettings.DeserializeNlpVerticalLimitSettings(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("searchSpace"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        searchSpace = null;
-                        continue;
-                    }
-                    List<NlpParameterSubspace> array = new List<NlpParameterSubspace>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(NlpParameterSubspace.DeserializeNlpParameterSubspace(item, options));
-                    }
-                    searchSpace = array;
-                    continue;
-                }
-                if (property.NameEquals("sweepSettings"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        sweepSettings = null;
-                        continue;
-                    }
-                    sweepSettings = NlpSweepSettings.DeserializeNlpSweepSettings(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("validationData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        validationData = null;
-                        continue;
-                    }
-                    validationData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("logVerbosity"u8))
@@ -297,13 +149,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 taskType,
                 trainingData,
                 serializedAdditionalRawData,
-                primaryMetric,
-                featurizationSettings,
-                fixedParameters,
-                limitSettings,
-                searchSpace ?? new ChangeTrackingList<NlpParameterSubspace>(),
-                sweepSettings,
-                validationData);
+                primaryMetric);
         }
 
         BinaryData IPersistableModel<TextClassification>.Write(ModelReaderWriterOptions options)

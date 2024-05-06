@@ -659,10 +659,6 @@ Description = "string",
 {
 ["string"] = new MachineLearningUriFileJobOutput()
 {
-AssetName = "string",
-AssetVersion = "string",
-Mode = MachineLearningOutputDeliveryMode.Direct,
-Uri = new Uri("string"),
 Description = "string",
 },
 },
@@ -793,10 +789,6 @@ Description = "string",
 {
 ["string"] = new MachineLearningUriFileJobOutput()
 {
-AssetName = "string",
-AssetVersion = "string",
-Mode = MachineLearningOutputDeliveryMode.Upload,
-Uri = new Uri("string"),
 Description = "string",
 },
 },
@@ -912,8 +904,6 @@ Description = "string",
 {
 ["string"] = new MachineLearningUriFileJobOutput()
 {
-Mode = MachineLearningOutputDeliveryMode.Upload,
-Uri = new Uri("string"),
 Description = "string",
 },
 },
@@ -1010,10 +1000,6 @@ Description = "string",
 {
 ["string"] = new MachineLearningUriFileJobOutput()
 {
-AssetName = "string",
-AssetVersion = "string",
-Mode = MachineLearningOutputDeliveryMode.ReadWriteMount,
-Uri = new Uri("string"),
 Description = "string",
 },
 },

@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "custom_model": return MachineLearningCustomModelJobInput.DeserializeMachineLearningCustomModelJobInput(element, options);
-                    case "literal": return MachineLearningLiteralJobInput.DeserializeMachineLearningLiteralJobInput(element, options);
-                    case "mlflow_model": return MachineLearningFlowModelJobInput.DeserializeMachineLearningFlowModelJobInput(element, options);
                     case "mltable": return MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(element, options);
+                    case "custom_model": return MachineLearningCustomModelJobInput.DeserializeMachineLearningCustomModelJobInput(element, options);
+                    case "mlflow_model": return MachineLearningFlowModelJobInput.DeserializeMachineLearningFlowModelJobInput(element, options);
+                    case "literal": return MachineLearningLiteralJobInput.DeserializeMachineLearningLiteralJobInput(element, options);
                     case "triton_model": return MachineLearningTritonModelJobInput.DeserializeMachineLearningTritonModelJobInput(element, options);
                     case "uri_file": return MachineLearningUriFileJobInput.DeserializeMachineLearningUriFileJobInput(element, options);
                     case "uri_folder": return MachineLearningUriFolderJobInput.DeserializeMachineLearningUriFolderJobInput(element, options);

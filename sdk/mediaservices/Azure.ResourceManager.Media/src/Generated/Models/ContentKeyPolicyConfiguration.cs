@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary>
     /// Base class for Content Key Policy configuration. A derived class must be used to create a configuration.
     /// Please note <see cref="ContentKeyPolicyConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="ContentKeyPolicyClearKeyConfiguration"/>, <see cref="ContentKeyPolicyFairPlayConfiguration"/>, <see cref="ContentKeyPolicyPlayReadyConfiguration"/>, <see cref="ContentKeyPolicyUnknownConfiguration"/> and <see cref="ContentKeyPolicyWidevineConfiguration"/>.
+    /// The available derived classes include <see cref="ContentKeyPolicyClearKeyConfiguration"/>, <see cref="ContentKeyPolicyUnknownConfiguration"/>, <see cref="ContentKeyPolicyWidevineConfiguration"/>, <see cref="ContentKeyPolicyPlayReadyConfiguration"/> and <see cref="ContentKeyPolicyFairPlayConfiguration"/>.
     /// </summary>
     public abstract partial class ContentKeyPolicyConfiguration
     {

@@ -22,22 +22,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of <see cref="MachineLearningAksComputeSecrets"/>. </summary>
         /// <param name="computeType"> The type of compute. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="userKubeConfig"> Content of kubeconfig file that can be used to connect to the Kubernetes cluster. </param>
-        /// <param name="adminKubeConfig"> Content of kubeconfig file that can be used to connect to the Kubernetes cluster. </param>
-        /// <param name="imagePullSecretName"> Image registry pull secret. </param>
-        internal MachineLearningAksComputeSecrets(ComputeType computeType, IDictionary<string, BinaryData> serializedAdditionalRawData, string userKubeConfig, string adminKubeConfig, string imagePullSecretName) : base(computeType, serializedAdditionalRawData)
+        internal MachineLearningAksComputeSecrets(ComputeType computeType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(computeType, serializedAdditionalRawData)
         {
-            UserKubeConfig = userKubeConfig;
-            AdminKubeConfig = adminKubeConfig;
-            ImagePullSecretName = imagePullSecretName;
             ComputeType = computeType;
         }
-
-        /// <summary> Content of kubeconfig file that can be used to connect to the Kubernetes cluster. </summary>
-        public string UserKubeConfig { get; }
-        /// <summary> Content of kubeconfig file that can be used to connect to the Kubernetes cluster. </summary>
-        public string AdminKubeConfig { get; }
-        /// <summary> Image registry pull secret. </summary>
-        public string ImagePullSecretName { get; }
     }
 }

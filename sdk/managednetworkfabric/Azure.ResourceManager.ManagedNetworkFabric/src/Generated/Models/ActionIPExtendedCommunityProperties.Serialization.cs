@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class ActionIPExtendedCommunityProperties : IUtf8JsonSerializable, IJsonModel<ActionIPExtendedCommunityProperties>
+    internal partial class ActionIPExtendedCommunityProperties : IUtf8JsonSerializable, IJsonModel<ActionIPExtendedCommunityProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ActionIPExtendedCommunityProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -26,16 +26,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Delete))
-            {
-                writer.WritePropertyName("delete"u8);
-                writer.WriteObjectValue(Delete, options);
-            }
-            if (Optional.IsDefined(Set))
-            {
-                writer.WritePropertyName("set"u8);
-                writer.WriteObjectValue(Set, options);
-            }
             if (Optional.IsDefined(Add))
             {
                 writer.WritePropertyName("add"u8);
@@ -79,31 +69,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            IPExtendedCommunityIdList delete = default;
-            IPExtendedCommunityIdList @set = default;
             IPExtendedCommunityIdList @add = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("delete"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    delete = IPExtendedCommunityIdList.DeserializeIPExtendedCommunityIdList(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("set"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    @set = IPExtendedCommunityIdList.DeserializeIPExtendedCommunityIdList(property.Value, options);
-                    continue;
-                }
                 if (property.NameEquals("add"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -119,7 +89,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ActionIPExtendedCommunityProperties(@add, serializedAdditionalRawData, delete, @set);
+            return new ActionIPExtendedCommunityProperties(@add, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ActionIPExtendedCommunityProperties>.Write(ModelReaderWriterOptions options)

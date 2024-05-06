@@ -79,30 +79,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("serviceDataAccessAuthIdentity"u8);
                 writer.WriteStringValue(ServiceDataAccessAuthIdentity.Value.ToString());
             }
-            if (Optional.IsDefined(ResourceGroup))
-            {
-                if (ResourceGroup != null)
-                {
-                    writer.WritePropertyName("resourceGroup"u8);
-                    writer.WriteStringValue(ResourceGroup);
-                }
-                else
-                {
-                    writer.WriteNull("resourceGroup");
-                }
-            }
-            if (Optional.IsDefined(SubscriptionId))
-            {
-                if (SubscriptionId != null)
-                {
-                    writer.WritePropertyName("subscriptionId"u8);
-                    writer.WriteStringValue(SubscriptionId);
-                }
-                else
-                {
-                    writer.WriteNull("subscriptionId");
-                }
-            }
             writer.WritePropertyName("credentials"u8);
             writer.WriteObjectValue(Credentials, options);
             writer.WritePropertyName("datastoreType"u8);
@@ -215,8 +191,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             string endpoint = default;
             string protocol = default;
             MachineLearningServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity = default;
-            string resourceGroup = default;
-            string subscriptionId = default;
             MachineLearningDatastoreCredentials credentials = default;
             DatastoreType datastoreType = default;
             IntellectualProperty intellectualProperty = default;
@@ -275,26 +249,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     serviceDataAccessAuthIdentity = new MachineLearningServiceDataAccessAuthIdentity(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("resourceGroup"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        resourceGroup = null;
-                        continue;
-                    }
-                    resourceGroup = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("subscriptionId"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        subscriptionId = null;
-                        continue;
-                    }
-                    subscriptionId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("credentials"u8))
@@ -385,9 +339,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 containerName,
                 endpoint,
                 protocol,
-                serviceDataAccessAuthIdentity,
-                resourceGroup,
-                subscriptionId);
+                serviceDataAccessAuthIdentity);
         }
 
         BinaryData IPersistableModel<MachineLearningAzureBlobDatastore>.Write(ModelReaderWriterOptions options)

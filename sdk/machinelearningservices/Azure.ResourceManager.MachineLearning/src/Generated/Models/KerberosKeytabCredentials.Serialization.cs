@@ -28,12 +28,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             writer.WritePropertyName("secrets"u8);
             writer.WriteObjectValue(Secrets, options);
-            writer.WritePropertyName("kerberosKdcAddress"u8);
-            writer.WriteStringValue(KerberosKdcAddress);
-            writer.WritePropertyName("kerberosPrincipal"u8);
-            writer.WriteStringValue(KerberosPrincipal);
-            writer.WritePropertyName("kerberosRealm"u8);
-            writer.WriteStringValue(KerberosRealm);
             writer.WritePropertyName("credentialsType"u8);
             writer.WriteStringValue(CredentialsType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -75,9 +69,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             KerberosKeytabSecrets secrets = default;
-            string kerberosKdcAddress = default;
-            string kerberosPrincipal = default;
-            string kerberosRealm = default;
             CredentialsType credentialsType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -86,21 +77,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (property.NameEquals("secrets"u8))
                 {
                     secrets = KerberosKeytabSecrets.DeserializeKerberosKeytabSecrets(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("kerberosKdcAddress"u8))
-                {
-                    kerberosKdcAddress = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("kerberosPrincipal"u8))
-                {
-                    kerberosPrincipal = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("kerberosRealm"u8))
-                {
-                    kerberosRealm = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("credentialsType"u8))
@@ -114,13 +90,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new KerberosKeytabCredentials(
-                credentialsType,
-                serializedAdditionalRawData,
-                secrets,
-                kerberosKdcAddress,
-                kerberosPrincipal,
-                kerberosRealm);
+            return new KerberosKeytabCredentials(credentialsType, serializedAdditionalRawData, secrets);
         }
 
         BinaryData IPersistableModel<KerberosKeytabCredentials>.Write(ModelReaderWriterOptions options)

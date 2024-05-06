@@ -43,10 +43,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             string networkFabricName = "example-fabric";
             NetworkFabricData data = new NetworkFabricData(new AzureLocation("eastuseuap"), "M4-A400-A100-C16-aa", new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/networkFabricControllers/example-fabricController"), 8, "10.18.0.0/19", 29249, new TerminalServerConfiguration()
             {
-                PrimaryIPv4Prefix = "10.0.0.12/30",
-                PrimaryIPv6Prefix = "4FFE:FFFF:0:CD30::a8/127",
-                SecondaryIPv4Prefix = "20.0.0.13/30",
-                SecondaryIPv6Prefix = "6FFE:FFFF:0:CD30::ac/127",
                 Username = "username",
                 Password = "xxxx",
                 SerialNumber = "123456",
@@ -85,10 +81,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
                 },
                 OptionAProperties = new VpnConfigurationOptionAProperties()
                 {
-                    PrimaryIPv4Prefix = "10.0.0.12/30",
-                    PrimaryIPv6Prefix = "4FFE:FFFF:0:CD30::a8/127",
-                    SecondaryIPv4Prefix = "20.0.0.13/30",
-                    SecondaryIPv6Prefix = "6FFE:FFFF:0:CD30::ac/127",
                     Mtu = 1501,
                     VlanId = 3001,
                     PeerAsn = 1235,
@@ -133,10 +125,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
                 },
                 OptionAProperties = new VpnConfigurationOptionAProperties()
                 {
-                    PrimaryIPv4Prefix = "10.0.0.14/30",
-                    PrimaryIPv6Prefix = "2FFE:FFFF:0:CD30::a7/126",
-                    SecondaryIPv4Prefix = "10.0.0.15/30",
-                    SecondaryIPv6Prefix = "2FFE:FFFF:0:CD30::ac/126",
                     Mtu = 1500,
                     VlanId = 3000,
                     PeerAsn = 61234,

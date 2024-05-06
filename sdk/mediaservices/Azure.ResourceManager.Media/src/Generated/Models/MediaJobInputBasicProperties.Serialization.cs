@@ -71,8 +71,8 @@ namespace Azure.ResourceManager.Media.Models
                 switch (discriminator.GetString())
                 {
                     case "#Microsoft.Media.JobInputAsset": return MediaJobInputAsset.DeserializeMediaJobInputAsset(element, options);
-                    case "#Microsoft.Media.JobInputClip": return MediaJobInputClip.DeserializeMediaJobInputClip(element, options);
                     case "#Microsoft.Media.JobInputHttp": return MediaJobInputHttp.DeserializeMediaJobInputHttp(element, options);
+                    case "#Microsoft.Media.JobInputClip": return MediaJobInputClip.DeserializeMediaJobInputClip(element, options);
                     case "#Microsoft.Media.JobInputs": return MediaJobInputs.DeserializeMediaJobInputs(element, options);
                     case "#Microsoft.Media.JobInputSequence": return MediaJobInputSequence.DeserializeMediaJobInputSequence(element, options);
                 }

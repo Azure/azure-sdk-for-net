@@ -71,8 +71,8 @@ namespace Azure.ResourceManager.Media.Models
                 switch (discriminator.GetString())
                 {
                     case "#Microsoft.Media.ContentKeyPolicyOpenRestriction": return ContentKeyPolicyOpenRestriction.DeserializeContentKeyPolicyOpenRestriction(element, options);
-                    case "#Microsoft.Media.ContentKeyPolicyTokenRestriction": return ContentKeyPolicyTokenRestriction.DeserializeContentKeyPolicyTokenRestriction(element, options);
                     case "#Microsoft.Media.ContentKeyPolicyUnknownRestriction": return ContentKeyPolicyUnknownRestriction.DeserializeContentKeyPolicyUnknownRestriction(element, options);
+                    case "#Microsoft.Media.ContentKeyPolicyTokenRestriction": return ContentKeyPolicyTokenRestriction.DeserializeContentKeyPolicyTokenRestriction(element, options);
                 }
             }
             return UnknownContentKeyPolicyRestriction.DeserializeUnknownContentKeyPolicyRestriction(element, options);
