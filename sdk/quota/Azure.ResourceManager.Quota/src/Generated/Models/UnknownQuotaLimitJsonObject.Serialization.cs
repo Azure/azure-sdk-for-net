@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Quota.Models
 {
-    internal partial class UnknownLimitJsonObject : IUtf8JsonSerializable, IJsonModel<QuotaLimitJsonObject>
+    internal partial class UnknownQuotaLimitJsonObject : IUtf8JsonSerializable, IJsonModel<QuotaLimitJsonObject>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QuotaLimitJsonObject>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Quota.Models
             return DeserializeQuotaLimitJsonObject(document.RootElement, options);
         }
 
-        internal static UnknownLimitJsonObject DeserializeUnknownLimitJsonObject(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UnknownQuotaLimitJsonObject DeserializeUnknownQuotaLimitJsonObject(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Quota.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownLimitJsonObject(limitObjectType, serializedAdditionalRawData);
+            return new UnknownQuotaLimitJsonObject(limitObjectType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QuotaLimitJsonObject>.Write(ModelReaderWriterOptions options)

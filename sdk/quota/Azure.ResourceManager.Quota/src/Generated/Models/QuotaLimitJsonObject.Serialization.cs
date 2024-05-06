@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Quota.Models
 {
-    [PersistableModelProxy(typeof(UnknownLimitJsonObject))]
+    [PersistableModelProxy(typeof(UnknownQuotaLimitJsonObject))]
     public partial class QuotaLimitJsonObject : IUtf8JsonSerializable, IJsonModel<QuotaLimitJsonObject>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QuotaLimitJsonObject>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Quota.Models
                     case "LimitValue": return QuotaLimitObject.DeserializeQuotaLimitObject(element, options);
                 }
             }
-            return UnknownLimitJsonObject.DeserializeUnknownLimitJsonObject(element, options);
+            return UnknownQuotaLimitJsonObject.DeserializeUnknownQuotaLimitJsonObject(element, options);
         }
 
         BinaryData IPersistableModel<QuotaLimitJsonObject>.Write(ModelReaderWriterOptions options)
