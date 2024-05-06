@@ -72,8 +72,8 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "FacetError": return FacetError.DeserializeFacetError(element, options);
                     case "FacetResult": return FacetResult.DeserializeFacetResult(element, options);
+                    case "FacetError": return FacetError.DeserializeFacetError(element, options);
                 }
             }
             return UnknownFacet.DeserializeUnknownFacet(element, options);
