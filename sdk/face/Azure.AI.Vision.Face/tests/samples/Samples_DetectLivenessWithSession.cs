@@ -67,6 +67,24 @@ namespace Azure.AI.Vision.Face.Samples
             #endregion
         }
 
+        public async Task SessionSample_ListDetectLivenessSessions()
+        {
+            var sessionClient = CreateSessionClient();
+
+            #region Snippet:GetLivenessSessions
+            var listResponse = await sessionClient.GetLivenessSessionsAsync();
+            foreach (var session in listResponse.Value)
+            {
+                Console.WriteLine($"SessionId: {session.Id}");
+                Console.WriteLine($"CreatedDateTime: {session.CreatedDateTime}");
+                Console.WriteLine($"SessionExpired: {session.SessionExpired}");
+                Console.WriteLine($"DeviceCorrelationId: {session.DeviceCorrelationId}");
+                Console.WriteLine($"AuthTokenTimeToLiveInSeconds: {session.AuthTokenTimeToLiveInSeconds}");
+                Console.WriteLine($"SessionStartDateTime: {session.SessionStartDateTime}");
+            }
+            #endregion
+        }
+
         #region Snippet:WriteLivenessSessionAuditEntry
         public void WriteLivenessSessionAuditEntry(LivenessSessionAuditEntry auditEntry)
         {

@@ -1,10 +1,20 @@
 # Detect liveness with face verification with session
 
-This sample demonstrates how to create a liveness session and query the liveness detection result. For more information about the liveness solution, see the [service documentation][face_liveness].
+This sample demonstrates how to perform liveness detection by following the steps in [service documentation][face_liveness]. This sample focus on logic at app server.
+
+![liveness diagram](https://learn.microsoft.com/en-us/azure/ai-services/computer-vision/media/liveness/liveness-diagram.jpg)
 
 To get started you'll need an Azure AI resource or a Face resource. See [README][README] for prerequisites and instructions.
 
-## Creating a `FaceSessionClient`
+## 1. Start liveness check
+
+A client device will send a request to app server to start liveness check.
+
+## 2. Create session
+
+App server send a request to Face API to create a liveness session.
+
+### Creating a `FaceSessionClient`
 
 To create a new `FaceSessionClient` you need the endpoint and credentials from your resource. In the sample below you'll use a Face API key credential by creating an `AzureKeyCredential` object that, if needed, will allow you to update the API key without creating a new client.
 
@@ -17,7 +27,7 @@ AzureKeyCredential credential = new AzureKeyCredential("<your apiKey>");
 var sessionClient = new FaceSessionClient(endpoint, credential);
 ```
 
-## Create a liveness detection session
+### Create a liveness detection session
 
 Before you can detect liveness in a face, you need to create a liveness detection session with Azure AI Face Service. The service creates a liveness-session and responds back with a session-authorization-token.
 
@@ -34,11 +44,15 @@ Console.WriteLine($"Session created, SessionId: {sessionId}");
 Console.WriteLine($"AuthToken: {createResponse.Value.AuthToken}");
 ```
 
-## Perform liveness detection from the Azure AI Vision SDK
+## 3. Pass the AuthToken to client device
 
-You can now perform liveness detection on a face image from the Azure AI Vision SDK by providing your authorization token.
+Client device will process the step 4, 5, 6 in the documentation [Orchestrate the liveness solution][orchestrate_the_liveness_solution].
 
-## Retrieve the liveness detection result
+## 7. Wait for liveness session to complete
+
+Client device should notify app server that liveness session has completed.
+
+## 8. Query for liveness result
 
 After you've performed liveness detection, you can retrieve the result by providing the session ID.
 
@@ -94,6 +108,23 @@ foreach (var auditEntry in getAuditEntriesResponse.Value)
 }
 ```
 
+## List all liveness sessions
+
+All existing sessions can be listed by sending a request to the service.
+
+```C# Snippet:GetLivenessSessions
+var listResponse = await sessionClient.GetLivenessSessionsAsync();
+foreach (var session in listResponse.Value)
+{
+    Console.WriteLine($"SessionId: {session.Id}");
+    Console.WriteLine($"CreatedDateTime: {session.CreatedDateTime}");
+    Console.WriteLine($"SessionExpired: {session.SessionExpired}");
+    Console.WriteLine($"DeviceCorrelationId: {session.DeviceCorrelationId}");
+    Console.WriteLine($"AuthTokenTimeToLiveInSeconds: {session.AuthTokenTimeToLiveInSeconds}");
+    Console.WriteLine($"SessionStartDateTime: {session.SessionStartDateTime}");
+}
+```
+
 ## Delete session
 
 Session can be revoked by sending delete request to the service. Corresponding authorization token will no longer have access to the service.
@@ -104,3 +135,4 @@ await sessionClient.DeleteLivenessSessionAsync(sessionId);
 
 [README]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/face/Azure.AI.Vision.Face#getting-started
 [face_liveness]: https://learn.microsoft.com/en-us/azure/ai-services/computer-vision/tutorials/liveness
+[orchestrate_the_liveness_solution]: https://learn.microsoft.com/en-us/azure/ai-services/computer-vision/tutorials/liveness#orchestrate-the-liveness-solution
