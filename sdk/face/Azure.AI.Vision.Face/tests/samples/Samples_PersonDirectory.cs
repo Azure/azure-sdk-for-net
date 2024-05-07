@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.Vision.Face.Tests;
 using Azure.Core.TestFramework;
@@ -16,43 +18,30 @@ namespace Azure.AI.Vision.Face.Samples
         {
             var administrationClient = CreateAdministrationClient();
 
-            var createPerson1Operation = await administrationClient.CreatePersonAsync(WaitUntil.Started, "Bill", userData: "Family1,singing");
-            var personIdBill = createPerson1Operation.Value.PersonId;
+            var personData = new[]
+            {
+                new { Name = "Bill", UserData = "Family1,singing", ImageUrls = new[] { FaceTestConstant.UrlFamily1Dad1Image, FaceTestConstant.UrlFamily1Dad2Image } },
+                new { Name = "Ron", UserData = "Family1", ImageUrls = new[] { FaceTestConstant.UrlFamily1Son1Image, FaceTestConstant.UrlFamily1Son2Image } }
+            };
 
-            await administrationClient.AddPersonFaceFromUrlAsync(
-                WaitUntil.Started,
-                personIdBill,
-                FaceRecognitionModel.Recognition04,
-                new Uri(FaceTestConstant.UrlFamily1Dad1Image),
-                detectionModel: FaceDetectionModel.Detection03,
-                userData: "0001");
+            var personIds = new Dictionary<string, Guid>();
 
-            await administrationClient.AddPersonFaceFromUrlAsync(
-                WaitUntil.Started,
-                personIdBill,
-                FaceRecognitionModel.Recognition04,
-                new Uri(FaceTestConstant.UrlFamily1Dad2Image),
-                detectionModel: FaceDetectionModel.Detection03,
-                userData: "0002");
+            foreach (var person in personData)
+            {
+                var createPersonOperation = await administrationClient.CreatePersonAsync(WaitUntil.Started, person.Name, userData: person.UserData);
+                var personId = createPersonOperation.Value.PersonId;
+                personIds.Add(person.Name, personId);
 
-            var createPerson2Operation = await administrationClient.CreatePersonAsync(WaitUntil.Started, "Ron", userData: "Family1");
-            var personIdRon = createPerson2Operation.Value.PersonId;
-
-            await administrationClient.AddPersonFaceFromUrlAsync(
-                WaitUntil.Started,
-                personIdRon,
-                FaceRecognitionModel.Recognition04,
-                new Uri(FaceTestConstant.UrlFamily1Son1Image),
-                detectionModel: FaceDetectionModel.Detection03,
-                userData: "0001");
-
-            await administrationClient.AddPersonFaceFromUrlAsync(
-                WaitUntil.Started,
-                personIdRon,
-                FaceRecognitionModel.Recognition04,
-                new Uri(FaceTestConstant.UrlFamily1Son2Image),
-                detectionModel: FaceDetectionModel.Detection03,
-                userData: "0002");
+                foreach (var imageUrl in person.ImageUrls)
+                {
+                    await administrationClient.AddPersonFaceFromUrlAsync(
+                        WaitUntil.Started,
+                        personId,
+                        FaceRecognitionModel.Recognition04,
+                        new Uri(imageUrl),
+                        detectionModel: FaceDetectionModel.Detection03);
+                }
+            }
 
             var faceClient = CreateClient();
             var detectResponse = await faceClient.DetectFromUrlAsync(
@@ -62,79 +51,55 @@ namespace Azure.AI.Vision.Face.Samples
                 returnFaceId: true);
             var targetFaceId = detectResponse.Value[0].FaceId.Value;
 
-            var verifyBillResponse = await faceClient.VerifyFromPersonDirectoryAsync(targetFaceId, personIdBill);
+            var verifyBillResponse = await faceClient.VerifyFromPersonDirectoryAsync(targetFaceId, personIds["Bill"]);
             Console.WriteLine($"Face verification result for person Bill. IsIdentical: {verifyBillResponse.Value.IsIdentical}, Confidence: {verifyBillResponse.Value.Confidence}");
 
-            var verifyRonResponse = await faceClient.VerifyFromPersonDirectoryAsync(targetFaceId, personIdRon);
+            var verifyRonResponse = await faceClient.VerifyFromPersonDirectoryAsync(targetFaceId, personIds["Ron"]);
             Console.WriteLine($"Face verification result for person Ron. IsIdentical: {verifyRonResponse.Value.IsIdentical}, Confidence: {verifyRonResponse.Value.Confidence}");
 
-            await administrationClient.DeletePersonAsync(WaitUntil.Started, personIdBill);
-            await administrationClient.DeletePersonAsync(WaitUntil.Started, personIdRon);
+            await administrationClient.DeletePersonAsync(WaitUntil.Started, personIds["Bill"]);
+            await administrationClient.DeletePersonAsync(WaitUntil.Started, personIds["Ron"]);
         }
 
         [RecordedTest]
-        public async Task Sample_IdentifyFromPerson()
+        public async Task Sample_IdentifyFromPersonDirectory()
         {
             var administrationClient = CreateAdministrationClient();
 
-            var createPerson1Operation = await administrationClient.CreatePersonAsync(WaitUntil.Started, "Ron", userData: "Family1");
-            var personIdRon = createPerson1Operation.Value.PersonId;
-            await administrationClient.AddPersonFaceFromUrlAsync(
-                WaitUntil.Started,
-                personIdRon,
-                FaceRecognitionModel.Recognition04,
-                new Uri(FaceTestConstant.UrlFamily1Son1Image),
-                detectionModel: FaceDetectionModel.Detection03,
-                userData: "0001");
-            var person1LastAddFaceOperation = await administrationClient.AddPersonFaceFromUrlAsync(
-                WaitUntil.Started,
-                personIdRon,
-                FaceRecognitionModel.Recognition04,
-                new Uri(FaceTestConstant.UrlFamily1Son2Image),
-                detectionModel: FaceDetectionModel.Detection03,
-                userData: "0002");
+            var personData = new[]
+            {
+                new { Name = "Ron", UserData = "Family1", ImageUrls = new[] { FaceTestConstant.UrlFamily1Son1Image, FaceTestConstant.UrlFamily1Son2Image } },
+                new { Name = "Gill", UserData = "Family1", ImageUrls = new[] { FaceTestConstant.UrlFamily1Daughter1Image, FaceTestConstant.UrlFamily1Daughter2Image } },
+                new { Name = "Anna", UserData = "Family2,singing", ImageUrls = new[] { FaceTestConstant.UrlFamily2Lady1Image, FaceTestConstant.UrlFamily2Lady2Image } }
+            };
 
-            var createPerson2Operation = await administrationClient.CreatePersonAsync(WaitUntil.Started, "Gill", userData: "Family1");
-            var personIdGill = createPerson2Operation.Value.PersonId;
-            await administrationClient.AddPersonFaceFromUrlAsync(
-                WaitUntil.Started,
-                personIdGill,
-                FaceRecognitionModel.Recognition04,
-                new Uri(FaceTestConstant.UrlFamily1Daughter1Image),
-                detectionModel: FaceDetectionModel.Detection03,
-                userData: "0001");
-            var person2LastAddFaceOperation = await administrationClient.AddPersonFaceFromUrlAsync(
-                WaitUntil.Started,
-                personIdGill,
-                FaceRecognitionModel.Recognition04,
-                new Uri(FaceTestConstant.UrlFamily1Daughter2Image),
-                detectionModel: FaceDetectionModel.Detection03,
-                userData: "0002");
+            var personIds = new Dictionary<string, Guid>();
+            var createPersonOperations = new List<Operation<PersonDirectoryPerson>>();
+            var lastAddFaceOperations = new List<Operation<PersonDirectoryFace>>();
 
-            var createPerson3Operation = await administrationClient.CreatePersonAsync(WaitUntil.Started, "Anna", userData: "Family2,singing");
-            var personIdAnna = createPerson3Operation.Value.PersonId;
-            await administrationClient.AddPersonFaceFromUrlAsync(
-                WaitUntil.Started,
-                personIdAnna,
-                FaceRecognitionModel.Recognition04,
-                new Uri(FaceTestConstant.UrlFamily2Lady1Image),
-                detectionModel: FaceDetectionModel.Detection03,
-                userData: "0001");
-            var person3LastAddFaceOperation = await administrationClient.AddPersonFaceFromUrlAsync(
-                WaitUntil.Started,
-                personIdAnna,
-                FaceRecognitionModel.Recognition04,
-                new Uri(FaceTestConstant.UrlFamily2Lady2Image),
-                detectionModel: FaceDetectionModel.Detection03,
-                userData: "0002");
+            foreach (var person in personData)
+            {
+                var createPersonOperation = await administrationClient.CreatePersonAsync(WaitUntil.Started, person.Name, userData: person.UserData);
+                createPersonOperations.Add(createPersonOperation);
+                var personId = createPersonOperation.Value.PersonId;
+                personIds.Add(person.Name, personId);
 
-            await Task.WhenAll(
-                createPerson1Operation.WaitForCompletionAsync().AsTask(),
-                createPerson2Operation.WaitForCompletionAsync().AsTask(),
-                createPerson3Operation.WaitForCompletionAsync().AsTask(),
-                person1LastAddFaceOperation.WaitForCompletionAsync().AsTask(),
-                person2LastAddFaceOperation.WaitForCompletionAsync().AsTask(),
-                person3LastAddFaceOperation.WaitForCompletionAsync().AsTask());
+                // It is an optimization to wait till the last added face is finished processing in a series as all faces for person are processed in series.
+                Operation<PersonDirectoryFace> lastAddFaceOperation = null;
+                foreach (var imageUrl in person.ImageUrls)
+                {
+                    lastAddFaceOperation = await administrationClient.AddPersonFaceFromUrlAsync(
+                        WaitUntil.Started,
+                        personId,
+                        FaceRecognitionModel.Recognition04,
+                        new Uri(imageUrl),
+                        detectionModel: FaceDetectionModel.Detection03);
+                }
+                lastAddFaceOperations.Add(lastAddFaceOperation);
+            }
+
+            createPersonOperations.ForEach(async operation => await operation.WaitForCompletionAsync());
+            lastAddFaceOperations.ForEach(async operation => await operation.WaitForCompletionAsync());
 
             var faceClient = CreateClient();
             var detectResponse = await faceClient.DetectFromUrlAsync(
@@ -144,7 +109,7 @@ namespace Azure.AI.Vision.Face.Samples
                 returnFaceId: true);
             var targetFaceId = detectResponse.Value[0].FaceId.Value;
 
-            var identifyPersonResponse = await faceClient.IdentifyFromPersonDirectoryAsync(new[] {targetFaceId}, new[] { personIdRon, personIdGill, personIdAnna });
+            var identifyPersonResponse = await faceClient.IdentifyFromPersonDirectoryAsync(new[] { targetFaceId }, personIds.Values.ToArray());
             foreach (var facesIdentifyResult in identifyPersonResponse.Value)
             {
                 Console.WriteLine($"For face {facesIdentifyResult.FaceId}");
@@ -153,6 +118,112 @@ namespace Azure.AI.Vision.Face.Samples
                     Console.WriteLine($"Candidate {candidate.PersonId} with confidence {candidate.Confidence}");
                 }
             }
+
+            //TODO: identify from entire pd
+        }
+
+        [RecordedTest]
+        public async Task Sample_IdentifyFromDynamicPersonGroup()
+        {
+            var administrationClient = CreateAdministrationClient();
+
+            var personData = new[]
+            {
+                new { Name = "Bill", UserData = "Family1,singing", ImageUrls = new[] { FaceTestConstant.UrlFamily1Dad1Image, FaceTestConstant.UrlFamily1Dad2Image } },
+                new { Name = "Clare", UserData = "Family1,singing", ImageUrls = new[] { FaceTestConstant.UrlFamily1Mom1Image, FaceTestConstant.UrlFamily1Mom2Image } },
+                new { Name = "Ron", UserData = "Family1", ImageUrls = new[] { FaceTestConstant.UrlFamily1Son1Image, FaceTestConstant.UrlFamily1Son2Image } },
+                new { Name = "Anna", UserData = "Family2,singing", ImageUrls = new[] { FaceTestConstant.UrlFamily2Lady1Image, FaceTestConstant.UrlFamily2Lady2Image } },
+            };
+
+            var personIds = new Dictionary<string, Guid>();
+            var createPersonOperations = new List<Operation<PersonDirectoryPerson>>();
+            var lastAddFaceOperations = new List<Operation<PersonDirectoryFace>>();
+
+            foreach (var person in personData)
+            {
+                var createPersonOperation = await administrationClient.CreatePersonAsync(WaitUntil.Started, person.Name, userData: person.UserData);
+                createPersonOperations.Add(createPersonOperation);
+                var personId = createPersonOperation.Value.PersonId;
+                personIds.Add(person.Name, personId);
+
+                // It is an optimization to wait till the last added face is finished processing in a series as all faces for person are processed in series.
+                Operation<PersonDirectoryFace> lastAddFaceOperation = null;
+                foreach (var imageUrl in person.ImageUrls)
+                {
+                    lastAddFaceOperation = await administrationClient.AddPersonFaceFromUrlAsync(
+                        WaitUntil.Started,
+                        personId,
+                        FaceRecognitionModel.Recognition04,
+                        new Uri(imageUrl),
+                        detectionModel: FaceDetectionModel.Detection03);
+                }
+                lastAddFaceOperations.Add(lastAddFaceOperation);
+            }
+
+            createPersonOperations.Take(3).ToList().ForEach(async operation => await operation.WaitForCompletionAsync());
+            var familyGroupId = "pd_family1";
+            await administrationClient.CreateDynamicPersonGroupWithPersonAsync(WaitUntil.Started, familyGroupId, "Dynamic Person Group for Family 1", new[] { personIds["Bill"], personIds["Clare"], personIds["Ron"] });
+
+            await createPersonOperations[3].WaitForCompletionAsync();
+            var hikingGroupId = "pd_hiking_club";
+            await administrationClient.CreateDynamicPersonGroupWithPersonAsync(WaitUntil.Started, hikingGroupId, "Dynamic Person Group for hiking club", new[] { personIds["Clare"], personIds["Anna"] });
+
+            lastAddFaceOperations.ForEach(async operation => await operation.WaitForCompletionAsync());
+
+            var faceClient = CreateClient();
+            var detectResponse = await faceClient.DetectFromUrlAsync(
+                new Uri(FaceTestConstant.UrlIdentification1Image),
+                recognitionModel: FaceRecognitionModel.Recognition04,
+                detectionModel: FaceDetectionModel.Detection03,
+                returnFaceId: true);
+            var faceIds = detectResponse.Value.Select(face => face.FaceId.Value);
+
+            var identifyFamilyPersonResponse = await faceClient.IdentifyFromDynamicPersonGroupAsync(faceIds, familyGroupId);
+            foreach (var facesIdentifyResult in identifyFamilyPersonResponse.Value)
+            {
+                Console.WriteLine($"For face {facesIdentifyResult.FaceId}");
+                foreach (var candidate in facesIdentifyResult.Candidates)
+                {
+                    Console.WriteLine($"Candidate {candidate.PersonId} with confidence {candidate.Confidence}");
+                }
+            }
+
+            var identifyHikingPersonResponse = await faceClient.IdentifyFromDynamicPersonGroupAsync(faceIds, hikingGroupId);
+            foreach (var facesIdentifyResult in identifyHikingPersonResponse.Value)
+            {
+                Console.WriteLine($"For face {facesIdentifyResult.FaceId}");
+                foreach (var candidate in facesIdentifyResult.Candidates)
+                {
+                    Console.WriteLine($"Candidate {candidate.PersonId} with confidence {candidate.Confidence}");
+                }
+            }
+
+            var createPersonGillOperation = await administrationClient.CreatePersonAsync(WaitUntil.Started, "Gill", userData: "Family1");
+            var gillPersonId = createPersonGillOperation.Value.PersonId;
+            await administrationClient.AddPersonFaceFromUrlAsync(
+                WaitUntil.Started,
+                gillPersonId,
+                FaceRecognitionModel.Recognition04,
+                new Uri(FaceTestConstant.UrlFamily1Daughter1Image),
+                detectionModel: FaceDetectionModel.Detection03);
+            var lastAddFaceForGillOperation = await administrationClient.AddPersonFaceFromUrlAsync(
+                WaitUntil.Started,
+                gillPersonId,
+                FaceRecognitionModel.Recognition04,
+                new Uri(FaceTestConstant.UrlFamily1Daughter2Image),
+                detectionModel: FaceDetectionModel.Detection03);
+
+            await createPersonGillOperation.WaitForCompletionAsync();
+            await lastAddFaceForGillOperation.WaitForCompletionAsync();
+
+            // TODO: update dpg with person
+
+            foreach (var personId in personIds.Values)
+            {
+                await administrationClient.DeletePersonAsync(WaitUntil.Started, personId);
+            }
+            await administrationClient.DeleteDynamicPersonGroupAsync(WaitUntil.Started, familyGroupId);
+            await administrationClient.DeleteDynamicPersonGroupAsync(WaitUntil.Started, hikingGroupId);
         }
     }
 }

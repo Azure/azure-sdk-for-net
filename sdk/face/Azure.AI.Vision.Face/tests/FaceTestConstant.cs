@@ -24,5 +24,6 @@ namespace Azure.AI.Vision.Face.Tests
         public const string UrlFamily1Daughter3Image = "https://raw.githubusercontent.com/Azure-Samples/cognitive-services-sample-data-files/master/Face/images/Family1-Daughter3.jpg";
         public const string UrlFamily2Lady1Image = "https://raw.githubusercontent.com/Azure-Samples/cognitive-services-sample-data-files/master/Face/images/Family2-Lady1.jpg";
         public const string UrlFamily2Lady2Image = "https://raw.githubusercontent.com/Azure-Samples/cognitive-services-sample-data-files/master/Face/images/Family2-Lady2.jpg";
+        public const string UrlIdentification1Image = "https://raw.githubusercontent.com/Azure-Samples/cognitive-services-sample-data-files/master/Face/images/identification1.jpg";
     }
 }

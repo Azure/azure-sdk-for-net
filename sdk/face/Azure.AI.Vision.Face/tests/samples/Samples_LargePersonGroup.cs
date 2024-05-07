@@ -12,7 +12,7 @@ namespace Azure.AI.Vision.Face.Samples
     public partial class FaceSamples
     {
         [RecordedTest]
-        public async Task LargePersonGroupSample()
+        public async Task Sample_VerifyAndIdentifyFromLargePersonGroup()
         {
             var administrationClient = CreateAdministrationClient();
             var groupId = "lpg_family1";
@@ -46,6 +46,15 @@ namespace Azure.AI.Vision.Face.Samples
 
             var verifyMomResponse = await faceClient.VerifyFromLargePersonGroupAsync(faceId, groupId, momPersonId);
             Console.WriteLine($"Is the detected face Clare? {verifyMomResponse.Value.IsIdentical} ({verifyMomResponse.Value.Confidence})");
+
+            var identifyResponse = await faceClient.IdentifyFromLargePersonGroupAsync(new[] { faceId }, groupId);
+            foreach (var candidate in identifyResponse.Value[0].Candidates)
+            {
+                var person = await administrationClient.GetLargePersonGroupPersonAsync(groupId, candidate.PersonId);
+                Console.WriteLine($"The detected face belongs to {person.Value.Name} ({candidate.Confidence})");
+            }
+
+            await administrationClient.DeleteLargePersonGroupAsync(groupId);
         }
     }
 }
