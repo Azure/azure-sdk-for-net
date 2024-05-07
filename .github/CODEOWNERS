@@ -956,6 +956,12 @@
 # ServiceLabel: %Recovery Services Backup %Mgmt
 # ServiceOwners:                                                   @Daya-Patil
 
+# PRLabel: %Self Help
+/sdk/selfhelp/Azure.ResourceManager.*/                             @siddiavinashmsft @archerzz @ArcturusZhang @ArthurMa1978
+
+# ServiceLabel: %Self Help %Mgmt
+# ServiceOwners:                                                   @siddiavinashmsft
+
 # PRLabel: %Spring App Discovery
 /sdk/springappdiscovery/Azure.ResourceManager.*/                   @sunkun99 @archerzz @ArcturusZhang @ArthurMa1978
 
