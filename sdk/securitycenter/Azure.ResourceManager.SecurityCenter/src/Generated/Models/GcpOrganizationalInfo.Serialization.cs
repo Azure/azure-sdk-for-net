@@ -70,8 +70,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Member": return GcpMemberOrganizationalInfo.DeserializeGcpMemberOrganizationalInfo(element, options);
                     case "Organization": return GcpParentOrganizationalInfo.DeserializeGcpParentOrganizationalInfo(element, options);
+                    case "Member": return GcpMemberOrganizationalInfo.DeserializeGcpMemberOrganizationalInfo(element, options);
                 }
             }
             return UnknownGcpOrganizationalData.DeserializeUnknownGcpOrganizationalData(element, options);

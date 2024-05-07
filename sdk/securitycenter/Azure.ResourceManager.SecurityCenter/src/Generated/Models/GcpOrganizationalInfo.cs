@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary>
     /// The gcpOrganization data
     /// Please note <see cref="GcpOrganizationalInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="GcpMemberOrganizationalInfo"/> and <see cref="GcpParentOrganizationalInfo"/>.
+    /// The available derived classes include <see cref="GcpParentOrganizationalInfo"/> and <see cref="GcpMemberOrganizationalInfo"/>.
     /// </summary>
     public abstract partial class GcpOrganizationalInfo
     {

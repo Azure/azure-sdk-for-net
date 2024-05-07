@@ -70,9 +70,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "SqlServerVulnerability": return SqlServerVulnerabilityProperties.DeserializeSqlServerVulnerabilityProperties(element, options);
                     case "ContainerRegistryVulnerability": return ContainerRegistryVulnerabilityProperties.DeserializeContainerRegistryVulnerabilityProperties(element, options);
                     case "ServerVulnerabilityAssessment": return ServerVulnerabilityProperties.DeserializeServerVulnerabilityProperties(element, options);
-                    case "SqlServerVulnerability": return SqlServerVulnerabilityProperties.DeserializeSqlServerVulnerabilityProperties(element, options);
                 }
             }
             return UnknownAdditionalData.DeserializeUnknownAdditionalData(element, options);
