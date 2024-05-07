@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary>
     /// The arguments passed in to the execution
     /// Please note <see cref="ScriptExecutionParameterDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="PSCredentialExecutionParameterDetails"/>, <see cref="ScriptSecureStringExecutionParameterDetails"/> and <see cref="ScriptStringExecutionParameterDetails"/>.
+    /// The available derived classes include <see cref="ScriptSecureStringExecutionParameterDetails"/>, <see cref="ScriptStringExecutionParameterDetails"/> and <see cref="PSCredentialExecutionParameterDetails"/>.
     /// </summary>
     public abstract partial class ScriptExecutionParameterDetails
     {
