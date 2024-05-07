@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary>
     /// A custom alert rule that checks if a value (depends on the custom alert type) is allowed.
     /// Please note <see cref="AllowlistCustomAlertRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="ConnectionFromIPNotAllowed"/>, <see cref="ConnectionToIPNotAllowed"/>, <see cref="LocalUserNotAllowed"/> and <see cref="ProcessNotAllowed"/>.
+    /// The available derived classes include <see cref="ConnectionToIPNotAllowed"/>, <see cref="ConnectionFromIPNotAllowed"/>, <see cref="LocalUserNotAllowed"/> and <see cref="ProcessNotAllowed"/>.
     /// </summary>
     public partial class AllowlistCustomAlertRule : ListCustomAlertRule
     {

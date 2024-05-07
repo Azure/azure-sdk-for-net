@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of <see cref="CefExternalSecuritySolution"/>. </summary>
         public CefExternalSecuritySolution()
         {
-            Kind = ExternalSecuritySolutionKind.Cef;
+            Kind = Models.ExternalSecuritySolutionKind?.Cef;
         }
 
         /// <summary> Initializes a new instance of <see cref="CefExternalSecuritySolution"/>. </summary>

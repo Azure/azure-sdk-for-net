@@ -72,12 +72,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="resourceDetails">
         /// Details of the resource that was assessed
         /// Please note <see cref="SecurityCenterResourceDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureResourceDetails"/>, <see cref="OnPremiseResourceDetails"/> and <see cref="OnPremiseSqlResourceDetails"/>.
+        /// The available derived classes include <see cref="AzureResourceDetails"/>, <see cref="OnPremiseSqlResourceDetails"/> and <see cref="OnPremiseResourceDetails"/>.
         /// </param>
         /// <param name="additionalData">
         /// Details of the sub-assessment
         /// Please note <see cref="SecuritySubAssessmentAdditionalInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ContainerRegistryVulnerabilityProperties"/>, <see cref="ServerVulnerabilityProperties"/> and <see cref="SqlServerVulnerabilityProperties"/>.
+        /// The available derived classes include <see cref="SqlServerVulnerabilityProperties"/>, <see cref="ContainerRegistryVulnerabilityProperties"/> and <see cref="ServerVulnerabilityProperties"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecuritySubAssessmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string vulnerabilityId, string displayName, SubAssessmentStatus status, string remediation, string impact, string category, string description, DateTimeOffset? generatedOn, SecurityCenterResourceDetails resourceDetails, SecuritySubAssessmentAdditionalInfo additionalData, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
@@ -114,13 +114,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary>
         /// Details of the resource that was assessed
         /// Please note <see cref="SecurityCenterResourceDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureResourceDetails"/>, <see cref="OnPremiseResourceDetails"/> and <see cref="OnPremiseSqlResourceDetails"/>.
+        /// The available derived classes include <see cref="AzureResourceDetails"/>, <see cref="OnPremiseSqlResourceDetails"/> and <see cref="OnPremiseResourceDetails"/>.
         /// </summary>
         public SecurityCenterResourceDetails ResourceDetails { get; set; }
         /// <summary>
         /// Details of the sub-assessment
         /// Please note <see cref="SecuritySubAssessmentAdditionalInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ContainerRegistryVulnerabilityProperties"/>, <see cref="ServerVulnerabilityProperties"/> and <see cref="SqlServerVulnerabilityProperties"/>.
+        /// The available derived classes include <see cref="SqlServerVulnerabilityProperties"/>, <see cref="ContainerRegistryVulnerabilityProperties"/> and <see cref="ServerVulnerabilityProperties"/>.
         /// </summary>
         public SecuritySubAssessmentAdditionalInfo AdditionalData { get; set; }
     }

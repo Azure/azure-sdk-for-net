@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="actions">
         /// A collection of the actions which are triggered if all the configured rules evaluations, within at least one rule set, are true.
         /// Please note <see cref="SecurityAutomationAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.SecurityAutomationActionEventHub"/>, <see cref="SecurityAutomationActionLogicApp"/> and <see cref="SecurityAutomationActionWorkspace"/>.
+        /// The available derived classes include <see cref="SecurityAutomationActionLogicApp"/>, <see cref="Models.SecurityAutomationActionEventHub"/> and <see cref="SecurityAutomationActionWorkspace"/>.
         /// </param>
         /// <param name="kind"> Kind of the resource. </param>
         /// <param name="eTag"> Entity tag is used for comparing two or more entities from the same requested resource. </param>
@@ -354,12 +354,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="resourceDetails">
         /// Details of the resource that was assessed
         /// Please note <see cref="SecurityCenterResourceDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.AzureResourceDetails"/>, <see cref="OnPremiseResourceDetails"/> and <see cref="OnPremiseSqlResourceDetails"/>.
+        /// The available derived classes include <see cref="Models.AzureResourceDetails"/>, <see cref="OnPremiseSqlResourceDetails"/> and <see cref="OnPremiseResourceDetails"/>.
         /// </param>
         /// <param name="additionalData">
         /// Details of the sub-assessment
         /// Please note <see cref="SecuritySubAssessmentAdditionalInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.ContainerRegistryVulnerabilityProperties"/>, <see cref="Models.ServerVulnerabilityProperties"/> and <see cref="Models.SqlServerVulnerabilityProperties"/>.
+        /// The available derived classes include <see cref="Models.SqlServerVulnerabilityProperties"/>, <see cref="Models.ContainerRegistryVulnerabilityProperties"/> and <see cref="Models.ServerVulnerabilityProperties"/>.
         /// </param>
         /// <returns> A new <see cref="SecurityCenter.SecuritySubAssessmentData"/> instance for mocking. </returns>
         public static SecuritySubAssessmentData SecuritySubAssessmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string vulnerabilityId = null, string displayName = null, SubAssessmentStatus status = null, string remediation = null, string impact = null, string category = null, string description = null, DateTimeOffset? generatedOn = null, SecurityCenterResourceDetails resourceDetails = null, SecuritySubAssessmentAdditionalInfo additionalData = null)
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="authenticationDetails">
         /// Settings for authentication management, these settings are relevant only for the cloud connector.
         /// Please note <see cref="Models.AuthenticationDetailsProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.AwsAssumeRoleAuthenticationDetailsProperties"/>, <see cref="Models.AwsCredsAuthenticationDetailsProperties"/> and <see cref="Models.GcpCredentialsDetailsProperties"/>.
+        /// The available derived classes include <see cref="Models.AwsCredsAuthenticationDetailsProperties"/>, <see cref="Models.AwsAssumeRoleAuthenticationDetailsProperties"/> and <see cref="Models.GcpCredentialsDetailsProperties"/>.
         /// </param>
         /// <returns> A new <see cref="SecurityCenter.SecurityCloudConnectorData"/> instance for mocking. </returns>
         public static SecurityCloudConnectorData SecurityCloudConnectorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, HybridComputeSettingsProperties hybridComputeSettings = null, AuthenticationDetailsProperties authenticationDetails = null)
@@ -1478,12 +1478,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="offerings">
         /// A collection of offerings for the security connector.
         /// Please note <see cref="Models.SecurityCenterCloudOffering"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.CspmMonitorAwsOffering"/>, <see cref="Models.CspmMonitorAzureDevOpsOffering"/>, <see cref="Models.CspmMonitorGcpOffering"/>, <see cref="Models.CspmMonitorGithubOffering"/>, <see cref="Models.CspmMonitorGitLabOffering"/>, <see cref="Models.DefenderCspmAwsOffering"/>, <see cref="Models.DefenderCspmGcpOffering"/>, <see cref="Models.DefenderForContainersAwsOffering"/>, <see cref="Models.DefenderForContainersGcpOffering"/>, <see cref="Models.DefenderForDatabasesAwsOffering"/>, <see cref="Models.DefenderForDatabasesGcpOffering"/>, <see cref="Models.DefenderForDevOpsAzureDevOpsOffering"/>, <see cref="Models.DefenderForDevOpsGithubOffering"/>, <see cref="Models.DefenderForDevOpsGitLabOffering"/>, <see cref="Models.DefenderForServersAwsOffering"/>, <see cref="Models.DefenderForServersGcpOffering"/> and <see cref="Models.InformationProtectionAwsOffering"/>.
+        /// The available derived classes include <see cref="Models.CspmMonitorAwsOffering"/>, <see cref="Models.DefenderForContainersAwsOffering"/>, <see cref="Models.DefenderForServersAwsOffering"/>, <see cref="Models.DefenderForDatabasesAwsOffering"/>, <see cref="Models.InformationProtectionAwsOffering"/>, <see cref="Models.CspmMonitorGcpOffering"/>, <see cref="Models.DefenderForServersGcpOffering"/>, <see cref="Models.DefenderForDatabasesGcpOffering"/>, <see cref="Models.DefenderForContainersGcpOffering"/>, <see cref="Models.CspmMonitorGithubOffering"/>, <see cref="Models.CspmMonitorAzureDevOpsOffering"/>, <see cref="Models.DefenderCspmAwsOffering"/>, <see cref="Models.DefenderCspmGcpOffering"/>, <see cref="Models.DefenderForDevOpsGithubOffering"/>, <see cref="Models.DefenderForDevOpsAzureDevOpsOffering"/>, <see cref="Models.CspmMonitorGitLabOffering"/> and <see cref="Models.DefenderForDevOpsGitLabOffering"/>.
         /// </param>
         /// <param name="environmentData">
         /// The security connector environment data.
         /// Please note <see cref="SecurityConnectorEnvironment"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.AwsEnvironment"/>, <see cref="AzureDevOpsScopeEnvironment"/>, <see cref="GcpProjectEnvironment"/>, <see cref="GithubScopeEnvironment"/> and <see cref="GitlabScopeEnvironment"/>.
+        /// The available derived classes include <see cref="Models.AwsEnvironment"/>, <see cref="GcpProjectEnvironment"/>, <see cref="GithubScopeEnvironment"/>, <see cref="AzureDevOpsScopeEnvironment"/> and <see cref="GitlabScopeEnvironment"/>.
         /// </param>
         /// <param name="kind"> Kind of the resource. </param>
         /// <param name="eTag"> Entity tag is used for comparing two or more entities from the same requested resource. </param>
@@ -1563,17 +1563,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="thresholdRules">
         /// The list of custom alert threshold rules.
         /// Please note <see cref="Models.ThresholdCustomAlertRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.ActiveConnectionsNotInAllowedRange"/>, <see cref="Models.AmqpC2DMessagesNotInAllowedRange"/>, <see cref="Models.AmqpC2DRejectedMessagesNotInAllowedRange"/>, <see cref="Models.AmqpD2CMessagesNotInAllowedRange"/>, <see cref="Models.DirectMethodInvokesNotInAllowedRange"/>, <see cref="Models.FailedLocalLoginsNotInAllowedRange"/>, <see cref="Models.FileUploadsNotInAllowedRange"/>, <see cref="Models.HttpC2DMessagesNotInAllowedRange"/>, <see cref="Models.HttpC2DRejectedMessagesNotInAllowedRange"/>, <see cref="Models.HttpD2CMessagesNotInAllowedRange"/>, <see cref="Models.MqttC2DMessagesNotInAllowedRange"/>, <see cref="Models.MqttC2DRejectedMessagesNotInAllowedRange"/>, <see cref="Models.MqttD2CMessagesNotInAllowedRange"/>, <see cref="Models.QueuePurgesNotInAllowedRange"/>, <see cref="Models.TimeWindowCustomAlertRule"/>, <see cref="Models.TwinUpdatesNotInAllowedRange"/> and <see cref="Models.UnauthorizedOperationsNotInAllowedRange"/>.
+        /// The available derived classes include <see cref="Models.ActiveConnectionsNotInAllowedRange"/>, <see cref="Models.AmqpC2DMessagesNotInAllowedRange"/>, <see cref="Models.MqttC2DMessagesNotInAllowedRange"/>, <see cref="Models.HttpC2DMessagesNotInAllowedRange"/>, <see cref="Models.AmqpC2DRejectedMessagesNotInAllowedRange"/>, <see cref="Models.MqttC2DRejectedMessagesNotInAllowedRange"/>, <see cref="Models.HttpC2DRejectedMessagesNotInAllowedRange"/>, <see cref="Models.AmqpD2CMessagesNotInAllowedRange"/>, <see cref="Models.MqttD2CMessagesNotInAllowedRange"/>, <see cref="Models.HttpD2CMessagesNotInAllowedRange"/>, <see cref="Models.DirectMethodInvokesNotInAllowedRange"/>, <see cref="Models.FailedLocalLoginsNotInAllowedRange"/>, <see cref="Models.FileUploadsNotInAllowedRange"/>, <see cref="Models.QueuePurgesNotInAllowedRange"/>, <see cref="Models.TwinUpdatesNotInAllowedRange"/>, <see cref="Models.UnauthorizedOperationsNotInAllowedRange"/> and <see cref="Models.TimeWindowCustomAlertRule"/>.
         /// </param>
         /// <param name="timeWindowRules">
         /// The list of custom alert time-window rules.
         /// Please note <see cref="Models.TimeWindowCustomAlertRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.ActiveConnectionsNotInAllowedRange"/>, <see cref="Models.AmqpC2DMessagesNotInAllowedRange"/>, <see cref="Models.AmqpC2DRejectedMessagesNotInAllowedRange"/>, <see cref="Models.AmqpD2CMessagesNotInAllowedRange"/>, <see cref="Models.DirectMethodInvokesNotInAllowedRange"/>, <see cref="Models.FailedLocalLoginsNotInAllowedRange"/>, <see cref="Models.FileUploadsNotInAllowedRange"/>, <see cref="Models.HttpC2DMessagesNotInAllowedRange"/>, <see cref="Models.HttpC2DRejectedMessagesNotInAllowedRange"/>, <see cref="Models.HttpD2CMessagesNotInAllowedRange"/>, <see cref="Models.MqttC2DMessagesNotInAllowedRange"/>, <see cref="Models.MqttC2DRejectedMessagesNotInAllowedRange"/>, <see cref="Models.MqttD2CMessagesNotInAllowedRange"/>, <see cref="Models.QueuePurgesNotInAllowedRange"/>, <see cref="Models.TwinUpdatesNotInAllowedRange"/> and <see cref="Models.UnauthorizedOperationsNotInAllowedRange"/>.
+        /// The available derived classes include <see cref="Models.ActiveConnectionsNotInAllowedRange"/>, <see cref="Models.AmqpC2DMessagesNotInAllowedRange"/>, <see cref="Models.MqttC2DMessagesNotInAllowedRange"/>, <see cref="Models.HttpC2DMessagesNotInAllowedRange"/>, <see cref="Models.AmqpC2DRejectedMessagesNotInAllowedRange"/>, <see cref="Models.MqttC2DRejectedMessagesNotInAllowedRange"/>, <see cref="Models.HttpC2DRejectedMessagesNotInAllowedRange"/>, <see cref="Models.AmqpD2CMessagesNotInAllowedRange"/>, <see cref="Models.MqttD2CMessagesNotInAllowedRange"/>, <see cref="Models.HttpD2CMessagesNotInAllowedRange"/>, <see cref="Models.DirectMethodInvokesNotInAllowedRange"/>, <see cref="Models.FailedLocalLoginsNotInAllowedRange"/>, <see cref="Models.FileUploadsNotInAllowedRange"/>, <see cref="Models.QueuePurgesNotInAllowedRange"/>, <see cref="Models.TwinUpdatesNotInAllowedRange"/> and <see cref="Models.UnauthorizedOperationsNotInAllowedRange"/>.
         /// </param>
         /// <param name="allowlistRules">
         /// The allow-list custom alert rules.
         /// Please note <see cref="Models.AllowlistCustomAlertRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.ConnectionFromIPNotAllowed"/>, <see cref="Models.ConnectionToIPNotAllowed"/>, <see cref="Models.LocalUserNotAllowed"/> and <see cref="Models.ProcessNotAllowed"/>.
+        /// The available derived classes include <see cref="Models.ConnectionToIPNotAllowed"/>, <see cref="Models.ConnectionFromIPNotAllowed"/>, <see cref="Models.LocalUserNotAllowed"/> and <see cref="Models.ProcessNotAllowed"/>.
         /// </param>
         /// <param name="denylistRules"> The deny-list custom alert rules. </param>
         /// <returns> A new <see cref="SecurityCenter.DeviceSecurityGroupData"/> instance for mocking. </returns>
@@ -2475,7 +2475,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="resourceDetails">
         /// Details of the resource that was assessed
         /// Please note <see cref="SecurityCenterResourceDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.AzureResourceDetails"/>, <see cref="OnPremiseResourceDetails"/> and <see cref="OnPremiseSqlResourceDetails"/>.
+        /// The available derived classes include <see cref="Models.AzureResourceDetails"/>, <see cref="OnPremiseSqlResourceDetails"/> and <see cref="OnPremiseResourceDetails"/>.
         /// </param>
         /// <param name="displayName"> User friendly display name of the assessment. </param>
         /// <param name="additionalData"> Additional data regarding the assessment. </param>
@@ -2529,7 +2529,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="resourceDetails">
         /// Details of the resource that was assessed
         /// Please note <see cref="SecurityCenterResourceDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.AzureResourceDetails"/>, <see cref="OnPremiseResourceDetails"/> and <see cref="OnPremiseSqlResourceDetails"/>.
+        /// The available derived classes include <see cref="Models.AzureResourceDetails"/>, <see cref="OnPremiseSqlResourceDetails"/> and <see cref="OnPremiseResourceDetails"/>.
         /// </param>
         /// <param name="displayName"> User friendly display name of the assessment. </param>
         /// <param name="additionalData"> Additional data regarding the assessment. </param>
@@ -2978,7 +2978,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="organizationalData">
         /// The AWS account's organizational data
         /// Please note <see cref="AwsOrganizationalInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AwsOrganizationalDataMember"/> and <see cref="AwsOrganizationalDataMaster"/>.
+        /// The available derived classes include <see cref="AwsOrganizationalDataMaster"/> and <see cref="AwsOrganizationalDataMember"/>.
         /// </param>
         /// <param name="regions"> list of regions to scan. </param>
         /// <param name="accountName"> The AWS account name. </param>
@@ -3714,7 +3714,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 name,
                 resourceType,
                 systemData,
-                ExternalSecuritySolutionKind.Cef,
+                Models.ExternalSecuritySolutionKind?.Cef,
                 location,
                 serializedAdditionalRawData: null,
                 properties);
@@ -3735,7 +3735,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 name,
                 resourceType,
                 systemData,
-                ExternalSecuritySolutionKind.Ata,
+                Models.ExternalSecuritySolutionKind?.Ata,
                 location,
                 serializedAdditionalRawData: null,
                 properties);
@@ -3756,7 +3756,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 name,
                 resourceType,
                 systemData,
-                ExternalSecuritySolutionKind.Aad,
+                Models.ExternalSecuritySolutionKind?.Aad,
                 location,
                 serializedAdditionalRawData: null,
                 properties);

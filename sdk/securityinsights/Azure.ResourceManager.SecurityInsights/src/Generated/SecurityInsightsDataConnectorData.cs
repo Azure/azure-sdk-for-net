@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityInsights
     /// A class representing the SecurityInsightsDataConnector data model.
     /// Data connector.
     /// Please note <see cref="SecurityInsightsDataConnectorData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="SecurityInsightsAwsCloudTrailDataConnector"/>, <see cref="SecurityInsightsAadDataConnector"/>, <see cref="SecurityInsightsAatpDataConnector"/>, <see cref="SecurityInsightsAscDataConnector"/>, <see cref="McasDataConnector"/>, <see cref="MdatpDataConnector"/>, <see cref="SecurityInsightsOfficeDataConnector"/> and <see cref="SecurityInsightsTIDataConnector"/>.
+    /// The available derived classes include <see cref="SecurityInsightsAadDataConnector"/>, <see cref="SecurityInsightsAatpDataConnector"/>, <see cref="SecurityInsightsAscDataConnector"/>, <see cref="SecurityInsightsAwsCloudTrailDataConnector"/>, <see cref="McasDataConnector"/>, <see cref="MdatpDataConnector"/>, <see cref="SecurityInsightsTIDataConnector"/> and <see cref="SecurityInsightsOfficeDataConnector"/>.
     /// </summary>
     public partial class SecurityInsightsDataConnectorData : ResourceData
     {

@@ -71,9 +71,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 switch (discriminator.GetString())
                 {
                     case "AwsAccount": return AwsEnvironment.DeserializeAwsEnvironment(element, options);
-                    case "AzureDevOpsScope": return AzureDevOpsScopeEnvironment.DeserializeAzureDevOpsScopeEnvironment(element, options);
                     case "GcpProject": return GcpProjectEnvironment.DeserializeGcpProjectEnvironment(element, options);
                     case "GithubScope": return GithubScopeEnvironment.DeserializeGithubScopeEnvironment(element, options);
+                    case "AzureDevOpsScope": return AzureDevOpsScopeEnvironment.DeserializeAzureDevOpsScopeEnvironment(element, options);
                     case "GitlabScope": return GitlabScopeEnvironment.DeserializeGitlabScopeEnvironment(element, options);
                 }
             }

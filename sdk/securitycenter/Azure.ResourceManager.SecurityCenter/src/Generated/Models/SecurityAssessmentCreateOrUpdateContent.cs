@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="resourceDetails">
         /// Details of the resource that was assessed
         /// Please note <see cref="SecurityCenterResourceDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureResourceDetails"/>, <see cref="OnPremiseResourceDetails"/> and <see cref="OnPremiseSqlResourceDetails"/>.
+        /// The available derived classes include <see cref="AzureResourceDetails"/>, <see cref="OnPremiseSqlResourceDetails"/> and <see cref="OnPremiseResourceDetails"/>.
         /// </param>
         /// <param name="displayName"> User friendly display name of the assessment. </param>
         /// <param name="additionalData"> Additional data regarding the assessment. </param>
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary>
         /// Details of the resource that was assessed
         /// Please note <see cref="SecurityCenterResourceDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureResourceDetails"/>, <see cref="OnPremiseResourceDetails"/> and <see cref="OnPremiseSqlResourceDetails"/>.
+        /// The available derived classes include <see cref="AzureResourceDetails"/>, <see cref="OnPremiseSqlResourceDetails"/> and <see cref="OnPremiseResourceDetails"/>.
         /// </summary>
         public SecurityCenterResourceDetails ResourceDetails { get; set; }
         /// <summary> User friendly display name of the assessment. </summary>

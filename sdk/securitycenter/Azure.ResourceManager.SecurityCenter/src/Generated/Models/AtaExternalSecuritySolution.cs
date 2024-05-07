@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of <see cref="AtaExternalSecuritySolution"/>. </summary>
         public AtaExternalSecuritySolution()
         {
-            Kind = ExternalSecuritySolutionKind.Ata;
+            Kind = Models.ExternalSecuritySolutionKind?.Ata;
         }
 
         /// <summary> Initializes a new instance of <see cref="AtaExternalSecuritySolution"/>. </summary>
