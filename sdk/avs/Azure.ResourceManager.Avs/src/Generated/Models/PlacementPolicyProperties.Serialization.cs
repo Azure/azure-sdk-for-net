@@ -85,8 +85,8 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "VmHost": return VmHostPlacementPolicyProperties.DeserializeVmHostPlacementPolicyProperties(element, options);
                     case "VmVm": return VmPlacementPolicyProperties.DeserializeVmPlacementPolicyProperties(element, options);
+                    case "VmHost": return VmHostPlacementPolicyProperties.DeserializeVmHostPlacementPolicyProperties(element, options);
                 }
             }
             return UnknownPlacementPolicyProperties.DeserializeUnknownPlacementPolicyProperties(element, options);

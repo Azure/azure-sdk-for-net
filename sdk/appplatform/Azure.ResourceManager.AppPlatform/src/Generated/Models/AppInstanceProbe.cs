@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <param name="probeAction">
         /// The action of the probe.
         /// Please note <see cref="AppInstanceProbeAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AppInstanceExecAction"/>, <see cref="AppInstanceHttpGetAction"/> and <see cref="AppInstanceTcpSocketAction"/>.
+        /// The available derived classes include <see cref="AppInstanceHttpGetAction"/>, <see cref="AppInstanceExecAction"/> and <see cref="AppInstanceTcpSocketAction"/>.
         /// </param>
         /// <param name="isProbeDisabled"> Indicate whether the probe is disabled. </param>
         /// <param name="initialDelayInSeconds"> Number of seconds after the App Instance has started before probes are initiated. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes. </param>
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary>
         /// The action of the probe.
         /// Please note <see cref="AppInstanceProbeAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AppInstanceExecAction"/>, <see cref="AppInstanceHttpGetAction"/> and <see cref="AppInstanceTcpSocketAction"/>.
+        /// The available derived classes include <see cref="AppInstanceHttpGetAction"/>, <see cref="AppInstanceExecAction"/> and <see cref="AppInstanceTcpSocketAction"/>.
         /// </summary>
         public AppInstanceProbeAction ProbeAction { get; set; }
         /// <summary> Indicate whether the probe is disabled. </summary>
