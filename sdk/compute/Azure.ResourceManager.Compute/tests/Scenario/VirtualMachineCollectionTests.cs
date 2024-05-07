@@ -80,6 +80,7 @@ namespace Azure.ResourceManager.Compute.Tests
 
         [TestCase]
         [RecordedTest]
+        [LiveOnly(Reason = "PrincipalId cannot be stored in test recordings.")]
         public async Task GetAllInSubscription()
         {
             var collection = await GetVirtualMachineCollectionAsync();
