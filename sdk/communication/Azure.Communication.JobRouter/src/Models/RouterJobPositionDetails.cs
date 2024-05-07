@@ -16,7 +16,7 @@ namespace Azure.Communication.JobRouter
         public TimeSpan EstimatedWaitTime { get; }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal void WriteEstimatedWaitTime(Utf8JsonWriter writer)
+        internal void WriteEstimatedWaitTime(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteNumberValue(EstimatedWaitTime.TotalMinutes);
         }
