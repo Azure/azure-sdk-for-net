@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary>
     /// Azure virtual network function application definition.
     /// Please note <see cref="AzureCoreNetworkFunctionApplication"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AzureCoreNetworkFunctionArmTemplateApplication"/> and <see cref="AzureCoreNetworkFunctionVhdApplication"/>.
+    /// The available derived classes include <see cref="AzureCoreNetworkFunctionVhdApplication"/> and <see cref="AzureCoreNetworkFunctionArmTemplateApplication"/>.
     /// </summary>
     public abstract partial class AzureCoreNetworkFunctionApplication : NetworkFunctionApplication
     {

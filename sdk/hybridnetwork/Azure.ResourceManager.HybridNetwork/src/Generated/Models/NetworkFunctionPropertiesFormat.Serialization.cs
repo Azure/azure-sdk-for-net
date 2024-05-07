@@ -130,8 +130,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Open": return NetworkFunctionValueWithoutSecrets.DeserializeNetworkFunctionValueWithoutSecrets(element, options);
                     case "Secret": return NetworkFunctionValueWithSecrets.DeserializeNetworkFunctionValueWithSecrets(element, options);
+                    case "Open": return NetworkFunctionValueWithoutSecrets.DeserializeNetworkFunctionValueWithoutSecrets(element, options);
                 }
             }
             return UnknownNetworkFunctionPropertiesFormat.DeserializeUnknownNetworkFunctionPropertiesFormat(element, options);
