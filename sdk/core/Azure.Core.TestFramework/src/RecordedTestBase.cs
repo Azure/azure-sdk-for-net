@@ -68,27 +68,7 @@ namespace Azure.Core.TestFramework
         /// The list of <see cref="BodyRegexSanitizer"/> to use while sanitizing request and response bodies. This allows you to specify a
         /// regex for matching on specific content in the body.
         /// </summary>
-        public List<BodyRegexSanitizer> BodyRegexSanitizers { get; } =
-            new()
-            {
-                new BodyRegexSanitizer("(client_assertion=)(?<secret>[^&\\\"\\s\n,\\\\]+)", SanitizeValue)
-                {
-                    GroupForReplace = "secret"
-                },
-                new BodyRegexSanitizer("(client_id=)(?<cid>[^&\\\"\\s\n,\\\\]+)", SanitizeValue)
-                {
-                    GroupForReplace = "cid"
-                },
-                new BodyRegexSanitizer("(client_secret=)(?<secret>[^&\\\"\\s\n,\\\\]+)", SanitizeValue)
-                {
-                    GroupForReplace = "secret"
-                },
-                // TODO remove if the common Proxy version is updated to exclude "st" and "se"
-                new BodyRegexSanitizer("(?:[?&](sig)=)(?<secret>[^&\\\"\\s\n,\\\\]*)", SanitizeValue)
-                {
-                    GroupForReplace = "secret"
-                },
-            };
+        public List<BodyRegexSanitizer> BodyRegexSanitizers { get; } = new();
 
         /// <summary>
         /// The list of <see cref="UriRegexSanitizer"/> to use while sanitizing request and response URIs. This allows you to specify
@@ -142,13 +122,12 @@ namespace Azure.Core.TestFramework
         /// </summary>
         public List<string> SanitizersToRemove { get; } = new()
         {
-            "AZSDK1007", // SAS URL - this is added separately in BodyRegexSanitizers
-            "AZSDK2031", // Operation-location header
             "AZSDK2003", // Location header
             "AZSDK2006", // x-ms-rename-source
             "AZSDK2007", // x-ms-file-rename-source
             "AZSDK2008", // x-ms-copy-source
             "AZSDK2020", // x-ms-request-id
+            "AZSDK2030", // Operation-location header
             "AZSDK3420", // $..targetResourceId
             "AZSDK3423", // $..source
             "AZSDK3424", // $..to
