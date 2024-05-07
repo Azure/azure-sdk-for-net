@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary>
     /// Output for the task that migrates PostgreSQL databases to Azure Database for PostgreSQL for online migrations
     /// Please note <see cref="MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseError"/>, <see cref="MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseLevel"/>, <see cref="MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputError"/>, <see cref="MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel"/> and <see cref="MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputTableLevel"/>.
+    /// The available derived classes include <see cref="MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel"/>, <see cref="MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseLevel"/>, <see cref="MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputTableLevel"/>, <see cref="MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputError"/> and <see cref="MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseError"/>.
     /// </summary>
     public abstract partial class MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput
     {

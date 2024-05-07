@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    internal partial class UnknownMigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput : IUtf8JsonSerializable, IJsonModel<MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput>
+    internal partial class UnknownMigratePostgreSqlAzureDbForPostgreSqlSyncTaskOutput : IUtf8JsonSerializable, IJsonModel<MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return DeserializeMigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput(document.RootElement, options);
         }
 
-        internal static UnknownMigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput DeserializeUnknownMigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UnknownMigratePostgreSqlAzureDbForPostgreSqlSyncTaskOutput DeserializeUnknownMigratePostgreSqlAzureDbForPostgreSqlSyncTaskOutput(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownMigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput(id, resultType, serializedAdditionalRawData);
+            return new UnknownMigratePostgreSqlAzureDbForPostgreSqlSyncTaskOutput(id, resultType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput>.Write(ModelReaderWriterOptions options)

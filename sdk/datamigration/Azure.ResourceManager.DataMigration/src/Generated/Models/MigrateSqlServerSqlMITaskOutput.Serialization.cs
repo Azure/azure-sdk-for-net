@@ -75,11 +75,11 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AgentJobLevelOutput": return MigrateSqlServerSqlMITaskOutputAgentJobLevel.DeserializeMigrateSqlServerSqlMITaskOutputAgentJobLevel(element, options);
-                    case "DatabaseLevelOutput": return MigrateSqlServerSqlMITaskOutputDatabaseLevel.DeserializeMigrateSqlServerSqlMITaskOutputDatabaseLevel(element, options);
-                    case "ErrorOutput": return MigrateSqlServerSqlMITaskOutputError.DeserializeMigrateSqlServerSqlMITaskOutputError(element, options);
-                    case "LoginLevelOutput": return MigrateSqlServerSqlMITaskOutputLoginLevel.DeserializeMigrateSqlServerSqlMITaskOutputLoginLevel(element, options);
                     case "MigrationLevelOutput": return MigrateSqlServerSqlMITaskOutputMigrationLevel.DeserializeMigrateSqlServerSqlMITaskOutputMigrationLevel(element, options);
+                    case "DatabaseLevelOutput": return MigrateSqlServerSqlMITaskOutputDatabaseLevel.DeserializeMigrateSqlServerSqlMITaskOutputDatabaseLevel(element, options);
+                    case "AgentJobLevelOutput": return MigrateSqlServerSqlMITaskOutputAgentJobLevel.DeserializeMigrateSqlServerSqlMITaskOutputAgentJobLevel(element, options);
+                    case "LoginLevelOutput": return MigrateSqlServerSqlMITaskOutputLoginLevel.DeserializeMigrateSqlServerSqlMITaskOutputLoginLevel(element, options);
+                    case "ErrorOutput": return MigrateSqlServerSqlMITaskOutputError.DeserializeMigrateSqlServerSqlMITaskOutputError(element, options);
                 }
             }
             return UnknownMigrateSqlServerSqlMITaskOutput.DeserializeUnknownMigrateSqlServerSqlMITaskOutput(element, options);

@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    internal partial class UnknownMigrateMySqlAzureDBForMySqlOfflineTaskOutput : IUtf8JsonSerializable, IJsonModel<MigrateMySqlAzureDBForMySqlOfflineTaskOutput>
+    internal partial class UnknownMigrateMySqlAzureDbForMySqlOfflineTaskOutput : IUtf8JsonSerializable, IJsonModel<MigrateMySqlAzureDBForMySqlOfflineTaskOutput>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateMySqlAzureDBForMySqlOfflineTaskOutput>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return DeserializeMigrateMySqlAzureDBForMySqlOfflineTaskOutput(document.RootElement, options);
         }
 
-        internal static UnknownMigrateMySqlAzureDBForMySqlOfflineTaskOutput DeserializeUnknownMigrateMySqlAzureDBForMySqlOfflineTaskOutput(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UnknownMigrateMySqlAzureDbForMySqlOfflineTaskOutput DeserializeUnknownMigrateMySqlAzureDbForMySqlOfflineTaskOutput(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownMigrateMySqlAzureDBForMySqlOfflineTaskOutput(id, resultType, serializedAdditionalRawData);
+            return new UnknownMigrateMySqlAzureDbForMySqlOfflineTaskOutput(id, resultType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MigrateMySqlAzureDBForMySqlOfflineTaskOutput>.Write(ModelReaderWriterOptions options)

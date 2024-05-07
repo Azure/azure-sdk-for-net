@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    [PersistableModelProxy(typeof(UnknownMigrateSqlServerSqlDBTaskOutput))]
+    [PersistableModelProxy(typeof(UnknownMigrateSqlServerSqlDbTaskOutput))]
     public partial class MigrateSqlServerSqlDBTaskOutput : IUtf8JsonSerializable, IJsonModel<MigrateSqlServerSqlDBTaskOutput>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateSqlServerSqlDBTaskOutput>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -75,15 +75,15 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "DatabaseLevelOutput": return MigrateSqlServerSqlDBTaskOutputDatabaseLevel.DeserializeMigrateSqlServerSqlDBTaskOutputDatabaseLevel(element, options);
-                    case "ErrorOutput": return MigrateSqlServerSqlDBTaskOutputError.DeserializeMigrateSqlServerSqlDBTaskOutputError(element, options);
-                    case "MigrationDatabaseLevelValidationOutput": return MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult.DeserializeMigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult(element, options);
                     case "MigrationLevelOutput": return MigrateSqlServerSqlDBTaskOutputMigrationLevel.DeserializeMigrateSqlServerSqlDBTaskOutputMigrationLevel(element, options);
-                    case "MigrationValidationOutput": return MigrateSqlServerSqlDBTaskOutputValidationResult.DeserializeMigrateSqlServerSqlDBTaskOutputValidationResult(element, options);
+                    case "DatabaseLevelOutput": return MigrateSqlServerSqlDBTaskOutputDatabaseLevel.DeserializeMigrateSqlServerSqlDBTaskOutputDatabaseLevel(element, options);
                     case "TableLevelOutput": return MigrateSqlServerSqlDBTaskOutputTableLevel.DeserializeMigrateSqlServerSqlDBTaskOutputTableLevel(element, options);
+                    case "ErrorOutput": return MigrateSqlServerSqlDBTaskOutputError.DeserializeMigrateSqlServerSqlDBTaskOutputError(element, options);
+                    case "MigrationValidationOutput": return MigrateSqlServerSqlDBTaskOutputValidationResult.DeserializeMigrateSqlServerSqlDBTaskOutputValidationResult(element, options);
+                    case "MigrationDatabaseLevelValidationOutput": return MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult.DeserializeMigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult(element, options);
                 }
             }
-            return UnknownMigrateSqlServerSqlDBTaskOutput.DeserializeUnknownMigrateSqlServerSqlDBTaskOutput(element, options);
+            return UnknownMigrateSqlServerSqlDbTaskOutput.DeserializeUnknownMigrateSqlServerSqlDbTaskOutput(element, options);
         }
 
         BinaryData IPersistableModel<MigrateSqlServerSqlDBTaskOutput>.Write(ModelReaderWriterOptions options)
