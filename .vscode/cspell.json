@@ -1387,7 +1387,8 @@
       "filename": "**/sdk/healthdataaiservices/**/*",
       "words": [
         "Deidentification",
-        "Deidentify"
+        "Deidentify",
+        "Deid"
       ]
     },
     {

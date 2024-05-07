@@ -16,6 +16,7 @@ namespace Azure.Health.Deidentification
 {
     // Data plane generated sub-client.
     /// <summary> The Deidentification sub-client. </summary>
+#pragma warning disable AZC0012
     public partial class Deidentification
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://deid.azure.com/.default" };
