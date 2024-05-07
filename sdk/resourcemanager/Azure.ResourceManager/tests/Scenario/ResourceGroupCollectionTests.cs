@@ -33,7 +33,6 @@ namespace Azure.ResourceManager.Tests
 
         [TestCase]
         [RecordedTest]
-        [LiveOnly]
         public async Task ListWithParameters()
         {
             var tags = new Dictionary<string, string>();
