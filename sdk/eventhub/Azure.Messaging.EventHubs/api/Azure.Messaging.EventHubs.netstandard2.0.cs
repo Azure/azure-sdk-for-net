@@ -399,10 +399,10 @@ namespace Azure.Messaging.EventHubs.Primitives
         public string ConsumerGroup { get { throw null; } }
         protected bool EnableBatchTracing { get { throw null; } set { } }
         public string EventHubName { get { throw null; } }
+        protected Azure.Messaging.EventHubs.EventHubProperties EventHubProperties { get { throw null; } }
         public string FullyQualifiedNamespace { get { throw null; } }
         public string Identifier { get { throw null; } }
         public bool IsRunning { get { throw null; } protected set { } }
-        protected Azure.Messaging.EventHubs.EventHubProperties Properties { get { throw null; } }
         protected Azure.Messaging.EventHubs.EventHubsRetryPolicy RetryPolicy { get { throw null; } }
         protected abstract System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Messaging.EventHubs.Primitives.EventProcessorPartitionOwnership>> ClaimOwnershipAsync(System.Collections.Generic.IEnumerable<Azure.Messaging.EventHubs.Primitives.EventProcessorPartitionOwnership> desiredOwnership, System.Threading.CancellationToken cancellationToken);
         protected internal virtual Azure.Messaging.EventHubs.EventHubConnection CreateConnection() { throw null; }
