@@ -72,11 +72,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureBlobStorage": return AzureBlobDataTransferDataSourceSink.DeserializeAzureBlobDataTransferDataSourceSink(element, options);
-                    case "BaseCosmosDataTransferDataSourceSink": return BaseCosmosDataTransferDataSourceSink.DeserializeBaseCosmosDataTransferDataSourceSink(element, options);
                     case "CosmosDBCassandra": return CosmosCassandraDataTransferDataSourceSink.DeserializeCosmosCassandraDataTransferDataSourceSink(element, options);
                     case "CosmosDBMongo": return CosmosMongoDataTransferDataSourceSink.DeserializeCosmosMongoDataTransferDataSourceSink(element, options);
                     case "CosmosDBSql": return CosmosSqlDataTransferDataSourceSink.DeserializeCosmosSqlDataTransferDataSourceSink(element, options);
+                    case "BaseCosmosDataTransferDataSourceSink": return BaseCosmosDataTransferDataSourceSink.DeserializeBaseCosmosDataTransferDataSourceSink(element, options);
+                    case "AzureBlobStorage": return AzureBlobDataTransferDataSourceSink.DeserializeAzureBlobDataTransferDataSourceSink(element, options);
                 }
             }
             return UnknownDataTransferDataSourceSink.DeserializeUnknownDataTransferDataSourceSink(element, options);
