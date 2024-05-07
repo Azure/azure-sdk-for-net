@@ -720,9 +720,11 @@ namespace Azure.Search.Documents.Tests
                     Type _ when t == typeof(WebApiSkill) => CreateSkill(t, new[] { "input" }, new[] { "output" }),
                     Type _ when t == typeof(AzureMachineLearningSkill) => CreateSkill(t, new[] { "input" }, new[] { "output" }),
                     Type _ when t == typeof(AzureOpenAIEmbeddingSkill) => CreateSkill(t, new[] { "text" }, new[] { "embedding" }),
-                    Type _ when t == typeof(VisionVectorizeSkill) => CreateSkill(t, new[] { "image" }, new[] { "vector" }),
+                    Type _ when t == typeof(VisionVectorizeSkill) =>
+                    TestEnvironment.AzureEnvironment != "AzureUSGovernment" ? CreateSkill(t, new[] { "image" }, new[] { "vector" }) : null,
                     _ => throw new NotSupportedException($"{t.FullName}"),
                 })
+                .Where(skill => skill != null)
                 .ToList();
 
             skills.Add(CreateEntityRecognitionSkill(EntityRecognitionSkill.SkillVersion.V3));
