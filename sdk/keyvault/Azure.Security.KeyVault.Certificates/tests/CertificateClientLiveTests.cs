@@ -772,7 +772,6 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         [RecordedTest]
         [TestCase("application/x-pkcs12")]
         [TestCase("application/x-pem-file")]
-        [LiveOnly(Reason = "Certificate data cannot be stored in test recording.")]
         public async Task DownloadLatestCertificate(string contentType)
         {
             string name = Recording.GenerateId();
@@ -820,7 +819,6 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         [RecordedTest]
         [TestCase("application/x-pkcs12")]
         [TestCase("application/x-pem-file")]
-        [LiveOnly(Reason = "Certificate data cannot be stored in test recording.")]
         public async Task DownloadVersionedCertificate(string contentType)
         {
             string name = Recording.GenerateId();
@@ -972,7 +970,6 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         }
 
         [RecordedTest]
-        [LiveOnly(Reason = "Certificate data cannot be stored in test recording.")]
         public async Task DownloadECDsaCertificateSignLocalVerifyRemote([EnumValues] CertificateContentType contentType, [EnumValues] CertificateKeyCurveName keyCurveName)
         {
 #if NET462
