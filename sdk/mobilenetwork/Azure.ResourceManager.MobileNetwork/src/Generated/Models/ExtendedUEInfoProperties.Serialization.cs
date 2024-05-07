@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    [PersistableModelProxy(typeof(UnknownExtendedUEInfoProperties))]
+    [PersistableModelProxy(typeof(UnknownExtendedUeInfoProperties))]
     public partial class ExtendedUEInfoProperties : IUtf8JsonSerializable, IJsonModel<ExtendedUEInfoProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExtendedUEInfoProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -75,11 +75,11 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "4G": return UEInfo4G.DeserializeUEInfo4G(element, options);
                     case "5G": return UEInfo5G.DeserializeUEInfo5G(element, options);
+                    case "4G": return UEInfo4G.DeserializeUEInfo4G(element, options);
                 }
             }
-            return UnknownExtendedUEInfoProperties.DeserializeUnknownExtendedUEInfoProperties(element, options);
+            return UnknownExtendedUeInfoProperties.DeserializeUnknownExtendedUeInfoProperties(element, options);
         }
 
         BinaryData IPersistableModel<ExtendedUEInfoProperties>.Write(ModelReaderWriterOptions options)

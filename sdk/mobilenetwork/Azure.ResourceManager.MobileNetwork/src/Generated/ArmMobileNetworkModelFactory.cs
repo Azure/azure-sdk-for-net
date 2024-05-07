@@ -660,7 +660,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <param name="properties">
         /// Extended UE Information Properties.
         /// Please note <see cref="ExtendedUEInfoProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="UEInfo4G"/> and <see cref="UEInfo5G"/>.
+        /// The available derived classes include <see cref="UEInfo5G"/> and <see cref="UEInfo4G"/>.
         /// </param>
         /// <returns> A new <see cref="MobileNetwork.ExtendedUEInfoData"/> instance for mocking. </returns>
         public static ExtendedUEInfoData ExtendedUEInfoData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ExtendedUEInfoProperties properties = null)
