@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    [PersistableModelProxy(typeof(UnknownSapSizingRecommendationResult))]
+    [PersistableModelProxy(typeof(UnknownSAPSizingRecommendationResult))]
     public partial class SapSizingRecommendationResult : IUtf8JsonSerializable, IJsonModel<SapSizingRecommendationResult>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapSizingRecommendationResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     case "ThreeTier": return ThreeTierRecommendationResult.DeserializeThreeTierRecommendationResult(element, options);
                 }
             }
-            return UnknownSapSizingRecommendationResult.DeserializeUnknownSapSizingRecommendationResult(element, options);
+            return UnknownSAPSizingRecommendationResult.DeserializeUnknownSAPSizingRecommendationResult(element, options);
         }
 
         BinaryData IPersistableModel<SapSizingRecommendationResult>.Write(ModelReaderWriterOptions options)

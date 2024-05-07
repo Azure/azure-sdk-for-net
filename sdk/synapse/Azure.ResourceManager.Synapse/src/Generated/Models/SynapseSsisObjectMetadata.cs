@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary>
     /// SSIS object metadata.
     /// Please note <see cref="SynapseSsisObjectMetadata"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="SynapseSsisEnvironment"/>, <see cref="SynapseSsisFolder"/>, <see cref="SynapseSsisPackage"/> and <see cref="SynapseSsisProject"/>.
+    /// The available derived classes include <see cref="SynapseSsisFolder"/>, <see cref="SynapseSsisProject"/>, <see cref="SynapseSsisPackage"/> and <see cref="SynapseSsisEnvironment"/>.
     /// </summary>
     public abstract partial class SynapseSsisObjectMetadata
     {

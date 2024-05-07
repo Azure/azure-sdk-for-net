@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="value">
         /// The list of Kusto data connections.
         /// Please note <see cref="SynapseDataConnectionData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SynapseEventGridDataConnection"/>, <see cref="SynapseEventHubDataConnection"/> and <see cref="SynapseIotHubDataConnection"/>.
+        /// The available derived classes include <see cref="SynapseEventHubDataConnection"/>, <see cref="SynapseIotHubDataConnection"/> and <see cref="SynapseEventGridDataConnection"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SynapseDataConnectionListResult(IReadOnlyList<SynapseDataConnectionData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <summary>
         /// The list of Kusto data connections.
         /// Please note <see cref="SynapseDataConnectionData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SynapseEventGridDataConnection"/>, <see cref="SynapseEventHubDataConnection"/> and <see cref="SynapseIotHubDataConnection"/>.
+        /// The available derived classes include <see cref="SynapseEventHubDataConnection"/>, <see cref="SynapseIotHubDataConnection"/> and <see cref="SynapseEventGridDataConnection"/>.
         /// </summary>
         public IReadOnlyList<SynapseDataConnectionData> Value { get; }
     }
