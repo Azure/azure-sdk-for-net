@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Media.Models
             ClipTime end = default;
             string label = default;
             IList<MediaJobInputDefinition> inputDefinitions = default;
-            string odataType = "#Microsoft.Media.JobInputClip";
+            string odataType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

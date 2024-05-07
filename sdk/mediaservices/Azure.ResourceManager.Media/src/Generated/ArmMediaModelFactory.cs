@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="track">
         /// Detailed information about a track in the asset.
         /// Please note <see cref="MediaAssetTrackBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.AudioTrack"/>, <see cref="Models.TextTrack"/> and <see cref="VideoTrack"/>.
+        /// The available derived classes include <see cref="Models.AudioTrack"/>, <see cref="VideoTrack"/> and <see cref="Models.TextTrack"/>.
         /// </param>
         /// <param name="provisioningState"> Provisioning state of the asset track. </param>
         /// <returns> A new <see cref="Media.MediaAssetTrackData"/> instance for mocking. </returns>
@@ -416,12 +416,12 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="configuration">
         /// The key delivery configuration.
         /// Please note <see cref="ContentKeyPolicyConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ContentKeyPolicyClearKeyConfiguration"/>, <see cref="ContentKeyPolicyFairPlayConfiguration"/>, <see cref="ContentKeyPolicyPlayReadyConfiguration"/>, <see cref="ContentKeyPolicyUnknownConfiguration"/> and <see cref="ContentKeyPolicyWidevineConfiguration"/>.
+        /// The available derived classes include <see cref="ContentKeyPolicyClearKeyConfiguration"/>, <see cref="ContentKeyPolicyUnknownConfiguration"/>, <see cref="ContentKeyPolicyWidevineConfiguration"/>, <see cref="ContentKeyPolicyPlayReadyConfiguration"/> and <see cref="ContentKeyPolicyFairPlayConfiguration"/>.
         /// </param>
         /// <param name="restriction">
         /// The requirements that must be met to deliver keys with this configuration
         /// Please note <see cref="ContentKeyPolicyRestriction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ContentKeyPolicyOpenRestriction"/>, <see cref="ContentKeyPolicyTokenRestriction"/> and <see cref="ContentKeyPolicyUnknownRestriction"/>.
+        /// The available derived classes include <see cref="ContentKeyPolicyOpenRestriction"/>, <see cref="ContentKeyPolicyUnknownRestriction"/> and <see cref="ContentKeyPolicyTokenRestriction"/>.
         /// </param>
         /// <returns> A new <see cref="Models.ContentKeyPolicyOption"/> instance for mocking. </returns>
         public static ContentKeyPolicyOption ContentKeyPolicyOption(Guid? policyOptionId = null, string name = null, ContentKeyPolicyConfiguration configuration = null, ContentKeyPolicyRestriction restriction = null)
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="input">
         /// The inputs for the Job.
         /// Please note <see cref="MediaJobInputBasicProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MediaJobInputAsset"/>, <see cref="MediaJobInputClip"/>, <see cref="MediaJobInputHttp"/>, <see cref="MediaJobInputs"/> and <see cref="MediaJobInputSequence"/>.
+        /// The available derived classes include <see cref="MediaJobInputAsset"/>, <see cref="MediaJobInputHttp"/>, <see cref="MediaJobInputClip"/>, <see cref="MediaJobInputs"/> and <see cref="MediaJobInputSequence"/>.
         /// </param>
         /// <param name="lastModifiedOn"> The UTC date and time when the customer has last updated the Job, in 'YYYY-MM-DDThh:mm:ssZ' format. </param>
         /// <param name="outputs">
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="presetOverride">
         /// A preset used to override the preset in the corresponding transform output.
         /// Please note <see cref="MediaTransformPreset"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AudioAnalyzerPreset"/>, <see cref="BuiltInStandardEncoderPreset"/>, <see cref="StandardEncoderPreset"/> and <see cref="VideoAnalyzerPreset"/>.
+        /// The available derived classes include <see cref="VideoAnalyzerPreset"/>, <see cref="AudioAnalyzerPreset"/>, <see cref="BuiltInStandardEncoderPreset"/> and <see cref="StandardEncoderPreset"/>.
         /// </param>
         /// <param name="state"> Describes the state of the JobOutput. </param>
         /// <param name="progress"> If the JobOutput is in a Processing state, this contains the Job completion percentage. The value is an estimate and not intended to be used to predict Job completion times. To determine if the JobOutput is complete, use the State property. </param>
@@ -894,7 +894,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="presetOverride">
         /// A preset used to override the preset in the corresponding transform output.
         /// Please note <see cref="MediaTransformPreset"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AudioAnalyzerPreset"/>, <see cref="BuiltInStandardEncoderPreset"/>, <see cref="StandardEncoderPreset"/> and <see cref="VideoAnalyzerPreset"/>.
+        /// The available derived classes include <see cref="VideoAnalyzerPreset"/>, <see cref="AudioAnalyzerPreset"/>, <see cref="BuiltInStandardEncoderPreset"/> and <see cref="StandardEncoderPreset"/>.
         /// </param>
         /// <param name="state"> Describes the state of the JobOutput. </param>
         /// <param name="progress"> If the JobOutput is in a Processing state, this contains the Job completion percentage. The value is an estimate and not intended to be used to predict Job completion times. To determine if the JobOutput is complete, use the State property. </param>

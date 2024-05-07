@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Media.Models
             string audioLanguage = default;
             AudioAnalysisMode? mode = default;
             IDictionary<string, string> experimentalOptions = default;
-            string odataType = "#Microsoft.Media.AudioAnalyzerPreset";
+            string odataType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

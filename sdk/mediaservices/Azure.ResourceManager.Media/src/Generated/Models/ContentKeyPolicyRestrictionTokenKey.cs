@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary>
     /// Base class for Content Key Policy key for token validation. A derived class must be used to create a token key.
     /// Please note <see cref="ContentKeyPolicyRestrictionTokenKey"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="ContentKeyPolicyRsaTokenKey"/>, <see cref="ContentKeyPolicySymmetricTokenKey"/> and <see cref="ContentKeyPolicyX509CertificateTokenKey"/>.
+    /// The available derived classes include <see cref="ContentKeyPolicySymmetricTokenKey"/>, <see cref="ContentKeyPolicyRsaTokenKey"/> and <see cref="ContentKeyPolicyX509CertificateTokenKey"/>.
     /// </summary>
     public abstract partial class ContentKeyPolicyRestrictionTokenKey
     {

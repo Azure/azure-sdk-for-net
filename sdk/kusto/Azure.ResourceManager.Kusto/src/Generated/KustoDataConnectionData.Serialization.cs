@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.Kusto
             {
                 switch (discriminator.GetString())
                 {
-                    case "CosmosDb": return KustoCosmosDBDataConnection.DeserializeKustoCosmosDBDataConnection(element, options);
-                    case "EventGrid": return KustoEventGridDataConnection.DeserializeKustoEventGridDataConnection(element, options);
                     case "EventHub": return KustoEventHubDataConnection.DeserializeKustoEventHubDataConnection(element, options);
                     case "IotHub": return KustoIotHubDataConnection.DeserializeKustoIotHubDataConnection(element, options);
+                    case "EventGrid": return KustoEventGridDataConnection.DeserializeKustoEventGridDataConnection(element, options);
+                    case "CosmosDb": return KustoCosmosDBDataConnection.DeserializeKustoCosmosDBDataConnection(element, options);
                 }
             }
             return UnknownDataConnection.DeserializeUnknownDataConnection(element, options);

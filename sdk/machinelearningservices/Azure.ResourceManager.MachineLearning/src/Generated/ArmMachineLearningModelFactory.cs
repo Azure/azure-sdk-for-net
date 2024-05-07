@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="properties">
         /// Compute properties
         /// Please note <see cref="Models.MachineLearningComputeProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.MachineLearningAksCompute"/>, <see cref="Models.AmlCompute"/>, <see cref="Models.MachineLearningComputeInstance"/>, <see cref="Models.MachineLearningDatabricksCompute"/>, <see cref="Models.MachineLearningDataFactoryCompute"/>, <see cref="Models.MachineLearningDataLakeAnalytics"/>, <see cref="Models.MachineLearningHDInsightCompute"/>, <see cref="Models.MachineLearningKubernetesCompute"/>, <see cref="Models.MachineLearningSynapseSpark"/> and <see cref="Models.MachineLearningVirtualMachineCompute"/>.
+        /// The available derived classes include <see cref="Models.MachineLearningAksCompute"/>, <see cref="Models.MachineLearningKubernetesCompute"/>, <see cref="Models.AmlCompute"/>, <see cref="Models.MachineLearningComputeInstance"/>, <see cref="Models.MachineLearningVirtualMachineCompute"/>, <see cref="Models.MachineLearningHDInsightCompute"/>, <see cref="Models.MachineLearningDataFactoryCompute"/>, <see cref="Models.MachineLearningDatabricksCompute"/>, <see cref="Models.MachineLearningDataLakeAnalytics"/> and <see cref="Models.MachineLearningSynapseSpark"/>.
         /// </param>
         /// <returns> A new <see cref="MachineLearning.MachineLearningComputeData"/> instance for mocking. </returns>
         public static MachineLearningComputeData MachineLearningComputeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, MachineLearningSku sku = null, MachineLearningComputeProperties properties = null)
@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="properties">
         /// [Required] Additional attributes of the entity.
         /// Please note <see cref="MachineLearningDataVersionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MachineLearningTable"/>, <see cref="MachineLearningUriFileDataVersion"/> and <see cref="MachineLearningUriFolderDataVersion"/>.
+        /// The available derived classes include <see cref="DataImport"/>, <see cref="MachineLearningTable"/>, <see cref="MachineLearningUriFileDataVersion"/> and <see cref="MachineLearningUriFolderDataVersion"/>.
         /// </param>
         /// <returns> A new <see cref="MachineLearning.MachineLearningDataVersionData"/> instance for mocking. </returns>
         public static MachineLearningDataVersionData MachineLearningDataVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MachineLearningDataVersionProperties properties = null)
@@ -964,7 +964,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="model">
         /// Reference to the model asset for the endpoint deployment.
         /// Please note <see cref="MachineLearningAssetReferenceBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MachineLearningDataPathAssetReference"/>, <see cref="MachineLearningIdAssetReference"/> and <see cref="MachineLearningOutputPathAssetReference"/>.
+        /// The available derived classes include <see cref="MachineLearningIdAssetReference"/>, <see cref="MachineLearningDataPathAssetReference"/> and <see cref="MachineLearningOutputPathAssetReference"/>.
         /// </param>
         /// <param name="outputAction"> Indicates how the output will be organized. </param>
         /// <param name="outputFileName"> Customized output file name for append_row output action. </param>
@@ -1295,7 +1295,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="properties">
         /// [Required] Additional attributes of the entity.
         /// Please note <see cref="Models.MachineLearningJobProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.AutoMLJob"/>, <see cref="Models.MachineLearningCommandJob"/>, <see cref="Models.LabelingJobProperties"/>, <see cref="Models.MachineLearningPipelineJob"/>, <see cref="Models.SparkJob"/> and <see cref="Models.MachineLearningSweepJob"/>.
+        /// The available derived classes include <see cref="Models.LabelingJobProperties"/>, <see cref="Models.AutoMLJob"/>, <see cref="Models.MachineLearningCommandJob"/>, <see cref="Models.MachineLearningPipelineJob"/>, <see cref="Models.SparkJob"/> and <see cref="Models.MachineLearningSweepJob"/>.
         /// </param>
         /// <returns> A new <see cref="MachineLearning.MachineLearningJobData"/> instance for mocking. </returns>
         public static MachineLearningJobData MachineLearningJobData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MachineLearningJobProperties properties = null)
@@ -1762,7 +1762,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="action">
         /// [Required] Specifies the action of the schedule
         /// Please note <see cref="MachineLearningScheduleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MachineLearningJobScheduleAction"/>, <see cref="CreateMonitorAction"/>, <see cref="ImportDataAction"/> and <see cref="MachineLearningEndpointScheduleAction"/>.
+        /// The available derived classes include <see cref="CreateMonitorAction"/>, <see cref="MachineLearningEndpointScheduleAction"/>, <see cref="ImportDataAction"/> and <see cref="MachineLearningJobScheduleAction"/>.
         /// </param>
         /// <param name="displayName"> Display name of schedule. </param>
         /// <param name="isEnabled"> Is the schedule enabled?. </param>
@@ -1770,7 +1770,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="trigger">
         /// [Required] Specifies the trigger details
         /// Please note <see cref="MachineLearningTriggerBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CronTrigger"/> and <see cref="MachineLearningRecurrenceTrigger"/>.
+        /// The available derived classes include <see cref="MachineLearningRecurrenceTrigger"/> and <see cref="CronTrigger"/>.
         /// </param>
         /// <returns> A new <see cref="Models.MachineLearningScheduleProperties"/> instance for mocking. </returns>
         public static MachineLearningScheduleProperties MachineLearningScheduleProperties(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, MachineLearningScheduleAction action = null, string displayName = null, bool? isEnabled = null, MachineLearningScheduleProvisioningStatus? provisioningState = null, MachineLearningTriggerBase trigger = null)
@@ -3179,7 +3179,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="inputs">
         /// Mapping of input data bindings used in the job.
         /// Please note <see cref="MachineLearningJobInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MachineLearningCustomModelJobInput"/>, <see cref="MachineLearningLiteralJobInput"/>, <see cref="MachineLearningFlowModelJobInput"/>, <see cref="MachineLearningTableJobInput"/>, <see cref="MachineLearningTritonModelJobInput"/>, <see cref="MachineLearningUriFileJobInput"/> and <see cref="MachineLearningUriFolderJobInput"/>.
+        /// The available derived classes include <see cref="MachineLearningTableJobInput"/>, <see cref="MachineLearningCustomModelJobInput"/>, <see cref="MachineLearningFlowModelJobInput"/>, <see cref="MachineLearningLiteralJobInput"/>, <see cref="MachineLearningTritonModelJobInput"/>, <see cref="MachineLearningUriFileJobInput"/> and <see cref="MachineLearningUriFolderJobInput"/>.
         /// </param>
         /// <param name="limits"> Command Job limit. </param>
         /// <param name="outputs">
@@ -3474,7 +3474,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="inputs">
         /// Inputs for the pipeline job.
         /// Please note <see cref="MachineLearningJobInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MachineLearningCustomModelJobInput"/>, <see cref="MachineLearningLiteralJobInput"/>, <see cref="MachineLearningFlowModelJobInput"/>, <see cref="MachineLearningTableJobInput"/>, <see cref="MachineLearningTritonModelJobInput"/>, <see cref="MachineLearningUriFileJobInput"/> and <see cref="MachineLearningUriFolderJobInput"/>.
+        /// The available derived classes include <see cref="MachineLearningTableJobInput"/>, <see cref="MachineLearningCustomModelJobInput"/>, <see cref="MachineLearningFlowModelJobInput"/>, <see cref="MachineLearningLiteralJobInput"/>, <see cref="MachineLearningTritonModelJobInput"/>, <see cref="MachineLearningUriFileJobInput"/> and <see cref="MachineLearningUriFolderJobInput"/>.
         /// </param>
         /// <param name="jobs"> Jobs construct the Pipeline Job. </param>
         /// <param name="outputs">
@@ -3562,7 +3562,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="inputs">
         /// Mapping of input data bindings used in the job.
         /// Please note <see cref="MachineLearningJobInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MachineLearningCustomModelJobInput"/>, <see cref="MachineLearningLiteralJobInput"/>, <see cref="MachineLearningFlowModelJobInput"/>, <see cref="MachineLearningTableJobInput"/>, <see cref="MachineLearningTritonModelJobInput"/>, <see cref="MachineLearningUriFileJobInput"/> and <see cref="MachineLearningUriFolderJobInput"/>.
+        /// The available derived classes include <see cref="MachineLearningTableJobInput"/>, <see cref="MachineLearningCustomModelJobInput"/>, <see cref="MachineLearningFlowModelJobInput"/>, <see cref="MachineLearningLiteralJobInput"/>, <see cref="MachineLearningTritonModelJobInput"/>, <see cref="MachineLearningUriFileJobInput"/> and <see cref="MachineLearningUriFolderJobInput"/>.
         /// </param>
         /// <param name="jars"> Jar files used in the job. </param>
         /// <param name="outputs">
@@ -3649,7 +3649,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="inputs">
         /// Mapping of input data bindings used in the job.
         /// Please note <see cref="MachineLearningJobInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MachineLearningCustomModelJobInput"/>, <see cref="MachineLearningLiteralJobInput"/>, <see cref="MachineLearningFlowModelJobInput"/>, <see cref="MachineLearningTableJobInput"/>, <see cref="MachineLearningTritonModelJobInput"/>, <see cref="MachineLearningUriFileJobInput"/> and <see cref="MachineLearningUriFolderJobInput"/>.
+        /// The available derived classes include <see cref="MachineLearningTableJobInput"/>, <see cref="MachineLearningCustomModelJobInput"/>, <see cref="MachineLearningFlowModelJobInput"/>, <see cref="MachineLearningLiteralJobInput"/>, <see cref="MachineLearningTritonModelJobInput"/>, <see cref="MachineLearningUriFileJobInput"/> and <see cref="MachineLearningUriFolderJobInput"/>.
         /// </param>
         /// <param name="limits"> Sweep Job limit. </param>
         /// <param name="objective"> [Required] Optimization objective. </param>

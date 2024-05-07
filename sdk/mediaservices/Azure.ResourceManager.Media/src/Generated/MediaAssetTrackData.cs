@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="track">
         /// Detailed information about a track in the asset.
         /// Please note <see cref="MediaAssetTrackBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AudioTrack"/>, <see cref="TextTrack"/> and <see cref="VideoTrack"/>.
+        /// The available derived classes include <see cref="AudioTrack"/>, <see cref="VideoTrack"/> and <see cref="TextTrack"/>.
         /// </param>
         /// <param name="provisioningState"> Provisioning state of the asset track. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Media
         /// <summary>
         /// Detailed information about a track in the asset.
         /// Please note <see cref="MediaAssetTrackBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AudioTrack"/>, <see cref="TextTrack"/> and <see cref="VideoTrack"/>.
+        /// The available derived classes include <see cref="AudioTrack"/>, <see cref="VideoTrack"/> and <see cref="TextTrack"/>.
         /// </summary>
         public MediaAssetTrackBase Track { get; set; }
         /// <summary> Provisioning state of the asset track. </summary>

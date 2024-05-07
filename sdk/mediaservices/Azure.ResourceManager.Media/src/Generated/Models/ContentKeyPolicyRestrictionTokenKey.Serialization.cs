@@ -70,8 +70,8 @@ namespace Azure.ResourceManager.Media.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "#Microsoft.Media.ContentKeyPolicyRsaTokenKey": return ContentKeyPolicyRsaTokenKey.DeserializeContentKeyPolicyRsaTokenKey(element, options);
                     case "#Microsoft.Media.ContentKeyPolicySymmetricTokenKey": return ContentKeyPolicySymmetricTokenKey.DeserializeContentKeyPolicySymmetricTokenKey(element, options);
+                    case "#Microsoft.Media.ContentKeyPolicyRsaTokenKey": return ContentKeyPolicyRsaTokenKey.DeserializeContentKeyPolicyRsaTokenKey(element, options);
                     case "#Microsoft.Media.ContentKeyPolicyX509CertificateTokenKey": return ContentKeyPolicyX509CertificateTokenKey.DeserializeContentKeyPolicyX509CertificateTokenKey(element, options);
                 }
             }

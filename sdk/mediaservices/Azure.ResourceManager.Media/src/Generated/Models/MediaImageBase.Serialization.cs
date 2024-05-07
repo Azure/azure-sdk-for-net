@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Media.Models
             TimeSpan? keyFrameInterval = default;
             InputVideoStretchMode? stretchMode = default;
             VideoSyncMode? syncMode = default;
-            string odataType = "#Microsoft.Media.Image";
+            string odataType = default;
             string label = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
