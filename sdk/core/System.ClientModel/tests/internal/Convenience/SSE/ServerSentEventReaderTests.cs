@@ -65,7 +65,7 @@ public class ServerSentEventReaderTests
     //{
     //    Stream contentStream = BinaryData.FromString("""
     //        ignore: done
-            
+    //
     //        """).ToStream();
     //    using ServerSentEventReader reader = new(contentStream);
 

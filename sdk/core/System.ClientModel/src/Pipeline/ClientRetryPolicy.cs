@@ -305,7 +305,7 @@ public class ClientRetryPolicy : PipelinePolicy
     {
         if (cancellationToken.WaitHandle.WaitOne(time))
         {
-            cancellationToken.ThrowIfCancellationRequested();
+            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
         }
     }
 }
