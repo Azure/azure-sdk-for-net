@@ -1,5 +1,20 @@
 # Release History
 
+## 1.12.0-beta.3 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.11.3 (2024-05-07)
+
+### Bugs Fixed
+- Fixed a regression in `DefaultAzureCredential` probe request behavior for IMDS managed identity environments. [#43796](https://github.com/Azure/azure-sdk-for-net/issues/43796)
+
 ## 1.12.0-beta.2 (2024-05-07)
 
 ### Features Added
