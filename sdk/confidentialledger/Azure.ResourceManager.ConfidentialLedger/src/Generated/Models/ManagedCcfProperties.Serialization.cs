@@ -56,6 +56,11 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 writer.WritePropertyName("deploymentType"u8);
                 writer.WriteObjectValue(DeploymentType, options);
             }
+            if (Optional.IsDefined(RunningState))
+            {
+                writer.WritePropertyName("runningState"u8);
+                writer.WriteStringValue(RunningState.Value.ToString());
+            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -109,6 +114,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             Uri identityServiceUri = default;
             IList<ConfidentialLedgerMemberIdentityCertificate> memberIdentityCertificates = default;
             ConfidentialLedgerDeploymentType deploymentType = default;
+            ConfidentialLedgerRunningState? runningState = default;
             ConfidentialLedgerProvisioningState? provisioningState = default;
             int? nodeCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -161,6 +167,15 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                     deploymentType = ConfidentialLedgerDeploymentType.DeserializeConfidentialLedgerDeploymentType(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("runningState"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    runningState = new ConfidentialLedgerRunningState(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -191,6 +206,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 identityServiceUri,
                 memberIdentityCertificates ?? new ChangeTrackingList<ConfidentialLedgerMemberIdentityCertificate>(),
                 deploymentType,
+                runningState,
                 provisioningState,
                 nodeCount,
                 serializedAdditionalRawData);

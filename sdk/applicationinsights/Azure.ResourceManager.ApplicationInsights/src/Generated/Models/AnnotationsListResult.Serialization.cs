@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            IReadOnlyList<Annotation> value = default;
+            IReadOnlyList<ApplicationInsightsAnnotation> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     {
                         continue;
                     }
-                    List<Annotation> array = new List<Annotation>();
+                    List<ApplicationInsightsAnnotation> array = new List<ApplicationInsightsAnnotation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Annotation.DeserializeAnnotation(item, options));
+                        array.Add(ApplicationInsightsAnnotation.DeserializeApplicationInsightsAnnotation(item, options));
                     }
                     value = array;
                     continue;
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AnnotationsListResult(value ?? new ChangeTrackingList<Annotation>(), serializedAdditionalRawData);
+            return new AnnotationsListResult(value ?? new ChangeTrackingList<ApplicationInsightsAnnotation>(), serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

@@ -195,6 +195,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         public BlobBaseClient(string connectionString, string blobContainerName, string blobName, BlobClientOptions options)
         {
+            Argument.AssertNotNull(blobContainerName, nameof(blobContainerName));
+            Argument.AssertNotNull(blobName, nameof(blobName));
+
             options ??= new BlobClientOptions();
             var conn = StorageConnectionString.Parse(connectionString);
             var builder =
