@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
         /// <param name="facets">
         /// Query facets.
         /// Please note <see cref="Facet"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FacetError"/> and <see cref="FacetResult"/>.
+        /// The available derived classes include <see cref="FacetResult"/> and <see cref="FacetError"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ResourceQueryResult(long totalRecords, long count, ResultTruncated resultTruncated, string skipToken, BinaryData data, IReadOnlyList<Facet> facets, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
         /// <summary>
         /// Query facets.
         /// Please note <see cref="Facet"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FacetError"/> and <see cref="FacetResult"/>.
+        /// The available derived classes include <see cref="FacetResult"/> and <see cref="FacetError"/>.
         /// </summary>
         public IReadOnlyList<Facet> Facets { get; }
     }

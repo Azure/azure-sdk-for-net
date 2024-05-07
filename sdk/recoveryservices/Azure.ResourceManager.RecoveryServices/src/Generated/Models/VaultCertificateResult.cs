@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="properties">
         /// Certificate details representing the Vault credentials.
         /// Please note <see cref="ResourceCertificateDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ResourceCertificateAndAcsDetails"/> and <see cref="ResourceCertificateAndAadDetails"/>.
+        /// The available derived classes include <see cref="ResourceCertificateAndAadDetails"/> and <see cref="ResourceCertificateAndAcsDetails"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal VaultCertificateResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceCertificateDetails properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <summary>
         /// Certificate details representing the Vault credentials.
         /// Please note <see cref="ResourceCertificateDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ResourceCertificateAndAcsDetails"/> and <see cref="ResourceCertificateAndAadDetails"/>.
+        /// The available derived classes include <see cref="ResourceCertificateAndAadDetails"/> and <see cref="ResourceCertificateAndAcsDetails"/>.
         /// </summary>
         public ResourceCertificateDetails Properties { get; }
     }
