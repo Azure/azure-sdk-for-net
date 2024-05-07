@@ -337,3 +337,13 @@ namespace Azure.Security.KeyVault.Administration
         public override string ToString() { throw null; }
     }
 }
+namespace Azure.Security.KeyVault.Administration.Models
+{
+    public partial class PreBackupOperationParameters
+    {
+        public PreBackupOperationParameters() { }
+        public string StorageResourceUri { get { throw null; } set { } }
+        public string Token { get { throw null; } set { } }
+        public bool? UseManagedIdentity { get { throw null; } set { } }
+    }
+}
