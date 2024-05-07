@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    [PersistableModelProxy(typeof(UnknownMigrateMySqlAzureDBForMySqlSyncTaskOutput))]
+    [PersistableModelProxy(typeof(UnknownMigrateMySqlAzureDbForMySqlSyncTaskOutput))]
     public partial class MigrateMySqlAzureDBForMySqlSyncTaskOutput : IUtf8JsonSerializable, IJsonModel<MigrateMySqlAzureDBForMySqlSyncTaskOutput>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateMySqlAzureDBForMySqlSyncTaskOutput>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -75,14 +75,14 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "DatabaseLevelErrorOutput": return MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseError.DeserializeMigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseError(element, options);
-                    case "DatabaseLevelOutput": return MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseLevel.DeserializeMigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseLevel(element, options);
-                    case "ErrorOutput": return MigrateMySqlAzureDBForMySqlSyncTaskOutputError.DeserializeMigrateMySqlAzureDBForMySqlSyncTaskOutputError(element, options);
                     case "MigrationLevelOutput": return MigrateMySqlAzureDBForMySqlSyncTaskOutputMigrationLevel.DeserializeMigrateMySqlAzureDBForMySqlSyncTaskOutputMigrationLevel(element, options);
+                    case "DatabaseLevelOutput": return MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseLevel.DeserializeMigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseLevel(element, options);
                     case "TableLevelOutput": return MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel.DeserializeMigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel(element, options);
+                    case "ErrorOutput": return MigrateMySqlAzureDBForMySqlSyncTaskOutputError.DeserializeMigrateMySqlAzureDBForMySqlSyncTaskOutputError(element, options);
+                    case "DatabaseLevelErrorOutput": return MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseError.DeserializeMigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseError(element, options);
                 }
             }
-            return UnknownMigrateMySqlAzureDBForMySqlSyncTaskOutput.DeserializeUnknownMigrateMySqlAzureDBForMySqlSyncTaskOutput(element, options);
+            return UnknownMigrateMySqlAzureDbForMySqlSyncTaskOutput.DeserializeUnknownMigrateMySqlAzureDbForMySqlSyncTaskOutput(element, options);
         }
 
         BinaryData IPersistableModel<MigrateMySqlAzureDBForMySqlSyncTaskOutput>.Write(ModelReaderWriterOptions options)
