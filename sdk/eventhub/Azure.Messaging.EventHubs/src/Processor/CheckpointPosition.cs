@@ -43,10 +43,12 @@ namespace Azure.Messaging.EventHubs.Processor
         /// </summary>
         ///
         /// <param name="globalOffset">The global offset to associate with the checkpoint. This indicates that a processor should begin reading from the next event in the stream.</param>
+        /// <param name="sequenceNumber">The sequence number to associate with this checkpoint. This value is only used as informational metadata for the checkpoint.</param>
         ///
-        public CheckpointPosition(string globalOffset)
+        public CheckpointPosition(string globalOffset, long sequenceNumber = default)
         {
             GlobalOffset = globalOffset;
+            SequenceNumber = sequenceNumber;
         }
 
         /// <summary>
@@ -57,7 +59,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         public static CheckpointPosition FromEvent(EventData eventData)
         {
-            return new CheckpointPosition(eventData.SequenceNumber);
+            return new CheckpointPosition(eventData.GlobalOffset, eventData.SequenceNumber);
         }
 
         /// <summary>
@@ -70,7 +72,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         public bool Equals(CheckpointPosition other)
         {
-            return (SequenceNumber == other.SequenceNumber);
+            return (SequenceNumber == other.SequenceNumber) && (GlobalOffset == other.GlobalOffset);
         }
 
         /// <summary>
@@ -100,6 +102,7 @@ namespace Azure.Messaging.EventHubs.Processor
         {
             var hashCode = new HashCodeBuilder();
             hashCode.Add(SequenceNumber);
+            hashCode.Add(GlobalOffset);
 
             return hashCode.ToHashCode();
         }
@@ -112,7 +115,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         public override string ToString()
         {
-            return $"Sequence Number: [{SequenceNumber}]";
+            return $"Global Offset:[{GlobalOffset}] Sequence Number: [{SequenceNumber}]";
         }
 
         /// <summary>

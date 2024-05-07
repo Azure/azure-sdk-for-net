@@ -22,22 +22,22 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <param name="instance">The instance that this method was invoked on.</param>
         /// <param name="properties">The set of free-form application properties to send with the event.</param>
         /// <param name="sequenceNumber">The sequence number assigned to the event when it was enqueued in the associated Event Hub partition.</param>
-        /// <param name="offset">The offset of the event when it was received from the associated Event Hub partition.</param>
+        /// <param name="globalOffset">The global offset of the event when it was received from the associated Event Hub partition.</param>
         /// <param name="enqueuedTime">The date and time, in UTC, of when the event was enqueued in the Event Hub partition.</param>
         /// <param name="partitionKey">The partition hashing key applied to the batch that the associated <see cref="EventData"/>, was sent with.</param>
         /// <param name="lastPartitionSequenceNumber">The sequence number that was last enqueued into the Event Hub partition.</param>
-        /// <param name="lastPartitionOffset">The offset that was last enqueued into the Event Hub partition.</param>
+        /// <param name="lastPartitionGlobalOffset">The global offset that was last enqueued into the Event Hub partition.</param>
         /// <param name="lastPartitionEnqueuedTime">The date and time, in UTC, of the event that was last enqueued into the Event Hub partition.</param>
         /// <param name="lastPartitionPropertiesRetrievalTime">The date and time, in UTC, that the last event information for the Event Hub partition was retrieved from the service.</param>
         ///
         public static void PopulateFromEventProperties(this AmqpAnnotatedMessage instance,
                                                        IDictionary<string, object> properties = null,
                                                        long? sequenceNumber = null,
-                                                       long? offset = null,
+                                                       string globalOffset = null,
                                                        DateTimeOffset? enqueuedTime = null,
                                                        string partitionKey = null,
                                                        long? lastPartitionSequenceNumber = null,
-                                                       long? lastPartitionOffset = null,
+                                                       string lastPartitionGlobalOffset = null,
                                                        DateTimeOffset? lastPartitionEnqueuedTime = null,
                                                        DateTimeOffset? lastPartitionPropertiesRetrievalTime = null)
         {
@@ -51,9 +51,9 @@ namespace Azure.Messaging.EventHubs.Amqp
                instance.MessageAnnotations[AmqpProperty.SequenceNumber.ToString()] = sequenceNumber.Value;
            }
 
-           if (offset.HasValue)
+           if (!string.IsNullOrEmpty(globalOffset))
            {
-               instance.MessageAnnotations[AmqpProperty.Offset.ToString()] = offset.Value;
+               instance.MessageAnnotations[AmqpProperty.Offset.ToString()] = globalOffset;
            }
 
            if (enqueuedTime.HasValue)
@@ -71,9 +71,9 @@ namespace Azure.Messaging.EventHubs.Amqp
                instance.DeliveryAnnotations[AmqpProperty.PartitionLastEnqueuedSequenceNumber.ToString()] = lastPartitionSequenceNumber.Value;
            }
 
-           if (lastPartitionOffset.HasValue)
+           if (!string.IsNullOrEmpty(lastPartitionGlobalOffset))
            {
-               instance.DeliveryAnnotations[AmqpProperty.PartitionLastEnqueuedOffset.ToString()] = lastPartitionOffset.Value;
+               instance.DeliveryAnnotations[AmqpProperty.PartitionLastEnqueuedOffset.ToString()] = lastPartitionGlobalOffset;
            }
 
            if (lastPartitionEnqueuedTime.HasValue)
@@ -290,7 +290,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         }
 
         /// <summary>
-        ///   Retrieves the offset of the last event published to the partition from an <see cref="AmqpAnnotatedMessage" />.
+        ///   Retrieves the global offset of the last event published to the partition from an <see cref="AmqpAnnotatedMessage" />.
         /// </summary>
         ///
         /// <param name="instance">The instance that this method was invoked on.</param>
@@ -298,13 +298,13 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         /// <returns>The offset of the last event published to the partition, if represented in the <paramref name="instance"/>; otherwise, <paramref name="defaultValue"/>.</returns>
         ///
-        public static long? GetLastPartitionOffset(this AmqpAnnotatedMessage instance,
-                                                   long? defaultValue = default)
+        public static string GetLastPartitionGlobalOffset(this AmqpAnnotatedMessage instance,
+                                                   string defaultValue = default)
         {
             if ((instance.HasSection(AmqpMessageSection.DeliveryAnnotations))
                 && (instance.DeliveryAnnotations.TryGetValue(AmqpProperty.PartitionLastEnqueuedOffset.ToString(), out var value)))
             {
-                return (long)value;
+                return (string)value;
             }
 
             return defaultValue;

@@ -295,27 +295,27 @@ namespace Azure.Messaging.EventHubs
         public string GlobalOffset => _amqpMessage.GetGlobalOffset(long.MinValue.ToString());
 
         /// <summary>
-        ///   The Event Hubs service no longer allows offsets with a numeric value. Use <see cref="GlobalOffset"/> instead. This
+        ///   The Event Hubs service no longer uses offsets with numeric values. Use <see cref="GlobalOffset"/> instead. This
         ///   property is populated with <see cref="SequenceNumber"/> to avoid breaking existing code that uses only offset properties.
         /// </summary>
         ///
         /// <value>
         ///   This value is read-only and will only be populated for events that have been read from Event Hubs. The default value
-        ///   when not populated is <see cref="long.MinValue"/>
+        ///   when not populated is <see cref="long.MinValue"/>.
         /// </value>
         ///
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public long Offset
-        {
-            get
-            {
-                // The offset is intentionally mapped to sequence number. The service no longer accepts a numeric offset value, so the
-                // new SDK populates the EventData offset property with the amqp message sequence number. This allows for backwards
-                // compatibility to avoid breaking existing code that uses only offset properties.
+        //[EditorBrowsable(EditorBrowsableState.Never)]
+        //public long Offset
+        //{
+        //    get
+        //    {
+        //        // The offset is intentionally mapped to sequence number. The service no longer uses a numeric offset value, so the
+        //        // new SDK populates the EventData offset property with the amqp message sequence number. This allows for backwards
+        //        // compatibility to avoid breaking existing code that uses only offset properties.
 
-                return _amqpMessage.GetSequenceNumber(long.MinValue);
-            }
-        }
+        //        return _amqpMessage.GetSequenceNumber(long.MinValue);
+        //    }l
+        //}
 
         /// <summary>
         ///   The date and time, in UTC, of when the event was enqueued in the Event Hub partition.
@@ -396,8 +396,8 @@ namespace Azure.Messaging.EventHubs
         internal long? LastPartitionSequenceNumber => _amqpMessage.GetLastPartitionSequenceNumber();
 
         /// <summary>
-        ///   The offset of the event that was last enqueued into the Event Hub partition from which this event was
-        ///   received.
+        ///   The global offset of the event that was last enqueued into the Event Hub partition from which this
+        ///   event was received.
         /// </summary>
         ///
         /// <value>
@@ -406,18 +406,32 @@ namespace Azure.Messaging.EventHubs
         ///   populated is <c>null</c>.
         /// </value>
         ///
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        internal long? LastPartitionOffset
-        {
-            get
-            {
-                // The offset is intentionally mapped to sequence number. The service no longer accepts a numeric offset value, so the
-                // new SDK populates the EventData offset property with the amqp message sequence number. This allows for backwards
-                // compatibility to avoid breaking existing code that uses only offset properties.
+        internal string LastPartitionGlobalOffset => _amqpMessage.GetLastPartitionGlobalOffset();
 
-                return _amqpMessage.GetLastPartitionSequenceNumber();
-            }
-        }
+        /// <summary>
+        ///   The Event Hubs service no longer uses offsets with numeric values. Use <see cref="LastPartitionGlobalOffset"/> instead.
+        ///   This property is populated with <see cref="LastPartitionSequenceNumber"/> to avoid breaking existing code that
+        ///   uses only offset properties.
+        /// </summary>
+        ///
+        /// <value>
+        ///   This value is read-only and will only be populated for events that have been read from Event Hubs by a consumer
+        ///   specifying <see cref="ReadEventOptions.TrackLastEnqueuedEventProperties" /> as enabled.  The default value when not
+        ///   populated is <c>null</c>.
+        /// </value>
+        ///
+        //[EditorBrowsable(EditorBrowsableState.Never)]
+        //internal long? LastPartitionOffset
+        //{
+        //    get
+        //    {
+        //        // The offset is intentionally mapped to sequence number. The service no longer uses a numeric offset value, so the
+        //        // new SDK populates the EventData offset property with the amqp message sequence number. This allows for backwards
+        //        // compatibility to avoid breaking existing code that uses only offset properties.
+
+        //        return _amqpMessage.GetLastPartitionSequenceNumber();
+        //    }
+        //}
 
         /// <summary>
         ///   The date and time, in UTC, that the last event was enqueued into the Event Hub partition from
@@ -571,11 +585,11 @@ namespace Azure.Messaging.EventHubs
         /// <param name="properties">The set of free-form event properties to send with the event.</param>
         /// <param name="systemProperties">The set of system properties received from the Event Hubs service.</param>
         /// <param name="sequenceNumber">The sequence number assigned to the event when it was enqueued in the associated Event Hub partition.</param>
-        /// <param name="offset">The offset of the event when it was received from the associated Event Hub partition.</param>
+        /// <param name="globalOffset">The global offset of the event when it was received from the associated Event Hub partition.</param>
         /// <param name="enqueuedTime">The date and time, in UTC, of when the event was enqueued in the Event Hub partition.</param>
         /// <param name="partitionKey">The partition hashing key applied to the batch that the associated <see cref="EventData"/>, was sent with.</param>
         /// <param name="lastPartitionSequenceNumber">The sequence number that was last enqueued into the Event Hub partition.</param>
-        /// <param name="lastPartitionOffset">The offset that was last enqueued into the Event Hub partition.</param>
+        /// <param name="lastPartitionGlobalOffset">The global offset that was last enqueued into the Event Hub partition.</param>
         /// <param name="lastPartitionEnqueuedTime">The date and time, in UTC, of the event that was last enqueued into the Event Hub partition.</param>
         /// <param name="lastPartitionPropertiesRetrievalTime">The date and time, in UTC, that the last event information for the Event Hub partition was retrieved from the service.</param>
         /// <param name="publishedSequenceNumber">The publishing sequence number assigned to the event at the time it was successfully published.</param>
@@ -587,11 +601,11 @@ namespace Azure.Messaging.EventHubs
                            IDictionary<string, object> properties = null,
                            IReadOnlyDictionary<string, object> systemProperties = null,
                            long? sequenceNumber = null,
-                           long? offset = null,
+                           string globalOffset = null,
                            DateTimeOffset? enqueuedTime = null,
                            string partitionKey = null,
                            long? lastPartitionSequenceNumber = null,
-                           long? lastPartitionOffset = null,
+                           string lastPartitionGlobalOffset = null,
                            DateTimeOffset? lastPartitionEnqueuedTime = null,
                            DateTimeOffset? lastPartitionPropertiesRetrievalTime = null,
                            int? publishedSequenceNumber = null,
@@ -605,11 +619,11 @@ namespace Azure.Messaging.EventHubs
             _amqpMessage.PopulateFromEventProperties(
                 properties,
                 sequenceNumber,
-                offset,
+                globalOffset,
                 enqueuedTime,
                 partitionKey,
                 lastPartitionSequenceNumber,
-                lastPartitionOffset,
+                lastPartitionGlobalOffset,
                 lastPartitionEnqueuedTime,
                 lastPartitionPropertiesRetrievalTime);
 
