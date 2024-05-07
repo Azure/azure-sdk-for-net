@@ -37,7 +37,7 @@ public abstract class AsyncResultCollection<T> : ClientResult, IAsyncEnumerable<
             throw new ArgumentException("Unable to create result collection from PipelineResponse with null ContentStream", nameof(response));
         }
 
-        return new AsyncSseBinaryDataResultCollection(response);
+        return new AsyncSseDataEventCollection(response);
     }
 
     #endregion

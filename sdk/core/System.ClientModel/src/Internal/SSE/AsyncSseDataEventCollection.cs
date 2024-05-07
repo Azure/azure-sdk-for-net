@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace System.ClientModel.Internal;
 
-internal class AsyncSseBinaryDataResultCollection : AsyncResultCollection<BinaryData>
+internal class AsyncSseDataEventCollection : AsyncResultCollection<BinaryData>
 {
     // Note: this one doesn't delay sending the request because it's used
     // with protocol methods.
-    public AsyncSseBinaryDataResultCollection(PipelineResponse response) : base(response)
+    public AsyncSseDataEventCollection(PipelineResponse response) : base(response)
     {
         Argument.AssertNotNull(response, nameof(response));
     }
@@ -28,10 +28,10 @@ internal class AsyncSseBinaryDataResultCollection : AsyncResultCollection<Binary
         // AsyncResultCollection.Create factory method.
         Debug.Assert(response.ContentStream is not null);
 
-        return new AsyncSseDataEnumerator(response.ContentStream!, cancellationToken);
+        return new AsyncSseDataEventEnumerator(response.ContentStream!, cancellationToken);
     }
 
-    private sealed class AsyncSseDataEnumerator : IAsyncEnumerator<BinaryData>
+    private sealed class AsyncSseDataEventEnumerator : IAsyncEnumerator<BinaryData>
     {
         private AsyncServerSentEventEnumerator? _events;
         private BinaryData? _current;
@@ -39,7 +39,7 @@ internal class AsyncSseBinaryDataResultCollection : AsyncResultCollection<Binary
         // TODO: is null supression the correct pattern here?
         public BinaryData Current { get => _current!; }
 
-        public AsyncSseDataEnumerator(Stream contentStream, CancellationToken cancellationToken)
+        public AsyncSseDataEventEnumerator(Stream contentStream, CancellationToken cancellationToken)
         {
             Debug.Assert(contentStream is not null);
 
@@ -50,7 +50,7 @@ internal class AsyncSseBinaryDataResultCollection : AsyncResultCollection<Binary
         {
             if (_events is null)
             {
-                throw new ObjectDisposedException(nameof(AsyncSseDataEnumerator));
+                throw new ObjectDisposedException(nameof(AsyncSseDataEventEnumerator));
             }
 
             if (await _events.MoveNextAsync().ConfigureAwait(false))

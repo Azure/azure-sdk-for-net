@@ -10,7 +10,7 @@ using NUnit.Framework;
 
 namespace System.ClientModel.Tests.Convenience;
 
-public class AsyncSseResultCollectionTests
+public class AsyncSseDataEventCollectionTests
 {
     [Test]
     public async Task BinaryDataCollectionEnumeratesData()
@@ -18,7 +18,7 @@ public class AsyncSseResultCollectionTests
         MockPipelineResponse response = new();
         response.SetContent(_mockContent);
 
-        AsyncSseBinaryDataResultCollection results = new(response);
+        AsyncSseDataEventCollection results = new(response);
 
         int i = 0;
         await foreach (BinaryData result in results)
@@ -40,7 +40,7 @@ public class AsyncSseResultCollectionTests
         MockPipelineResponse response = new();
         response.SetContent(_mockContent);
 
-        AsyncSseBinaryDataResultCollection results = new(response);
+        AsyncSseDataEventCollection results = new(response);
 
         CancellationToken token = new(true);
 

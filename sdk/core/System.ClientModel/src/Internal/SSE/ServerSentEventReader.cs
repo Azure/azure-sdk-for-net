@@ -65,7 +65,7 @@ internal sealed class ServerSentEventReader : IDisposable, IAsyncDisposable
             }
             else
             {
-                // Otherwise, process the the field + value and accumulate it for the next dispatched event
+                // Otherwise, process the field + value and accumulate it for the next dispatched event
                 fields ??= new();
                 fields.Add(new ServerSentEventField(line));
             }
@@ -96,7 +96,8 @@ internal sealed class ServerSentEventReader : IDisposable, IAsyncDisposable
 
             if (line == null)
             {
-                // A null line indicates end of input
+                // A null line indicates end of input.
+                // Per the SSE spec, "Once the end of the file is reached, any pending data must be discarded."
                 return null;
             }
             else if (line.Length == 0)
@@ -115,7 +116,7 @@ internal sealed class ServerSentEventReader : IDisposable, IAsyncDisposable
             }
             else
             {
-                // Otherwise, process the the field + value and accumulate it for the next dispatched event
+                // Otherwise, process the field + value and accumulate it for the next dispatched event
                 fields ??= new();
                 fields.Add(new ServerSentEventField(line));
             }

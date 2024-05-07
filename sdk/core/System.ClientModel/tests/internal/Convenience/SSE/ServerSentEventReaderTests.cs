@@ -41,6 +41,63 @@ public class ServerSentEventReaderTests
     }
 
     [Test]
+    public async Task HandlesNullLine()
+    {
+        Stream contentStream = BinaryData.FromString(string.Empty).ToStream();
+        using ServerSentEventReader reader = new(contentStream);
+
+        ServerSentEvent? ssEvent = await reader.TryGetNextEventAsync();
+        Assert.IsNull(ssEvent);
+    }
+
+    [Test]
+    public async Task DiscardsCommentLine()
+    {
+        Stream contentStream = BinaryData.FromString(": comment").ToStream();
+        using ServerSentEventReader reader = new(contentStream);
+
+        ServerSentEvent? ssEvent = await reader.TryGetNextEventAsync();
+        Assert.IsNull(ssEvent);
+    }
+
+    //[Test]
+    //public async Task HandlesIgnoreLine()
+    //{
+    //    Stream contentStream = BinaryData.FromString("""
+    //        ignore: done
+            
+    //        """).ToStream();
+    //    using ServerSentEventReader reader = new(contentStream);
+
+    //    ServerSentEvent? sse = await reader.TryGetNextEventAsync();
+
+    //    Assert.IsNotNull(sse);
+    //    Assert.IsTrue(sse.Value.EventName.Span.SequenceEqual($"done".AsSpan()));
+    //    Assert.IsTrue(sse.Value.Data.Span.SequenceEqual($"[DONE]".AsSpan()));
+    //    Assert.AreEqual(sse.Value.LastEventId.Length, 0);
+    //    Assert.IsNull(sse.Value.ReconnectionTime);
+    //}
+
+    //[Test]
+    //public async Task HandlesDoneEvent()
+    //{
+    //    Stream contentStream = BinaryData.FromString("""
+    //        event: done
+    //        data: [DONE]
+
+    //        """).ToStream();
+    //    using ServerSentEventReader reader = new(contentStream);
+
+    //    ServerSentEvent? sse = await reader.TryGetNextEventAsync();
+
+    //    Assert.IsNotNull(sse);
+    //    Assert.IsTrue(sse.Value.EventName.Span.SequenceEqual($"done".AsSpan()));
+    //    Assert.IsTrue(sse.Value.Data.Span.SequenceEqual($"[DONE]".AsSpan()));
+    //    Assert.AreEqual(sse.Value.LastEventId.Length, 0);
+    //    Assert.IsNull(sse.Value.ReconnectionTime);
+    //}
+
+    [Test]
     public void ThrowsIfCancelled()
     {
         CancellationToken token = new(true);
