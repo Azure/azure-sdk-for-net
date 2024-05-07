@@ -10,16 +10,16 @@ namespace Azure.AI.Translation.Text
         public static Azure.AI.Translation.Text.DictionaryLookupItem DictionaryLookupItem(string normalizedSource = null, string displaySource = null, System.Collections.Generic.IEnumerable<Azure.AI.Translation.Text.DictionaryTranslation> translations = null) { throw null; }
         public static Azure.AI.Translation.Text.DictionaryTranslation DictionaryTranslation(string normalizedTarget = null, string displayTarget = null, string posTag = null, float confidence = 0f, string prefixWord = null, System.Collections.Generic.IEnumerable<Azure.AI.Translation.Text.BackTranslation> backTranslations = null) { throw null; }
         public static Azure.AI.Translation.Text.GetSupportedLanguagesResult GetSupportedLanguagesResult(System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.Translation.Text.TranslationLanguage> translation = null, System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.Translation.Text.TransliterationLanguage> transliteration = null, System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.Translation.Text.SourceDictionaryLanguage> dictionary = null) { throw null; }
-        public static Azure.AI.Translation.Text.LanguageScript LanguageScript(string code = null, string name = null, string nativeName = null, Azure.AI.Translation.Text.LanguageDirectionality directionality = default(Azure.AI.Translation.Text.LanguageDirectionality)) { throw null; }
+        public static Azure.AI.Translation.Text.LanguageScript LanguageScript(string code = null, string name = null, string nativeName = null, Azure.AI.Translation.Text.LanguageDirectionality directionality = Azure.AI.Translation.Text.LanguageDirectionality.LeftToRight) { throw null; }
         public static Azure.AI.Translation.Text.SentenceBoundaries SentenceBoundaries(System.Collections.Generic.IEnumerable<int> sourceSentencesLengths = null, System.Collections.Generic.IEnumerable<int> translatedSentencesLengths = null) { throw null; }
-        public static Azure.AI.Translation.Text.SourceDictionaryLanguage SourceDictionaryLanguage(string name = null, string nativeName = null, Azure.AI.Translation.Text.LanguageDirectionality directionality = default(Azure.AI.Translation.Text.LanguageDirectionality), System.Collections.Generic.IEnumerable<Azure.AI.Translation.Text.TargetDictionaryLanguage> translations = null) { throw null; }
+        public static Azure.AI.Translation.Text.SourceDictionaryLanguage SourceDictionaryLanguage(string name = null, string nativeName = null, Azure.AI.Translation.Text.LanguageDirectionality directionality = Azure.AI.Translation.Text.LanguageDirectionality.LeftToRight, System.Collections.Generic.IEnumerable<Azure.AI.Translation.Text.TargetDictionaryLanguage> translations = null) { throw null; }
         public static Azure.AI.Translation.Text.SourceText SourceText(string text = null) { throw null; }
-        public static Azure.AI.Translation.Text.TargetDictionaryLanguage TargetDictionaryLanguage(string name = null, string nativeName = null, Azure.AI.Translation.Text.LanguageDirectionality directionality = default(Azure.AI.Translation.Text.LanguageDirectionality), string code = null) { throw null; }
+        public static Azure.AI.Translation.Text.TargetDictionaryLanguage TargetDictionaryLanguage(string name = null, string nativeName = null, Azure.AI.Translation.Text.LanguageDirectionality directionality = Azure.AI.Translation.Text.LanguageDirectionality.LeftToRight, string code = null) { throw null; }
         public static Azure.AI.Translation.Text.TranslatedTextAlignment TranslatedTextAlignment(string projections = null) { throw null; }
         public static Azure.AI.Translation.Text.TranslatedTextItem TranslatedTextItem(Azure.AI.Translation.Text.DetectedLanguage detectedLanguage = null, System.Collections.Generic.IEnumerable<Azure.AI.Translation.Text.TranslationText> translations = null, Azure.AI.Translation.Text.SourceText sourceText = null) { throw null; }
-        public static Azure.AI.Translation.Text.TranslationLanguage TranslationLanguage(string name = null, string nativeName = null, Azure.AI.Translation.Text.LanguageDirectionality directionality = default(Azure.AI.Translation.Text.LanguageDirectionality)) { throw null; }
+        public static Azure.AI.Translation.Text.TranslationLanguage TranslationLanguage(string name = null, string nativeName = null, Azure.AI.Translation.Text.LanguageDirectionality directionality = Azure.AI.Translation.Text.LanguageDirectionality.LeftToRight) { throw null; }
         public static Azure.AI.Translation.Text.TranslationText TranslationText(string to = null, string text = null, Azure.AI.Translation.Text.TransliteratedText transliteration = null, Azure.AI.Translation.Text.TranslatedTextAlignment alignment = null, Azure.AI.Translation.Text.SentenceBoundaries sentenceBoundaries = null) { throw null; }
-        public static Azure.AI.Translation.Text.TransliterableScript TransliterableScript(string code = null, string name = null, string nativeName = null, Azure.AI.Translation.Text.LanguageDirectionality directionality = default(Azure.AI.Translation.Text.LanguageDirectionality), System.Collections.Generic.IEnumerable<Azure.AI.Translation.Text.LanguageScript> toScripts = null) { throw null; }
+        public static Azure.AI.Translation.Text.TransliterableScript TransliterableScript(string code = null, string name = null, string nativeName = null, Azure.AI.Translation.Text.LanguageDirectionality directionality = Azure.AI.Translation.Text.LanguageDirectionality.LeftToRight, System.Collections.Generic.IEnumerable<Azure.AI.Translation.Text.LanguageScript> toScripts = null) { throw null; }
         public static Azure.AI.Translation.Text.TransliteratedText TransliteratedText(string text = null, string script = null) { throw null; }
         public static Azure.AI.Translation.Text.TransliterationLanguage TransliterationLanguage(string name = null, string nativeName = null, System.Collections.Generic.IEnumerable<Azure.AI.Translation.Text.TransliterableScript> scripts = null) { throw null; }
     }
@@ -150,23 +150,10 @@ namespace Azure.AI.Translation.Text
         public string Text { get { throw null; } }
         public string Translation { get { throw null; } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct LanguageDirectionality : System.IEquatable<Azure.AI.Translation.Text.LanguageDirectionality>
+    public enum LanguageDirectionality
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public LanguageDirectionality(string value) { throw null; }
-        public static Azure.AI.Translation.Text.LanguageDirectionality LeftToRight { get { throw null; } }
-        public static Azure.AI.Translation.Text.LanguageDirectionality RightToLeft { get { throw null; } }
-        public bool Equals(Azure.AI.Translation.Text.LanguageDirectionality other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Translation.Text.LanguageDirectionality left, Azure.AI.Translation.Text.LanguageDirectionality right) { throw null; }
-        public static implicit operator Azure.AI.Translation.Text.LanguageDirectionality (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Translation.Text.LanguageDirectionality left, Azure.AI.Translation.Text.LanguageDirectionality right) { throw null; }
-        public override string ToString() { throw null; }
+        LeftToRight = 0,
+        RightToLeft = 1,
     }
     public partial class LanguageScript : System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.LanguageScript>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.LanguageScript>
     {
@@ -181,42 +168,16 @@ namespace Azure.AI.Translation.Text
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.LanguageScript>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.LanguageScript>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ProfanityAction : System.IEquatable<Azure.AI.Translation.Text.ProfanityAction>
+    public enum ProfanityAction
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ProfanityAction(string value) { throw null; }
-        public static Azure.AI.Translation.Text.ProfanityAction Deleted { get { throw null; } }
-        public static Azure.AI.Translation.Text.ProfanityAction Marked { get { throw null; } }
-        public static Azure.AI.Translation.Text.ProfanityAction NoAction { get { throw null; } }
-        public bool Equals(Azure.AI.Translation.Text.ProfanityAction other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Translation.Text.ProfanityAction left, Azure.AI.Translation.Text.ProfanityAction right) { throw null; }
-        public static implicit operator Azure.AI.Translation.Text.ProfanityAction (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Translation.Text.ProfanityAction left, Azure.AI.Translation.Text.ProfanityAction right) { throw null; }
-        public override string ToString() { throw null; }
+        NoAction = 0,
+        Marked = 1,
+        Deleted = 2,
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ProfanityMarker : System.IEquatable<Azure.AI.Translation.Text.ProfanityMarker>
+    public enum ProfanityMarker
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ProfanityMarker(string value) { throw null; }
-        public static Azure.AI.Translation.Text.ProfanityMarker Asterisk { get { throw null; } }
-        public static Azure.AI.Translation.Text.ProfanityMarker Tag { get { throw null; } }
-        public bool Equals(Azure.AI.Translation.Text.ProfanityMarker other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Translation.Text.ProfanityMarker left, Azure.AI.Translation.Text.ProfanityMarker right) { throw null; }
-        public static implicit operator Azure.AI.Translation.Text.ProfanityMarker (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Translation.Text.ProfanityMarker left, Azure.AI.Translation.Text.ProfanityMarker right) { throw null; }
-        public override string ToString() { throw null; }
+        Asterisk = 0,
+        Tag = 1,
     }
     public partial class SentenceBoundaries : System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.SentenceBoundaries>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.SentenceBoundaries>
     {

@@ -31,7 +31,7 @@ namespace Azure.AI.Translation.Text
             writer.WritePropertyName("nativeName"u8);
             writer.WriteStringValue(NativeName);
             writer.WritePropertyName("dir"u8);
-            writer.WriteStringValue(Directionality.ToString());
+            writer.WriteStringValue(Directionality.ToSerialString());
             writer.WritePropertyName("translations"u8);
             writer.WriteStartArray();
             foreach (var item in Translations)
@@ -97,7 +97,7 @@ namespace Azure.AI.Translation.Text
                 }
                 if (property.NameEquals("dir"u8))
                 {
-                    dir = new LanguageDirectionality(property.Value.GetString());
+                    dir = property.Value.GetString().ToLanguageDirectionality();
                     continue;
                 }
                 if (property.NameEquals("translations"u8))
