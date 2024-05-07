@@ -70,8 +70,8 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Linux": return SapLinuxConfiguration.DeserializeSapLinuxConfiguration(element, options);
                     case "Windows": return SapWindowsConfiguration.DeserializeSapWindowsConfiguration(element, options);
+                    case "Linux": return SapLinuxConfiguration.DeserializeSapLinuxConfiguration(element, options);
                 }
             }
             return UnknownOSConfiguration.DeserializeUnknownOSConfiguration(element, options);

@@ -70,9 +70,9 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "Skip": return SkipFileShareConfiguration.DeserializeSkipFileShareConfiguration(element, options);
                     case "CreateAndMount": return CreateAndMountFileShareConfiguration.DeserializeCreateAndMountFileShareConfiguration(element, options);
                     case "Mount": return MountFileShareConfiguration.DeserializeMountFileShareConfiguration(element, options);
-                    case "Skip": return SkipFileShareConfiguration.DeserializeSkipFileShareConfiguration(element, options);
                 }
             }
             return UnknownFileShareConfiguration.DeserializeUnknownFileShareConfiguration(element, options);

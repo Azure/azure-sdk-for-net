@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Synapse.Models
 
         /// <summary> Initializes a new instance of <see cref="SynapseWorkspacePatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="identity"> The identity of the workspace. Current supported identity types: None, SystemAssigned, SystemAssigned,UserAssigned. </param>
+        /// <param name="identity"> The identity of the workspace. Current supported identity types: None, SystemAssigned, SystemAssignedUserAssigned. </param>
         /// <param name="sqlAdministratorLoginPassword"> SQL administrator login password. </param>
         /// <param name="managedVirtualNetworkSettings"> Managed Virtual Network Settings. </param>
         /// <param name="workspaceRepositoryConfiguration"> Git integration settings. </param>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Synapse.Models
 
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> The identity of the workspace. Current supported identity types: None, SystemAssigned, SystemAssigned,UserAssigned. </summary>
+        /// <summary> The identity of the workspace. Current supported identity types: None, SystemAssigned, SystemAssignedUserAssigned. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> SQL administrator login password. </summary>
         public string SqlAdministratorLoginPassword { get; set; }

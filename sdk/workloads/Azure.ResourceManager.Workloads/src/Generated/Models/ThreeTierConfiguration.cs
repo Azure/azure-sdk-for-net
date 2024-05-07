@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary>
         /// The properties of the transport directory attached to the VIS. The default for transportFileShareConfiguration is the createAndMount flow if storage configuration is missing.
         /// Please note <see cref="FileShareConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CreateAndMountFileShareConfiguration"/>, <see cref="MountFileShareConfiguration"/> and <see cref="SkipFileShareConfiguration"/>.
+        /// The available derived classes include <see cref="SkipFileShareConfiguration"/>, <see cref="CreateAndMountFileShareConfiguration"/> and <see cref="MountFileShareConfiguration"/>.
         /// </summary>
         public FileShareConfiguration StorageTransportFileShareConfiguration
         {

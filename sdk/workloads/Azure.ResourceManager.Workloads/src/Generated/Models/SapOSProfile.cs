@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <param name="osConfiguration">
         /// Specifies Windows operating system settings on the virtual machine.
         /// Please note <see cref="SapOSConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SapLinuxConfiguration"/> and <see cref="SapWindowsConfiguration"/>.
+        /// The available derived classes include <see cref="SapWindowsConfiguration"/> and <see cref="SapLinuxConfiguration"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SapOSProfile(string adminUsername, string adminPassword, SapOSConfiguration osConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary>
         /// Specifies Windows operating system settings on the virtual machine.
         /// Please note <see cref="SapOSConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SapLinuxConfiguration"/> and <see cref="SapWindowsConfiguration"/>.
+        /// The available derived classes include <see cref="SapWindowsConfiguration"/> and <see cref="SapLinuxConfiguration"/>.
         /// </summary>
         public SapOSConfiguration OSConfiguration { get; set; }
     }

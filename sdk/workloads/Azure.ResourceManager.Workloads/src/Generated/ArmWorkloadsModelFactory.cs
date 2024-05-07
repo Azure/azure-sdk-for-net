@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <param name="configuration">
         /// Defines if the SAP system is being created using Azure Center for SAP solutions (ACSS) or if an existing SAP system is being registered with ACSS
         /// Please note <see cref="SapConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DeploymentConfiguration"/>, <see cref="DeploymentWithOSConfiguration"/> and <see cref="Models.DiscoveryConfiguration"/>.
+        /// The available derived classes include <see cref="Models.DiscoveryConfiguration"/>, <see cref="DeploymentConfiguration"/> and <see cref="DeploymentWithOSConfiguration"/>.
         /// </param>
         /// <param name="managedResourceGroupName"> Managed resource group configuration. </param>
         /// <param name="status"> Defines the SAP Instance status. </param>
@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <param name="providerSettings">
         /// Defines the provider specific properties.
         /// Please note <see cref="ProviderSpecificProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DB2ProviderInstanceProperties"/>, <see cref="MsSqlServerProviderInstanceProperties"/>, <see cref="PrometheusHAClusterProviderInstanceProperties"/>, <see cref="PrometheusOSProviderInstanceProperties"/>, <see cref="HanaDBProviderInstanceProperties"/> and <see cref="SapNetWeaverProviderInstanceProperties"/>.
+        /// The available derived classes include <see cref="HanaDBProviderInstanceProperties"/>, <see cref="SapNetWeaverProviderInstanceProperties"/>, <see cref="PrometheusOSProviderInstanceProperties"/>, <see cref="DB2ProviderInstanceProperties"/>, <see cref="PrometheusHAClusterProviderInstanceProperties"/> and <see cref="MsSqlServerProviderInstanceProperties"/>.
         /// </param>
         /// <returns> A new <see cref="Workloads.SapProviderInstanceData"/> instance for mocking. </returns>
         public static SapProviderInstanceData SapProviderInstanceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, UserAssignedServiceIdentity identity = null, WorkloadMonitorProvisioningState? provisioningState = null, ResponseError errors = null, ProviderSpecificProperties providerSettings = null)

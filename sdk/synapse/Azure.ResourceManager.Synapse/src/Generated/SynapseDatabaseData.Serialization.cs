@@ -95,8 +95,8 @@ namespace Azure.ResourceManager.Synapse
             {
                 switch (discriminator.GetString())
                 {
-                    case "ReadOnlyFollowing": return SynapseReadOnlyFollowingDatabase.DeserializeSynapseReadOnlyFollowingDatabase(element, options);
                     case "ReadWrite": return SynapseReadWriteDatabase.DeserializeSynapseReadWriteDatabase(element, options);
+                    case "ReadOnlyFollowing": return SynapseReadOnlyFollowingDatabase.DeserializeSynapseReadOnlyFollowingDatabase(element, options);
                 }
             }
             return UnknownDatabase.DeserializeUnknownDatabase(element, options);

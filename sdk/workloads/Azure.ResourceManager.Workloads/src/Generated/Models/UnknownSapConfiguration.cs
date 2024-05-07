@@ -11,18 +11,18 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary> Unknown version of SAPConfiguration. </summary>
-    internal partial class UnknownSapConfiguration : SapConfiguration
+    internal partial class UnknownSAPConfiguration : SapConfiguration
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownSapConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownSAPConfiguration"/>. </summary>
         /// <param name="configurationType"> The configuration Type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownSapConfiguration(SapConfigurationType configurationType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(configurationType, serializedAdditionalRawData)
+        internal UnknownSAPConfiguration(SapConfigurationType configurationType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(configurationType, serializedAdditionalRawData)
         {
             ConfigurationType = configurationType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="UnknownSapConfiguration"/> for deserialization. </summary>
-        internal UnknownSapConfiguration()
+        /// <summary> Initializes a new instance of <see cref="UnknownSAPConfiguration"/> for deserialization. </summary>
+        internal UnknownSAPConfiguration()
         {
         }
     }
