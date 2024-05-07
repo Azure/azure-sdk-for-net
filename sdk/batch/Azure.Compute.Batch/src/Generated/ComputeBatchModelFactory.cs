@@ -47,9 +47,8 @@ namespace Azure.Compute.Batch
         /// <summary> Initializes a new instance of <see cref="Batch.BatchPoolCreateContent"/>. </summary>
         /// <param name="id"> A string that uniquely identifies the Pool within the Account. The ID can contain any combination of alphanumeric characters including hyphens and underscores, and cannot contain more than 64 characters. The ID is case-preserving and case-insensitive (that is, you may not have two Pool IDs within an Account that differ only by case). </param>
         /// <param name="displayName"> The display name for the Pool. The display name need not be unique and can contain any Unicode characters up to a maximum length of 1024. </param>
-        /// <param name="vmSize"> The size of virtual machines in the Pool. All virtual machines in a Pool are the same size. For information about available sizes of virtual machines for Cloud Services Pools (pools created with cloudServiceConfiguration), see Sizes for Cloud Services (https://azure.microsoft.com/documentation/articles/cloud-services-sizes-specs/). Batch supports all Cloud Services VM sizes except ExtraSmall, A1V2 and A2V2. For information about available VM sizes for Pools using Images from the Virtual Machines Marketplace (pools created with virtualMachineConfiguration) see Sizes for Virtual Machines (Linux) (https://azure.microsoft.com/documentation/articles/virtual-machines-linux-sizes/) or Sizes for Virtual Machines (Windows) (https://azure.microsoft.com/documentation/articles/virtual-machines-windows-sizes/). Batch supports all Azure VM sizes except STANDARD_A0 and those with premium storage (STANDARD_GS, STANDARD_DS, and STANDARD_DSV2 series). </param>
-        /// <param name="cloudServiceConfiguration"> The cloud service configuration for the Pool. This property and virtualMachineConfiguration are mutually exclusive and one of the properties must be specified. This property cannot be specified if the Batch Account was created with its poolAllocationMode property set to 'UserSubscription'. </param>
-        /// <param name="virtualMachineConfiguration"> The virtual machine configuration for the Pool. This property and cloudServiceConfiguration are mutually exclusive and one of the properties must be specified. </param>
+        /// <param name="vmSize"> The size of virtual machines in the Pool. All virtual machines in a Pool are the same size. For information about available VM sizes for Pools using Images from the Virtual Machines Marketplace (pools created with virtualMachineConfiguration), see Sizes for Virtual Machines (Linux) (https://azure.microsoft.com/documentation/articles/virtual-machines-linux-sizes/) or Sizes for Virtual Machines (Windows) (https://azure.microsoft.com/documentation/articles/virtual-machines-windows-sizes/). Batch supports all Azure VM sizes except STANDARD_A0 and those with premium storage (STANDARD_GS, STANDARD_DS, and STANDARD_DSV2 series). </param>
+        /// <param name="virtualMachineConfiguration"> The virtual machine configuration for the Pool. This property must be specified. </param>
         /// <param name="resizeTimeout"> The timeout for allocation of Compute Nodes to the Pool. This timeout applies only to manual scaling; it has no effect when enableAutoScale is set to true. The default value is 15 minutes. The minimum value is 5 minutes. If you specify a value less than 5 minutes, the Batch service returns an error; if you are calling the REST API directly, the HTTP status code is 400 (Bad Request). </param>
         /// <param name="resourceTags"> The user-specified tags associated with the pool. The user-defined tags to be associated with the Azure Batch Pool. When specified, these tags are propagated to the backing Azure resources associated with the pool. This property can only be specified when the Batch account was created with the poolAllocationMode property set to 'UserSubscription'. </param>
         /// <param name="targetDedicatedNodes"> The desired number of dedicated Compute Nodes in the Pool. This property must not be specified if enableAutoScale is set to true. If enableAutoScale is set to false, then you must set either targetDedicatedNodes, targetLowPriorityNodes, or both. </param>
@@ -60,14 +59,7 @@ namespace Azure.Compute.Batch
         /// <param name="enableInterNodeCommunication"> Whether the Pool permits direct communication between Compute Nodes. Enabling inter-node communication limits the maximum size of the Pool due to deployment restrictions on the Compute Nodes of the Pool. This may result in the Pool not reaching its desired size. The default value is false. </param>
         /// <param name="networkConfiguration"> The network configuration for the Pool. </param>
         /// <param name="startTask"> A Task specified to run on each Compute Node as it joins the Pool. The Task runs when the Compute Node is added to the Pool or when the Compute Node is restarted. </param>
-        /// <param name="certificateReferences">
-        /// For Windows Nodes, the Batch service installs the Certificates to the specified Certificate store and location.
-        /// For Linux Compute Nodes, the Certificates are stored in a directory inside the Task working directory and an environment variable AZ_BATCH_CERTIFICATES_DIR is supplied to the Task to query for this location.
-        /// For Certificates with visibility of 'remoteUser', a 'certs' directory is created in the user's home directory (e.g., /home/{user-name}/certs) and Certificates are placed in that directory.
-        /// Warning: This property is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.
-        /// </param>
         /// <param name="applicationPackageReferences"> The list of Packages to be installed on each Compute Node in the Pool. When creating a pool, the package's application ID must be fully qualified (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/applications/{applicationName}). Changes to Package references affect all new Nodes joining the Pool, but do not affect Compute Nodes that are already in the Pool until they are rebooted or reimaged. There is a maximum of 10 Package references on any given Pool. </param>
-        /// <param name="applicationLicenses"> The list of application licenses the Batch service will make available on each Compute Node in the Pool. The list of application licenses must be a subset of available Batch service application licenses. If a license is requested which is not supported, Pool creation will fail. </param>
         /// <param name="taskSlotsPerNode"> The number of task slots that can be used to run concurrent tasks on a single compute node in the pool. The default value is 1. The maximum value is the smaller of 4 times the number of cores of the vmSize of the pool or 256. </param>
         /// <param name="taskSchedulingPolicy"> How Tasks are distributed across Compute Nodes in a Pool. If not specified, the default is spread. </param>
         /// <param name="userAccounts"> The list of user Accounts to be created on each Compute Node in the Pool. </param>
@@ -76,12 +68,10 @@ namespace Azure.Compute.Batch
         /// <param name="targetNodeCommunicationMode"> The desired node communication mode for the pool. If omitted, the default value is Default. </param>
         /// <param name="upgradePolicy"> The upgrade policy for the Pool. Describes an upgrade policy - automatic, manual, or rolling. </param>
         /// <returns> A new <see cref="Batch.BatchPoolCreateContent"/> instance for mocking. </returns>
-        public static BatchPoolCreateContent BatchPoolCreateContent(string id = null, string displayName = null, string vmSize = null, CloudServiceConfiguration cloudServiceConfiguration = null, VirtualMachineConfiguration virtualMachineConfiguration = null, TimeSpan? resizeTimeout = null, IDictionary<string, string> resourceTags = null, int? targetDedicatedNodes = null, int? targetLowPriorityNodes = null, bool? enableAutoScale = null, string autoScaleFormula = null, TimeSpan? autoScaleEvaluationInterval = null, bool? enableInterNodeCommunication = null, NetworkConfiguration networkConfiguration = null, BatchStartTask startTask = null, IEnumerable<BatchCertificateReference> certificateReferences = null, IEnumerable<BatchApplicationPackageReference> applicationPackageReferences = null, IEnumerable<string> applicationLicenses = null, int? taskSlotsPerNode = null, BatchTaskSchedulingPolicy taskSchedulingPolicy = null, IEnumerable<UserAccount> userAccounts = null, IEnumerable<MetadataItem> metadata = null, IEnumerable<MountConfiguration> mountConfiguration = null, BatchNodeCommunicationMode? targetNodeCommunicationMode = null, UpgradePolicy upgradePolicy = null)
+        public static BatchPoolCreateContent BatchPoolCreateContent(string id = null, string displayName = null, string vmSize = null, VirtualMachineConfiguration virtualMachineConfiguration = null, TimeSpan? resizeTimeout = null, IDictionary<string, string> resourceTags = null, int? targetDedicatedNodes = null, int? targetLowPriorityNodes = null, bool? enableAutoScale = null, string autoScaleFormula = null, TimeSpan? autoScaleEvaluationInterval = null, bool? enableInterNodeCommunication = null, NetworkConfiguration networkConfiguration = null, BatchStartTask startTask = null, IEnumerable<BatchApplicationPackageReference> applicationPackageReferences = null, int? taskSlotsPerNode = null, BatchTaskSchedulingPolicy taskSchedulingPolicy = null, IEnumerable<UserAccount> userAccounts = null, IEnumerable<MetadataItem> metadata = null, IEnumerable<MountConfiguration> mountConfiguration = null, BatchNodeCommunicationMode? targetNodeCommunicationMode = null, UpgradePolicy upgradePolicy = null)
         {
             resourceTags ??= new Dictionary<string, string>();
-            certificateReferences ??= new List<BatchCertificateReference>();
             applicationPackageReferences ??= new List<BatchApplicationPackageReference>();
-            applicationLicenses ??= new List<string>();
             userAccounts ??= new List<UserAccount>();
             metadata ??= new List<MetadataItem>();
             mountConfiguration ??= new List<MountConfiguration>();
@@ -90,7 +80,6 @@ namespace Azure.Compute.Batch
                 id,
                 displayName,
                 vmSize,
-                cloudServiceConfiguration,
                 virtualMachineConfiguration,
                 resizeTimeout,
                 resourceTags,
@@ -102,9 +91,7 @@ namespace Azure.Compute.Batch
                 enableInterNodeCommunication,
                 networkConfiguration,
                 startTask,
-                certificateReferences?.ToList(),
                 applicationPackageReferences?.ToList(),
-                applicationLicenses?.ToList(),
                 taskSlotsPerNode,
                 taskSchedulingPolicy,
                 userAccounts?.ToList(),
@@ -147,8 +134,7 @@ namespace Azure.Compute.Batch
         /// <param name="allocationState"> Whether the Pool is resizing. </param>
         /// <param name="allocationStateTransitionTime"> The time at which the Pool entered its current allocation state. </param>
         /// <param name="vmSize"> The size of virtual machines in the Pool. All virtual machines in a Pool are the same size. For information about available sizes of virtual machines in Pools, see Choose a VM size for Compute Nodes in an Azure Batch Pool (https://docs.microsoft.com/azure/batch/batch-pool-vm-sizes). </param>
-        /// <param name="cloudServiceConfiguration"> The cloud service configuration for the Pool. This property and virtualMachineConfiguration are mutually exclusive and one of the properties must be specified. This property cannot be specified if the Batch Account was created with its poolAllocationMode property set to 'UserSubscription'. </param>
-        /// <param name="virtualMachineConfiguration"> The virtual machine configuration for the Pool. This property and cloudServiceConfiguration are mutually exclusive and one of the properties must be specified. </param>
+        /// <param name="virtualMachineConfiguration"> The virtual machine configuration for the Pool. This property must be specified. </param>
         /// <param name="resizeTimeout"> The timeout for allocation of Compute Nodes to the Pool. This is the timeout for the most recent resize operation. (The initial sizing when the Pool is created counts as a resize.) The default value is 15 minutes. </param>
         /// <param name="resizeErrors"> A list of errors encountered while performing the last resize on the Pool. This property is set only if one or more errors occurred during the last Pool resize, and only when the Pool allocationState is Steady. </param>
         /// <param name="resourceTags"> The user-specified tags associated with the pool. The user-defined tags to be associated with the Azure Batch Pool. When specified, these tags are propagated to the backing Azure resources associated with the pool. This property can only be specified when the Batch account was created with the poolAllocationMode property set to 'UserSubscription'. </param>
@@ -163,14 +149,7 @@ namespace Azure.Compute.Batch
         /// <param name="enableInterNodeCommunication"> Whether the Pool permits direct communication between Compute Nodes. This imposes restrictions on which Compute Nodes can be assigned to the Pool. Specifying this value can reduce the chance of the requested number of Compute Nodes to be allocated in the Pool. </param>
         /// <param name="networkConfiguration"> The network configuration for the Pool. </param>
         /// <param name="startTask"> A Task specified to run on each Compute Node as it joins the Pool. </param>
-        /// <param name="certificateReferences">
-        /// For Windows Nodes, the Batch service installs the Certificates to the specified Certificate store and location.
-        /// For Linux Compute Nodes, the Certificates are stored in a directory inside the Task working directory and an environment variable AZ_BATCH_CERTIFICATES_DIR is supplied to the Task to query for this location.
-        /// For Certificates with visibility of 'remoteUser', a 'certs' directory is created in the user's home directory (e.g., /home/{user-name}/certs) and Certificates are placed in that directory.
-        /// Warning: This property is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.
-        /// </param>
         /// <param name="applicationPackageReferences"> The list of Packages to be installed on each Compute Node in the Pool. Changes to Package references affect all new Nodes joining the Pool, but do not affect Compute Nodes that are already in the Pool until they are rebooted or reimaged. There is a maximum of 10 Package references on any given Pool. </param>
-        /// <param name="applicationLicenses"> The list of application licenses the Batch service will make available on each Compute Node in the Pool. The list of application licenses must be a subset of available Batch service application licenses. If a license is requested which is not supported, Pool creation will fail. </param>
         /// <param name="taskSlotsPerNode"> The number of task slots that can be used to run concurrent tasks on a single compute node in the pool. The default value is 1. The maximum value is the smaller of 4 times the number of cores of the vmSize of the pool or 256. </param>
         /// <param name="taskSchedulingPolicy"> How Tasks are distributed across Compute Nodes in a Pool. If not specified, the default is spread. </param>
         /// <param name="userAccounts"> The list of user Accounts to be created on each Compute Node in the Pool. </param>
@@ -182,13 +161,11 @@ namespace Azure.Compute.Batch
         /// <param name="currentNodeCommunicationMode"> The current state of the pool communication mode. </param>
         /// <param name="upgradePolicy"> The upgrade policy for the Pool. Describes an upgrade policy - automatic, manual, or rolling. </param>
         /// <returns> A new <see cref="Batch.BatchPool"/> instance for mocking. </returns>
-        public static BatchPool BatchPool(string id = null, string displayName = null, string url = null, string eTag = null, DateTimeOffset? lastModified = null, DateTimeOffset? creationTime = null, BatchPoolState? state = null, DateTimeOffset? stateTransitionTime = null, AllocationState? allocationState = null, DateTimeOffset? allocationStateTransitionTime = null, string vmSize = null, CloudServiceConfiguration cloudServiceConfiguration = null, VirtualMachineConfiguration virtualMachineConfiguration = null, TimeSpan? resizeTimeout = null, IEnumerable<ResizeError> resizeErrors = null, IReadOnlyDictionary<string, string> resourceTags = null, int? currentDedicatedNodes = null, int? currentLowPriorityNodes = null, int? targetDedicatedNodes = null, int? targetLowPriorityNodes = null, bool? enableAutoScale = null, string autoScaleFormula = null, TimeSpan? autoScaleEvaluationInterval = null, AutoScaleRun autoScaleRun = null, bool? enableInterNodeCommunication = null, NetworkConfiguration networkConfiguration = null, BatchStartTask startTask = null, IEnumerable<BatchCertificateReference> certificateReferences = null, IEnumerable<BatchApplicationPackageReference> applicationPackageReferences = null, IEnumerable<string> applicationLicenses = null, int? taskSlotsPerNode = null, BatchTaskSchedulingPolicy taskSchedulingPolicy = null, IEnumerable<UserAccount> userAccounts = null, IEnumerable<MetadataItem> metadata = null, BatchPoolStatistics stats = null, IEnumerable<MountConfiguration> mountConfiguration = null, BatchPoolIdentity identity = null, BatchNodeCommunicationMode? targetNodeCommunicationMode = null, BatchNodeCommunicationMode? currentNodeCommunicationMode = null, UpgradePolicy upgradePolicy = null)
+        public static BatchPool BatchPool(string id = null, string displayName = null, string url = null, string eTag = null, DateTimeOffset? lastModified = null, DateTimeOffset? creationTime = null, BatchPoolState? state = null, DateTimeOffset? stateTransitionTime = null, AllocationState? allocationState = null, DateTimeOffset? allocationStateTransitionTime = null, string vmSize = null, VirtualMachineConfiguration virtualMachineConfiguration = null, TimeSpan? resizeTimeout = null, IEnumerable<ResizeError> resizeErrors = null, IReadOnlyDictionary<string, string> resourceTags = null, int? currentDedicatedNodes = null, int? currentLowPriorityNodes = null, int? targetDedicatedNodes = null, int? targetLowPriorityNodes = null, bool? enableAutoScale = null, string autoScaleFormula = null, TimeSpan? autoScaleEvaluationInterval = null, AutoScaleRun autoScaleRun = null, bool? enableInterNodeCommunication = null, NetworkConfiguration networkConfiguration = null, BatchStartTask startTask = null, IEnumerable<BatchApplicationPackageReference> applicationPackageReferences = null, int? taskSlotsPerNode = null, BatchTaskSchedulingPolicy taskSchedulingPolicy = null, IEnumerable<UserAccount> userAccounts = null, IEnumerable<MetadataItem> metadata = null, BatchPoolStatistics stats = null, IEnumerable<MountConfiguration> mountConfiguration = null, BatchPoolIdentity identity = null, BatchNodeCommunicationMode? targetNodeCommunicationMode = null, BatchNodeCommunicationMode? currentNodeCommunicationMode = null, UpgradePolicy upgradePolicy = null)
         {
             resizeErrors ??= new List<ResizeError>();
             resourceTags ??= new Dictionary<string, string>();
-            certificateReferences ??= new List<BatchCertificateReference>();
             applicationPackageReferences ??= new List<BatchApplicationPackageReference>();
-            applicationLicenses ??= new List<string>();
             userAccounts ??= new List<UserAccount>();
             metadata ??= new List<MetadataItem>();
             mountConfiguration ??= new List<MountConfiguration>();
@@ -205,7 +182,6 @@ namespace Azure.Compute.Batch
                 allocationState,
                 allocationStateTransitionTime,
                 vmSize,
-                cloudServiceConfiguration,
                 virtualMachineConfiguration,
                 resizeTimeout,
                 resizeErrors?.ToList(),
@@ -221,9 +197,7 @@ namespace Azure.Compute.Batch
                 enableInterNodeCommunication,
                 networkConfiguration,
                 startTask,
-                certificateReferences?.ToList(),
                 applicationPackageReferences?.ToList(),
-                applicationLicenses?.ToList(),
                 taskSlotsPerNode,
                 taskSchedulingPolicy,
                 userAccounts?.ToList(),
@@ -314,7 +288,7 @@ namespace Azure.Compute.Batch
         /// <param name="networkReadGiB"> The total amount of data in GiB of network reads across all Compute Nodes in the Pool. </param>
         /// <param name="networkWriteGiB"> The total amount of data in GiB of network writes across all Compute Nodes in the Pool. </param>
         /// <returns> A new <see cref="Batch.BatchPoolResourceStatistics"/> instance for mocking. </returns>
-        public static BatchPoolResourceStatistics BatchPoolResourceStatistics(DateTimeOffset startTime = default, DateTimeOffset lastUpdateTime = default, float avgCpuPercentage = default, float avgMemoryGiB = default, float peakMemoryGiB = default, float avgDiskGiB = default, float peakDiskGiB = default, int diskReadIOps = default, int diskWriteIOps = default, float diskReadGiB = default, float diskWriteGiB = default, float networkReadGiB = default, float networkWriteGiB = default)
+        public static BatchPoolResourceStatistics BatchPoolResourceStatistics(DateTimeOffset startTime = default, DateTimeOffset lastUpdateTime = default, float avgCpuPercentage = default, float avgMemoryGiB = default, float peakMemoryGiB = default, float avgDiskGiB = default, float peakDiskGiB = default, long diskReadIOps = default, long diskWriteIOps = default, float diskReadGiB = default, float diskWriteGiB = default, float networkReadGiB = default, float networkWriteGiB = default)
         {
             return new BatchPoolResourceStatistics(
                 startTime,
@@ -354,19 +328,19 @@ namespace Azure.Compute.Batch
             return new UserAssignedIdentity(resourceId, clientId, principalId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Batch.ImageInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Batch.BatchSupportedImage"/>. </summary>
         /// <param name="nodeAgentSkuId"> The ID of the Compute Node agent SKU which the Image supports. </param>
         /// <param name="imageReference"> The reference to the Azure Virtual Machine's Marketplace Image. </param>
         /// <param name="osType"> The type of operating system (e.g. Windows or Linux) of the Image. </param>
         /// <param name="capabilities"> The capabilities or features which the Image supports. Not every capability of the Image is listed. Capabilities in this list are considered of special interest and are generally related to integration with other features in the Azure Batch service. </param>
         /// <param name="batchSupportEndOfLife"> The time when the Azure Batch service will stop accepting create Pool requests for the Image. </param>
         /// <param name="verificationType"> Whether the Azure Batch service actively verifies that the Image is compatible with the associated Compute Node agent SKU. </param>
-        /// <returns> A new <see cref="Batch.ImageInfo"/> instance for mocking. </returns>
-        public static ImageInfo ImageInfo(string nodeAgentSkuId = null, ImageReference imageReference = null, OSType osType = default, IEnumerable<string> capabilities = null, DateTimeOffset? batchSupportEndOfLife = null, ImageVerificationType verificationType = default)
+        /// <returns> A new <see cref="Batch.BatchSupportedImage"/> instance for mocking. </returns>
+        public static BatchSupportedImage BatchSupportedImage(string nodeAgentSkuId = null, ImageReference imageReference = null, OSType osType = default, IEnumerable<string> capabilities = null, DateTimeOffset? batchSupportEndOfLife = null, ImageVerificationType verificationType = default)
         {
             capabilities ??= new List<string>();
 
-            return new ImageInfo(
+            return new BatchSupportedImage(
                 nodeAgentSkuId,
                 imageReference,
                 osType,
@@ -401,9 +375,9 @@ namespace Azure.Compute.Batch
         /// <param name="unusable"> The number of Compute Nodes in the unusable state. </param>
         /// <param name="waitingForStartTask"> The number of Compute Nodes in the waitingForStartTask state. </param>
         /// <param name="total"> The total number of Compute Nodes. </param>
-        /// <param name="upgradingOS"> The number of Compute Nodes in the upgradingOS state. </param>
+        /// <param name="upgradingOs"> The number of Compute Nodes in the upgradingOS state. </param>
         /// <returns> A new <see cref="Batch.BatchNodeCounts"/> instance for mocking. </returns>
-        public static BatchNodeCounts BatchNodeCounts(int creating = default, int idle = default, int offline = default, int preempted = default, int rebooting = default, int reimaging = default, int running = default, int starting = default, int startTaskFailed = default, int leavingPool = default, int unknown = default, int unusable = default, int waitingForStartTask = default, int total = default, int upgradingOS = default)
+        public static BatchNodeCounts BatchNodeCounts(int creating = default, int idle = default, int offline = default, int preempted = default, int rebooting = default, int reimaging = default, int running = default, int starting = default, int startTaskFailed = default, int leavingPool = default, int unknown = default, int unusable = default, int waitingForStartTask = default, int total = default, int upgradingOs = default)
         {
             return new BatchNodeCounts(
                 creating,
@@ -420,7 +394,7 @@ namespace Azure.Compute.Batch
                 unusable,
                 waitingForStartTask,
                 total,
-                upgradingOS,
+                upgradingOs,
                 serializedAdditionalRawData: null);
         }
 
@@ -646,38 +620,6 @@ namespace Azure.Compute.Batch
                 completed,
                 succeeded,
                 failed,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Batch.BatchCertificate"/>. </summary>
-        /// <param name="thumbprint"> The X.509 thumbprint of the Certificate. This is a sequence of up to 40 hex digits (it may include spaces but these are removed). </param>
-        /// <param name="thumbprintAlgorithm"> The algorithm used to derive the thumbprint. This must be sha1. </param>
-        /// <param name="url"> The URL of the Certificate. </param>
-        /// <param name="state"> The state of the Certificate. </param>
-        /// <param name="stateTransitionTime"> The time at which the Certificate entered its current state. </param>
-        /// <param name="previousState"> The previous state of the Certificate. This property is not set if the Certificate is in its initial active state. </param>
-        /// <param name="previousStateTransitionTime"> The time at which the Certificate entered its previous state. This property is not set if the Certificate is in its initial Active state. </param>
-        /// <param name="publicData"> The public part of the Certificate as a base-64 encoded .cer file. </param>
-        /// <param name="deleteCertificateError"> The error that occurred on the last attempt to delete this Certificate. This property is set only if the Certificate is in the DeleteFailed state. </param>
-        /// <param name="data"> The base64-encoded contents of the Certificate. The maximum size is 10KB. </param>
-        /// <param name="certificateFormat"> The format of the Certificate data. </param>
-        /// <param name="password"> The password to access the Certificate's private key. This must be omitted if the Certificate format is cer. </param>
-        /// <returns> A new <see cref="Batch.BatchCertificate"/> instance for mocking. </returns>
-        public static BatchCertificate BatchCertificate(string thumbprint = null, string thumbprintAlgorithm = null, string url = null, BatchCertificateState? state = null, DateTimeOffset? stateTransitionTime = null, BatchCertificateState? previousState = null, DateTimeOffset? previousStateTransitionTime = null, string publicData = null, DeleteBatchCertificateError deleteCertificateError = null, string data = null, BatchCertificateFormat? certificateFormat = null, string password = null)
-        {
-            return new BatchCertificate(
-                thumbprint,
-                thumbprintAlgorithm,
-                url,
-                state,
-                stateTransitionTime,
-                previousState,
-                previousStateTransitionTime,
-                publicData,
-                deleteCertificateError,
-                data,
-                certificateFormat,
-                password,
                 serializedAdditionalRawData: null);
         }
 
@@ -963,7 +905,7 @@ namespace Azure.Compute.Batch
         /// <param name="contentType"> The content type of the file. </param>
         /// <param name="fileMode"> The file mode attribute in octal format. The file mode is returned only for files on Linux Compute Nodes. </param>
         /// <returns> A new <see cref="Batch.FileProperties"/> instance for mocking. </returns>
-        public static FileProperties FileProperties(DateTimeOffset? creationTime = null, DateTimeOffset lastModified = default, int contentLength = default, string contentType = null, string fileMode = null)
+        public static FileProperties FileProperties(DateTimeOffset? creationTime = null, DateTimeOffset lastModified = default, long contentLength = default, string contentType = null, string fileMode = null)
         {
             return new FileProperties(
                 creationTime,
@@ -978,7 +920,7 @@ namespace Azure.Compute.Batch
         /// <param name="name"> The user name of the Account. </param>
         /// <param name="isAdmin"> Whether the Account should be an administrator on the Compute Node. The default value is false. </param>
         /// <param name="expiryTime"> The time at which the Account should expire. If omitted, the default is 1 day from the current time. For Linux Compute Nodes, the expiryTime has a precision up to a day. </param>
-        /// <param name="password"> The password of the Account. The password is required for Windows Compute Nodes (those created with 'cloudServiceConfiguration', or created with 'virtualMachineConfiguration' using a Windows Image reference). For Linux Compute Nodes, the password can optionally be specified along with the sshPublicKey property. </param>
+        /// <param name="password"> The password of the Account. The password is required for Windows Compute Nodes (those created with 'virtualMachineConfiguration' using a Windows Image reference). For Linux Compute Nodes, the password can optionally be specified along with the sshPublicKey property. </param>
         /// <param name="sshPublicKey"> The SSH public key that can be used for remote login to the Compute Node. The public key should be compatible with OpenSSH encoding and should be base 64 encoded. This property can be specified only for Linux Compute Nodes. If this is specified for a Windows Compute Node, then the Batch service rejects the request; if you are calling the REST API directly, the HTTP status code is 400 (Bad Request). </param>
         /// <returns> A new <see cref="Batch.BatchNodeUserCreateContent"/> instance for mocking. </returns>
         public static BatchNodeUserCreateContent BatchNodeUserCreateContent(string name = null, bool? isAdmin = null, DateTimeOffset? expiryTime = null, string password = null, string sshPublicKey = null)
@@ -1010,22 +952,15 @@ namespace Azure.Compute.Batch
         /// <param name="recentTasks"> A list of Tasks whose state has recently changed. This property is present only if at least one Task has run on this Compute Node since it was assigned to the Pool. </param>
         /// <param name="startTask"> The Task specified to run on the Compute Node as it joins the Pool. </param>
         /// <param name="startTaskInfo"> Runtime information about the execution of the StartTask on the Compute Node. </param>
-        /// <param name="certificateReferences">
-        /// For Windows Nodes, the Batch service installs the Certificates to the specified Certificate store and location.
-        /// For Linux Compute Nodes, the Certificates are stored in a directory inside the Task working directory and an environment variable AZ_BATCH_CERTIFICATES_DIR is supplied to the Task to query for this location.
-        /// For Certificates with visibility of 'remoteUser', a 'certs' directory is created in the user's home directory (e.g., /home/{user-name}/certs) and Certificates are placed in that directory.
-        /// Warning: This property is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.
-        /// </param>
         /// <param name="errors"> The list of errors that are currently being encountered by the Compute Node. </param>
         /// <param name="isDedicated"> Whether this Compute Node is a dedicated Compute Node. If false, the Compute Node is a Spot/Low-priority Compute Node. </param>
         /// <param name="endpointConfiguration"> The endpoint configuration for the Compute Node. </param>
         /// <param name="nodeAgentInfo"> Information about the Compute Node agent version and the time the Compute Node upgraded to a new version. </param>
         /// <param name="virtualMachineInfo"> Info about the current state of the virtual machine. </param>
         /// <returns> A new <see cref="Batch.BatchNode"/> instance for mocking. </returns>
-        public static BatchNode BatchNode(string id = null, string url = null, BatchNodeState? state = null, SchedulingState? schedulingState = null, DateTimeOffset? stateTransitionTime = null, DateTimeOffset? lastBootTime = null, DateTimeOffset? allocationTime = null, string ipAddress = null, string affinityId = null, string vmSize = null, int? totalTasksRun = null, int? runningTasksCount = null, int? runningTaskSlotsCount = null, int? totalTasksSucceeded = null, IEnumerable<BatchTaskInfo> recentTasks = null, BatchStartTask startTask = null, BatchStartTaskInfo startTaskInfo = null, IEnumerable<BatchCertificateReference> certificateReferences = null, IEnumerable<BatchNodeError> errors = null, bool? isDedicated = null, BatchNodeEndpointConfiguration endpointConfiguration = null, BatchNodeAgentInfo nodeAgentInfo = null, VirtualMachineInfo virtualMachineInfo = null)
+        public static BatchNode BatchNode(string id = null, string url = null, BatchNodeState? state = null, SchedulingState? schedulingState = null, DateTimeOffset? stateTransitionTime = null, DateTimeOffset? lastBootTime = null, DateTimeOffset? allocationTime = null, string ipAddress = null, string affinityId = null, string vmSize = null, int? totalTasksRun = null, int? runningTasksCount = null, int? runningTaskSlotsCount = null, int? totalTasksSucceeded = null, IEnumerable<BatchTaskInfo> recentTasks = null, BatchStartTask startTask = null, BatchStartTaskInfo startTaskInfo = null, IEnumerable<BatchNodeError> errors = null, bool? isDedicated = null, BatchNodeEndpointConfiguration endpointConfiguration = null, BatchNodeAgentInfo nodeAgentInfo = null, VirtualMachineInfo virtualMachineInfo = null)
         {
             recentTasks ??= new List<BatchTaskInfo>();
-            certificateReferences ??= new List<BatchCertificateReference>();
             errors ??= new List<BatchNodeError>();
 
             return new BatchNode(
@@ -1046,7 +981,6 @@ namespace Azure.Compute.Batch
                 recentTasks?.ToList(),
                 startTask,
                 startTaskInfo,
-                certificateReferences?.ToList(),
                 errors?.ToList(),
                 isDedicated,
                 endpointConfiguration,

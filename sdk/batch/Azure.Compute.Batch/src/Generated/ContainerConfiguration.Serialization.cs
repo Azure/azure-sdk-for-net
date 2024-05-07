@@ -88,7 +88,7 @@ namespace Azure.Compute.Batch
             }
             ContainerType type = default;
             IList<string> containerImageNames = default;
-            IList<ContainerRegistry> containerRegistries = default;
+            IList<ContainerRegistryReference> containerRegistries = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,10 +118,10 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    List<ContainerRegistry> array = new List<ContainerRegistry>();
+                    List<ContainerRegistryReference> array = new List<ContainerRegistryReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerRegistry.DeserializeContainerRegistry(item, options));
+                        array.Add(ContainerRegistryReference.DeserializeContainerRegistryReference(item, options));
                     }
                     containerRegistries = array;
                     continue;
@@ -132,7 +132,7 @@ namespace Azure.Compute.Batch
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ContainerConfiguration(type, containerImageNames ?? new ChangeTrackingList<string>(), containerRegistries ?? new ChangeTrackingList<ContainerRegistry>(), serializedAdditionalRawData);
+            return new ContainerConfiguration(type, containerImageNames ?? new ChangeTrackingList<string>(), containerRegistries ?? new ChangeTrackingList<ContainerRegistryReference>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerConfiguration>.Write(ModelReaderWriterOptions options)

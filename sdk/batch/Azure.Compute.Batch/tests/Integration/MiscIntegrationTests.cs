@@ -38,7 +38,7 @@ namespace Azure.Compute.Batch.Tests.Integration
 
             // get supported images
             int count = 0;
-            await foreach (ImageInfo item in client.GetSupportedImagesAsync())
+            await foreach (BatchSupportedImage item in client.GetSupportedImagesAsync())
             {
                 count++;
             }

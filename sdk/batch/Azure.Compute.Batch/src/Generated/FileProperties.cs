@@ -48,7 +48,7 @@ namespace Azure.Compute.Batch
         /// <summary> Initializes a new instance of <see cref="FileProperties"/>. </summary>
         /// <param name="lastModified"> The time at which the file was last modified. </param>
         /// <param name="contentLength"> The length of the file. </param>
-        internal FileProperties(DateTimeOffset lastModified, int contentLength)
+        internal FileProperties(DateTimeOffset lastModified, long contentLength)
         {
             LastModified = lastModified;
             ContentLength = contentLength;
@@ -61,7 +61,7 @@ namespace Azure.Compute.Batch
         /// <param name="contentType"> The content type of the file. </param>
         /// <param name="fileMode"> The file mode attribute in octal format. The file mode is returned only for files on Linux Compute Nodes. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FileProperties(DateTimeOffset? creationTime, DateTimeOffset lastModified, int contentLength, string contentType, string fileMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FileProperties(DateTimeOffset? creationTime, DateTimeOffset lastModified, long contentLength, string contentType, string fileMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CreationTime = creationTime;
             LastModified = lastModified;
@@ -81,7 +81,7 @@ namespace Azure.Compute.Batch
         /// <summary> The time at which the file was last modified. </summary>
         public DateTimeOffset LastModified { get; }
         /// <summary> The length of the file. </summary>
-        public int ContentLength { get; }
+        public long ContentLength { get; }
         /// <summary> The content type of the file. </summary>
         public string ContentType { get; }
         /// <summary> The file mode attribute in octal format. The file mode is returned only for files on Linux Compute Nodes. </summary>

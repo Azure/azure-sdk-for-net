@@ -117,10 +117,6 @@ BatchClient client = new BatchClient(endpoint, credential);
 BatchPoolCreateContent pool = new BatchPoolCreateContent("<id>", "<vmSize>")
 {
     DisplayName = "<displayName>",
-    CloudServiceConfiguration = new CloudServiceConfiguration("<osFamily>")
-    {
-        OsVersion = "<osVersion>",
-    },
     VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
     {
         Publisher = "<publisher>",
@@ -143,7 +139,7 @@ BatchPoolCreateContent pool = new BatchPoolCreateContent("<id>", "<vmSize>")
         ContainerConfiguration = new ContainerConfiguration(ContainerType.DockerCompatible)
         {
             ContainerImageNames = { "<containerImageNames>" },
-            ContainerRegistries = {new ContainerRegistry
+            ContainerRegistries = {new ContainerRegistryReference
             {
                 Username = "<username>",
                 Password = "<password>",
@@ -210,9 +206,9 @@ BatchPoolCreateContent pool = new BatchPoolCreateContent("<id>", "<vmSize>")
     {
         SubnetId = "<subnetId>",
         DynamicVNetAssignmentScope = DynamicVNetAssignmentScope.None,
-        EndpointConfiguration = new BatchPoolEndpointConfiguration(new InboundNATPool[]
+        EndpointConfiguration = new BatchPoolEndpointConfiguration(new InboundNatPool[]
         {
-            new InboundNATPool("<name>", InboundEndpointProtocol.Tcp, 1234, 1234, 1234)
+            new InboundNatPool("<name>", InboundEndpointProtocol.Tcp, 1234, 1234, 1234)
             {
                 NetworkSecurityGroupRules = {new NetworkSecurityGroupRule(1234, NetworkSecurityGroupRuleAccess.Allow, "<sourceAddressPrefix>")
                 {
@@ -261,17 +257,10 @@ BatchPoolCreateContent pool = new BatchPoolCreateContent("<id>", "<vmSize>")
         MaxTaskRetryCount = 1234,
         WaitForSuccess = true,
     },
-    CertificateReferences = {new BatchCertificateReference("<thumbprint>", "<thumbprintAlgorithm>")
-    {
-        StoreLocation = BatchCertificateStoreLocation.CurrentUser,
-        StoreName = "<storeName>",
-        Visibility = {BatchCertificateVisibility.StartTask},
-    }},
     ApplicationPackageReferences = {new BatchApplicationPackageReference("<applicationId>")
     {
         Version = "<version>",
     }},
-    ApplicationLicenses = { "<applicationLicenses>" },
     TaskSlotsPerNode = 1234,
     TaskSchedulingPolicy = new BatchTaskSchedulingPolicy(BatchNodeFillType.Spread),
     UserAccounts = {new UserAccount("<name>", "<password>")
@@ -314,10 +303,10 @@ BatchPoolCreateContent pool = new BatchPoolCreateContent("<id>", "<vmSize>")
     TargetNodeCommunicationMode = BatchNodeCommunicationMode.Default,
     UpgradePolicy = new UpgradePolicy(UpgradeMode.Automatic)
     {
-        AutomaticOSUpgradePolicy = new AutomaticOsUpgradePolicy
+        AutomaticOsUpgradePolicy = new AutomaticOsUpgradePolicy
         {
             DisableAutomaticRollback = true,
-            EnableAutomaticOSUpgrade = true,
+            EnableAutomaticOsUpgrade = true,
             UseRollingUpgradePolicy = true,
             OsRollingUpgradeDeferral = true,
         },
@@ -356,10 +345,6 @@ BatchClient client = new BatchClient(endpoint, credential);
 BatchPoolCreateContent pool = new BatchPoolCreateContent("<id>", "<vmSize>")
 {
     DisplayName = "<displayName>",
-    CloudServiceConfiguration = new CloudServiceConfiguration("<osFamily>")
-    {
-        OsVersion = "<osVersion>",
-    },
     VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
     {
         Publisher = "<publisher>",
@@ -382,7 +367,7 @@ BatchPoolCreateContent pool = new BatchPoolCreateContent("<id>", "<vmSize>")
         ContainerConfiguration = new ContainerConfiguration(ContainerType.DockerCompatible)
         {
             ContainerImageNames = { "<containerImageNames>" },
-            ContainerRegistries = {new ContainerRegistry
+            ContainerRegistries = {new ContainerRegistryReference
             {
                 Username = "<username>",
                 Password = "<password>",
@@ -449,9 +434,9 @@ BatchPoolCreateContent pool = new BatchPoolCreateContent("<id>", "<vmSize>")
     {
         SubnetId = "<subnetId>",
         DynamicVNetAssignmentScope = DynamicVNetAssignmentScope.None,
-        EndpointConfiguration = new BatchPoolEndpointConfiguration(new InboundNATPool[]
+        EndpointConfiguration = new BatchPoolEndpointConfiguration(new InboundNatPool[]
         {
-            new InboundNATPool("<name>", InboundEndpointProtocol.Tcp, 1234, 1234, 1234)
+            new InboundNatPool("<name>", InboundEndpointProtocol.Tcp, 1234, 1234, 1234)
             {
                 NetworkSecurityGroupRules = {new NetworkSecurityGroupRule(1234, NetworkSecurityGroupRuleAccess.Allow, "<sourceAddressPrefix>")
                 {
@@ -500,17 +485,10 @@ BatchPoolCreateContent pool = new BatchPoolCreateContent("<id>", "<vmSize>")
         MaxTaskRetryCount = 1234,
         WaitForSuccess = true,
     },
-    CertificateReferences = {new BatchCertificateReference("<thumbprint>", "<thumbprintAlgorithm>")
-    {
-        StoreLocation = BatchCertificateStoreLocation.CurrentUser,
-        StoreName = "<storeName>",
-        Visibility = {BatchCertificateVisibility.StartTask},
-    }},
     ApplicationPackageReferences = {new BatchApplicationPackageReference("<applicationId>")
     {
         Version = "<version>",
     }},
-    ApplicationLicenses = { "<applicationLicenses>" },
     TaskSlotsPerNode = 1234,
     TaskSchedulingPolicy = new BatchTaskSchedulingPolicy(BatchNodeFillType.Spread),
     UserAccounts = {new UserAccount("<name>", "<password>")
@@ -553,10 +531,10 @@ BatchPoolCreateContent pool = new BatchPoolCreateContent("<id>", "<vmSize>")
     TargetNodeCommunicationMode = BatchNodeCommunicationMode.Default,
     UpgradePolicy = new UpgradePolicy(UpgradeMode.Automatic)
     {
-        AutomaticOSUpgradePolicy = new AutomaticOsUpgradePolicy
+        AutomaticOsUpgradePolicy = new AutomaticOsUpgradePolicy
         {
             DisableAutomaticRollback = true,
-            EnableAutomaticOSUpgrade = true,
+            EnableAutomaticOsUpgrade = true,
             UseRollingUpgradePolicy = true,
             OsRollingUpgradeDeferral = true,
         },
@@ -603,11 +581,6 @@ using RequestContent content = RequestContent.Create(new
     id = "<id>",
     displayName = "<displayName>",
     vmSize = "<vmSize>",
-    cloudServiceConfiguration = new
-    {
-        osFamily = "<osFamily>",
-        osVersion = "<osVersion>",
-    },
     virtualMachineConfiguration = new
     {
         imageReference = new
@@ -812,20 +785,6 @@ using RequestContent content = RequestContent.Create(new
         maxTaskRetryCount = 1234,
         waitForSuccess = true,
     },
-    certificateReferences = new object[]
-    {
-        new
-        {
-            thumbprint = "<thumbprint>",
-            thumbprintAlgorithm = "<thumbprintAlgorithm>",
-            storeLocation = "currentuser",
-            storeName = "<storeName>",
-            visibility = new object[]
-            {
-                "starttask"
-            },
-        }
-    },
     applicationPackageReferences = new object[]
     {
         new
@@ -833,10 +792,6 @@ using RequestContent content = RequestContent.Create(new
             applicationId = "<applicationId>",
             version = "<version>",
         }
-    },
-    applicationLicenses = new object[]
-    {
-        "<applicationLicenses>"
     },
     taskSlotsPerNode = 1234,
     taskSchedulingPolicy = new
@@ -911,10 +866,10 @@ using RequestContent content = RequestContent.Create(new
     upgradePolicy = new
     {
         mode = "automatic",
-        automaticOsUpgradePolicy = new
+        automaticOSUpgradePolicy = new
         {
             disableAutomaticRollback = true,
-            enableAutomaticOsUpgrade = true,
+            enableAutomaticOSUpgrade = true,
             useRollingUpgradePolicy = true,
             osRollingUpgradeDeferral = true,
         },
@@ -963,11 +918,6 @@ using RequestContent content = RequestContent.Create(new
     id = "<id>",
     displayName = "<displayName>",
     vmSize = "<vmSize>",
-    cloudServiceConfiguration = new
-    {
-        osFamily = "<osFamily>",
-        osVersion = "<osVersion>",
-    },
     virtualMachineConfiguration = new
     {
         imageReference = new
@@ -1172,20 +1122,6 @@ using RequestContent content = RequestContent.Create(new
         maxTaskRetryCount = 1234,
         waitForSuccess = true,
     },
-    certificateReferences = new object[]
-    {
-        new
-        {
-            thumbprint = "<thumbprint>",
-            thumbprintAlgorithm = "<thumbprintAlgorithm>",
-            storeLocation = "currentuser",
-            storeName = "<storeName>",
-            visibility = new object[]
-            {
-                "starttask"
-            },
-        }
-    },
     applicationPackageReferences = new object[]
     {
         new
@@ -1193,10 +1129,6 @@ using RequestContent content = RequestContent.Create(new
             applicationId = "<applicationId>",
             version = "<version>",
         }
-    },
-    applicationLicenses = new object[]
-    {
-        "<applicationLicenses>"
     },
     taskSlotsPerNode = 1234,
     taskSchedulingPolicy = new
@@ -1271,10 +1203,10 @@ using RequestContent content = RequestContent.Create(new
     upgradePolicy = new
     {
         mode = "automatic",
-        automaticOsUpgradePolicy = new
+        automaticOSUpgradePolicy = new
         {
             disableAutomaticRollback = true,
-            enableAutomaticOsUpgrade = true,
+            enableAutomaticOSUpgrade = true,
             useRollingUpgradePolicy = true,
             osRollingUpgradeDeferral = true,
         },
@@ -1412,8 +1344,6 @@ Console.WriteLine(result.GetProperty("stateTransitionTime").ToString());
 Console.WriteLine(result.GetProperty("allocationState").ToString());
 Console.WriteLine(result.GetProperty("allocationStateTransitionTime").ToString());
 Console.WriteLine(result.GetProperty("vmSize").ToString());
-Console.WriteLine(result.GetProperty("cloudServiceConfiguration").GetProperty("osFamily").ToString());
-Console.WriteLine(result.GetProperty("cloudServiceConfiguration").GetProperty("osVersion").ToString());
 Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("publisher").ToString());
 Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("offer").ToString());
 Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("sku").ToString());
@@ -1510,14 +1440,8 @@ Console.WriteLine(result.GetProperty("startTask").GetProperty("userIdentity").Ge
 Console.WriteLine(result.GetProperty("startTask").GetProperty("userIdentity").GetProperty("autoUser").GetProperty("elevationLevel").ToString());
 Console.WriteLine(result.GetProperty("startTask").GetProperty("maxTaskRetryCount").ToString());
 Console.WriteLine(result.GetProperty("startTask").GetProperty("waitForSuccess").ToString());
-Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("thumbprint").ToString());
-Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("thumbprintAlgorithm").ToString());
-Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("storeLocation").ToString());
-Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("storeName").ToString());
-Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("visibility")[0].ToString());
 Console.WriteLine(result.GetProperty("applicationPackageReferences")[0].GetProperty("applicationId").ToString());
 Console.WriteLine(result.GetProperty("applicationPackageReferences")[0].GetProperty("version").ToString());
-Console.WriteLine(result.GetProperty("applicationLicenses")[0].ToString());
 Console.WriteLine(result.GetProperty("taskSlotsPerNode").ToString());
 Console.WriteLine(result.GetProperty("taskSchedulingPolicy").GetProperty("nodeFillType").ToString());
 Console.WriteLine(result.GetProperty("userAccounts")[0].GetProperty("name").ToString());
@@ -1575,10 +1499,10 @@ Console.WriteLine(result.GetProperty("identity").GetProperty("userAssignedIdenti
 Console.WriteLine(result.GetProperty("targetNodeCommunicationMode").ToString());
 Console.WriteLine(result.GetProperty("currentNodeCommunicationMode").ToString());
 Console.WriteLine(result.GetProperty("upgradePolicy").GetProperty("mode").ToString());
-Console.WriteLine(result.GetProperty("upgradePolicy").GetProperty("automaticOsUpgradePolicy").GetProperty("disableAutomaticRollback").ToString());
-Console.WriteLine(result.GetProperty("upgradePolicy").GetProperty("automaticOsUpgradePolicy").GetProperty("enableAutomaticOsUpgrade").ToString());
-Console.WriteLine(result.GetProperty("upgradePolicy").GetProperty("automaticOsUpgradePolicy").GetProperty("useRollingUpgradePolicy").ToString());
-Console.WriteLine(result.GetProperty("upgradePolicy").GetProperty("automaticOsUpgradePolicy").GetProperty("osRollingUpgradeDeferral").ToString());
+Console.WriteLine(result.GetProperty("upgradePolicy").GetProperty("automaticOSUpgradePolicy").GetProperty("disableAutomaticRollback").ToString());
+Console.WriteLine(result.GetProperty("upgradePolicy").GetProperty("automaticOSUpgradePolicy").GetProperty("enableAutomaticOSUpgrade").ToString());
+Console.WriteLine(result.GetProperty("upgradePolicy").GetProperty("automaticOSUpgradePolicy").GetProperty("useRollingUpgradePolicy").ToString());
+Console.WriteLine(result.GetProperty("upgradePolicy").GetProperty("automaticOSUpgradePolicy").GetProperty("osRollingUpgradeDeferral").ToString());
 Console.WriteLine(result.GetProperty("upgradePolicy").GetProperty("rollingUpgradePolicy").GetProperty("enableCrossZoneUpgrade").ToString());
 Console.WriteLine(result.GetProperty("upgradePolicy").GetProperty("rollingUpgradePolicy").GetProperty("maxBatchInstancePercent").ToString());
 Console.WriteLine(result.GetProperty("upgradePolicy").GetProperty("rollingUpgradePolicy").GetProperty("maxUnhealthyInstancePercent").ToString());
@@ -1621,8 +1545,6 @@ Console.WriteLine(result.GetProperty("stateTransitionTime").ToString());
 Console.WriteLine(result.GetProperty("allocationState").ToString());
 Console.WriteLine(result.GetProperty("allocationStateTransitionTime").ToString());
 Console.WriteLine(result.GetProperty("vmSize").ToString());
-Console.WriteLine(result.GetProperty("cloudServiceConfiguration").GetProperty("osFamily").ToString());
-Console.WriteLine(result.GetProperty("cloudServiceConfiguration").GetProperty("osVersion").ToString());
 Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("publisher").ToString());
 Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("offer").ToString());
 Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("sku").ToString());
@@ -1719,14 +1641,8 @@ Console.WriteLine(result.GetProperty("startTask").GetProperty("userIdentity").Ge
 Console.WriteLine(result.GetProperty("startTask").GetProperty("userIdentity").GetProperty("autoUser").GetProperty("elevationLevel").ToString());
 Console.WriteLine(result.GetProperty("startTask").GetProperty("maxTaskRetryCount").ToString());
 Console.WriteLine(result.GetProperty("startTask").GetProperty("waitForSuccess").ToString());
-Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("thumbprint").ToString());
-Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("thumbprintAlgorithm").ToString());
-Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("storeLocation").ToString());
-Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("storeName").ToString());
-Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("visibility")[0].ToString());
 Console.WriteLine(result.GetProperty("applicationPackageReferences")[0].GetProperty("applicationId").ToString());
 Console.WriteLine(result.GetProperty("applicationPackageReferences")[0].GetProperty("version").ToString());
-Console.WriteLine(result.GetProperty("applicationLicenses")[0].ToString());
 Console.WriteLine(result.GetProperty("taskSlotsPerNode").ToString());
 Console.WriteLine(result.GetProperty("taskSchedulingPolicy").GetProperty("nodeFillType").ToString());
 Console.WriteLine(result.GetProperty("userAccounts")[0].GetProperty("name").ToString());
@@ -1784,10 +1700,10 @@ Console.WriteLine(result.GetProperty("identity").GetProperty("userAssignedIdenti
 Console.WriteLine(result.GetProperty("targetNodeCommunicationMode").ToString());
 Console.WriteLine(result.GetProperty("currentNodeCommunicationMode").ToString());
 Console.WriteLine(result.GetProperty("upgradePolicy").GetProperty("mode").ToString());
-Console.WriteLine(result.GetProperty("upgradePolicy").GetProperty("automaticOsUpgradePolicy").GetProperty("disableAutomaticRollback").ToString());
-Console.WriteLine(result.GetProperty("upgradePolicy").GetProperty("automaticOsUpgradePolicy").GetProperty("enableAutomaticOsUpgrade").ToString());
-Console.WriteLine(result.GetProperty("upgradePolicy").GetProperty("automaticOsUpgradePolicy").GetProperty("useRollingUpgradePolicy").ToString());
-Console.WriteLine(result.GetProperty("upgradePolicy").GetProperty("automaticOsUpgradePolicy").GetProperty("osRollingUpgradeDeferral").ToString());
+Console.WriteLine(result.GetProperty("upgradePolicy").GetProperty("automaticOSUpgradePolicy").GetProperty("disableAutomaticRollback").ToString());
+Console.WriteLine(result.GetProperty("upgradePolicy").GetProperty("automaticOSUpgradePolicy").GetProperty("enableAutomaticOSUpgrade").ToString());
+Console.WriteLine(result.GetProperty("upgradePolicy").GetProperty("automaticOSUpgradePolicy").GetProperty("useRollingUpgradePolicy").ToString());
+Console.WriteLine(result.GetProperty("upgradePolicy").GetProperty("automaticOSUpgradePolicy").GetProperty("osRollingUpgradeDeferral").ToString());
 Console.WriteLine(result.GetProperty("upgradePolicy").GetProperty("rollingUpgradePolicy").GetProperty("enableCrossZoneUpgrade").ToString());
 Console.WriteLine(result.GetProperty("upgradePolicy").GetProperty("rollingUpgradePolicy").GetProperty("maxBatchInstancePercent").ToString());
 Console.WriteLine(result.GetProperty("upgradePolicy").GetProperty("rollingUpgradePolicy").GetProperty("maxUnhealthyInstancePercent").ToString());
@@ -1868,20 +1784,6 @@ using RequestContent content = RequestContent.Create(new
         },
         maxTaskRetryCount = 1234,
         waitForSuccess = true,
-    },
-    certificateReferences = new object[]
-    {
-        new
-        {
-            thumbprint = "<thumbprint>",
-            thumbprintAlgorithm = "<thumbprintAlgorithm>",
-            storeLocation = "currentuser",
-            storeName = "<storeName>",
-            visibility = new object[]
-            {
-                "starttask"
-            },
-        }
     },
     applicationPackageReferences = new object[]
     {
@@ -1977,20 +1879,6 @@ using RequestContent content = RequestContent.Create(new
         },
         maxTaskRetryCount = 1234,
         waitForSuccess = true,
-    },
-    certificateReferences = new object[]
-    {
-        new
-        {
-            thumbprint = "<thumbprint>",
-            thumbprintAlgorithm = "<thumbprintAlgorithm>",
-            storeLocation = "currentuser",
-            storeName = "<storeName>",
-            visibility = new object[]
-            {
-                "starttask"
-            },
-        }
     },
     applicationPackageReferences = new object[]
     {
@@ -2457,10 +2345,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchPoolReplaceContent pool = new BatchPoolReplaceContent(new BatchCertificateReference[]
-{
-    new BatchCertificateReference("<thumbprint>", "<thumbprintAlgorithm>")
-}, new BatchApplicationPackageReference[]
+BatchPoolReplaceContent pool = new BatchPoolReplaceContent(new BatchApplicationPackageReference[]
 {
     new BatchApplicationPackageReference("<applicationId>")
 }, new MetadataItem[]
@@ -2475,15 +2360,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchPoolReplaceContent pool = new BatchPoolReplaceContent(new BatchCertificateReference[]
-{
-    new BatchCertificateReference("<thumbprint>", "<thumbprintAlgorithm>")
-    {
-        StoreLocation = BatchCertificateStoreLocation.CurrentUser,
-        StoreName = "<storeName>",
-        Visibility = {BatchCertificateVisibility.StartTask},
-    }
-}, new BatchApplicationPackageReference[]
+BatchPoolReplaceContent pool = new BatchPoolReplaceContent(new BatchApplicationPackageReference[]
 {
     new BatchApplicationPackageReference("<applicationId>")
     {
@@ -2499,7 +2376,7 @@ BatchPoolReplaceContent pool = new BatchPoolReplaceContent(new BatchCertificateR
         ContainerSettings = new BatchTaskContainerSettings("<imageName>")
         {
             ContainerRunOptions = "<containerRunOptions>",
-            Registry = new ContainerRegistry
+            Registry = new ContainerRegistryReference
             {
                 Username = "<username>",
                 Password = "<password>",
@@ -2550,10 +2427,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchPoolReplaceContent pool = new BatchPoolReplaceContent(new BatchCertificateReference[]
-{
-    new BatchCertificateReference("<thumbprint>", "<thumbprintAlgorithm>")
-}, new BatchApplicationPackageReference[]
+BatchPoolReplaceContent pool = new BatchPoolReplaceContent(new BatchApplicationPackageReference[]
 {
     new BatchApplicationPackageReference("<applicationId>")
 }, new MetadataItem[]
@@ -2568,15 +2442,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchPoolReplaceContent pool = new BatchPoolReplaceContent(new BatchCertificateReference[]
-{
-    new BatchCertificateReference("<thumbprint>", "<thumbprintAlgorithm>")
-    {
-        StoreLocation = BatchCertificateStoreLocation.CurrentUser,
-        StoreName = "<storeName>",
-        Visibility = {BatchCertificateVisibility.StartTask},
-    }
-}, new BatchApplicationPackageReference[]
+BatchPoolReplaceContent pool = new BatchPoolReplaceContent(new BatchApplicationPackageReference[]
 {
     new BatchApplicationPackageReference("<applicationId>")
     {
@@ -2592,7 +2458,7 @@ BatchPoolReplaceContent pool = new BatchPoolReplaceContent(new BatchCertificateR
         ContainerSettings = new BatchTaskContainerSettings("<imageName>")
         {
             ContainerRunOptions = "<containerRunOptions>",
-            Registry = new ContainerRegistry
+            Registry = new ContainerRegistryReference
             {
                 Username = "<username>",
                 Password = "<password>",
@@ -2645,14 +2511,6 @@ BatchClient client = new BatchClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
-    certificateReferences = new object[]
-    {
-        new
-        {
-            thumbprint = "<thumbprint>",
-            thumbprintAlgorithm = "<thumbprintAlgorithm>",
-        }
-    },
     applicationPackageReferences = new object[]
     {
         new
@@ -2732,20 +2590,6 @@ using RequestContent content = RequestContent.Create(new
         maxTaskRetryCount = 1234,
         waitForSuccess = true,
     },
-    certificateReferences = new object[]
-    {
-        new
-        {
-            thumbprint = "<thumbprint>",
-            thumbprintAlgorithm = "<thumbprintAlgorithm>",
-            storeLocation = "currentuser",
-            storeName = "<storeName>",
-            visibility = new object[]
-            {
-                "starttask"
-            },
-        }
-    },
     applicationPackageReferences = new object[]
     {
         new
@@ -2779,14 +2623,6 @@ BatchClient client = new BatchClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
-    certificateReferences = new object[]
-    {
-        new
-        {
-            thumbprint = "<thumbprint>",
-            thumbprintAlgorithm = "<thumbprintAlgorithm>",
-        }
-    },
     applicationPackageReferences = new object[]
     {
         new
@@ -2865,20 +2701,6 @@ using RequestContent content = RequestContent.Create(new
         },
         maxTaskRetryCount = 1234,
         waitForSuccess = true,
-    },
-    certificateReferences = new object[]
-    {
-        new
-        {
-            thumbprint = "<thumbprint>",
-            thumbprintAlgorithm = "<thumbprintAlgorithm>",
-            storeLocation = "currentuser",
-            storeName = "<storeName>",
-            visibility = new object[]
-            {
-                "starttask"
-            },
-        }
     },
     applicationPackageReferences = new object[]
     {
@@ -3249,8 +3071,6 @@ Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecificat
 Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("keepAlive").ToString());
 Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("displayName").ToString());
 Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("vmSize").ToString());
-Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("cloudServiceConfiguration").GetProperty("osFamily").ToString());
-Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("cloudServiceConfiguration").GetProperty("osVersion").ToString());
 Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("publisher").ToString());
 Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("offer").ToString());
 Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("sku").ToString());
@@ -3337,14 +3157,8 @@ Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecificat
 Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("startTask").GetProperty("userIdentity").GetProperty("autoUser").GetProperty("elevationLevel").ToString());
 Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("startTask").GetProperty("maxTaskRetryCount").ToString());
 Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("startTask").GetProperty("waitForSuccess").ToString());
-Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("certificateReferences")[0].GetProperty("thumbprint").ToString());
-Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("certificateReferences")[0].GetProperty("thumbprintAlgorithm").ToString());
-Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("certificateReferences")[0].GetProperty("storeLocation").ToString());
-Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("certificateReferences")[0].GetProperty("storeName").ToString());
-Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("certificateReferences")[0].GetProperty("visibility")[0].ToString());
 Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("applicationPackageReferences")[0].GetProperty("applicationId").ToString());
 Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("applicationPackageReferences")[0].GetProperty("version").ToString());
-Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("applicationLicenses")[0].ToString());
 Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("userAccounts")[0].GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("userAccounts")[0].GetProperty("password").ToString());
 Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("userAccounts")[0].GetProperty("elevationLevel").ToString());
@@ -3376,10 +3190,10 @@ Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecificat
 Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("mountConfiguration")[0].GetProperty("azureFileShareConfiguration").GetProperty("mountOptions").ToString());
 Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("targetNodeCommunicationMode").ToString());
 Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("mode").ToString());
-Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOsUpgradePolicy").GetProperty("disableAutomaticRollback").ToString());
-Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOsUpgradePolicy").GetProperty("enableAutomaticOsUpgrade").ToString());
-Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOsUpgradePolicy").GetProperty("useRollingUpgradePolicy").ToString());
-Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOsUpgradePolicy").GetProperty("osRollingUpgradeDeferral").ToString());
+Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOSUpgradePolicy").GetProperty("disableAutomaticRollback").ToString());
+Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOSUpgradePolicy").GetProperty("enableAutomaticOSUpgrade").ToString());
+Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOSUpgradePolicy").GetProperty("useRollingUpgradePolicy").ToString());
+Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOSUpgradePolicy").GetProperty("osRollingUpgradeDeferral").ToString());
 Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("rollingUpgradePolicy").GetProperty("enableCrossZoneUpgrade").ToString());
 Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("rollingUpgradePolicy").GetProperty("maxBatchInstancePercent").ToString());
 Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("rollingUpgradePolicy").GetProperty("maxUnhealthyInstancePercent").ToString());
@@ -3551,8 +3365,6 @@ Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecificat
 Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("keepAlive").ToString());
 Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("displayName").ToString());
 Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("vmSize").ToString());
-Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("cloudServiceConfiguration").GetProperty("osFamily").ToString());
-Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("cloudServiceConfiguration").GetProperty("osVersion").ToString());
 Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("publisher").ToString());
 Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("offer").ToString());
 Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("sku").ToString());
@@ -3639,14 +3451,8 @@ Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecificat
 Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("startTask").GetProperty("userIdentity").GetProperty("autoUser").GetProperty("elevationLevel").ToString());
 Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("startTask").GetProperty("maxTaskRetryCount").ToString());
 Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("startTask").GetProperty("waitForSuccess").ToString());
-Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("certificateReferences")[0].GetProperty("thumbprint").ToString());
-Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("certificateReferences")[0].GetProperty("thumbprintAlgorithm").ToString());
-Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("certificateReferences")[0].GetProperty("storeLocation").ToString());
-Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("certificateReferences")[0].GetProperty("storeName").ToString());
-Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("certificateReferences")[0].GetProperty("visibility")[0].ToString());
 Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("applicationPackageReferences")[0].GetProperty("applicationId").ToString());
 Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("applicationPackageReferences")[0].GetProperty("version").ToString());
-Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("applicationLicenses")[0].ToString());
 Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("userAccounts")[0].GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("userAccounts")[0].GetProperty("password").ToString());
 Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("userAccounts")[0].GetProperty("elevationLevel").ToString());
@@ -3678,10 +3484,10 @@ Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecificat
 Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("mountConfiguration")[0].GetProperty("azureFileShareConfiguration").GetProperty("mountOptions").ToString());
 Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("targetNodeCommunicationMode").ToString());
 Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("mode").ToString());
-Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOsUpgradePolicy").GetProperty("disableAutomaticRollback").ToString());
-Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOsUpgradePolicy").GetProperty("enableAutomaticOsUpgrade").ToString());
-Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOsUpgradePolicy").GetProperty("useRollingUpgradePolicy").ToString());
-Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOsUpgradePolicy").GetProperty("osRollingUpgradeDeferral").ToString());
+Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOSUpgradePolicy").GetProperty("disableAutomaticRollback").ToString());
+Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOSUpgradePolicy").GetProperty("enableAutomaticOSUpgrade").ToString());
+Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOSUpgradePolicy").GetProperty("useRollingUpgradePolicy").ToString());
+Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOSUpgradePolicy").GetProperty("osRollingUpgradeDeferral").ToString());
 Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("rollingUpgradePolicy").GetProperty("enableCrossZoneUpgrade").ToString());
 Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("rollingUpgradePolicy").GetProperty("maxBatchInstancePercent").ToString());
 Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("rollingUpgradePolicy").GetProperty("maxUnhealthyInstancePercent").ToString());
@@ -3760,11 +3566,6 @@ using RequestContent content = RequestContent.Create(new
             {
                 displayName = "<displayName>",
                 vmSize = "<vmSize>",
-                cloudServiceConfiguration = new
-                {
-                    osFamily = "<osFamily>",
-                    osVersion = "<osVersion>",
-                },
                 virtualMachineConfiguration = new
                 {
                     imageReference = new
@@ -3971,20 +3772,6 @@ using RequestContent content = RequestContent.Create(new
                     maxTaskRetryCount = 1234,
                     waitForSuccess = true,
                 },
-                certificateReferences = new object[]
-                {
-                    new
-                    {
-                        thumbprint = "<thumbprint>",
-                        thumbprintAlgorithm = "<thumbprintAlgorithm>",
-                        storeLocation = "currentuser",
-                        storeName = "<storeName>",
-                        visibility = new object[]
-                        {
-                            "starttask"
-                        },
-                    }
-                },
                 applicationPackageReferences = new object[]
                 {
                     new
@@ -3992,10 +3779,6 @@ using RequestContent content = RequestContent.Create(new
                         applicationId = "<applicationId>",
                         version = "<version>",
                     }
-                },
-                applicationLicenses = new object[]
-                {
-                    "<applicationLicenses>"
                 },
                 userAccounts = new object[]
                 {
@@ -4065,10 +3848,10 @@ using RequestContent content = RequestContent.Create(new
                 upgradePolicy = new
                 {
                     mode = "automatic",
-                    automaticOsUpgradePolicy = new
+                    automaticOSUpgradePolicy = new
                     {
                         disableAutomaticRollback = true,
-                        enableAutomaticOsUpgrade = true,
+                        enableAutomaticOSUpgrade = true,
                         useRollingUpgradePolicy = true,
                         osRollingUpgradeDeferral = true,
                     },
@@ -4138,11 +3921,6 @@ using RequestContent content = RequestContent.Create(new
             {
                 displayName = "<displayName>",
                 vmSize = "<vmSize>",
-                cloudServiceConfiguration = new
-                {
-                    osFamily = "<osFamily>",
-                    osVersion = "<osVersion>",
-                },
                 virtualMachineConfiguration = new
                 {
                     imageReference = new
@@ -4349,20 +4127,6 @@ using RequestContent content = RequestContent.Create(new
                     maxTaskRetryCount = 1234,
                     waitForSuccess = true,
                 },
-                certificateReferences = new object[]
-                {
-                    new
-                    {
-                        thumbprint = "<thumbprint>",
-                        thumbprintAlgorithm = "<thumbprintAlgorithm>",
-                        storeLocation = "currentuser",
-                        storeName = "<storeName>",
-                        visibility = new object[]
-                        {
-                            "starttask"
-                        },
-                    }
-                },
                 applicationPackageReferences = new object[]
                 {
                     new
@@ -4370,10 +4134,6 @@ using RequestContent content = RequestContent.Create(new
                         applicationId = "<applicationId>",
                         version = "<version>",
                     }
-                },
-                applicationLicenses = new object[]
-                {
-                    "<applicationLicenses>"
                 },
                 userAccounts = new object[]
                 {
@@ -4443,10 +4203,10 @@ using RequestContent content = RequestContent.Create(new
                 upgradePolicy = new
                 {
                     mode = "automatic",
-                    automaticOsUpgradePolicy = new
+                    automaticOSUpgradePolicy = new
                     {
                         disableAutomaticRollback = true,
-                        enableAutomaticOsUpgrade = true,
+                        enableAutomaticOSUpgrade = true,
                         useRollingUpgradePolicy = true,
                         osRollingUpgradeDeferral = true,
                     },
@@ -4502,10 +4262,6 @@ BatchJob job = new BatchJob(new BatchPoolInfo
         Pool = new BatchPoolSpecification("<vmSize>")
         {
             DisplayName = "<displayName>",
-            CloudServiceConfiguration = new CloudServiceConfiguration("<osFamily>")
-            {
-                OsVersion = "<osVersion>",
-            },
             VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
             {
                 Publisher = "<publisher>",
@@ -4528,7 +4284,7 @@ BatchJob job = new BatchJob(new BatchPoolInfo
                 ContainerConfiguration = new ContainerConfiguration(ContainerType.DockerCompatible)
                 {
                     ContainerImageNames = { "<containerImageNames>" },
-                    ContainerRegistries = {new ContainerRegistry
+                    ContainerRegistries = {new ContainerRegistryReference
                     {
                         Username = "<username>",
                         Password = "<password>",
@@ -4594,9 +4350,9 @@ BatchJob job = new BatchJob(new BatchPoolInfo
             {
                 SubnetId = "<subnetId>",
                 DynamicVNetAssignmentScope = DynamicVNetAssignmentScope.None,
-                EndpointConfiguration = new BatchPoolEndpointConfiguration(new InboundNATPool[]
+                EndpointConfiguration = new BatchPoolEndpointConfiguration(new InboundNatPool[]
                 {
-                    new InboundNATPool("<name>", InboundEndpointProtocol.Tcp, 1234, 1234, 1234)
+                    new InboundNatPool("<name>", InboundEndpointProtocol.Tcp, 1234, 1234, 1234)
                     {
                         NetworkSecurityGroupRules = {new NetworkSecurityGroupRule(1234, NetworkSecurityGroupRuleAccess.Allow, "<sourceAddressPrefix>")
                         {
@@ -4645,17 +4401,10 @@ BatchJob job = new BatchJob(new BatchPoolInfo
                 MaxTaskRetryCount = 1234,
                 WaitForSuccess = true,
             },
-            CertificateReferences = {new BatchCertificateReference("<thumbprint>", "<thumbprintAlgorithm>")
-            {
-                StoreLocation = BatchCertificateStoreLocation.CurrentUser,
-                StoreName = "<storeName>",
-                Visibility = {BatchCertificateVisibility.StartTask},
-            }},
             ApplicationPackageReferences = {new BatchApplicationPackageReference("<applicationId>")
             {
                 Version = "<version>",
             }},
-            ApplicationLicenses = { "<applicationLicenses>" },
             UserAccounts = {new UserAccount("<name>", "<password>")
             {
                 ElevationLevel = ElevationLevel.NonAdmin,
@@ -4696,10 +4445,10 @@ BatchJob job = new BatchJob(new BatchPoolInfo
             TargetNodeCommunicationMode = BatchNodeCommunicationMode.Default,
             UpgradePolicy = new UpgradePolicy(UpgradeMode.Automatic)
             {
-                AutomaticOSUpgradePolicy = new AutomaticOsUpgradePolicy
+                AutomaticOsUpgradePolicy = new AutomaticOsUpgradePolicy
                 {
                     DisableAutomaticRollback = true,
-                    EnableAutomaticOSUpgrade = true,
+                    EnableAutomaticOsUpgrade = true,
                     UseRollingUpgradePolicy = true,
                     OsRollingUpgradeDeferral = true,
                 },
@@ -4759,10 +4508,6 @@ BatchJob job = new BatchJob(new BatchPoolInfo
         Pool = new BatchPoolSpecification("<vmSize>")
         {
             DisplayName = "<displayName>",
-            CloudServiceConfiguration = new CloudServiceConfiguration("<osFamily>")
-            {
-                OsVersion = "<osVersion>",
-            },
             VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
             {
                 Publisher = "<publisher>",
@@ -4785,7 +4530,7 @@ BatchJob job = new BatchJob(new BatchPoolInfo
                 ContainerConfiguration = new ContainerConfiguration(ContainerType.DockerCompatible)
                 {
                     ContainerImageNames = { "<containerImageNames>" },
-                    ContainerRegistries = {new ContainerRegistry
+                    ContainerRegistries = {new ContainerRegistryReference
                     {
                         Username = "<username>",
                         Password = "<password>",
@@ -4851,9 +4596,9 @@ BatchJob job = new BatchJob(new BatchPoolInfo
             {
                 SubnetId = "<subnetId>",
                 DynamicVNetAssignmentScope = DynamicVNetAssignmentScope.None,
-                EndpointConfiguration = new BatchPoolEndpointConfiguration(new InboundNATPool[]
+                EndpointConfiguration = new BatchPoolEndpointConfiguration(new InboundNatPool[]
                 {
-                    new InboundNATPool("<name>", InboundEndpointProtocol.Tcp, 1234, 1234, 1234)
+                    new InboundNatPool("<name>", InboundEndpointProtocol.Tcp, 1234, 1234, 1234)
                     {
                         NetworkSecurityGroupRules = {new NetworkSecurityGroupRule(1234, NetworkSecurityGroupRuleAccess.Allow, "<sourceAddressPrefix>")
                         {
@@ -4902,17 +4647,10 @@ BatchJob job = new BatchJob(new BatchPoolInfo
                 MaxTaskRetryCount = 1234,
                 WaitForSuccess = true,
             },
-            CertificateReferences = {new BatchCertificateReference("<thumbprint>", "<thumbprintAlgorithm>")
-            {
-                StoreLocation = BatchCertificateStoreLocation.CurrentUser,
-                StoreName = "<storeName>",
-                Visibility = {BatchCertificateVisibility.StartTask},
-            }},
             ApplicationPackageReferences = {new BatchApplicationPackageReference("<applicationId>")
             {
                 Version = "<version>",
             }},
-            ApplicationLicenses = { "<applicationLicenses>" },
             UserAccounts = {new UserAccount("<name>", "<password>")
             {
                 ElevationLevel = ElevationLevel.NonAdmin,
@@ -4953,10 +4691,10 @@ BatchJob job = new BatchJob(new BatchPoolInfo
             TargetNodeCommunicationMode = BatchNodeCommunicationMode.Default,
             UpgradePolicy = new UpgradePolicy(UpgradeMode.Automatic)
             {
-                AutomaticOSUpgradePolicy = new AutomaticOsUpgradePolicy
+                AutomaticOsUpgradePolicy = new AutomaticOsUpgradePolicy
                 {
                     DisableAutomaticRollback = true,
-                    EnableAutomaticOSUpgrade = true,
+                    EnableAutomaticOsUpgrade = true,
                     UseRollingUpgradePolicy = true,
                     OsRollingUpgradeDeferral = true,
                 },
@@ -5033,11 +4771,6 @@ using RequestContent content = RequestContent.Create(new
             {
                 displayName = "<displayName>",
                 vmSize = "<vmSize>",
-                cloudServiceConfiguration = new
-                {
-                    osFamily = "<osFamily>",
-                    osVersion = "<osVersion>",
-                },
                 virtualMachineConfiguration = new
                 {
                     imageReference = new
@@ -5244,20 +4977,6 @@ using RequestContent content = RequestContent.Create(new
                     maxTaskRetryCount = 1234,
                     waitForSuccess = true,
                 },
-                certificateReferences = new object[]
-                {
-                    new
-                    {
-                        thumbprint = "<thumbprint>",
-                        thumbprintAlgorithm = "<thumbprintAlgorithm>",
-                        storeLocation = "currentuser",
-                        storeName = "<storeName>",
-                        visibility = new object[]
-                        {
-                            "starttask"
-                        },
-                    }
-                },
                 applicationPackageReferences = new object[]
                 {
                     new
@@ -5265,10 +4984,6 @@ using RequestContent content = RequestContent.Create(new
                         applicationId = "<applicationId>",
                         version = "<version>",
                     }
-                },
-                applicationLicenses = new object[]
-                {
-                    "<applicationLicenses>"
                 },
                 userAccounts = new object[]
                 {
@@ -5338,10 +5053,10 @@ using RequestContent content = RequestContent.Create(new
                 upgradePolicy = new
                 {
                     mode = "automatic",
-                    automaticOsUpgradePolicy = new
+                    automaticOSUpgradePolicy = new
                     {
                         disableAutomaticRollback = true,
-                        enableAutomaticOsUpgrade = true,
+                        enableAutomaticOSUpgrade = true,
                         useRollingUpgradePolicy = true,
                         osRollingUpgradeDeferral = true,
                     },
@@ -5414,11 +5129,6 @@ using RequestContent content = RequestContent.Create(new
             {
                 displayName = "<displayName>",
                 vmSize = "<vmSize>",
-                cloudServiceConfiguration = new
-                {
-                    osFamily = "<osFamily>",
-                    osVersion = "<osVersion>",
-                },
                 virtualMachineConfiguration = new
                 {
                     imageReference = new
@@ -5625,20 +5335,6 @@ using RequestContent content = RequestContent.Create(new
                     maxTaskRetryCount = 1234,
                     waitForSuccess = true,
                 },
-                certificateReferences = new object[]
-                {
-                    new
-                    {
-                        thumbprint = "<thumbprint>",
-                        thumbprintAlgorithm = "<thumbprintAlgorithm>",
-                        storeLocation = "currentuser",
-                        storeName = "<storeName>",
-                        visibility = new object[]
-                        {
-                            "starttask"
-                        },
-                    }
-                },
                 applicationPackageReferences = new object[]
                 {
                     new
@@ -5646,10 +5342,6 @@ using RequestContent content = RequestContent.Create(new
                         applicationId = "<applicationId>",
                         version = "<version>",
                     }
-                },
-                applicationLicenses = new object[]
-                {
-                    "<applicationLicenses>"
                 },
                 userAccounts = new object[]
                 {
@@ -5719,10 +5411,10 @@ using RequestContent content = RequestContent.Create(new
                 upgradePolicy = new
                 {
                     mode = "automatic",
-                    automaticOsUpgradePolicy = new
+                    automaticOSUpgradePolicy = new
                     {
                         disableAutomaticRollback = true,
-                        enableAutomaticOsUpgrade = true,
+                        enableAutomaticOSUpgrade = true,
                         useRollingUpgradePolicy = true,
                         osRollingUpgradeDeferral = true,
                     },
@@ -6030,10 +5722,6 @@ BatchJobCreateContent job = new BatchJobCreateContent("<id>", new BatchPoolInfo
         Pool = new BatchPoolSpecification("<vmSize>")
         {
             DisplayName = "<displayName>",
-            CloudServiceConfiguration = new CloudServiceConfiguration("<osFamily>")
-            {
-                OsVersion = "<osVersion>",
-            },
             VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
             {
                 Publisher = "<publisher>",
@@ -6113,9 +5801,9 @@ BatchJobCreateContent job = new BatchJobCreateContent("<id>", new BatchPoolInfo
             {
                 SubnetId = "<subnetId>",
                 DynamicVNetAssignmentScope = DynamicVNetAssignmentScope.None,
-                EndpointConfiguration = new BatchPoolEndpointConfiguration(new InboundNATPool[]
+                EndpointConfiguration = new BatchPoolEndpointConfiguration(new InboundNatPool[]
                 {
-                    new InboundNATPool("<name>", InboundEndpointProtocol.Tcp, 1234, 1234, 1234)
+                    new InboundNatPool("<name>", InboundEndpointProtocol.Tcp, 1234, 1234, 1234)
                     {
                         NetworkSecurityGroupRules = {new NetworkSecurityGroupRule(1234, NetworkSecurityGroupRuleAccess.Allow, "<sourceAddressPrefix>")
                         {
@@ -6139,14 +5827,7 @@ BatchJobCreateContent job = new BatchJobCreateContent("<id>", new BatchPoolInfo
                 MaxTaskRetryCount = 1234,
                 WaitForSuccess = true,
             },
-            CertificateReferences = {new BatchCertificateReference("<thumbprint>", "<thumbprintAlgorithm>")
-            {
-                StoreLocation = BatchCertificateStoreLocation.CurrentUser,
-                StoreName = "<storeName>",
-                Visibility = {BatchCertificateVisibility.StartTask},
-            }},
             ApplicationPackageReferences = { default },
-            ApplicationLicenses = { "<applicationLicenses>" },
             UserAccounts = {new UserAccount("<name>", "<password>")
             {
                 ElevationLevel = ElevationLevel.NonAdmin,
@@ -6187,10 +5868,10 @@ BatchJobCreateContent job = new BatchJobCreateContent("<id>", new BatchPoolInfo
             TargetNodeCommunicationMode = BatchNodeCommunicationMode.Default,
             UpgradePolicy = new UpgradePolicy(UpgradeMode.Automatic)
             {
-                AutomaticOSUpgradePolicy = new AutomaticOsUpgradePolicy
+                AutomaticOsUpgradePolicy = new AutomaticOsUpgradePolicy
                 {
                     DisableAutomaticRollback = true,
-                    EnableAutomaticOSUpgrade = true,
+                    EnableAutomaticOsUpgrade = true,
                     UseRollingUpgradePolicy = true,
                     OsRollingUpgradeDeferral = true,
                 },
@@ -6225,7 +5906,7 @@ BatchJobCreateContent job = new BatchJobCreateContent("<id>", new BatchPoolInfo
         ContainerSettings = new BatchTaskContainerSettings("<imageName>")
         {
             ContainerRunOptions = "<containerRunOptions>",
-            Registry = new ContainerRegistry
+            Registry = new ContainerRegistryReference
             {
                 Username = "<username>",
                 Password = "<password>",
@@ -6348,10 +6029,6 @@ BatchJobCreateContent job = new BatchJobCreateContent("<id>", new BatchPoolInfo
         Pool = new BatchPoolSpecification("<vmSize>")
         {
             DisplayName = "<displayName>",
-            CloudServiceConfiguration = new CloudServiceConfiguration("<osFamily>")
-            {
-                OsVersion = "<osVersion>",
-            },
             VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
             {
                 Publisher = "<publisher>",
@@ -6431,9 +6108,9 @@ BatchJobCreateContent job = new BatchJobCreateContent("<id>", new BatchPoolInfo
             {
                 SubnetId = "<subnetId>",
                 DynamicVNetAssignmentScope = DynamicVNetAssignmentScope.None,
-                EndpointConfiguration = new BatchPoolEndpointConfiguration(new InboundNATPool[]
+                EndpointConfiguration = new BatchPoolEndpointConfiguration(new InboundNatPool[]
                 {
-                    new InboundNATPool("<name>", InboundEndpointProtocol.Tcp, 1234, 1234, 1234)
+                    new InboundNatPool("<name>", InboundEndpointProtocol.Tcp, 1234, 1234, 1234)
                     {
                         NetworkSecurityGroupRules = {new NetworkSecurityGroupRule(1234, NetworkSecurityGroupRuleAccess.Allow, "<sourceAddressPrefix>")
                         {
@@ -6457,14 +6134,7 @@ BatchJobCreateContent job = new BatchJobCreateContent("<id>", new BatchPoolInfo
                 MaxTaskRetryCount = 1234,
                 WaitForSuccess = true,
             },
-            CertificateReferences = {new BatchCertificateReference("<thumbprint>", "<thumbprintAlgorithm>")
-            {
-                StoreLocation = BatchCertificateStoreLocation.CurrentUser,
-                StoreName = "<storeName>",
-                Visibility = {BatchCertificateVisibility.StartTask},
-            }},
             ApplicationPackageReferences = { default },
-            ApplicationLicenses = { "<applicationLicenses>" },
             UserAccounts = {new UserAccount("<name>", "<password>")
             {
                 ElevationLevel = ElevationLevel.NonAdmin,
@@ -6505,10 +6175,10 @@ BatchJobCreateContent job = new BatchJobCreateContent("<id>", new BatchPoolInfo
             TargetNodeCommunicationMode = BatchNodeCommunicationMode.Default,
             UpgradePolicy = new UpgradePolicy(UpgradeMode.Automatic)
             {
-                AutomaticOSUpgradePolicy = new AutomaticOsUpgradePolicy
+                AutomaticOsUpgradePolicy = new AutomaticOsUpgradePolicy
                 {
                     DisableAutomaticRollback = true,
-                    EnableAutomaticOSUpgrade = true,
+                    EnableAutomaticOsUpgrade = true,
                     UseRollingUpgradePolicy = true,
                     OsRollingUpgradeDeferral = true,
                 },
@@ -6543,7 +6213,7 @@ BatchJobCreateContent job = new BatchJobCreateContent("<id>", new BatchPoolInfo
         ContainerSettings = new BatchTaskContainerSettings("<imageName>")
         {
             ContainerRunOptions = "<containerRunOptions>",
-            Registry = new ContainerRegistry
+            Registry = new ContainerRegistryReference
             {
                 Username = "<username>",
                 Password = "<password>",
@@ -6824,11 +6494,6 @@ using RequestContent content = RequestContent.Create(new
             {
                 displayName = "<displayName>",
                 vmSize = "<vmSize>",
-                cloudServiceConfiguration = new
-                {
-                    osFamily = "<osFamily>",
-                    osVersion = "<osVersion>",
-                },
                 virtualMachineConfiguration = new
                 {
                     imageReference = new
@@ -6999,27 +6664,9 @@ using RequestContent content = RequestContent.Create(new
                     maxTaskRetryCount = 1234,
                     waitForSuccess = true,
                 },
-                certificateReferences = new object[]
-                {
-                    new
-                    {
-                        thumbprint = "<thumbprint>",
-                        thumbprintAlgorithm = "<thumbprintAlgorithm>",
-                        storeLocation = "currentuser",
-                        storeName = "<storeName>",
-                        visibility = new object[]
-                        {
-                            "starttask"
-                        },
-                    }
-                },
                 applicationPackageReferences = new object[]
                 {
                     null
-                },
-                applicationLicenses = new object[]
-                {
-                    "<applicationLicenses>"
                 },
                 userAccounts = new object[]
                 {
@@ -7089,10 +6736,10 @@ using RequestContent content = RequestContent.Create(new
                 upgradePolicy = new
                 {
                     mode = "automatic",
-                    automaticOsUpgradePolicy = new
+                    automaticOSUpgradePolicy = new
                     {
                         disableAutomaticRollback = true,
-                        enableAutomaticOsUpgrade = true,
+                        enableAutomaticOSUpgrade = true,
                         useRollingUpgradePolicy = true,
                         osRollingUpgradeDeferral = true,
                     },
@@ -7311,11 +6958,6 @@ using RequestContent content = RequestContent.Create(new
             {
                 displayName = "<displayName>",
                 vmSize = "<vmSize>",
-                cloudServiceConfiguration = new
-                {
-                    osFamily = "<osFamily>",
-                    osVersion = "<osVersion>",
-                },
                 virtualMachineConfiguration = new
                 {
                     imageReference = new
@@ -7486,27 +7128,9 @@ using RequestContent content = RequestContent.Create(new
                     maxTaskRetryCount = 1234,
                     waitForSuccess = true,
                 },
-                certificateReferences = new object[]
-                {
-                    new
-                    {
-                        thumbprint = "<thumbprint>",
-                        thumbprintAlgorithm = "<thumbprintAlgorithm>",
-                        storeLocation = "currentuser",
-                        storeName = "<storeName>",
-                        visibility = new object[]
-                        {
-                            "starttask"
-                        },
-                    }
-                },
                 applicationPackageReferences = new object[]
                 {
                     null
-                },
-                applicationLicenses = new object[]
-                {
-                    "<applicationLicenses>"
                 },
                 userAccounts = new object[]
                 {
@@ -7576,10 +7200,10 @@ using RequestContent content = RequestContent.Create(new
                 upgradePolicy = new
                 {
                     mode = "automatic",
-                    automaticOsUpgradePolicy = new
+                    automaticOSUpgradePolicy = new
                     {
                         disableAutomaticRollback = true,
-                        enableAutomaticOsUpgrade = true,
+                        enableAutomaticOSUpgrade = true,
                         useRollingUpgradePolicy = true,
                         osRollingUpgradeDeferral = true,
                     },
@@ -7963,8 +7587,6 @@ Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo")
 Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("keepAlive").ToString());
 Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("displayName").ToString());
 Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("vmSize").ToString());
-Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("cloudServiceConfiguration").GetProperty("osFamily").ToString());
-Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("cloudServiceConfiguration").GetProperty("osVersion").ToString());
 Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("publisher").ToString());
 Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("offer").ToString());
 Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("sku").ToString());
@@ -8051,14 +7673,8 @@ Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo")
 Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("startTask").GetProperty("userIdentity").GetProperty("autoUser").GetProperty("elevationLevel").ToString());
 Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("startTask").GetProperty("maxTaskRetryCount").ToString());
 Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("startTask").GetProperty("waitForSuccess").ToString());
-Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("certificateReferences")[0].GetProperty("thumbprint").ToString());
-Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("certificateReferences")[0].GetProperty("thumbprintAlgorithm").ToString());
-Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("certificateReferences")[0].GetProperty("storeLocation").ToString());
-Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("certificateReferences")[0].GetProperty("storeName").ToString());
-Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("certificateReferences")[0].GetProperty("visibility")[0].ToString());
 Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("applicationPackageReferences")[0].GetProperty("applicationId").ToString());
 Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("applicationPackageReferences")[0].GetProperty("version").ToString());
-Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("applicationLicenses")[0].ToString());
 Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("userAccounts")[0].GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("userAccounts")[0].GetProperty("password").ToString());
 Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("userAccounts")[0].GetProperty("elevationLevel").ToString());
@@ -8090,10 +7706,10 @@ Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo")
 Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("mountConfiguration")[0].GetProperty("azureFileShareConfiguration").GetProperty("mountOptions").ToString());
 Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("targetNodeCommunicationMode").ToString());
 Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("mode").ToString());
-Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOsUpgradePolicy").GetProperty("disableAutomaticRollback").ToString());
-Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOsUpgradePolicy").GetProperty("enableAutomaticOsUpgrade").ToString());
-Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOsUpgradePolicy").GetProperty("useRollingUpgradePolicy").ToString());
-Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOsUpgradePolicy").GetProperty("osRollingUpgradeDeferral").ToString());
+Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOSUpgradePolicy").GetProperty("disableAutomaticRollback").ToString());
+Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOSUpgradePolicy").GetProperty("enableAutomaticOSUpgrade").ToString());
+Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOSUpgradePolicy").GetProperty("useRollingUpgradePolicy").ToString());
+Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOSUpgradePolicy").GetProperty("osRollingUpgradeDeferral").ToString());
 Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("rollingUpgradePolicy").GetProperty("enableCrossZoneUpgrade").ToString());
 Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("rollingUpgradePolicy").GetProperty("maxBatchInstancePercent").ToString());
 Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("rollingUpgradePolicy").GetProperty("maxUnhealthyInstancePercent").ToString());
@@ -8267,8 +7883,6 @@ Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo")
 Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("keepAlive").ToString());
 Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("displayName").ToString());
 Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("vmSize").ToString());
-Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("cloudServiceConfiguration").GetProperty("osFamily").ToString());
-Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("cloudServiceConfiguration").GetProperty("osVersion").ToString());
 Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("publisher").ToString());
 Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("offer").ToString());
 Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("sku").ToString());
@@ -8355,14 +7969,8 @@ Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo")
 Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("startTask").GetProperty("userIdentity").GetProperty("autoUser").GetProperty("elevationLevel").ToString());
 Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("startTask").GetProperty("maxTaskRetryCount").ToString());
 Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("startTask").GetProperty("waitForSuccess").ToString());
-Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("certificateReferences")[0].GetProperty("thumbprint").ToString());
-Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("certificateReferences")[0].GetProperty("thumbprintAlgorithm").ToString());
-Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("certificateReferences")[0].GetProperty("storeLocation").ToString());
-Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("certificateReferences")[0].GetProperty("storeName").ToString());
-Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("certificateReferences")[0].GetProperty("visibility")[0].ToString());
 Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("applicationPackageReferences")[0].GetProperty("applicationId").ToString());
 Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("applicationPackageReferences")[0].GetProperty("version").ToString());
-Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("applicationLicenses")[0].ToString());
 Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("userAccounts")[0].GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("userAccounts")[0].GetProperty("password").ToString());
 Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("userAccounts")[0].GetProperty("elevationLevel").ToString());
@@ -8394,10 +8002,10 @@ Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo")
 Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("mountConfiguration")[0].GetProperty("azureFileShareConfiguration").GetProperty("mountOptions").ToString());
 Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("targetNodeCommunicationMode").ToString());
 Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("mode").ToString());
-Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOsUpgradePolicy").GetProperty("disableAutomaticRollback").ToString());
-Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOsUpgradePolicy").GetProperty("enableAutomaticOsUpgrade").ToString());
-Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOsUpgradePolicy").GetProperty("useRollingUpgradePolicy").ToString());
-Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOsUpgradePolicy").GetProperty("osRollingUpgradeDeferral").ToString());
+Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOSUpgradePolicy").GetProperty("disableAutomaticRollback").ToString());
+Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOSUpgradePolicy").GetProperty("enableAutomaticOSUpgrade").ToString());
+Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOSUpgradePolicy").GetProperty("useRollingUpgradePolicy").ToString());
+Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOSUpgradePolicy").GetProperty("osRollingUpgradeDeferral").ToString());
 Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("rollingUpgradePolicy").GetProperty("enableCrossZoneUpgrade").ToString());
 Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("rollingUpgradePolicy").GetProperty("maxBatchInstancePercent").ToString());
 Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("rollingUpgradePolicy").GetProperty("maxUnhealthyInstancePercent").ToString());
@@ -8624,11 +8232,6 @@ using RequestContent content = RequestContent.Create(new
                 {
                     displayName = "<displayName>",
                     vmSize = "<vmSize>",
-                    cloudServiceConfiguration = new
-                    {
-                        osFamily = "<osFamily>",
-                        osVersion = "<osVersion>",
-                    },
                     virtualMachineConfiguration = new
                     {
                         imageReference = new
@@ -8799,27 +8402,9 @@ using RequestContent content = RequestContent.Create(new
                         maxTaskRetryCount = 1234,
                         waitForSuccess = true,
                     },
-                    certificateReferences = new object[]
-                    {
-                        new
-                        {
-                            thumbprint = "<thumbprint>",
-                            thumbprintAlgorithm = "<thumbprintAlgorithm>",
-                            storeLocation = "currentuser",
-                            storeName = "<storeName>",
-                            visibility = new object[]
-                            {
-                                "starttask"
-                            },
-                        }
-                    },
                     applicationPackageReferences = new object[]
                     {
                         null
-                    },
-                    applicationLicenses = new object[]
-                    {
-                        "<applicationLicenses>"
                     },
                     userAccounts = new object[]
                     {
@@ -8889,10 +8474,10 @@ using RequestContent content = RequestContent.Create(new
                     upgradePolicy = new
                     {
                         mode = "automatic",
-                        automaticOsUpgradePolicy = new
+                        automaticOSUpgradePolicy = new
                         {
                             disableAutomaticRollback = true,
-                            enableAutomaticOsUpgrade = true,
+                            enableAutomaticOSUpgrade = true,
                             useRollingUpgradePolicy = true,
                             osRollingUpgradeDeferral = true,
                         },
@@ -9120,11 +8705,6 @@ using RequestContent content = RequestContent.Create(new
                 {
                     displayName = "<displayName>",
                     vmSize = "<vmSize>",
-                    cloudServiceConfiguration = new
-                    {
-                        osFamily = "<osFamily>",
-                        osVersion = "<osVersion>",
-                    },
                     virtualMachineConfiguration = new
                     {
                         imageReference = new
@@ -9295,27 +8875,9 @@ using RequestContent content = RequestContent.Create(new
                         maxTaskRetryCount = 1234,
                         waitForSuccess = true,
                     },
-                    certificateReferences = new object[]
-                    {
-                        new
-                        {
-                            thumbprint = "<thumbprint>",
-                            thumbprintAlgorithm = "<thumbprintAlgorithm>",
-                            storeLocation = "currentuser",
-                            storeName = "<storeName>",
-                            visibility = new object[]
-                            {
-                                "starttask"
-                            },
-                        }
-                    },
                     applicationPackageReferences = new object[]
                     {
                         null
-                    },
-                    applicationLicenses = new object[]
-                    {
-                        "<applicationLicenses>"
                     },
                     userAccounts = new object[]
                     {
@@ -9385,10 +8947,10 @@ using RequestContent content = RequestContent.Create(new
                     upgradePolicy = new
                     {
                         mode = "automatic",
-                        automaticOsUpgradePolicy = new
+                        automaticOSUpgradePolicy = new
                         {
                             disableAutomaticRollback = true,
-                            enableAutomaticOsUpgrade = true,
+                            enableAutomaticOSUpgrade = true,
                             useRollingUpgradePolicy = true,
                             osRollingUpgradeDeferral = true,
                         },
@@ -9448,10 +9010,6 @@ BatchJobSchedule jobSchedule = new BatchJobSchedule(new BatchJobSpecification(ne
         Pool = new BatchPoolSpecification("<vmSize>")
         {
             DisplayName = "<displayName>",
-            CloudServiceConfiguration = new CloudServiceConfiguration("<osFamily>")
-            {
-                OsVersion = "<osVersion>",
-            },
             VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
             {
                 Publisher = "<publisher>",
@@ -9531,9 +9089,9 @@ BatchJobSchedule jobSchedule = new BatchJobSchedule(new BatchJobSpecification(ne
             {
                 SubnetId = "<subnetId>",
                 DynamicVNetAssignmentScope = DynamicVNetAssignmentScope.None,
-                EndpointConfiguration = new BatchPoolEndpointConfiguration(new InboundNATPool[]
+                EndpointConfiguration = new BatchPoolEndpointConfiguration(new InboundNatPool[]
                 {
-                    new InboundNATPool("<name>", InboundEndpointProtocol.Tcp, 1234, 1234, 1234)
+                    new InboundNatPool("<name>", InboundEndpointProtocol.Tcp, 1234, 1234, 1234)
                     {
                         NetworkSecurityGroupRules = {new NetworkSecurityGroupRule(1234, NetworkSecurityGroupRuleAccess.Allow, "<sourceAddressPrefix>")
                         {
@@ -9557,14 +9115,7 @@ BatchJobSchedule jobSchedule = new BatchJobSchedule(new BatchJobSpecification(ne
                 MaxTaskRetryCount = 1234,
                 WaitForSuccess = true,
             },
-            CertificateReferences = {new BatchCertificateReference("<thumbprint>", "<thumbprintAlgorithm>")
-            {
-                StoreLocation = BatchCertificateStoreLocation.CurrentUser,
-                StoreName = "<storeName>",
-                Visibility = {BatchCertificateVisibility.StartTask},
-            }},
             ApplicationPackageReferences = { default },
-            ApplicationLicenses = { "<applicationLicenses>" },
             UserAccounts = {new UserAccount("<name>", "<password>")
             {
                 ElevationLevel = ElevationLevel.NonAdmin,
@@ -9605,10 +9156,10 @@ BatchJobSchedule jobSchedule = new BatchJobSchedule(new BatchJobSpecification(ne
             TargetNodeCommunicationMode = BatchNodeCommunicationMode.Default,
             UpgradePolicy = new UpgradePolicy(UpgradeMode.Automatic)
             {
-                AutomaticOSUpgradePolicy = new AutomaticOsUpgradePolicy
+                AutomaticOsUpgradePolicy = new AutomaticOsUpgradePolicy
                 {
                     DisableAutomaticRollback = true,
-                    EnableAutomaticOSUpgrade = true,
+                    EnableAutomaticOsUpgrade = true,
                     UseRollingUpgradePolicy = true,
                     OsRollingUpgradeDeferral = true,
                 },
@@ -9646,7 +9197,7 @@ BatchJobSchedule jobSchedule = new BatchJobSchedule(new BatchJobSpecification(ne
         ContainerSettings = new BatchTaskContainerSettings("<imageName>")
         {
             ContainerRunOptions = "<containerRunOptions>",
-            Registry = new ContainerRegistry
+            Registry = new ContainerRegistryReference
             {
                 Username = "<username>",
                 Password = "<password>",
@@ -9776,10 +9327,6 @@ BatchJobSchedule jobSchedule = new BatchJobSchedule(new BatchJobSpecification(ne
         Pool = new BatchPoolSpecification("<vmSize>")
         {
             DisplayName = "<displayName>",
-            CloudServiceConfiguration = new CloudServiceConfiguration("<osFamily>")
-            {
-                OsVersion = "<osVersion>",
-            },
             VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
             {
                 Publisher = "<publisher>",
@@ -9859,9 +9406,9 @@ BatchJobSchedule jobSchedule = new BatchJobSchedule(new BatchJobSpecification(ne
             {
                 SubnetId = "<subnetId>",
                 DynamicVNetAssignmentScope = DynamicVNetAssignmentScope.None,
-                EndpointConfiguration = new BatchPoolEndpointConfiguration(new InboundNATPool[]
+                EndpointConfiguration = new BatchPoolEndpointConfiguration(new InboundNatPool[]
                 {
-                    new InboundNATPool("<name>", InboundEndpointProtocol.Tcp, 1234, 1234, 1234)
+                    new InboundNatPool("<name>", InboundEndpointProtocol.Tcp, 1234, 1234, 1234)
                     {
                         NetworkSecurityGroupRules = {new NetworkSecurityGroupRule(1234, NetworkSecurityGroupRuleAccess.Allow, "<sourceAddressPrefix>")
                         {
@@ -9885,14 +9432,7 @@ BatchJobSchedule jobSchedule = new BatchJobSchedule(new BatchJobSpecification(ne
                 MaxTaskRetryCount = 1234,
                 WaitForSuccess = true,
             },
-            CertificateReferences = {new BatchCertificateReference("<thumbprint>", "<thumbprintAlgorithm>")
-            {
-                StoreLocation = BatchCertificateStoreLocation.CurrentUser,
-                StoreName = "<storeName>",
-                Visibility = {BatchCertificateVisibility.StartTask},
-            }},
             ApplicationPackageReferences = { default },
-            ApplicationLicenses = { "<applicationLicenses>" },
             UserAccounts = {new UserAccount("<name>", "<password>")
             {
                 ElevationLevel = ElevationLevel.NonAdmin,
@@ -9933,10 +9473,10 @@ BatchJobSchedule jobSchedule = new BatchJobSchedule(new BatchJobSpecification(ne
             TargetNodeCommunicationMode = BatchNodeCommunicationMode.Default,
             UpgradePolicy = new UpgradePolicy(UpgradeMode.Automatic)
             {
-                AutomaticOSUpgradePolicy = new AutomaticOsUpgradePolicy
+                AutomaticOsUpgradePolicy = new AutomaticOsUpgradePolicy
                 {
                     DisableAutomaticRollback = true,
-                    EnableAutomaticOSUpgrade = true,
+                    EnableAutomaticOsUpgrade = true,
                     UseRollingUpgradePolicy = true,
                     OsRollingUpgradeDeferral = true,
                 },
@@ -9974,7 +9514,7 @@ BatchJobSchedule jobSchedule = new BatchJobSchedule(new BatchJobSpecification(ne
         ContainerSettings = new BatchTaskContainerSettings("<imageName>")
         {
             ContainerRunOptions = "<containerRunOptions>",
-            Registry = new ContainerRegistry
+            Registry = new ContainerRegistryReference
             {
                 Username = "<username>",
                 Password = "<password>",
@@ -10278,11 +9818,6 @@ using RequestContent content = RequestContent.Create(new
                 {
                     displayName = "<displayName>",
                     vmSize = "<vmSize>",
-                    cloudServiceConfiguration = new
-                    {
-                        osFamily = "<osFamily>",
-                        osVersion = "<osVersion>",
-                    },
                     virtualMachineConfiguration = new
                     {
                         imageReference = new
@@ -10453,27 +9988,9 @@ using RequestContent content = RequestContent.Create(new
                         maxTaskRetryCount = 1234,
                         waitForSuccess = true,
                     },
-                    certificateReferences = new object[]
-                    {
-                        new
-                        {
-                            thumbprint = "<thumbprint>",
-                            thumbprintAlgorithm = "<thumbprintAlgorithm>",
-                            storeLocation = "currentuser",
-                            storeName = "<storeName>",
-                            visibility = new object[]
-                            {
-                                "starttask"
-                            },
-                        }
-                    },
                     applicationPackageReferences = new object[]
                     {
                         null
-                    },
-                    applicationLicenses = new object[]
-                    {
-                        "<applicationLicenses>"
                     },
                     userAccounts = new object[]
                     {
@@ -10543,10 +10060,10 @@ using RequestContent content = RequestContent.Create(new
                     upgradePolicy = new
                     {
                         mode = "automatic",
-                        automaticOsUpgradePolicy = new
+                        automaticOSUpgradePolicy = new
                         {
                             disableAutomaticRollback = true,
-                            enableAutomaticOsUpgrade = true,
+                            enableAutomaticOSUpgrade = true,
                             useRollingUpgradePolicy = true,
                             osRollingUpgradeDeferral = true,
                         },
@@ -10780,11 +10297,6 @@ using RequestContent content = RequestContent.Create(new
                 {
                     displayName = "<displayName>",
                     vmSize = "<vmSize>",
-                    cloudServiceConfiguration = new
-                    {
-                        osFamily = "<osFamily>",
-                        osVersion = "<osVersion>",
-                    },
                     virtualMachineConfiguration = new
                     {
                         imageReference = new
@@ -10955,27 +10467,9 @@ using RequestContent content = RequestContent.Create(new
                         maxTaskRetryCount = 1234,
                         waitForSuccess = true,
                     },
-                    certificateReferences = new object[]
-                    {
-                        new
-                        {
-                            thumbprint = "<thumbprint>",
-                            thumbprintAlgorithm = "<thumbprintAlgorithm>",
-                            storeLocation = "currentuser",
-                            storeName = "<storeName>",
-                            visibility = new object[]
-                            {
-                                "starttask"
-                            },
-                        }
-                    },
                     applicationPackageReferences = new object[]
                     {
                         null
-                    },
-                    applicationLicenses = new object[]
-                    {
-                        "<applicationLicenses>"
                     },
                     userAccounts = new object[]
                     {
@@ -11045,10 +10539,10 @@ using RequestContent content = RequestContent.Create(new
                     upgradePolicy = new
                     {
                         mode = "automatic",
-                        automaticOsUpgradePolicy = new
+                        automaticOSUpgradePolicy = new
                         {
                             disableAutomaticRollback = true,
-                            enableAutomaticOsUpgrade = true,
+                            enableAutomaticOSUpgrade = true,
                             useRollingUpgradePolicy = true,
                             osRollingUpgradeDeferral = true,
                         },
@@ -11252,10 +10746,6 @@ BatchJobScheduleCreateContent jobSchedule = new BatchJobScheduleCreateContent("<
         Pool = new BatchPoolSpecification("<vmSize>")
         {
             DisplayName = "<displayName>",
-            CloudServiceConfiguration = new CloudServiceConfiguration("<osFamily>")
-            {
-                OsVersion = "<osVersion>",
-            },
             VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
             {
                 Publisher = "<publisher>",
@@ -11335,9 +10825,9 @@ BatchJobScheduleCreateContent jobSchedule = new BatchJobScheduleCreateContent("<
             {
                 SubnetId = "<subnetId>",
                 DynamicVNetAssignmentScope = DynamicVNetAssignmentScope.None,
-                EndpointConfiguration = new BatchPoolEndpointConfiguration(new InboundNATPool[]
+                EndpointConfiguration = new BatchPoolEndpointConfiguration(new InboundNatPool[]
                 {
-                    new InboundNATPool("<name>", InboundEndpointProtocol.Tcp, 1234, 1234, 1234)
+                    new InboundNatPool("<name>", InboundEndpointProtocol.Tcp, 1234, 1234, 1234)
                     {
                         NetworkSecurityGroupRules = {new NetworkSecurityGroupRule(1234, NetworkSecurityGroupRuleAccess.Allow, "<sourceAddressPrefix>")
                         {
@@ -11361,14 +10851,7 @@ BatchJobScheduleCreateContent jobSchedule = new BatchJobScheduleCreateContent("<
                 MaxTaskRetryCount = 1234,
                 WaitForSuccess = true,
             },
-            CertificateReferences = {new BatchCertificateReference("<thumbprint>", "<thumbprintAlgorithm>")
-            {
-                StoreLocation = BatchCertificateStoreLocation.CurrentUser,
-                StoreName = "<storeName>",
-                Visibility = {BatchCertificateVisibility.StartTask},
-            }},
             ApplicationPackageReferences = { default },
-            ApplicationLicenses = { "<applicationLicenses>" },
             UserAccounts = {new UserAccount("<name>", "<password>")
             {
                 ElevationLevel = ElevationLevel.NonAdmin,
@@ -11409,10 +10892,10 @@ BatchJobScheduleCreateContent jobSchedule = new BatchJobScheduleCreateContent("<
             TargetNodeCommunicationMode = BatchNodeCommunicationMode.Default,
             UpgradePolicy = new UpgradePolicy(UpgradeMode.Automatic)
             {
-                AutomaticOSUpgradePolicy = new AutomaticOsUpgradePolicy
+                AutomaticOsUpgradePolicy = new AutomaticOsUpgradePolicy
                 {
                     DisableAutomaticRollback = true,
-                    EnableAutomaticOSUpgrade = true,
+                    EnableAutomaticOsUpgrade = true,
                     UseRollingUpgradePolicy = true,
                     OsRollingUpgradeDeferral = true,
                 },
@@ -11450,7 +10933,7 @@ BatchJobScheduleCreateContent jobSchedule = new BatchJobScheduleCreateContent("<
         ContainerSettings = new BatchTaskContainerSettings("<imageName>")
         {
             ContainerRunOptions = "<containerRunOptions>",
-            Registry = new ContainerRegistry
+            Registry = new ContainerRegistryReference
             {
                 Username = "<username>",
                 Password = "<password>",
@@ -11580,10 +11063,6 @@ BatchJobScheduleCreateContent jobSchedule = new BatchJobScheduleCreateContent("<
         Pool = new BatchPoolSpecification("<vmSize>")
         {
             DisplayName = "<displayName>",
-            CloudServiceConfiguration = new CloudServiceConfiguration("<osFamily>")
-            {
-                OsVersion = "<osVersion>",
-            },
             VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
             {
                 Publisher = "<publisher>",
@@ -11663,9 +11142,9 @@ BatchJobScheduleCreateContent jobSchedule = new BatchJobScheduleCreateContent("<
             {
                 SubnetId = "<subnetId>",
                 DynamicVNetAssignmentScope = DynamicVNetAssignmentScope.None,
-                EndpointConfiguration = new BatchPoolEndpointConfiguration(new InboundNATPool[]
+                EndpointConfiguration = new BatchPoolEndpointConfiguration(new InboundNatPool[]
                 {
-                    new InboundNATPool("<name>", InboundEndpointProtocol.Tcp, 1234, 1234, 1234)
+                    new InboundNatPool("<name>", InboundEndpointProtocol.Tcp, 1234, 1234, 1234)
                     {
                         NetworkSecurityGroupRules = {new NetworkSecurityGroupRule(1234, NetworkSecurityGroupRuleAccess.Allow, "<sourceAddressPrefix>")
                         {
@@ -11689,14 +11168,7 @@ BatchJobScheduleCreateContent jobSchedule = new BatchJobScheduleCreateContent("<
                 MaxTaskRetryCount = 1234,
                 WaitForSuccess = true,
             },
-            CertificateReferences = {new BatchCertificateReference("<thumbprint>", "<thumbprintAlgorithm>")
-            {
-                StoreLocation = BatchCertificateStoreLocation.CurrentUser,
-                StoreName = "<storeName>",
-                Visibility = {BatchCertificateVisibility.StartTask},
-            }},
             ApplicationPackageReferences = { default },
-            ApplicationLicenses = { "<applicationLicenses>" },
             UserAccounts = {new UserAccount("<name>", "<password>")
             {
                 ElevationLevel = ElevationLevel.NonAdmin,
@@ -11737,10 +11209,10 @@ BatchJobScheduleCreateContent jobSchedule = new BatchJobScheduleCreateContent("<
             TargetNodeCommunicationMode = BatchNodeCommunicationMode.Default,
             UpgradePolicy = new UpgradePolicy(UpgradeMode.Automatic)
             {
-                AutomaticOSUpgradePolicy = new AutomaticOsUpgradePolicy
+                AutomaticOsUpgradePolicy = new AutomaticOsUpgradePolicy
                 {
                     DisableAutomaticRollback = true,
-                    EnableAutomaticOSUpgrade = true,
+                    EnableAutomaticOsUpgrade = true,
                     UseRollingUpgradePolicy = true,
                     OsRollingUpgradeDeferral = true,
                 },
@@ -11778,7 +11250,7 @@ BatchJobScheduleCreateContent jobSchedule = new BatchJobScheduleCreateContent("<
         ContainerSettings = new BatchTaskContainerSettings("<imageName>")
         {
             ContainerRunOptions = "<containerRunOptions>",
-            Registry = new ContainerRegistry
+            Registry = new ContainerRegistryReference
             {
                 Username = "<username>",
                 Password = "<password>",
@@ -12080,11 +11552,6 @@ using RequestContent content = RequestContent.Create(new
                 {
                     displayName = "<displayName>",
                     vmSize = "<vmSize>",
-                    cloudServiceConfiguration = new
-                    {
-                        osFamily = "<osFamily>",
-                        osVersion = "<osVersion>",
-                    },
                     virtualMachineConfiguration = new
                     {
                         imageReference = new
@@ -12255,27 +11722,9 @@ using RequestContent content = RequestContent.Create(new
                         maxTaskRetryCount = 1234,
                         waitForSuccess = true,
                     },
-                    certificateReferences = new object[]
-                    {
-                        new
-                        {
-                            thumbprint = "<thumbprint>",
-                            thumbprintAlgorithm = "<thumbprintAlgorithm>",
-                            storeLocation = "currentuser",
-                            storeName = "<storeName>",
-                            visibility = new object[]
-                            {
-                                "starttask"
-                            },
-                        }
-                    },
                     applicationPackageReferences = new object[]
                     {
                         null
-                    },
-                    applicationLicenses = new object[]
-                    {
-                        "<applicationLicenses>"
                     },
                     userAccounts = new object[]
                     {
@@ -12345,10 +11794,10 @@ using RequestContent content = RequestContent.Create(new
                     upgradePolicy = new
                     {
                         mode = "automatic",
-                        automaticOsUpgradePolicy = new
+                        automaticOSUpgradePolicy = new
                         {
                             disableAutomaticRollback = true,
-                            enableAutomaticOsUpgrade = true,
+                            enableAutomaticOSUpgrade = true,
                             useRollingUpgradePolicy = true,
                             osRollingUpgradeDeferral = true,
                         },
@@ -12586,11 +12035,6 @@ using RequestContent content = RequestContent.Create(new
                 {
                     displayName = "<displayName>",
                     vmSize = "<vmSize>",
-                    cloudServiceConfiguration = new
-                    {
-                        osFamily = "<osFamily>",
-                        osVersion = "<osVersion>",
-                    },
                     virtualMachineConfiguration = new
                     {
                         imageReference = new
@@ -12761,27 +12205,9 @@ using RequestContent content = RequestContent.Create(new
                         maxTaskRetryCount = 1234,
                         waitForSuccess = true,
                     },
-                    certificateReferences = new object[]
-                    {
-                        new
-                        {
-                            thumbprint = "<thumbprint>",
-                            thumbprintAlgorithm = "<thumbprintAlgorithm>",
-                            storeLocation = "currentuser",
-                            storeName = "<storeName>",
-                            visibility = new object[]
-                            {
-                                "starttask"
-                            },
-                        }
-                    },
                     applicationPackageReferences = new object[]
                     {
                         null
-                    },
-                    applicationLicenses = new object[]
-                    {
-                        "<applicationLicenses>"
                     },
                     userAccounts = new object[]
                     {
@@ -12851,10 +12277,10 @@ using RequestContent content = RequestContent.Create(new
                     upgradePolicy = new
                     {
                         mode = "automatic",
-                        automaticOsUpgradePolicy = new
+                        automaticOSUpgradePolicy = new
                         {
                             disableAutomaticRollback = true,
-                            enableAutomaticOsUpgrade = true,
+                            enableAutomaticOSUpgrade = true,
                             useRollingUpgradePolicy = true,
                             osRollingUpgradeDeferral = true,
                         },
@@ -12922,7 +12348,7 @@ BatchTaskCreateContent task = new BatchTaskCreateContent("<id>", "<commandLine>"
     ContainerSettings = new BatchTaskContainerSettings("<imageName>")
     {
         ContainerRunOptions = "<containerRunOptions>",
-        Registry = new ContainerRegistry
+        Registry = new ContainerRegistryReference
         {
             Username = "<username>",
             Password = "<password>",
@@ -13034,7 +12460,7 @@ BatchTaskCreateContent task = new BatchTaskCreateContent("<id>", "<commandLine>"
     ContainerSettings = new BatchTaskContainerSettings("<imageName>")
     {
         ContainerRunOptions = "<containerRunOptions>",
-        Registry = new ContainerRegistry
+        Registry = new ContainerRegistryReference
         {
             Username = "<username>",
             Password = "<password>",
@@ -13515,7 +12941,7 @@ BatchTaskGroup taskCollection = new BatchTaskGroup(new BatchTaskCreateContent[]
         ContainerSettings = new BatchTaskContainerSettings("<imageName>")
         {
             ContainerRunOptions = "<containerRunOptions>",
-            Registry = new ContainerRegistry
+            Registry = new ContainerRegistryReference
             {
                 Username = "<username>",
                 Password = "<password>",
@@ -13633,7 +13059,7 @@ BatchTaskGroup taskCollection = new BatchTaskGroup(new BatchTaskCreateContent[]
         ContainerSettings = new BatchTaskContainerSettings("<imageName>")
         {
             ContainerRunOptions = "<containerRunOptions>",
-            Registry = new ContainerRegistry
+            Registry = new ContainerRegistryReference
             {
                 Username = "<username>",
                 Password = "<password>",
@@ -14809,52 +14235,6 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code></example>
     </member>
-    <member name="GetTaskFilePropertiesAsync(string,string,string,int?,DateTimeOffset?,RequestConditions,RequestContext)">
-      <example>
-This sample shows how to call GetTaskFilePropertiesAsync.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-Response response = await client.GetTaskFilePropertiesAsync("<jobId>", "<taskId>", "<filePath>");
-
-Console.WriteLine(response.Status);
-]]></code>
-This sample shows how to call GetTaskFilePropertiesAsync with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-Response response = await client.GetTaskFilePropertiesAsync("<jobId>", "<taskId>", "<filePath>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
-
-Console.WriteLine(response.Status);
-]]></code></example>
-    </member>
-    <member name="GetTaskFileProperties(string,string,string,int?,DateTimeOffset?,RequestConditions,RequestContext)">
-      <example>
-This sample shows how to call GetTaskFileProperties.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-Response response = client.GetTaskFileProperties("<jobId>", "<taskId>", "<filePath>");
-
-Console.WriteLine(response.Status);
-]]></code>
-This sample shows how to call GetTaskFileProperties with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-Response response = client.GetTaskFileProperties("<jobId>", "<taskId>", "<filePath>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
-
-Console.WriteLine(response.Status);
-]]></code></example>
-    </member>
     <member name="CreateNodeUserAsync(string,string,BatchNodeUserCreateContent,int?,DateTimeOffset?,CancellationToken)">
       <example>
 This sample shows how to call CreateNodeUserAsync.
@@ -15269,11 +14649,6 @@ Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("failureInfo")
 Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("retryCount").ToString());
 Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("lastRetryTime").ToString());
 Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("result").ToString());
-Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("thumbprint").ToString());
-Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("thumbprintAlgorithm").ToString());
-Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("storeLocation").ToString());
-Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("storeName").ToString());
-Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("visibility")[0].ToString());
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("errorDetails")[0].GetProperty("name").ToString());
@@ -15390,11 +14765,6 @@ Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("failureInfo")
 Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("retryCount").ToString());
 Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("lastRetryTime").ToString());
 Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("result").ToString());
-Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("thumbprint").ToString());
-Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("thumbprintAlgorithm").ToString());
-Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("storeLocation").ToString());
-Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("storeName").ToString());
-Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("visibility")[0].ToString());
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("errorDetails")[0].GetProperty("name").ToString());
@@ -15515,108 +14885,6 @@ using RequestContent content = RequestContent.Create(new
     nodeRebootOption = "requeue",
 });
 Response response = client.RebootNode("<poolId>", "<nodeId>", content, timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
-
-Console.WriteLine(response.Status);
-]]></code></example>
-    </member>
-    <member name="ReimageNodeAsync(string,string,BatchNodeReimageContent,int?,DateTimeOffset?,CancellationToken)">
-      <example>
-This sample shows how to call ReimageNodeAsync.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-Response response = await client.ReimageNodeAsync("<poolId>", "<nodeId>");
-]]></code>
-This sample shows how to call ReimageNodeAsync with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-BatchNodeReimageContent parameters = new BatchNodeReimageContent
-{
-    NodeReimageOption = BatchNodeReimageOption.Requeue,
-};
-Response response = await client.ReimageNodeAsync("<poolId>", "<nodeId>", parameters: parameters, timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
-]]></code></example>
-    </member>
-    <member name="ReimageNode(string,string,BatchNodeReimageContent,int?,DateTimeOffset?,CancellationToken)">
-      <example>
-This sample shows how to call ReimageNode.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-Response response = client.ReimageNode("<poolId>", "<nodeId>");
-]]></code>
-This sample shows how to call ReimageNode with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-BatchNodeReimageContent parameters = new BatchNodeReimageContent
-{
-    NodeReimageOption = BatchNodeReimageOption.Requeue,
-};
-Response response = client.ReimageNode("<poolId>", "<nodeId>", parameters: parameters, timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
-]]></code></example>
-    </member>
-    <member name="ReimageNodeAsync(string,string,RequestContent,int?,DateTimeOffset?,RequestContext)">
-      <example>
-This sample shows how to call ReimageNodeAsync.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-using RequestContent content = null;
-Response response = await client.ReimageNodeAsync("<poolId>", "<nodeId>", content);
-
-Console.WriteLine(response.Status);
-]]></code>
-This sample shows how to call ReimageNodeAsync with all parameters and request content.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-using RequestContent content = RequestContent.Create(new
-{
-    nodeReimageOption = "requeue",
-});
-Response response = await client.ReimageNodeAsync("<poolId>", "<nodeId>", content, timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
-
-Console.WriteLine(response.Status);
-]]></code></example>
-    </member>
-    <member name="ReimageNode(string,string,RequestContent,int?,DateTimeOffset?,RequestContext)">
-      <example>
-This sample shows how to call ReimageNode.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-using RequestContent content = null;
-Response response = client.ReimageNode("<poolId>", "<nodeId>", content);
-
-Console.WriteLine(response.Status);
-]]></code>
-This sample shows how to call ReimageNode with all parameters and request content.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-using RequestContent content = RequestContent.Create(new
-{
-    nodeReimageOption = "requeue",
-});
-Response response = client.ReimageNode("<poolId>", "<nodeId>", content, timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
 
 Console.WriteLine(response.Status);
 ]]></code></example>
@@ -15859,94 +15127,6 @@ Response response = client.GetNodeRemoteLoginSettings("<poolId>", "<nodeId>", 12
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("remoteLoginIPAddress").ToString());
 Console.WriteLine(result.GetProperty("remoteLoginPort").ToString());
-]]></code></example>
-    </member>
-    <member name="GetNodeRemoteDesktopFileAsync(string,string,int?,DateTimeOffset?,CancellationToken)">
-      <example>
-This sample shows how to call GetNodeRemoteDesktopFileAsync.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-Response<BinaryData> response = await client.GetNodeRemoteDesktopFileAsync("<poolId>", "<nodeId>");
-]]></code>
-This sample shows how to call GetNodeRemoteDesktopFileAsync with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-Response<BinaryData> response = await client.GetNodeRemoteDesktopFileAsync("<poolId>", "<nodeId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
-]]></code></example>
-    </member>
-    <member name="GetNodeRemoteDesktopFile(string,string,int?,DateTimeOffset?,CancellationToken)">
-      <example>
-This sample shows how to call GetNodeRemoteDesktopFile.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-Response<BinaryData> response = client.GetNodeRemoteDesktopFile("<poolId>", "<nodeId>");
-]]></code>
-This sample shows how to call GetNodeRemoteDesktopFile with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-Response<BinaryData> response = client.GetNodeRemoteDesktopFile("<poolId>", "<nodeId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
-]]></code></example>
-    </member>
-    <member name="GetNodeRemoteDesktopFileAsync(string,string,int?,DateTimeOffset?,RequestContext)">
-      <example>
-This sample shows how to call GetNodeRemoteDesktopFileAsync and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-Response response = await client.GetNodeRemoteDesktopFileAsync("<poolId>", "<nodeId>", null, null, null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call GetNodeRemoteDesktopFileAsync with all parameters and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-Response response = await client.GetNodeRemoteDesktopFileAsync("<poolId>", "<nodeId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code></example>
-    </member>
-    <member name="GetNodeRemoteDesktopFile(string,string,int?,DateTimeOffset?,RequestContext)">
-      <example>
-This sample shows how to call GetNodeRemoteDesktopFile and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-Response response = client.GetNodeRemoteDesktopFile("<poolId>", "<nodeId>", null, null, null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call GetNodeRemoteDesktopFile with all parameters and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-Response response = client.GetNodeRemoteDesktopFile("<poolId>", "<nodeId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
 ]]></code></example>
     </member>
     <member name="UploadNodeLogsAsync(string,string,UploadBatchServiceLogsContent,int?,DateTimeOffset?,CancellationToken)">
@@ -16351,52 +15531,6 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code></example>
     </member>
-    <member name="GetNodeFilePropertiesAsync(string,string,string,int?,DateTimeOffset?,RequestConditions,RequestContext)">
-      <example>
-This sample shows how to call GetNodeFilePropertiesAsync.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-Response response = await client.GetNodeFilePropertiesAsync("<poolId>", "<nodeId>", "<filePath>");
-
-Console.WriteLine(response.Status);
-]]></code>
-This sample shows how to call GetNodeFilePropertiesAsync with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-Response response = await client.GetNodeFilePropertiesAsync("<poolId>", "<nodeId>", "<filePath>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
-
-Console.WriteLine(response.Status);
-]]></code></example>
-    </member>
-    <member name="GetNodeFileProperties(string,string,string,int?,DateTimeOffset?,RequestConditions,RequestContext)">
-      <example>
-This sample shows how to call GetNodeFileProperties.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-Response response = client.GetNodeFileProperties("<poolId>", "<nodeId>", "<filePath>");
-
-Console.WriteLine(response.Status);
-]]></code>
-This sample shows how to call GetNodeFileProperties with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-Response response = client.GetNodeFileProperties("<poolId>", "<nodeId>", "<filePath>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
-
-Console.WriteLine(response.Status);
-]]></code></example>
-    </member>
     <member name="GetApplicationsAsync(int?,DateTimeOffset?,int?,CancellationToken)">
       <example>
 This sample shows how to call GetApplicationsAsync.
@@ -16701,8 +15835,6 @@ await foreach (BinaryData item in client.GetPoolsAsync(1234, DateTimeOffset.Pars
     Console.WriteLine(result.GetProperty("allocationState").ToString());
     Console.WriteLine(result.GetProperty("allocationStateTransitionTime").ToString());
     Console.WriteLine(result.GetProperty("vmSize").ToString());
-    Console.WriteLine(result.GetProperty("cloudServiceConfiguration").GetProperty("osFamily").ToString());
-    Console.WriteLine(result.GetProperty("cloudServiceConfiguration").GetProperty("osVersion").ToString());
     Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("publisher").ToString());
     Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("offer").ToString());
     Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("sku").ToString());
@@ -16799,14 +15931,8 @@ await foreach (BinaryData item in client.GetPoolsAsync(1234, DateTimeOffset.Pars
     Console.WriteLine(result.GetProperty("startTask").GetProperty("userIdentity").GetProperty("autoUser").GetProperty("elevationLevel").ToString());
     Console.WriteLine(result.GetProperty("startTask").GetProperty("maxTaskRetryCount").ToString());
     Console.WriteLine(result.GetProperty("startTask").GetProperty("waitForSuccess").ToString());
-    Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("thumbprint").ToString());
-    Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("thumbprintAlgorithm").ToString());
-    Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("storeLocation").ToString());
-    Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("storeName").ToString());
-    Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("visibility")[0].ToString());
     Console.WriteLine(result.GetProperty("applicationPackageReferences")[0].GetProperty("applicationId").ToString());
     Console.WriteLine(result.GetProperty("applicationPackageReferences")[0].GetProperty("version").ToString());
-    Console.WriteLine(result.GetProperty("applicationLicenses")[0].ToString());
     Console.WriteLine(result.GetProperty("taskSlotsPerNode").ToString());
     Console.WriteLine(result.GetProperty("taskSchedulingPolicy").GetProperty("nodeFillType").ToString());
     Console.WriteLine(result.GetProperty("userAccounts")[0].GetProperty("name").ToString());
@@ -16864,10 +15990,10 @@ await foreach (BinaryData item in client.GetPoolsAsync(1234, DateTimeOffset.Pars
     Console.WriteLine(result.GetProperty("targetNodeCommunicationMode").ToString());
     Console.WriteLine(result.GetProperty("currentNodeCommunicationMode").ToString());
     Console.WriteLine(result.GetProperty("upgradePolicy").GetProperty("mode").ToString());
-    Console.WriteLine(result.GetProperty("upgradePolicy").GetProperty("automaticOsUpgradePolicy").GetProperty("disableAutomaticRollback").ToString());
-    Console.WriteLine(result.GetProperty("upgradePolicy").GetProperty("automaticOsUpgradePolicy").GetProperty("enableAutomaticOsUpgrade").ToString());
-    Console.WriteLine(result.GetProperty("upgradePolicy").GetProperty("automaticOsUpgradePolicy").GetProperty("useRollingUpgradePolicy").ToString());
-    Console.WriteLine(result.GetProperty("upgradePolicy").GetProperty("automaticOsUpgradePolicy").GetProperty("osRollingUpgradeDeferral").ToString());
+    Console.WriteLine(result.GetProperty("upgradePolicy").GetProperty("automaticOSUpgradePolicy").GetProperty("disableAutomaticRollback").ToString());
+    Console.WriteLine(result.GetProperty("upgradePolicy").GetProperty("automaticOSUpgradePolicy").GetProperty("enableAutomaticOSUpgrade").ToString());
+    Console.WriteLine(result.GetProperty("upgradePolicy").GetProperty("automaticOSUpgradePolicy").GetProperty("useRollingUpgradePolicy").ToString());
+    Console.WriteLine(result.GetProperty("upgradePolicy").GetProperty("automaticOSUpgradePolicy").GetProperty("osRollingUpgradeDeferral").ToString());
     Console.WriteLine(result.GetProperty("upgradePolicy").GetProperty("rollingUpgradePolicy").GetProperty("enableCrossZoneUpgrade").ToString());
     Console.WriteLine(result.GetProperty("upgradePolicy").GetProperty("rollingUpgradePolicy").GetProperty("maxBatchInstancePercent").ToString());
     Console.WriteLine(result.GetProperty("upgradePolicy").GetProperty("rollingUpgradePolicy").GetProperty("maxUnhealthyInstancePercent").ToString());
@@ -16912,8 +16038,6 @@ foreach (BinaryData item in client.GetPools(1234, DateTimeOffset.Parse("Tue, 10 
     Console.WriteLine(result.GetProperty("allocationState").ToString());
     Console.WriteLine(result.GetProperty("allocationStateTransitionTime").ToString());
     Console.WriteLine(result.GetProperty("vmSize").ToString());
-    Console.WriteLine(result.GetProperty("cloudServiceConfiguration").GetProperty("osFamily").ToString());
-    Console.WriteLine(result.GetProperty("cloudServiceConfiguration").GetProperty("osVersion").ToString());
     Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("publisher").ToString());
     Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("offer").ToString());
     Console.WriteLine(result.GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("sku").ToString());
@@ -17010,14 +16134,8 @@ foreach (BinaryData item in client.GetPools(1234, DateTimeOffset.Parse("Tue, 10 
     Console.WriteLine(result.GetProperty("startTask").GetProperty("userIdentity").GetProperty("autoUser").GetProperty("elevationLevel").ToString());
     Console.WriteLine(result.GetProperty("startTask").GetProperty("maxTaskRetryCount").ToString());
     Console.WriteLine(result.GetProperty("startTask").GetProperty("waitForSuccess").ToString());
-    Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("thumbprint").ToString());
-    Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("thumbprintAlgorithm").ToString());
-    Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("storeLocation").ToString());
-    Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("storeName").ToString());
-    Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("visibility")[0].ToString());
     Console.WriteLine(result.GetProperty("applicationPackageReferences")[0].GetProperty("applicationId").ToString());
     Console.WriteLine(result.GetProperty("applicationPackageReferences")[0].GetProperty("version").ToString());
-    Console.WriteLine(result.GetProperty("applicationLicenses")[0].ToString());
     Console.WriteLine(result.GetProperty("taskSlotsPerNode").ToString());
     Console.WriteLine(result.GetProperty("taskSchedulingPolicy").GetProperty("nodeFillType").ToString());
     Console.WriteLine(result.GetProperty("userAccounts")[0].GetProperty("name").ToString());
@@ -17075,10 +16193,10 @@ foreach (BinaryData item in client.GetPools(1234, DateTimeOffset.Parse("Tue, 10 
     Console.WriteLine(result.GetProperty("targetNodeCommunicationMode").ToString());
     Console.WriteLine(result.GetProperty("currentNodeCommunicationMode").ToString());
     Console.WriteLine(result.GetProperty("upgradePolicy").GetProperty("mode").ToString());
-    Console.WriteLine(result.GetProperty("upgradePolicy").GetProperty("automaticOsUpgradePolicy").GetProperty("disableAutomaticRollback").ToString());
-    Console.WriteLine(result.GetProperty("upgradePolicy").GetProperty("automaticOsUpgradePolicy").GetProperty("enableAutomaticOsUpgrade").ToString());
-    Console.WriteLine(result.GetProperty("upgradePolicy").GetProperty("automaticOsUpgradePolicy").GetProperty("useRollingUpgradePolicy").ToString());
-    Console.WriteLine(result.GetProperty("upgradePolicy").GetProperty("automaticOsUpgradePolicy").GetProperty("osRollingUpgradeDeferral").ToString());
+    Console.WriteLine(result.GetProperty("upgradePolicy").GetProperty("automaticOSUpgradePolicy").GetProperty("disableAutomaticRollback").ToString());
+    Console.WriteLine(result.GetProperty("upgradePolicy").GetProperty("automaticOSUpgradePolicy").GetProperty("enableAutomaticOSUpgrade").ToString());
+    Console.WriteLine(result.GetProperty("upgradePolicy").GetProperty("automaticOSUpgradePolicy").GetProperty("useRollingUpgradePolicy").ToString());
+    Console.WriteLine(result.GetProperty("upgradePolicy").GetProperty("automaticOSUpgradePolicy").GetProperty("osRollingUpgradeDeferral").ToString());
     Console.WriteLine(result.GetProperty("upgradePolicy").GetProperty("rollingUpgradePolicy").GetProperty("enableCrossZoneUpgrade").ToString());
     Console.WriteLine(result.GetProperty("upgradePolicy").GetProperty("rollingUpgradePolicy").GetProperty("maxBatchInstancePercent").ToString());
     Console.WriteLine(result.GetProperty("upgradePolicy").GetProperty("rollingUpgradePolicy").GetProperty("maxUnhealthyInstancePercent").ToString());
@@ -17097,7 +16215,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-await foreach (ImageInfo item in client.GetSupportedImagesAsync())
+await foreach (BatchSupportedImage item in client.GetSupportedImagesAsync())
 {
 }
 ]]></code>
@@ -17107,7 +16225,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-await foreach (ImageInfo item in client.GetSupportedImagesAsync(timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), maxresults: 1234, filter: "<filter>"))
+await foreach (BatchSupportedImage item in client.GetSupportedImagesAsync(timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), maxresults: 1234, filter: "<filter>"))
 {
 }
 ]]></code></example>
@@ -17120,7 +16238,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-foreach (ImageInfo item in client.GetSupportedImages())
+foreach (BatchSupportedImage item in client.GetSupportedImages())
 {
 }
 ]]></code>
@@ -17130,7 +16248,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-foreach (ImageInfo item in client.GetSupportedImages(timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), maxresults: 1234, filter: "<filter>"))
+foreach (BatchSupportedImage item in client.GetSupportedImages(timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), maxresults: 1234, filter: "<filter>"))
 {
 }
 ]]></code></example>
@@ -17299,7 +16417,7 @@ await foreach (BinaryData item in client.GetPoolNodeCountsAsync(1234, DateTimeOf
     Console.WriteLine(result.GetProperty("dedicated").GetProperty("unusable").ToString());
     Console.WriteLine(result.GetProperty("dedicated").GetProperty("waitingForStartTask").ToString());
     Console.WriteLine(result.GetProperty("dedicated").GetProperty("total").ToString());
-    Console.WriteLine(result.GetProperty("dedicated").GetProperty("upgradingOs").ToString());
+    Console.WriteLine(result.GetProperty("dedicated").GetProperty("upgradingOS").ToString());
     Console.WriteLine(result.GetProperty("lowPriority").GetProperty("creating").ToString());
     Console.WriteLine(result.GetProperty("lowPriority").GetProperty("idle").ToString());
     Console.WriteLine(result.GetProperty("lowPriority").GetProperty("offline").ToString());
@@ -17314,7 +16432,7 @@ await foreach (BinaryData item in client.GetPoolNodeCountsAsync(1234, DateTimeOf
     Console.WriteLine(result.GetProperty("lowPriority").GetProperty("unusable").ToString());
     Console.WriteLine(result.GetProperty("lowPriority").GetProperty("waitingForStartTask").ToString());
     Console.WriteLine(result.GetProperty("lowPriority").GetProperty("total").ToString());
-    Console.WriteLine(result.GetProperty("lowPriority").GetProperty("upgradingOs").ToString());
+    Console.WriteLine(result.GetProperty("lowPriority").GetProperty("upgradingOS").ToString());
 }
 ]]></code></example>
     </member>
@@ -17356,7 +16474,7 @@ foreach (BinaryData item in client.GetPoolNodeCounts(1234, DateTimeOffset.Parse(
     Console.WriteLine(result.GetProperty("dedicated").GetProperty("unusable").ToString());
     Console.WriteLine(result.GetProperty("dedicated").GetProperty("waitingForStartTask").ToString());
     Console.WriteLine(result.GetProperty("dedicated").GetProperty("total").ToString());
-    Console.WriteLine(result.GetProperty("dedicated").GetProperty("upgradingOs").ToString());
+    Console.WriteLine(result.GetProperty("dedicated").GetProperty("upgradingOS").ToString());
     Console.WriteLine(result.GetProperty("lowPriority").GetProperty("creating").ToString());
     Console.WriteLine(result.GetProperty("lowPriority").GetProperty("idle").ToString());
     Console.WriteLine(result.GetProperty("lowPriority").GetProperty("offline").ToString());
@@ -17371,7 +16489,7 @@ foreach (BinaryData item in client.GetPoolNodeCounts(1234, DateTimeOffset.Parse(
     Console.WriteLine(result.GetProperty("lowPriority").GetProperty("unusable").ToString());
     Console.WriteLine(result.GetProperty("lowPriority").GetProperty("waitingForStartTask").ToString());
     Console.WriteLine(result.GetProperty("lowPriority").GetProperty("total").ToString());
-    Console.WriteLine(result.GetProperty("lowPriority").GetProperty("upgradingOs").ToString());
+    Console.WriteLine(result.GetProperty("lowPriority").GetProperty("upgradingOS").ToString());
 }
 ]]></code></example>
     </member>
@@ -17556,8 +16674,6 @@ await foreach (BinaryData item in client.GetJobsAsync(1234, DateTimeOffset.Parse
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("keepAlive").ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("displayName").ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("vmSize").ToString());
-    Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("cloudServiceConfiguration").GetProperty("osFamily").ToString());
-    Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("cloudServiceConfiguration").GetProperty("osVersion").ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("publisher").ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("offer").ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("sku").ToString());
@@ -17644,14 +16760,8 @@ await foreach (BinaryData item in client.GetJobsAsync(1234, DateTimeOffset.Parse
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("startTask").GetProperty("userIdentity").GetProperty("autoUser").GetProperty("elevationLevel").ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("startTask").GetProperty("maxTaskRetryCount").ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("startTask").GetProperty("waitForSuccess").ToString());
-    Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("certificateReferences")[0].GetProperty("thumbprint").ToString());
-    Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("certificateReferences")[0].GetProperty("thumbprintAlgorithm").ToString());
-    Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("certificateReferences")[0].GetProperty("storeLocation").ToString());
-    Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("certificateReferences")[0].GetProperty("storeName").ToString());
-    Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("certificateReferences")[0].GetProperty("visibility")[0].ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("applicationPackageReferences")[0].GetProperty("applicationId").ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("applicationPackageReferences")[0].GetProperty("version").ToString());
-    Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("applicationLicenses")[0].ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("userAccounts")[0].GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("userAccounts")[0].GetProperty("password").ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("userAccounts")[0].GetProperty("elevationLevel").ToString());
@@ -17683,10 +16793,10 @@ await foreach (BinaryData item in client.GetJobsAsync(1234, DateTimeOffset.Parse
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("mountConfiguration")[0].GetProperty("azureFileShareConfiguration").GetProperty("mountOptions").ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("targetNodeCommunicationMode").ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("mode").ToString());
-    Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOsUpgradePolicy").GetProperty("disableAutomaticRollback").ToString());
-    Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOsUpgradePolicy").GetProperty("enableAutomaticOsUpgrade").ToString());
-    Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOsUpgradePolicy").GetProperty("useRollingUpgradePolicy").ToString());
-    Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOsUpgradePolicy").GetProperty("osRollingUpgradeDeferral").ToString());
+    Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOSUpgradePolicy").GetProperty("disableAutomaticRollback").ToString());
+    Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOSUpgradePolicy").GetProperty("enableAutomaticOSUpgrade").ToString());
+    Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOSUpgradePolicy").GetProperty("useRollingUpgradePolicy").ToString());
+    Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOSUpgradePolicy").GetProperty("osRollingUpgradeDeferral").ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("rollingUpgradePolicy").GetProperty("enableCrossZoneUpgrade").ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("rollingUpgradePolicy").GetProperty("maxBatchInstancePercent").ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("rollingUpgradePolicy").GetProperty("maxUnhealthyInstancePercent").ToString());
@@ -17860,8 +16970,6 @@ foreach (BinaryData item in client.GetJobs(1234, DateTimeOffset.Parse("Tue, 10 M
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("keepAlive").ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("displayName").ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("vmSize").ToString());
-    Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("cloudServiceConfiguration").GetProperty("osFamily").ToString());
-    Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("cloudServiceConfiguration").GetProperty("osVersion").ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("publisher").ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("offer").ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("sku").ToString());
@@ -17948,14 +17056,8 @@ foreach (BinaryData item in client.GetJobs(1234, DateTimeOffset.Parse("Tue, 10 M
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("startTask").GetProperty("userIdentity").GetProperty("autoUser").GetProperty("elevationLevel").ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("startTask").GetProperty("maxTaskRetryCount").ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("startTask").GetProperty("waitForSuccess").ToString());
-    Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("certificateReferences")[0].GetProperty("thumbprint").ToString());
-    Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("certificateReferences")[0].GetProperty("thumbprintAlgorithm").ToString());
-    Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("certificateReferences")[0].GetProperty("storeLocation").ToString());
-    Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("certificateReferences")[0].GetProperty("storeName").ToString());
-    Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("certificateReferences")[0].GetProperty("visibility")[0].ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("applicationPackageReferences")[0].GetProperty("applicationId").ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("applicationPackageReferences")[0].GetProperty("version").ToString());
-    Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("applicationLicenses")[0].ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("userAccounts")[0].GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("userAccounts")[0].GetProperty("password").ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("userAccounts")[0].GetProperty("elevationLevel").ToString());
@@ -17987,10 +17089,10 @@ foreach (BinaryData item in client.GetJobs(1234, DateTimeOffset.Parse("Tue, 10 M
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("mountConfiguration")[0].GetProperty("azureFileShareConfiguration").GetProperty("mountOptions").ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("targetNodeCommunicationMode").ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("mode").ToString());
-    Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOsUpgradePolicy").GetProperty("disableAutomaticRollback").ToString());
-    Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOsUpgradePolicy").GetProperty("enableAutomaticOsUpgrade").ToString());
-    Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOsUpgradePolicy").GetProperty("useRollingUpgradePolicy").ToString());
-    Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOsUpgradePolicy").GetProperty("osRollingUpgradeDeferral").ToString());
+    Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOSUpgradePolicy").GetProperty("disableAutomaticRollback").ToString());
+    Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOSUpgradePolicy").GetProperty("enableAutomaticOSUpgrade").ToString());
+    Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOSUpgradePolicy").GetProperty("useRollingUpgradePolicy").ToString());
+    Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOSUpgradePolicy").GetProperty("osRollingUpgradeDeferral").ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("rollingUpgradePolicy").GetProperty("enableCrossZoneUpgrade").ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("rollingUpgradePolicy").GetProperty("maxBatchInstancePercent").ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("rollingUpgradePolicy").GetProperty("maxUnhealthyInstancePercent").ToString());
@@ -18210,8 +17312,6 @@ await foreach (BinaryData item in client.GetJobsFromSchedulesAsync("<jobSchedule
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("keepAlive").ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("displayName").ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("vmSize").ToString());
-    Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("cloudServiceConfiguration").GetProperty("osFamily").ToString());
-    Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("cloudServiceConfiguration").GetProperty("osVersion").ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("publisher").ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("offer").ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("sku").ToString());
@@ -18298,14 +17398,8 @@ await foreach (BinaryData item in client.GetJobsFromSchedulesAsync("<jobSchedule
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("startTask").GetProperty("userIdentity").GetProperty("autoUser").GetProperty("elevationLevel").ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("startTask").GetProperty("maxTaskRetryCount").ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("startTask").GetProperty("waitForSuccess").ToString());
-    Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("certificateReferences")[0].GetProperty("thumbprint").ToString());
-    Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("certificateReferences")[0].GetProperty("thumbprintAlgorithm").ToString());
-    Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("certificateReferences")[0].GetProperty("storeLocation").ToString());
-    Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("certificateReferences")[0].GetProperty("storeName").ToString());
-    Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("certificateReferences")[0].GetProperty("visibility")[0].ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("applicationPackageReferences")[0].GetProperty("applicationId").ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("applicationPackageReferences")[0].GetProperty("version").ToString());
-    Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("applicationLicenses")[0].ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("userAccounts")[0].GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("userAccounts")[0].GetProperty("password").ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("userAccounts")[0].GetProperty("elevationLevel").ToString());
@@ -18337,10 +17431,10 @@ await foreach (BinaryData item in client.GetJobsFromSchedulesAsync("<jobSchedule
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("mountConfiguration")[0].GetProperty("azureFileShareConfiguration").GetProperty("mountOptions").ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("targetNodeCommunicationMode").ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("mode").ToString());
-    Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOsUpgradePolicy").GetProperty("disableAutomaticRollback").ToString());
-    Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOsUpgradePolicy").GetProperty("enableAutomaticOsUpgrade").ToString());
-    Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOsUpgradePolicy").GetProperty("useRollingUpgradePolicy").ToString());
-    Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOsUpgradePolicy").GetProperty("osRollingUpgradeDeferral").ToString());
+    Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOSUpgradePolicy").GetProperty("disableAutomaticRollback").ToString());
+    Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOSUpgradePolicy").GetProperty("enableAutomaticOSUpgrade").ToString());
+    Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOSUpgradePolicy").GetProperty("useRollingUpgradePolicy").ToString());
+    Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOSUpgradePolicy").GetProperty("osRollingUpgradeDeferral").ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("rollingUpgradePolicy").GetProperty("enableCrossZoneUpgrade").ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("rollingUpgradePolicy").GetProperty("maxBatchInstancePercent").ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("rollingUpgradePolicy").GetProperty("maxUnhealthyInstancePercent").ToString());
@@ -18514,8 +17608,6 @@ foreach (BinaryData item in client.GetJobsFromSchedules("<jobScheduleId>", 1234,
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("keepAlive").ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("displayName").ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("vmSize").ToString());
-    Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("cloudServiceConfiguration").GetProperty("osFamily").ToString());
-    Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("cloudServiceConfiguration").GetProperty("osVersion").ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("publisher").ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("offer").ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("sku").ToString());
@@ -18602,14 +17694,8 @@ foreach (BinaryData item in client.GetJobsFromSchedules("<jobScheduleId>", 1234,
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("startTask").GetProperty("userIdentity").GetProperty("autoUser").GetProperty("elevationLevel").ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("startTask").GetProperty("maxTaskRetryCount").ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("startTask").GetProperty("waitForSuccess").ToString());
-    Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("certificateReferences")[0].GetProperty("thumbprint").ToString());
-    Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("certificateReferences")[0].GetProperty("thumbprintAlgorithm").ToString());
-    Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("certificateReferences")[0].GetProperty("storeLocation").ToString());
-    Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("certificateReferences")[0].GetProperty("storeName").ToString());
-    Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("certificateReferences")[0].GetProperty("visibility")[0].ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("applicationPackageReferences")[0].GetProperty("applicationId").ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("applicationPackageReferences")[0].GetProperty("version").ToString());
-    Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("applicationLicenses")[0].ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("userAccounts")[0].GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("userAccounts")[0].GetProperty("password").ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("userAccounts")[0].GetProperty("elevationLevel").ToString());
@@ -18641,10 +17727,10 @@ foreach (BinaryData item in client.GetJobsFromSchedules("<jobScheduleId>", 1234,
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("mountConfiguration")[0].GetProperty("azureFileShareConfiguration").GetProperty("mountOptions").ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("targetNodeCommunicationMode").ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("mode").ToString());
-    Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOsUpgradePolicy").GetProperty("disableAutomaticRollback").ToString());
-    Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOsUpgradePolicy").GetProperty("enableAutomaticOsUpgrade").ToString());
-    Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOsUpgradePolicy").GetProperty("useRollingUpgradePolicy").ToString());
-    Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOsUpgradePolicy").GetProperty("osRollingUpgradeDeferral").ToString());
+    Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOSUpgradePolicy").GetProperty("disableAutomaticRollback").ToString());
+    Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOSUpgradePolicy").GetProperty("enableAutomaticOSUpgrade").ToString());
+    Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOSUpgradePolicy").GetProperty("useRollingUpgradePolicy").ToString());
+    Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOSUpgradePolicy").GetProperty("osRollingUpgradeDeferral").ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("rollingUpgradePolicy").GetProperty("enableCrossZoneUpgrade").ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("rollingUpgradePolicy").GetProperty("maxBatchInstancePercent").ToString());
     Console.WriteLine(result.GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("rollingUpgradePolicy").GetProperty("maxUnhealthyInstancePercent").ToString());
@@ -19040,8 +18126,6 @@ await foreach (BinaryData item in client.GetJobSchedulesAsync(1234, DateTimeOffs
     Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("keepAlive").ToString());
     Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("displayName").ToString());
     Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("vmSize").ToString());
-    Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("cloudServiceConfiguration").GetProperty("osFamily").ToString());
-    Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("cloudServiceConfiguration").GetProperty("osVersion").ToString());
     Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("publisher").ToString());
     Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("offer").ToString());
     Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("sku").ToString());
@@ -19128,14 +18212,8 @@ await foreach (BinaryData item in client.GetJobSchedulesAsync(1234, DateTimeOffs
     Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("startTask").GetProperty("userIdentity").GetProperty("autoUser").GetProperty("elevationLevel").ToString());
     Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("startTask").GetProperty("maxTaskRetryCount").ToString());
     Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("startTask").GetProperty("waitForSuccess").ToString());
-    Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("certificateReferences")[0].GetProperty("thumbprint").ToString());
-    Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("certificateReferences")[0].GetProperty("thumbprintAlgorithm").ToString());
-    Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("certificateReferences")[0].GetProperty("storeLocation").ToString());
-    Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("certificateReferences")[0].GetProperty("storeName").ToString());
-    Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("certificateReferences")[0].GetProperty("visibility")[0].ToString());
     Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("applicationPackageReferences")[0].GetProperty("applicationId").ToString());
     Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("applicationPackageReferences")[0].GetProperty("version").ToString());
-    Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("applicationLicenses")[0].ToString());
     Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("userAccounts")[0].GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("userAccounts")[0].GetProperty("password").ToString());
     Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("userAccounts")[0].GetProperty("elevationLevel").ToString());
@@ -19167,10 +18245,10 @@ await foreach (BinaryData item in client.GetJobSchedulesAsync(1234, DateTimeOffs
     Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("mountConfiguration")[0].GetProperty("azureFileShareConfiguration").GetProperty("mountOptions").ToString());
     Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("targetNodeCommunicationMode").ToString());
     Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("mode").ToString());
-    Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOsUpgradePolicy").GetProperty("disableAutomaticRollback").ToString());
-    Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOsUpgradePolicy").GetProperty("enableAutomaticOsUpgrade").ToString());
-    Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOsUpgradePolicy").GetProperty("useRollingUpgradePolicy").ToString());
-    Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOsUpgradePolicy").GetProperty("osRollingUpgradeDeferral").ToString());
+    Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOSUpgradePolicy").GetProperty("disableAutomaticRollback").ToString());
+    Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOSUpgradePolicy").GetProperty("enableAutomaticOSUpgrade").ToString());
+    Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOSUpgradePolicy").GetProperty("useRollingUpgradePolicy").ToString());
+    Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOSUpgradePolicy").GetProperty("osRollingUpgradeDeferral").ToString());
     Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("rollingUpgradePolicy").GetProperty("enableCrossZoneUpgrade").ToString());
     Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("rollingUpgradePolicy").GetProperty("maxBatchInstancePercent").ToString());
     Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("rollingUpgradePolicy").GetProperty("maxUnhealthyInstancePercent").ToString());
@@ -19346,8 +18424,6 @@ foreach (BinaryData item in client.GetJobSchedules(1234, DateTimeOffset.Parse("T
     Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("keepAlive").ToString());
     Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("displayName").ToString());
     Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("vmSize").ToString());
-    Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("cloudServiceConfiguration").GetProperty("osFamily").ToString());
-    Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("cloudServiceConfiguration").GetProperty("osVersion").ToString());
     Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("publisher").ToString());
     Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("offer").ToString());
     Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("virtualMachineConfiguration").GetProperty("imageReference").GetProperty("sku").ToString());
@@ -19434,14 +18510,8 @@ foreach (BinaryData item in client.GetJobSchedules(1234, DateTimeOffset.Parse("T
     Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("startTask").GetProperty("userIdentity").GetProperty("autoUser").GetProperty("elevationLevel").ToString());
     Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("startTask").GetProperty("maxTaskRetryCount").ToString());
     Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("startTask").GetProperty("waitForSuccess").ToString());
-    Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("certificateReferences")[0].GetProperty("thumbprint").ToString());
-    Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("certificateReferences")[0].GetProperty("thumbprintAlgorithm").ToString());
-    Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("certificateReferences")[0].GetProperty("storeLocation").ToString());
-    Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("certificateReferences")[0].GetProperty("storeName").ToString());
-    Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("certificateReferences")[0].GetProperty("visibility")[0].ToString());
     Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("applicationPackageReferences")[0].GetProperty("applicationId").ToString());
     Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("applicationPackageReferences")[0].GetProperty("version").ToString());
-    Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("applicationLicenses")[0].ToString());
     Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("userAccounts")[0].GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("userAccounts")[0].GetProperty("password").ToString());
     Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("userAccounts")[0].GetProperty("elevationLevel").ToString());
@@ -19473,10 +18543,10 @@ foreach (BinaryData item in client.GetJobSchedules(1234, DateTimeOffset.Parse("T
     Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("mountConfiguration")[0].GetProperty("azureFileShareConfiguration").GetProperty("mountOptions").ToString());
     Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("targetNodeCommunicationMode").ToString());
     Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("mode").ToString());
-    Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOsUpgradePolicy").GetProperty("disableAutomaticRollback").ToString());
-    Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOsUpgradePolicy").GetProperty("enableAutomaticOsUpgrade").ToString());
-    Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOsUpgradePolicy").GetProperty("useRollingUpgradePolicy").ToString());
-    Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOsUpgradePolicy").GetProperty("osRollingUpgradeDeferral").ToString());
+    Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOSUpgradePolicy").GetProperty("disableAutomaticRollback").ToString());
+    Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOSUpgradePolicy").GetProperty("enableAutomaticOSUpgrade").ToString());
+    Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOSUpgradePolicy").GetProperty("useRollingUpgradePolicy").ToString());
+    Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("automaticOSUpgradePolicy").GetProperty("osRollingUpgradeDeferral").ToString());
     Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("rollingUpgradePolicy").GetProperty("enableCrossZoneUpgrade").ToString());
     Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("rollingUpgradePolicy").GetProperty("maxBatchInstancePercent").ToString());
     Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").GetProperty("autoPoolSpecification").GetProperty("pool").GetProperty("upgradePolicy").GetProperty("rollingUpgradePolicy").GetProperty("maxUnhealthyInstancePercent").ToString());
@@ -20212,11 +19282,6 @@ await foreach (BinaryData item in client.GetNodesAsync("<poolId>", 1234, DateTim
     Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("retryCount").ToString());
     Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("lastRetryTime").ToString());
     Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("result").ToString());
-    Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("thumbprint").ToString());
-    Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("thumbprintAlgorithm").ToString());
-    Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("storeLocation").ToString());
-    Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("storeName").ToString());
-    Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("visibility")[0].ToString());
     Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
     Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
     Console.WriteLine(result.GetProperty("errors")[0].GetProperty("errorDetails")[0].GetProperty("name").ToString());
@@ -20335,11 +19400,6 @@ foreach (BinaryData item in client.GetNodes("<poolId>", 1234, DateTimeOffset.Par
     Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("retryCount").ToString());
     Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("lastRetryTime").ToString());
     Console.WriteLine(result.GetProperty("startTaskInfo").GetProperty("result").ToString());
-    Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("thumbprint").ToString());
-    Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("thumbprintAlgorithm").ToString());
-    Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("storeLocation").ToString());
-    Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("storeName").ToString());
-    Console.WriteLine(result.GetProperty("certificateReferences")[0].GetProperty("visibility")[0].ToString());
     Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
     Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
     Console.WriteLine(result.GetProperty("errors")[0].GetProperty("errorDetails")[0].GetProperty("name").ToString());

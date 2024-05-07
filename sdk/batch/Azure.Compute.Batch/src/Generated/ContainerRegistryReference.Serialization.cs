@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.Compute.Batch
 {
-    public partial class ContainerRegistry : IUtf8JsonSerializable, IJsonModel<ContainerRegistry>
+    public partial class ContainerRegistryReference : IUtf8JsonSerializable, IJsonModel<ContainerRegistryReference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerRegistry>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerRegistryReference>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ContainerRegistry>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ContainerRegistryReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistry>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistry)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryReference)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,19 +64,19 @@ namespace Azure.Compute.Batch
             writer.WriteEndObject();
         }
 
-        ContainerRegistry IJsonModel<ContainerRegistry>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ContainerRegistryReference IJsonModel<ContainerRegistryReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistry>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistry)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryReference)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeContainerRegistry(document.RootElement, options);
+            return DeserializeContainerRegistryReference(document.RootElement, options);
         }
 
-        internal static ContainerRegistry DeserializeContainerRegistry(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ContainerRegistryReference DeserializeContainerRegistryReference(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -122,46 +122,46 @@ namespace Azure.Compute.Batch
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ContainerRegistry(username, password, registryServer, identityReference, serializedAdditionalRawData);
+            return new ContainerRegistryReference(username, password, registryServer, identityReference, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ContainerRegistry>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ContainerRegistryReference>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistry>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryReference>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistry)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryReference)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ContainerRegistry IPersistableModel<ContainerRegistry>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ContainerRegistryReference IPersistableModel<ContainerRegistryReference>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistry>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryReference>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeContainerRegistry(document.RootElement, options);
+                        return DeserializeContainerRegistryReference(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistry)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryReference)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ContainerRegistry>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ContainerRegistryReference>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ContainerRegistry FromResponse(Response response)
+        internal static ContainerRegistryReference FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeContainerRegistry(document.RootElement);
+            return DeserializeContainerRegistryReference(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

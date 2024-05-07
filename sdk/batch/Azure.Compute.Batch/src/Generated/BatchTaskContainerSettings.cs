@@ -61,7 +61,7 @@ namespace Azure.Compute.Batch
         /// <param name="registry"> The private registry which contains the container Image. This setting can be omitted if was already provided at Pool creation. </param>
         /// <param name="workingDirectory"> The location of the container Task working directory. The default is 'taskWorkingDirectory'. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchTaskContainerSettings(string containerRunOptions, string imageName, ContainerRegistry registry, ContainerWorkingDirectory? workingDirectory, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BatchTaskContainerSettings(string containerRunOptions, string imageName, ContainerRegistryReference registry, ContainerWorkingDirectory? workingDirectory, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ContainerRunOptions = containerRunOptions;
             ImageName = imageName;
@@ -80,7 +80,7 @@ namespace Azure.Compute.Batch
         /// <summary> The Image to use to create the container in which the Task will run. This is the full Image reference, as would be specified to "docker pull". If no tag is provided as part of the Image name, the tag ":latest" is used as a default. </summary>
         public string ImageName { get; set; }
         /// <summary> The private registry which contains the container Image. This setting can be omitted if was already provided at Pool creation. </summary>
-        public ContainerRegistry Registry { get; set; }
+        public ContainerRegistryReference Registry { get; set; }
         /// <summary> The location of the container Task working directory. The default is 'taskWorkingDirectory'. </summary>
         public ContainerWorkingDirectory? WorkingDirectory { get; set; }
     }

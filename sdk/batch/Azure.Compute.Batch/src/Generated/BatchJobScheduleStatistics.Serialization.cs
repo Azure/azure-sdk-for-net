@@ -98,13 +98,13 @@ namespace Azure.Compute.Batch
             TimeSpan userCPUTime = default;
             TimeSpan kernelCPUTime = default;
             TimeSpan wallClockTime = default;
-            int readIOps = default;
-            int writeIOps = default;
+            long readIOps = default;
+            long writeIOps = default;
             float readIOGiB = default;
             float writeIOGiB = default;
-            int numSucceededTasks = default;
-            int numFailedTasks = default;
-            int numTaskRetries = default;
+            long numSucceededTasks = default;
+            long numFailedTasks = default;
+            long numTaskRetries = default;
             TimeSpan waitTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -142,12 +142,12 @@ namespace Azure.Compute.Batch
                 }
                 if (property.NameEquals("readIOps"u8))
                 {
-                    readIOps = property.Value.GetInt32();
+                    readIOps = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("writeIOps"u8))
                 {
-                    writeIOps = property.Value.GetInt32();
+                    writeIOps = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("readIOGiB"u8))
@@ -162,17 +162,17 @@ namespace Azure.Compute.Batch
                 }
                 if (property.NameEquals("numSucceededTasks"u8))
                 {
-                    numSucceededTasks = property.Value.GetInt32();
+                    numSucceededTasks = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("numFailedTasks"u8))
                 {
-                    numFailedTasks = property.Value.GetInt32();
+                    numFailedTasks = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("numTaskRetries"u8))
                 {
-                    numTaskRetries = property.Value.GetInt32();
+                    numTaskRetries = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("waitTime"u8))

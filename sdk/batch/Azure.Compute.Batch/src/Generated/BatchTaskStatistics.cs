@@ -58,7 +58,7 @@ namespace Azure.Compute.Batch
         /// <param name="writeIOGiB"> The total gibibytes written to disk by the Task. </param>
         /// <param name="waitTime"> The total wait time of the Task. The wait time for a Task is defined as the elapsed time between the creation of the Task and the start of Task execution. (If the Task is retried due to failures, the wait time is the time to the most recent Task execution.). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
-        public BatchTaskStatistics(string url, DateTimeOffset startTime, DateTimeOffset lastUpdateTime, TimeSpan userCpuTime, TimeSpan kernelCpuTime, TimeSpan wallClockTime, int readIOps, int writeIOps, float readIOGiB, float writeIOGiB, TimeSpan waitTime)
+        public BatchTaskStatistics(string url, DateTimeOffset startTime, DateTimeOffset lastUpdateTime, TimeSpan userCpuTime, TimeSpan kernelCpuTime, TimeSpan wallClockTime, long readIOps, long writeIOps, float readIOGiB, float writeIOGiB, TimeSpan waitTime)
         {
             Argument.AssertNotNull(url, nameof(url));
 
@@ -88,7 +88,7 @@ namespace Azure.Compute.Batch
         /// <param name="writeIOGiB"> The total gibibytes written to disk by the Task. </param>
         /// <param name="waitTime"> The total wait time of the Task. The wait time for a Task is defined as the elapsed time between the creation of the Task and the start of Task execution. (If the Task is retried due to failures, the wait time is the time to the most recent Task execution.). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchTaskStatistics(string url, DateTimeOffset startTime, DateTimeOffset lastUpdateTime, TimeSpan userCpuTime, TimeSpan kernelCpuTime, TimeSpan wallClockTime, int readIOps, int writeIOps, float readIOGiB, float writeIOGiB, TimeSpan waitTime, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BatchTaskStatistics(string url, DateTimeOffset startTime, DateTimeOffset lastUpdateTime, TimeSpan userCpuTime, TimeSpan kernelCpuTime, TimeSpan wallClockTime, long readIOps, long writeIOps, float readIOGiB, float writeIOGiB, TimeSpan waitTime, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Url = url;
             StartTime = startTime;
@@ -122,9 +122,9 @@ namespace Azure.Compute.Batch
         /// <summary> The total wall clock time of the Task. The wall clock time is the elapsed time from when the Task started running on a Compute Node to when it finished (or to the last time the statistics were updated, if the Task had not finished by then). If the Task was retried, this includes the wall clock time of all the Task retries. </summary>
         public TimeSpan WallClockTime { get; set; }
         /// <summary> The total number of disk read operations made by the Task. </summary>
-        public int ReadIOps { get; set; }
+        public long ReadIOps { get; set; }
         /// <summary> The total number of disk write operations made by the Task. </summary>
-        public int WriteIOps { get; set; }
+        public long WriteIOps { get; set; }
         /// <summary> The total gibibytes read from disk by the Task. </summary>
         public float ReadIOGiB { get; set; }
         /// <summary> The total gibibytes written to disk by the Task. </summary>

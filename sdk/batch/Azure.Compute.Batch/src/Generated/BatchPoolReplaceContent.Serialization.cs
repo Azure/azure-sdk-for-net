@@ -31,13 +31,6 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("startTask"u8);
                 writer.WriteObjectValue(StartTask, options);
             }
-            writer.WritePropertyName("certificateReferences"u8);
-            writer.WriteStartArray();
-            foreach (var item in CertificateReferences)
-            {
-                writer.WriteObjectValue(item, options);
-            }
-            writer.WriteEndArray();
             writer.WritePropertyName("applicationPackageReferences"u8);
             writer.WriteStartArray();
             foreach (var item in ApplicationPackageReferences)
@@ -96,7 +89,6 @@ namespace Azure.Compute.Batch
                 return null;
             }
             BatchStartTask startTask = default;
-            IList<BatchCertificateReference> certificateReferences = default;
             IList<BatchApplicationPackageReference> applicationPackageReferences = default;
             IList<MetadataItem> metadata = default;
             BatchNodeCommunicationMode? targetNodeCommunicationMode = default;
@@ -111,16 +103,6 @@ namespace Azure.Compute.Batch
                         continue;
                     }
                     startTask = BatchStartTask.DeserializeBatchStartTask(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("certificateReferences"u8))
-                {
-                    List<BatchCertificateReference> array = new List<BatchCertificateReference>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(BatchCertificateReference.DeserializeBatchCertificateReference(item, options));
-                    }
-                    certificateReferences = array;
                     continue;
                 }
                 if (property.NameEquals("applicationPackageReferences"u8))
@@ -158,13 +140,7 @@ namespace Azure.Compute.Batch
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new BatchPoolReplaceContent(
-                startTask,
-                certificateReferences,
-                applicationPackageReferences,
-                metadata,
-                targetNodeCommunicationMode,
-                serializedAdditionalRawData);
+            return new BatchPoolReplaceContent(startTask, applicationPackageReferences, metadata, targetNodeCommunicationMode, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchPoolReplaceContent>.Write(ModelReaderWriterOptions options)

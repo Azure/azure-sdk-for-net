@@ -54,8 +54,8 @@ namespace Azure.Compute.Batch
             writer.WriteNumberValue(WaitingForStartTask);
             writer.WritePropertyName("total"u8);
             writer.WriteNumberValue(Total);
-            writer.WritePropertyName("upgradingOs"u8);
-            writer.WriteNumberValue(UpgradingOS);
+            writer.WritePropertyName("upgradingOS"u8);
+            writer.WriteNumberValue(UpgradingOs);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -108,7 +108,7 @@ namespace Azure.Compute.Batch
             int unusable = default;
             int waitingForStartTask = default;
             int total = default;
-            int upgradingOs = default;
+            int upgradingOS = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -183,9 +183,9 @@ namespace Azure.Compute.Batch
                     total = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("upgradingOs"u8))
+                if (property.NameEquals("upgradingOS"u8))
                 {
-                    upgradingOs = property.Value.GetInt32();
+                    upgradingOS = property.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
@@ -209,7 +209,7 @@ namespace Azure.Compute.Batch
                 unusable,
                 waitingForStartTask,
                 total,
-                upgradingOs,
+                upgradingOS,
                 serializedAdditionalRawData);
         }
 

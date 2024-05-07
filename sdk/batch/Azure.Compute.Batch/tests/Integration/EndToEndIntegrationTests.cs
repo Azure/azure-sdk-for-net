@@ -22,17 +22,5 @@ namespace Azure.Compute.Batch.Tests.Integration
         public EndToEndIntegrationTests(bool isAsync, RecordedTestMode? mode = null) : base(isAsync, mode)
         {
         }
-
-        [Ignore("Work in progress")]
-        [RecordedTest]
-        public async Task HelloWorld()
-        {
-            var jobId = "HelloWorldJob-" + TestUtilities.GetMyName() + "-" + TestUtilities.GetTimeStamp();
-
-            var client = CreateBatchClient();
-
-            PaasWindowsPoolFixture paasWindowsPoolFixture = new PaasWindowsPoolFixture(client, isPlayBack());
-            BatchPool pool  = await paasWindowsPoolFixture.CreatePoolAsync();
-        }
     }
 }

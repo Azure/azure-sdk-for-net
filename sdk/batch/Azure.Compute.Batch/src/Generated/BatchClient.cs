@@ -2830,544 +2830,6 @@ namespace Azure.Compute.Batch
             }
         }
 
-        /// <summary> Creates a Certificate to the specified Account. </summary>
-        /// <param name="certificate"> The Certificate to be created. </param>
-        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
-        /// The time the request was issued. Client libraries typically set this to the
-        /// current system clock time; set it explicitly if you are calling the REST API
-        /// directly.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="certificate"/> is null. </exception>
-        [Obsolete("Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.")]
-        public virtual async Task<Response> CreateCertificateAsync(BatchCertificate certificate, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(certificate, nameof(certificate));
-
-            using RequestContent content = certificate.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CreateCertificateAsync(content, timeOutInSeconds, ocpdate, context).ConfigureAwait(false);
-            return response;
-        }
-
-        /// <summary> Creates a Certificate to the specified Account. </summary>
-        /// <param name="certificate"> The Certificate to be created. </param>
-        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
-        /// The time the request was issued. Client libraries typically set this to the
-        /// current system clock time; set it explicitly if you are calling the REST API
-        /// directly.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="certificate"/> is null. </exception>
-        [Obsolete("Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.")]
-        public virtual Response CreateCertificate(BatchCertificate certificate, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(certificate, nameof(certificate));
-
-            using RequestContent content = certificate.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = CreateCertificate(content, timeOutInSeconds, ocpdate, context);
-            return response;
-        }
-
-        /// <summary>
-        /// [Protocol Method] Creates a Certificate to the specified Account.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CreateCertificateAsync(BatchCertificate,int?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
-        /// The time the request was issued. Client libraries typically set this to the
-        /// current system clock time; set it explicitly if you are calling the REST API
-        /// directly.
-        /// </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        [Obsolete("Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.")]
-        public virtual async Task<Response> CreateCertificateAsync(RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("BatchClient.CreateCertificate");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCreateCertificateRequest(content, timeOutInSeconds, ocpdate, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Creates a Certificate to the specified Account.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CreateCertificate(BatchCertificate,int?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
-        /// The time the request was issued. Client libraries typically set this to the
-        /// current system clock time; set it explicitly if you are calling the REST API
-        /// directly.
-        /// </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        [Obsolete("Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.")]
-        public virtual Response CreateCertificate(RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("BatchClient.CreateCertificate");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCreateCertificateRequest(content, timeOutInSeconds, ocpdate, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
-        /// <summary>
-        /// [Protocol Method] Cancels a failed deletion of a Certificate from the specified Account.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="thumbprintAlgorithm"> The algorithm used to derive the thumbprint parameter. This must be sha1. </param>
-        /// <param name="thumbprint"> The thumbprint of the Certificate being deleted. </param>
-        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
-        /// The time the request was issued. Client libraries typically set this to the
-        /// current system clock time; set it explicitly if you are calling the REST API
-        /// directly.
-        /// </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="thumbprintAlgorithm"/> or <paramref name="thumbprint"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="thumbprintAlgorithm"/> or <paramref name="thumbprint"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        [Obsolete("Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.")]
-        public virtual async Task<Response> CancelCertificateDeletionAsync(string thumbprintAlgorithm, string thumbprint, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(thumbprintAlgorithm, nameof(thumbprintAlgorithm));
-            Argument.AssertNotNullOrEmpty(thumbprint, nameof(thumbprint));
-
-            using var scope = ClientDiagnostics.CreateScope("BatchClient.CancelCertificateDeletion");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCancelCertificateDeletionRequest(thumbprintAlgorithm, thumbprint, timeOutInSeconds, ocpdate, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
-        /// <summary>
-        /// [Protocol Method] Cancels a failed deletion of a Certificate from the specified Account.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="thumbprintAlgorithm"> The algorithm used to derive the thumbprint parameter. This must be sha1. </param>
-        /// <param name="thumbprint"> The thumbprint of the Certificate being deleted. </param>
-        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
-        /// The time the request was issued. Client libraries typically set this to the
-        /// current system clock time; set it explicitly if you are calling the REST API
-        /// directly.
-        /// </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="thumbprintAlgorithm"/> or <paramref name="thumbprint"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="thumbprintAlgorithm"/> or <paramref name="thumbprint"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        [Obsolete("Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.")]
-        public virtual Response CancelCertificateDeletion(string thumbprintAlgorithm, string thumbprint, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(thumbprintAlgorithm, nameof(thumbprintAlgorithm));
-            Argument.AssertNotNullOrEmpty(thumbprint, nameof(thumbprint));
-
-            using var scope = ClientDiagnostics.CreateScope("BatchClient.CancelCertificateDeletion");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCancelCertificateDeletionRequest(thumbprintAlgorithm, thumbprint, timeOutInSeconds, ocpdate, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
-        /// <summary>
-        /// [Protocol Method] Deletes a Certificate from the specified Account.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="thumbprintAlgorithm"> The algorithm used to derive the thumbprint parameter. This must be sha1. </param>
-        /// <param name="thumbprint"> The thumbprint of the Certificate to be deleted. </param>
-        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
-        /// The time the request was issued. Client libraries typically set this to the
-        /// current system clock time; set it explicitly if you are calling the REST API
-        /// directly.
-        /// </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="thumbprintAlgorithm"/> or <paramref name="thumbprint"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="thumbprintAlgorithm"/> or <paramref name="thumbprint"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        [Obsolete("Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.")]
-        public virtual async Task<Response> DeleteCertificateAsync(string thumbprintAlgorithm, string thumbprint, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(thumbprintAlgorithm, nameof(thumbprintAlgorithm));
-            Argument.AssertNotNullOrEmpty(thumbprint, nameof(thumbprint));
-
-            using var scope = ClientDiagnostics.CreateScope("BatchClient.DeleteCertificate");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateDeleteCertificateRequest(thumbprintAlgorithm, thumbprint, timeOutInSeconds, ocpdate, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
-        /// <summary>
-        /// [Protocol Method] Deletes a Certificate from the specified Account.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="thumbprintAlgorithm"> The algorithm used to derive the thumbprint parameter. This must be sha1. </param>
-        /// <param name="thumbprint"> The thumbprint of the Certificate to be deleted. </param>
-        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
-        /// The time the request was issued. Client libraries typically set this to the
-        /// current system clock time; set it explicitly if you are calling the REST API
-        /// directly.
-        /// </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="thumbprintAlgorithm"/> or <paramref name="thumbprint"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="thumbprintAlgorithm"/> or <paramref name="thumbprint"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        [Obsolete("Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.")]
-        public virtual Response DeleteCertificate(string thumbprintAlgorithm, string thumbprint, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(thumbprintAlgorithm, nameof(thumbprintAlgorithm));
-            Argument.AssertNotNullOrEmpty(thumbprint, nameof(thumbprint));
-
-            using var scope = ClientDiagnostics.CreateScope("BatchClient.DeleteCertificate");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateDeleteCertificateRequest(thumbprintAlgorithm, thumbprint, timeOutInSeconds, ocpdate, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets information about the specified Certificate. </summary>
-        /// <param name="thumbprintAlgorithm"> The algorithm used to derive the thumbprint parameter. This must be sha1. </param>
-        /// <param name="thumbprint"> The thumbprint of the Certificate to get. </param>
-        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
-        /// The time the request was issued. Client libraries typically set this to the
-        /// current system clock time; set it explicitly if you are calling the REST API
-        /// directly.
-        /// </param>
-        /// <param name="select"> An OData $select clause. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="thumbprintAlgorithm"/> or <paramref name="thumbprint"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="thumbprintAlgorithm"/> or <paramref name="thumbprint"/> is an empty string, and was expected to be non-empty. </exception>
-        [Obsolete("Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.")]
-        public virtual async Task<Response<BatchCertificate>> GetCertificateAsync(string thumbprintAlgorithm, string thumbprint, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(thumbprintAlgorithm, nameof(thumbprintAlgorithm));
-            Argument.AssertNotNullOrEmpty(thumbprint, nameof(thumbprint));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetCertificateAsync(thumbprintAlgorithm, thumbprint, timeOutInSeconds, ocpdate, select, context).ConfigureAwait(false);
-            return Response.FromValue(BatchCertificate.FromResponse(response), response);
-        }
-
-        /// <summary> Gets information about the specified Certificate. </summary>
-        /// <param name="thumbprintAlgorithm"> The algorithm used to derive the thumbprint parameter. This must be sha1. </param>
-        /// <param name="thumbprint"> The thumbprint of the Certificate to get. </param>
-        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
-        /// The time the request was issued. Client libraries typically set this to the
-        /// current system clock time; set it explicitly if you are calling the REST API
-        /// directly.
-        /// </param>
-        /// <param name="select"> An OData $select clause. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="thumbprintAlgorithm"/> or <paramref name="thumbprint"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="thumbprintAlgorithm"/> or <paramref name="thumbprint"/> is an empty string, and was expected to be non-empty. </exception>
-        [Obsolete("Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.")]
-        public virtual Response<BatchCertificate> GetCertificate(string thumbprintAlgorithm, string thumbprint, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(thumbprintAlgorithm, nameof(thumbprintAlgorithm));
-            Argument.AssertNotNullOrEmpty(thumbprint, nameof(thumbprint));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetCertificate(thumbprintAlgorithm, thumbprint, timeOutInSeconds, ocpdate, select, context);
-            return Response.FromValue(BatchCertificate.FromResponse(response), response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Gets information about the specified Certificate.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetCertificateAsync(string,string,int?,DateTimeOffset?,IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="thumbprintAlgorithm"> The algorithm used to derive the thumbprint parameter. This must be sha1. </param>
-        /// <param name="thumbprint"> The thumbprint of the Certificate to get. </param>
-        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
-        /// The time the request was issued. Client libraries typically set this to the
-        /// current system clock time; set it explicitly if you are calling the REST API
-        /// directly.
-        /// </param>
-        /// <param name="select"> An OData $select clause. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="thumbprintAlgorithm"/> or <paramref name="thumbprint"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="thumbprintAlgorithm"/> or <paramref name="thumbprint"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        [Obsolete("Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.")]
-        public virtual async Task<Response> GetCertificateAsync(string thumbprintAlgorithm, string thumbprint, int? timeOutInSeconds, DateTimeOffset? ocpdate, IEnumerable<string> select, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(thumbprintAlgorithm, nameof(thumbprintAlgorithm));
-            Argument.AssertNotNullOrEmpty(thumbprint, nameof(thumbprint));
-
-            using var scope = ClientDiagnostics.CreateScope("BatchClient.GetCertificate");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetCertificateRequest(thumbprintAlgorithm, thumbprint, timeOutInSeconds, ocpdate, select, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Gets information about the specified Certificate.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetCertificate(string,string,int?,DateTimeOffset?,IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="thumbprintAlgorithm"> The algorithm used to derive the thumbprint parameter. This must be sha1. </param>
-        /// <param name="thumbprint"> The thumbprint of the Certificate to get. </param>
-        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
-        /// The time the request was issued. Client libraries typically set this to the
-        /// current system clock time; set it explicitly if you are calling the REST API
-        /// directly.
-        /// </param>
-        /// <param name="select"> An OData $select clause. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="thumbprintAlgorithm"/> or <paramref name="thumbprint"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="thumbprintAlgorithm"/> or <paramref name="thumbprint"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        [Obsolete("Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.")]
-        public virtual Response GetCertificate(string thumbprintAlgorithm, string thumbprint, int? timeOutInSeconds, DateTimeOffset? ocpdate, IEnumerable<string> select, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(thumbprintAlgorithm, nameof(thumbprintAlgorithm));
-            Argument.AssertNotNullOrEmpty(thumbprint, nameof(thumbprint));
-
-            using var scope = ClientDiagnostics.CreateScope("BatchClient.GetCertificate");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetCertificateRequest(thumbprintAlgorithm, thumbprint, timeOutInSeconds, ocpdate, select, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
-        /// <summary>
-        /// [Protocol Method] Checks the specified Job Schedule exists.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="jobScheduleId"> The ID of the Job Schedule which you want to check. </param>
-        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
-        /// The time the request was issued. Client libraries typically set this to the
-        /// current system clock time; set it explicitly if you are calling the REST API
-        /// directly.
-        /// </param>
-        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobScheduleId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> JobScheduleExistsAsync(string jobScheduleId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
-
-            using var scope = ClientDiagnostics.CreateScope("BatchClient.JobScheduleExists");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateJobScheduleExistsRequest(jobScheduleId, timeOutInSeconds, ocpdate, requestConditions, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
-        /// <summary>
-        /// [Protocol Method] Checks the specified Job Schedule exists.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="jobScheduleId"> The ID of the Job Schedule which you want to check. </param>
-        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
-        /// The time the request was issued. Client libraries typically set this to the
-        /// current system clock time; set it explicitly if you are calling the REST API
-        /// directly.
-        /// </param>
-        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobScheduleId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual Response JobScheduleExists(string jobScheduleId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
-
-            using var scope = ClientDiagnostics.CreateScope("BatchClient.JobScheduleExists");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateJobScheduleExistsRequest(jobScheduleId, timeOutInSeconds, ocpdate, requestConditions, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
         /// [Protocol Method] Deletes a Job Schedule from the specified Account.
@@ -5480,8 +4942,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/>, <paramref name="taskId"/> or <paramref name="filePath"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetTaskFilePropertiesAsync(string,string,string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
-        public virtual async Task<Response> GetTaskFilePropertiesAsync(string jobId, string taskId, string filePath, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        internal virtual async Task<Response> GetTaskFilePropertiesInternalAsync(string jobId, string taskId, string filePath, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
@@ -5496,11 +4957,11 @@ namespace Azure.Compute.Batch
                 throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
             }
 
-            using var scope = ClientDiagnostics.CreateScope("BatchClient.GetTaskFileProperties");
+            using var scope = ClientDiagnostics.CreateScope("BatchClient.GetTaskFilePropertiesInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTaskFilePropertiesRequest(jobId, taskId, filePath, timeOutInSeconds, ocpdate, requestConditions, context);
+                using HttpMessage message = CreateGetTaskFilePropertiesInternalRequest(jobId, taskId, filePath, timeOutInSeconds, ocpdate, requestConditions, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -5536,8 +4997,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/>, <paramref name="taskId"/> or <paramref name="filePath"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetTaskFileProperties(string,string,string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
-        public virtual Response GetTaskFileProperties(string jobId, string taskId, string filePath, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        internal virtual Response GetTaskFilePropertiesInternal(string jobId, string taskId, string filePath, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
@@ -5552,11 +5012,11 @@ namespace Azure.Compute.Batch
                 throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
             }
 
-            using var scope = ClientDiagnostics.CreateScope("BatchClient.GetTaskFileProperties");
+            using var scope = ClientDiagnostics.CreateScope("BatchClient.GetTaskFilePropertiesInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTaskFilePropertiesRequest(jobId, taskId, filePath, timeOutInSeconds, ocpdate, requestConditions, context);
+                using HttpMessage message = CreateGetTaskFilePropertiesInternalRequest(jobId, taskId, filePath, timeOutInSeconds, ocpdate, requestConditions, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -6286,164 +5746,6 @@ namespace Azure.Compute.Batch
             }
         }
 
-        /// <summary> Reinstalls the operating system on the specified Compute Node. </summary>
-        /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
-        /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
-        /// <param name="parameters"> The options to use for reimaging the Compute Node. </param>
-        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
-        /// The time the request was issued. Client libraries typically set this to the
-        /// current system clock time; set it explicitly if you are calling the REST API
-        /// directly.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// You can reinstall the operating system on a Compute Node only if it is in an
-        /// idle or running state. This API can be invoked only on Pools created with the
-        /// cloud service configuration property.
-        /// </remarks>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='ReimageNodeAsync(string,string,BatchNodeReimageContent,int?,DateTimeOffset?,CancellationToken)']/*" />
-        public virtual async Task<Response> ReimageNodeAsync(string poolId, string nodeId, BatchNodeReimageContent parameters = null, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
-            Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
-
-            using RequestContent content = parameters?.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await ReimageNodeAsync(poolId, nodeId, content, timeOutInSeconds, ocpdate, context).ConfigureAwait(false);
-            return response;
-        }
-
-        /// <summary> Reinstalls the operating system on the specified Compute Node. </summary>
-        /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
-        /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
-        /// <param name="parameters"> The options to use for reimaging the Compute Node. </param>
-        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
-        /// The time the request was issued. Client libraries typically set this to the
-        /// current system clock time; set it explicitly if you are calling the REST API
-        /// directly.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// You can reinstall the operating system on a Compute Node only if it is in an
-        /// idle or running state. This API can be invoked only on Pools created with the
-        /// cloud service configuration property.
-        /// </remarks>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='ReimageNode(string,string,BatchNodeReimageContent,int?,DateTimeOffset?,CancellationToken)']/*" />
-        public virtual Response ReimageNode(string poolId, string nodeId, BatchNodeReimageContent parameters = null, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
-            Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
-
-            using RequestContent content = parameters?.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = ReimageNode(poolId, nodeId, content, timeOutInSeconds, ocpdate, context);
-            return response;
-        }
-
-        /// <summary>
-        /// [Protocol Method] Reinstalls the operating system on the specified Compute Node.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="ReimageNodeAsync(string,string,BatchNodeReimageContent,int?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
-        /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
-        /// The time the request was issued. Client libraries typically set this to the
-        /// current system clock time; set it explicitly if you are calling the REST API
-        /// directly.
-        /// </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='ReimageNodeAsync(string,string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
-        public virtual async Task<Response> ReimageNodeAsync(string poolId, string nodeId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
-            Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
-
-            using var scope = ClientDiagnostics.CreateScope("BatchClient.ReimageNode");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateReimageNodeRequest(poolId, nodeId, content, timeOutInSeconds, ocpdate, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Reinstalls the operating system on the specified Compute Node.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="ReimageNode(string,string,BatchNodeReimageContent,int?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
-        /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
-        /// The time the request was issued. Client libraries typically set this to the
-        /// current system clock time; set it explicitly if you are calling the REST API
-        /// directly.
-        /// </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='ReimageNode(string,string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
-        public virtual Response ReimageNode(string poolId, string nodeId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
-            Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
-
-            using var scope = ClientDiagnostics.CreateScope("BatchClient.ReimageNode");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateReimageNodeRequest(poolId, nodeId, content, timeOutInSeconds, ocpdate, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary> Disables Task scheduling on the specified Compute Node. </summary>
         /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
         /// <param name="nodeId"> The ID of the Compute Node on which you want to disable Task scheduling. </param>
@@ -6704,8 +6006,6 @@ namespace Azure.Compute.Batch
         /// Before you can remotely login to a Compute Node using the remote login
         /// settings, you must create a user Account on the Compute Node. This API can be
         /// invoked only on Pools created with the virtual machine configuration property.
-        /// For Pools created with a cloud service configuration, see the GetRemoteDesktop
-        /// API.
         /// </remarks>
         /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodeRemoteLoginSettingsAsync(string,string,int?,DateTimeOffset?,CancellationToken)']/*" />
         public virtual async Task<Response<BatchNodeRemoteLoginSettings>> GetNodeRemoteLoginSettingsAsync(string poolId, string nodeId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
@@ -6734,8 +6034,6 @@ namespace Azure.Compute.Batch
         /// Before you can remotely login to a Compute Node using the remote login
         /// settings, you must create a user Account on the Compute Node. This API can be
         /// invoked only on Pools created with the virtual machine configuration property.
-        /// For Pools created with a cloud service configuration, see the GetRemoteDesktop
-        /// API.
         /// </remarks>
         /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodeRemoteLoginSettings(string,string,int?,DateTimeOffset?,CancellationToken)']/*" />
         public virtual Response<BatchNodeRemoteLoginSettings> GetNodeRemoteLoginSettings(string poolId, string nodeId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
@@ -6835,172 +6133,6 @@ namespace Azure.Compute.Batch
             try
             {
                 using HttpMessage message = CreateGetNodeRemoteLoginSettingsRequest(poolId, nodeId, timeOutInSeconds, ocpdate, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets the Remote Desktop Protocol file for the specified Compute Node. </summary>
-        /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
-        /// <param name="nodeId">
-        /// The ID of the Compute Node for which you want to get the Remote Desktop
-        /// Protocol file.
-        /// </param>
-        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
-        /// The time the request was issued. Client libraries typically set this to the
-        /// current system clock time; set it explicitly if you are calling the REST API
-        /// directly.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Before you can access a Compute Node by using the RDP file, you must create a
-        /// user Account on the Compute Node. This API can only be invoked on Pools created
-        /// with a cloud service configuration. For Pools created with a virtual machine
-        /// configuration, see the GetRemoteLoginSettings API.
-        /// </remarks>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodeRemoteDesktopFileAsync(string,string,int?,DateTimeOffset?,CancellationToken)']/*" />
-        public virtual async Task<Response<BinaryData>> GetNodeRemoteDesktopFileAsync(string poolId, string nodeId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
-            Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetNodeRemoteDesktopFileAsync(poolId, nodeId, timeOutInSeconds, ocpdate, context).ConfigureAwait(false);
-            return Response.FromValue(response.Content, response);
-        }
-
-        /// <summary> Gets the Remote Desktop Protocol file for the specified Compute Node. </summary>
-        /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
-        /// <param name="nodeId">
-        /// The ID of the Compute Node for which you want to get the Remote Desktop
-        /// Protocol file.
-        /// </param>
-        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
-        /// The time the request was issued. Client libraries typically set this to the
-        /// current system clock time; set it explicitly if you are calling the REST API
-        /// directly.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Before you can access a Compute Node by using the RDP file, you must create a
-        /// user Account on the Compute Node. This API can only be invoked on Pools created
-        /// with a cloud service configuration. For Pools created with a virtual machine
-        /// configuration, see the GetRemoteLoginSettings API.
-        /// </remarks>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodeRemoteDesktopFile(string,string,int?,DateTimeOffset?,CancellationToken)']/*" />
-        public virtual Response<BinaryData> GetNodeRemoteDesktopFile(string poolId, string nodeId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
-            Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetNodeRemoteDesktopFile(poolId, nodeId, timeOutInSeconds, ocpdate, context);
-            return Response.FromValue(response.Content, response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Gets the Remote Desktop Protocol file for the specified Compute Node.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetNodeRemoteDesktopFileAsync(string,string,int?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
-        /// <param name="nodeId">
-        /// The ID of the Compute Node for which you want to get the Remote Desktop
-        /// Protocol file.
-        /// </param>
-        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
-        /// The time the request was issued. Client libraries typically set this to the
-        /// current system clock time; set it explicitly if you are calling the REST API
-        /// directly.
-        /// </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodeRemoteDesktopFileAsync(string,string,int?,DateTimeOffset?,RequestContext)']/*" />
-        public virtual async Task<Response> GetNodeRemoteDesktopFileAsync(string poolId, string nodeId, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
-            Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
-
-            using var scope = ClientDiagnostics.CreateScope("BatchClient.GetNodeRemoteDesktopFile");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetNodeRemoteDesktopFileRequest(poolId, nodeId, timeOutInSeconds, ocpdate, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Gets the Remote Desktop Protocol file for the specified Compute Node.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetNodeRemoteDesktopFile(string,string,int?,DateTimeOffset?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
-        /// <param name="nodeId">
-        /// The ID of the Compute Node for which you want to get the Remote Desktop
-        /// Protocol file.
-        /// </param>
-        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
-        /// The time the request was issued. Client libraries typically set this to the
-        /// current system clock time; set it explicitly if you are calling the REST API
-        /// directly.
-        /// </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodeRemoteDesktopFile(string,string,int?,DateTimeOffset?,RequestContext)']/*" />
-        public virtual Response GetNodeRemoteDesktopFile(string poolId, string nodeId, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
-            Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
-
-            using var scope = ClientDiagnostics.CreateScope("BatchClient.GetNodeRemoteDesktopFile");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetNodeRemoteDesktopFileRequest(poolId, nodeId, timeOutInSeconds, ocpdate, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -7666,8 +6798,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/>, <paramref name="nodeId"/> or <paramref name="filePath"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodeFilePropertiesAsync(string,string,string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
-        public virtual async Task<Response> GetNodeFilePropertiesAsync(string poolId, string nodeId, string filePath, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        internal virtual async Task<Response> GetNodeFilePropertiesInternalAsync(string poolId, string nodeId, string filePath, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
@@ -7682,11 +6813,11 @@ namespace Azure.Compute.Batch
                 throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
             }
 
-            using var scope = ClientDiagnostics.CreateScope("BatchClient.GetNodeFileProperties");
+            using var scope = ClientDiagnostics.CreateScope("BatchClient.GetNodeFilePropertiesInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetNodeFilePropertiesRequest(poolId, nodeId, filePath, timeOutInSeconds, ocpdate, requestConditions, context);
+                using HttpMessage message = CreateGetNodeFilePropertiesInternalRequest(poolId, nodeId, filePath, timeOutInSeconds, ocpdate, requestConditions, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -7722,8 +6853,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/>, <paramref name="nodeId"/> or <paramref name="filePath"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodeFileProperties(string,string,string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
-        public virtual Response GetNodeFileProperties(string poolId, string nodeId, string filePath, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        internal virtual Response GetNodeFilePropertiesInternal(string poolId, string nodeId, string filePath, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
@@ -7738,11 +6868,11 @@ namespace Azure.Compute.Batch
                 throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
             }
 
-            using var scope = ClientDiagnostics.CreateScope("BatchClient.GetNodeFileProperties");
+            using var scope = ClientDiagnostics.CreateScope("BatchClient.GetNodeFilePropertiesInternal");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetNodeFilePropertiesRequest(poolId, nodeId, filePath, timeOutInSeconds, ocpdate, requestConditions, context);
+                using HttpMessage message = CreateGetNodeFilePropertiesInternalRequest(poolId, nodeId, filePath, timeOutInSeconds, ocpdate, requestConditions, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -8229,12 +7359,12 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetSupportedImagesAsync(int?,DateTimeOffset?,int?,string,CancellationToken)']/*" />
-        public virtual AsyncPageable<ImageInfo> GetSupportedImagesAsync(int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BatchSupportedImage> GetSupportedImagesAsync(int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSupportedImagesRequest(timeOutInSeconds, ocpdate, maxresults, filter, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSupportedImagesNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, filter, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ImageInfo.DeserializeImageInfo(e), ClientDiagnostics, _pipeline, "BatchClient.GetSupportedImages", "value", "odata.nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BatchSupportedImage.DeserializeBatchSupportedImage(e), ClientDiagnostics, _pipeline, "BatchClient.GetSupportedImages", "value", "odata.nextLink", context);
         }
 
         /// <summary> Lists all Virtual Machine Images supported by the Azure Batch service. </summary>
@@ -8254,12 +7384,12 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetSupportedImages(int?,DateTimeOffset?,int?,string,CancellationToken)']/*" />
-        public virtual Pageable<ImageInfo> GetSupportedImages(int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<BatchSupportedImage> GetSupportedImages(int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSupportedImagesRequest(timeOutInSeconds, ocpdate, maxresults, filter, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSupportedImagesNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, filter, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ImageInfo.DeserializeImageInfo(e), ClientDiagnostics, _pipeline, "BatchClient.GetSupportedImages", "value", "odata.nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BatchSupportedImage.DeserializeBatchSupportedImage(e), ClientDiagnostics, _pipeline, "BatchClient.GetSupportedImages", "value", "odata.nextLink", context);
         }
 
         /// <summary>
@@ -8956,140 +8086,6 @@ namespace Azure.Compute.Batch
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobPreparationAndReleaseTaskStatusesRequest(jobId, timeOutInSeconds, ocpdate, maxresults, filter, select, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobPreparationAndReleaseTaskStatusesNextPageRequest(nextLink, jobId, timeOutInSeconds, ocpdate, maxresults, filter, select, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchClient.GetJobPreparationAndReleaseTaskStatuses", "value", "odata.nextLink", context);
-        }
-
-        /// <summary> Lists all of the Certificates that have been added to the specified Account. </summary>
-        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
-        /// The time the request was issued. Client libraries typically set this to the
-        /// current system clock time; set it explicitly if you are calling the REST API
-        /// directly.
-        /// </param>
-        /// <param name="maxresults">
-        /// The maximum number of items to return in the response. A maximum of 1000
-        /// applications can be returned.
-        /// </param>
-        /// <param name="filter">
-        /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-certificates.
-        /// </param>
-        /// <param name="select"> An OData $select clause. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [Obsolete("Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.")]
-        public virtual AsyncPageable<BatchCertificate> GetCertificatesAsync(int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, string filter = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetCertificatesRequest(timeOutInSeconds, ocpdate, maxresults, filter, select, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetCertificatesNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, filter, select, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BatchCertificate.DeserializeBatchCertificate(e), ClientDiagnostics, _pipeline, "BatchClient.GetCertificates", "value", "odata.nextLink", context);
-        }
-
-        /// <summary> Lists all of the Certificates that have been added to the specified Account. </summary>
-        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
-        /// The time the request was issued. Client libraries typically set this to the
-        /// current system clock time; set it explicitly if you are calling the REST API
-        /// directly.
-        /// </param>
-        /// <param name="maxresults">
-        /// The maximum number of items to return in the response. A maximum of 1000
-        /// applications can be returned.
-        /// </param>
-        /// <param name="filter">
-        /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-certificates.
-        /// </param>
-        /// <param name="select"> An OData $select clause. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [Obsolete("Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.")]
-        public virtual Pageable<BatchCertificate> GetCertificates(int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, string filter = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetCertificatesRequest(timeOutInSeconds, ocpdate, maxresults, filter, select, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetCertificatesNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, filter, select, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BatchCertificate.DeserializeBatchCertificate(e), ClientDiagnostics, _pipeline, "BatchClient.GetCertificates", "value", "odata.nextLink", context);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Lists all of the Certificates that have been added to the specified Account.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetCertificatesAsync(int?,DateTimeOffset?,int?,string,IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
-        /// The time the request was issued. Client libraries typically set this to the
-        /// current system clock time; set it explicitly if you are calling the REST API
-        /// directly.
-        /// </param>
-        /// <param name="maxresults">
-        /// The maximum number of items to return in the response. A maximum of 1000
-        /// applications can be returned.
-        /// </param>
-        /// <param name="filter">
-        /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-certificates.
-        /// </param>
-        /// <param name="select"> An OData $select clause. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        [Obsolete("Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.")]
-        public virtual AsyncPageable<BinaryData> GetCertificatesAsync(int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> select, RequestContext context)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetCertificatesRequest(timeOutInSeconds, ocpdate, maxresults, filter, select, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetCertificatesNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, filter, select, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchClient.GetCertificates", "value", "odata.nextLink", context);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Lists all of the Certificates that have been added to the specified Account.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetCertificates(int?,DateTimeOffset?,int?,string,IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpdate">
-        /// The time the request was issued. Client libraries typically set this to the
-        /// current system clock time; set it explicitly if you are calling the REST API
-        /// directly.
-        /// </param>
-        /// <param name="maxresults">
-        /// The maximum number of items to return in the response. A maximum of 1000
-        /// applications can be returned.
-        /// </param>
-        /// <param name="filter">
-        /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-certificates.
-        /// </param>
-        /// <param name="select"> An OData $select clause. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        [Obsolete("Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.")]
-        public virtual Pageable<BinaryData> GetCertificates(int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> select, RequestContext context)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetCertificatesRequest(timeOutInSeconds, ocpdate, maxresults, filter, select, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetCertificatesNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, filter, select, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchClient.GetCertificates", "value", "odata.nextLink", context);
         }
 
         /// <summary> Lists all of the Job Schedules in the specified Account. </summary>
@@ -11125,156 +10121,6 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateCreateCertificateRequest(RequestContent content, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier201);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/certificates", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
-            {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("client-request-id", message.Request.ClientRequestId);
-            request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
-            {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
-            }
-            request.Headers.Add("content-type", "application/json; odata=minimalmetadata");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateGetCertificatesRequest(int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> select, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/certificates", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
-            {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
-            }
-            if (maxresults != null)
-            {
-                uri.AppendQuery("maxresults", maxresults.Value, true);
-            }
-            if (filter != null)
-            {
-                uri.AppendQuery("$filter", filter, true);
-            }
-            if (select != null && !(select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
-            {
-                uri.AppendQueryDelimited("$select", select, ",", true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("client-request-id", message.Request.ClientRequestId);
-            request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
-            {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
-            }
-            return message;
-        }
-
-        internal HttpMessage CreateCancelCertificateDeletionRequest(string thumbprintAlgorithm, string thumbprint, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/certificates(thumbprintAlgorithm=", false);
-            uri.AppendPath(thumbprintAlgorithm, true);
-            uri.AppendPath(",thumbprint=", false);
-            uri.AppendPath(thumbprint, true);
-            uri.AppendPath(")/canceldelete", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
-            {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("client-request-id", message.Request.ClientRequestId);
-            request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
-            {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
-            }
-            return message;
-        }
-
-        internal HttpMessage CreateDeleteCertificateRequest(string thumbprintAlgorithm, string thumbprint, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/certificates(thumbprintAlgorithm=", false);
-            uri.AppendPath(thumbprintAlgorithm, true);
-            uri.AppendPath(",thumbprint=", false);
-            uri.AppendPath(thumbprint, true);
-            uri.AppendPath(")", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
-            {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("client-request-id", message.Request.ClientRequestId);
-            request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
-            {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
-            }
-            return message;
-        }
-
-        internal HttpMessage CreateGetCertificateRequest(string thumbprintAlgorithm, string thumbprint, int? timeOutInSeconds, DateTimeOffset? ocpdate, IEnumerable<string> select, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/certificates(thumbprintAlgorithm=", false);
-            uri.AppendPath(thumbprintAlgorithm, true);
-            uri.AppendPath(",thumbprint=", false);
-            uri.AppendPath(thumbprint, true);
-            uri.AppendPath(")", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
-            {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
-            }
-            if (select != null && !(select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
-            {
-                uri.AppendQueryDelimited("$select", select, ",", true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("client-request-id", message.Request.ClientRequestId);
-            request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
-            {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
-            }
-            return message;
-        }
-
         internal HttpMessage CreateJobScheduleExistsRequest(string jobScheduleId, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestConditions requestConditions, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200404);
@@ -11955,7 +10801,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateGetTaskFilePropertiesRequest(string jobId, string taskId, string filePath, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestConditions requestConditions, RequestContext context)
+        internal HttpMessage CreateGetTaskFilePropertiesInternalRequest(string jobId, string taskId, string filePath, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestConditions requestConditions, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -12179,36 +11025,6 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateReimageNodeRequest(string poolId, string nodeId, RequestContent content, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/pools/", false);
-            uri.AppendPath(poolId, true);
-            uri.AppendPath("/nodes/", false);
-            uri.AppendPath(nodeId, true);
-            uri.AppendPath("/reimage", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
-            {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("client-request-id", message.Request.ClientRequestId);
-            request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
-            {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
-            }
-            request.Headers.Add("content-type", "application/json; odata=minimalmetadata");
-            request.Content = content;
-            return message;
-        }
-
         internal HttpMessage CreateDisableNodeSchedulingRequest(string poolId, string nodeId, RequestContent content, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -12286,34 +11102,6 @@ namespace Azure.Compute.Batch
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("client-request-id", message.Request.ClientRequestId);
-            request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
-            {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
-            }
-            return message;
-        }
-
-        internal HttpMessage CreateGetNodeRemoteDesktopFileRequest(string poolId, string nodeId, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/pools/", false);
-            uri.AppendPath(poolId, true);
-            uri.AppendPath("/nodes/", false);
-            uri.AppendPath(nodeId, true);
-            uri.AppendPath("/rdp", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (timeOutInSeconds != null)
-            {
-                uri.AppendQuery("timeOut", timeOutInSeconds.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/octet-stream");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
             if (ocpdate != null)
@@ -12530,7 +11318,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateGetNodeFilePropertiesRequest(string poolId, string nodeId, string filePath, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestConditions requestConditions, RequestContext context)
+        internal HttpMessage CreateGetNodeFilePropertiesInternalRequest(string poolId, string nodeId, string filePath, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestConditions requestConditions, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -12737,25 +11525,6 @@ namespace Azure.Compute.Batch
         }
 
         internal HttpMessage CreateGetJobPreparationAndReleaseTaskStatusesNextPageRequest(string nextLink, string jobId, int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> select, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("client-request-id", message.Request.ClientRequestId);
-            request.Headers.Add("return-client-request-id", "true");
-            if (ocpdate != null)
-            {
-                request.Headers.Add("ocp-date", ocpdate.Value, "R");
-            }
-            return message;
-        }
-
-        internal HttpMessage CreateGetCertificatesNextPageRequest(string nextLink, int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> select, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;

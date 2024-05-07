@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.Compute.Batch
 {
-    public partial class ImageInfo : IUtf8JsonSerializable, IJsonModel<ImageInfo>
+    public partial class BatchSupportedImage : IUtf8JsonSerializable, IJsonModel<BatchSupportedImage>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ImageInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchSupportedImage>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ImageInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BatchSupportedImage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ImageInfo>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BatchSupportedImage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImageInfo)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchSupportedImage)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -67,19 +67,19 @@ namespace Azure.Compute.Batch
             writer.WriteEndObject();
         }
 
-        ImageInfo IJsonModel<ImageInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        BatchSupportedImage IJsonModel<BatchSupportedImage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ImageInfo>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BatchSupportedImage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImageInfo)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchSupportedImage)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeImageInfo(document.RootElement, options);
+            return DeserializeBatchSupportedImage(document.RootElement, options);
         }
 
-        internal static ImageInfo DeserializeImageInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static BatchSupportedImage DeserializeBatchSupportedImage(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -146,7 +146,7 @@ namespace Azure.Compute.Batch
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ImageInfo(
+            return new BatchSupportedImage(
                 nodeAgentSKUId,
                 imageReference,
                 osType,
@@ -156,43 +156,43 @@ namespace Azure.Compute.Batch
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ImageInfo>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<BatchSupportedImage>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ImageInfo>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BatchSupportedImage>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ImageInfo)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchSupportedImage)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ImageInfo IPersistableModel<ImageInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        BatchSupportedImage IPersistableModel<BatchSupportedImage>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ImageInfo>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BatchSupportedImage>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeImageInfo(document.RootElement, options);
+                        return DeserializeBatchSupportedImage(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ImageInfo)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchSupportedImage)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ImageInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BatchSupportedImage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ImageInfo FromResponse(Response response)
+        internal static BatchSupportedImage FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeImageInfo(document.RootElement);
+            return DeserializeBatchSupportedImage(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

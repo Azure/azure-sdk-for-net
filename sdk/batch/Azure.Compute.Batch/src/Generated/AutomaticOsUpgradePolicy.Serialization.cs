@@ -31,10 +31,10 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("disableAutomaticRollback"u8);
                 writer.WriteBooleanValue(DisableAutomaticRollback.Value);
             }
-            if (Optional.IsDefined(EnableAutomaticOSUpgrade))
+            if (Optional.IsDefined(EnableAutomaticOsUpgrade))
             {
-                writer.WritePropertyName("enableAutomaticOsUpgrade"u8);
-                writer.WriteBooleanValue(EnableAutomaticOSUpgrade.Value);
+                writer.WritePropertyName("enableAutomaticOSUpgrade"u8);
+                writer.WriteBooleanValue(EnableAutomaticOsUpgrade.Value);
             }
             if (Optional.IsDefined(UseRollingUpgradePolicy))
             {
@@ -85,7 +85,7 @@ namespace Azure.Compute.Batch
                 return null;
             }
             bool? disableAutomaticRollback = default;
-            bool? enableAutomaticOsUpgrade = default;
+            bool? enableAutomaticOSUpgrade = default;
             bool? useRollingUpgradePolicy = default;
             bool? osRollingUpgradeDeferral = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -101,13 +101,13 @@ namespace Azure.Compute.Batch
                     disableAutomaticRollback = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("enableAutomaticOsUpgrade"u8))
+                if (property.NameEquals("enableAutomaticOSUpgrade"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    enableAutomaticOsUpgrade = property.Value.GetBoolean();
+                    enableAutomaticOSUpgrade = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("useRollingUpgradePolicy"u8))
@@ -134,7 +134,7 @@ namespace Azure.Compute.Batch
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AutomaticOsUpgradePolicy(disableAutomaticRollback, enableAutomaticOsUpgrade, useRollingUpgradePolicy, osRollingUpgradeDeferral, serializedAdditionalRawData);
+            return new AutomaticOsUpgradePolicy(disableAutomaticRollback, enableAutomaticOSUpgrade, useRollingUpgradePolicy, osRollingUpgradeDeferral, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomaticOsUpgradePolicy>.Write(ModelReaderWriterOptions options)

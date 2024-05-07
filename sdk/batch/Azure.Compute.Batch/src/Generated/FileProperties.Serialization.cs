@@ -85,7 +85,7 @@ namespace Azure.Compute.Batch
             }
             DateTimeOffset? creationTime = default;
             DateTimeOffset lastModified = default;
-            int contentLength = default;
+            long contentLength = default;
             string contentType = default;
             string fileMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -108,7 +108,7 @@ namespace Azure.Compute.Batch
                 }
                 if (property.NameEquals("contentLength"u8))
                 {
-                    contentLength = property.Value.GetInt32();
+                    contentLength = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("contentType"u8))

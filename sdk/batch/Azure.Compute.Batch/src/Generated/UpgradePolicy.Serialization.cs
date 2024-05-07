@@ -28,10 +28,10 @@ namespace Azure.Compute.Batch
             writer.WriteStartObject();
             writer.WritePropertyName("mode"u8);
             writer.WriteStringValue(Mode.ToString());
-            if (Optional.IsDefined(AutomaticOSUpgradePolicy))
+            if (Optional.IsDefined(AutomaticOsUpgradePolicy))
             {
-                writer.WritePropertyName("automaticOsUpgradePolicy"u8);
-                writer.WriteObjectValue(AutomaticOSUpgradePolicy, options);
+                writer.WritePropertyName("automaticOSUpgradePolicy"u8);
+                writer.WriteObjectValue(AutomaticOsUpgradePolicy, options);
             }
             if (Optional.IsDefined(RollingUpgradePolicy))
             {
@@ -77,7 +77,7 @@ namespace Azure.Compute.Batch
                 return null;
             }
             UpgradeMode mode = default;
-            AutomaticOsUpgradePolicy automaticOsUpgradePolicy = default;
+            AutomaticOsUpgradePolicy automaticOSUpgradePolicy = default;
             RollingUpgradePolicy rollingUpgradePolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -88,13 +88,13 @@ namespace Azure.Compute.Batch
                     mode = new UpgradeMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("automaticOsUpgradePolicy"u8))
+                if (property.NameEquals("automaticOSUpgradePolicy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    automaticOsUpgradePolicy = AutomaticOsUpgradePolicy.DeserializeAutomaticOsUpgradePolicy(property.Value, options);
+                    automaticOSUpgradePolicy = AutomaticOsUpgradePolicy.DeserializeAutomaticOsUpgradePolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("rollingUpgradePolicy"u8))
@@ -112,7 +112,7 @@ namespace Azure.Compute.Batch
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UpgradePolicy(mode, automaticOsUpgradePolicy, rollingUpgradePolicy, serializedAdditionalRawData);
+            return new UpgradePolicy(mode, automaticOSUpgradePolicy, rollingUpgradePolicy, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UpgradePolicy>.Write(ModelReaderWriterOptions options)

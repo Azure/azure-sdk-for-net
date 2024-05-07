@@ -49,7 +49,6 @@ namespace Azure.Compute.Batch
         internal BatchNode()
         {
             RecentTasks = new ChangeTrackingList<BatchTaskInfo>();
-            CertificateReferences = new ChangeTrackingList<BatchCertificateReference>();
             Errors = new ChangeTrackingList<BatchNodeError>();
         }
 
@@ -71,19 +70,13 @@ namespace Azure.Compute.Batch
         /// <param name="recentTasks"> A list of Tasks whose state has recently changed. This property is present only if at least one Task has run on this Compute Node since it was assigned to the Pool. </param>
         /// <param name="startTask"> The Task specified to run on the Compute Node as it joins the Pool. </param>
         /// <param name="startTaskInfo"> Runtime information about the execution of the StartTask on the Compute Node. </param>
-        /// <param name="certificateReferences">
-        /// For Windows Nodes, the Batch service installs the Certificates to the specified Certificate store and location.
-        /// For Linux Compute Nodes, the Certificates are stored in a directory inside the Task working directory and an environment variable AZ_BATCH_CERTIFICATES_DIR is supplied to the Task to query for this location.
-        /// For Certificates with visibility of 'remoteUser', a 'certs' directory is created in the user's home directory (e.g., /home/{user-name}/certs) and Certificates are placed in that directory.
-        /// Warning: This property is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.
-        /// </param>
         /// <param name="errors"> The list of errors that are currently being encountered by the Compute Node. </param>
         /// <param name="isDedicated"> Whether this Compute Node is a dedicated Compute Node. If false, the Compute Node is a Spot/Low-priority Compute Node. </param>
         /// <param name="endpointConfiguration"> The endpoint configuration for the Compute Node. </param>
         /// <param name="nodeAgentInfo"> Information about the Compute Node agent version and the time the Compute Node upgraded to a new version. </param>
         /// <param name="virtualMachineInfo"> Info about the current state of the virtual machine. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchNode(string id, string url, BatchNodeState? state, SchedulingState? schedulingState, DateTimeOffset? stateTransitionTime, DateTimeOffset? lastBootTime, DateTimeOffset? allocationTime, string ipAddress, string affinityId, string vmSize, int? totalTasksRun, int? runningTasksCount, int? runningTaskSlotsCount, int? totalTasksSucceeded, IReadOnlyList<BatchTaskInfo> recentTasks, BatchStartTask startTask, BatchStartTaskInfo startTaskInfo, IReadOnlyList<BatchCertificateReference> certificateReferences, IReadOnlyList<BatchNodeError> errors, bool? isDedicated, BatchNodeEndpointConfiguration endpointConfiguration, BatchNodeAgentInfo nodeAgentInfo, VirtualMachineInfo virtualMachineInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BatchNode(string id, string url, BatchNodeState? state, SchedulingState? schedulingState, DateTimeOffset? stateTransitionTime, DateTimeOffset? lastBootTime, DateTimeOffset? allocationTime, string ipAddress, string affinityId, string vmSize, int? totalTasksRun, int? runningTasksCount, int? runningTaskSlotsCount, int? totalTasksSucceeded, IReadOnlyList<BatchTaskInfo> recentTasks, BatchStartTask startTask, BatchStartTaskInfo startTaskInfo, IReadOnlyList<BatchNodeError> errors, bool? isDedicated, BatchNodeEndpointConfiguration endpointConfiguration, BatchNodeAgentInfo nodeAgentInfo, VirtualMachineInfo virtualMachineInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Url = url;
@@ -102,7 +95,6 @@ namespace Azure.Compute.Batch
             RecentTasks = recentTasks;
             StartTask = startTask;
             StartTaskInfo = startTaskInfo;
-            CertificateReferences = certificateReferences;
             Errors = errors;
             IsDedicated = isDedicated;
             EndpointConfiguration = endpointConfiguration;
@@ -145,13 +137,6 @@ namespace Azure.Compute.Batch
         public BatchStartTask StartTask { get; }
         /// <summary> Runtime information about the execution of the StartTask on the Compute Node. </summary>
         public BatchStartTaskInfo StartTaskInfo { get; }
-        /// <summary>
-        /// For Windows Nodes, the Batch service installs the Certificates to the specified Certificate store and location.
-        /// For Linux Compute Nodes, the Certificates are stored in a directory inside the Task working directory and an environment variable AZ_BATCH_CERTIFICATES_DIR is supplied to the Task to query for this location.
-        /// For Certificates with visibility of 'remoteUser', a 'certs' directory is created in the user's home directory (e.g., /home/{user-name}/certs) and Certificates are placed in that directory.
-        /// Warning: This property is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.
-        /// </summary>
-        public IReadOnlyList<BatchCertificateReference> CertificateReferences { get; }
         /// <summary> The list of errors that are currently being encountered by the Compute Node. </summary>
         public IReadOnlyList<BatchNodeError> Errors { get; }
         /// <summary> Whether this Compute Node is a dedicated Compute Node. If false, the Compute Node is a Spot/Low-priority Compute Node. </summary>

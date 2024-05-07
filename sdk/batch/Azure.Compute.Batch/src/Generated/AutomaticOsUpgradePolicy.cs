@@ -52,14 +52,14 @@ namespace Azure.Compute.Batch
 
         /// <summary> Initializes a new instance of <see cref="AutomaticOsUpgradePolicy"/>. </summary>
         /// <param name="disableAutomaticRollback"> Whether OS image rollback feature should be disabled. </param>
-        /// <param name="enableAutomaticOSUpgrade"> Indicates whether OS upgrades should automatically be applied to scale set instances in a rolling fashion when a newer version of the OS image becomes available. &lt;br /&gt;&lt;br /&gt; If this is set to true for Windows based pools, [WindowsConfiguration.enableAutomaticUpdates](https://learn.microsoft.com/en-us/rest/api/batchservice/pool/add?tabs=HTTP#windowsconfiguration) cannot be set to true. </param>
+        /// <param name="enableAutomaticOsUpgrade"> Indicates whether OS upgrades should automatically be applied to scale set instances in a rolling fashion when a newer version of the OS image becomes available. &lt;br /&gt;&lt;br /&gt; If this is set to true for Windows based pools, [WindowsConfiguration.enableAutomaticUpdates](https://learn.microsoft.com/en-us/rest/api/batchservice/pool/add?tabs=HTTP#windowsconfiguration) cannot be set to true. </param>
         /// <param name="useRollingUpgradePolicy"> Indicates whether rolling upgrade policy should be used during Auto OS Upgrade. Auto OS Upgrade will fallback to the default policy if no policy is defined on the VMSS. </param>
         /// <param name="osRollingUpgradeDeferral"> Defer OS upgrades on the TVMs if they are running tasks. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutomaticOsUpgradePolicy(bool? disableAutomaticRollback, bool? enableAutomaticOSUpgrade, bool? useRollingUpgradePolicy, bool? osRollingUpgradeDeferral, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AutomaticOsUpgradePolicy(bool? disableAutomaticRollback, bool? enableAutomaticOsUpgrade, bool? useRollingUpgradePolicy, bool? osRollingUpgradeDeferral, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DisableAutomaticRollback = disableAutomaticRollback;
-            EnableAutomaticOSUpgrade = enableAutomaticOSUpgrade;
+            EnableAutomaticOsUpgrade = enableAutomaticOsUpgrade;
             UseRollingUpgradePolicy = useRollingUpgradePolicy;
             OsRollingUpgradeDeferral = osRollingUpgradeDeferral;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -68,7 +68,7 @@ namespace Azure.Compute.Batch
         /// <summary> Whether OS image rollback feature should be disabled. </summary>
         public bool? DisableAutomaticRollback { get; set; }
         /// <summary> Indicates whether OS upgrades should automatically be applied to scale set instances in a rolling fashion when a newer version of the OS image becomes available. &lt;br /&gt;&lt;br /&gt; If this is set to true for Windows based pools, [WindowsConfiguration.enableAutomaticUpdates](https://learn.microsoft.com/en-us/rest/api/batchservice/pool/add?tabs=HTTP#windowsconfiguration) cannot be set to true. </summary>
-        public bool? EnableAutomaticOSUpgrade { get; set; }
+        public bool? EnableAutomaticOsUpgrade { get; set; }
         /// <summary> Indicates whether rolling upgrade policy should be used during Auto OS Upgrade. Auto OS Upgrade will fallback to the default policy if no policy is defined on the VMSS. </summary>
         public bool? UseRollingUpgradePolicy { get; set; }
         /// <summary> Defer OS upgrades on the TVMs if they are running tasks. </summary>

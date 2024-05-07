@@ -83,7 +83,7 @@ namespace Azure.Compute.Batch
             }
             string containerRunOptions = default;
             string imageName = default;
-            ContainerRegistry registry = default;
+            ContainerRegistryReference registry = default;
             ContainerWorkingDirectory? workingDirectory = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -105,7 +105,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    registry = ContainerRegistry.DeserializeContainerRegistry(property.Value, options);
+                    registry = ContainerRegistryReference.DeserializeContainerRegistryReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("workingDirectory"u8))

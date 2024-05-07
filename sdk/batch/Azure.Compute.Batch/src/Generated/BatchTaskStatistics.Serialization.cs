@@ -92,8 +92,8 @@ namespace Azure.Compute.Batch
             TimeSpan userCPUTime = default;
             TimeSpan kernelCPUTime = default;
             TimeSpan wallClockTime = default;
-            int readIOps = default;
-            int writeIOps = default;
+            long readIOps = default;
+            long writeIOps = default;
             float readIOGiB = default;
             float writeIOGiB = default;
             TimeSpan waitTime = default;
@@ -133,12 +133,12 @@ namespace Azure.Compute.Batch
                 }
                 if (property.NameEquals("readIOps"u8))
                 {
-                    readIOps = property.Value.GetInt32();
+                    readIOps = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("writeIOps"u8))
                 {
-                    writeIOps = property.Value.GetInt32();
+                    writeIOps = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("readIOGiB"u8))

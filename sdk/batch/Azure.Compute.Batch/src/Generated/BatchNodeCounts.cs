@@ -60,8 +60,8 @@ namespace Azure.Compute.Batch
         /// <param name="unusable"> The number of Compute Nodes in the unusable state. </param>
         /// <param name="waitingForStartTask"> The number of Compute Nodes in the waitingForStartTask state. </param>
         /// <param name="total"> The total number of Compute Nodes. </param>
-        /// <param name="upgradingOS"> The number of Compute Nodes in the upgradingOS state. </param>
-        internal BatchNodeCounts(int creating, int idle, int offline, int preempted, int rebooting, int reimaging, int running, int starting, int startTaskFailed, int leavingPool, int unknown, int unusable, int waitingForStartTask, int total, int upgradingOS)
+        /// <param name="upgradingOs"> The number of Compute Nodes in the upgradingOS state. </param>
+        internal BatchNodeCounts(int creating, int idle, int offline, int preempted, int rebooting, int reimaging, int running, int starting, int startTaskFailed, int leavingPool, int unknown, int unusable, int waitingForStartTask, int total, int upgradingOs)
         {
             Creating = creating;
             Idle = idle;
@@ -77,7 +77,7 @@ namespace Azure.Compute.Batch
             Unusable = unusable;
             WaitingForStartTask = waitingForStartTask;
             Total = total;
-            UpgradingOS = upgradingOS;
+            UpgradingOs = upgradingOs;
         }
 
         /// <summary> Initializes a new instance of <see cref="BatchNodeCounts"/>. </summary>
@@ -95,9 +95,9 @@ namespace Azure.Compute.Batch
         /// <param name="unusable"> The number of Compute Nodes in the unusable state. </param>
         /// <param name="waitingForStartTask"> The number of Compute Nodes in the waitingForStartTask state. </param>
         /// <param name="total"> The total number of Compute Nodes. </param>
-        /// <param name="upgradingOS"> The number of Compute Nodes in the upgradingOS state. </param>
+        /// <param name="upgradingOs"> The number of Compute Nodes in the upgradingOS state. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchNodeCounts(int creating, int idle, int offline, int preempted, int rebooting, int reimaging, int running, int starting, int startTaskFailed, int leavingPool, int unknown, int unusable, int waitingForStartTask, int total, int upgradingOS, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BatchNodeCounts(int creating, int idle, int offline, int preempted, int rebooting, int reimaging, int running, int starting, int startTaskFailed, int leavingPool, int unknown, int unusable, int waitingForStartTask, int total, int upgradingOs, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Creating = creating;
             Idle = idle;
@@ -113,7 +113,7 @@ namespace Azure.Compute.Batch
             Unusable = unusable;
             WaitingForStartTask = waitingForStartTask;
             Total = total;
-            UpgradingOS = upgradingOS;
+            UpgradingOs = upgradingOs;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -151,6 +151,6 @@ namespace Azure.Compute.Batch
         /// <summary> The total number of Compute Nodes. </summary>
         public int Total { get; }
         /// <summary> The number of Compute Nodes in the upgradingOS state. </summary>
-        public int UpgradingOS { get; }
+        public int UpgradingOs { get; }
     }
 }

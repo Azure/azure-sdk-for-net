@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.Compute.Batch
 {
-    /// <summary> Parameters for reimaging an Azure Batch Compute Node. </summary>
-    public partial class BatchNodeReimageContent
+    /// <summary> A private container registry. </summary>
+    public partial class ContainerRegistryReference
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,21 +45,33 @@ namespace Azure.Compute.Batch
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="BatchNodeReimageContent"/>. </summary>
-        public BatchNodeReimageContent()
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryReference"/>. </summary>
+        public ContainerRegistryReference()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchNodeReimageContent"/>. </summary>
-        /// <param name="nodeReimageOption"> When to reimage the Compute Node and what to do with currently running Tasks. The default value is requeue. </param>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryReference"/>. </summary>
+        /// <param name="username"> The user name to log into the registry server. </param>
+        /// <param name="password"> The password to log into the registry server. </param>
+        /// <param name="registryServer"> The registry URL. If omitted, the default is "docker.io". </param>
+        /// <param name="identityReference"> The reference to the user assigned identity to use to access an Azure Container Registry instead of username and password. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchNodeReimageContent(BatchNodeReimageOption? nodeReimageOption, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerRegistryReference(string username, string password, string registryServer, BatchNodeIdentityReference identityReference, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            NodeReimageOption = nodeReimageOption;
+            Username = username;
+            Password = password;
+            RegistryServer = registryServer;
+            IdentityReference = identityReference;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> When to reimage the Compute Node and what to do with currently running Tasks. The default value is requeue. </summary>
-        public BatchNodeReimageOption? NodeReimageOption { get; set; }
+        /// <summary> The user name to log into the registry server. </summary>
+        public string Username { get; set; }
+        /// <summary> The password to log into the registry server. </summary>
+        public string Password { get; set; }
+        /// <summary> The registry URL. If omitted, the default is "docker.io". </summary>
+        public string RegistryServer { get; set; }
+        /// <summary> The reference to the user assigned identity to use to access an Azure Container Registry instead of username and password. </summary>
+        public BatchNodeIdentityReference IdentityReference { get; set; }
     }
 }

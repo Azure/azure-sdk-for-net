@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.Compute.Batch
 {
-    public partial class InboundNATPool : IUtf8JsonSerializable, IJsonModel<InboundNATPool>
+    public partial class InboundNatPool : IUtf8JsonSerializable, IJsonModel<InboundNatPool>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InboundNATPool>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InboundNatPool>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<InboundNATPool>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<InboundNatPool>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InboundNATPool>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<InboundNatPool>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InboundNATPool)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(InboundNatPool)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,19 +64,19 @@ namespace Azure.Compute.Batch
             writer.WriteEndObject();
         }
 
-        InboundNATPool IJsonModel<InboundNATPool>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        InboundNatPool IJsonModel<InboundNatPool>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InboundNATPool>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<InboundNatPool>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InboundNATPool)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(InboundNatPool)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeInboundNATPool(document.RootElement, options);
+            return DeserializeInboundNatPool(document.RootElement, options);
         }
 
-        internal static InboundNATPool DeserializeInboundNATPool(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static InboundNatPool DeserializeInboundNatPool(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -139,7 +139,7 @@ namespace Azure.Compute.Batch
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new InboundNATPool(
+            return new InboundNatPool(
                 name,
                 protocol,
                 backendPort,
@@ -149,43 +149,43 @@ namespace Azure.Compute.Batch
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<InboundNATPool>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<InboundNatPool>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InboundNATPool>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<InboundNatPool>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InboundNATPool)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InboundNatPool)} does not support writing '{options.Format}' format.");
             }
         }
 
-        InboundNATPool IPersistableModel<InboundNATPool>.Create(BinaryData data, ModelReaderWriterOptions options)
+        InboundNatPool IPersistableModel<InboundNatPool>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InboundNATPool>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<InboundNatPool>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeInboundNATPool(document.RootElement, options);
+                        return DeserializeInboundNatPool(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InboundNATPool)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InboundNatPool)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<InboundNATPool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<InboundNatPool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static InboundNATPool FromResponse(Response response)
+        internal static InboundNatPool FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeInboundNATPool(document.RootElement);
+            return DeserializeInboundNatPool(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

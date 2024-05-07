@@ -97,8 +97,8 @@ namespace Azure.Compute.Batch
             float peakMemoryGiB = default;
             float avgDiskGiB = default;
             float peakDiskGiB = default;
-            int diskReadIOps = default;
-            int diskWriteIOps = default;
+            long diskReadIOps = default;
+            long diskWriteIOps = default;
             float diskReadGiB = default;
             float diskWriteGiB = default;
             float networkReadGiB = default;
@@ -144,12 +144,12 @@ namespace Azure.Compute.Batch
                 }
                 if (property.NameEquals("diskReadIOps"u8))
                 {
-                    diskReadIOps = property.Value.GetInt32();
+                    diskReadIOps = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("diskWriteIOps"u8))
                 {
-                    diskWriteIOps = property.Value.GetInt32();
+                    diskWriteIOps = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("diskReadGiB"u8))

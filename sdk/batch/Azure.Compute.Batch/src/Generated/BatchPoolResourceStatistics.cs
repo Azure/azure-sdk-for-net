@@ -59,7 +59,7 @@ namespace Azure.Compute.Batch
         /// <param name="diskWriteGiB"> The total amount of data in GiB of disk writes across all Compute Nodes in the Pool. </param>
         /// <param name="networkReadGiB"> The total amount of data in GiB of network reads across all Compute Nodes in the Pool. </param>
         /// <param name="networkWriteGiB"> The total amount of data in GiB of network writes across all Compute Nodes in the Pool. </param>
-        internal BatchPoolResourceStatistics(DateTimeOffset startTime, DateTimeOffset lastUpdateTime, float avgCpuPercentage, float avgMemoryGiB, float peakMemoryGiB, float avgDiskGiB, float peakDiskGiB, int diskReadIOps, int diskWriteIOps, float diskReadGiB, float diskWriteGiB, float networkReadGiB, float networkWriteGiB)
+        internal BatchPoolResourceStatistics(DateTimeOffset startTime, DateTimeOffset lastUpdateTime, float avgCpuPercentage, float avgMemoryGiB, float peakMemoryGiB, float avgDiskGiB, float peakDiskGiB, long diskReadIOps, long diskWriteIOps, float diskReadGiB, float diskWriteGiB, float networkReadGiB, float networkWriteGiB)
         {
             StartTime = startTime;
             LastUpdateTime = lastUpdateTime;
@@ -91,7 +91,7 @@ namespace Azure.Compute.Batch
         /// <param name="networkReadGiB"> The total amount of data in GiB of network reads across all Compute Nodes in the Pool. </param>
         /// <param name="networkWriteGiB"> The total amount of data in GiB of network writes across all Compute Nodes in the Pool. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchPoolResourceStatistics(DateTimeOffset startTime, DateTimeOffset lastUpdateTime, float avgCpuPercentage, float avgMemoryGiB, float peakMemoryGiB, float avgDiskGiB, float peakDiskGiB, int diskReadIOps, int diskWriteIOps, float diskReadGiB, float diskWriteGiB, float networkReadGiB, float networkWriteGiB, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BatchPoolResourceStatistics(DateTimeOffset startTime, DateTimeOffset lastUpdateTime, float avgCpuPercentage, float avgMemoryGiB, float peakMemoryGiB, float avgDiskGiB, float peakDiskGiB, long diskReadIOps, long diskWriteIOps, float diskReadGiB, float diskWriteGiB, float networkReadGiB, float networkWriteGiB, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StartTime = startTime;
             LastUpdateTime = lastUpdateTime;
@@ -129,9 +129,9 @@ namespace Azure.Compute.Batch
         /// <summary> The peak used disk space in GiB across all Compute Nodes in the Pool. </summary>
         public float PeakDiskGiB { get; }
         /// <summary> The total number of disk read operations across all Compute Nodes in the Pool. </summary>
-        public int DiskReadIOps { get; }
+        public long DiskReadIOps { get; }
         /// <summary> The total number of disk write operations across all Compute Nodes in the Pool. </summary>
-        public int DiskWriteIOps { get; }
+        public long DiskWriteIOps { get; }
         /// <summary> The total amount of data in GiB of disk reads across all Compute Nodes in the Pool. </summary>
         public float DiskReadGiB { get; }
         /// <summary> The total amount of data in GiB of disk writes across all Compute Nodes in the Pool. </summary>

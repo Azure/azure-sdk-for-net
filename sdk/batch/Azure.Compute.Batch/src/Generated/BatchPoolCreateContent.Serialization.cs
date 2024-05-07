@@ -35,11 +35,6 @@ namespace Azure.Compute.Batch
             }
             writer.WritePropertyName("vmSize"u8);
             writer.WriteStringValue(VmSize);
-            if (Optional.IsDefined(CloudServiceConfiguration))
-            {
-                writer.WritePropertyName("cloudServiceConfiguration"u8);
-                writer.WriteObjectValue(CloudServiceConfiguration, options);
-            }
             if (Optional.IsDefined(VirtualMachineConfiguration))
             {
                 writer.WritePropertyName("virtualMachineConfiguration"u8);
@@ -101,16 +96,6 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("startTask"u8);
                 writer.WriteObjectValue(StartTask, options);
             }
-            if (Optional.IsCollectionDefined(CertificateReferences))
-            {
-                writer.WritePropertyName("certificateReferences"u8);
-                writer.WriteStartArray();
-                foreach (var item in CertificateReferences)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
             if (Optional.IsCollectionDefined(ApplicationPackageReferences))
             {
                 writer.WritePropertyName("applicationPackageReferences"u8);
@@ -118,16 +103,6 @@ namespace Azure.Compute.Batch
                 foreach (var item in ApplicationPackageReferences)
                 {
                     writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(ApplicationLicenses))
-            {
-                writer.WritePropertyName("applicationLicenses"u8);
-                writer.WriteStartArray();
-                foreach (var item in ApplicationLicenses)
-                {
-                    writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -222,7 +197,6 @@ namespace Azure.Compute.Batch
             string id = default;
             string displayName = default;
             string vmSize = default;
-            CloudServiceConfiguration cloudServiceConfiguration = default;
             VirtualMachineConfiguration virtualMachineConfiguration = default;
             TimeSpan? resizeTimeout = default;
             IDictionary<string, string> resourceTags = default;
@@ -234,9 +208,7 @@ namespace Azure.Compute.Batch
             bool? enableInterNodeCommunication = default;
             NetworkConfiguration networkConfiguration = default;
             BatchStartTask startTask = default;
-            IList<BatchCertificateReference> certificateReferences = default;
             IList<BatchApplicationPackageReference> applicationPackageReferences = default;
-            IList<string> applicationLicenses = default;
             int? taskSlotsPerNode = default;
             BatchTaskSchedulingPolicy taskSchedulingPolicy = default;
             IList<UserAccount> userAccounts = default;
@@ -261,15 +233,6 @@ namespace Azure.Compute.Batch
                 if (property.NameEquals("vmSize"u8))
                 {
                     vmSize = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("cloudServiceConfiguration"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    cloudServiceConfiguration = CloudServiceConfiguration.DeserializeCloudServiceConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("virtualMachineConfiguration"u8))
@@ -372,20 +335,6 @@ namespace Azure.Compute.Batch
                     startTask = BatchStartTask.DeserializeBatchStartTask(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("certificateReferences"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<BatchCertificateReference> array = new List<BatchCertificateReference>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(BatchCertificateReference.DeserializeBatchCertificateReference(item, options));
-                    }
-                    certificateReferences = array;
-                    continue;
-                }
                 if (property.NameEquals("applicationPackageReferences"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -398,20 +347,6 @@ namespace Azure.Compute.Batch
                         array.Add(BatchApplicationPackageReference.DeserializeBatchApplicationPackageReference(item, options));
                     }
                     applicationPackageReferences = array;
-                    continue;
-                }
-                if (property.NameEquals("applicationLicenses"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
-                    }
-                    applicationLicenses = array;
                     continue;
                 }
                 if (property.NameEquals("taskSlotsPerNode"u8))
@@ -502,7 +437,6 @@ namespace Azure.Compute.Batch
                 id,
                 displayName,
                 vmSize,
-                cloudServiceConfiguration,
                 virtualMachineConfiguration,
                 resizeTimeout,
                 resourceTags ?? new ChangeTrackingDictionary<string, string>(),
@@ -514,9 +448,7 @@ namespace Azure.Compute.Batch
                 enableInterNodeCommunication,
                 networkConfiguration,
                 startTask,
-                certificateReferences ?? new ChangeTrackingList<BatchCertificateReference>(),
                 applicationPackageReferences ?? new ChangeTrackingList<BatchApplicationPackageReference>(),
-                applicationLicenses ?? new ChangeTrackingList<string>(),
                 taskSlotsPerNode,
                 taskSchedulingPolicy,
                 userAccounts ?? new ChangeTrackingList<UserAccount>(),
