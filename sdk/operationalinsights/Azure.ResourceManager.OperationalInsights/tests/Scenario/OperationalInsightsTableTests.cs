@@ -39,6 +39,7 @@ namespace Azure.ResourceManager.OperationalInsights.Tests.Scenario
         }
 
         [RecordedTest]
+        [LiveOnly(Reason = "Test regularly times out during playback.")]
         public async Task GetAll()
         {
             var tables = await _workspace.GetOperationalInsightsTables().GetAllAsync().ToEnumerableAsync();
