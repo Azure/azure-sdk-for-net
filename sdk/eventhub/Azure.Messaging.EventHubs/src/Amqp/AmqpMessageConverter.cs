@@ -181,22 +181,17 @@ namespace Azure.Messaging.EventHubs.Amqp
                 throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.InvalidMessageBody, typeof(AmqpMap).Name));
             }
 
-            object geoReplicationFactor = responseData[AmqpManagement.ResponseMap.GeoReplicationFactor];
-            var geoReplicationFactorValue = geoReplicationFactor as int?;
-            if (geoReplicationFactorValue != null)
+            var geoReplicationEnabled = responseData[AmqpManagement.ResponseMap.GeoReplicationFactor] switch
             {
-                return new EventHubProperties((string)responseData[AmqpManagement.ResponseMap.Name],
-                                              new DateTimeOffset((DateTime)responseData[AmqpManagement.ResponseMap.CreatedAt], TimeSpan.Zero),
-                                              (string[])responseData[AmqpManagement.ResponseMap.PartitionIdentifiers],
-                                              geoReplicationFactorValue > 1);
-            }
-
-            // This is only because this is a preview feature and the service might not return the geo replication factor.
-            // This should be removed once the geo replication factor is publicly available.
-
+                int count when count > 1 => true,
+                _ => false
+            };
+            
             return new EventHubProperties(
                 (string)responseData[AmqpManagement.ResponseMap.Name],
                 new DateTimeOffset((DateTime)responseData[AmqpManagement.ResponseMap.CreatedAt], TimeSpan.Zero),
+                (string[])responseData[AmqpManagement.ResponseMap.PartitionIdentifiers],
+                geoReplicationEnabled);
                 (string[])responseData[AmqpManagement.ResponseMap.PartitionIdentifiers]);
         }
 
