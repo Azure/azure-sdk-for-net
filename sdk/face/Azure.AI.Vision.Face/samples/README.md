@@ -3,7 +3,7 @@ page_type: sample
 languages:
 - csharp
 products:
-- azure-ai-vision-face
+- azure-face
 name: Azure AI Vision Face samples for .NET
 description: Samples for the Azure.AI.Vision.Face client library
 ---
