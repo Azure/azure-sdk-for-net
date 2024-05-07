@@ -2,13 +2,12 @@
 
 ## 1.0.0-beta.3 (2024-05-07)
 
-### Features Added
-
-### Breaking Changes
-
 ### Bugs Fixed
 
-### Other Changes
+- Instantiate paths variable.
+- Use alpha for extracting the pushpin color.
+
+
 
 ## 1.0.0-beta.2 (2023-07-13)
 
