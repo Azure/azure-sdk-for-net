@@ -1,14 +1,14 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
+## 1.3.3 (2024-05-07)
 
 ### Features Added
 
-### Breaking Changes
+- Add `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
 
 ### Bugs Fixed
 
-### Other Changes
+- Fixed bicep serialization of flattened properties.
 
 ## 1.3.2 (2024-03-23)
 
