@@ -173,7 +173,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         /// <param name="sequenceNumber">The sequence number associated with the checkpoint being written.</param>
         /// <param name="offset">The offset associated with the checkpoint being written.</param>
         ///
-        [Event(25, Level = EventLevel.Error, Message = "An exception occurred while attempting to perform a checkpoint update for partition '{0}' by processor instance with identifier '{1}' for Event Hub: {2} and Consumer Group: {3} at Sequence Number: {5} Offset: {6}. Error Message: '{4}'")]
+        [Event(25, Level = EventLevel.Error, Message = "An exception occurred while attempting to perform a checkpoint update for partition '{0}' by processor instance with identifier '{1}' for Event Hub: {2} and Consumer Group: {3}  Error Message: '{4}' Sequence Number: {5} Offset: {6}.")]
         public virtual void UpdateCheckpointError(string partitionId,
                                                   string identifier,
                                                   string eventHubName,

@@ -292,7 +292,17 @@ namespace Azure.Messaging.EventHubs
         ///   when not populated is <see cref="long.MinValue"/>.
         /// </value>
         ///
-        public long Offset => _amqpMessage.GetSequenceNumber(long.MinValue);
+        public long Offset
+        {
+            get
+            {
+                // The offset is intentionally mapped to sequence number. The service no longer accepts a numeric offset value, so the
+                // new SDK populates the EventData offset property with the amqp message sequence number. This allows for backwards
+                // compatibility to avoid breaking existing code that uses only offset properties.
+
+                return _amqpMessage.GetSequenceNumber(long.MinValue);
+            }
+        }
 
         /// <summary>
         ///   The date and time, in UTC, of when the event was enqueued in the Event Hub partition.

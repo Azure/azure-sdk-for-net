@@ -704,7 +704,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                 linkSettings.DesiredCapabilities ??= new Multiple<AmqpSymbol>();
                 linkSettings.DesiredCapabilities.Add(AmqpProperty.GeoReplication);
-                
+
                 if (trackLastEnqueuedEventProperties)
                 {
                     linkSettings.DesiredCapabilities.Add(AmqpProperty.TrackLastEnqueuedEventProperties);
@@ -811,7 +811,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                 linkSettings.DesiredCapabilities ??= new Multiple<AmqpSymbol>();
                 linkSettings.DesiredCapabilities.Add(AmqpProperty.GeoReplication);
-                
+
                 if ((features & TransportProducerFeatures.IdempotentPublishing) != 0)
                 {
                     linkSettings.DesiredCapabilities.Add(AmqpProperty.EnableIdempotentPublishing);

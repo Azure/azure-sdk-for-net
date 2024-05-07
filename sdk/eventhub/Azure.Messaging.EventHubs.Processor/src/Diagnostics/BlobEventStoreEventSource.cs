@@ -314,7 +314,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         /// <param name="offset">The offset associated with this checkpoint.</param>
         /// <param name="errorMessage">The message for the exception that occurred.</param>
         ///
-        [Event(34, Level = EventLevel.Error, Message = "An exception occurred when creating/updating a checkpoint for  partition: `{0}` of FullyQualifiedNamespace: '{1}'; EventHubName: '{2}'; ConsumerGroup: '{3}'; ClientIdentifier: '{5}'; at SequenceNumber: '{6}' ReplicationSegment '{7}' Offset '{8}'.  ErrorMessage: '{4}'.")]
+        [Event(34, Level = EventLevel.Error, Message = "An exception occurred when creating/updating a checkpoint for  partition: `{0}` of FullyQualifiedNamespace: '{1}'; EventHubName: '{2}'; ConsumerGroup: '{3}'; ClientIdentifier: '{5}'; ErrorMessage: '{4}'; SequenceNumber: '{6}' ReplicationSegment: '{7}' Offset: '{8}'.")]
         public virtual void UpdateCheckpointError(string partitionId,
                                                   string fullyQualifiedNamespace,
                                                   string eventHubName,

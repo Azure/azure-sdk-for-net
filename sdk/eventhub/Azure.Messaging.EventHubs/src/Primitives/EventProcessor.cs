@@ -1302,10 +1302,10 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///
         /// <returns>The set of identifiers for the Event Hub partitions.</returns>
         ///
-        protected virtual async Task<string[]> ListPartitionIdsAsync(EventHubConnection connection,
+        protected virtual Task<string[]> ListPartitionIdsAsync(EventHubConnection connection,
                                                                      CancellationToken cancellationToken)
         {
-            return Task.FromResult(Properties.PartitionIds);
+            return Task.FromResult(EventHubProperties.PartitionIds);
         }
 
         /// <summary>
@@ -1643,7 +1643,7 @@ namespace Azure.Messaging.EventHubs.Primitives
 
                     try
                     {
-                        Properties = await connection.GetPropertiesAsync(RetryPolicy, cancellationToken).ConfigureAwait(false);
+                        EventHubProperties = await connection.GetPropertiesAsync(RetryPolicy, cancellationToken).ConfigureAwait(false);
                         partitionIds = await ListPartitionIdsAsync(connection, cancellationToken).ConfigureAwait(false);
                     }
                     catch (Exception ex) when (ex.IsNotType<TaskCanceledException>())
