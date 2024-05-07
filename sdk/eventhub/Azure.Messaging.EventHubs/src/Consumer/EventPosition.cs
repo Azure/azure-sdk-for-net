@@ -27,7 +27,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   which has not expired due to the retention policy.
         /// </summary>
         ///
-        public static EventPosition Earliest { get; } = new EventPosition { SequenceNumber = StartOfStream, IsInclusive = false };
+        public static EventPosition Earliest { get; } = new EventPosition { Offset = StartOfStream, IsInclusive = false };
 
         /// <summary>
         ///   Corresponds to the end of the partition, where no more events are currently enqueued.  Use this
@@ -35,7 +35,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   consumer begins reading with this position.
         /// </summary>
         ///
-        public static EventPosition Latest { get; } = new EventPosition { SequenceNumber = EndOfStream, IsInclusive = false };
+        public static EventPosition Latest { get; } = new EventPosition { Offset = EndOfStream, IsInclusive = false };
 
         /// <summary>
         ///   The offset of the event identified by this position.
@@ -188,8 +188,8 @@ namespace Azure.Messaging.EventHubs.Consumer
         public override string ToString() =>
             this switch
             {
-                _ when (SequenceNumber == StartOfStream) => nameof(Earliest),
-                _ when (SequenceNumber == EndOfStream) => nameof(Latest),
+                _ when (Offset == StartOfStream) => nameof(Earliest),
+                _ when (Offset == EndOfStream) => nameof(Latest),
                 _ when (!string.IsNullOrEmpty(SequenceNumber)) => $"Sequence Number: [{SequenceNumber}] | Inclusive: [{IsInclusive}]",
                 _ when (!string.IsNullOrEmpty(Offset)) => $"Offset: [{ Offset }] | Inclusive: [{ IsInclusive }]",
                 _ when (EnqueuedTime.HasValue) => $"Enqueued: [{ EnqueuedTime }]",
