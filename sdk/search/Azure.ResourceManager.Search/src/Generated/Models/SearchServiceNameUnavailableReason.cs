@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Search.Models
         private const string InvalidValue = "Invalid";
         private const string AlreadyExistsValue = "AlreadyExists";
 
-        /// <summary> The search service name doesn't match naming requirements. </summary>
+        /// <summary> The search service name does not match naming requirements. </summary>
         public static SearchServiceNameUnavailableReason Invalid { get; } = new SearchServiceNameUnavailableReason(InvalidValue);
         /// <summary> The search service name is already assigned to a different search service. </summary>
         public static SearchServiceNameUnavailableReason AlreadyExists { get; } = new SearchServiceNameUnavailableReason(AlreadyExistsValue);

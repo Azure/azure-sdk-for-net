@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    /// <summary> An object to describe any issues with provisioning network security perimeters to a search service. </summary>
-    public partial class NspProvisioningIssue
+    /// <summary> Network-specific rules that determine how the search service can be reached. </summary>
+    internal partial class NetworkRuleSet
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,27 +45,23 @@ namespace Azure.ResourceManager.Search.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NspProvisioningIssue"/>. </summary>
-        public NspProvisioningIssue()
+        /// <summary> Initializes a new instance of <see cref="NetworkRuleSet"/>. </summary>
+        public NetworkRuleSet()
         {
+            IPRules = new ChangeTrackingList<SearchServiceIPRule>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="NspProvisioningIssue"/>. </summary>
-        /// <param name="name"></param>
-        /// <param name="properties"> The properties to describe any issues with provisioning network security perimeters to a search service. </param>
+        /// <summary> Initializes a new instance of <see cref="NetworkRuleSet"/>. </summary>
+        /// <param name="ipRules"> A list of IP restriction rules used for an IP firewall. Any IPs that do not match the rules are blocked by the firewall. These rules are only applied when the 'publicNetworkAccess' of the search service is 'enabled'. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NspProvisioningIssue(string name, NspProvisioningIssueProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkRuleSet(IList<SearchServiceIPRule> ipRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Name = name;
-            Properties = properties;
+            IPRules = ipRules;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the name. </summary>
-        [WirePath("name")]
-        public string Name { get; set; }
-        /// <summary> The properties to describe any issues with provisioning network security perimeters to a search service. </summary>
-        [WirePath("properties")]
-        public NspProvisioningIssueProperties Properties { get; set; }
+        /// <summary> A list of IP restriction rules used for an IP firewall. Any IPs that do not match the rules are blocked by the firewall. These rules are only applied when the 'publicNetworkAccess' of the search service is 'enabled'. </summary>
+        [WirePath("ipRules")]
+        public IList<SearchServiceIPRule> IPRules { get; }
     }
 }

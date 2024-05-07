@@ -5,12 +5,9 @@
 
 #nullable disable
 
-using System.ComponentModel;
-
 namespace Azure.ResourceManager.Search.Models
 {
     /// <summary> The provisioning state of the shared private link resource. Valid values are Updating, Deleting, Failed, Succeeded or Incomplete. </summary>
-    [EditorBrowsable(EditorBrowsableState.Never)]
     public enum SharedSearchServicePrivateLinkResourceProvisioningState
     {
         /// <summary> Updating. </summary>

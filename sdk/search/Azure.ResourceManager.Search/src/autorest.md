@@ -8,8 +8,7 @@ azure-arm: true
 csharp: true
 library-name: Search
 namespace: Azure.ResourceManager.Search
-require: https://github.com/Azure/azure-rest-api-specs/blob/3fb73ef5a3af2c138b53e3cced182095b671a679/specification/search/resource-manager/readme.md
-#tag: package-preview-2024-03
+require: https://github.com/Azure/azure-rest-api-specs/blob/26be3565da4173c800cd664e6a2bdae6119e6145/specification/search/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -39,29 +38,22 @@ rename-mapping:
   PrivateLinkServiceConnectionStatus: SearchServicePrivateLinkServiceConnectionStatus
   PrivateLinkServiceConnectionProvisioningState: SearchPrivateLinkServiceConnectionProvisioningState
   ProvisioningState: SearchServiceProvisioningState
-  PublicNetworkAccess: SearchServicePublicInternetAccess
+  PublicNetworkAccess: SearchServicePublicNetworkAccess
   QueryKey: SearchServiceQueryKey
   ResourceType: SearchServiceResourceType
   SearchEncryptionWithCmk: SearchEncryptionWithCmkEnforcement
   SearchService.properties.disableLocalAuth: isLocalAuthDisabled
-  SearchService.properties.publicNetworkAccess: PublicInternetAccess
-  SearchService.sku: SearchSku
   SearchServiceUpdate.properties.disableLocalAuth: isLocalAuthDisabled
-  SearchServiceUpdate.properties.publicNetworkAccess: PublicInternetAccess
-  SearchServiceUpdate.sku: SearchSku
   ShareablePrivateLinkResourceProperties: ShareableSearchServicePrivateLinkResourceProperties
   ShareablePrivateLinkResourceType: ShareableSearchServicePrivateLinkResourceType
   SharedPrivateLinkResource: SharedSearchServicePrivateLinkResource
   SharedPrivateLinkResourceProperties: SharedSearchServicePrivateLinkResourceProperties
   SharedPrivateLinkResourceProperties.privateLinkResourceId: -|arm-id
   SharedPrivateLinkResourceProperties.resourceRegion: -|azure-location
-  SharedPrivateLinkResourceProperties.status: SharedPrivateLinkResourceStatus
-  SharedPrivateLinkResourceProperties.provisioningState: SharedPrivateLinkResourceProvisioningState
-  SharedPrivateLinkResourceProvisioningState: SearchServiceSharedPrivateLinkResourceProvisioningState
-  SharedPrivateLinkResourceStatus: SearchServiceSharedPrivateLinkResourceStatus
+  SharedPrivateLinkResourceProvisioningState: SharedSearchServicePrivateLinkResourceProvisioningState
+  SharedPrivateLinkResourceStatus: SharedSearchServicePrivateLinkResourceStatus
   UnavailableNameReason: SearchServiceNameUnavailableReason
-  SkuName: SearchServiceSkuName
-  NetworkRuleSet: SearchServiceNetworkRuleSet
+
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -92,7 +84,6 @@ acronym-mapping:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
-  NSP: Nsp|nsp
 
 override-operation-name:
   Services_CheckNameAvailability: CheckSearchServiceNameAvailability

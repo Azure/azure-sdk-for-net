@@ -47,15 +47,15 @@ namespace Azure.ResourceManager.Search.Models
                 writer.WritePropertyName("resourceRegion"u8);
                 writer.WriteStringValue(ResourceRegion.Value);
             }
-            if (Optional.IsDefined(SharedPrivateLinkResourceStatus))
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(SharedPrivateLinkResourceStatus.Value.ToString());
+                writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (Optional.IsDefined(SharedPrivateLinkResourceProvisioningState))
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(SharedPrivateLinkResourceProvisioningState.Value.ToString());
+                writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -99,8 +99,8 @@ namespace Azure.ResourceManager.Search.Models
             string groupId = default;
             string requestMessage = default;
             AzureLocation? resourceRegion = default;
-            SearchServiceSharedPrivateLinkResourceStatus? status = default;
-            SearchServiceSharedPrivateLinkResourceProvisioningState? provisioningState = default;
+            SharedSearchServicePrivateLinkResourceStatus? status = default;
+            SharedSearchServicePrivateLinkResourceProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Search.Models
                     {
                         continue;
                     }
-                    status = new SearchServiceSharedPrivateLinkResourceStatus(property.Value.GetString());
+                    status = property.Value.GetString().ToSharedSearchServicePrivateLinkResourceStatus();
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Search.Models
                     {
                         continue;
                     }
-                    provisioningState = new SearchServiceSharedPrivateLinkResourceProvisioningState(property.Value.GetString());
+                    provisioningState = property.Value.GetString().ToSharedSearchServicePrivateLinkResourceProvisioningState();
                     continue;
                 }
                 if (options.Format != "W")
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Search.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SharedPrivateLinkResourceStatus), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  status: ");
@@ -262,14 +262,14 @@ namespace Azure.ResourceManager.Search.Models
             }
             else
             {
-                if (Optional.IsDefined(SharedPrivateLinkResourceStatus))
+                if (Optional.IsDefined(Status))
                 {
                     builder.Append("  status: ");
-                    builder.AppendLine($"'{SharedPrivateLinkResourceStatus.Value.ToString()}'");
+                    builder.AppendLine($"'{Status.Value.ToSerialString()}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SharedPrivateLinkResourceProvisioningState), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  provisioningState: ");
@@ -277,10 +277,10 @@ namespace Azure.ResourceManager.Search.Models
             }
             else
             {
-                if (Optional.IsDefined(SharedPrivateLinkResourceProvisioningState))
+                if (Optional.IsDefined(ProvisioningState))
                 {
                     builder.Append("  provisioningState: ");
-                    builder.AppendLine($"'{SharedPrivateLinkResourceProvisioningState.Value.ToString()}'");
+                    builder.AppendLine($"'{ProvisioningState.Value.ToSerialString()}'");
                 }
             }
 
