@@ -168,6 +168,16 @@ stages:
                 -WorkingDirectory '$(Build.ArtifactStagingDirectory)'
                 -NupkgFilesDestination 'nupkgFiles'
 
+          - task: AzureCLI@2
+            displayName: Azure CLI Login
+            inputs:
+              azureSubscription: azure-sdk-apiscan
+              scriptType: pscore
+              scriptLocation: inlineScript
+              inlineScript: |
+                az --version
+                az account show
+
           - task: securedevelopmentteam.vss-secure-development-tools.build-task-apiscan.APIScan@2
             displayName: 'Run APIScan'
             inputs:
@@ -179,8 +189,7 @@ stages:
               preserveLogsFolder: true
               verbosityLevel: standard
             env:
-              # azure-sdk-apiscan (81109e5f-0620-423c-a37a-c22fbf8973a7)
-              AzureServicesAuthConnectionString: runAs=App;AppId=81109e5f-0620-423c-a37a-c22fbf8973a7
+              AzureServicesAuthConnectionString: RunAs=Developer;DeveloperTool=AzureCli
 
           - task: securedevelopmentteam.vss-secure-development-tools.build-task-postanalysis.PostAnalysis@2
             displayName: 'Post Analysis (ApiScan)'
