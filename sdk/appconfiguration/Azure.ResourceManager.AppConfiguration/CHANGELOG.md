@@ -1,14 +1,10 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.3.2 (2024-05-07)
 
 ### Bugs Fixed
 
-### Other Changes
+- Fixed bicep serialization of flattened properties.
 
 ## 1.3.1 (2024-03-23)
 
