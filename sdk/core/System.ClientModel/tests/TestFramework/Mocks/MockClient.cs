@@ -147,7 +147,7 @@ public class MockClient
                         throw new ArgumentException("Unable to create result from response with null ContentStream", nameof(response));
                     }
 
-                    AsyncResultCollection<BinaryData> events = Create(response);
+                    AsyncResultCollection<BinaryData> events = Create(response, "[DONE]");
                     _events = events.GetAsyncEnumerator();
                     _started = true;
                 }

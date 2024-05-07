@@ -21,7 +21,7 @@ public class ClientResultCollectionTests : SyncAsyncTestBase
     {
         MockPipelineResponse response = new();
         response.SetContent(_mockContent);
-        AsyncResultCollection<BinaryData> results = AsyncResultCollection<BinaryData>.Create(response);
+        AsyncResultCollection<BinaryData> results = AsyncResultCollection<BinaryData>.Create(response, "[DONE]");
 
         int i = 0;
         await foreach (BinaryData result in results)
@@ -43,7 +43,7 @@ public class ClientResultCollectionTests : SyncAsyncTestBase
         MockPipelineResponse response = new();
         response.SetContent(_mockContent);
 
-        var results = AsyncResultCollection<BinaryData>.Create(response);
+        var results = AsyncResultCollection<BinaryData>.Create(response, "[DONE]");
 
         // Set it to `cancelled: true` to validate functionality.
         CancellationToken token = new(true);
@@ -143,6 +143,7 @@ public class ClientResultCollectionTests : SyncAsyncTestBase
 
         event: done
         data: [DONE]
+
 
         """;
 

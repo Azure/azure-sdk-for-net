@@ -25,10 +25,8 @@ public abstract class AsyncResultCollection<T> : ClientResult, IAsyncEnumerable<
     {
     }
 
-    #region Factory method
-
     // TODO: terminal event can be a model type as well ... are we happy using string for now and adding an overload if needed later?
-    public static AsyncResultCollection<BinaryData> Create(PipelineResponse response)
+    public static AsyncResultCollection<BinaryData> Create(PipelineResponse response, string terminalEvent)
     {
         Argument.AssertNotNull(response, nameof(response));
 
@@ -37,10 +35,8 @@ public abstract class AsyncResultCollection<T> : ClientResult, IAsyncEnumerable<
             throw new ArgumentException("Unable to create result collection from PipelineResponse with null ContentStream", nameof(response));
         }
 
-        return new AsyncSseDataEventCollection(response);
+        return new AsyncSseDataEventCollection(response, terminalEvent);
     }
-
-    #endregion
 
     public abstract IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = default);
 }

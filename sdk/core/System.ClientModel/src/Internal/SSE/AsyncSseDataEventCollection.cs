@@ -13,11 +13,13 @@ namespace System.ClientModel.Internal;
 
 internal class AsyncSseDataEventCollection : AsyncResultCollection<BinaryData>
 {
-    // Note: this one doesn't delay sending the request because it's used
-    // with protocol methods.
-    public AsyncSseDataEventCollection(PipelineResponse response) : base(response)
+    private readonly string _terminalEvent;
+
+    public AsyncSseDataEventCollection(PipelineResponse response, string terminalEvent) : base(response)
     {
         Argument.AssertNotNull(response, nameof(response));
+
+        _terminalEvent = terminalEvent;
     }
 
     public override IAsyncEnumerator<BinaryData> GetAsyncEnumerator(CancellationToken cancellationToken = default)
@@ -28,7 +30,7 @@ internal class AsyncSseDataEventCollection : AsyncResultCollection<BinaryData>
         // AsyncResultCollection.Create factory method.
         Debug.Assert(response.ContentStream is not null);
 
-        return new AsyncSseDataEventEnumerator(response.ContentStream!, cancellationToken);
+        return new AsyncSseDataEventEnumerator(response.ContentStream!, _terminalEvent, cancellationToken);
     }
 
     private sealed class AsyncSseDataEventEnumerator : IAsyncEnumerator<BinaryData>
@@ -39,11 +41,11 @@ internal class AsyncSseDataEventCollection : AsyncResultCollection<BinaryData>
         // TODO: is null supression the correct pattern here?
         public BinaryData Current { get => _current!; }
 
-        public AsyncSseDataEventEnumerator(Stream contentStream, CancellationToken cancellationToken)
+        public AsyncSseDataEventEnumerator(Stream contentStream, string terminalEvent, CancellationToken cancellationToken)
         {
             Debug.Assert(contentStream is not null);
 
-            _events = new(contentStream!, cancellationToken);
+            _events = new(contentStream!, terminalEvent, cancellationToken);
         }
 
         public async ValueTask<bool> MoveNextAsync()

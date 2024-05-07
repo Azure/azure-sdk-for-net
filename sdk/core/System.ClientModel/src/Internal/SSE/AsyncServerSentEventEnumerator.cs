@@ -10,18 +10,18 @@ namespace System.ClientModel.Internal;
 
 internal sealed class AsyncServerSentEventEnumerator : IAsyncEnumerator<ServerSentEvent>
 {
-    // TODO: make this configurable per coming from TypeSpec
-    private static readonly ReadOnlyMemory<char> _doneToken = "[DONE]".AsMemory();
-
+    private readonly ReadOnlyMemory<char> _terminalEvent;
     private readonly CancellationToken _cancellationToken;
+
     private ServerSentEventReader? _reader;
 
     public ServerSentEvent Current { get; private set; }
 
-    public AsyncServerSentEventEnumerator(Stream contentStream, CancellationToken cancellationToken = default)
+    public AsyncServerSentEventEnumerator(Stream contentStream, string terminalEvent, CancellationToken cancellationToken = default)
     {
         _reader = new(contentStream);
         _cancellationToken = cancellationToken;
+        _terminalEvent = terminalEvent.AsMemory();
     }
 
     public async ValueTask<bool> MoveNextAsync()
@@ -34,7 +34,7 @@ internal sealed class AsyncServerSentEventEnumerator : IAsyncEnumerator<ServerSe
         ServerSentEvent? nextEvent = await _reader.TryGetNextEventAsync(_cancellationToken).ConfigureAwait(false);
         if (nextEvent.HasValue)
         {
-            if (nextEvent.Value.Data.Span.SequenceEqual(_doneToken.Span))
+            if (nextEvent.Value.Data.Span.SequenceEqual(_terminalEvent.Span))
             {
                 return false;
             }

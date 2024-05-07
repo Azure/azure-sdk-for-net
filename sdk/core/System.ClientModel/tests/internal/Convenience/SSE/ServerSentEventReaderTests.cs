@@ -28,16 +28,17 @@ public class ServerSentEventReaderTests
             ssEvent = await reader.TryGetNextEventAsync();
         }
 
-        Assert.AreEqual(events.Count, 3);
+        Assert.AreEqual(events.Count, 4);
 
-        for (int i = 0; i < events.Count; i++)
+        for (int i = 0; i < 3; i++)
         {
             ServerSentEvent sse = events[i];
             Assert.IsTrue(sse.EventName.Span.SequenceEqual($"event.{i}".AsSpan()));
             Assert.IsTrue(sse.Data.Span.SequenceEqual($"{{ \"id\": \"{i}\", \"object\": {i} }}".AsSpan()));
         }
 
-        // TODO: Question - should this include the "done" event?  Probably yes?
+        Assert.IsTrue(events[3].EventName.Span.SequenceEqual("done".AsSpan()));
+        Assert.IsTrue(events[3].Data.Span.SequenceEqual("[DONE]".AsSpan()));
     }
 
     [Test]
@@ -60,42 +61,39 @@ public class ServerSentEventReaderTests
         Assert.IsNull(ssEvent);
     }
 
-    //[Test]
-    //public async Task HandlesIgnoreLine()
-    //{
-    //    Stream contentStream = BinaryData.FromString("""
-    //        ignore: done
-    //
-    //        """).ToStream();
-    //    using ServerSentEventReader reader = new(contentStream);
+    [Test]
+    public async Task HandlesIgnoreLine()
+    {
+        Stream contentStream = BinaryData.FromString("""
+            ignore: noop
 
-    //    ServerSentEvent? sse = await reader.TryGetNextEventAsync();
 
-    //    Assert.IsNotNull(sse);
-    //    Assert.IsTrue(sse.Value.EventName.Span.SequenceEqual($"done".AsSpan()));
-    //    Assert.IsTrue(sse.Value.Data.Span.SequenceEqual($"[DONE]".AsSpan()));
-    //    Assert.AreEqual(sse.Value.LastEventId.Length, 0);
-    //    Assert.IsNull(sse.Value.ReconnectionTime);
-    //}
+            """).ToStream();
+        using ServerSentEventReader reader = new(contentStream);
 
-    //[Test]
-    //public async Task HandlesDoneEvent()
-    //{
-    //    Stream contentStream = BinaryData.FromString("""
-    //        event: done
-    //        data: [DONE]
+        ServerSentEvent? sse = await reader.TryGetNextEventAsync();
 
-    //        """).ToStream();
-    //    using ServerSentEventReader reader = new(contentStream);
+        Assert.IsNotNull(sse);
+        Assert.AreEqual(sse.Value.EventName.Length, 0);
+        Assert.AreEqual(sse.Value.Data.Length, 0);
+        Assert.AreEqual(sse.Value.LastEventId.Length, 0);
+        Assert.IsNull(sse.Value.ReconnectionTime);
+    }
 
-    //    ServerSentEvent? sse = await reader.TryGetNextEventAsync();
+    [Test]
+    public async Task HandlesDoneEvent()
+    {
+        Stream contentStream = BinaryData.FromString("event: done\ndata: [DONE]\n\n").ToStream();
+        using ServerSentEventReader reader = new(contentStream);
 
-    //    Assert.IsNotNull(sse);
-    //    Assert.IsTrue(sse.Value.EventName.Span.SequenceEqual($"done".AsSpan()));
-    //    Assert.IsTrue(sse.Value.Data.Span.SequenceEqual($"[DONE]".AsSpan()));
-    //    Assert.AreEqual(sse.Value.LastEventId.Length, 0);
-    //    Assert.IsNull(sse.Value.ReconnectionTime);
-    //}
+        ServerSentEvent? sse = await reader.TryGetNextEventAsync();
+
+        Assert.IsNotNull(sse);
+        Assert.IsTrue(sse.Value.EventName.Span.SequenceEqual($"done".AsSpan()));
+        Assert.IsTrue(sse.Value.Data.Span.SequenceEqual($"[DONE]".AsSpan()));
+        Assert.AreEqual(sse.Value.LastEventId.Length, 0);
+        Assert.IsNull(sse.Value.ReconnectionTime);
+    }
 
     [Test]
     public void ThrowsIfCancelled()
@@ -111,6 +109,7 @@ public class ServerSentEventReaderTests
 
     #region Helpers
 
+    // Note: raw string literal quirk removes \n from final line.
     private string _mockContent = """
         event: event.0
         data: { "id": "0", "object": 0 }
@@ -123,6 +122,7 @@ public class ServerSentEventReaderTests
 
         event: done
         data: [DONE]
+
 
         """;
 

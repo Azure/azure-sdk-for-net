@@ -18,7 +18,7 @@ public class AsyncSseDataEventCollectionTests
         MockPipelineResponse response = new();
         response.SetContent(_mockContent);
 
-        AsyncSseDataEventCollection results = new(response);
+        AsyncSseDataEventCollection results = new(response, "[DONE]");
 
         int i = 0;
         await foreach (BinaryData result in results)
@@ -40,7 +40,7 @@ public class AsyncSseDataEventCollectionTests
         MockPipelineResponse response = new();
         response.SetContent(_mockContent);
 
-        AsyncSseDataEventCollection results = new(response);
+        AsyncSseDataEventCollection results = new(response, "[DONE]");
 
         CancellationToken token = new(true);
 
@@ -70,6 +70,7 @@ public class AsyncSseDataEventCollectionTests
 
         event: done
         data: [DONE]
+
 
         """;
 
