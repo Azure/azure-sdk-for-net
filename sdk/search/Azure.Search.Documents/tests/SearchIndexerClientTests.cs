@@ -721,7 +721,7 @@ namespace Azure.Search.Documents.Tests
                     Type _ when t == typeof(AzureMachineLearningSkill) => CreateSkill(t, new[] { "input" }, new[] { "output" }),
                     Type _ when t == typeof(AzureOpenAIEmbeddingSkill) => CreateSkill(t, new[] { "text" }, new[] { "embedding" }),
                     Type _ when t == typeof(VisionVectorizeSkill) =>
-                    TestEnvironment.Location != "usgov" ? CreateSkill(t, new[] { "image" }, new[] { "vector" }) : null,
+                    TestEnvironment.AzureEnvironment != "AzureUSGovernment" ? CreateSkill(t, new[] { "image" }, new[] { "vector" }) : null,
                     _ => throw new NotSupportedException($"{t.FullName}"),
                 })
                 .Where(skill => skill != null)

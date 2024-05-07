@@ -24,7 +24,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="contained"> Contained, inline Resources. </param>
         /// <param name="extension"> Additional Content defined by implementations. </param>
         /// <param name="modifierExtension"> Extensions that cannot be ignored. </param>
-        internal UnknownFhirR4DomainResource(string resourceType, string id, FhirR4Meta meta, string implicitRules, string language, IDictionary<string, BinaryData> additionalProperties, FhirR4Narrative text, IList<FhirR4Resource> contained, IList<FhirR4Extension> extension, IList<FhirR4Extension> modifierExtension) : base(resourceType, id, meta, implicitRules, language, additionalProperties, text, contained, extension, modifierExtension)
+        internal UnknownFhirR4DomainResource(string resourceType, string id, FhirR4Meta meta, string implicitRules, string language, IDictionary<string, BinaryData> additionalProperties, FhirR4Narrative text, IReadOnlyList<FhirR4Resource> contained, IReadOnlyList<FhirR4Extension> extension, IReadOnlyList<FhirR4Extension> modifierExtension) : base(resourceType, id, meta, implicitRules, language, additionalProperties, text, contained, extension, modifierExtension)
         {
         }
 

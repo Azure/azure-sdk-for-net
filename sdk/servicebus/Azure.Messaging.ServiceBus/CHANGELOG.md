@@ -1,16 +1,16 @@
 # Release History
 
-## 7.18.0-beta.1 (Unreleased)
+## 7.18.0-beta.1 (2024-05-08)
 
 ### Features Added
 
-### Breaking Changes
+- `ServiceBusReceiver` now supports the ability to delete all messages from an entity using the `PurgeMessagesAsync` method.  Callers may optionally request to limit the target messages to those earlier than a given date.
+
+- `ServiceBusReceiver` now supports the ability to delete messages from an entity in batches using the `DeleteMessagesAsync` method.  The messages selected for deletion will be the oldest in the entity, based on the enqueued date and callers may optionally request to limit them to only those earlier than a given date.
 
 ### Bugs Fixed
 
 - Fixed issue where the `SupportOrdering` property was not being respected when set on `CreateTopicOptions`.
-
-### Other Changes
 
 ## 7.17.5 (2024-04-09)
 
