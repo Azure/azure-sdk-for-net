@@ -8,7 +8,7 @@ This library replaces the package [Microsoft.Azure.CognitiveServices.Vision.Face
 This package's [documentation](README.md) and [samples](samples/README.md) demonstrate the new API.
 
 - This library supports only the Azure AI Face v1.1-preview.1 API.
-- The nampespace/package name for Azure AI Face has changed from `Microsoft.Azure.CognitiveServices.Vision.Face` to `Azure.AI.Vision.Face`.
+- The namespace/package name for Azure AI Face has changed from `Microsoft.Azure.CognitiveServices.Vision.Face` to `Azure.AI.Vision.Face`.
 
 ### Features Added
 
