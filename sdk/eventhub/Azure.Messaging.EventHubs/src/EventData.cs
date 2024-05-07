@@ -284,14 +284,27 @@ namespace Azure.Messaging.EventHubs
         public long SequenceNumber => _amqpMessage.GetSequenceNumber(long.MinValue);
 
         /// <summary>
-        ///   The offset of the event when it was received from the associated Event Hub partition.
+        ///   The sequence number assigned to the event when it was enqueued in the associated Event Hub partition.
         /// </summary>
         ///
         /// <value>
         ///   This value is read-only and will only be populated for events that have been read from Event Hubs. The default value
-        ///   when not populated is <see cref="long.MinValue"/>.
+        ///   when not populated is the string value of <see cref="long.MinValue"/>.
         /// </value>
         ///
+        public string GlobalOffset => _amqpMessage.GetGlobalOffset(long.MinValue.ToString());
+
+        /// <summary>
+        ///   The Event Hubs service no longer allows offsets with a numeric value. Use <see cref="GlobalOffset"/> instead. This
+        ///   property is populated with <see cref="SequenceNumber"/> to avoid breaking existing code that uses only offset properties.
+        /// </summary>
+        ///
+        /// <value>
+        ///   This value is read-only and will only be populated for events that have been read from Event Hubs. The default value
+        ///   when not populated is <see cref="long.MinValue"/>
+        /// </value>
+        ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public long Offset
         {
             get
@@ -393,6 +406,7 @@ namespace Azure.Messaging.EventHubs
         ///   populated is <c>null</c>.
         /// </value>
         ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
         internal long? LastPartitionOffset
         {
             get

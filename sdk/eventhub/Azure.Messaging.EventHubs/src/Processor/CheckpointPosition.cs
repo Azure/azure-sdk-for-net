@@ -22,6 +22,12 @@ namespace Azure.Messaging.EventHubs.Processor
         public long SequenceNumber { get; }
 
         /// <summary>
+        ///   The sequence number to associate with the checkpoint. This indicates that a processor should begin reading from the next event in the stream.
+        /// </summary>
+        ///
+        public string GlobalOffset { get; }
+
+        /// <summary>
         ///   Initializes a new instance of the <see cref="CheckpointPosition"/> struct.
         /// </summary>
         ///
@@ -30,6 +36,17 @@ namespace Azure.Messaging.EventHubs.Processor
         public CheckpointPosition(long sequenceNumber)
         {
             SequenceNumber = sequenceNumber;
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="CheckpointPosition"/> struct.
+        /// </summary>
+        ///
+        /// <param name="globalOffset">The global offset to associate with the checkpoint. This indicates that a processor should begin reading from the next event in the stream.</param>
+        ///
+        public CheckpointPosition(string globalOffset)
+        {
+            GlobalOffset = globalOffset;
         }
 
         /// <summary>

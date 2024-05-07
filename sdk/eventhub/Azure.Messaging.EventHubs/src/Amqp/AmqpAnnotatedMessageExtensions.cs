@@ -188,13 +188,13 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         /// <returns>The offset, if represented in the <paramref name="instance"/>; otherwise, <paramref name="defaultValue"/>.</returns>
         ///
-        public static long GetOffset(this AmqpAnnotatedMessage instance,
-                                     long defaultValue = long.MinValue)
+        public static string GetGlobalOffset(this AmqpAnnotatedMessage instance,
+                                       string defaultValue = default)
         {
             if ((instance.HasSection(AmqpMessageSection.MessageAnnotations))
                 && (instance.MessageAnnotations.TryGetValue(AmqpProperty.Offset.ToString(), out var value)))
             {
-                return (long)value;
+                return (string)value;
             }
 
             return defaultValue;
