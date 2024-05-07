@@ -96,6 +96,27 @@ public class ServerSentEventReaderTests
     }
 
     [Test]
+    public async Task ConcatenatesDataLines()
+    {
+        Stream contentStream = BinaryData.FromString("""
+            data: YHOO
+            data: +2
+            data: 10
+
+
+            """).ToStream();
+        using ServerSentEventReader reader = new(contentStream);
+
+        ServerSentEvent? sse = await reader.TryGetNextEventAsync();
+
+        Assert.IsNotNull(sse);
+        Assert.AreEqual(sse.Value.EventName.Length, 0);
+        Assert.IsTrue(sse.Value.Data.Span.SequenceEqual("YHOO\n+2\n10".AsSpan()));
+        Assert.AreEqual(sse.Value.LastEventId.Length, 0);
+        Assert.IsNull(sse.Value.ReconnectionTime);
+    }
+
+    [Test]
     public void ThrowsIfCancelled()
     {
         CancellationToken token = new(true);

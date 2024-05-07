@@ -38,7 +38,6 @@ internal class AsyncSseDataEventCollection : AsyncResultCollection<BinaryData>
         private AsyncServerSentEventEnumerator? _events;
         private BinaryData? _current;
 
-        // TODO: is null supression the correct pattern here?
         public BinaryData Current { get => _current!; }
 
         public AsyncSseDataEventEnumerator(Stream contentStream, string terminalEvent, CancellationToken cancellationToken)

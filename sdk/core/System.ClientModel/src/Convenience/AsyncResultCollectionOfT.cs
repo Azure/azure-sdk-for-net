@@ -25,7 +25,6 @@ public abstract class AsyncResultCollection<T> : ClientResult, IAsyncEnumerable<
     {
     }
 
-    // TODO: terminal event can be a model type as well ... are we happy using string for now and adding an overload if needed later?
     public static AsyncResultCollection<BinaryData> Create(PipelineResponse response, string terminalEvent)
     {
         Argument.AssertNotNull(response, nameof(response));
@@ -39,5 +38,8 @@ public abstract class AsyncResultCollection<T> : ClientResult, IAsyncEnumerable<
     }
 
     public abstract IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = default);
+
+    // TODO: what input does it take?
+    //public virtual bool CloseStream() { }
 }
 #pragma warning restore CS1591 // public XML comments

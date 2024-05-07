@@ -14,8 +14,9 @@ internal sealed class AsyncServerSentEventEnumerator : IAsyncEnumerator<ServerSe
     private readonly CancellationToken _cancellationToken;
 
     private ServerSentEventReader? _reader;
+    private ServerSentEvent _current;
 
-    public ServerSentEvent Current { get; private set; }
+    public ServerSentEvent Current => _current;
 
     public AsyncServerSentEventEnumerator(Stream contentStream, string terminalEvent, CancellationToken cancellationToken = default)
     {
@@ -32,14 +33,16 @@ internal sealed class AsyncServerSentEventEnumerator : IAsyncEnumerator<ServerSe
         }
 
         ServerSentEvent? nextEvent = await _reader.TryGetNextEventAsync(_cancellationToken).ConfigureAwait(false);
+
         if (nextEvent.HasValue)
         {
             if (nextEvent.Value.Data.Span.SequenceEqual(_terminalEvent.Span))
             {
+                _current = default;
                 return false;
             }
 
-            Current = nextEvent.Value;
+            _current = nextEvent.Value;
             return true;
         }
 
