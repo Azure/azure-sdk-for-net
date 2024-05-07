@@ -3497,7 +3497,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="ruleCollections">
         /// Group of Firewall Policy rule collections.
         /// Please note <see cref="FirewallPolicyRuleCollectionInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FirewallPolicyFilterRuleCollectionInfo"/> and <see cref="FirewallPolicyNatRuleCollectionInfo"/>.
+        /// The available derived classes include <see cref="FirewallPolicyNatRuleCollectionInfo"/> and <see cref="FirewallPolicyFilterRuleCollectionInfo"/>.
         /// </param>
         /// <param name="provisioningState"> The provisioning state of the firewall policy rule collection group resource. </param>
         /// <returns> A new <see cref="Network.FirewallPolicyRuleCollectionGroupData"/> instance for mocking. </returns>
@@ -3618,7 +3618,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="ruleCollections">
         /// Group of Firewall Policy rule collections.
         /// Please note <see cref="FirewallPolicyRuleCollectionInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FirewallPolicyFilterRuleCollectionInfo"/> and <see cref="FirewallPolicyNatRuleCollectionInfo"/>.
+        /// The available derived classes include <see cref="FirewallPolicyNatRuleCollectionInfo"/> and <see cref="FirewallPolicyFilterRuleCollectionInfo"/>.
         /// </param>
         /// <returns> A new <see cref="Network.FirewallPolicyRuleCollectionGroupDraftData"/> instance for mocking. </returns>
         public static FirewallPolicyRuleCollectionGroupDraftData FirewallPolicyRuleCollectionGroupDraftData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, string size = null, int? priority = null, IEnumerable<FirewallPolicyRuleCollectionInfo> ruleCollections = null)
