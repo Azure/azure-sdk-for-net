@@ -90,7 +90,7 @@ namespace Azure.Maps.Search.Tests
         }
 
         [RecordedTest]
-        public void InvalidGetGeocodingBaychTest()
+        public void InvalidGetGeocodingBatchTest()
         {
             var client = CreateClient();
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(

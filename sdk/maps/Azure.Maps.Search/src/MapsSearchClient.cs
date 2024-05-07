@@ -285,7 +285,7 @@ namespace Azure.Maps.Search
         /// <exception cref="ArgumentNullException"> <paramref name="geocodingBatchRequestBody"/> is null. </exception>
         public virtual Response<GeocodingBatchResponse> GetGeocodingBatch(GeocodingBatchRequestBody geocodingBatchRequestBody, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.GetGeocoding");
+            using var scope = _clientDiagnostics.CreateScope("MapsSearchClient.GetGeocodingBatch");
             scope.Start();
             try
             {
