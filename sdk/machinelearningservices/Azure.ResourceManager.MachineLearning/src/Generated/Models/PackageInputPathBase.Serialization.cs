@@ -71,8 +71,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 switch (discriminator.GetString())
                 {
                     case "PathId": return PackageInputPathId.DeserializePackageInputPathId(element, options);
-                    case "PathVersion": return PackageInputPathVersion.DeserializePackageInputPathVersion(element, options);
                     case "Url": return PackageInputPathUri.DeserializePackageInputPathUri(element, options);
+                    case "PathVersion": return PackageInputPathVersion.DeserializePackageInputPathVersion(element, options);
                 }
             }
             return UnknownPackageInputPathBase.DeserializeUnknownPackageInputPathBase(element, options);

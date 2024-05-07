@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary>
     /// Base class for Content Key Policy restrictions. A derived class must be used to create a restriction.
     /// Please note <see cref="ContentKeyPolicyRestriction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="ContentKeyPolicyOpenRestriction"/>, <see cref="ContentKeyPolicyTokenRestriction"/> and <see cref="ContentKeyPolicyUnknownRestriction"/>.
+    /// The available derived classes include <see cref="ContentKeyPolicyOpenRestriction"/>, <see cref="ContentKeyPolicyUnknownRestriction"/> and <see cref="ContentKeyPolicyTokenRestriction"/>.
     /// </summary>
     public abstract partial class ContentKeyPolicyRestriction
     {

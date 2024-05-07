@@ -71,8 +71,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 switch (discriminator.GetString())
                 {
                     case "AKS": return MachineLearningAksComputeSecrets.DeserializeMachineLearningAksComputeSecrets(element, options);
-                    case "Databricks": return MachineLearningDatabricksComputeSecrets.DeserializeMachineLearningDatabricksComputeSecrets(element, options);
                     case "VirtualMachine": return MachineLearningVirtualMachineSecrets.DeserializeMachineLearningVirtualMachineSecrets(element, options);
+                    case "Databricks": return MachineLearningDatabricksComputeSecrets.DeserializeMachineLearningDatabricksComputeSecrets(element, options);
                 }
             }
             return UnknownComputeSecrets.DeserializeUnknownComputeSecrets(element, options);

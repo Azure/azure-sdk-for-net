@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="configuration">
         /// The key delivery configuration.
         /// Please note <see cref="ContentKeyPolicyConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ContentKeyPolicyClearKeyConfiguration"/>, <see cref="ContentKeyPolicyFairPlayConfiguration"/>, <see cref="ContentKeyPolicyPlayReadyConfiguration"/>, <see cref="ContentKeyPolicyUnknownConfiguration"/> and <see cref="ContentKeyPolicyWidevineConfiguration"/>.
+        /// The available derived classes include <see cref="ContentKeyPolicyClearKeyConfiguration"/>, <see cref="ContentKeyPolicyUnknownConfiguration"/>, <see cref="ContentKeyPolicyWidevineConfiguration"/>, <see cref="ContentKeyPolicyPlayReadyConfiguration"/> and <see cref="ContentKeyPolicyFairPlayConfiguration"/>.
         /// </param>
         /// <param name="restriction">
         /// The requirements that must be met to deliver keys with this configuration
         /// Please note <see cref="ContentKeyPolicyRestriction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ContentKeyPolicyOpenRestriction"/>, <see cref="ContentKeyPolicyTokenRestriction"/> and <see cref="ContentKeyPolicyUnknownRestriction"/>.
+        /// The available derived classes include <see cref="ContentKeyPolicyOpenRestriction"/>, <see cref="ContentKeyPolicyUnknownRestriction"/> and <see cref="ContentKeyPolicyTokenRestriction"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="configuration"/> or <paramref name="restriction"/> is null. </exception>
         public ContentKeyPolicyOption(ContentKeyPolicyConfiguration configuration, ContentKeyPolicyRestriction restriction)
@@ -72,12 +72,12 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="configuration">
         /// The key delivery configuration.
         /// Please note <see cref="ContentKeyPolicyConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ContentKeyPolicyClearKeyConfiguration"/>, <see cref="ContentKeyPolicyFairPlayConfiguration"/>, <see cref="ContentKeyPolicyPlayReadyConfiguration"/>, <see cref="ContentKeyPolicyUnknownConfiguration"/> and <see cref="ContentKeyPolicyWidevineConfiguration"/>.
+        /// The available derived classes include <see cref="ContentKeyPolicyClearKeyConfiguration"/>, <see cref="ContentKeyPolicyUnknownConfiguration"/>, <see cref="ContentKeyPolicyWidevineConfiguration"/>, <see cref="ContentKeyPolicyPlayReadyConfiguration"/> and <see cref="ContentKeyPolicyFairPlayConfiguration"/>.
         /// </param>
         /// <param name="restriction">
         /// The requirements that must be met to deliver keys with this configuration
         /// Please note <see cref="ContentKeyPolicyRestriction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ContentKeyPolicyOpenRestriction"/>, <see cref="ContentKeyPolicyTokenRestriction"/> and <see cref="ContentKeyPolicyUnknownRestriction"/>.
+        /// The available derived classes include <see cref="ContentKeyPolicyOpenRestriction"/>, <see cref="ContentKeyPolicyUnknownRestriction"/> and <see cref="ContentKeyPolicyTokenRestriction"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ContentKeyPolicyOption(Guid? policyOptionId, string name, ContentKeyPolicyConfiguration configuration, ContentKeyPolicyRestriction restriction, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -101,13 +101,13 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary>
         /// The key delivery configuration.
         /// Please note <see cref="ContentKeyPolicyConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ContentKeyPolicyClearKeyConfiguration"/>, <see cref="ContentKeyPolicyFairPlayConfiguration"/>, <see cref="ContentKeyPolicyPlayReadyConfiguration"/>, <see cref="ContentKeyPolicyUnknownConfiguration"/> and <see cref="ContentKeyPolicyWidevineConfiguration"/>.
+        /// The available derived classes include <see cref="ContentKeyPolicyClearKeyConfiguration"/>, <see cref="ContentKeyPolicyUnknownConfiguration"/>, <see cref="ContentKeyPolicyWidevineConfiguration"/>, <see cref="ContentKeyPolicyPlayReadyConfiguration"/> and <see cref="ContentKeyPolicyFairPlayConfiguration"/>.
         /// </summary>
         public ContentKeyPolicyConfiguration Configuration { get; set; }
         /// <summary>
         /// The requirements that must be met to deliver keys with this configuration
         /// Please note <see cref="ContentKeyPolicyRestriction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ContentKeyPolicyOpenRestriction"/>, <see cref="ContentKeyPolicyTokenRestriction"/> and <see cref="ContentKeyPolicyUnknownRestriction"/>.
+        /// The available derived classes include <see cref="ContentKeyPolicyOpenRestriction"/>, <see cref="ContentKeyPolicyUnknownRestriction"/> and <see cref="ContentKeyPolicyTokenRestriction"/>.
         /// </summary>
         public ContentKeyPolicyRestriction Restriction { get; set; }
     }

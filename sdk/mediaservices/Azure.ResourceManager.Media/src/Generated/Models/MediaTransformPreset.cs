@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary>
     /// Base type for all Presets, which define the recipe or instructions on how the input media files should be processed.
     /// Please note <see cref="MediaTransformPreset"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AudioAnalyzerPreset"/>, <see cref="BuiltInStandardEncoderPreset"/>, <see cref="StandardEncoderPreset"/> and <see cref="VideoAnalyzerPreset"/>.
+    /// The available derived classes include <see cref="VideoAnalyzerPreset"/>, <see cref="AudioAnalyzerPreset"/>, <see cref="BuiltInStandardEncoderPreset"/> and <see cref="StandardEncoderPreset"/>.
     /// </summary>
     public abstract partial class MediaTransformPreset
     {
