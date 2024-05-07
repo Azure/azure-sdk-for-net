@@ -82,7 +82,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(properties.IsEmpty, Is.EqualTo(isEmpty), "The `is empty` flag should have been set.");
             Assert.That(properties.BeginningSequenceNumber, Is.EqualTo(beginningSequenceNumber), "The beginning sequence number should have been set.");
             Assert.That(properties.LastEnqueuedSequenceNumber, Is.EqualTo(lastSequenceNumber), "The last sequence number should have been set.");
-            Assert.That(properties.LastEnqueuedOffset, Is.EqualTo(lastOffset), "The last offset should have been set.");
+            Assert.That(properties.LastEnqueuedOffset, Is.EqualTo(lastSequenceNumber), "The last offset should have been set to the same value as the last sequence number.");
             Assert.That(properties.LastEnqueuedTime, Is.EqualTo(lastEnqueuedTime), "The last enqueue date/time should have been set.");
         }
 
