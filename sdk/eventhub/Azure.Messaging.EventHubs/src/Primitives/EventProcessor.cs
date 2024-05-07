@@ -210,7 +210,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///    The properties associated with the Event Hub being read from. This value is updated in each load balancing cycle.
         /// </summary>
         ///
-        protected EventHubProperties Properties { get; private set; }
+        protected EventHubProperties EventHubProperties { get; private set; }
 
         /// <summary>
         ///   Indicates whether or not this event processor should instrument batch event processing calls with distributed tracing.
