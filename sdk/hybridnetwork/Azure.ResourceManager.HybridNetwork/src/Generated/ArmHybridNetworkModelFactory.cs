@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="properties">
         /// Hybrid configuration group value properties.
         /// Please note <see cref="Models.ConfigurationGroupValuePropertiesFormat"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.ConfigurationValueWithoutSecrets"/> and <see cref="Models.ConfigurationValueWithSecrets"/>.
+        /// The available derived classes include <see cref="Models.ConfigurationValueWithSecrets"/> and <see cref="Models.ConfigurationValueWithoutSecrets"/>.
         /// </param>
         /// <returns> A new <see cref="HybridNetwork.ConfigurationGroupValueData"/> instance for mocking. </returns>
         public static ConfigurationGroupValueData ConfigurationGroupValueData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ConfigurationGroupValuePropertiesFormat properties = null)
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="configurationGroupSchemaResourceReference">
         /// The configuration group schema resource reference.
         /// Please note <see cref="DeploymentResourceIdReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="OpenDeploymentResourceReference"/> and <see cref="SecretDeploymentResourceReference"/>.
+        /// The available derived classes include <see cref="SecretDeploymentResourceReference"/> and <see cref="OpenDeploymentResourceReference"/>.
         /// </param>
         /// <param name="configurationType"> The value which indicates if configuration values are secrets. </param>
         /// <returns> A new <see cref="Models.ConfigurationGroupValuePropertiesFormat"/> instance for mocking. </returns>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="properties">
         /// Network function properties.
         /// Please note <see cref="Models.NetworkFunctionPropertiesFormat"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.NetworkFunctionValueWithoutSecrets"/> and <see cref="Models.NetworkFunctionValueWithSecrets"/>.
+        /// The available derived classes include <see cref="Models.NetworkFunctionValueWithSecrets"/> and <see cref="Models.NetworkFunctionValueWithoutSecrets"/>.
         /// </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="identity"> The managed identity of the network function. </param>
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="networkFunctionDefinitionVersionResourceReference">
         /// The network function definition version resource reference.
         /// Please note <see cref="DeploymentResourceIdReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="OpenDeploymentResourceReference"/> and <see cref="SecretDeploymentResourceReference"/>.
+        /// The available derived classes include <see cref="SecretDeploymentResourceReference"/> and <see cref="OpenDeploymentResourceReference"/>.
         /// </param>
         /// <param name="nfviType"> The nfvi type for the network function. </param>
         /// <param name="nfviId"> The nfviId for the network function. </param>
@@ -713,7 +713,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="nfvis">
         /// List of NFVIs
         /// Please note <see cref="NFVIs"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureArcK8SClusterNfviDetails"/>, <see cref="AzureCoreNfviDetails"/> and <see cref="AzureOperatorNexusClusterNfviDetails"/>.
+        /// The available derived classes include <see cref="AzureCoreNfviDetails"/>, <see cref="AzureArcK8SClusterNfviDetails"/> and <see cref="AzureOperatorNexusClusterNfviDetails"/>.
         /// </param>
         /// <param name="siteNetworkServiceReferences"> The list of site network services on the site. </param>
         /// <returns> A new <see cref="Models.SitePropertiesFormat"/> instance for mocking. </returns>
@@ -765,7 +765,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="networkServiceDesignVersionResourceReference">
         /// The network service design version resource reference.
         /// Please note <see cref="DeploymentResourceIdReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="OpenDeploymentResourceReference"/> and <see cref="SecretDeploymentResourceReference"/>.
+        /// The available derived classes include <see cref="SecretDeploymentResourceReference"/> and <see cref="OpenDeploymentResourceReference"/>.
         /// </param>
         /// <param name="desiredStateConfigurationGroupValueReferences"> The goal state of the site network service resource. This has references to the configuration group value objects that describe the desired state of the site network service. </param>
         /// <param name="lastStateNetworkServiceDesignVersionName"> The network service design version for the site network service. </param>
@@ -852,7 +852,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="configurationGroupSchemaResourceReference">
         /// The configuration group schema resource reference.
         /// Please note <see cref="DeploymentResourceIdReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="OpenDeploymentResourceReference"/> and <see cref="SecretDeploymentResourceReference"/>.
+        /// The available derived classes include <see cref="SecretDeploymentResourceReference"/> and <see cref="OpenDeploymentResourceReference"/>.
         /// </param>
         /// <param name="secretConfigurationValue"> Name and value pairs that define the configuration value secrets. It can be a well formed escaped JSON string. </param>
         /// <returns> A new <see cref="Models.ConfigurationValueWithSecrets"/> instance for mocking. </returns>
@@ -879,7 +879,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="configurationGroupSchemaResourceReference">
         /// The configuration group schema resource reference.
         /// Please note <see cref="DeploymentResourceIdReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="OpenDeploymentResourceReference"/> and <see cref="SecretDeploymentResourceReference"/>.
+        /// The available derived classes include <see cref="SecretDeploymentResourceReference"/> and <see cref="OpenDeploymentResourceReference"/>.
         /// </param>
         /// <param name="configurationValue"> Name and value pairs that define the configuration value. It can be a well formed escaped JSON string. </param>
         /// <returns> A new <see cref="Models.ConfigurationValueWithoutSecrets"/> instance for mocking. </returns>
@@ -907,7 +907,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="networkFunctionDefinitionVersionResourceReference">
         /// The network function definition version resource reference.
         /// Please note <see cref="DeploymentResourceIdReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="OpenDeploymentResourceReference"/> and <see cref="SecretDeploymentResourceReference"/>.
+        /// The available derived classes include <see cref="SecretDeploymentResourceReference"/> and <see cref="OpenDeploymentResourceReference"/>.
         /// </param>
         /// <param name="nfviType"> The nfvi type for the network function. </param>
         /// <param name="nfviId"> The nfviId for the network function. </param>
@@ -946,7 +946,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="networkFunctionDefinitionVersionResourceReference">
         /// The network function definition version resource reference.
         /// Please note <see cref="DeploymentResourceIdReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="OpenDeploymentResourceReference"/> and <see cref="SecretDeploymentResourceReference"/>.
+        /// The available derived classes include <see cref="SecretDeploymentResourceReference"/> and <see cref="OpenDeploymentResourceReference"/>.
         /// </param>
         /// <param name="nfviType"> The nfvi type for the network function. </param>
         /// <param name="nfviId"> The nfviId for the network function. </param>

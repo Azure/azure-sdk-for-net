@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary>
     /// Network function properties.
     /// Please note <see cref="NetworkFunctionPropertiesFormat"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="NetworkFunctionValueWithoutSecrets"/> and <see cref="NetworkFunctionValueWithSecrets"/>.
+    /// The available derived classes include <see cref="NetworkFunctionValueWithSecrets"/> and <see cref="NetworkFunctionValueWithoutSecrets"/>.
     /// </summary>
     public abstract partial class NetworkFunctionPropertiesFormat
     {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="networkFunctionDefinitionVersionResourceReference">
         /// The network function definition version resource reference.
         /// Please note <see cref="DeploymentResourceIdReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="OpenDeploymentResourceReference"/> and <see cref="SecretDeploymentResourceReference"/>.
+        /// The available derived classes include <see cref="SecretDeploymentResourceReference"/> and <see cref="OpenDeploymentResourceReference"/>.
         /// </param>
         /// <param name="nfviType"> The nfvi type for the network function. </param>
         /// <param name="nfviId"> The nfviId for the network function. </param>
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <summary>
         /// The network function definition version resource reference.
         /// Please note <see cref="DeploymentResourceIdReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="OpenDeploymentResourceReference"/> and <see cref="SecretDeploymentResourceReference"/>.
+        /// The available derived classes include <see cref="SecretDeploymentResourceReference"/> and <see cref="OpenDeploymentResourceReference"/>.
         /// </summary>
         public DeploymentResourceIdReference NetworkFunctionDefinitionVersionResourceReference { get; set; }
         /// <summary> The nfvi type for the network function. </summary>
