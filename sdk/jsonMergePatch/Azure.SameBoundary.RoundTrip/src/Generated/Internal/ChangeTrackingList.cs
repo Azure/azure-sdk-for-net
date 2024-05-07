@@ -18,7 +18,7 @@ namespace Azure.SameBoundary.RoundTrip
         private bool _isChanged;
         private bool _wasCleared;
 
-        public bool IsChanged() => _isChanged;
+        public bool IsChanged => _isChanged;
         public bool WasCleared() => _wasCleared;
 
         public ChangeTrackingList()

@@ -233,7 +233,7 @@ namespace Azure.SameBoundary.RoundTrip
                     // [Patch] Case 1: dictionary["a"] = null;
                     // [Patch] Case 2: dictionary["a"] = <T>;
                     // [Patch] Case 3: dictionary["a"] is <T> and <T> is changed.
-                    if (((ChangeTrackingDictionary<string, T>)dictionary).IsChanged(item.Key) || (additionalItemChangeCheck != null && additionalItemChangeCheck(item.Value)))
+                    if (((ChangeTrackingDictionary<string, T>)dictionary).IsKeyChanged(item.Key) || (additionalItemChangeCheck != null && additionalItemChangeCheck(item.Value)))
                     {
                         if (!propertyNameWritten)
                         {
@@ -288,7 +288,7 @@ namespace Azure.SameBoundary.RoundTrip
                 writer.WritePropertyName(propertyName);
                 writer.WriteNullValue();
             }
-            else if (list is not ChangeTrackingList<T> || ((ChangeTrackingList<T>)list).IsChanged() || (additionalItemChangeCheck != null && list.Any(item => additionalItemChangeCheck(item))))
+            else if (list is not ChangeTrackingList<T> || ((ChangeTrackingList<T>)list).IsChanged || (additionalItemChangeCheck != null && list.Any(item => additionalItemChangeCheck(item))))
             {
                 writer.WritePropertyName(propertyName);
                 writer.WriteStartArray();

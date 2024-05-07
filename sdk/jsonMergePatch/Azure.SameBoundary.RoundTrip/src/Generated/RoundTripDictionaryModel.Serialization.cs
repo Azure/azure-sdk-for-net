@@ -46,16 +46,16 @@ namespace Azure.SameBoundary.RoundTrip
             ModelSerializationExtensions.WritePatchDictionary(writer, "optionalIntDictionary"u8, OptionalIntDictionary, (item) => writer.WriteNumberValue(item.Value));
             ModelSerializationExtensions.WritePatchDictionary(writer, "requiredModelDictionary"u8, RequiredModelDictionary,
                 (item) => ((IJsonModel<RoundTripDummy>)item).Write(writer, new ModelReaderWriterOptions("JMP")),
-                (item) => (item != null && item.IsChanged()));
+                (item) => (item != null && item.IsChanged));
             ModelSerializationExtensions.WritePatchDictionary(writer, "optionalModelDictionary"u8, OptionalModelDictionary,
                 (item) => ((IJsonModel<RoundTripDummy>)item).Write(writer, new ModelReaderWriterOptions("JMP")),
-                (item) => (item != null && item.IsChanged()));
+                (item) => (item != null && item.IsChanged));
             ModelSerializationExtensions.WritePatchDictionary2D(writer, "requiredDictionaryDictionary", RequiredDictionaryDictionary,
                 (item) => ((IJsonModel<RoundTripDummy>)item).Write(writer, new ModelReaderWriterOptions("JMP")),
-                (item) => (item != null && item.IsChanged()));
+                (item) => (item != null && item.IsChanged));
             ModelSerializationExtensions.WritePatchDictionary2D(writer, "optionalDictionaryDictionary", OptionalDictionaryDictionary,
                 (item) => ((IJsonModel<RoundTripDummy>)item).Write(writer, new ModelReaderWriterOptions("JMP")),
-                (item) => (item != null && item.IsChanged()));
+                (item) => (item != null && item.IsChanged));
             ModelSerializationExtensions.WritePatchDictionary(writer, "requiredArrayDictionary"u8, RequiredArrayDictionary,
                 (item) =>
                 {
@@ -74,7 +74,7 @@ namespace Azure.SameBoundary.RoundTrip
                     }
                     writer.WriteEndArray();
                 },
-                (item) => ((ChangeTrackingList<RoundTripDummy>)item).IsChanged() || item.Any(item => item?.IsChanged() == true));
+                (item) => ((ChangeTrackingList<RoundTripDummy>)item).IsChanged || item.Any(item => item?.IsChanged == true));
             ModelSerializationExtensions.WritePatchDictionary(writer, "optionalArrayDictionary"u8, OptionalArrayDictionary,
                 (item) =>
                 {
@@ -93,7 +93,7 @@ namespace Azure.SameBoundary.RoundTrip
                     }
                     writer.WriteEndArray();
                 },
-                (item) => ((ChangeTrackingList<RoundTripDummy>)item).IsChanged() || item.Any(item => item?.IsChanged() == true));
+                (item) => ((ChangeTrackingList<RoundTripDummy>)item).IsChanged || item.Any(item => item?.IsChanged == true));
             writer.WriteEndObject();
         }
 

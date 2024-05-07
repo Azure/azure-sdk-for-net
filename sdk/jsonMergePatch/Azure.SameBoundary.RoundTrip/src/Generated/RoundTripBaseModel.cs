@@ -105,14 +105,10 @@ namespace Azure.SameBoundary.RoundTrip
 
         // [Patch] This is to ensure "reading whether the model is changed" is an atomic operation.
         private bool _isChanged = false;
+        internal virtual bool IsChanged => _isChanged;
         // [Patch] `virtual`: so that we can override this method in the derived class.
-        internal virtual bool IsChanged(string name = null)
+        internal virtual bool IsKeyChanged(string name)
         {
-            if (name == null)
-            {
-                return _isChanged;
-            }
-
             switch (name)
             {
                 case nameof(BaseProperty1):

@@ -50,7 +50,7 @@ namespace Azure.SameBoundary.RoundTrip
                     writer.WriteStringValue(ExtendedProperty);
                 }
             }
-            if (IsChanged(nameof(BaseProperty1)))
+            if (IsKeyChanged(nameof(BaseProperty1)))
             {
                 writer.WritePropertyName("baseProperty1"u8);
                 if (BaseProperty1 == null)
@@ -62,7 +62,7 @@ namespace Azure.SameBoundary.RoundTrip
                     writer.WriteStringValue(BaseProperty1);
                 }
             }
-            if (IsChanged(nameof(BaseProperty2)))
+            if (IsKeyChanged(nameof(BaseProperty2)))
             {
                 writer.WritePropertyName("baseProperty2"u8);
                 writer.WriteNumberValue(BaseProperty2);
@@ -78,7 +78,7 @@ namespace Azure.SameBoundary.RoundTrip
                 bool baseProperty3 = false;
                 foreach (var item in BaseProperty3)
                 {
-                    if (((ChangeTrackingDictionary<string, string>)BaseProperty3).IsChanged(item.Key))
+                    if (((ChangeTrackingDictionary<string, string>)BaseProperty3).IsKeyChanged(item.Key))
                     {
                         if (!baseProperty3)
                         {

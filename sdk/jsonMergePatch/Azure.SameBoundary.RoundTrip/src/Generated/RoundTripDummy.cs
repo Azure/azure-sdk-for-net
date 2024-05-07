@@ -74,13 +74,9 @@ namespace Azure.SameBoundary.RoundTrip
         }
 
         private bool _isChanged = false;
-        internal virtual bool IsChanged(string name = null)
+        internal bool IsChanged => _isChanged;
+        internal virtual bool IsKeyChanged(string name)
         {
-            if (name == null)
-            {
-                return _isChanged;
-            }
-
             switch (name)
             {
                 case nameof(Property):

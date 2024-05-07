@@ -38,7 +38,7 @@ namespace Azure.SameBoundary.RoundTrip
         private void WritePatch(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (_requiredModelChanged || RequiredModel.IsChanged())
+            if (_requiredModelChanged || RequiredModel.IsChanged)
             {
                 writer.WritePropertyName("requiredModel"u8);
                 ((IJsonModel<RoundTripDummy>)RequiredModel).Write(writer, options);
@@ -51,7 +51,7 @@ namespace Azure.SameBoundary.RoundTrip
             // Thread 1 reads `OptionalModel.IsChanged()` as true and writes {"optionalModel": {"property": "new"}}
             // Thread 2 writes {"optionalModel": {"property": "new"}} again.
             // Though we write the same payload twice, there is no data corruption.
-            if (_optionalModelChanged || OptionalModel.IsChanged())
+            if (_optionalModelChanged || OptionalModel.IsChanged)
             {
                 writer.WritePropertyName("optionalModel"u8);
                 if (OptionalModel == null)

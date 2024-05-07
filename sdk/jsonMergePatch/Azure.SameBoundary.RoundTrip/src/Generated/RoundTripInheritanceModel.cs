@@ -50,19 +50,16 @@ namespace Azure.SameBoundary.RoundTrip
         }
 
         private bool _isChanged = false;
-        internal override bool IsChanged(string name = null)
-        {
-            if (name == null)
-            {
-                return _isChanged || base.IsChanged();
-            }
+        internal override bool IsChanged => _isChanged || base.IsChanged;
 
+        internal override bool IsKeyChanged(string name)
+        {
             switch (name)
             {
-                case "ExtendedProperty":
+                case nameof(ExtendedProperty):
                     return _extendedPrpertyChanged;
                 default:
-                    return base.IsChanged(name);
+                    return base.IsKeyChanged(name);
             }
         }
     }

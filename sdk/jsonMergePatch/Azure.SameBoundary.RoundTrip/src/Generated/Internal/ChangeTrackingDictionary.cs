@@ -57,14 +57,11 @@ namespace Azure.SameBoundary.RoundTrip
         public IReadOnlyList<TKey> ChangedKeys => _changedKeys;
 
         // [Patch] These two methods are consistent with `IsChanged(TKey key = null)`
-        public bool IsChanged(TKey key)
+        public bool IsKeyChanged(TKey key)
         {
             return EnsureChangedKeys().Contains(key);
         }
-        public bool IsChanged()
-        {
-            return _changedKeys?.Count > 0;
-        }
+        public bool IsChanged => _changedKeys?.Count > 0;
 
         // [Patch] If we choose `_dictionary.Clear()` as delete operation, we need this method, otherwise we don't need it.
         public bool WasCleared()

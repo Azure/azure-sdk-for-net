@@ -45,10 +45,10 @@ namespace Azure.SameBoundary.RoundTrip
             ModelSerializationExtensions.WritePatchList(writer, "optionalIntArray"u8, OptionalIntArray, (item) => writer.WriteNumberValue(item));
             ModelSerializationExtensions.WritePatchList(writer, "requiredModelArray"u8, RequiredModelArray,
                 (item) => ((IJsonModel<RoundTripDummy>)item).Write(writer, new ModelReaderWriterOptions("W")), // [Patch] The format is "W"
-                (item) => item?.IsChanged() == true);
+                (item) => item?.IsChanged == true);
             ModelSerializationExtensions.WritePatchList(writer, "optionalModelArray"u8, OptionalModelArray,
                 (item) => ((IJsonModel<RoundTripDummy>)item).Write(writer, new ModelReaderWriterOptions("W")), // [Patch] The format is "W"
-                (item) => item?.IsChanged() == true);
+                (item) => item?.IsChanged == true);
             ModelSerializationExtensions.WritePatchList(writer, "requiredArrayArray"u8, RequiredArrayArray,
                 (item) =>
                 {
@@ -66,7 +66,7 @@ namespace Azure.SameBoundary.RoundTrip
                     }
                     writer.WriteEndArray();
                 },
-                (item) => item is not ChangeTrackingList<RoundTripDummy> || (item is ChangeTrackingList<RoundTripDummy> trackingItem && (trackingItem.IsChanged() || item.Any(item => item?.IsChanged() == true))));
+                (item) => item is not ChangeTrackingList<RoundTripDummy> || (item is ChangeTrackingList<RoundTripDummy> trackingItem && (trackingItem.IsChanged || item.Any(item => item?.IsChanged == true))));
             ModelSerializationExtensions.WritePatchList(writer, "optionalArrayArray"u8, OptionalArrayArray,
                 (item) =>
                 {
@@ -84,7 +84,7 @@ namespace Azure.SameBoundary.RoundTrip
                     }
                     writer.WriteEndArray();
                 },
-                (item) => item is not ChangeTrackingList<RoundTripDummy> || (item is ChangeTrackingList<RoundTripDummy> trackingItem && (trackingItem.IsChanged() || item.Any(item => item?.IsChanged() == true))));
+                (item) => item is not ChangeTrackingList<RoundTripDummy> || (item is ChangeTrackingList<RoundTripDummy> trackingItem && (trackingItem.IsChanged || item.Any(item => item?.IsChanged == true))));
             ModelSerializationExtensions.WritePatchList(writer, "requiredDictionaryArray"u8, RequiredDictionaryArray,
                 (item) =>
                 {
@@ -103,7 +103,7 @@ namespace Azure.SameBoundary.RoundTrip
                     }
                     writer.WriteEndObject();
                 },
-                (item) => item is not ChangeTrackingDictionary<string, RoundTripDummy> || (item is ChangeTrackingDictionary<string, RoundTripDummy> trackingItem && (trackingItem.IsChanged() || item.Any(item => item.Value?.IsChanged() == true))));
+                (item) => item is not ChangeTrackingDictionary<string, RoundTripDummy> || (item is ChangeTrackingDictionary<string, RoundTripDummy> trackingItem && (trackingItem.IsChanged || item.Any(item => item.Value?.IsChanged == true))));
             ModelSerializationExtensions.WritePatchList(writer, "optionalDictionaryArray"u8, OptionalDictionaryArray,
                 (item) =>
                 {
@@ -122,7 +122,7 @@ namespace Azure.SameBoundary.RoundTrip
                     }
                     writer.WriteEndObject();
                 },
-                (item) => item is not ChangeTrackingDictionary<string, RoundTripDummy> || (item is ChangeTrackingDictionary<string, RoundTripDummy> trackingItem && (trackingItem.IsChanged() || item.Any(item => item.Value?.IsChanged() == true))));
+                (item) => item is not ChangeTrackingDictionary<string, RoundTripDummy> || (item is ChangeTrackingDictionary<string, RoundTripDummy> trackingItem && (trackingItem.IsChanged || item.Any(item => item.Value?.IsChanged == true))));
 
             writer.WriteEndObject();
         }
