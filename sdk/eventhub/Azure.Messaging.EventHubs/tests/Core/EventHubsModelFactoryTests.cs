@@ -123,7 +123,9 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(properties, Is.Not.Null, "The properties should have been created.");
             Assert.That(properties.SequenceNumber, Is.EqualTo(lastSequence), "The sequence number should have been set.");
-            Assert.That(properties.Offset, Is.EqualTo(lastOffset), "The offset should have been set.");
+
+            // The offset is intentionally mapped to sequence number.
+            Assert.That(properties.Offset, Is.EqualTo(lastSequence), "The offset should have been set.");
             Assert.That(properties.EnqueuedTime, Is.EqualTo(lastEnqueued), "The enqueued date/time should have been set.");
             Assert.That(properties.LastReceivedTime, Is.EqualTo(lastReceived), "The last received date/time should have been set.");
         }
