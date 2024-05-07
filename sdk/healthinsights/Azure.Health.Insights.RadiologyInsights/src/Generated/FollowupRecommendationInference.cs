@@ -28,7 +28,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         {
             Argument.AssertNotNull(recommendedProcedure, nameof(recommendedProcedure));
 
-            Kind = "followupRecommendation";
+            Kind = RadiologyInsightsInferenceType.FollowupRecommendation;
             Findings = new ChangeTrackingList<RecommendationFinding>();
             IsConditional = isConditional;
             IsOption = isOption;
@@ -53,7 +53,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// Please note <see cref="ProcedureRecommendation"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="GenericProcedureRecommendation"/> and <see cref="ImagingProcedureRecommendation"/>.
         /// </param>
-        internal FollowupRecommendationInference(string kind, IReadOnlyList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, string effectiveDateTime, FhirR4Period effectivePeriod, IReadOnlyList<RecommendationFinding> findings, bool isConditional, bool isOption, bool isGuideline, bool isHedging, ProcedureRecommendation recommendedProcedure) : base(kind, extension, serializedAdditionalRawData)
+        internal FollowupRecommendationInference(RadiologyInsightsInferenceType kind, IReadOnlyList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, string effectiveDateTime, FhirR4Period effectivePeriod, IReadOnlyList<RecommendationFinding> findings, bool isConditional, bool isOption, bool isGuideline, bool isHedging, ProcedureRecommendation recommendedProcedure) : base(kind, extension, serializedAdditionalRawData)
         {
             EffectiveDateTime = effectiveDateTime;
             EffectivePeriod = effectivePeriod;
