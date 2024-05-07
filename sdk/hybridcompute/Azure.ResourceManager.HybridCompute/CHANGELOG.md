@@ -1,5 +1,11 @@
 # Release History
 
+## 1.0.0-beta.9 (2024-05-07)
+
+### Bugs Fixed
+
+- Fix format type of ESU license status
+
 ## 1.0.0-beta.8 (Unreleased)
 
 ### Features Added

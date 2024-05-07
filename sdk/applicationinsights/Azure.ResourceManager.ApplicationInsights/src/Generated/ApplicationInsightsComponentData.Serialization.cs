@@ -252,9 +252,9 @@ namespace Azure.ResourceManager.ApplicationInsights
             string applicationId = default;
             string appId = default;
             string name0 = default;
-            ApplicationType? applicationType = default;
-            FlowType? flowType = default;
-            RequestSource? requestSource = default;
+            ApplicationInsightsApplicationType? applicationType = default;
+            ComponentFlowType? flowType = default;
+            ComponentRequestSource? requestSource = default;
             string instrumentationKey = default;
             DateTimeOffset? creationDate = default;
             Guid? tenantId = default;
@@ -266,12 +266,12 @@ namespace Azure.ResourceManager.ApplicationInsights
             int? retentionInDays = default;
             bool? disableIPMasking = default;
             bool? immediatePurgeDataOn30Days = default;
-            string workspaceResourceId = default;
+            ResourceIdentifier workspaceResourceId = default;
             DateTimeOffset? laMigrationDate = default;
-            IReadOnlyList<PrivateLinkScopedResourceContent> privateLinkScopedResources = default;
-            PublicNetworkAccessType? publicNetworkAccessForIngestion = default;
-            PublicNetworkAccessType? publicNetworkAccessForQuery = default;
-            IngestionMode? ingestionMode = default;
+            IReadOnlyList<PrivateLinkScopedResourceReference> privateLinkScopedResources = default;
+            ApplicationInsightsPublicNetworkAccessType? publicNetworkAccessForIngestion = default;
+            ApplicationInsightsPublicNetworkAccessType? publicNetworkAccessForQuery = default;
+            ComponentIngestionMode? ingestionMode = default;
             bool? disableLocalAuth = default;
             bool? forceCustomerStorageForProfiler = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                             {
                                 continue;
                             }
-                            applicationType = new ApplicationType(property0.Value.GetString());
+                            applicationType = new ApplicationInsightsApplicationType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("Flow_Type"u8))
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                             {
                                 continue;
                             }
-                            flowType = new FlowType(property0.Value.GetString());
+                            flowType = new ComponentFlowType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("Request_Source"u8))
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                             {
                                 continue;
                             }
-                            requestSource = new RequestSource(property0.Value.GetString());
+                            requestSource = new ComponentRequestSource(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("InstrumentationKey"u8))
@@ -467,7 +467,11 @@ namespace Azure.ResourceManager.ApplicationInsights
                         }
                         if (property0.NameEquals("WorkspaceResourceId"u8))
                         {
-                            workspaceResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            workspaceResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("LaMigrationDate"u8))
@@ -485,10 +489,10 @@ namespace Azure.ResourceManager.ApplicationInsights
                             {
                                 continue;
                             }
-                            List<PrivateLinkScopedResourceContent> array = new List<PrivateLinkScopedResourceContent>();
+                            List<PrivateLinkScopedResourceReference> array = new List<PrivateLinkScopedResourceReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PrivateLinkScopedResourceContent.DeserializePrivateLinkScopedResourceContent(item, options));
+                                array.Add(PrivateLinkScopedResourceReference.DeserializePrivateLinkScopedResourceReference(item, options));
                             }
                             privateLinkScopedResources = array;
                             continue;
@@ -499,7 +503,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                             {
                                 continue;
                             }
-                            publicNetworkAccessForIngestion = new PublicNetworkAccessType(property0.Value.GetString());
+                            publicNetworkAccessForIngestion = new ApplicationInsightsPublicNetworkAccessType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("publicNetworkAccessForQuery"u8))
@@ -508,7 +512,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                             {
                                 continue;
                             }
-                            publicNetworkAccessForQuery = new PublicNetworkAccessType(property0.Value.GetString());
+                            publicNetworkAccessForQuery = new ApplicationInsightsPublicNetworkAccessType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("IngestionMode"u8))
@@ -517,7 +521,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                             {
                                 continue;
                             }
-                            ingestionMode = new IngestionMode(property0.Value.GetString());
+                            ingestionMode = new ComponentIngestionMode(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("DisableLocalAuth"u8))
@@ -575,7 +579,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 immediatePurgeDataOn30Days,
                 workspaceResourceId,
                 laMigrationDate,
-                privateLinkScopedResources ?? new ChangeTrackingList<PrivateLinkScopedResourceContent>(),
+                privateLinkScopedResources ?? new ChangeTrackingList<PrivateLinkScopedResourceReference>(),
                 publicNetworkAccessForIngestion,
                 publicNetworkAccessForQuery,
                 ingestionMode,
@@ -1070,15 +1074,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 if (Optional.IsDefined(WorkspaceResourceId))
                 {
                     builder.Append("    WorkspaceResourceId: ");
-                    if (WorkspaceResourceId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{WorkspaceResourceId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{WorkspaceResourceId}'");
-                    }
+                    builder.AppendLine($"'{WorkspaceResourceId.ToString()}'");
                 }
             }
 

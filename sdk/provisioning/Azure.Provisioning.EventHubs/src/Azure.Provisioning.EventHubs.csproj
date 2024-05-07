@@ -4,7 +4,6 @@
     <Description>Azure.Provisioning.EventHubs simplifies declarative resource provisioning in .NET for Azure Event Hubs.</Description>
     <Version>0.1.0</Version>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <NoWarn>$(NoWarn);AZC0001</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
