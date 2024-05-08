@@ -1711,7 +1711,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     mockProcessor.Object.ConsumerGroup,
                     partition.PartitionId,
                     It.IsAny<string>(),
-                    EventPosition.FromOffset(lastEventBatch.Last().Offset, false),
+                    EventPosition.FromGlobalOffset(lastEventBatch.Last().GlobalOffset, false),
                     mockConnection,
                     It.IsAny<EventProcessorOptions>(),
                     It.IsAny<bool>()),
