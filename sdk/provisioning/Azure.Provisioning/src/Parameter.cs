@@ -37,7 +37,7 @@ namespace Azure.Provisioning
         /// <summary>
         /// Gets the type of the parameter.
         /// </summary>
-        public BicepType BicepType { get; }
+        public BicepType ParameterType { get; }
 
         /// <summary>
         /// Gets a value indicating whether the parameter is an expression.
@@ -71,7 +71,7 @@ namespace Azure.Provisioning
             IsSecure = output.IsSecure;
             Value = output.Value;
             Source = output.Source;
-            BicepType = output.BicepType;
+            ParameterType = output.OutputType;
             Output = output;
         }
 
@@ -110,7 +110,7 @@ namespace Azure.Provisioning
         public Parameter(string name, BicepType type = BicepType.String, string? description = default, object? defaultValue = default, bool isSecure = false)
         {
             Name = name;
-            BicepType = type;
+            ParameterType = type;
             Description = description;
             DefaultValue = defaultValue;
             IsSecure = isSecure;

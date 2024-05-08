@@ -73,10 +73,10 @@ namespace Azure.Provisioning
     public partial class Output
     {
         internal Output() { }
-        public Azure.Provisioning.BicepType BicepType { get { throw null; } }
         public bool IsLiteral { get { throw null; } }
         public bool IsSecure { get { throw null; } }
         public string Name { get { throw null; } }
+        public Azure.Provisioning.BicepType OutputType { get { throw null; } }
         public string Value { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -88,12 +88,12 @@ namespace Azure.Provisioning
         public Parameter(string name, Azure.Provisioning.BicepType type = Azure.Provisioning.BicepType.String, string? description = null, object? defaultValue = null, bool isSecure = false) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Parameter(string name, string? description, object? defaultValue, bool isSecure) { throw null; }
-        public Azure.Provisioning.BicepType BicepType { get { throw null; } }
         public object? DefaultValue { get { throw null; } }
         public string? Description { get { throw null; } }
         public bool IsFromOutput { get { throw null; } }
         public bool IsSecure { get { throw null; } }
         public string Name { get { throw null; } }
+        public Azure.Provisioning.BicepType ParameterType { get { throw null; } }
         public Azure.Provisioning.IConstruct? Source { get { throw null; } }
         public string? Value { get { throw null; } }
     }

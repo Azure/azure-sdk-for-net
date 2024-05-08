@@ -190,7 +190,7 @@ namespace Azure.Provisioning
         {
             string value = ReferenceEquals(this, output.Resource.ModuleScope) ? output.Value : $"{output.Resource.ModuleScope!.Name}.outputs.{output.Name}";
 
-            return $"output {output.Name} {output.BicepType.ToString().ToLower()} = {value}";
+            return $"output {output.Name} {output.OutputType.ToString().ToLower()} = {value}";
         }
 
         private void GetAllOutputsRecursive(IConstruct construct, HashSet<Output> visited, bool isChild)
@@ -231,7 +231,7 @@ namespace Azure.Provisioning
 
         private string GetParameterDeclaration(Parameter parameter)
         {
-            string declaration = $"param {parameter.Name} {parameter.BicepType.ToString().ToLower()}";
+            string declaration = $"param {parameter.Name} {parameter.ParameterType.ToString().ToLower()}";
             string value;
 
             if (parameter.DefaultValue is null)
@@ -244,7 +244,7 @@ namespace Azure.Provisioning
             }
             else
             {
-                value = parameter.BicepType switch
+                value = parameter.ParameterType switch
                 {
                     BicepType.Bool => parameter.DefaultValue.ToString()!.ToLower(),
                     BicepType.Int => parameter.DefaultValue.ToString()!,

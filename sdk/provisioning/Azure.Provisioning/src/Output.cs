@@ -30,7 +30,7 @@ namespace Azure.Provisioning
         /// <summary>
         /// Gets the type of the output.
         /// </summary>
-        public BicepType BicepType { get; }
+        public BicepType OutputType { get; }
 
         internal IConstruct Source { get; }
 
@@ -54,7 +54,7 @@ namespace Azure.Provisioning
             IsSecure = isSecure;
             Source = source;
             Resource = resource;
-            BicepType = type;
+            OutputType = type;
         }
     }
 }
