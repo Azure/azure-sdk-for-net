@@ -70,7 +70,7 @@ namespace Azure.Messaging.EventHubs
                                                               long lastSequenceNumber,
                                                               long lastOffset,
                                                               DateTimeOffset lastEnqueuedTime) =>
-            new PartitionProperties(eventHubName, partitionId, isEmpty, beginningSequenceNumber, lastSequenceNumber, string.Empty, lastEnqueuedTime);
+            new PartitionProperties(eventHubName, partitionId, isEmpty, beginningSequenceNumber, lastSequenceNumber, lastOffset, lastEnqueuedTime);
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="Azure.Messaging.EventHubs.PartitionProperties"/> class.
@@ -91,7 +91,7 @@ namespace Azure.Messaging.EventHubs
                                                               long lastSequenceNumber,
                                                               string lastOffset,
                                                               DateTimeOffset lastEnqueuedTime) =>
-            new PartitionProperties(eventHubName, partitionId, isEmpty, beginningSequenceNumber, lastSequenceNumber, lastOffset, lastEnqueuedTime);
+            new(eventHubName, partitionId, isEmpty, beginningSequenceNumber, lastSequenceNumber, lastOffset, lastEnqueuedTime);
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="Azure.Messaging.EventHubs.EventHubProperties"/> class.
@@ -107,7 +107,7 @@ namespace Azure.Messaging.EventHubs
                                                                                     long? producerGroupId,
                                                                                     short? ownerLevel,
                                                                                     int? lastPublishedSequenceNumber) =>
-            new PartitionPublishingProperties(isIdempotentPublishingEnabled, producerGroupId, ownerLevel, lastPublishedSequenceNumber);
+            new(isIdempotentPublishingEnabled, producerGroupId, ownerLevel, lastPublishedSequenceNumber);
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="LastEnqueuedEventProperties"/> class.
@@ -166,21 +166,19 @@ namespace Azure.Messaging.EventHubs
         /// <param name="enqueuedTime">The date and time, in UTC, of when the event was enqueued in the Event Hub partition.</param>
         ///
         /// <remarks>
-        ///   The Event Hubs service no longer uses offsets with numeric values. It is strongly recommended to use the overload,
-        ///   <see cref="EventData(BinaryData, IDictionary{string, object}, IReadOnlyDictionary{string, object}, string, long, string, DateTimeOffset)"/> instead.
-        ///
-        ///   The <paramref name="offset"/> parameter is included for backwards compatibility, but is ignored. Instead, EventData.Offset (TODO) will be
+        ///   The Event Hubs service no longer uses offsets with numeric values. The <paramref name="offset"/> parameter is
+        ///   included for backwards compatibility, but is ignored. Instead, <see cref="EventData.Offset"/> is
         ///   populated with <paramref name="sequenceNumber"/>.
         /// </remarks>
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static EventData EventData(BinaryData eventBody,
-                                          IDictionary<string, object> properties = null,
-                                          IReadOnlyDictionary<string, object> systemProperties = null,
-                                          string partitionKey = null,
-                                          long sequenceNumber = long.MinValue,
-                                          long offset = long.MinValue,
-                                          DateTimeOffset enqueuedTime = default) =>
+                                          IDictionary<string, object> properties,
+                                          IReadOnlyDictionary<string, object> systemProperties,
+                                          string partitionKey,
+                                          long sequenceNumber,
+                                          long offset,
+                                          DateTimeOffset enqueuedTime) =>
              new EventData(eventBody, properties, systemProperties, sequenceNumber, string.Empty, enqueuedTime, partitionKey);
 
         /// <summary>
@@ -192,18 +190,25 @@ namespace Azure.Messaging.EventHubs
         /// <param name="systemProperties">The set of system properties that accompany events read from the Event Hubs service.</param>
         /// <param name="partitionKey">The partition hashing key associated with the event when it was published.</param>
         /// <param name="sequenceNumber">The sequence number assigned to the event when it was enqueued in the associated Event Hub partition.</param>
+        /// <param name="globalOffset">The global offset of the event when it was received from the associated Event Hub partition.</param>
         /// <param name="offset">The offset of the event when it was received from the associated Event Hub partition.</param>
         /// <param name="enqueuedTime">The date and time, in UTC, of when the event was enqueued in the Event Hub partition.</param>
         ///
-        [EditorBrowsable(EditorBrowsableState.Never)]
+        /// <remarks>
+        ///   The Event Hubs service no longer uses offsets with numeric values. The <paramref name="offset"/> parameter is
+        ///   included for backwards compatibility, but is ignored. Instead, <see cref="EventData.Offset"/> is
+        ///   populated with <paramref name="sequenceNumber"/>.
+        /// </remarks>
+        ///
         public static EventData EventData(BinaryData eventBody,
                                           IDictionary<string, object> properties = null,
                                           IReadOnlyDictionary<string, object> systemProperties = null,
                                           string partitionKey = null,
                                           long sequenceNumber = long.MinValue,
-                                          string offset = null,
+                                          string globalOffset = null,
+                                          long offset = long.MinValue,
                                           DateTimeOffset enqueuedTime = default) =>
-             new EventData(eventBody, properties, systemProperties, sequenceNumber, offset, enqueuedTime, partitionKey);
+             new EventData(eventBody, properties, systemProperties, sequenceNumber, globalOffset, enqueuedTime, partitionKey);
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="EventDataBatch" /> class.

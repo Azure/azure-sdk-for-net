@@ -295,8 +295,8 @@ namespace Azure.Messaging.EventHubs
         public string GlobalOffset => _amqpMessage.GetGlobalOffset(long.MinValue.ToString());
 
         /// <summary>
-        ///   The Event Hubs service no longer uses offsets with numeric values. Use <see cref="GlobalOffset"/> instead. This
-        ///   property is populated with <see cref="SequenceNumber"/> to avoid breaking existing code that uses only offset properties.
+        ///   The Event Hubs service no longer uses offsets with numeric values. Use <see cref="EventData.GlobalOffset"/> instead. This
+        ///   property is populated with <see cref="EventData.SequenceNumber"/> to avoid breaking existing code that uses only offset properties.
         /// </summary>
         ///
         /// <value>
@@ -657,7 +657,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <remarks>
         ///   <para>This constructor has been superseded by the
-        ///   <see cref="EventHubsModelFactory.EventData(BinaryData, IDictionary{string, object}, IReadOnlyDictionary{string, object}, string, long, string, DateTimeOffset)" />
+        ///   <see cref="EventHubsModelFactory.EventData(BinaryData, IDictionary{string, object}, IReadOnlyDictionary{string, object}, string, long, string, long, DateTimeOffset)" />
         ///   factory method. It is strongly recommended that the model factory be preferred over use of this constructor.</para>
         ///
         ///   <para>This overload was previously intended for mocking in support of testing efforts.  It is recommended that
@@ -690,7 +690,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <remarks>
         ///   <para>This constructor has been superseded by the
-        ///   <see cref="EventHubsModelFactory.EventData(BinaryData, IDictionary{string, object}, IReadOnlyDictionary{string, object}, string, long, string, DateTimeOffset)" />
+        ///   <see cref="EventHubsModelFactory.EventData(BinaryData, IDictionary{string, object}, IReadOnlyDictionary{string, object}, string, long, string, long, DateTimeOffset)" />
         ///   factory method. It is strongly recommended that the model factory be preferred over use of this constructor.</para>
         ///
         ///   <para>This overload was previously intended for mocking in support of testing efforts.  It is recommended that

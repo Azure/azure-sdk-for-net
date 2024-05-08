@@ -364,7 +364,7 @@ namespace Azure.Messaging.EventHubs.Tests
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var options = new EventProcessorOptions { TrackLastEnqueuedEventProperties = true };
-            var lastEvent = new EventData(new BinaryData(Array.Empty<byte>()), lastPartitionSequenceNumber: 123, lastPartitionOffset: 887, lastPartitionEnqueuedTime: DateTimeOffset.Parse("2015-10-27T12:00:00Z"), lastPartitionPropertiesRetrievalTime: DateTimeOffset.Parse("2021-03-04T08:30:00Z"));
+            var lastEvent = new EventData(new BinaryData(Array.Empty<byte>()), lastPartitionSequenceNumber: 123, lastPartitionGlobalOffset: "887", lastPartitionEnqueuedTime: DateTimeOffset.Parse("2015-10-27T12:00:00Z"), lastPartitionPropertiesRetrievalTime: DateTimeOffset.Parse("2021-03-04T08:30:00Z"));
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var mockConnection = Mock.Of<EventHubConnection>();
             var mockConsumer = new Mock<SettableTransportConsumer>();
@@ -413,7 +413,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var retryOptions = new EventHubsRetryOptions { MaximumRetries = 0, MaximumDelay = TimeSpan.FromMilliseconds(5) };
             var options = new EventProcessorOptions { TrackLastEnqueuedEventProperties = true, RetryOptions = retryOptions };
-            var lastEvent = new EventData(new BinaryData(Array.Empty<byte>()), lastPartitionSequenceNumber: 123, lastPartitionOffset: 887, lastPartitionEnqueuedTime: DateTimeOffset.Parse("2015-10-27T12:00:00Z"), lastPartitionPropertiesRetrievalTime: DateTimeOffset.Parse("2021-03-04T08:30:00Z"));
+            var lastEvent = new EventData(new BinaryData(Array.Empty<byte>()), lastPartitionSequenceNumber: 123, lastPartitionGlobalOffset: "887", lastPartitionEnqueuedTime: DateTimeOffset.Parse("2015-10-27T12:00:00Z"), lastPartitionPropertiesRetrievalTime: DateTimeOffset.Parse("2021-03-04T08:30:00Z"));
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var mockConnection = Mock.Of<EventHubConnection>();
             var mockConsumer = new Mock<SettableTransportConsumer>();

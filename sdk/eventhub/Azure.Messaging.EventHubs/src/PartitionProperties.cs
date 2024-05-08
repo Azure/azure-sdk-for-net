@@ -43,10 +43,13 @@ namespace Azure.Messaging.EventHubs
         public string LastEnqueuedGlobalOffset { get; }
 
         /// <summary>
-        ///   The Event Hubs service no longer uses offsets with numeric values. Use <see cref="LastEnqueuedGlobalOffset"/>
-        ///   instead. This property is populated with <see cref="LastEnqueuedSequenceNumber"/> to avoid breaking existing code that
-        ///   only uses offset properties.
+        ///   WARNING: The Event Hubs service no longer uses offsets with numeric values. Use <see cref="LastEnqueuedGlobalOffset"/>
+        ///   instead.
         /// </summary>
+        ///
+        /// <remarks>
+        ///   This value is be populated with the value of <see cref="LastEnqueuedSequenceNumber"/> for backwards compatibility.
+        /// </remarks>
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
         public long LastEnqueuedOffset { get; }
@@ -64,6 +67,41 @@ namespace Azure.Messaging.EventHubs
         /// <value><c>true</c> if the partition is empty; otherwise, <c>false</c>.</value>
         ///
         public bool IsEmpty { get; }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="PartitionProperties"/> class.
+        /// </summary>
+        ///
+        /// <param name="eventHubName">The name of the Event Hub that contains the partitions.</param>
+        /// <param name="partitionId">The identifier of the partition.</param>
+        /// <param name="isEmpty">Indicates whether or not the partition is currently empty.</param>
+        /// <param name="beginningSequenceNumber">The first sequence number available for events in the partition.</param>
+        /// <param name="lastSequenceNumber">The sequence number observed the last event to be enqueued in the partition.</param>
+        /// <param name="lastOffset">The offset of the last event to be enqueued in the partition.</param>
+        /// <param name="lastEnqueuedTime">The date and time, in UTC, that the last event was enqueued in the partition.</param>
+        ///
+        /// <remarks>
+        ///   WARNING: The Event Hubs service no longer uses offsets with numeric values. Use the
+        ///   <see cref="PartitionProperties(string, string, bool, long, long, string, DateTimeOffset)"/> constructor instead.
+        /// </remarks>
+        ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        protected internal PartitionProperties(string eventHubName,
+                                               string partitionId,
+                                               bool isEmpty,
+                                               long beginningSequenceNumber,
+                                               long lastSequenceNumber,
+                                               long lastOffset,
+                                               DateTimeOffset lastEnqueuedTime)
+        {
+            EventHubName = eventHubName;
+            Id = partitionId;
+            BeginningSequenceNumber = beginningSequenceNumber;
+            LastEnqueuedSequenceNumber = lastSequenceNumber;
+            LastEnqueuedOffset = lastOffset;
+            LastEnqueuedTime = lastEnqueuedTime;
+            IsEmpty = isEmpty;
+        }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="PartitionProperties"/> class.
@@ -95,7 +133,7 @@ namespace Azure.Messaging.EventHubs
             // new SDK populates the EventData offset property with the amqp message sequence number. This allows for backwards
             // compatibility to avoid breaking existing code that uses only offset properties.
 
-            // TODO uncomment LastEnqueuedOffset = lastSequenceNumber;
+            LastEnqueuedOffset = lastSequenceNumber;
             LastEnqueuedTime = lastEnqueuedTime;
             IsEmpty = isEmpty;
         }

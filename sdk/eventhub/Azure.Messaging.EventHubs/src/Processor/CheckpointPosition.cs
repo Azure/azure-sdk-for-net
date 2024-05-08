@@ -33,6 +33,11 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <param name="sequenceNumber">The sequence number to associate with the checkpoint. This indicates that a processor should begin reading from the next event in the stream.</param>
         ///
+        /// <remarks>
+        ///   This constructor is not compatible when processing a geo-replicated Event Hub. Use <see cref="CheckpointPosition(string, long)"/> or
+        ///   <see cref="FromEvent(EventData)"/> instead.
+        /// </remarks>
+        ///
         public CheckpointPosition(long sequenceNumber)
         {
             SequenceNumber = sequenceNumber;

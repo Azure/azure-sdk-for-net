@@ -26,8 +26,8 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             // Unset all properties for the event position.
 
-            var position = EventPosition.FromOffset(1);
-            position.Offset = null;
+            var position = EventPosition.FromGlobalOffset("1");
+            position.GlobalOffset = null;
 
             Assert.That(() => AmqpFilter.BuildFilterExpression(position), Throws.ArgumentException);
         }
