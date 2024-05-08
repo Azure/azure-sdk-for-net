@@ -33,7 +33,7 @@ namespace Azure.Communication.JobRouter
             if (Optional.IsCollectionDefined(EstimatedWaitTimes))
             {
                 writer.WritePropertyName("estimatedWaitTimeMinutes"u8);
-                WriteEstimatedWaitTimes(writer);
+                WriteEstimatedWaitTimes(writer, options);
             }
             if (Optional.IsDefined(LongestJobWaitTimeMinutes))
             {
