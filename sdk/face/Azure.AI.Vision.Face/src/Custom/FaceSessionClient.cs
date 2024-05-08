@@ -5,6 +5,7 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 
 namespace Azure.AI.Vision.Face
 {
@@ -37,7 +38,7 @@ namespace Azure.AI.Vision.Face
         /// &gt; [!NOTE]
         /// &gt; Extra measures should be taken to validate that the client is sending the expected VerifyImage.
         /// </remarks>
-
+        [ForwardsClientCalls]
         public virtual async Task<Response<CreateLivenessWithVerifySessionResult>> CreateLivenessWithVerifySessionAsync(CreateLivenessSessionContent createLivenessSessionContent, Stream verifyImage, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(createLivenessSessionContent, nameof(createLivenessSessionContent));
@@ -48,17 +49,7 @@ namespace Azure.AI.Vision.Face
             }
 
             var createLivenessWithVerifySessionContent = new CreateLivenessWithVerifySessionContent(createLivenessSessionContent.ToMultipartContent(), verifyImage);
-            using var scope = ClientDiagnostics.CreateScope("FaceSessionClient.CreateLivenessWithVerifySession");
-            scope.Start();
-
-            try {
-                return await CreateLivenessWithVerifySessionWithVerifyImageAsync(createLivenessWithVerifySessionContent, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return await CreateLivenessWithVerifySessionWithVerifyImageAsync(createLivenessWithVerifySessionContent, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Create a new liveness session with verify. Provide the verify image during session creation. </summary>
@@ -87,6 +78,7 @@ namespace Azure.AI.Vision.Face
         /// &gt; [!NOTE]
         /// &gt; Extra measures should be taken to validate that the client is sending the expected VerifyImage.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual Response<CreateLivenessWithVerifySessionResult> CreateLivenessWithVerifySession(CreateLivenessSessionContent createLivenessSessionContent, Stream verifyImage, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(createLivenessSessionContent, nameof(createLivenessSessionContent));
@@ -97,17 +89,7 @@ namespace Azure.AI.Vision.Face
             }
 
             var createLivenessWithVerifySessionContent = new CreateLivenessWithVerifySessionContent(createLivenessSessionContent.ToMultipartContent(), verifyImage);
-            using var scope = ClientDiagnostics.CreateScope("FaceSessionClient.CreateLivenessWithVerifySession");
-            scope.Start();
-
-            try {
-                return CreateLivenessWithVerifySessionWithVerifyImage(createLivenessWithVerifySessionContent, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return CreateLivenessWithVerifySessionWithVerifyImage(createLivenessWithVerifySessionContent, cancellationToken);
         }
     }
 }
