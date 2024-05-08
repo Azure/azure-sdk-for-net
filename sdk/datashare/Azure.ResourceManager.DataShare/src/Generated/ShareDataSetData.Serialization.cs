@@ -95,9 +95,9 @@ namespace Azure.ResourceManager.DataShare
                     case "AdlsGen2File": return AdlsGen2FileDataSet.DeserializeAdlsGen2FileDataSet(element, options);
                     case "AdlsGen2FileSystem": return AdlsGen2FileSystemDataSet.DeserializeAdlsGen2FileSystemDataSet(element, options);
                     case "AdlsGen2Folder": return AdlsGen2FolderDataSet.DeserializeAdlsGen2FolderDataSet(element, options);
+                    case "Container": return BlobContainerDataSet.DeserializeBlobContainerDataSet(element, options);
                     case "Blob": return BlobDataSet.DeserializeBlobDataSet(element, options);
                     case "BlobFolder": return BlobFolderDataSet.DeserializeBlobFolderDataSet(element, options);
-                    case "Container": return BlobContainerDataSet.DeserializeBlobContainerDataSet(element, options);
                     case "KustoCluster": return KustoClusterDataSet.DeserializeKustoClusterDataSet(element, options);
                     case "KustoDatabase": return KustoDatabaseDataSet.DeserializeKustoDatabaseDataSet(element, options);
                     case "KustoTable": return KustoTableDataSet.DeserializeKustoTableDataSet(element, options);
