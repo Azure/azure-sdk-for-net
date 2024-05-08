@@ -119,16 +119,20 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         /// <param name="identifier">A unique name used to identify the event processor.</param>
         /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
         /// <param name="consumerGroup">The name of the consumer group that the processor is associated with.</param>
+        /// <param name="sequenceNumber">The sequence number associated with the checkpoint being written.</param>
+        /// <param name="offset">The offset associated with the checkpoint being written.</param>
         ///
-        [Event(23, Level = EventLevel.Verbose, Message = "Starting to perform a checkpoint update for partition '{0}' by processor instance with identifier '{1}' for Event Hub: {2} and Consumer Group: {3}.")]
+        [Event(23, Level = EventLevel.Verbose, Message = "Starting to perform a checkpoint update for partition '{0}' by processor instance with identifier '{1}' for Event Hub: {2} and Consumer Group: {3} with Sequence Number {4}, Offset: {5}.")]
         public virtual void UpdateCheckpointStart(string partitionId,
                                                   string identifier,
                                                   string eventHubName,
-                                                  string consumerGroup)
+                                                  string consumerGroup,
+                                                  string sequenceNumber,
+                                                  string offset)
         {
             if (IsEnabled())
             {
-                WriteEvent(23, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty);
+                WriteEvent(23, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, sequenceNumber ?? string.Empty, offset ?? string.Empty);
             }
         }
 
@@ -140,16 +144,20 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         /// <param name="identifier">A unique name used to identify the event processor.</param>
         /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
         /// <param name="consumerGroup">The name of the consumer group that the processor is associated with.</param>
+        /// <param name="sequenceNumber">The sequence number associated with the checkpoint being written.</param>
+        /// <param name="offset">The offset associated with the checkpoint being written.</param>
         ///
-        [Event(24, Level = EventLevel.Verbose, Message = "Completed performing a checkpoint update for partition '{0}' by processor instance with identifier '{1}' for Event Hub: {2} and Consumer Group: {3}.")]
+        [Event(24, Level = EventLevel.Verbose, Message = "Completed performing a checkpoint update for partition '{0}' by processor instance with identifier '{1}' for Event Hub: {2} and Consumer Group: {3} with Sequence Number: {4}, Offset: {5}.")]
         public virtual void UpdateCheckpointComplete(string partitionId,
                                                      string identifier,
                                                      string eventHubName,
-                                                     string consumerGroup)
+                                                     string consumerGroup,
+                                                     string sequenceNumber,
+                                                     string offset)
         {
             if (IsEnabled())
             {
-                WriteEvent(24, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty);
+                WriteEvent(24, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, sequenceNumber ?? string.Empty, offset ?? string.Empty);
             }
         }
 
@@ -162,13 +170,17 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
         /// <param name="consumerGroup">The name of the consumer group that the processor is associated with.</param>
         /// <param name="errorMessage">The message for the exception that occurred.</param>
+        /// <param name="sequenceNumber">The sequence number associated with the checkpoint being written.</param>
+        /// <param name="offset">The offset associated with the checkpoint being written.</param>
         ///
-        [Event(25, Level = EventLevel.Error, Message = "An exception occurred while attempting to perform a checkpoint update for partition '{0}' by processor instance with identifier '{1}' for Event Hub: {2} and Consumer Group: {3}.  Error Message: '{4}'")]
+        [Event(25, Level = EventLevel.Error, Message = "An exception occurred while attempting to perform a checkpoint update for partition '{0}' by processor instance with identifier '{1}' for Event Hub: {2} and Consumer Group: {3}  Error Message: '{4}' Sequence Number: {5} Offset: {6}.")]
         public virtual void UpdateCheckpointError(string partitionId,
                                                   string identifier,
                                                   string eventHubName,
                                                   string consumerGroup,
-                                                  string errorMessage)
+                                                  string errorMessage,
+                                                  string sequenceNumber,
+                                                  string offset)
         {
             if (IsEnabled())
             {

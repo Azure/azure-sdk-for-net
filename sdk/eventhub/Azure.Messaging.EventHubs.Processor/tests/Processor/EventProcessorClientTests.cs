@@ -1526,13 +1526,22 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void UpdateCheckpointRespectsTheCancellationToken()
+        [TestCase(true)]
+        [TestCase(false)]
+        public void UpdateCheckpointRespectsTheCancellationToken(bool useOldCheckpoint)
         {
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
 
             var processorClient = new TestEventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
-            Assert.That(async () => await processorClient.InvokeUpdateCheckpointAsync("0", new CheckpointPosition(123), cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
+            if (useOldCheckpoint)
+            {
+                Assert.That(async () => await processorClient.InvokeOldUpdateCheckpointAsync("0", 456, 123, cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
+            }
+            else
+            {
+                Assert.That(async () => await processorClient.InvokeUpdateCheckpointAsync("0", new CheckpointPosition(123), cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
+            }
         }
 
         /// <summary>
@@ -1541,35 +1550,69 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task UpdateCheckpointLogsExecution()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task UpdateCheckpointLogsExecution(bool useOldCheckpoint)
         {
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var partitionId = "3";
             var sequenceNumber = 789;
+            var offset = 123;
             var checkpointStartingPosition = new CheckpointPosition(sequenceNumber);
             var mockLogger = new Mock<EventProcessorClientEventSource>();
             var processorClient = new TestEventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
 
             processorClient.Logger = mockLogger.Object;
-            await processorClient.InvokeUpdateCheckpointAsync(partitionId, checkpointStartingPosition, cancellationSource.Token);
+            if (useOldCheckpoint)
+            {
+                await processorClient.InvokeOldUpdateCheckpointAsync(partitionId, offset, sequenceNumber, cancellationSource.Token);
 
-            mockLogger
+                mockLogger
+                    .Verify(log => log.UpdateCheckpointStart(
+                        partitionId,
+                        processorClient.Identifier,
+                        processorClient.EventHubName,
+                        processorClient.ConsumerGroup,
+                        sequenceNumber.ToString(),
+                        offset.ToString()),
+                    Times.Once);
+
+                mockLogger
+                    .Verify(log => log.UpdateCheckpointComplete(
+                        partitionId,
+                        processorClient.Identifier,
+                        processorClient.EventHubName,
+                        processorClient.ConsumerGroup,
+                        sequenceNumber.ToString(),
+                        offset.ToString()),
+                    Times.Once);
+            }
+            else
+            {
+                await processorClient.InvokeUpdateCheckpointAsync(partitionId, checkpointStartingPosition, cancellationSource.Token);
+
+                mockLogger
                 .Verify(log => log.UpdateCheckpointStart(
                     partitionId,
                     processorClient.Identifier,
                     processorClient.EventHubName,
-                    processorClient.ConsumerGroup),
+                    processorClient.ConsumerGroup,
+                    sequenceNumber.ToString(),
+                    null),
                 Times.Once);
 
-            mockLogger
-                .Verify(log => log.UpdateCheckpointComplete(
-                    partitionId,
-                    processorClient.Identifier,
-                    processorClient.EventHubName,
-                    processorClient.ConsumerGroup),
-                Times.Once);
+                mockLogger
+                    .Verify(log => log.UpdateCheckpointComplete(
+                        partitionId,
+                        processorClient.Identifier,
+                        processorClient.EventHubName,
+                        processorClient.ConsumerGroup,
+                        sequenceNumber.ToString(),
+                        null),
+                    Times.Once);
+            }
 
             cancellationSource.Cancel();
         }
@@ -1580,14 +1623,18 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void UpdateCheckpointLogsExceptions()
+        [TestCase(true)]
+        [TestCase(false)]
+        public void UpdateCheckpointLogsExceptions(bool useOldCheckpoint)
         {
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var expectedException = new NotImplementedException("This didn't work.");
             var partitionId = "3";
-            var checkpointStartingPosition = new CheckpointPosition(789);
+            var sequenceNumber = 789;
+            var offset = 123;
+            var checkpointStartingPosition = new CheckpointPosition(sequenceNumber);
             var mockLogger = new Mock<EventProcessorClientEventSource>();
             var mockStorage = new Mock<CheckpointStore>();
             var processorClient = new TestEventProcessorClient(mockStorage.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
@@ -1603,17 +1650,49 @@ namespace Azure.Messaging.EventHubs.Tests
                     It.IsAny<CancellationToken>()))
                 .Throws(expectedException);
 
-            processorClient.Logger = mockLogger.Object;
-            Assert.That(async () => await processorClient.InvokeUpdateCheckpointAsync(partitionId, checkpointStartingPosition, cancellationSource.Token), Throws.Exception.EqualTo(expectedException));
+            mockStorage
+                .Setup(storage => storage.UpdateCheckpointAsync(
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<long>(),
+                    It.IsAny<long>(),
+                    It.IsAny<CancellationToken>()))
+                .Throws(expectedException);
 
-            mockLogger
+            processorClient.Logger = mockLogger.Object;
+
+            if (useOldCheckpoint)
+            {
+                Assert.That(async () => await processorClient.InvokeOldUpdateCheckpointAsync(partitionId, offset, sequenceNumber, cancellationSource.Token), Throws.Exception.EqualTo(expectedException));
+
+                mockLogger
                 .Verify(log => log.UpdateCheckpointError(
                     partitionId,
                     processorClient.Identifier,
                     processorClient.EventHubName,
                     processorClient.ConsumerGroup,
-                    expectedException.Message),
+                    expectedException.Message,
+                    sequenceNumber.ToString(),
+                    offset.ToString()),
                 Times.Once);
+            }
+            else
+            {
+                Assert.That(async () => await processorClient.InvokeUpdateCheckpointAsync(partitionId, checkpointStartingPosition, cancellationSource.Token), Throws.Exception.EqualTo(expectedException));
+
+                mockLogger
+                .Verify(log => log.UpdateCheckpointError(
+                    partitionId,
+                    processorClient.Identifier,
+                    processorClient.EventHubName,
+                    processorClient.ConsumerGroup,
+                    expectedException.Message,
+                    sequenceNumber.ToString(),
+                    null),
+                Times.Once);
+            }
 
             cancellationSource.Cancel();
         }

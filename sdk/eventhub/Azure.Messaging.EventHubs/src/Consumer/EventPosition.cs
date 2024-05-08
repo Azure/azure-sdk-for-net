@@ -191,7 +191,7 @@ namespace Azure.Messaging.EventHubs.Consumer
                 _ when (Offset == StartOfStream) => nameof(Earliest),
                 _ when (Offset == EndOfStream) => nameof(Latest),
                 _ when (!string.IsNullOrEmpty(Offset)) => $"Offset: [{ Offset }] | Inclusive: [{ IsInclusive }]",
-                _ when (!string.IsNullOrEmpty(SequenceNumber)) => $"Sequence Number: [{ SequenceNumber }] | Inclusive: [{ IsInclusive }]",
+                _ when (!string.IsNullOrEmpty(SequenceNumber)) => $"Sequence Number: [{SequenceNumber}] | Inclusive: [{IsInclusive}]",
                 _ when (EnqueuedTime.HasValue) => $"Enqueued: [{ EnqueuedTime }]",
                 _ => base.ToString()
             };

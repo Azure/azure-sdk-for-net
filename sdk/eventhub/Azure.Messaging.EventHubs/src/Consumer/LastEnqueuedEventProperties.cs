@@ -42,7 +42,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         /// </summary>
         ///
         /// <param name="lastSequenceNumber">The sequence number observed the last event to be enqueued in the partition.</param>
-        /// <param name="lastOffset">The offset of the last event to be enqueued in the partition.</param>
+        /// <param name="lastOffset">The sequence number observed the last event to be enqueued in the partition.</param>
         /// <param name="lastEnqueuedTime">The date and time, in UTC, that the last event was enqueued in the partition.</param>
         /// <param name="lastReceivedTime">The date and time, in UTC, that the information was last received.</param>
         ///
@@ -52,7 +52,12 @@ namespace Azure.Messaging.EventHubs.Consumer
                                            DateTimeOffset? lastReceivedTime)
         {
             SequenceNumber = lastSequenceNumber;
-            Offset = lastOffset;
+
+            // The offset is intentionally mapped to sequence number. The service no longer accepts a numeric offset value, so the
+            // new SDK populates the EventData offset property with the amqp message sequence number. This allows for backwards
+            // compatibility to avoid breaking existing code that uses only offset properties.
+
+            Offset = lastSequenceNumber;
             EnqueuedTime = lastEnqueuedTime;
             LastReceivedTime = lastReceivedTime;
         }

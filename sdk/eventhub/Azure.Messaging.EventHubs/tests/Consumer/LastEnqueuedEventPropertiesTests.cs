@@ -39,24 +39,6 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void DifferentOffsetsAreNotEqual()
-        {
-            var now = DateTimeOffset.UtcNow;
-            var first = new LastEnqueuedEventProperties(lastSequenceNumber: 123, lastOffset: 999, lastEnqueuedTime: DateTimeOffset.Parse("2015-10-27T12:00:00Z"), lastReceivedTime: now);
-            var second = new LastEnqueuedEventProperties(lastSequenceNumber: 123, lastOffset: 888, lastEnqueuedTime: DateTimeOffset.Parse("2015-10-27T12:00:00Z"), lastReceivedTime: now);
-
-            Assert.That(first.Equals((object)second), Is.False, "The default Equals comparison is incorrect.");
-            Assert.That(first.Equals(second), Is.False, "The IEquatable comparison is incorrect.");
-            Assert.That((first == second), Is.False, "The == operator comparison is incorrect.");
-            Assert.That((first != second), Is.True, "The != operator comparison is incorrect.");
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="LastEnqueuedEventProperties "/>
-        ///   equality.
-        /// </summary>
-        ///
-        [Test]
         public void DifferentEnqueueTimesAreNotEqual()
         {
             var now = DateTimeOffset.UtcNow;
@@ -135,7 +117,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var properties = new LastEnqueuedEventProperties(sequence, offset, enqueued, received);
             var toStringValue = properties.ToString();
 
-            Assert.That(toStringValue, Contains.Substring($"[{ offset }]"), "The offset should be represented.");
+            Assert.That(toStringValue, Contains.Substring($"[{ sequence }]"), "The offset should be represented as the sequence number.");
             Assert.That(toStringValue, Contains.Substring($"[{ sequence }]"), "The sequence number should be represented.");
             Assert.That(toStringValue, Contains.Substring($"[{ enqueued }]"), "The enqueued time should be represented.");
             Assert.That(toStringValue, Contains.Substring($"[{ received }]"), "The received time should be represented.");
