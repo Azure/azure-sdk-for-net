@@ -6,7 +6,6 @@
     <ApiCompatVersion>0.1.0</ApiCompatVersion>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <Nullable>enable</Nullable>
-    <NoWarn>$(NoWarn);AZC0001</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

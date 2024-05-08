@@ -657,12 +657,13 @@ namespace Azure.AI.OpenAI
             return new EmbeddingsUsage(promptTokens, totalTokens, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="OpenAI.StopFinishDetails"/>. </summary>
-        /// <param name="stop"> The token sequence that the model terminated with. </param>
-        /// <returns> A new <see cref="OpenAI.StopFinishDetails"/> instance for mocking. </returns>
-        public static StopFinishDetails StopFinishDetails(string stop = null)
+        /// <summary> Initializes a new instance of <see cref="OpenAI.ChatRequestSystemMessage"/>. </summary>
+        /// <param name="content"> The contents of the system message. </param>
+        /// <param name="name"> An optional name for the participant. </param>
+        /// <returns> A new <see cref="OpenAI.ChatRequestSystemMessage"/> instance for mocking. </returns>
+        public static ChatRequestSystemMessage ChatRequestSystemMessage(string content = null, string name = null)
         {
-            return new StopFinishDetails("stop", serializedAdditionalRawData: null, stop);
+            return new ChatRequestSystemMessage(ChatRole.System, serializedAdditionalRawData: null, content, name);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.ChatMessageTextContentItem"/>. </summary>
@@ -671,35 +672,6 @@ namespace Azure.AI.OpenAI
         public static ChatMessageTextContentItem ChatMessageTextContentItem(string text = null)
         {
             return new ChatMessageTextContentItem("text", serializedAdditionalRawData: null, text);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="OpenAI.ChatMessageImageContentItem"/>. </summary>
-        /// <param name="imageUrl"> An internet location, which must be accessible to the model,from which the image may be retrieved. </param>
-        /// <returns> A new <see cref="OpenAI.ChatMessageImageContentItem"/> instance for mocking. </returns>
-        public static ChatMessageImageContentItem ChatMessageImageContentItem(ChatMessageImageUrl imageUrl = null)
-        {
-            return new ChatMessageImageContentItem("image_url", serializedAdditionalRawData: null, imageUrl);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="OpenAI.ChatMessageImageUrl"/>. </summary>
-        /// <param name="url"> The URL of the image. </param>
-        /// <param name="detail">
-        /// The evaluation quality setting to use, which controls relative prioritization of speed, token consumption, and
-        /// accuracy.
-        /// </param>
-        /// <returns> A new <see cref="OpenAI.ChatMessageImageUrl"/> instance for mocking. </returns>
-        public static ChatMessageImageUrl ChatMessageImageUrl(Uri url = null, ChatMessageImageDetailLevel? detail = null)
-        {
-            return new ChatMessageImageUrl(url, detail, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="OpenAI.ChatRequestSystemMessage"/>. </summary>
-        /// <param name="content"> The contents of the system message. </param>
-        /// <param name="name"> An optional name for the participant. </param>
-        /// <returns> A new <see cref="OpenAI.ChatRequestSystemMessage"/> instance for mocking. </returns>
-        public static ChatRequestSystemMessage ChatRequestSystemMessage(string content = null, string name = null)
-        {
-            return new ChatRequestSystemMessage(ChatRole.System, serializedAdditionalRawData: null, content, name);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.ChatRequestAssistantMessage"/>. </summary>
@@ -745,14 +717,6 @@ namespace Azure.AI.OpenAI
         public static ChatRequestFunctionMessage ChatRequestFunctionMessage(string name = null, string content = null)
         {
             return new ChatRequestFunctionMessage(ChatRole.Function, serializedAdditionalRawData: null, name, content);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="OpenAI.ChatCompletionsFunctionToolDefinition"/>. </summary>
-        /// <param name="function"> The function definition details for the function tool. </param>
-        /// <returns> A new <see cref="OpenAI.ChatCompletionsFunctionToolDefinition"/> instance for mocking. </returns>
-        public static ChatCompletionsFunctionToolDefinition ChatCompletionsFunctionToolDefinition(FunctionDefinition function = null)
-        {
-            return new ChatCompletionsFunctionToolDefinition("function", serializedAdditionalRawData: null, function);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.OnYourDataApiKeyAuthenticationOptions"/>. </summary>
@@ -831,6 +795,22 @@ namespace Azure.AI.OpenAI
         public static OnYourDataModelIdVectorizationSource OnYourDataModelIdVectorizationSource(string modelId = null)
         {
             return new OnYourDataModelIdVectorizationSource(OnYourDataVectorizationSourceType.ModelId, serializedAdditionalRawData: null, modelId);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.ChatCompletionsFunctionToolDefinition"/>. </summary>
+        /// <param name="function"> The function definition details for the function tool. </param>
+        /// <returns> A new <see cref="OpenAI.ChatCompletionsFunctionToolDefinition"/> instance for mocking. </returns>
+        public static ChatCompletionsFunctionToolDefinition ChatCompletionsFunctionToolDefinition(FunctionDefinition function = null)
+        {
+            return new ChatCompletionsFunctionToolDefinition("function", serializedAdditionalRawData: null, function);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.StopFinishDetails"/>. </summary>
+        /// <param name="stop"> The token sequence that the model terminated with. </param>
+        /// <returns> A new <see cref="OpenAI.StopFinishDetails"/> instance for mocking. </returns>
+        public static StopFinishDetails StopFinishDetails(string stop = null)
+        {
+            return new StopFinishDetails("stop", serializedAdditionalRawData: null, stop);
         }
     }
 }

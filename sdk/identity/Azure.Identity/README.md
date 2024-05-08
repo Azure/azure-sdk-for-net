@@ -125,18 +125,47 @@ var eventHubClient = new EventHubProducerClient("myeventhub.eventhubs.windows.ne
 
 ### Specify a user-assigned managed identity with `DefaultAzureCredential`
 
-Many Azure hosts allow the assignment of a user-assigned managed identity. This example demonstrates configuring the `DefaultAzureCredential` to authenticate a user-assigned identity when deployed to an Azure host. It then authenticates a `BlobClient` from the [Azure.Storage.Blobs][blobs_client_library] client library with credential.
+Many Azure hosts allow the assignment of a user-assigned managed identity. The following examples demonstrate configuring `DefaultAzureCredential` to authenticate a user-assigned managed identity when deployed to an Azure host. The sample code uses the credential to authenticate a `BlobClient` from the [Azure.Storage.Blobs][blobs_client_library] client library. It also demonstrates how you can specify a user-assigned managed identity either by a client ID or a resource ID.
 
-```C# Snippet:UserAssignedManagedIdentity
-// When deployed to an azure host, the default azure credential will authenticate the specified user assigned managed identity.
+#### Client ID
 
-string userAssignedClientId = "<your managed identity client Id>";
-var credential = new DefaultAzureCredential(new DefaultAzureCredentialOptions { ManagedIdentityClientId = userAssignedClientId });
+To use a client ID, take one of the following approaches:
 
-var blobClient = new BlobClient(new Uri("https://myaccount.blob.core.windows.net/mycontainer/myblob"), credential);
+1. Set the [DefaultAzureCredentialOptions.ManagedIdentityClientId](https://learn.microsoft.com/dotnet/api/azure.identity.defaultazurecredentialoptions.managedidentityclientid?view=azure-dotnet) property. For example:
+
+```C# Snippet:UserAssignedManagedIdentityWithClientId
+// When deployed to an Azure host, DefaultAzureCredential will authenticate the specified user-assigned managed identity.
+
+string userAssignedClientId = "<your managed identity client ID>";
+var credential = new DefaultAzureCredential(
+    new DefaultAzureCredentialOptions
+    {
+        ManagedIdentityClientId = userAssignedClientId
+    });
+
+var blobClient = new BlobClient(
+    new Uri("https://myaccount.blob.core.windows.net/mycontainer/myblob"),
+    credential);
 ```
 
-In addition to configuring the `ManagedIdentityClientId` via code, it can also be set using the `AZURE_CLIENT_ID` environment variable. These two approaches are equivalent when using the `DefaultAzureCredential`.
+1. Set the `AZURE_CLIENT_ID` environment variable.
+
+#### Resource ID
+
+To use a resource ID, set the [DefaultAzureCredentialOptions.ManagedIdentityResourceId](https://learn.microsoft.com/dotnet/api/azure.identity.defaultazurecredentialoptions.managedidentityresourceid?view=azure-dotnet) property. The resource ID takes the form `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}`. Because resource IDs can be built by convention, they can be more convenient when there are a large number of user-assigned managed identities in your environment. For example:
+
+```C# Snippet:UserAssignedManagedIdentityWithResourceId
+string userAssignedResourceId = "<your managed identity resource ID>";
+var credential = new DefaultAzureCredential(
+    new DefaultAzureCredentialOptions
+    {
+        ManagedIdentityResourceId = new ResourceIdentifier(userAssignedResourceId)
+    });
+
+var blobClient = new BlobClient(
+    new Uri("https://myaccount.blob.core.windows.net/mycontainer/myblob"),
+    credential);
+```
 
 ### Define a custom authentication flow with `ChainedTokenCredential`
 
@@ -208,6 +237,7 @@ Not all credentials require this configuration. Credentials which authenticate t
 
 |Credential | Usage | Reference
 |-|-|-
+|`AzurePipelinesCredential`|Supports [Microsoft Entra Workload ID](https://learn.microsoft.com/azure/devops/pipelines/release/configure-workload-identity?view=azure-devops) on Azure Pipelines.| [example](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/samples/OtherCredentialSamples.md#AzurePipelinesCredential_example)
 |[`ClientAssertionCredential`][ref_ClientAssertionCredential]|Authenticates a service principal using a signed client assertion. |
 |[`ClientCertificateCredential`][ref_ClientCertificateCredential]|Authenticates a service principal using a certificate. | [Service principal authentication](https://learn.microsoft.com/entra/identity-platform/app-objects-and-service-principals)
 |[`ClientSecretCredential`][ref_ClientSecretCredential]|Authenticates a service principal using a secret. | [Service principal authentication](https://learn.microsoft.com/entra/identity-platform/app-objects-and-service-principals)
