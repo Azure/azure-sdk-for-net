@@ -672,18 +672,18 @@ namespace Azure.Messaging.ServiceBus
         /// Attempts to purge all messages from an entity.  Locked messages are not eligible for removal and
         /// will remain in the entity.
         /// </summary>
-        /// <param name="beforeEnqueueTime">An optional <see cref="DateTimeOffset"/>, in UTC, representing the cutoff time for deletion. Only messages that were enqueued before this time will be purgeCount.  If not specified, <see cref="DateTimeOffset.UtcNow"/> will be assumed.</param>
+        /// <param name="beforeEnqueueTime">An optional <see cref="DateTimeOffset"/>, in UTC, representing the cutoff time for deletion. Only messages that were enqueued before this time will be deleted.  If not specified, <see cref="DateTimeOffset.UtcNow"/> will be assumed.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <remarks>
-        /// If the lock for a message is held by a receiver, it will be respected and the message will not be purgeCount.
+        /// If the lock for a message is held by a receiver, it will be respected and the message will not be deleted.
         ///
         /// This method may invoke multiple service requests to delete all messages.  As a result, it may exceed the configured <see cref="ServiceBusRetryOptions.TryTimeout"/>.
         /// If you need control over the amount of time the operation takes, it is recommended that you pass a <paramref name="cancellationToken"/> with the desired timeout set for cancellation.
         ///
         /// Because multiple service requests may be made, the possibility of partial success exists.  In this scenario, the method will stop attempting to delete additional messages
-        /// and throw the exception that was encountered.  It is recommended to evaluate this exception and determine which messages may not have been purgeCount.
+        /// and throw the exception that was encountered.  It is recommended to evaluate this exception and determine which messages may not have been deleted.
         /// </remarks>
-        /// <returns>The number of messages that were purgeCount.</returns>
+        /// <returns>The number of messages that were deleted.</returns>
         public virtual async Task<int> PurgeMessagesAsync(
             DateTimeOffset? beforeEnqueueTime = null,
             CancellationToken cancellationToken = default)
@@ -735,13 +735,13 @@ namespace Azure.Messaging.ServiceBus
 
         /// <summary>
         /// Deletes up to <paramref name="messageCount"/> messages from the entity. The actual number
-        /// of purgeCount messages may be less if there are fewer eligible messages in the entity.
+        /// of deleted messages may be less if there are fewer eligible messages in the entity.
         /// </summary>
         /// <param name="messageCount">The desired number of messages to delete.  This value is limited by the service and governed <see href="https://learn.microsoft.com/azure/service-bus-messaging/service-bus-quotas">Service Bus quotas</see>.  The service may delete fewer messages than this limit.</param>
-        /// <param name="beforeEnqueueTime">An optional <see cref="DateTimeOffset"/>, in UTC, representing the cutoff time for deletion. Only messages that were enqueued before this time will be purgeCount.  If not specified, <see cref="DateTimeOffset.UtcNow"/> will be assumed.</param>
+        /// <param name="beforeEnqueueTime">An optional <see cref="DateTimeOffset"/>, in UTC, representing the cutoff time for deletion. Only messages that were enqueued before this time will be deleted.  If not specified, <see cref="DateTimeOffset.UtcNow"/> will be assumed.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        /// <returns>The number of messages that were purgeCount.</returns>
-        /// <remarks>If the lock for a message is held by a receiver, it will be respected and the message will not be purgeCount.</remarks>
+        /// <returns>The number of messages that were deleted.</returns>
+        /// <remarks>If the lock for a message is held by a receiver, it will be respected and the message will not be deleted.</remarks>
         /// <exception cref="ArgumentOutOfRangeException">
         /// Occurs when the <paramref name="messageCount"/> is less than 1 or exceeds the maximum allowed, as determined by the Service Bus service.
         /// For more information on service limits, see <see href="https://learn.microsoft.com/azure/service-bus-messaging/service-bus-quotas#messaging-quotas"/>.
