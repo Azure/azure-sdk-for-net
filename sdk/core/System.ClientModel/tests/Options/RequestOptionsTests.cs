@@ -143,6 +143,7 @@ public class RequestOptionsTests
 
         Assert.Throws<InvalidOperationException>(() => options.CancellationToken = CancellationToken.None);
         Assert.Throws<InvalidOperationException>(() => options.ErrorOptions = ClientErrorBehaviors.NoThrow);
+        Assert.Throws<InvalidOperationException>(() => options.BufferResponse = true);
         Assert.Throws<InvalidOperationException>(() => options.AddHeader("A", "B"));
         Assert.Throws<InvalidOperationException>(()
             => options.AddPolicy(new ObservablePolicy("A"), PipelinePosition.PerCall));
@@ -156,8 +157,47 @@ public class RequestOptionsTests
 
         Assert.Throws<InvalidOperationException>(() => options.CancellationToken = CancellationToken.None);
         Assert.Throws<InvalidOperationException>(() => options.ErrorOptions = ClientErrorBehaviors.NoThrow);
+        Assert.Throws<InvalidOperationException>(() => options.BufferResponse = true);
         Assert.Throws<InvalidOperationException>(() => options.AddHeader("A", "B"));
         Assert.Throws<InvalidOperationException>(() => options.AddPolicy(
             new ObservablePolicy("A"), PipelinePosition.PerCall));
+    }
+
+    [Test]
+    public void OverridesBufferResponse()
+    {
+        ClientPipeline pipeline = ClientPipeline.Create();
+        PipelineMessage message = pipeline.CreateMessage();
+
+        RequestOptions bufferTrueOptions = new() { BufferResponse = true };
+        message.BufferResponse = false;
+        message.Apply(bufferTrueOptions);
+
+        Assert.IsTrue(message.BufferResponse);
+
+        RequestOptions bufferFalseOptions = new() { BufferResponse = false };
+        message.BufferResponse = true;
+        message.Apply(bufferFalseOptions);
+
+        Assert.IsFalse(message.BufferResponse);
+    }
+
+    [Test]
+    public void DoesntChangeBufferResponse()
+    {
+        RequestOptions options = new() { BufferResponse = null };
+
+        ClientPipeline pipeline = ClientPipeline.Create();
+        PipelineMessage message = pipeline.CreateMessage();
+
+        message.BufferResponse = false;
+        message.Apply(options);
+
+        Assert.IsFalse(message.BufferResponse);
+
+        message.BufferResponse = true;
+        message.Apply(options);
+
+        Assert.IsTrue(message.BufferResponse);
     }
 }

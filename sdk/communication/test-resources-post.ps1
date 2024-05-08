@@ -23,7 +23,7 @@ function Log($Message) {
   Write-Host ('{0} - {1}' -f [DateTime]::Now.ToLongTimeString(), $Message)
 }
 
-Log 'Starting sdk\communication\test-resources\test-resources-post.ps1'
+Log 'Starting sdk\communication\test-resources-post.ps1'
 
 if($DeploymentOutputs.ContainsKey('COMMUNICATION_SERVICE_ENDPOINT')){
   Write-Host "COMMUNICATION_SERVICE_ENDPOINT exists, proceeding."
@@ -94,4 +94,4 @@ catch {
   Write-Host "Error Message:" $_.ErrorDetails.Message
 }
 
-Log 'Finishing sdk\communication\test-resources\test-resources-post.ps1'
+Log 'Finishing sdk\communication\test-resources-post.ps1'
