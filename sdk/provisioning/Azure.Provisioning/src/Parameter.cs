@@ -146,7 +146,7 @@ namespace Azure.Provisioning
             // If the parameter is an output from the current scope, use its Value.
             if (ReferenceEquals(Output!.Resource.ModuleScope, parentScope))
             {
-                return Value!.ToString()!;
+                return Value!;
             }
 
             // Otherwise it is an output from a different scope, use the full reference.
