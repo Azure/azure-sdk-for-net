@@ -329,8 +329,6 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <param name="sequenceNumber">An optional sequence number to associate with the checkpoint, intended as informational metadata.  The <paramref name="offset" /> will be used for positioning when events are read.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal a request to cancel the operation.</param>
         ///
-        /// <returns>The translated options.</returns>
-        ///
         private static Task InvokeOldUpdateCheckpointAsync(EventProcessorClient target,
                                                         string partitionId,
                                                         long offset,
