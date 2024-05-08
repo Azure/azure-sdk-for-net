@@ -103,14 +103,14 @@ namespace Azure.Provisioning
         /// Initializes a new instance of the <see cref="Parameter"/>.
         /// </summary>
         /// <param name="name">The parameter name.</param>
-        /// <param name="type">The parameter type.</param>
+        /// <param name="parameterType">The parameter type.</param>
         /// <param name="description">The parameter description.</param>
         /// <param name="defaultValue">The parameter defaultValue.</param>
         /// <param name="isSecure">Is the parameter secure.</param>
-        public Parameter(string name, BicepType type = BicepType.String, string? description = default, object? defaultValue = default, bool isSecure = false)
+        public Parameter(string name, BicepType parameterType = BicepType.String, string? description = default, object? defaultValue = default, bool isSecure = false)
         {
             Name = name;
-            ParameterType = type;
+            ParameterType = parameterType;
             Description = description;
             DefaultValue = defaultValue;
             IsSecure = isSecure;

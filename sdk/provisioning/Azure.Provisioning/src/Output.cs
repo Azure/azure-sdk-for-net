@@ -45,8 +45,8 @@ namespace Azure.Provisioning
         /// <param name="resource">The output resource.</param>
         /// <param name="isLiteral">Is the output a literal value.</param>
         /// <param name="isSecure">Is the output secure.</param>
-        /// <param name="type">The type of the output.</param>
-        internal Output(string name, string value, IConstruct source, Resource resource, bool isLiteral = false, bool isSecure = false, BicepType type = BicepType.String)
+        /// <param name="outputType">The type of the output.</param>
+        internal Output(string name, string value, IConstruct source, Resource resource, bool isLiteral = false, bool isSecure = false, BicepType outputType = BicepType.String)
         {
             Name = name;
             Value = value;
@@ -54,7 +54,7 @@ namespace Azure.Provisioning
             IsSecure = isSecure;
             Source = source;
             Resource = resource;
-            OutputType = type;
+            OutputType = outputType;
         }
     }
 }

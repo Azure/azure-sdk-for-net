@@ -85,7 +85,7 @@ namespace Azure.Provisioning
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public Parameter(Azure.Provisioning.Output output) { throw null; }
-        public Parameter(string name, Azure.Provisioning.BicepType type = Azure.Provisioning.BicepType.String, string? description = null, object? defaultValue = null, bool isSecure = false) { throw null; }
+        public Parameter(string name, Azure.Provisioning.BicepType parameterType = Azure.Provisioning.BicepType.String, string? description = null, object? defaultValue = null, bool isSecure = false) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Parameter(string name, string? description, object? defaultValue, bool isSecure) { throw null; }
         public object? DefaultValue { get { throw null; } }
