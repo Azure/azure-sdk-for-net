@@ -179,6 +179,11 @@ stages:
                 az --version
                 az account show
 
+          - pwsh: | 
+                az --version
+                az account show
+            displayName: Check CLI Login
+
           - task: securedevelopmentteam.vss-secure-development-tools.build-task-apiscan.APIScan@2
             displayName: 'Run APIScan'
             inputs:
