@@ -134,7 +134,8 @@ namespace Azure.Core.TestFramework
             "AZSDK3425", // $..from
             "AZSDK3430", // $..id
             "AZSDK3433", // $..userId
-            "AZSDK3447", // $.key - app config key
+            "AZSDK3447", // $.key - app config key - not a secret
+            "AZSDK3448", // $.value[*].key - search key - not a secret
             "AZSDK3451", // $..storageContainerUri - used for mixed reality - no sas token
             "AZSDK3478", // $..accountName
             "AZSDK3488", // $..targetResourceRegion
