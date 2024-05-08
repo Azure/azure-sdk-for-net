@@ -8,5 +8,6 @@ namespace Azure.Health.Deidentification.Tests
     public class DeidentificationTestEnvironment : TestEnvironment
     {
         public string Endpoint => GetRecordedVariable("DEID_SERVICE_ENDPOINT");
+        public string StorageAccountConnectionString => GetRecordedVariable("STORAGE_ACCOUNT_CONNECTION_STRING", options => options.IsSecret());
     }
 }

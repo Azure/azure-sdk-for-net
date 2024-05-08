@@ -80,6 +80,5 @@ resource batchRole 'Microsoft.Authorization/roleAssignments@2020-10-01-preview' 
 var blobStorageConnectionString = 'DefaultEndpointsProtocol=https;AccountName=${storageAccount.name};EndpointSuffix=${environment().suffixes.storage};AccountKey=${storageAccount.listKeys().keys[0].value}'
 
 output DEID_SERVICE_ENDPOINT string = testDeidService.properties.serviceUrl
-output STORAGE_ACCOUNT_NAME string = storageAccount.name
 output STORAGE_ACCOUNT_CONNECTION_STRING string = blobStorageConnectionString
 output STORAGE_CONTAINER_NAME string = container.name
