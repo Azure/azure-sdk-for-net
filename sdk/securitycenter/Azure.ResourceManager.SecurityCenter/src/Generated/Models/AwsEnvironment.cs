@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="organizationalData">
         /// The AWS account's organizational data
         /// Please note <see cref="AwsOrganizationalInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AwsOrganizationalDataMember"/> and <see cref="AwsOrganizationalDataMaster"/>.
+        /// The available derived classes include <see cref="AwsOrganizationalDataMaster"/> and <see cref="AwsOrganizationalDataMember"/>.
         /// </param>
         /// <param name="regions"> list of regions to scan. </param>
         /// <param name="accountName"> The AWS account name. </param>
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary>
         /// The AWS account's organizational data
         /// Please note <see cref="AwsOrganizationalInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AwsOrganizationalDataMember"/> and <see cref="AwsOrganizationalDataMaster"/>.
+        /// The available derived classes include <see cref="AwsOrganizationalDataMaster"/> and <see cref="AwsOrganizationalDataMember"/>.
         /// </summary>
         public AwsOrganizationalInfo OrganizationalData { get; set; }
         /// <summary> list of regions to scan. </summary>

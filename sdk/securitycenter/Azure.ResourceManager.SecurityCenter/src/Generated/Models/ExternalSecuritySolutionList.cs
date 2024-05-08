@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of <see cref="ExternalSecuritySolutionList"/>. </summary>
         /// <param name="value">
         /// Please note <see cref="ExternalSecuritySolution"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AadExternalSecuritySolution"/>, <see cref="AtaExternalSecuritySolution"/> and <see cref="CefExternalSecuritySolution"/>.
+        /// The available derived classes include <see cref="CefExternalSecuritySolution"/>, <see cref="AtaExternalSecuritySolution"/> and <see cref="AadExternalSecuritySolution"/>.
         /// </param>
         /// <param name="nextLink"> The URI to fetch the next page. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary>
         /// Gets the value
         /// Please note <see cref="ExternalSecuritySolution"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AadExternalSecuritySolution"/>, <see cref="AtaExternalSecuritySolution"/> and <see cref="CefExternalSecuritySolution"/>.
+        /// The available derived classes include <see cref="CefExternalSecuritySolution"/>, <see cref="AtaExternalSecuritySolution"/> and <see cref="AadExternalSecuritySolution"/>.
         /// </summary>
         public IReadOnlyList<ExternalSecuritySolution> Value { get; }
         /// <summary> The URI to fetch the next page. </summary>

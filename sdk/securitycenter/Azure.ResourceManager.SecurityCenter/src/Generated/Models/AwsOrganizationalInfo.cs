@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary>
     /// The AWS organization data
     /// Please note <see cref="AwsOrganizationalInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AwsOrganizationalDataMember"/> and <see cref="AwsOrganizationalDataMaster"/>.
+    /// The available derived classes include <see cref="AwsOrganizationalDataMaster"/> and <see cref="AwsOrganizationalDataMember"/>.
     /// </summary>
     public abstract partial class AwsOrganizationalInfo
     {

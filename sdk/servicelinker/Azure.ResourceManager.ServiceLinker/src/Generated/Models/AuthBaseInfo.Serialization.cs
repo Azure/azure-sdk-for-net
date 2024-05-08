@@ -71,10 +71,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 switch (discriminator.GetString())
                 {
                     case "secret": return SecretAuthInfo.DeserializeSecretAuthInfo(element, options);
-                    case "servicePrincipalCertificate": return ServicePrincipalCertificateAuthInfo.DeserializeServicePrincipalCertificateAuthInfo(element, options);
-                    case "servicePrincipalSecret": return ServicePrincipalSecretAuthInfo.DeserializeServicePrincipalSecretAuthInfo(element, options);
-                    case "systemAssignedIdentity": return SystemAssignedIdentityAuthInfo.DeserializeSystemAssignedIdentityAuthInfo(element, options);
                     case "userAssignedIdentity": return UserAssignedIdentityAuthInfo.DeserializeUserAssignedIdentityAuthInfo(element, options);
+                    case "systemAssignedIdentity": return SystemAssignedIdentityAuthInfo.DeserializeSystemAssignedIdentityAuthInfo(element, options);
+                    case "servicePrincipalSecret": return ServicePrincipalSecretAuthInfo.DeserializeServicePrincipalSecretAuthInfo(element, options);
+                    case "servicePrincipalCertificate": return ServicePrincipalCertificateAuthInfo.DeserializeServicePrincipalCertificateAuthInfo(element, options);
                 }
             }
             return UnknownAuthInfoBase.DeserializeUnknownAuthInfoBase(element, options);

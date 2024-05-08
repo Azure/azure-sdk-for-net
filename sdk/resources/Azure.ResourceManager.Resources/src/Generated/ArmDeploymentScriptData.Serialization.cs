@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.Resources
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureCLI": return AzureCliScript.DeserializeAzureCliScript(element, options);
                     case "AzurePowerShell": return AzurePowerShellScript.DeserializeAzurePowerShellScript(element, options);
+                    case "AzureCLI": return AzureCliScript.DeserializeAzureCliScript(element, options);
                 }
             }
             return UnknownArmDeploymentScript.DeserializeUnknownArmDeploymentScript(element, options);

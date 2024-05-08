@@ -71,8 +71,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 switch (discriminator.GetString())
                 {
                     case "Azure": return AzureResourceDetails.DeserializeAzureResourceDetails(element, options);
-                    case "OnPremise": return OnPremiseResourceDetails.DeserializeOnPremiseResourceDetails(element, options);
                     case "OnPremiseSql": return OnPremiseSqlResourceDetails.DeserializeOnPremiseSqlResourceDetails(element, options);
+                    case "OnPremise": return OnPremiseResourceDetails.DeserializeOnPremiseResourceDetails(element, options);
                 }
             }
             return UnknownResourceDetails.DeserializeUnknownResourceDetails(element, options);

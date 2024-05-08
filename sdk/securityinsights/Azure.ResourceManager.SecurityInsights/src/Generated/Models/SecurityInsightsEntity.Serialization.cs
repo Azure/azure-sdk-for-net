@@ -89,9 +89,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "SecurityAlert": return SecurityInsightsAlert.DeserializeSecurityInsightsAlert(element, options);
+                    case "Bookmark": return SecurityInsightsHuntingBookmark.DeserializeSecurityInsightsHuntingBookmark(element, options);
                     case "Account": return SecurityInsightsAccountEntity.DeserializeSecurityInsightsAccountEntity(element, options);
                     case "AzureResource": return SecurityInsightsAzureResourceEntity.DeserializeSecurityInsightsAzureResourceEntity(element, options);
-                    case "Bookmark": return SecurityInsightsHuntingBookmark.DeserializeSecurityInsightsHuntingBookmark(element, options);
                     case "CloudApplication": return SecurityInsightsCloudApplicationEntity.DeserializeSecurityInsightsCloudApplicationEntity(element, options);
                     case "DnsResolution": return SecurityInsightsDnsEntity.DeserializeSecurityInsightsDnsEntity(element, options);
                     case "File": return SecurityInsightsFileEntity.DeserializeSecurityInsightsFileEntity(element, options);
@@ -106,7 +107,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     case "Process": return SecurityInsightsProcessEntity.DeserializeSecurityInsightsProcessEntity(element, options);
                     case "RegistryKey": return SecurityInsightsRegistryKeyEntity.DeserializeSecurityInsightsRegistryKeyEntity(element, options);
                     case "RegistryValue": return SecurityInsightsRegistryValueEntity.DeserializeSecurityInsightsRegistryValueEntity(element, options);
-                    case "SecurityAlert": return SecurityInsightsAlert.DeserializeSecurityInsightsAlert(element, options);
                     case "SecurityGroup": return SecurityInsightsGroupEntity.DeserializeSecurityInsightsGroupEntity(element, options);
                     case "SubmissionMail": return SecurityInsightsSubmissionMailEntity.DeserializeSecurityInsightsSubmissionMailEntity(element, options);
                     case "Url": return SecurityInsightsUriEntity.DeserializeSecurityInsightsUriEntity(element, options);

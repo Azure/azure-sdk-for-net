@@ -90,8 +90,8 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 switch (discriminator.GetString())
                 {
-                    case "AlertSyncSettings": return SecurityAlertSyncSettings.DeserializeSecurityAlertSyncSettings(element, options);
                     case "DataExportSettings": return DataExportSettings.DeserializeDataExportSettings(element, options);
+                    case "AlertSyncSettings": return SecurityAlertSyncSettings.DeserializeSecurityAlertSyncSettings(element, options);
                 }
             }
             return UnknownSetting.DeserializeUnknownSetting(element, options);
