@@ -28,7 +28,7 @@ namespace Azure.Provisioning.WebPubSub
         public WebPubSubHub(IConstruct scope,
             WebPubSubHubProperties properties,
             WebPubSubService? parent = null,
-            string name = "Hub",
+            string name = "hub",
             string version = WebPubSubService.DefaultVersion)
             : this(scope, parent, name, version, false, (name) => ArmWebPubSubModelFactory.WebPubSubHubData(
                 name: name,

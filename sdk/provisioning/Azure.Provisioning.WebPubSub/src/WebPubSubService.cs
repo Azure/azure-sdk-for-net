@@ -34,7 +34,7 @@ namespace Azure.Provisioning.WebPubSub
             IConstruct scope,
             BillingInfoSku? sku = default,
             ResourceGroup? parent = default,
-            string name = "WebPubSub",
+            string name = "webpubsub",
             string version = DefaultVersion,
             AzureLocation? location = default)
             : this(scope, parent, name, version, false, (name) => ArmWebPubSubModelFactory.WebPubSubData(
