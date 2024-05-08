@@ -19,14 +19,15 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="primaryVerificationKey">
         /// The primary verification key.
         /// Please note <see cref="ContentKeyPolicyRestrictionTokenKey"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ContentKeyPolicyRsaTokenKey"/>, <see cref="ContentKeyPolicySymmetricTokenKey"/> and <see cref="ContentKeyPolicyX509CertificateTokenKey"/>.
+        /// The available derived classes include <see cref="ContentKeyPolicySymmetricTokenKey"/>, <see cref="ContentKeyPolicyRsaTokenKey"/> and <see cref="ContentKeyPolicyX509CertificateTokenKey"/>.
         /// </param>
         /// <param name="restrictionTokenType"> The type of token. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="issuer"/> or <paramref name="audience"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="issuer"/>, <paramref name="audience"/> or <paramref name="primaryVerificationKey"/> is null. </exception>
         public ContentKeyPolicyTokenRestriction(string issuer, string audience, ContentKeyPolicyRestrictionTokenKey primaryVerificationKey, ContentKeyPolicyRestrictionTokenType restrictionTokenType)
         {
             Argument.AssertNotNull(issuer, nameof(issuer));
             Argument.AssertNotNull(audience, nameof(audience));
+            Argument.AssertNotNull(primaryVerificationKey, nameof(primaryVerificationKey));
 
             Issuer = issuer;
             Audience = audience;
@@ -45,12 +46,12 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="primaryVerificationKey">
         /// The primary verification key.
         /// Please note <see cref="ContentKeyPolicyRestrictionTokenKey"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ContentKeyPolicyRsaTokenKey"/>, <see cref="ContentKeyPolicySymmetricTokenKey"/> and <see cref="ContentKeyPolicyX509CertificateTokenKey"/>.
+        /// The available derived classes include <see cref="ContentKeyPolicySymmetricTokenKey"/>, <see cref="ContentKeyPolicyRsaTokenKey"/> and <see cref="ContentKeyPolicyX509CertificateTokenKey"/>.
         /// </param>
         /// <param name="alternateVerificationKeys">
         /// A list of alternative verification keys.
         /// Please note <see cref="ContentKeyPolicyRestrictionTokenKey"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ContentKeyPolicyRsaTokenKey"/>, <see cref="ContentKeyPolicySymmetricTokenKey"/> and <see cref="ContentKeyPolicyX509CertificateTokenKey"/>.
+        /// The available derived classes include <see cref="ContentKeyPolicySymmetricTokenKey"/>, <see cref="ContentKeyPolicyRsaTokenKey"/> and <see cref="ContentKeyPolicyX509CertificateTokenKey"/>.
         /// </param>
         /// <param name="requiredClaims"> A list of required token claims. </param>
         /// <param name="restrictionTokenType"> The type of token. </param>
@@ -79,13 +80,13 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary>
         /// The primary verification key.
         /// Please note <see cref="ContentKeyPolicyRestrictionTokenKey"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ContentKeyPolicyRsaTokenKey"/>, <see cref="ContentKeyPolicySymmetricTokenKey"/> and <see cref="ContentKeyPolicyX509CertificateTokenKey"/>.
+        /// The available derived classes include <see cref="ContentKeyPolicySymmetricTokenKey"/>, <see cref="ContentKeyPolicyRsaTokenKey"/> and <see cref="ContentKeyPolicyX509CertificateTokenKey"/>.
         /// </summary>
         public ContentKeyPolicyRestrictionTokenKey PrimaryVerificationKey { get; set; }
         /// <summary>
         /// A list of alternative verification keys.
         /// Please note <see cref="ContentKeyPolicyRestrictionTokenKey"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ContentKeyPolicyRsaTokenKey"/>, <see cref="ContentKeyPolicySymmetricTokenKey"/> and <see cref="ContentKeyPolicyX509CertificateTokenKey"/>.
+        /// The available derived classes include <see cref="ContentKeyPolicySymmetricTokenKey"/>, <see cref="ContentKeyPolicyRsaTokenKey"/> and <see cref="ContentKeyPolicyX509CertificateTokenKey"/>.
         /// </summary>
         public IList<ContentKeyPolicyRestrictionTokenKey> AlternateVerificationKeys { get; }
         /// <summary> A list of required token claims. </summary>

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="inputs">
         /// Inputs for the pipeline job.
         /// Please note <see cref="MachineLearningJobInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MachineLearningCustomModelJobInput"/>, <see cref="MachineLearningLiteralJobInput"/>, <see cref="MachineLearningFlowModelJobInput"/>, <see cref="MachineLearningTableJobInput"/>, <see cref="MachineLearningTritonModelJobInput"/>, <see cref="MachineLearningUriFileJobInput"/> and <see cref="MachineLearningUriFolderJobInput"/>.
+        /// The available derived classes include <see cref="MachineLearningTableJobInput"/>, <see cref="MachineLearningCustomModelJobInput"/>, <see cref="MachineLearningFlowModelJobInput"/>, <see cref="MachineLearningLiteralJobInput"/>, <see cref="MachineLearningTritonModelJobInput"/>, <see cref="MachineLearningUriFileJobInput"/> and <see cref="MachineLearningUriFolderJobInput"/>.
         /// </param>
         /// <param name="jobs"> Jobs construct the Pipeline Job. </param>
         /// <param name="outputs">
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary>
         /// Inputs for the pipeline job.
         /// Please note <see cref="MachineLearningJobInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MachineLearningCustomModelJobInput"/>, <see cref="MachineLearningLiteralJobInput"/>, <see cref="MachineLearningFlowModelJobInput"/>, <see cref="MachineLearningTableJobInput"/>, <see cref="MachineLearningTritonModelJobInput"/>, <see cref="MachineLearningUriFileJobInput"/> and <see cref="MachineLearningUriFolderJobInput"/>.
+        /// The available derived classes include <see cref="MachineLearningTableJobInput"/>, <see cref="MachineLearningCustomModelJobInput"/>, <see cref="MachineLearningFlowModelJobInput"/>, <see cref="MachineLearningLiteralJobInput"/>, <see cref="MachineLearningTritonModelJobInput"/>, <see cref="MachineLearningUriFileJobInput"/> and <see cref="MachineLearningUriFolderJobInput"/>.
         /// </summary>
         public IDictionary<string, MachineLearningJobInput> Inputs { get; set; }
         /// <summary>

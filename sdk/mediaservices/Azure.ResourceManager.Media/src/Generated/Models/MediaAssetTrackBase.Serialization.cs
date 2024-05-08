@@ -71,8 +71,8 @@ namespace Azure.ResourceManager.Media.Models
                 switch (discriminator.GetString())
                 {
                     case "#Microsoft.Media.AudioTrack": return AudioTrack.DeserializeAudioTrack(element, options);
-                    case "#Microsoft.Media.TextTrack": return TextTrack.DeserializeTextTrack(element, options);
                     case "#Microsoft.Media.VideoTrack": return VideoTrack.DeserializeVideoTrack(element, options);
+                    case "#Microsoft.Media.TextTrack": return TextTrack.DeserializeTextTrack(element, options);
                 }
             }
             return UnknownTrackBase.DeserializeUnknownTrackBase(element, options);

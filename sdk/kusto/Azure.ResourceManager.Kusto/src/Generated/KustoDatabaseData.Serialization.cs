@@ -95,8 +95,8 @@ namespace Azure.ResourceManager.Kusto
             {
                 switch (discriminator.GetString())
                 {
-                    case "ReadOnlyFollowing": return KustoReadOnlyFollowingDatabase.DeserializeKustoReadOnlyFollowingDatabase(element, options);
                     case "ReadWrite": return KustoReadWriteDatabase.DeserializeKustoReadWriteDatabase(element, options);
+                    case "ReadOnlyFollowing": return KustoReadOnlyFollowingDatabase.DeserializeKustoReadOnlyFollowingDatabase(element, options);
                 }
             }
             return UnknownDatabase.DeserializeUnknownDatabase(element, options);

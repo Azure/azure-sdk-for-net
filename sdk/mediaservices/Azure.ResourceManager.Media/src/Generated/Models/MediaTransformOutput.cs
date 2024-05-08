@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="preset">
         /// Preset that describes the operations that will be used to modify, transcode, or extract insights from the source file to generate the output.
         /// Please note <see cref="MediaTransformPreset"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AudioAnalyzerPreset"/>, <see cref="BuiltInStandardEncoderPreset"/>, <see cref="StandardEncoderPreset"/> and <see cref="VideoAnalyzerPreset"/>.
+        /// The available derived classes include <see cref="VideoAnalyzerPreset"/>, <see cref="AudioAnalyzerPreset"/>, <see cref="BuiltInStandardEncoderPreset"/> and <see cref="StandardEncoderPreset"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="preset"/> is null. </exception>
         public MediaTransformOutput(MediaTransformPreset preset)
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="preset">
         /// Preset that describes the operations that will be used to modify, transcode, or extract insights from the source file to generate the output.
         /// Please note <see cref="MediaTransformPreset"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AudioAnalyzerPreset"/>, <see cref="BuiltInStandardEncoderPreset"/>, <see cref="StandardEncoderPreset"/> and <see cref="VideoAnalyzerPreset"/>.
+        /// The available derived classes include <see cref="VideoAnalyzerPreset"/>, <see cref="AudioAnalyzerPreset"/>, <see cref="BuiltInStandardEncoderPreset"/> and <see cref="StandardEncoderPreset"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MediaTransformOutput(MediaTransformOnErrorType? onError, MediaJobPriority? relativePriority, MediaTransformPreset preset, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary>
         /// Preset that describes the operations that will be used to modify, transcode, or extract insights from the source file to generate the output.
         /// Please note <see cref="MediaTransformPreset"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AudioAnalyzerPreset"/>, <see cref="BuiltInStandardEncoderPreset"/>, <see cref="StandardEncoderPreset"/> and <see cref="VideoAnalyzerPreset"/>.
+        /// The available derived classes include <see cref="VideoAnalyzerPreset"/>, <see cref="AudioAnalyzerPreset"/>, <see cref="BuiltInStandardEncoderPreset"/> and <see cref="StandardEncoderPreset"/>.
         /// </summary>
         public MediaTransformPreset Preset { get; set; }
     }
