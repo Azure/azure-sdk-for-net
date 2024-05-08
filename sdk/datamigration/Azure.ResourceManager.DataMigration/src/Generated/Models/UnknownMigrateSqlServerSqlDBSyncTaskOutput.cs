@@ -11,19 +11,19 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> Unknown version of MigrateSqlServerSqlDbSyncTaskOutput. </summary>
-    internal partial class UnknownMigrateSqlServerSqlDBSyncTaskOutput : MigrateSqlServerSqlDBSyncTaskOutput
+    internal partial class UnknownMigrateSqlServerSqlDbSyncTaskOutput : MigrateSqlServerSqlDBSyncTaskOutput
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownMigrateSqlServerSqlDBSyncTaskOutput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownMigrateSqlServerSqlDbSyncTaskOutput"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownMigrateSqlServerSqlDBSyncTaskOutput(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, resultType, serializedAdditionalRawData)
+        internal UnknownMigrateSqlServerSqlDbSyncTaskOutput(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, resultType, serializedAdditionalRawData)
         {
             ResultType = resultType ?? "Unknown";
         }
 
-        /// <summary> Initializes a new instance of <see cref="UnknownMigrateSqlServerSqlDBSyncTaskOutput"/> for deserialization. </summary>
-        internal UnknownMigrateSqlServerSqlDBSyncTaskOutput()
+        /// <summary> Initializes a new instance of <see cref="UnknownMigrateSqlServerSqlDbSyncTaskOutput"/> for deserialization. </summary>
+        internal UnknownMigrateSqlServerSqlDbSyncTaskOutput()
         {
         }
     }

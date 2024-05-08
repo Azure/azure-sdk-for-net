@@ -11,19 +11,19 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> Unknown version of MigratePostgreSqlAzureDbForPostgreSqlSyncTaskOutput. </summary>
-    internal partial class UnknownMigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput : MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput
+    internal partial class UnknownMigratePostgreSqlAzureDbForPostgreSqlSyncTaskOutput : MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownMigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownMigratePostgreSqlAzureDbForPostgreSqlSyncTaskOutput"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownMigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, resultType, serializedAdditionalRawData)
+        internal UnknownMigratePostgreSqlAzureDbForPostgreSqlSyncTaskOutput(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, resultType, serializedAdditionalRawData)
         {
             ResultType = resultType ?? "Unknown";
         }
 
-        /// <summary> Initializes a new instance of <see cref="UnknownMigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput"/> for deserialization. </summary>
-        internal UnknownMigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput()
+        /// <summary> Initializes a new instance of <see cref="UnknownMigratePostgreSqlAzureDbForPostgreSqlSyncTaskOutput"/> for deserialization. </summary>
+        internal UnknownMigratePostgreSqlAzureDbForPostgreSqlSyncTaskOutput()
         {
         }
     }

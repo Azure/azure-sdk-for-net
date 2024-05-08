@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    internal partial class UnknownMongoDBProgress : IUtf8JsonSerializable, IJsonModel<MongoDBProgress>
+    internal partial class UnknownMongoDbProgress : IUtf8JsonSerializable, IJsonModel<MongoDBProgress>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MongoDBProgress>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return DeserializeMongoDBProgress(document.RootElement, options);
         }
 
-        internal static UnknownMongoDBProgress DeserializeUnknownMongoDBProgress(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UnknownMongoDbProgress DeserializeUnknownMongoDbProgress(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownMongoDBProgress(
+            return new UnknownMongoDbProgress(
                 bytesCopied,
                 documentsCopied,
                 elapsedTime,
