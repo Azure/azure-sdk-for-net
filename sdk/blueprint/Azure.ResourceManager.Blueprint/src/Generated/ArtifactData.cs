@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Blueprint
     /// A class representing the Artifact data model.
     /// Represents a blueprint artifact.
     /// Please note <see cref="ArtifactData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="PolicyAssignmentArtifact"/>, <see cref="RoleAssignmentArtifact"/> and <see cref="TemplateArtifact"/>.
+    /// The available derived classes include <see cref="TemplateArtifact"/>, <see cref="RoleAssignmentArtifact"/> and <see cref="PolicyAssignmentArtifact"/>.
     /// </summary>
     public abstract partial class ArtifactData : ResourceData
     {
