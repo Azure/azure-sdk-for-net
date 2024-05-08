@@ -11,18 +11,18 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary> Unknown version of SAPSizingRecommendationResult. </summary>
-    internal partial class UnknownSapSizingRecommendationResult : SapSizingRecommendationResult
+    internal partial class UnknownSAPSizingRecommendationResult : SapSizingRecommendationResult
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownSapSizingRecommendationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownSAPSizingRecommendationResult"/>. </summary>
         /// <param name="deploymentType"> The type of SAP deployment, single server or Three tier. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownSapSizingRecommendationResult(SapDeploymentType deploymentType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(deploymentType, serializedAdditionalRawData)
+        internal UnknownSAPSizingRecommendationResult(SapDeploymentType deploymentType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(deploymentType, serializedAdditionalRawData)
         {
             DeploymentType = deploymentType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="UnknownSapSizingRecommendationResult"/> for deserialization. </summary>
-        internal UnknownSapSizingRecommendationResult()
+        /// <summary> Initializes a new instance of <see cref="UnknownSAPSizingRecommendationResult"/> for deserialization. </summary>
+        internal UnknownSAPSizingRecommendationResult()
         {
         }
     }

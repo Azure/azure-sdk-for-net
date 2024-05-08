@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="value">
         /// List of SSIS object metadata.
         /// Please note <see cref="SynapseSsisObjectMetadata"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SynapseSsisEnvironment"/>, <see cref="SynapseSsisFolder"/>, <see cref="SynapseSsisPackage"/> and <see cref="SynapseSsisProject"/>.
+        /// The available derived classes include <see cref="SynapseSsisFolder"/>, <see cref="SynapseSsisProject"/>, <see cref="SynapseSsisPackage"/> and <see cref="SynapseSsisEnvironment"/>.
         /// </param>
         /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <summary>
         /// List of SSIS object metadata.
         /// Please note <see cref="SynapseSsisObjectMetadata"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SynapseSsisEnvironment"/>, <see cref="SynapseSsisFolder"/>, <see cref="SynapseSsisPackage"/> and <see cref="SynapseSsisProject"/>.
+        /// The available derived classes include <see cref="SynapseSsisFolder"/>, <see cref="SynapseSsisProject"/>, <see cref="SynapseSsisPackage"/> and <see cref="SynapseSsisEnvironment"/>.
         /// </summary>
         public IReadOnlyList<SynapseSsisObjectMetadata> Value { get; }
         /// <summary> The link to the next page of results, if any remaining results exist. </summary>

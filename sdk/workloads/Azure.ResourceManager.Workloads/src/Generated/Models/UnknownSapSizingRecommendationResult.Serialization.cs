@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    internal partial class UnknownSapSizingRecommendationResult : IUtf8JsonSerializable, IJsonModel<SapSizingRecommendationResult>
+    internal partial class UnknownSAPSizingRecommendationResult : IUtf8JsonSerializable, IJsonModel<SapSizingRecommendationResult>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapSizingRecommendationResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Workloads.Models
             return DeserializeSapSizingRecommendationResult(document.RootElement, options);
         }
 
-        internal static UnknownSapSizingRecommendationResult DeserializeUnknownSapSizingRecommendationResult(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UnknownSAPSizingRecommendationResult DeserializeUnknownSAPSizingRecommendationResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownSapSizingRecommendationResult(deploymentType, serializedAdditionalRawData);
+            return new UnknownSAPSizingRecommendationResult(deploymentType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SapSizingRecommendationResult>.Write(ModelReaderWriterOptions options)

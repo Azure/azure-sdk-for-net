@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="configuration">
         /// Defines if the SAP system is being created using Azure Center for SAP solutions (ACSS) or if an existing SAP system is being registered with ACSS
         /// Please note <see cref="SapConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DeploymentConfiguration"/>, <see cref="DeploymentWithOSConfiguration"/> and <see cref="DiscoveryConfiguration"/>.
+        /// The available derived classes include <see cref="DiscoveryConfiguration"/>, <see cref="DeploymentConfiguration"/> and <see cref="DeploymentWithOSConfiguration"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="configuration"/> is null. </exception>
         public SapVirtualInstanceData(AzureLocation location, SapEnvironmentType environment, SapProductType sapProduct, SapConfiguration configuration) : base(location)
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="configuration">
         /// Defines if the SAP system is being created using Azure Center for SAP solutions (ACSS) or if an existing SAP system is being registered with ACSS
         /// Please note <see cref="SapConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DeploymentConfiguration"/>, <see cref="DeploymentWithOSConfiguration"/> and <see cref="DiscoveryConfiguration"/>.
+        /// The available derived classes include <see cref="DiscoveryConfiguration"/>, <see cref="DeploymentConfiguration"/> and <see cref="DeploymentWithOSConfiguration"/>.
         /// </param>
         /// <param name="managedResourceGroupConfiguration"> Managed resource group configuration. </param>
         /// <param name="status"> Defines the SAP Instance status. </param>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Workloads
         /// <summary>
         /// Defines if the SAP system is being created using Azure Center for SAP solutions (ACSS) or if an existing SAP system is being registered with ACSS
         /// Please note <see cref="SapConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DeploymentConfiguration"/>, <see cref="DeploymentWithOSConfiguration"/> and <see cref="DiscoveryConfiguration"/>.
+        /// The available derived classes include <see cref="DiscoveryConfiguration"/>, <see cref="DeploymentConfiguration"/> and <see cref="DeploymentWithOSConfiguration"/>.
         /// </summary>
         public SapConfiguration Configuration { get; set; }
         /// <summary> Managed resource group configuration. </summary>

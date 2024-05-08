@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Environment": return SynapseSsisEnvironment.DeserializeSynapseSsisEnvironment(element, options);
                     case "Folder": return SynapseSsisFolder.DeserializeSynapseSsisFolder(element, options);
-                    case "Package": return SynapseSsisPackage.DeserializeSynapseSsisPackage(element, options);
                     case "Project": return SynapseSsisProject.DeserializeSynapseSsisProject(element, options);
+                    case "Package": return SynapseSsisPackage.DeserializeSynapseSsisPackage(element, options);
+                    case "Environment": return SynapseSsisEnvironment.DeserializeSynapseSsisEnvironment(element, options);
                 }
             }
             return UnknownSsisObjectMetadata.DeserializeUnknownSsisObjectMetadata(element, options);
