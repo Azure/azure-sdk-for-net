@@ -50,7 +50,7 @@ namespace Azure.Provisioning.Tests.Samples
 
             keyVault.AssignProperty(
                 data => data.Properties.EnableSoftDelete,
-                new Parameter("enableSoftDelete", defaultValue: true, kind: BicepKind.Bool, description: "Enable soft delete for the key vault."));
+                new Parameter("enableSoftDelete", defaultValue: true, type: BicepType.Bool, description: "Enable soft delete for the key vault."));
 
 #if SNIPPET
             infrastructure.Build();
@@ -70,9 +70,9 @@ namespace Azure.Provisioning.Tests.Samples
 
             keyVault.AssignProperty(
                 data => data.Properties.EnableSoftDelete,
-                new Parameter("enableSoftDelete", defaultValue: true, kind: BicepKind.Bool, description: "Enable soft delete for the key vault."));
+                new Parameter("enableSoftDelete", defaultValue: true, type: BicepType.Bool, description: "Enable soft delete for the key vault."));
 
-            keyVault.AddOutput("VAULT_URI", kind: BicepKind.String, data => data.Properties.VaultUri);
+            keyVault.AddOutput("VAULT_URI", data => data.Properties.VaultUri);
 
 #if SNIPPET
             infrastructure.Build();

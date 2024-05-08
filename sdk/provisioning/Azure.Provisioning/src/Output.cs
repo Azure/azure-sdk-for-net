@@ -28,9 +28,9 @@ namespace Azure.Provisioning
         public bool IsSecure { get; }
 
         /// <summary>
-        /// Gets the kind of the output.
+        /// Gets the type of the output.
         /// </summary>
-        public BicepKind Kind { get; }
+        public BicepType BicepType { get; }
 
         internal IConstruct Source { get; }
 
@@ -45,8 +45,8 @@ namespace Azure.Provisioning
         /// <param name="resource">The output resource.</param>
         /// <param name="isLiteral">Is the output a literal value.</param>
         /// <param name="isSecure">Is the output secure.</param>
-        /// <param name="kind">The kind of the output.</param>
-        internal Output(string name, string value, IConstruct source, Resource resource, bool isLiteral = false, bool isSecure = false, BicepKind kind = BicepKind.String)
+        /// <param name="type">The type of the output.</param>
+        internal Output(string name, string value, IConstruct source, Resource resource, bool isLiteral = false, bool isSecure = false, BicepType type = BicepType.String)
         {
             Name = name;
             Value = value;
@@ -54,7 +54,7 @@ namespace Azure.Provisioning
             IsSecure = isSecure;
             Source = source;
             Resource = resource;
-            Kind = kind;
+            BicepType = type;
         }
     }
 }

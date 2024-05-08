@@ -4,9 +4,9 @@
 namespace Azure.Provisioning
 {
     /// <summary>
-    /// The kind of the Bicep parameter or output.
+    /// The type of the Bicep parameter or output.
     /// </summary>
-    public enum BicepKind
+    public enum BicepType
     {
         /// <summary>
         /// A string.

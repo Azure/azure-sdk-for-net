@@ -28,7 +28,7 @@ namespace Azure.Provisioning.Storage.Tests
             storageAccount.AssignProperty(a => a.PrimaryEndpoints,
                 new Parameter(
                     "primaryEndpoints",
-                    BicepKind.Object,
+                    BicepType.Object,
                     defaultValue: "{ " +
                                   "'blob': 'https://photoacct.blob.core.windows.net/' " + Environment.NewLine +
                                   "'file': 'https://photoacct.file.core.windows.net/' " + Environment.NewLine +
@@ -122,7 +122,7 @@ namespace Azure.Provisioning.Storage.Tests
             var storageAccount1 = infra.AddStorageAccount(kind: StorageKind.Storage, sku: StorageSkuName.StandardGrs, parent: rg1);
 
             var output1 = storageAccount1.AddOutput("STORAGE_KIND", data => data.Kind);
-            var output2 = storageAccount1.AddOutput("PRIMARY_ENDPOINTS", BicepKind.Object, data => data.PrimaryEndpoints);
+            var output2 = storageAccount1.AddOutput("PRIMARY_ENDPOINTS", data => data.PrimaryEndpoints, BicepType.Object);
 
             KeyVaults.KeyVault keyVault = infra.AddKeyVault(resourceGroup: rg1);
             keyVault.AssignProperty(data => data.Properties.EnableSoftDelete, new Parameter("enableSoftDelete", description: "Enable soft delete", defaultValue: true, isSecure: false));

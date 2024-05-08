@@ -188,30 +188,9 @@ namespace Azure.Provisioning
 
         private string GetOutputString(Output output)
         {
-            string value;
+            string value = ReferenceEquals(this, output.Resource.ModuleScope) ? output.Value : $"{output.Resource.ModuleScope!.Name}.outputs.{output.Name}";
 
-            if (output.IsLiteral)
-            {
-                value = output.Kind switch
-                {
-                    BicepKind.Bool => output.Value.ToLower(),
-                    BicepKind.Int => output.Value,
-                    BicepKind.Array => output.Value,
-                    BicepKind.Object => output.Value,
-                    BicepKind.String => $"'{output.Value}'",
-                    _ => throw new NotSupportedException("Invalid output kind.")
-                };
-            }
-            else if (ReferenceEquals(this, output.Resource.ModuleScope))
-            {
-                value = output.Value.ToString()!;
-            }
-            else
-            {
-                value = $"{output.Resource.ModuleScope!.Name}.outputs.{output.Name}";
-            }
-
-            return $"output {output.Name} {output.Kind.ToString().ToLower()} = {value}";
+            return $"output {output.Name} {output.BicepType.ToString().ToLower()} = {value}";
         }
 
         private void GetAllOutputsRecursive(IConstruct construct, HashSet<Output> visited, bool isChild)
@@ -252,6 +231,7 @@ namespace Azure.Provisioning
 
         private string GetParameterDeclaration(Parameter parameter)
         {
+            string declaration = $"param {parameter.Name} {parameter.BicepType.ToString().ToLower()}";
             string value;
 
             if (parameter.DefaultValue is null)
@@ -264,18 +244,23 @@ namespace Azure.Provisioning
             }
             else
             {
-                value = parameter.Kind switch
+                value = parameter.BicepType switch
                 {
-                    BicepKind.Bool => parameter.DefaultValue.ToString()!.ToLower(),
-                    BicepKind.Int => parameter.DefaultValue.ToString()!,
-                    BicepKind.Array => parameter.DefaultValue.ToString()!,
-                    BicepKind.Object => parameter.DefaultValue.ToString()!,
-                    BicepKind.String => $"'{parameter.DefaultValue}'",
+                    BicepType.Bool => parameter.DefaultValue.ToString()!.ToLower(),
+                    BicepType.Int => parameter.DefaultValue.ToString()!,
+                    BicepType.Array => parameter.DefaultValue.ToString()!,
+                    BicepType.Object => parameter.DefaultValue.ToString()!,
+                    BicepType.String => $"'{parameter.DefaultValue}'",
                     _ => throw new NotSupportedException("Invalid parameter kind.")
                 };
             }
 
-            return $"param {parameter.Name} {parameter.Kind.ToString().ToLower()}{(!string.IsNullOrEmpty(value) ? $" = {value}" : string.Empty)}";
+            if (!string.IsNullOrEmpty(value))
+            {
+                declaration += $" = {value}";
+            }
+
+            return declaration;
         }
 
         private bool ShouldExposeParameter(Parameter parameter, HashSet<Output> outputs)

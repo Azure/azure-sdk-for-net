@@ -35,9 +35,9 @@ namespace Azure.Provisioning
         public bool IsSecure { get; }
 
         /// <summary>
-        /// Gets the kind of the parameter.
+        /// Gets the type of the parameter.
         /// </summary>
-        public BicepKind Kind { get; }
+        public BicepType BicepType { get; }
 
         /// <summary>
         /// Gets a value indicating whether the parameter is an expression.
@@ -71,7 +71,7 @@ namespace Azure.Provisioning
             IsSecure = output.IsSecure;
             Value = output.Value;
             Source = output.Source;
-            Kind = output.Kind;
+            BicepType = output.BicepType;
             Output = output;
         }
 
@@ -94,8 +94,8 @@ namespace Azure.Provisioning
         /// <param name="defaultValue">The parameter defaultValue.</param>
         /// <param name="isSecure">Is the parameter secure.</param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public Parameter(string name, string? description = default, object? defaultValue = default, bool isSecure = false)
-            : this(name, BicepKind.String, description, defaultValue, isSecure)
+        public Parameter(string name, string? description, object? defaultValue, bool isSecure)
+            : this(name, BicepType.String, description, defaultValue, isSecure)
         {
         }
 
@@ -103,14 +103,14 @@ namespace Azure.Provisioning
         /// Initializes a new instance of the <see cref="Parameter"/>.
         /// </summary>
         /// <param name="name">The parameter name.</param>
-        /// <param name="kind">The parameter kind.</param>
+        /// <param name="type">The parameter type.</param>
         /// <param name="description">The parameter description.</param>
         /// <param name="defaultValue">The parameter defaultValue.</param>
         /// <param name="isSecure">Is the parameter secure.</param>
-        public Parameter(string name, BicepKind kind, string? description = default, object? defaultValue = default, bool isSecure = false)
+        public Parameter(string name, BicepType type = BicepType.String, string? description = default, object? defaultValue = default, bool isSecure = false)
         {
             Name = name;
-            Kind = kind;
+            BicepType = type;
             Description = description;
             DefaultValue = defaultValue;
             IsSecure = isSecure;
@@ -125,7 +125,7 @@ namespace Azure.Provisioning
         /// <param name="isSecure">Is the parameter secure.</param>
         /// <param name="isExpression">Is the parameter an expression.</param>
         internal Parameter(string name, string? description, object? defaultValue = default, bool isSecure = false, bool isExpression = false)
-        : this(name, BicepKind.String, description, defaultValue, isSecure)
+        : this(name, BicepType.String, description, defaultValue, isSecure)
         {
             IsExpression = isExpression;
         }

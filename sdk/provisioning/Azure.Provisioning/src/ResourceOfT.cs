@@ -103,23 +103,22 @@ namespace Azure.Provisioning
         /// <param name="isSecure">Is the output secure.</param>
         /// <returns>The <see cref="Output"/>.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public Output AddOutput(string outputName, Expression<Func<T, object?>> propertySelector, bool isLiteral = false, bool isSecure = false)
-            => AddOutput(outputName, BicepKind.String, propertySelector, isLiteral, isSecure);
+        public Output AddOutput(string outputName, Expression<Func<T, object?>> propertySelector, bool isLiteral, bool isSecure)
+            => AddOutput(outputName, propertySelector, BicepType.String, isSecure);
 
         /// <summary>
         /// Adds an output to the resource.
         /// </summary>
         /// <param name="outputName">The name of the output.</param>
         /// <param name="propertySelector">A lambda expression to select the property to use as the source of the output.</param>
-        /// <param name="isLiteral">Is the output literal.</param>
+        /// <param name="type">The type of the output.</param>
         /// <param name="isSecure">Is the output secure.</param>
-        /// <param name="kind">The kind of the output.</param>
         /// <returns>The <see cref="Output"/>.</returns>
-        public Output AddOutput(string outputName, BicepKind kind, Expression<Func<T, object?>> propertySelector, bool isLiteral = false, bool isSecure = false)
+        public Output AddOutput(string outputName, Expression<Func<T, object?>> propertySelector, BicepType type = BicepType.String, bool isSecure = false)
         {
             (_, _, string expression) = EvaluateLambda(propertySelector, true);
 
-            return AddOutput(outputName, expression, isLiteral, isSecure, kind: kind);
+            return AddOutput(outputName, expression, false, isSecure, type: type);
         }
 
         /// <summary>
@@ -132,24 +131,24 @@ namespace Azure.Provisioning
         /// <param name="isSecure">Is the output secure.</param>
         /// <returns>The <see cref="Output"/>.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public Output AddOutput(string outputName, string formattedString, Expression<Func<T, object?>> propertySelector, bool isLiteral = false, bool isSecure = false)
-            => AddOutput(outputName, BicepKind.String, formattedString, propertySelector, isLiteral, isSecure);
+        public Output AddOutput(string outputName, string formattedString, Expression<Func<T, object?>> propertySelector, bool isLiteral, bool isSecure)
+            => AddOutput(outputName, formattedString, propertySelector, isLiteral, isSecure);
 
         /// <summary>
         /// Adds an output to the resource.
         /// </summary>
         /// <param name="outputName">The name of the output.</param>
-        /// <param name="kind">The kind of the output.</param>
+        /// <param name="type">The kind of the output.</param>
         /// <param name="propertySelector">A lambda expression to select the property to use as the source of the output.</param>
         /// <param name="formattedString">A tokenized string containing the output.</param>
         /// <param name="isLiteral">Is the output literal.</param>
         /// <param name="isSecure">Is the output secure.</param>
         /// <returns>The <see cref="Output"/>.</returns>
-        public Output AddOutput(string outputName, BicepKind kind, string formattedString, Expression<Func<T, object?>> propertySelector, bool isLiteral = false, bool isSecure = false)
+        public Output AddOutput(string outputName, string formattedString, Expression<Func<T, object?>> propertySelector, BicepType type = BicepType.String, bool isLiteral = false, bool isSecure = false)
         {
             (_, _, string expression) = EvaluateLambda(propertySelector, true);
 
-            return AddOutput(outputName, expression, isLiteral, isSecure, formattedString);
+            return AddOutput(outputName, expression, isLiteral, isSecure, formattedString, type);
         }
 
         private (object Instance, string PropertyName, string Expression) EvaluateLambda(Expression<Func<T, object?>> propertySelector, bool isOutput = false)

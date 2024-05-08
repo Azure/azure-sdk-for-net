@@ -1,6 +1,6 @@
 namespace Azure.Provisioning
 {
-    public enum BicepKind
+    public enum BicepType
     {
         String = 0,
         Int = 1,
@@ -73,9 +73,9 @@ namespace Azure.Provisioning
     public partial class Output
     {
         internal Output() { }
+        public Azure.Provisioning.BicepType BicepType { get { throw null; } }
         public bool IsLiteral { get { throw null; } }
         public bool IsSecure { get { throw null; } }
-        public Azure.Provisioning.BicepKind Kind { get { throw null; } }
         public string Name { get { throw null; } }
         public string Value { get { throw null; } }
     }
@@ -85,14 +85,14 @@ namespace Azure.Provisioning
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public Parameter(Azure.Provisioning.Output output) { throw null; }
-        public Parameter(string name, Azure.Provisioning.BicepKind kind, string? description = null, object? defaultValue = null, bool isSecure = false) { throw null; }
+        public Parameter(string name, Azure.Provisioning.BicepType type = Azure.Provisioning.BicepType.String, string? description = null, object? defaultValue = null, bool isSecure = false) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public Parameter(string name, string? description = null, object? defaultValue = null, bool isSecure = false) { throw null; }
+        public Parameter(string name, string? description, object? defaultValue, bool isSecure) { throw null; }
+        public Azure.Provisioning.BicepType BicepType { get { throw null; } }
         public object? DefaultValue { get { throw null; } }
         public string? Description { get { throw null; } }
         public bool IsFromOutput { get { throw null; } }
         public bool IsSecure { get { throw null; } }
-        public Azure.Provisioning.BicepKind Kind { get { throw null; } }
         public string Name { get { throw null; } }
         public Azure.Provisioning.IConstruct? Source { get { throw null; } }
         public string? Value { get { throw null; } }
@@ -128,12 +128,12 @@ namespace Azure.Provisioning
     {
         protected Resource(Azure.Provisioning.IConstruct scope, Azure.Provisioning.Resource? parent, string resourceName, Azure.Core.ResourceType resourceType, string version, System.Func<string, T> createProperties, bool isExisting = false) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, object>)) { }
         public T Properties { get { throw null; } }
-        public Azure.Provisioning.Output AddOutput(string outputName, Azure.Provisioning.BicepKind kind, System.Linq.Expressions.Expression<System.Func<T, object?>> propertySelector, bool isLiteral = false, bool isSecure = false) { throw null; }
-        public Azure.Provisioning.Output AddOutput(string outputName, Azure.Provisioning.BicepKind kind, string formattedString, System.Linq.Expressions.Expression<System.Func<T, object?>> propertySelector, bool isLiteral = false, bool isSecure = false) { throw null; }
+        public Azure.Provisioning.Output AddOutput(string outputName, System.Linq.Expressions.Expression<System.Func<T, object?>> propertySelector, Azure.Provisioning.BicepType type = Azure.Provisioning.BicepType.String, bool isSecure = false) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public Azure.Provisioning.Output AddOutput(string outputName, System.Linq.Expressions.Expression<System.Func<T, object?>> propertySelector, bool isLiteral = false, bool isSecure = false) { throw null; }
+        public Azure.Provisioning.Output AddOutput(string outputName, System.Linq.Expressions.Expression<System.Func<T, object?>> propertySelector, bool isLiteral, bool isSecure) { throw null; }
+        public Azure.Provisioning.Output AddOutput(string outputName, string formattedString, System.Linq.Expressions.Expression<System.Func<T, object?>> propertySelector, Azure.Provisioning.BicepType type = Azure.Provisioning.BicepType.String, bool isLiteral = false, bool isSecure = false) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public Azure.Provisioning.Output AddOutput(string outputName, string formattedString, System.Linq.Expressions.Expression<System.Func<T, object?>> propertySelector, bool isLiteral = false, bool isSecure = false) { throw null; }
+        public Azure.Provisioning.Output AddOutput(string outputName, string formattedString, System.Linq.Expressions.Expression<System.Func<T, object?>> propertySelector, bool isLiteral, bool isSecure) { throw null; }
         public void AssignProperty(System.Linq.Expressions.Expression<System.Func<T, object?>> propertySelector, Azure.Provisioning.Parameter parameter) { }
         public void AssignProperty(System.Linq.Expressions.Expression<System.Func<T, object?>> propertySelector, string propertyValue) { }
     }

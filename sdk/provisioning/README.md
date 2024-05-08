@@ -10,25 +10,12 @@ Azure.Provisioning contains the core functionality for the Azure Provisioning li
 Install the specific service libraries for .NET with [NuGet](https://www.nuget.org/) required for your application.
 
 ```dotnetcli
-dotnet add package Azure.Provisioning.AppConfiguration
-dotnet add package Azure.Provisioning.ApplicationInsights
-dotnet add package Azure.Provisioning.CognitiveServices
-dotnet add package Azure.Provisioning.CosmosDB
-dotnet add package Azure.Provisioning.EventHubs
 dotnet add package Azure.Provisioning.KeyVault
-dotnet add package Azure.Provisioning.OperationalInsights
-dotnet add package Azure.Provisioning.PostgreSql
-dotnet add package Azure.Provisioning.Redis
-dotnet add package Azure.Provisioning.Resources
-dotnet add package Azure.Provisioning.Search
-dotnet add package Azure.Provisioning.ServiceBus
-dotnet add package Azure.Provisioning.SignalR
-dotnet add package Azure.Provisioning.Sql
-dotnet add package Azure.Provisioning.Storage
 ```
 
 Note that `Azure.Provisioning` will be pulled in as a transitive dependency
-of any of the service libraries.
+of any of the service libraries. All other service libraries will follow the
+pattern of `Azure.Provisioning.{ServiceName}`.
 
 ### Prerequisites
 
@@ -194,6 +181,8 @@ output VAULT_URI string = keyVault_7LloDNJK5.properties.vaultUri
 -   Check [previous questions](https://stackoverflow.com/questions/tagged/azure+.net) or ask new ones on Stack Overflow using Azure and .NET tags.
 
 ## Next steps
+
+Learn more about deploying bicep using the Azure Developer CLI [here](https://learn.microsoft.com/azure/developer/azure-developer-cli/get-started?tabs=localinstall&pivots=programming-language-csharp).
 
 ## Contributing
 
