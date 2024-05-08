@@ -8,7 +8,5 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
     public class ProgrammableConnectivityClientTestEnvironment : TestEnvironment
     {
         public string Endpoint => GetRecordedVariable("ProgrammableConnectivity_ENDPOINT");
-
-        // Add other client paramters here as above.
     }
 }

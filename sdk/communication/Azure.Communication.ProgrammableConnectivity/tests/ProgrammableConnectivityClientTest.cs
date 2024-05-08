@@ -18,7 +18,7 @@ using NUnit.Framework;
 
 namespace Azure.Communication.ProgrammableConnectivity.Tests
 {
-    public class ProgrammableConnectivityClientTest : RecordedTestBase
+    public class ProgrammableConnectivityClientTest : RecordedTestBase<ProgrammableConnectivityClientTestEnvironment>
     {
         private TokenCredential credential;
 
@@ -27,7 +27,7 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
             HeaderRegexSanitizers.Add(
                 new HeaderRegexSanitizer("apc-gateway-id", "**********/resourceGroups")
                 { Regex = @"[A-Za-z0-9-\-]*/resourceGroups" });
-            credential = new DefaultAzureCredential();
+            credential = TestEnvironment.Credential;
         }
 
         [RecordedTest]
