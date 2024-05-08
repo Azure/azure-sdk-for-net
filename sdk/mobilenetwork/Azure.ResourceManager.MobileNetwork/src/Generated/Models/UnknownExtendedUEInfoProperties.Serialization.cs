@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    internal partial class UnknownExtendedUEInfoProperties : IUtf8JsonSerializable, IJsonModel<ExtendedUEInfoProperties>
+    internal partial class UnknownExtendedUeInfoProperties : IUtf8JsonSerializable, IJsonModel<ExtendedUEInfoProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExtendedUEInfoProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             return DeserializeExtendedUEInfoProperties(document.RootElement, options);
         }
 
-        internal static UnknownExtendedUEInfoProperties DeserializeUnknownExtendedUEInfoProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UnknownExtendedUeInfoProperties DeserializeUnknownExtendedUeInfoProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownExtendedUEInfoProperties(ratType, lastReadAt, serializedAdditionalRawData);
+            return new UnknownExtendedUeInfoProperties(ratType, lastReadAt, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExtendedUEInfoProperties>.Write(ModelReaderWriterOptions options)
