@@ -38,19 +38,18 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void BuildFilterExpressionPrefersSequenceNumber()
+        public void BuildFilterExpressionPrefersOffset()
         {
             // Set all properties for the event position.
 
             var offset = 1;
-            var sequenceNumber = 222;
             var position = EventPosition.FromOffset(offset);
             position.SequenceNumber = "222";
             position.EnqueuedTime = DateTimeOffset.Parse("2015-10-27T12:00:00Z");
 
             var filter = AmqpFilter.BuildFilterExpression(position);
-            Assert.That(filter, Contains.Substring(AmqpFilter.SequenceNumberName), "The sequence number should have precedence for filtering.");
-            Assert.That(filter, Contains.Substring(sequenceNumber.ToString()), "The offset value should be present in the filter.");
+            Assert.That(filter, Contains.Substring(AmqpFilter.OffsetName), "The offset should have precedence for filtering.");
+            Assert.That(filter, Contains.Substring(offset.ToString()), "The offset value should be present in the filter.");
         }
 
         /// <summary>
@@ -70,25 +69,6 @@ namespace Azure.Messaging.EventHubs.Tests
             var filter = AmqpFilter.BuildFilterExpression(position);
             Assert.That(filter, Contains.Substring(AmqpFilter.SequenceNumberName), "The sequence number should have precedence over the enqueued time for filtering.");
             Assert.That(filter, Contains.Substring(sequence.ToString()), "The sequence number value should be present in the filter.");
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="AmqpFilter.BuildFilterExpression(EventPosition)" />
-        ///   method.
-        /// </summary>
-        ///
-        [Test]
-        public void BuildFilterExpressionSetsOffsetAsSequenceNumber()
-        {
-            // Set all properties for the event position.
-
-            var offset = 2345;
-            var position = EventPosition.FromOffset(offset);
-            position.EnqueuedTime = DateTimeOffset.Parse("2015-10-27T12:00:00Z");
-
-            var filter = AmqpFilter.BuildFilterExpression(position);
-            Assert.That(filter, Contains.Substring(AmqpFilter.SequenceNumberName), "The offset should be set as a sequence number.");
-            Assert.That(filter, Contains.Substring(offset.ToString()), "The offset value should be present in the filter.");
         }
 
         /// <summary>
