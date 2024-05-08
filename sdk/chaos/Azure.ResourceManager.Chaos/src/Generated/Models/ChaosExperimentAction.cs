@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Chaos.Models
     /// <summary>
     /// Model that represents the base action model. 9 total per experiment.
     /// Please note <see cref="ChaosExperimentAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="ChaosContinuousAction"/>, <see cref="ChaosDelayAction"/> and <see cref="ChaosDiscreteAction"/>.
+    /// The available derived classes include <see cref="ChaosDelayAction"/>, <see cref="ChaosDiscreteAction"/> and <see cref="ChaosContinuousAction"/>.
     /// </summary>
     public abstract partial class ChaosExperimentAction
     {
