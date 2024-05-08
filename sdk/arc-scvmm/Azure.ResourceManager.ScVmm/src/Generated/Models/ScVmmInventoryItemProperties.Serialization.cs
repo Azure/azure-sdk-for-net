@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.ScVmm.Models
                 switch (discriminator.GetString())
                 {
                     case "Cloud": return CloudInventoryItem.DeserializeCloudInventoryItem(element, options);
-                    case "VirtualMachine": return VirtualMachineInventoryItem.DeserializeVirtualMachineInventoryItem(element, options);
-                    case "VirtualMachineTemplate": return VirtualMachineTemplateInventoryItem.DeserializeVirtualMachineTemplateInventoryItem(element, options);
                     case "VirtualNetwork": return VirtualNetworkInventoryItem.DeserializeVirtualNetworkInventoryItem(element, options);
+                    case "VirtualMachineTemplate": return VirtualMachineTemplateInventoryItem.DeserializeVirtualMachineTemplateInventoryItem(element, options);
+                    case "VirtualMachine": return VirtualMachineInventoryItem.DeserializeVirtualMachineInventoryItem(element, options);
                 }
             }
             return UnknownInventoryItemProperties.DeserializeUnknownInventoryItemProperties(element, options);

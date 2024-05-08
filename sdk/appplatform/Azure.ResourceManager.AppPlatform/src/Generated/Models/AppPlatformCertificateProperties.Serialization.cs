@@ -115,8 +115,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "ContentCertificate": return AppPlatformContentCertificateProperties.DeserializeAppPlatformContentCertificateProperties(element, options);
                     case "KeyVaultCertificate": return AppPlatformKeyVaultCertificateProperties.DeserializeAppPlatformKeyVaultCertificateProperties(element, options);
+                    case "ContentCertificate": return AppPlatformContentCertificateProperties.DeserializeAppPlatformContentCertificateProperties(element, options);
                 }
             }
             return UnknownCertificateProperties.DeserializeUnknownCertificateProperties(element, options);

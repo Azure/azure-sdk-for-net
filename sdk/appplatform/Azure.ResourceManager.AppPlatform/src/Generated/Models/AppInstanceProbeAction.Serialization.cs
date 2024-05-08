@@ -70,8 +70,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "ExecAction": return AppInstanceExecAction.DeserializeAppInstanceExecAction(element, options);
                     case "HTTPGetAction": return AppInstanceHttpGetAction.DeserializeAppInstanceHttpGetAction(element, options);
+                    case "ExecAction": return AppInstanceExecAction.DeserializeAppInstanceExecAction(element, options);
                     case "TCPSocketAction": return AppInstanceTcpSocketAction.DeserializeAppInstanceTcpSocketAction(element, options);
                 }
             }
