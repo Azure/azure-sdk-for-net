@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary>
     /// Gets or sets the resource settings.
     /// Please note <see cref="MoverResourceSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="MoverAvailabilitySetResourceSettings"/>, <see cref="DiskEncryptionSetResourceSettings"/>, <see cref="VirtualMachineResourceSettings"/>, <see cref="KeyVaultResourceSettings"/>, <see cref="LoadBalancerResourceSettings"/>, <see cref="NetworkInterfaceResourceSettings"/>, <see cref="NetworkSecurityGroupResourceSettings"/>, <see cref="PublicIPAddressResourceSettings"/>, <see cref="MoverVirtualNetworkResourceSettings"/>, <see cref="SqlServerResourceSettings"/>, <see cref="SqlDatabaseResourceSettings"/>, <see cref="SqlElasticPoolResourceSettings"/> and <see cref="ResourceGroupResourceSettings"/>.
+    /// The available derived classes include <see cref="VirtualMachineResourceSettings"/>, <see cref="MoverAvailabilitySetResourceSettings"/>, <see cref="MoverVirtualNetworkResourceSettings"/>, <see cref="NetworkInterfaceResourceSettings"/>, <see cref="NetworkSecurityGroupResourceSettings"/>, <see cref="LoadBalancerResourceSettings"/>, <see cref="SqlServerResourceSettings"/>, <see cref="SqlElasticPoolResourceSettings"/>, <see cref="SqlDatabaseResourceSettings"/>, <see cref="ResourceGroupResourceSettings"/>, <see cref="PublicIPAddressResourceSettings"/>, <see cref="KeyVaultResourceSettings"/> and <see cref="DiskEncryptionSetResourceSettings"/>.
     /// </summary>
     public abstract partial class MoverResourceSettings
     {

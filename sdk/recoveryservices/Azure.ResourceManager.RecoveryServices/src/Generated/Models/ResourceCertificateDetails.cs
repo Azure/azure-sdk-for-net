@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     /// <summary>
     /// Certificate details representing the Vault credentials.
     /// Please note <see cref="ResourceCertificateDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="ResourceCertificateAndAcsDetails"/> and <see cref="ResourceCertificateAndAadDetails"/>.
+    /// The available derived classes include <see cref="ResourceCertificateAndAadDetails"/> and <see cref="ResourceCertificateAndAcsDetails"/>.
     /// </summary>
     public abstract partial class ResourceCertificateDetails
     {
