@@ -35,7 +35,7 @@ namespace Azure.Communication.JobRouter
             writer.WritePropertyName("queueLength"u8);
             writer.WriteNumberValue(QueueLength);
             writer.WritePropertyName("estimatedWaitTimeMinutes"u8);
-            WriteEstimatedWaitTime(writer);
+            WriteEstimatedWaitTime(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

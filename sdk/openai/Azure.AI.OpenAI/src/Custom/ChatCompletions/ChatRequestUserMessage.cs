@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -84,7 +85,7 @@ public partial class ChatRequestUserMessage : ChatRequestMessage
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    internal void SerializeContent(Utf8JsonWriter writer)
+    internal void SerializeContent(Utf8JsonWriter writer, ModelReaderWriterOptions options)
     {
         if (MultimodalContentItems != null)
         {
