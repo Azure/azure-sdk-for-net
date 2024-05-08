@@ -1570,14 +1570,14 @@ namespace Azure.Messaging.EventHubs.Tests
                 await processorClient.InvokeOldUpdateCheckpointAsync(partitionId, offset, sequenceNumber, cancellationSource.Token);
 
                 mockLogger
-                .Verify(log => log.UpdateCheckpointStart(
-                    partitionId,
-                    processorClient.Identifier,
-                    processorClient.EventHubName,
-                    processorClient.ConsumerGroup,
-                    sequenceNumber.ToString(),
-                    offset.ToString()),
-                Times.Once);
+                    .Verify(log => log.UpdateCheckpointStart(
+                        partitionId,
+                        processorClient.Identifier,
+                        processorClient.EventHubName,
+                        processorClient.ConsumerGroup,
+                        sequenceNumber.ToString(),
+                        offset.ToString()),
+                    Times.Once);
 
                 mockLogger
                     .Verify(log => log.UpdateCheckpointComplete(
