@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="properties">
         /// Certificate details representing the Vault credentials.
         /// Please note <see cref="Models.ResourceCertificateDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.ResourceCertificateAndAcsDetails"/> and <see cref="Models.ResourceCertificateAndAadDetails"/>.
+        /// The available derived classes include <see cref="Models.ResourceCertificateAndAadDetails"/> and <see cref="Models.ResourceCertificateAndAcsDetails"/>.
         /// </param>
         /// <returns> A new <see cref="Models.VaultCertificateResult"/> instance for mocking. </returns>
         public static VaultCertificateResult VaultCertificateResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceCertificateDetails properties = null)

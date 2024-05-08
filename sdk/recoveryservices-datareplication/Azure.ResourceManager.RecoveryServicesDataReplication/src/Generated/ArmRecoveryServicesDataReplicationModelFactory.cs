@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="customProperties">
         /// Dra model custom properties.
         /// Please note <see cref="DraModelCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="GeneralDraModelCustomProperties"/> and <see cref="VMwareDraModelCustomProperties"/>.
+        /// The available derived classes include <see cref="VMwareDraModelCustomProperties"/> and <see cref="GeneralDraModelCustomProperties"/>.
         /// </param>
         /// <returns> A new <see cref="Models.DataReplicationDraProperties"/> instance for mocking. </returns>
         public static DataReplicationDraProperties DataReplicationDraProperties(string correlationId = null, string machineId = null, string machineName = null, DataReplicationIdentity authenticationIdentity = null, DataReplicationIdentity resourceAccessIdentity = null, bool? isResponsive = null, DateTimeOffset? lastHeartbeatOn = null, string versionNumber = null, DataReplicationProvisioningState? provisioningState = null, IEnumerable<DataReplicationHealthErrorInfo> healthErrors = null, DraModelCustomProperties customProperties = null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="customProperties">
         /// Fabric model custom properties.
         /// Please note <see cref="FabricModelCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.AzStackHciFabricModelCustomProperties"/>, <see cref="GeneralFabricModelCustomProperties"/>, <see cref="Models.HyperVMigrateFabricModelCustomProperties"/> and <see cref="VMwareMigrateFabricModelCustomProperties"/>.
+        /// The available derived classes include <see cref="Models.AzStackHciFabricModelCustomProperties"/>, <see cref="Models.HyperVMigrateFabricModelCustomProperties"/>, <see cref="VMwareMigrateFabricModelCustomProperties"/> and <see cref="GeneralFabricModelCustomProperties"/>.
         /// </param>
         /// <returns> A new <see cref="Models.DataReplicationFabricProperties"/> instance for mocking. </returns>
         public static DataReplicationFabricProperties DataReplicationFabricProperties(DataReplicationProvisioningState? provisioningState = null, string serviceEndpoint = null, ResourceIdentifier serviceResourceId = null, DataReplicationHealthStatus? health = null, IEnumerable<DataReplicationHealthErrorInfo> healthErrors = null, FabricModelCustomProperties customProperties = null)
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="customProperties">
         /// Policy model custom properties.
         /// Please note <see cref="PolicyModelCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="HyperVToAzStackHciPolicyModelCustomProperties"/>, <see cref="GeneralPolicyModelCustomProperties"/> and <see cref="VMwareToAzStackHciPolicyModelCustomProperties"/>.
+        /// The available derived classes include <see cref="HyperVToAzStackHciPolicyModelCustomProperties"/>, <see cref="VMwareToAzStackHciPolicyModelCustomProperties"/> and <see cref="GeneralPolicyModelCustomProperties"/>.
         /// </param>
         /// <returns> A new <see cref="Models.DataReplicationPolicyProperties"/> instance for mocking. </returns>
         public static DataReplicationPolicyProperties DataReplicationPolicyProperties(DataReplicationProvisioningState? provisioningState = null, PolicyModelCustomProperties customProperties = null)
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="customProperties">
         /// Protected item model custom properties.
         /// Please note <see cref="ProtectedItemModelCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.HyperVToAzStackHciProtectedItemModelCustomProperties"/>, <see cref="GeneralProtectedItemModelCustomProperties"/> and <see cref="Models.VMwareToAzStackHciProtectedItemModelCustomProperties"/>.
+        /// The available derived classes include <see cref="Models.HyperVToAzStackHciProtectedItemModelCustomProperties"/>, <see cref="Models.VMwareToAzStackHciProtectedItemModelCustomProperties"/> and <see cref="GeneralProtectedItemModelCustomProperties"/>.
         /// </param>
         /// <returns> A new <see cref="Models.DataReplicationProtectedItemProperties"/> instance for mocking. </returns>
         public static DataReplicationProtectedItemProperties DataReplicationProtectedItemProperties(string policyName = null, string replicationExtensionName = null, string correlationId = null, DataReplicationProvisioningState? provisioningState = null, DataReplicationProtectionState? protectionState = null, string protectionStateDescription = null, DataReplicationTestFailoverState? testFailoverState = null, string testFailoverStateDescription = null, DataReplicationResynchronizationState? resynchronizationState = null, string fabricObjectId = null, string fabricObjectName = null, string sourceFabricProviderId = null, string targetFabricProviderId = null, string fabricId = null, string targetFabricId = null, string draId = null, string targetDraId = null, bool? isResyncRequired = null, DateTimeOffset? lastSuccessfulPlannedFailoverOn = null, DateTimeOffset? lastSuccessfulUnplannedFailoverOn = null, DateTimeOffset? lastSuccessfulTestFailoverOn = null, ProtectedItemJobProperties currentJob = null, IEnumerable<string> allowedJobs = null, ProtectedItemJobProperties lastFailedEnableProtectionJob = null, ProtectedItemJobProperties lastFailedPlannedFailoverJob = null, ProtectedItemJobProperties lastTestFailoverJob = null, DataReplicationHealthStatus? replicationHealth = null, IEnumerable<DataReplicationHealthErrorInfo> healthErrors = null, ProtectedItemModelCustomProperties customProperties = null)
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="customProperties">
         /// Replication extension model custom properties.
         /// Please note <see cref="ReplicationExtensionModelCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.HyperVToAzStackHciReplicationExtensionModelCustomProperties"/>, <see cref="GeneralReplicationExtensionModelCustomProperties"/> and <see cref="Models.VMwareToAzStackHciReplicationExtensionModelCustomProperties"/>.
+        /// The available derived classes include <see cref="Models.HyperVToAzStackHciReplicationExtensionModelCustomProperties"/>, <see cref="Models.VMwareToAzStackHciReplicationExtensionModelCustomProperties"/> and <see cref="GeneralReplicationExtensionModelCustomProperties"/>.
         /// </param>
         /// <returns> A new <see cref="Models.DataReplicationReplicationExtensionProperties"/> instance for mocking. </returns>
         public static DataReplicationReplicationExtensionProperties DataReplicationReplicationExtensionProperties(DataReplicationProvisioningState? provisioningState = null, ReplicationExtensionModelCustomProperties customProperties = null)
