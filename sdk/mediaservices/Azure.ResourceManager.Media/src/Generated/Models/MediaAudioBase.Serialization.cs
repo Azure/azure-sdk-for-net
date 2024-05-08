@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Media.Models
             int? channels = default;
             int? samplingRate = default;
             int? bitrate = default;
-            string odataType = "#Microsoft.Media.Audio";
+            string odataType = default;
             string label = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();

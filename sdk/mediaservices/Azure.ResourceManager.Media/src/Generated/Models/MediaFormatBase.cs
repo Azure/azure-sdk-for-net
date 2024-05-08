@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary>
     /// Base class for output.
     /// Please note <see cref="MediaFormatBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="OutputImageFileFormat"/>, <see cref="JpgFormat"/>, <see cref="Mp4Format"/>, <see cref="MultiBitrateFormat"/>, <see cref="PngFormat"/> and <see cref="TransportStreamFormat"/>.
+    /// The available derived classes include <see cref="JpgFormat"/>, <see cref="PngFormat"/>, <see cref="OutputImageFileFormat"/>, <see cref="Mp4Format"/>, <see cref="TransportStreamFormat"/> and <see cref="MultiBitrateFormat"/>.
     /// </summary>
     public abstract partial class MediaFormatBase
     {

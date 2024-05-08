@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="codecs">
         /// The list of codecs to be used when encoding the input video.
         /// Please note <see cref="MediaCodecBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AacAudio"/>, <see cref="MediaAudioBase"/>, <see cref="CodecCopyAudio"/>, <see cref="CodecCopyVideo"/>, <see cref="DDAudio"/>, <see cref="H264Video"/>, <see cref="H265Video"/>, <see cref="MediaImageBase"/>, <see cref="JpgImage"/>, <see cref="PngImage"/> and <see cref="MediaVideoBase"/>.
+        /// The available derived classes include <see cref="AacAudio"/>, <see cref="DDAudio"/>, <see cref="MediaAudioBase"/>, <see cref="H265Video"/>, <see cref="JpgImage"/>, <see cref="PngImage"/>, <see cref="MediaImageBase"/>, <see cref="H264Video"/>, <see cref="MediaVideoBase"/>, <see cref="CodecCopyVideo"/> and <see cref="CodecCopyAudio"/>.
         /// </param>
         /// <param name="formats">
         /// The list of outputs to be produced by the encoder.
         /// Please note <see cref="MediaFormatBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="OutputImageFileFormat"/>, <see cref="JpgFormat"/>, <see cref="Mp4Format"/>, <see cref="MultiBitrateFormat"/>, <see cref="PngFormat"/> and <see cref="TransportStreamFormat"/>.
+        /// The available derived classes include <see cref="JpgFormat"/>, <see cref="PngFormat"/>, <see cref="OutputImageFileFormat"/>, <see cref="Mp4Format"/>, <see cref="TransportStreamFormat"/> and <see cref="MultiBitrateFormat"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="codecs"/> or <paramref name="formats"/> is null. </exception>
         public StandardEncoderPreset(IEnumerable<MediaCodecBase> codecs, IEnumerable<MediaFormatBase> formats)
@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="codecs">
         /// The list of codecs to be used when encoding the input video.
         /// Please note <see cref="MediaCodecBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AacAudio"/>, <see cref="MediaAudioBase"/>, <see cref="CodecCopyAudio"/>, <see cref="CodecCopyVideo"/>, <see cref="DDAudio"/>, <see cref="H264Video"/>, <see cref="H265Video"/>, <see cref="MediaImageBase"/>, <see cref="JpgImage"/>, <see cref="PngImage"/> and <see cref="MediaVideoBase"/>.
+        /// The available derived classes include <see cref="AacAudio"/>, <see cref="DDAudio"/>, <see cref="MediaAudioBase"/>, <see cref="H265Video"/>, <see cref="JpgImage"/>, <see cref="PngImage"/>, <see cref="MediaImageBase"/>, <see cref="H264Video"/>, <see cref="MediaVideoBase"/>, <see cref="CodecCopyVideo"/> and <see cref="CodecCopyAudio"/>.
         /// </param>
         /// <param name="formats">
         /// The list of outputs to be produced by the encoder.
         /// Please note <see cref="MediaFormatBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="OutputImageFileFormat"/>, <see cref="JpgFormat"/>, <see cref="Mp4Format"/>, <see cref="MultiBitrateFormat"/>, <see cref="PngFormat"/> and <see cref="TransportStreamFormat"/>.
+        /// The available derived classes include <see cref="JpgFormat"/>, <see cref="PngFormat"/>, <see cref="OutputImageFileFormat"/>, <see cref="Mp4Format"/>, <see cref="TransportStreamFormat"/> and <see cref="MultiBitrateFormat"/>.
         /// </param>
         internal StandardEncoderPreset(string odataType, IDictionary<string, BinaryData> serializedAdditionalRawData, IDictionary<string, string> experimentalOptions, FilteringOperations filters, IList<MediaCodecBase> codecs, IList<MediaFormatBase> formats) : base(odataType, serializedAdditionalRawData)
         {
@@ -73,13 +73,13 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary>
         /// The list of codecs to be used when encoding the input video.
         /// Please note <see cref="MediaCodecBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AacAudio"/>, <see cref="MediaAudioBase"/>, <see cref="CodecCopyAudio"/>, <see cref="CodecCopyVideo"/>, <see cref="DDAudio"/>, <see cref="H264Video"/>, <see cref="H265Video"/>, <see cref="MediaImageBase"/>, <see cref="JpgImage"/>, <see cref="PngImage"/> and <see cref="MediaVideoBase"/>.
+        /// The available derived classes include <see cref="AacAudio"/>, <see cref="DDAudio"/>, <see cref="MediaAudioBase"/>, <see cref="H265Video"/>, <see cref="JpgImage"/>, <see cref="PngImage"/>, <see cref="MediaImageBase"/>, <see cref="H264Video"/>, <see cref="MediaVideoBase"/>, <see cref="CodecCopyVideo"/> and <see cref="CodecCopyAudio"/>.
         /// </summary>
         public IList<MediaCodecBase> Codecs { get; }
         /// <summary>
         /// The list of outputs to be produced by the encoder.
         /// Please note <see cref="MediaFormatBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="OutputImageFileFormat"/>, <see cref="JpgFormat"/>, <see cref="Mp4Format"/>, <see cref="MultiBitrateFormat"/>, <see cref="PngFormat"/> and <see cref="TransportStreamFormat"/>.
+        /// The available derived classes include <see cref="JpgFormat"/>, <see cref="PngFormat"/>, <see cref="OutputImageFileFormat"/>, <see cref="Mp4Format"/>, <see cref="TransportStreamFormat"/> and <see cref="MultiBitrateFormat"/>.
         /// </summary>
         public IList<MediaFormatBase> Formats { get; }
     }

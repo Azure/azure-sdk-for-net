@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             IList<MediaOutputFile> outputFiles = default;
-            string odataType = "#Microsoft.Media.MultiBitrateFormat";
+            string odataType = default;
             string filenamePattern = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
