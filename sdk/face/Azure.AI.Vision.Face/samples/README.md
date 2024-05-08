@@ -15,5 +15,6 @@ Azure AI Vision Face is a cloud service that  gives you access to advanced algor
 - [Detect faces from image](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/face/Azure.AI.Vision.Face/samples/Sample_FaceDetection.md)
   - From local image file
   - From URL
+- [Verification and identification from Person Directory](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/face/Azure.AI.Vision.Face/samples/Sample_PersonDirectory.md)
 - [Detect liveness in faces with session](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/face/Azure.AI.Vision.Face/samples/Sample_DetectLivenessWithSession.md)
 - [Detect liveness with face verification with session](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/face/Azure.AI.Vision.Face/samples/Sample_DetectLivenessWithVeirfyWithSession.md)
