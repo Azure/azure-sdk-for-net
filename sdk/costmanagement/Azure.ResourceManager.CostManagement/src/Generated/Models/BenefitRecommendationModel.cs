@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="properties">
         /// The properties of the benefit recommendations.
         /// Please note <see cref="BenefitRecommendationProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SharedScopeBenefitRecommendationProperties"/> and <see cref="SingleScopeBenefitRecommendationProperties"/>.
+        /// The available derived classes include <see cref="SingleScopeBenefitRecommendationProperties"/> and <see cref="SharedScopeBenefitRecommendationProperties"/>.
         /// </param>
         /// <param name="kind"> Reservation or SavingsPlan. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <summary>
         /// The properties of the benefit recommendations.
         /// Please note <see cref="BenefitRecommendationProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SharedScopeBenefitRecommendationProperties"/> and <see cref="SingleScopeBenefitRecommendationProperties"/>.
+        /// The available derived classes include <see cref="SingleScopeBenefitRecommendationProperties"/> and <see cref="SharedScopeBenefitRecommendationProperties"/>.
         /// </summary>
         public BenefitRecommendationProperties Properties { get; set; }
         /// <summary> Reservation or SavingsPlan. </summary>
