@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="properties">
         /// DHCP properties.
         /// Please note <see cref="WorkloadNetworkDhcpEntity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="WorkloadNetworkDhcpRelay"/> and <see cref="WorkloadNetworkDhcpServer"/>.
+        /// The available derived classes include <see cref="WorkloadNetworkDhcpServer"/> and <see cref="WorkloadNetworkDhcpRelay"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WorkloadNetworkDhcpData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WorkloadNetworkDhcpEntity properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Avs
         /// <summary>
         /// DHCP properties.
         /// Please note <see cref="WorkloadNetworkDhcpEntity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="WorkloadNetworkDhcpRelay"/> and <see cref="WorkloadNetworkDhcpServer"/>.
+        /// The available derived classes include <see cref="WorkloadNetworkDhcpServer"/> and <see cref="WorkloadNetworkDhcpRelay"/>.
         /// </summary>
         public WorkloadNetworkDhcpEntity Properties { get; set; }
     }
