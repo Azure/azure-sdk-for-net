@@ -38,7 +38,7 @@ First create your Infrastructure class.
 ```C# Snippet:SampleInfrastructure
 public class SampleInfrastructure : Infrastructure
 {
-    public SampleInfrastructure() : base(envName: "Sample", configuration: new Configuration { UseInteractiveMode = true })
+    public SampleInfrastructure() : base(envName: "Sample", tenantId: Guid.Empty, configuration: new Configuration { UseInteractiveMode = true })
     {
     }
 }
@@ -96,7 +96,7 @@ var keyVault = infrastructure.AddKeyVault();
 
 keyVault.AssignProperty(
     data => data.Properties.EnableSoftDelete,
-    new Parameter("enableSoftDelete", defaultValue: true, kind: BicepKind.Bool, description: "Enable soft delete for the key vault."));
+    new Parameter("enableSoftDelete", defaultValue: true, parameterType: BicepType.Bool, description: "Enable soft delete for the key vault."));
 
 infrastructure.Build();
 ```
@@ -139,9 +139,9 @@ var keyVault = infrastructure.AddKeyVault();
 
 keyVault.AssignProperty(
     data => data.Properties.EnableSoftDelete,
-    new Parameter("enableSoftDelete", defaultValue: true, kind: BicepKind.Bool, description: "Enable soft delete for the key vault."));
+    new Parameter("enableSoftDelete", defaultValue: true, parameterType: BicepType.Bool, description: "Enable soft delete for the key vault."));
 
-keyVault.AddOutput("VAULT_URI", kind: BicepKind.String, data => data.Properties.VaultUri);
+keyVault.AddOutput("VAULT_URI", data => data.Properties.VaultUri);
 
 infrastructure.Build();
 ```

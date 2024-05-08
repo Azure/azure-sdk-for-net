@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using Azure.Provisioning.KeyVaults;
 using NUnit.Framework;
 
@@ -15,7 +16,7 @@ namespace Azure.Provisioning.Tests.Samples
         #region Snippet:SampleInfrastructure
         public class SampleInfrastructure : Infrastructure
         {
-            public SampleInfrastructure() : base(envName: "Sample", configuration: new Configuration { UseInteractiveMode = true })
+            public SampleInfrastructure() : base(envName: "Sample", tenantId: Guid.Empty, configuration: new Configuration { UseInteractiveMode = true })
             {
             }
         }
