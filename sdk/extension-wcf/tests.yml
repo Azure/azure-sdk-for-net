@@ -5,3 +5,8 @@ extends:
   parameters:
     ServiceDirectory: extension-wcf
     SupportedClouds: 'Public,Canary,UsGov,China'
+    TestSetupSteps:
+    - template: /sdk/storage/tests-install-azurite.yml
+    - bash: brew install openssl@3
+      displayName: (MacOS) Install OpenSSL
+      condition: contains(variables['OSVmImage'], 'mac')
