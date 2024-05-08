@@ -14,7 +14,7 @@ namespace Azure.Health.Deidentification
     /// <summary> Model factory for models. </summary>
     public static partial class HealthDeidentificationModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Health.Deidentification.DeidentifyJob"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Deidentification.DeidentifyJob"/>. </summary>
         /// <param name="sourceLocation"> Storage location to perform the operation on. </param>
         /// <param name="targetLocation"> Target location to store output of operation. </param>
         /// <param name="dataType"> Data type of the input documents. </param>
@@ -32,7 +32,7 @@ namespace Azure.Health.Deidentification
         /// If the job failed, this is the time when the job failed.
         /// </param>
         /// <param name="summary"> Summary of a job. Exists only when the job is completed. </param>
-        /// <returns> A new <see cref="Health.Deidentification.DeidentifyJob"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Deidentification.DeidentifyJob"/> instance for mocking. </returns>
         public static DeidentifyJob DeidentifyJob(SourceStorageLocation sourceLocation = null, TargetStorageLocation targetLocation = null, DocumentDataType dataType = default, OperationType operation = default, string redactionFormat = null, JobStatus status = default, ResponseError error = null, DateTimeOffset createdAt = default, DateTimeOffset? startedAt = null, DateTimeOffset? lastUpdatedAt = null, JobSummary summary = null)
         {
             return new DeidentifyJob(
@@ -50,13 +50,13 @@ namespace Azure.Health.Deidentification
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Health.Deidentification.HealthFileDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Deidentification.HealthFileDetails"/>. </summary>
         /// <param name="id"> Id of the file report. </param>
         /// <param name="input"> File Location for the input. </param>
         /// <param name="output"> File Location for the output. </param>
         /// <param name="status"> Status of the file. </param>
         /// <param name="error"> Error when file fails. </param>
-        /// <returns> A new <see cref="Health.Deidentification.HealthFileDetails"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Deidentification.HealthFileDetails"/> instance for mocking. </returns>
         public static HealthFileDetails HealthFileDetails(string id = null, FileLocation input = null, FileLocation output = null, OperationState status = default, ResponseError error = null)
         {
             return new HealthFileDetails(
@@ -68,22 +68,22 @@ namespace Azure.Health.Deidentification
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Health.Deidentification.FileLocation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Deidentification.FileLocation"/>. </summary>
         /// <param name="path"> Absolute path to the file in storage. </param>
         /// <param name="etag"> The entity tag for this resource. </param>
-        /// <returns> A new <see cref="Health.Deidentification.FileLocation"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Deidentification.FileLocation"/> instance for mocking. </returns>
         public static FileLocation FileLocation(string path = null, string etag = null)
         {
             return new FileLocation(path, etag, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Health.Deidentification.DeidentifyConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Deidentification.DeidentifyConfig"/>. </summary>
         /// <param name="inputText"> Input text to deidentify. </param>
         /// <param name="dataType"> Data type of the input. </param>
         /// <param name="operation"> Operation to perform on the input. </param>
         /// <param name="stringIndexType"> Requested Encoding of the tag response indices. </param>
         /// <param name="redactionFormat"> Format of the redacted output. Only valid when OperationType is Redact. </param>
-        /// <returns> A new <see cref="Health.Deidentification.DeidentifyConfig"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Deidentification.DeidentifyConfig"/> instance for mocking. </returns>
         public static DeidentifyConfig DeidentifyConfig(string inputText = null, DocumentDataType dataType = default, OperationType operation = default, StringIndexType stringIndexType = default, string redactionFormat = null)
         {
             return new DeidentifyConfig(
@@ -95,21 +95,21 @@ namespace Azure.Health.Deidentification
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Health.Deidentification.DeidentifyResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Deidentification.DeidentifyResult"/>. </summary>
         /// <param name="outputText"> Output text after de-identifying. Not available for Tag Operation. </param>
         /// <param name="taggerResult"> Result of the tag operation. Only available for Tag Operation. </param>
-        /// <returns> A new <see cref="Health.Deidentification.DeidentifyResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Deidentification.DeidentifyResult"/> instance for mocking. </returns>
         public static DeidentifyResult DeidentifyResult(string outputText = null, PhiTaggerResult taggerResult = null)
         {
             return new DeidentifyResult(outputText, taggerResult, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Health.Deidentification.PhiTaggerResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Deidentification.PhiTaggerResult"/>. </summary>
         /// <param name="entities"> List of entities detected in the input. </param>
         /// <param name="stringIndexType"> Requested Encoding of the tag response indices. </param>
         /// <param name="path"> Path to the file in the storage container. </param>
         /// <param name="etag"> The entity tag for this resource. </param>
-        /// <returns> A new <see cref="Health.Deidentification.PhiTaggerResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Deidentification.PhiTaggerResult"/> instance for mocking. </returns>
         public static PhiTaggerResult PhiTaggerResult(IEnumerable<PhiEntity> entities = null, StringIndexType stringIndexType = default, string path = null, string etag = null)
         {
             entities ??= new List<PhiEntity>();
@@ -117,13 +117,13 @@ namespace Azure.Health.Deidentification
             return new PhiTaggerResult(entities?.ToList(), stringIndexType, path, etag, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Health.Deidentification.PhiEntity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Deidentification.PhiEntity"/>. </summary>
         /// <param name="category"> Phi Category of the entity. </param>
         /// <param name="offset"> Starting index of the location from within the input text. </param>
         /// <param name="length"> Length of the input text. </param>
         /// <param name="text"> Text of the entity. </param>
         /// <param name="confidenceScore"> Confidence score of the text/type pairing. </param>
-        /// <returns> A new <see cref="Health.Deidentification.PhiEntity"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Deidentification.PhiEntity"/> instance for mocking. </returns>
         public static PhiEntity PhiEntity(PhiCategory category = default, int offset = default, int length = default, string text = null, double? confidenceScore = null)
         {
             return new PhiEntity(

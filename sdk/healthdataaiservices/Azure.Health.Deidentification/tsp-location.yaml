@@ -1,5 +1,5 @@
 repo: Azure/azure-rest-api-specs
-commit: b01d5892436b944fea42b08531bda2bd3877c18d
+commit: a37f5e541fea0e3b583bc8fa630591be6e472534
 directory: specification/healthdataaiservices/HealthDataAIServices.Deidentification
 additionalDirectories: []
 

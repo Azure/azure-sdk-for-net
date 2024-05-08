@@ -7,7 +7,7 @@ This sample shows how to call GetJobAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
 Response<DeidentifyJob> response = await client.GetJobAsync("<name>");
 ]]></code>
@@ -15,7 +15,7 @@ This sample shows how to call GetJobAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
 Response<DeidentifyJob> response = await client.GetJobAsync("<name>");
 ]]></code></example>
@@ -26,7 +26,7 @@ This sample shows how to call GetJob.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
 Response<DeidentifyJob> response = client.GetJob("<name>");
 ]]></code>
@@ -34,7 +34,7 @@ This sample shows how to call GetJob with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
 Response<DeidentifyJob> response = client.GetJob("<name>");
 ]]></code></example>
@@ -45,7 +45,7 @@ This sample shows how to call GetJobAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
 Response response = await client.GetJobAsync("<name>", null);
 
@@ -64,7 +64,7 @@ This sample shows how to call GetJobAsync with all parameters and parse the resu
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
 Response response = await client.GetJobAsync("<name>", null);
 
@@ -98,7 +98,7 @@ This sample shows how to call GetJob and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
 Response response = client.GetJob("<name>", null);
 
@@ -117,7 +117,7 @@ This sample shows how to call GetJob with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
 Response response = client.GetJob("<name>", null);
 
@@ -151,7 +151,7 @@ This sample shows how to call CancelJobAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
 Response<DeidentifyJob> response = await client.CancelJobAsync("<name>");
 ]]></code>
@@ -159,7 +159,7 @@ This sample shows how to call CancelJobAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
 Response<DeidentifyJob> response = await client.CancelJobAsync("<name>");
 ]]></code></example>
@@ -170,7 +170,7 @@ This sample shows how to call CancelJob.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
 Response<DeidentifyJob> response = client.CancelJob("<name>");
 ]]></code>
@@ -178,7 +178,7 @@ This sample shows how to call CancelJob with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
 Response<DeidentifyJob> response = client.CancelJob("<name>");
 ]]></code></example>
@@ -189,7 +189,7 @@ This sample shows how to call CancelJobAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
 Response response = await client.CancelJobAsync("<name>", null);
 
@@ -208,7 +208,7 @@ This sample shows how to call CancelJobAsync with all parameters and parse the r
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
 Response response = await client.CancelJobAsync("<name>", null);
 
@@ -242,7 +242,7 @@ This sample shows how to call CancelJob and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
 Response response = client.CancelJob("<name>", null);
 
@@ -261,7 +261,7 @@ This sample shows how to call CancelJob with all parameters and parse the result
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
 Response response = client.CancelJob("<name>", null);
 
@@ -295,7 +295,7 @@ This sample shows how to call DeleteJobAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
 Response response = await client.DeleteJobAsync("<name>");
 
@@ -305,7 +305,7 @@ This sample shows how to call DeleteJobAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
 Response response = await client.DeleteJobAsync("<name>");
 
@@ -318,7 +318,7 @@ This sample shows how to call DeleteJob.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
 Response response = client.DeleteJob("<name>");
 
@@ -328,7 +328,7 @@ This sample shows how to call DeleteJob with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
 Response response = client.DeleteJob("<name>");
 
@@ -341,7 +341,7 @@ This sample shows how to call DeidentifyAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
 DeidentifyConfig body = new DeidentifyConfig("<inputText>", DocumentDataType.PlainText, OperationType.Redact, StringIndexType.TextElementV8);
 Response<DeidentifyResult> response = await client.DeidentifyAsync(body);
@@ -350,7 +350,7 @@ This sample shows how to call DeidentifyAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
 DeidentifyConfig body = new DeidentifyConfig("<inputText>", DocumentDataType.PlainText, OperationType.Redact, StringIndexType.TextElementV8)
 {
@@ -365,7 +365,7 @@ This sample shows how to call Deidentify.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
 DeidentifyConfig body = new DeidentifyConfig("<inputText>", DocumentDataType.PlainText, OperationType.Redact, StringIndexType.TextElementV8);
 Response<DeidentifyResult> response = client.Deidentify(body);
@@ -374,7 +374,7 @@ This sample shows how to call Deidentify with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
 DeidentifyConfig body = new DeidentifyConfig("<inputText>", DocumentDataType.PlainText, OperationType.Redact, StringIndexType.TextElementV8)
 {
@@ -389,7 +389,7 @@ This sample shows how to call DeidentifyAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -407,7 +407,7 @@ This sample shows how to call DeidentifyAsync with all request content and parse
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -437,7 +437,7 @@ This sample shows how to call Deidentify and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -455,7 +455,7 @@ This sample shows how to call Deidentify with all request content and parse the 
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -485,7 +485,7 @@ This sample shows how to call GetJobsAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
 await foreach (DeidentifyJob item in client.GetJobsAsync())
 {
@@ -495,7 +495,7 @@ This sample shows how to call GetJobsAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
 await foreach (DeidentifyJob item in client.GetJobsAsync(maxpagesize: 1234, continuationToken: "<continuationToken>"))
 {
@@ -508,7 +508,7 @@ This sample shows how to call GetJobs.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
 foreach (DeidentifyJob item in client.GetJobs())
 {
@@ -518,7 +518,7 @@ This sample shows how to call GetJobs with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
 foreach (DeidentifyJob item in client.GetJobs(maxpagesize: 1234, continuationToken: "<continuationToken>"))
 {
@@ -531,7 +531,7 @@ This sample shows how to call GetJobsAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
 await foreach (BinaryData item in client.GetJobsAsync(null, null, null))
 {
@@ -551,7 +551,7 @@ This sample shows how to call GetJobsAsync with all parameters and parse the res
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
 await foreach (BinaryData item in client.GetJobsAsync(1234, "<continuationToken>", null))
 {
@@ -586,7 +586,7 @@ This sample shows how to call GetJobs and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
 foreach (BinaryData item in client.GetJobs(null, null, null))
 {
@@ -606,7 +606,7 @@ This sample shows how to call GetJobs with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
 foreach (BinaryData item in client.GetJobs(1234, "<continuationToken>", null))
 {
@@ -641,7 +641,7 @@ This sample shows how to call GetJobFilesAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
 await foreach (HealthFileDetails item in client.GetJobFilesAsync("<name>"))
 {
@@ -651,7 +651,7 @@ This sample shows how to call GetJobFilesAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
 await foreach (HealthFileDetails item in client.GetJobFilesAsync("<name>", maxpagesize: 1234, continuationToken: "<continuationToken>"))
 {
@@ -664,7 +664,7 @@ This sample shows how to call GetJobFiles.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
 foreach (HealthFileDetails item in client.GetJobFiles("<name>"))
 {
@@ -674,7 +674,7 @@ This sample shows how to call GetJobFiles with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
 foreach (HealthFileDetails item in client.GetJobFiles("<name>", maxpagesize: 1234, continuationToken: "<continuationToken>"))
 {
@@ -687,7 +687,7 @@ This sample shows how to call GetJobFilesAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
 await foreach (BinaryData item in client.GetJobFilesAsync("<name>", null, null, null))
 {
@@ -702,7 +702,7 @@ This sample shows how to call GetJobFilesAsync with all parameters and parse the
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
 await foreach (BinaryData item in client.GetJobFilesAsync("<name>", 1234, "<continuationToken>", null))
 {
@@ -726,7 +726,7 @@ This sample shows how to call GetJobFiles and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
 foreach (BinaryData item in client.GetJobFiles("<name>", null, null, null))
 {
@@ -741,7 +741,7 @@ This sample shows how to call GetJobFiles with all parameters and parse the resu
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
 foreach (BinaryData item in client.GetJobFiles("<name>", 1234, "<continuationToken>", null))
 {
@@ -765,7 +765,7 @@ This sample shows how to call CreateJobAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
 DeidentifyJob resource = new DeidentifyJob(new SourceStorageLocation(new Uri("http://localhost:3000"), "<prefix>", new string[] { "<extensions>" }), new TargetStorageLocation(new Uri("http://localhost:3000"), "<prefix>"), DocumentDataType.PlainText, OperationType.Redact);
 Operation<DeidentifyJob> operation = await client.CreateJobAsync(WaitUntil.Completed, "<name>", resource);
@@ -775,7 +775,7 @@ This sample shows how to call CreateJobAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
 DeidentifyJob resource = new DeidentifyJob(new SourceStorageLocation(new Uri("http://localhost:3000"), "<prefix>", new string[] { "<extensions>" }), new TargetStorageLocation(new Uri("http://localhost:3000"), "<prefix>"), DocumentDataType.PlainText, OperationType.Redact)
 {
@@ -791,7 +791,7 @@ This sample shows how to call CreateJob.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
 DeidentifyJob resource = new DeidentifyJob(new SourceStorageLocation(new Uri("http://localhost:3000"), "<prefix>", new string[] { "<extensions>" }), new TargetStorageLocation(new Uri("http://localhost:3000"), "<prefix>"), DocumentDataType.PlainText, OperationType.Redact);
 Operation<DeidentifyJob> operation = client.CreateJob(WaitUntil.Completed, "<name>", resource);
@@ -801,7 +801,7 @@ This sample shows how to call CreateJob with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
 DeidentifyJob resource = new DeidentifyJob(new SourceStorageLocation(new Uri("http://localhost:3000"), "<prefix>", new string[] { "<extensions>" }), new TargetStorageLocation(new Uri("http://localhost:3000"), "<prefix>"), DocumentDataType.PlainText, OperationType.Redact)
 {
@@ -817,7 +817,7 @@ This sample shows how to call CreateJobAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -856,7 +856,7 @@ This sample shows how to call CreateJobAsync with all parameters and request con
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -911,7 +911,7 @@ This sample shows how to call CreateJob and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -950,7 +950,7 @@ This sample shows how to call CreateJob with all parameters and request content 
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {

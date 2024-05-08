@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.Health.Deidentification.Samples
 {
-    public partial class Samples_Deidentification
+    public partial class Samples_DeidentificationClient
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -22,7 +22,7 @@ namespace Azure.Health.Deidentification.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
             Response response = client.GetJob("<name>", null);
 
@@ -44,7 +44,7 @@ namespace Azure.Health.Deidentification.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
             Response response = await client.GetJobAsync("<name>", null);
 
@@ -66,7 +66,7 @@ namespace Azure.Health.Deidentification.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
             Response<DeidentifyJob> response = client.GetJob("<name>");
         }
@@ -77,7 +77,7 @@ namespace Azure.Health.Deidentification.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
             Response<DeidentifyJob> response = await client.GetJobAsync("<name>");
         }
@@ -88,7 +88,7 @@ namespace Azure.Health.Deidentification.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
             Response response = client.GetJob("<name>", null);
 
@@ -122,7 +122,7 @@ namespace Azure.Health.Deidentification.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
             Response response = await client.GetJobAsync("<name>", null);
 
@@ -156,7 +156,7 @@ namespace Azure.Health.Deidentification.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
             Response<DeidentifyJob> response = client.GetJob("<name>");
         }
@@ -167,7 +167,7 @@ namespace Azure.Health.Deidentification.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
             Response<DeidentifyJob> response = await client.GetJobAsync("<name>");
         }
@@ -178,7 +178,7 @@ namespace Azure.Health.Deidentification.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
             Response response = client.CancelJob("<name>", null);
 
@@ -200,7 +200,7 @@ namespace Azure.Health.Deidentification.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
             Response response = await client.CancelJobAsync("<name>", null);
 
@@ -222,7 +222,7 @@ namespace Azure.Health.Deidentification.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
             Response<DeidentifyJob> response = client.CancelJob("<name>");
         }
@@ -233,7 +233,7 @@ namespace Azure.Health.Deidentification.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
             Response<DeidentifyJob> response = await client.CancelJobAsync("<name>");
         }
@@ -244,7 +244,7 @@ namespace Azure.Health.Deidentification.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
             Response response = client.CancelJob("<name>", null);
 
@@ -278,7 +278,7 @@ namespace Azure.Health.Deidentification.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
             Response response = await client.CancelJobAsync("<name>", null);
 
@@ -312,7 +312,7 @@ namespace Azure.Health.Deidentification.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
             Response<DeidentifyJob> response = client.CancelJob("<name>");
         }
@@ -323,7 +323,7 @@ namespace Azure.Health.Deidentification.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
             Response<DeidentifyJob> response = await client.CancelJobAsync("<name>");
         }
@@ -334,7 +334,7 @@ namespace Azure.Health.Deidentification.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
             Response response = client.DeleteJob("<name>");
 
@@ -347,7 +347,7 @@ namespace Azure.Health.Deidentification.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
             Response response = await client.DeleteJobAsync("<name>");
 
@@ -360,7 +360,7 @@ namespace Azure.Health.Deidentification.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
             Response response = client.DeleteJob("<name>");
 
@@ -373,7 +373,7 @@ namespace Azure.Health.Deidentification.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
             Response response = await client.DeleteJobAsync("<name>");
 
@@ -386,7 +386,7 @@ namespace Azure.Health.Deidentification.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -407,7 +407,7 @@ namespace Azure.Health.Deidentification.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -428,7 +428,7 @@ namespace Azure.Health.Deidentification.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
             DeidentifyConfig body = new DeidentifyConfig("<inputText>", DocumentDataType.PlainText, OperationType.Redact, StringIndexType.TextElementV8);
             Response<DeidentifyResult> response = client.Deidentify(body);
@@ -440,7 +440,7 @@ namespace Azure.Health.Deidentification.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
             DeidentifyConfig body = new DeidentifyConfig("<inputText>", DocumentDataType.PlainText, OperationType.Redact, StringIndexType.TextElementV8);
             Response<DeidentifyResult> response = await client.DeidentifyAsync(body);
@@ -452,7 +452,7 @@ namespace Azure.Health.Deidentification.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -482,7 +482,7 @@ namespace Azure.Health.Deidentification.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -512,7 +512,7 @@ namespace Azure.Health.Deidentification.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
             DeidentifyConfig body = new DeidentifyConfig("<inputText>", DocumentDataType.PlainText, OperationType.Redact, StringIndexType.TextElementV8)
             {
@@ -527,7 +527,7 @@ namespace Azure.Health.Deidentification.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
             DeidentifyConfig body = new DeidentifyConfig("<inputText>", DocumentDataType.PlainText, OperationType.Redact, StringIndexType.TextElementV8)
             {
@@ -542,7 +542,7 @@ namespace Azure.Health.Deidentification.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
             foreach (BinaryData item in client.GetJobs(null, null, null))
             {
@@ -565,7 +565,7 @@ namespace Azure.Health.Deidentification.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
             await foreach (BinaryData item in client.GetJobsAsync(null, null, null))
             {
@@ -588,7 +588,7 @@ namespace Azure.Health.Deidentification.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
             foreach (DeidentifyJob item in client.GetJobs())
             {
@@ -601,7 +601,7 @@ namespace Azure.Health.Deidentification.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
             await foreach (DeidentifyJob item in client.GetJobsAsync())
             {
@@ -614,7 +614,7 @@ namespace Azure.Health.Deidentification.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
             foreach (BinaryData item in client.GetJobs(1234, "<continuationToken>", null))
             {
@@ -649,7 +649,7 @@ namespace Azure.Health.Deidentification.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
             await foreach (BinaryData item in client.GetJobsAsync(1234, "<continuationToken>", null))
             {
@@ -684,7 +684,7 @@ namespace Azure.Health.Deidentification.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
             foreach (DeidentifyJob item in client.GetJobs(maxpagesize: 1234, continuationToken: "<continuationToken>"))
             {
@@ -697,7 +697,7 @@ namespace Azure.Health.Deidentification.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
             await foreach (DeidentifyJob item in client.GetJobsAsync(maxpagesize: 1234, continuationToken: "<continuationToken>"))
             {
@@ -710,7 +710,7 @@ namespace Azure.Health.Deidentification.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
             foreach (BinaryData item in client.GetJobFiles("<name>", null, null, null))
             {
@@ -728,7 +728,7 @@ namespace Azure.Health.Deidentification.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
             await foreach (BinaryData item in client.GetJobFilesAsync("<name>", null, null, null))
             {
@@ -746,7 +746,7 @@ namespace Azure.Health.Deidentification.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
             foreach (HealthFileDetails item in client.GetJobFiles("<name>"))
             {
@@ -759,7 +759,7 @@ namespace Azure.Health.Deidentification.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
             await foreach (HealthFileDetails item in client.GetJobFilesAsync("<name>"))
             {
@@ -772,7 +772,7 @@ namespace Azure.Health.Deidentification.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
             foreach (BinaryData item in client.GetJobFiles("<name>", 1234, "<continuationToken>", null))
             {
@@ -796,7 +796,7 @@ namespace Azure.Health.Deidentification.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
             await foreach (BinaryData item in client.GetJobFilesAsync("<name>", 1234, "<continuationToken>", null))
             {
@@ -820,7 +820,7 @@ namespace Azure.Health.Deidentification.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
             foreach (HealthFileDetails item in client.GetJobFiles("<name>", maxpagesize: 1234, continuationToken: "<continuationToken>"))
             {
@@ -833,7 +833,7 @@ namespace Azure.Health.Deidentification.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
             await foreach (HealthFileDetails item in client.GetJobFilesAsync("<name>", maxpagesize: 1234, continuationToken: "<continuationToken>"))
             {
@@ -846,7 +846,7 @@ namespace Azure.Health.Deidentification.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -888,7 +888,7 @@ namespace Azure.Health.Deidentification.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -930,7 +930,7 @@ namespace Azure.Health.Deidentification.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
             DeidentifyJob resource = new DeidentifyJob(new SourceStorageLocation(new Uri("http://localhost:3000"), "<prefix>", new string[] { "<extensions>" }), new TargetStorageLocation(new Uri("http://localhost:3000"), "<prefix>"), DocumentDataType.PlainText, OperationType.Redact);
             Operation<DeidentifyJob> operation = client.CreateJob(WaitUntil.Completed, "<name>", resource);
@@ -943,7 +943,7 @@ namespace Azure.Health.Deidentification.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
             DeidentifyJob resource = new DeidentifyJob(new SourceStorageLocation(new Uri("http://localhost:3000"), "<prefix>", new string[] { "<extensions>" }), new TargetStorageLocation(new Uri("http://localhost:3000"), "<prefix>"), DocumentDataType.PlainText, OperationType.Redact);
             Operation<DeidentifyJob> operation = await client.CreateJobAsync(WaitUntil.Completed, "<name>", resource);
@@ -956,7 +956,7 @@ namespace Azure.Health.Deidentification.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1011,7 +1011,7 @@ namespace Azure.Health.Deidentification.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1066,7 +1066,7 @@ namespace Azure.Health.Deidentification.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
             DeidentifyJob resource = new DeidentifyJob(new SourceStorageLocation(new Uri("http://localhost:3000"), "<prefix>", new string[] { "<extensions>" }), new TargetStorageLocation(new Uri("http://localhost:3000"), "<prefix>"), DocumentDataType.PlainText, OperationType.Redact)
             {
@@ -1082,7 +1082,7 @@ namespace Azure.Health.Deidentification.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Deidentification client = new DeidentificationClient(endpoint, credential).GetDeidentificationClient(apiVersion: "2024-01-16-preview");
+            DeidentificationClient client = new DeidentificationClient(endpoint, credential);
 
             DeidentifyJob resource = new DeidentifyJob(new SourceStorageLocation(new Uri("http://localhost:3000"), "<prefix>", new string[] { "<extensions>" }), new TargetStorageLocation(new Uri("http://localhost:3000"), "<prefix>"), DocumentDataType.PlainText, OperationType.Redact)
             {
