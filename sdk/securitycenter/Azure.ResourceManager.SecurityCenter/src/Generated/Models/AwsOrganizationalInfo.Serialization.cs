@@ -70,8 +70,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Member": return AwsOrganizationalDataMember.DeserializeAwsOrganizationalDataMember(element, options);
                     case "Organization": return AwsOrganizationalDataMaster.DeserializeAwsOrganizationalDataMaster(element, options);
+                    case "Member": return AwsOrganizationalDataMember.DeserializeAwsOrganizationalDataMember(element, options);
                 }
             }
             return UnknownAwsOrganizationalData.DeserializeUnknownAwsOrganizationalData(element, options);

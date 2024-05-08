@@ -101,9 +101,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AAD": return AadExternalSecuritySolution.DeserializeAadExternalSecuritySolution(element, options);
-                    case "ATA": return AtaExternalSecuritySolution.DeserializeAtaExternalSecuritySolution(element, options);
                     case "CEF": return CefExternalSecuritySolution.DeserializeCefExternalSecuritySolution(element, options);
+                    case "ATA": return AtaExternalSecuritySolution.DeserializeAtaExternalSecuritySolution(element, options);
+                    case "AAD": return AadExternalSecuritySolution.DeserializeAadExternalSecuritySolution(element, options);
                 }
             }
             return UnknownExternalSecuritySolution.DeserializeUnknownExternalSecuritySolution(element, options);

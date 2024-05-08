@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="authenticationDetails">
         /// Settings for authentication management, these settings are relevant only for the cloud connector.
         /// Please note <see cref="AuthenticationDetailsProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AwsAssumeRoleAuthenticationDetailsProperties"/>, <see cref="AwsCredsAuthenticationDetailsProperties"/> and <see cref="GcpCredentialsDetailsProperties"/>.
+        /// The available derived classes include <see cref="AwsCredsAuthenticationDetailsProperties"/>, <see cref="AwsAssumeRoleAuthenticationDetailsProperties"/> and <see cref="GcpCredentialsDetailsProperties"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityCloudConnectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HybridComputeSettingsProperties hybridComputeSettings, AuthenticationDetailsProperties authenticationDetails, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary>
         /// Settings for authentication management, these settings are relevant only for the cloud connector.
         /// Please note <see cref="AuthenticationDetailsProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AwsAssumeRoleAuthenticationDetailsProperties"/>, <see cref="AwsCredsAuthenticationDetailsProperties"/> and <see cref="GcpCredentialsDetailsProperties"/>.
+        /// The available derived classes include <see cref="AwsCredsAuthenticationDetailsProperties"/>, <see cref="AwsAssumeRoleAuthenticationDetailsProperties"/> and <see cref="GcpCredentialsDetailsProperties"/>.
         /// </summary>
         public AuthenticationDetailsProperties AuthenticationDetails { get; set; }
     }

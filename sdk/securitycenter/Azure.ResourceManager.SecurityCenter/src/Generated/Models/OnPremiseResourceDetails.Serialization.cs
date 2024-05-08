@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Guid vmuuid = default;
             string sourceComputerId = default;
             string machineName = default;
-            HealthReportSource source = "AutoRest.CSharp.Output.Models.Types.EnumTypeValue";
+            HealthReportSource source = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

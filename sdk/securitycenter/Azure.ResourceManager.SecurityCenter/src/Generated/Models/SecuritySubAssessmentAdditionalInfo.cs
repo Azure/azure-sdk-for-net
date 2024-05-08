@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary>
     /// Details of the sub-assessment
     /// Please note <see cref="SecuritySubAssessmentAdditionalInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="ContainerRegistryVulnerabilityProperties"/>, <see cref="ServerVulnerabilityProperties"/> and <see cref="SqlServerVulnerabilityProperties"/>.
+    /// The available derived classes include <see cref="SqlServerVulnerabilityProperties"/>, <see cref="ContainerRegistryVulnerabilityProperties"/> and <see cref="ServerVulnerabilityProperties"/>.
     /// </summary>
     public abstract partial class SecuritySubAssessmentAdditionalInfo
     {
