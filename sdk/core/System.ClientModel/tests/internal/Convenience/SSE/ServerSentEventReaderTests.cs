@@ -73,11 +73,7 @@ public class ServerSentEventReaderTests
 
         ServerSentEvent? sse = await reader.TryGetNextEventAsync();
 
-        Assert.IsNotNull(sse);
-        Assert.IsTrue(sse.Value.EventName.Span.SequenceEqual("message".AsSpan()));
-        Assert.AreEqual(sse.Value.Data.Length, 0);
-        Assert.AreEqual(sse.Value.LastEventId.Length, 0);
-        Assert.IsNull(sse.Value.ReconnectionTime);
+        Assert.IsNull(sse);
     }
 
     [Test]
@@ -115,6 +111,45 @@ public class ServerSentEventReaderTests
         Assert.IsTrue(sse.Value.Data.Span.SequenceEqual("YHOO\n+2\n10".AsSpan()));
         Assert.AreEqual(sse.Value.LastEventId.Length, 0);
         Assert.IsNull(sse.Value.ReconnectionTime);
+    }
+
+    [Test]
+    public async Task SecondSpecCase()
+    {
+        Stream contentStream = BinaryData.FromString("""
+            : test stream
+
+            data: first event
+            id: 1
+
+            data:second event
+            id
+
+            data:  third event
+
+
+            """).ToStream();
+        using ServerSentEventReader reader = new(contentStream);
+
+        List<ServerSentEvent> events = new();
+
+        ServerSentEvent? sse = await reader.TryGetNextEventAsync();
+        while (sse is not null)
+        {
+            events.Add(sse.Value);
+            sse = await reader.TryGetNextEventAsync();
+        }
+
+        Assert.AreEqual(3, events.Count);
+
+        Assert.IsTrue(events[0].Data.Span.SequenceEqual("first event".AsSpan()));
+        Assert.IsTrue(events[0].LastEventId.Span.SequenceEqual("1".AsSpan()));
+
+        Assert.IsTrue(events[1].Data.Span.SequenceEqual("second event".AsSpan()));
+        Assert.AreEqual(events[1].LastEventId.Length, 0);
+
+        Assert.IsTrue(events[2].Data.Span.SequenceEqual(" third event".AsSpan()));
+        Assert.AreEqual(events[2].LastEventId.Length, 0);
     }
 
     [Test]

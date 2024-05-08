@@ -2,8 +2,20 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace System.ClientModel.Internal;
+
+internal struct PendingEvent
+{
+    private List<ServerSentEventField>? _dataFields;
+
+    public int DataLength { get; set; }
+    public List<ServerSentEventField> DataFields => _dataFields ??= new();
+    public ServerSentEventField? EventNameField { get; set; }
+    public ServerSentEventField? IdField { get; set; }
+    public ServerSentEventField? RetryField { get; set; }
+}
 
 // SSE specification: https://html.spec.whatwg.org/multipage/server-sent-events.html#parsing-an-event-stream
 internal readonly struct ServerSentEvent
@@ -19,59 +31,44 @@ internal readonly struct ServerSentEvent
     // If present, gets the defined "retry" value for the event, which represents the delay before reconnecting.
     public TimeSpan? ReconnectionTime { get; }
 
-    internal ServerSentEvent(IReadOnlyList<ServerSentEventField> fields)
+    internal ServerSentEvent(PendingEvent pending)
     {
-        int dataLength = 0;
-        foreach (ServerSentEventField field in fields)
+        if (pending.EventNameField.HasValue)
         {
-            switch (field.FieldType)
-            {
-                case ServerSentEventFieldKind.Event:
-                    EventName = field.Value;
-                    break;
-                case ServerSentEventFieldKind.Data:
-                    dataLength += field.Value.Length + 1;
-                    break;
-                case ServerSentEventFieldKind.Id:
-                    LastEventId = field.Value;
-                    break;
-                case ServerSentEventFieldKind.Retry:
+            EventName = pending.EventNameField.Value.Value;
+        }
+
+        if (pending.IdField.HasValue)
+        {
+            LastEventId = pending.IdField.Value.Value;
+        }
+
+        if (pending.RetryField.HasValue)
+        {
 #if NETSTANDARD2_0
-                    ReconnectionTime = int.TryParse(field.Value.ToString(), out int retry) ? TimeSpan.FromMilliseconds(retry) : null;
+            ReconnectionTime = int.TryParse(pending.RetryField.Value.Value.ToString(), out int retry) ? TimeSpan.FromMilliseconds(retry) : null;
 #else
-                    ReconnectionTime = int.TryParse(field.Value.Span, out int retry) ? TimeSpan.FromMilliseconds(retry) : null;
+            ReconnectionTime = int.TryParse(pending.RetryField.Value.Value.Span, out int retry) ? TimeSpan.FromMilliseconds(retry) : null;
 #endif
-                    break;
-                default:
-                    break;
-            }
         }
 
-        if (dataLength > 0)
+        Debug.Assert(pending.DataLength > 0);
+
+        Memory<char> buffer = new(new char[pending.DataLength]);
+
+        int curr = 0;
+
+        foreach (ServerSentEventField field in pending.DataFields)
         {
-            Memory<char> buffer = new(new char[dataLength]);
+            Debug.Assert(field.FieldType == ServerSentEventFieldKind.Data);
 
-            int curr = 0;
-
-            foreach (ServerSentEventField field in fields)
-            {
-                if (field.FieldType == ServerSentEventFieldKind.Data)
-                {
-                    field.Value.Span.CopyTo(buffer.Span.Slice(curr));
-                    buffer.Span[curr + field.Value.Length] = LF;
-                    curr += field.Value.Length + 1;
-                }
-            }
-
-            // remove trailing LF.
-            Data = buffer.Slice(0, buffer.Length - 1);
+            field.Value.Span.CopyTo(buffer.Span.Slice(curr));
+            buffer.Span[curr + field.Value.Length] = LF;
+            curr += field.Value.Length + 1;
         }
 
-        if (Data.Length == 0)
-        {
-            // Per spec, if data buffer is empty, set event type buffer to empty.
-            EventName = ReadOnlyMemory<char>.Empty;
-        }
+        // remove trailing LF.
+        Data = buffer.Slice(0, buffer.Length - 1);
 
         if (EventName.Length == 0)
         {

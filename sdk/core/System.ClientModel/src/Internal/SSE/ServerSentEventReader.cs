@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,6 +12,8 @@ internal sealed class ServerSentEventReader : IDisposable, IAsyncDisposable
 {
     private Stream? _stream;
     private StreamReader? _reader;
+
+    public int? LastEventId { get; private set; }
 
     public ServerSentEventReader(Stream stream)
     {
@@ -36,7 +36,7 @@ internal sealed class ServerSentEventReader : IDisposable, IAsyncDisposable
             throw new ObjectDisposedException(nameof(ServerSentEventReader));
         }
 
-        List<ServerSentEventField>? fields = default;
+        PendingEvent pending = default;
         while (true)
         {
             cancellationToken.ThrowIfCancellationRequested();
@@ -51,12 +51,14 @@ internal sealed class ServerSentEventReader : IDisposable, IAsyncDisposable
             }
             else if (line.Length == 0)
             {
-                Debug.Assert(fields is not null);
+                if (pending.DataLength == 0)
+                {
+                    // Per spec, if there's no data, don't dispatch an event.
+                    pending = default;
+                    continue;
+                }
 
-                // An empty line should dispatch an event for pending accumulated fields
-                ServerSentEvent nextEvent = new(fields!);
-                fields = default;
-                return nextEvent;
+                return new ServerSentEvent(pending);
             }
             else if (line[0] == ':')
             {
@@ -65,9 +67,27 @@ internal sealed class ServerSentEventReader : IDisposable, IAsyncDisposable
             }
             else
             {
-                // Otherwise, process the field + value and accumulate it for the next dispatched event
-                fields ??= new();
-                fields.Add(new ServerSentEventField(line));
+                // Otherwise, process the field + value and accumulate it for the
+                // next dispatched event.
+                ServerSentEventField field = new(line);
+                switch (field.FieldType)
+                {
+                    case ServerSentEventFieldKind.Event:
+                        pending.EventNameField = field;
+                        break;
+                    case ServerSentEventFieldKind.Data:
+                        pending.DataFields.Add(field);
+                        break;
+                    case ServerSentEventFieldKind.Id:
+                        pending.IdField = field;
+                        break;
+                    case ServerSentEventFieldKind.Retry:
+                        pending.RetryField = field;
+                        break;
+                    default:
+                        // Ignore
+                        break;
+                }
             }
         }
     }
@@ -87,27 +107,29 @@ internal sealed class ServerSentEventReader : IDisposable, IAsyncDisposable
             throw new ObjectDisposedException(nameof(ServerSentEventReader));
         }
 
-        List<ServerSentEventField>? fields = default;
+        PendingEvent pending = default;
         while (true)
         {
             cancellationToken.ThrowIfCancellationRequested();
 
+            // TODO: Pass cancellationToken?
             string? line = await _reader.ReadLineAsync().ConfigureAwait(false);
 
             if (line == null)
             {
-                // A null line indicates end of input.
-                // Per the SSE spec, "Once the end of the file is reached, any pending data must be discarded."
+                // A null line indicates end of input
                 return null;
             }
             else if (line.Length == 0)
             {
-                Debug.Assert(fields is not null);
+                if (pending.DataLength == 0)
+                {
+                    // Per spec, if there's no data, don't dispatch an event.
+                    pending = default;
+                    continue;
+                }
 
-                // An empty line should dispatch an event for pending accumulated fields
-                ServerSentEvent nextEvent = new(fields!);
-                fields = default;
-                return nextEvent;
+                return new ServerSentEvent(pending);
             }
             else if (line[0] == ':')
             {
@@ -116,9 +138,28 @@ internal sealed class ServerSentEventReader : IDisposable, IAsyncDisposable
             }
             else
             {
-                // Otherwise, process the field + value and accumulate it for the next dispatched event
-                fields ??= new();
-                fields.Add(new ServerSentEventField(line));
+                // Otherwise, process the field + value and accumulate it for the
+                // next dispatched event.
+                ServerSentEventField field = new(line);
+                switch (field.FieldType)
+                {
+                    case ServerSentEventFieldKind.Event:
+                        pending.EventNameField = field;
+                        break;
+                    case ServerSentEventFieldKind.Data:
+                        pending.DataLength += field.Value.Length + 1;
+                        pending.DataFields.Add(field);
+                        break;
+                    case ServerSentEventFieldKind.Id:
+                        pending.IdField = field;
+                        break;
+                    case ServerSentEventFieldKind.Retry:
+                        pending.RetryField = field;
+                        break;
+                    default:
+                        // Ignore
+                        break;
+                }
             }
         }
     }

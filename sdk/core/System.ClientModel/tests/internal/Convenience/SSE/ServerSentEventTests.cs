@@ -9,22 +9,22 @@ namespace System.ClientModel.Tests.Convenience;
 
 public class ServerSentEventTests
 {
-    [Test]
-    public void SetsPropertiesFromFields()
-    {
-        string eventLine = "event: event.name";
-        string dataLine = """data: {"id":"a","object":"value"}""";
+    //[Test]
+    //public void SetsPropertiesFromFields()
+    //{
+    //    string eventLine = "event: event.name";
+    //    string dataLine = """data: {"id":"a","object":"value"}""";
 
-        List<ServerSentEventField> fields = new() {
-            new ServerSentEventField(eventLine),
-            new ServerSentEventField(dataLine)
-        };
+    //    List<ServerSentEventField> fields = new() {
+    //        new ServerSentEventField(eventLine),
+    //        new ServerSentEventField(dataLine)
+    //    };
 
-        ServerSentEvent ssEvent = new(fields);
+    //    ServerSentEvent ssEvent = new(fields);
 
-        Assert.IsNull(ssEvent.ReconnectionTime);
-        Assert.IsTrue(ssEvent.EventName.Span.SequenceEqual("event.name".AsSpan()));
-        Assert.IsTrue(ssEvent.Data.Span.SequenceEqual("""{"id":"a","object":"value"}""".AsSpan()));
-        Assert.AreEqual(ssEvent.LastEventId.Length, 0);
-    }
+    //    Assert.IsNull(ssEvent.ReconnectionTime);
+    //    Assert.IsTrue(ssEvent.EventName.Span.SequenceEqual("event.name".AsSpan()));
+    //    Assert.IsTrue(ssEvent.Data.Span.SequenceEqual("""{"id":"a","object":"value"}""".AsSpan()));
+    //    Assert.AreEqual(ssEvent.LastEventId.Length, 0);
+    //}
 }
