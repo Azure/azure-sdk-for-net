@@ -36,6 +36,7 @@ namespace Azure.Messaging.EventHubs.Processor
         public CheckpointPosition(long sequenceNumber)
         {
             SequenceNumber = sequenceNumber;
+            GlobalOffset = null;
         }
 
         /// <summary>

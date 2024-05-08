@@ -68,27 +68,27 @@ namespace Azure.Messaging.EventHubs.Consumer
         /// <value>Expected to be <c>null</c> if the event position represents a sequence number or enqueue time.</value>
         internal string GlobalOffset { get; set; }
 
-        ///// <summary>
-        /////   The Event Hubs service no longer uses offsets with numeric values. Use <see cref="FromGlobalOffset(string, bool)"/>
-        /////   instead. This constructor calls <see cref="FromSequenceNumber(long, bool)"/> with the values of <paramref name="offset"/>
-        /////   and <paramref name="isInclusive"/> to avoid breaking existing code that uses only offset properties.
-        ///// </summary>
-        /////
-        ///// <param name="offset">The offset of an event with respect to its relative position in the partition.</param>
-        ///// <param name="isInclusive">When <c>true</c>, the event with the <paramref name="offset"/> is included; otherwise the next event in sequence will be read.</param>
-        /////
-        ///// <returns>The specified position of an event in the partition.</returns>
-        /////
-        //[EditorBrowsable(EditorBrowsableState.Never)]
-        //public static EventPosition FromOffset(long offset,
-        //                                       bool isInclusive = true)
-        //{
-        //    return new EventPosition
-        //    {
-        //        SequenceNumber = offset.ToString(CultureInfo.InvariantCulture),
-        //        IsInclusive = isInclusive
-        //    };
-        //}
+        /// <summary>
+        ///   The Event Hubs service no longer uses offsets with numeric values. Use <see cref="FromGlobalOffset(string, bool)"/>
+        ///   instead. This constructor calls <see cref="FromSequenceNumber(long, bool)"/> with the values of <paramref name="offset"/>
+        ///   and <paramref name="isInclusive"/> to avoid breaking existing code that uses only offset properties.
+        /// </summary>
+        ///
+        /// <param name="offset">The offset of an event with respect to its relative position in the partition.</param>
+        /// <param name="isInclusive">When <c>true</c>, the event with the <paramref name="offset"/> is included; otherwise the next event in sequence will be read.</param>
+        ///
+        /// <returns>The specified position of an event in the partition.</returns>
+        ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static EventPosition FromOffset(long offset,
+                                               bool isInclusive = true)
+        {
+            return new EventPosition
+            {
+                SequenceNumber = offset.ToString(CultureInfo.InvariantCulture),
+                IsInclusive = isInclusive
+            };
+        }
 
         /// <summary>
         /// TODO

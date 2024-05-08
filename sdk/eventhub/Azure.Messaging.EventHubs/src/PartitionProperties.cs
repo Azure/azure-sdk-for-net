@@ -42,14 +42,14 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         public string LastEnqueuedGlobalOffset { get; }
 
-        ///// <summary>
-        /////   The Event Hubs service no longer uses offsets with numeric values. Use <see cref="LastEnqueuedGlobalOffset"/>
-        /////   instead. This property is populated with <see cref="LastEnqueuedSequenceNumber"/> to avoid breaking existing code that
-        /////   only uses offset properties.
-        ///// </summary>
-        /////
-        //[EditorBrowsable(EditorBrowsableState.Never)]
-        //public long LastEnqueuedOffset { get; }
+        /// <summary>
+        ///   The Event Hubs service no longer uses offsets with numeric values. Use <see cref="LastEnqueuedGlobalOffset"/>
+        ///   instead. This property is populated with <see cref="LastEnqueuedSequenceNumber"/> to avoid breaking existing code that
+        ///   only uses offset properties.
+        /// </summary>
+        ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public long LastEnqueuedOffset { get; }
 
         /// <summary>
         ///   The date and time, in UTC, that the last observed event was enqueued in the partition.

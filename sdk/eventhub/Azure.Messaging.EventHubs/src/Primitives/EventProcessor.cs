@@ -821,9 +821,9 @@ namespace Azure.Messaging.EventHubs.Primitives
 
                                 lastEvent = (eventBatch != null && eventBatch.Count > 0) ? eventBatch[eventBatch.Count - 1] : null;
 
-                                if ((lastEvent != null) && (lastEvent.Offset != long.MinValue))
+                                if ((lastEvent != null) && !string.IsNullOrEmpty(lastEvent.GlobalOffset))
                                 {
-                                    startingPosition = EventPosition.FromOffset(lastEvent.Offset, false);
+                                    startingPosition = EventPosition.FromGlobalOffset(lastEvent.GlobalOffset, false);
                                 }
 
                                 // If event batches are successfully processed, then the need for forward progress is
@@ -1100,6 +1100,13 @@ namespace Azure.Messaging.EventHubs.Primitives
                                                      long? sequenceNumber,
                                                      CancellationToken cancellationToken)
         {
+            if (EventHubProperties.IsGeoReplicationEnabled)
+            {
+                var message = string.Format(CultureInfo.InvariantCulture, Resources.ProcessorAttemptingToWriteCheckpointWithoutGlobalOffset);
+                var updateCheckpointException = new EventHubsException(true, EventHubName, message, EventHubsException.FailureReason.GeneralError);
+                _ = InvokeOnProcessingErrorAsync(updateCheckpointException, null, Resources.OperationEventProcessingLoop, CancellationToken.None);
+            }
+
             if (sequenceNumber.HasValue)
             {
                 return UpdateCheckpointAsync(partitionId, new CheckpointPosition(sequenceNumber.Value), cancellationToken);

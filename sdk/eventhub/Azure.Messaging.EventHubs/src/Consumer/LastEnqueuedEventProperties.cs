@@ -24,14 +24,14 @@ namespace Azure.Messaging.EventHubs.Consumer
         /// </summary>
         public string GlobalOffset { get; }
 
-        ///// <summary>
-        /////   The Event Hubs service no longer uses offsets with numeric values. Use <see cref="GlobalOffset"/> instead.
-        /////   This property is populated with <see cref="SequenceNumber"/> to avoid breaking existing code that uses only
-        /////   offset properties.
-        ///// </summary>
-        /////
-        //[EditorBrowsable(EditorBrowsableState.Never)]
-        //public long? Offset { get; }
+        /// <summary>
+        ///   The Event Hubs service no longer uses offsets with numeric values. Use <see cref="GlobalOffset"/> instead.
+        ///   This property is populated with <see cref="SequenceNumber"/> to avoid breaking existing code that uses only
+        ///   offset properties.
+        /// </summary>
+        ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public long? Offset { get; }
 
         /// <summary>
         ///   The date and time, in UTC, that the last observed event was enqueued in the partition.
@@ -49,8 +49,12 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   Initializes a new instance of the <see cref="LastEnqueuedEventProperties"/> class.
         /// </summary>
         ///
+        /// <remarks>
+        ///   The Event Hubs service no longer uses offsets with numeric values. 
+        /// </remarks>
+        ///
         /// <param name="lastSequenceNumber">The sequence number observed the last event to be enqueued in the partition.</param>
-        /// <param name="lastOffset">The sequence number observed the last event to be enqueued in the partition.</param>
+        /// <param name="lastOffset">This val</param>
         /// <param name="lastEnqueuedTime">The date and time, in UTC, that the last event was enqueued in the partition.</param>
         /// <param name="lastReceivedTime">The date and time, in UTC, that the information was last received.</param>
         ///
@@ -66,7 +70,7 @@ namespace Azure.Messaging.EventHubs.Consumer
             // new SDK populates the EventData offset property with the amqp message sequence number. This allows for backwards
             // compatibility to avoid breaking existing code that uses only offset properties.
 
-            // TODO uncomment - Offset = lastSequenceNumber;
+            Offset = lastSequenceNumber;
             EnqueuedTime = lastEnqueuedTime;
             LastReceivedTime = lastReceivedTime;
         }
@@ -93,7 +97,7 @@ namespace Azure.Messaging.EventHubs.Consumer
             // new SDK populates the EventData offset property with the amqp message sequence number. This allows for backwards
             // compatibility to avoid breaking existing code that uses only offset properties.
 
-            // TODO uncomment - Offset = lastSequenceNumber;
+            Offset = lastSequenceNumber;
             EnqueuedTime = lastEnqueuedTime;
             LastReceivedTime = lastReceivedTime;
         }
@@ -110,7 +114,7 @@ namespace Azure.Messaging.EventHubs.Consumer
                  sourceEvent?.LastPartitionEnqueuedTime,
                  sourceEvent?.LastPartitionPropertiesRetrievalTime)
         {
-            // TODO uncomment Offset = sourceEvent?.LastPartitionOffset;
+            Offset = sourceEvent?.LastPartitionOffset;
         }
 
         /// <summary>
@@ -126,7 +130,8 @@ namespace Azure.Messaging.EventHubs.Consumer
             return (GlobalOffset == other.GlobalOffset)
                 && (SequenceNumber == other.SequenceNumber)
                 && (EnqueuedTime == other.EnqueuedTime)
-                && (LastReceivedTime == other.LastReceivedTime); //TODO
+                && (LastReceivedTime == other.LastReceivedTime)
+                && (Offset == other.Offset);
         }
 
         /// <summary>
@@ -155,10 +160,11 @@ namespace Azure.Messaging.EventHubs.Consumer
         public override int GetHashCode()
         {
             var hashCode = new HashCodeBuilder();
-            // TODO uncomment hashCode.Add(Offset);
+            hashCode.Add(Offset);
             hashCode.Add(SequenceNumber);
             hashCode.Add(EnqueuedTime);
             hashCode.Add(LastReceivedTime);
+            hashCode.Add(GlobalOffset);
 
             return hashCode.ToHashCode();
         }

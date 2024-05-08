@@ -67,21 +67,12 @@ namespace Azure.Messaging.EventHubs
                 return $"{ SequenceNumberName } {(eventPosition.IsInclusive ? ">=" : ">")} {eventPosition.SequenceNumber}";
             }
 
-            // The offset is intentionally mapped to sequence number. The service no longer accepts a numeric offset value, so the
-            // new SDK populates the EventData offset property with the amqp message sequence number. This allows for backwards
-            // compatibility to avoid breaking existing code that uses only offset properties.
-
-            // TODO - uncomment if (!string.IsNullOrEmpty(eventPosition.Offset))
-            //{
-            //    return $"{ SequenceNumberName } { (eventPosition.IsInclusive ? ">=" : ">") } { eventPosition.Offset }";
-            //}
-
             if (eventPosition.EnqueuedTime.HasValue)
             {
                 return $"{ EnqueuedTimeName } > { eventPosition.EnqueuedTime.Value.ToUnixTimeMilliseconds() }";
             }
 
-            // If no filter was built, than the event position is not valid for filtering.
+            // If no filter was built, then the event position is not valid for filtering.
 
             throw new ArgumentException(Resources.InvalidEventPositionForFilter, nameof(eventPosition));
         }
