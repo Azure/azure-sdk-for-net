@@ -181,7 +181,7 @@ foreach (FhirR4Extension extension in extensionList)
     if (extension.Url != null && extension.Url.Equals("section"))
     {
         Console.Write("   Section:");
-        IReadOnlyList<FhirR4Extension> subextensionList = extension.Extension;
+        IList<FhirR4Extension> subextensionList = extension.Extension;
         if (subextensionList != null)
         {
             foreach (FhirR4Extension subextension in subextensionList)

@@ -149,7 +149,7 @@ foreach (RadiologyInsightsInference inference in inferences)
 ```C# Snippet:Age_Mismatch_Async_Tests_Samples_ExtractEvidence
 foreach (FhirR4Extension extension in extensions)
 {
-    IReadOnlyList<FhirR4Extension> subExtensions = extension.Extension;
+    IList<FhirR4Extension> subExtensions = extension.Extension;
     if (subExtensions != null)
     {
         evidence += ExtractEvidenceToken(subExtensions) + " ";

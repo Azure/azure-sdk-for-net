@@ -142,7 +142,7 @@ Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiol
 ```C# Snippet:Followup_Recommendation_Async_Tests_Samples_FollowupRecommendationInference
 Console.Write("Follow Up Recommendation Inference found");
 IList<FhirR4Extension> extensions = followupRecommendationInference.Extension;
-Console.Write("   Evidence: " + ExtractEvidence((IReadOnlyList<FhirR4Extension>)extensions));
+Console.Write("   Evidence: " + ExtractEvidence((IList<FhirR4Extension>)extensions));
 Console.Write("   Is conditional: " + followupRecommendationInference.IsConditional);
 Console.Write("   Is guideline: " + followupRecommendationInference.IsGuideline);
 Console.Write("   Is hedging: " + followupRecommendationInference.IsHedging);
@@ -208,7 +208,7 @@ if (codingList != null)
 ```C# Snippet:Followup_Recommendation_Async_Tests_Samples_ExtractEvidence
 foreach (FhirR4Extension extension in extensions)
 {
-    IReadOnlyList<FhirR4Extension> subExtensions = extension.Extension;
+    IList<FhirR4Extension> subExtensions = extension.Extension;
     if (subExtensions != null)
     {
         evidence += extractEvidenceToken(subExtensions) + " ";
