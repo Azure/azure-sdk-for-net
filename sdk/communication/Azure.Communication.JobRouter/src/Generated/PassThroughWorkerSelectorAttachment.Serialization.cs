@@ -33,7 +33,7 @@ namespace Azure.Communication.JobRouter
             if (Optional.IsDefined(ExpiresAfter))
             {
                 writer.WritePropertyName("expiresAfterSeconds"u8);
-                WriteExpiresAfter(writer);
+                WriteExpiresAfter(writer, options);
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
