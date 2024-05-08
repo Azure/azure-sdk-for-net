@@ -16,9 +16,7 @@ using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Microsoft.AspNetCore.DataProtection.Repositories;
 
-#pragma warning disable AZC0001 //
 namespace Azure.Extensions.AspNetCore.DataProtection.Blobs
-#pragma warning restore
 {
     /// <summary>
     /// An <see cref="IXmlRepository"/> which is backed by Azure Blob Storage.

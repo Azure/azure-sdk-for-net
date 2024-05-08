@@ -79,7 +79,7 @@ namespace Azure.Search.Documents
     }
     public partial class SearchClientOptions : Azure.Core.ClientOptions
     {
-        public SearchClientOptions(Azure.Search.Documents.SearchClientOptions.ServiceVersion version = Azure.Search.Documents.SearchClientOptions.ServiceVersion.V2024_03_01_Preview) { }
+        public SearchClientOptions(Azure.Search.Documents.SearchClientOptions.ServiceVersion version = Azure.Search.Documents.SearchClientOptions.ServiceVersion.V2024_05_01_Preview) { }
         public Azure.Search.Documents.SearchAudience? Audience { get { throw null; } set { } }
         public Azure.Core.Serialization.ObjectSerializer Serializer { get { throw null; } set { } }
         public Azure.Search.Documents.SearchClientOptions.ServiceVersion Version { get { throw null; } }
@@ -87,7 +87,7 @@ namespace Azure.Search.Documents
         {
             V2020_06_30 = 1,
             V2023_11_01 = 2,
-            V2024_03_01_Preview = 3,
+            V2024_05_01_Preview = 3,
         }
     }
     public static partial class SearchFilter
@@ -151,6 +151,7 @@ namespace Azure.Search.Documents
         public System.Collections.Generic.IList<string> HighlightFields { get { throw null; } }
         public string HighlightPostTag { get { throw null; } set { } }
         public string HighlightPreTag { get { throw null; } set { } }
+        public Azure.Search.Documents.Models.HybridSearch HybridSearch { get { throw null; } set { } }
         public bool? IncludeTotalCount { get { throw null; } set { } }
         public double? MinimumCoverage { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> OrderBy { get { throw null; } }
@@ -361,12 +362,48 @@ namespace Azure.Search.Documents.Indexes
         public VectorSearchFieldAttribute() { }
         public bool IsHidden { get { throw null; } set { } }
         public bool IsStored { get { throw null; } set { } }
+        public string VectorEncodingFormat { get { throw null; } set { } }
         public int VectorSearchDimensions { get { throw null; } set { } }
         public string VectorSearchProfileName { get { throw null; } set { } }
     }
 }
 namespace Azure.Search.Documents.Indexes.Models
 {
+    public partial class AIServicesVisionParameters
+    {
+        public AIServicesVisionParameters(string modelVersion, System.Uri resourceUri) { }
+        public string ApiKey { get { throw null; } set { } }
+        public Azure.Search.Documents.Indexes.Models.SearchIndexerDataIdentity AuthIdentity { get { throw null; } set { } }
+        public string ModelVersion { get { throw null; } set { } }
+        public System.Uri ResourceUri { get { throw null; } set { } }
+    }
+    public partial class AIServicesVisionVectorizer : Azure.Search.Documents.Indexes.Models.VectorSearchVectorizer
+    {
+        public AIServicesVisionVectorizer(string name) : base (default(string)) { }
+        public Azure.Search.Documents.Indexes.Models.AIServicesVisionParameters AIServicesVisionParameters { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AIStudioModelCatalogName : System.IEquatable<Azure.Search.Documents.Indexes.Models.AIStudioModelCatalogName>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AIStudioModelCatalogName(string value) { throw null; }
+        public static Azure.Search.Documents.Indexes.Models.AIStudioModelCatalogName CohereEmbedV3English { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.AIStudioModelCatalogName CohereEmbedV3Multilingual { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.AIStudioModelCatalogName FacebookDinoV2ImageEmbeddingsViTBase { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.AIStudioModelCatalogName FacebookDinoV2ImageEmbeddingsViTGiant { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.AIStudioModelCatalogName OpenAIClipImageTextEmbeddingsVitBasePatch32 { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.AIStudioModelCatalogName OpenAIClipImageTextEmbeddingsViTLargePatch14336 { get { throw null; } }
+        public bool Equals(Azure.Search.Documents.Indexes.Models.AIStudioModelCatalogName other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Search.Documents.Indexes.Models.AIStudioModelCatalogName left, Azure.Search.Documents.Indexes.Models.AIStudioModelCatalogName right) { throw null; }
+        public static implicit operator Azure.Search.Documents.Indexes.Models.AIStudioModelCatalogName (string value) { throw null; }
+        public static bool operator !=(Azure.Search.Documents.Indexes.Models.AIStudioModelCatalogName left, Azure.Search.Documents.Indexes.Models.AIStudioModelCatalogName right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class AnalyzedTokenInfo
     {
         internal AnalyzedTokenInfo() { }
@@ -393,6 +430,16 @@ namespace Azure.Search.Documents.Indexes.Models
         public AsciiFoldingTokenFilter(string name) { }
         public bool? PreserveOriginal { get { throw null; } set { } }
     }
+    public partial class AzureMachineLearningParameters
+    {
+        public AzureMachineLearningParameters(System.Uri scoringUri) { }
+        public string AuthenticationKey { get { throw null; } set { } }
+        public Azure.Search.Documents.Indexes.Models.AIStudioModelCatalogName? ModelName { get { throw null; } set { } }
+        public string Region { get { throw null; } set { } }
+        public string ResourceId { get { throw null; } set { } }
+        public System.Uri ScoringUri { get { throw null; } set { } }
+        public System.TimeSpan? Timeout { get { throw null; } set { } }
+    }
     public partial class AzureMachineLearningSkill : Azure.Search.Documents.Indexes.Models.SearchIndexerSkill
     {
         public AzureMachineLearningSkill(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> outputs, Azure.Core.ResourceIdentifier resourceId, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) { }
@@ -404,13 +451,40 @@ namespace Azure.Search.Documents.Indexes.Models
         public System.Uri ScoringUri { get { throw null; } }
         public System.TimeSpan? Timeout { get { throw null; } set { } }
     }
+    public partial class AzureMachineLearningVectorizer : Azure.Search.Documents.Indexes.Models.VectorSearchVectorizer
+    {
+        public AzureMachineLearningVectorizer(string name) : base (default(string)) { }
+        public Azure.Search.Documents.Indexes.Models.AzureMachineLearningParameters AMLParameters { get { throw null; } set { } }
+    }
     public partial class AzureOpenAIEmbeddingSkill : Azure.Search.Documents.Indexes.Models.SearchIndexerSkill
     {
         public AzureOpenAIEmbeddingSkill(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> outputs) { }
         public string ApiKey { get { throw null; } set { } }
         public Azure.Search.Documents.Indexes.Models.SearchIndexerDataIdentity AuthIdentity { get { throw null; } set { } }
         public string DeploymentId { get { throw null; } set { } }
+        public int? Dimensions { get { throw null; } set { } }
+        public Azure.Search.Documents.Indexes.Models.AzureOpenAIModelName? ModelName { get { throw null; } set { } }
         public System.Uri ResourceUri { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AzureOpenAIModelName : System.IEquatable<Azure.Search.Documents.Indexes.Models.AzureOpenAIModelName>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AzureOpenAIModelName(string value) { throw null; }
+        public static Azure.Search.Documents.Indexes.Models.AzureOpenAIModelName Experimental { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.AzureOpenAIModelName TextEmbedding3Large { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.AzureOpenAIModelName TextEmbedding3Small { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.AzureOpenAIModelName TextEmbeddingAda002 { get { throw null; } }
+        public bool Equals(Azure.Search.Documents.Indexes.Models.AzureOpenAIModelName other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Search.Documents.Indexes.Models.AzureOpenAIModelName left, Azure.Search.Documents.Indexes.Models.AzureOpenAIModelName right) { throw null; }
+        public static implicit operator Azure.Search.Documents.Indexes.Models.AzureOpenAIModelName (string value) { throw null; }
+        public static bool operator !=(Azure.Search.Documents.Indexes.Models.AzureOpenAIModelName left, Azure.Search.Documents.Indexes.Models.AzureOpenAIModelName right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class AzureOpenAIParameters
     {
@@ -418,6 +492,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public string ApiKey { get { throw null; } set { } }
         public Azure.Search.Documents.Indexes.Models.SearchIndexerDataIdentity AuthIdentity { get { throw null; } set { } }
         public string DeploymentId { get { throw null; } set { } }
+        public Azure.Search.Documents.Indexes.Models.AzureOpenAIModelName? ModelName { get { throw null; } set { } }
         public System.Uri ResourceUri { get { throw null; } set { } }
     }
     public partial class AzureOpenAIVectorizer : Azure.Search.Documents.Indexes.Models.VectorSearchVectorizer
@@ -2116,6 +2191,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public Azure.Search.Documents.Indexes.Models.LexicalAnalyzerName? SearchAnalyzerName { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> SynonymMapNames { get { throw null; } }
         public Azure.Search.Documents.Indexes.Models.SearchFieldDataType Type { get { throw null; } }
+        public Azure.Search.Documents.Indexes.Models.VectorEncodingFormat? VectorEncodingFormat { get { throw null; } set { } }
         public int? VectorSearchDimensions { get { throw null; } set { } }
         public string VectorSearchProfileName { get { throw null; } set { } }
         public override string ToString() { throw null; }
@@ -2127,6 +2203,7 @@ namespace Azure.Search.Documents.Indexes.Models
         private readonly int _dummyPrimitive;
         public SearchFieldDataType(string value) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.SearchFieldDataType Boolean { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.SearchFieldDataType Byte { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.SearchFieldDataType Complex { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.SearchFieldDataType DateTimeOffset { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.SearchFieldDataType Double { get { throw null; } }
@@ -2242,6 +2319,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceType AzureTable { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceType CosmosDb { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceType MySql { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceType OneLake { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Indexes.Models.SearchIndexerDataSourceType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -2381,6 +2459,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public int? MaxComplexObjectsInCollectionsPerDocument { get { throw null; } }
         public int? MaxFieldNestingDepthPerIndex { get { throw null; } }
         public int? MaxFieldsPerIndex { get { throw null; } }
+        public long? MaxStoragePerIndexInBytes { get { throw null; } }
     }
     public partial class SearchServiceStatistics
     {
@@ -2943,6 +3022,27 @@ namespace Azure.Search.Documents.Indexes.Models
         public UniqueTokenFilter(string name) { }
         public bool? OnlyOnSamePosition { get { throw null; } set { } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct VectorEncodingFormat : System.IEquatable<Azure.Search.Documents.Indexes.Models.VectorEncodingFormat>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public VectorEncodingFormat(string value) { throw null; }
+        public static Azure.Search.Documents.Indexes.Models.VectorEncodingFormat PackedBit { get { throw null; } }
+        public bool Equals(Azure.Search.Documents.Indexes.Models.VectorEncodingFormat other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Search.Documents.Indexes.Models.VectorEncodingFormat left, Azure.Search.Documents.Indexes.Models.VectorEncodingFormat right) { throw null; }
+        public static implicit operator Azure.Search.Documents.Indexes.Models.VectorEncodingFormat (string value) { throw null; }
+        public static bool operator !=(Azure.Search.Documents.Indexes.Models.VectorEncodingFormat left, Azure.Search.Documents.Indexes.Models.VectorEncodingFormat right) { throw null; }
+        public override string ToString() { throw null; }
+        public static partial class Values
+        {
+            public const string PackedBit = "packedBit";
+        }
+    }
     public partial class VectorSearch
     {
         public VectorSearch() { }
@@ -2965,6 +3065,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static Azure.Search.Documents.Indexes.Models.VectorSearchAlgorithmMetric Cosine { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.VectorSearchAlgorithmMetric DotProduct { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.VectorSearchAlgorithmMetric Euclidean { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.VectorSearchAlgorithmMetric Hamming { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Indexes.Models.VectorSearchAlgorithmMetric other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -3004,6 +3105,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public VectorSearchField(string name, int vectorSearchDimensions, string vectorSearchProfileName) { }
         public bool IsHidden { get { throw null; } set { } }
         public bool? IsStored { get { throw null; } set { } }
+        public Azure.Search.Documents.Indexes.Models.VectorEncodingFormat? VectorEncodingFormat { get { throw null; } set { } }
         public int VectorSearchDimensions { get { throw null; } set { } }
         public string VectorSearchProfileName { get { throw null; } set { } }
     }
@@ -3019,6 +3121,11 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         protected VectorSearchVectorizer(string name) { }
         public string Name { get { throw null; } set { } }
+    }
+    public partial class VisionVectorizeSkill : Azure.Search.Documents.Indexes.Models.SearchIndexerSkill
+    {
+        public VisionVectorizeSkill(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> outputs, string modelVersion) { }
+        public string ModelVersion { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct VisualFeature : System.IEquatable<Azure.Search.Documents.Indexes.Models.VisualFeature>
@@ -3118,6 +3225,30 @@ namespace Azure.Search.Documents.Models
     {
         Value = 0,
         Range = 1,
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct HybridCountAndFacetMode : System.IEquatable<Azure.Search.Documents.Models.HybridCountAndFacetMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public HybridCountAndFacetMode(string value) { throw null; }
+        public static Azure.Search.Documents.Models.HybridCountAndFacetMode CountAllResults { get { throw null; } }
+        public static Azure.Search.Documents.Models.HybridCountAndFacetMode CountRetrievableResults { get { throw null; } }
+        public bool Equals(Azure.Search.Documents.Models.HybridCountAndFacetMode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Search.Documents.Models.HybridCountAndFacetMode left, Azure.Search.Documents.Models.HybridCountAndFacetMode right) { throw null; }
+        public static implicit operator Azure.Search.Documents.Models.HybridCountAndFacetMode (string value) { throw null; }
+        public static bool operator !=(Azure.Search.Documents.Models.HybridCountAndFacetMode left, Azure.Search.Documents.Models.HybridCountAndFacetMode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class HybridSearch
+    {
+        public HybridSearch() { }
+        public Azure.Search.Documents.Models.HybridCountAndFacetMode? CountAndFacetMode { get { throw null; } set { } }
+        public int? MaxTextRecallSize { get { throw null; } set { } }
     }
     public partial class IndexActionCompletedEventArgs<T> : Azure.Search.Documents.Models.IndexActionEventArgs<T>
     {
@@ -3506,7 +3637,9 @@ namespace Azure.Search.Documents.Models
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Search.Documents.Indexes.Models.SearchServiceCounters SearchServiceCounters(Azure.Search.Documents.Indexes.Models.SearchResourceCounter documentCounter = null, Azure.Search.Documents.Indexes.Models.SearchResourceCounter indexCounter = null, Azure.Search.Documents.Indexes.Models.SearchResourceCounter indexerCounter = null, Azure.Search.Documents.Indexes.Models.SearchResourceCounter dataSourceCounter = null, Azure.Search.Documents.Indexes.Models.SearchResourceCounter storageSizeCounter = null, Azure.Search.Documents.Indexes.Models.SearchResourceCounter synonymMapCounter = null, Azure.Search.Documents.Indexes.Models.SearchResourceCounter skillsetCounter = null, Azure.Search.Documents.Indexes.Models.SearchResourceCounter vectorIndexSizeCounter = null) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.SearchServiceCounters SearchServiceCounters(Azure.Search.Documents.Indexes.Models.SearchResourceCounter aliasCounter = null, Azure.Search.Documents.Indexes.Models.SearchResourceCounter documentCounter = null, Azure.Search.Documents.Indexes.Models.SearchResourceCounter indexCounter = null, Azure.Search.Documents.Indexes.Models.SearchResourceCounter indexerCounter = null, Azure.Search.Documents.Indexes.Models.SearchResourceCounter dataSourceCounter = null, Azure.Search.Documents.Indexes.Models.SearchResourceCounter storageSizeCounter = null, Azure.Search.Documents.Indexes.Models.SearchResourceCounter synonymMapCounter = null, Azure.Search.Documents.Indexes.Models.SearchResourceCounter skillsetCounter = null, Azure.Search.Documents.Indexes.Models.SearchResourceCounter vectorIndexSizeCounter = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Search.Documents.Indexes.Models.SearchServiceLimits SearchServiceLimits(int? maxFieldsPerIndex, int? maxFieldNestingDepthPerIndex, int? maxComplexCollectionFieldsPerIndex, int? maxComplexObjectsInCollectionsPerDocument) { throw null; }
+        public static Azure.Search.Documents.Indexes.Models.SearchServiceLimits SearchServiceLimits(int? maxFieldsPerIndex = default(int?), int? maxFieldNestingDepthPerIndex = default(int?), int? maxComplexCollectionFieldsPerIndex = default(int?), int? maxComplexObjectsInCollectionsPerDocument = default(int?), long? maxStoragePerIndexInBytes = default(long?)) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.SearchServiceStatistics SearchServiceStatistics(Azure.Search.Documents.Indexes.Models.SearchServiceCounters counters, Azure.Search.Documents.Indexes.Models.SearchServiceLimits limits) { throw null; }
         public static Azure.Search.Documents.Models.SearchSuggestion<T> SearchSuggestion<T>(T document, string text) { throw null; }
         public static Azure.Search.Documents.Models.SemanticDebugInfo SemanticDebugInfo(Azure.Search.Documents.Models.QueryResultDocumentSemanticField titleField = null, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.QueryResultDocumentSemanticField> contentFields = null, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.QueryResultDocumentSemanticField> keywordFields = null, Azure.Search.Documents.Models.QueryResultDocumentRerankerInput rerankerInput = null) { throw null; }
@@ -3551,6 +3684,11 @@ namespace Azure.Search.Documents.Models
         public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<string>> Highlights { get { throw null; } }
         public double? Score { get { throw null; } }
         public Azure.Search.Documents.Models.SemanticSearchResult SemanticSearch { get { throw null; } }
+    }
+    public partial class SearchScoreThreshold : Azure.Search.Documents.Models.VectorThreshold
+    {
+        public SearchScoreThreshold(double value) { }
+        public double Value { get { throw null; } set { } }
     }
     public partial class SearchSuggestion<T>
     {
@@ -3695,6 +3833,16 @@ namespace Azure.Search.Documents.Models
         public static bool operator !=(Azure.Search.Documents.Models.VectorFilterMode left, Azure.Search.Documents.Models.VectorFilterMode right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class VectorizableImageBinaryQuery : Azure.Search.Documents.Models.VectorQuery
+    {
+        public VectorizableImageBinaryQuery() { }
+        public string Base64Image { get { throw null; } set { } }
+    }
+    public partial class VectorizableImageUrlQuery : Azure.Search.Documents.Models.VectorQuery
+    {
+        public VectorizableImageUrlQuery() { }
+        public System.Uri Url { get { throw null; } set { } }
+    }
     public partial class VectorizableTextQuery : Azure.Search.Documents.Models.VectorQuery
     {
         public VectorizableTextQuery(string text) { }
@@ -3712,12 +3860,23 @@ namespace Azure.Search.Documents.Models
         public System.Collections.Generic.IList<string> Fields { get { throw null; } }
         public int? KNearestNeighborsCount { get { throw null; } set { } }
         public double? Oversampling { get { throw null; } set { } }
+        public Azure.Search.Documents.Models.VectorThreshold Threshold { get { throw null; } set { } }
+        public float? Weight { get { throw null; } set { } }
     }
     public partial class VectorSearchOptions
     {
         public VectorSearchOptions() { }
         public Azure.Search.Documents.Models.VectorFilterMode? FilterMode { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Search.Documents.Models.VectorQuery> Queries { get { throw null; } }
+    }
+    public partial class VectorSimilarityThreshold : Azure.Search.Documents.Models.VectorThreshold
+    {
+        public VectorSimilarityThreshold(double value) { }
+        public double Value { get { throw null; } set { } }
+    }
+    public abstract partial class VectorThreshold
+    {
+        protected VectorThreshold() { }
     }
 }
 namespace Microsoft.Extensions.Azure

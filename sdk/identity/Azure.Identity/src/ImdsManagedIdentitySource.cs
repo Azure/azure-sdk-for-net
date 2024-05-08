@@ -91,7 +91,6 @@ namespace Azure.Identity
             if (_isFirstRequest && _isChainedCredential)
             {
                 message.NetworkTimeout = _imdsNetworkTimeout;
-                _isFirstRequest = false;
             }
 
             return message;
@@ -139,6 +138,9 @@ namespace Azure.Identity
             Response response = message.Response;
             // if we got a response from IMDS we can stop limiting the network timeout
             _imdsNetworkTimeout = null;
+
+            // Mark that the first request has been made
+            _isFirstRequest = false;
 
             // handle error status codes indicating managed identity is not available
             string baseMessage = response.Status switch

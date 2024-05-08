@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="globalParameters"> Global parameters that can be passed to all solutionIds. </param>
+        /// <param name="globalParameters"> Global parameters is an optional map which can be used to add key and  value to request body to improve the diagnostics results. </param>
         /// <param name="insights"> SolutionIds that are needed to be invoked. </param>
         /// <param name="acceptedOn"> Diagnostic Request Accepted time. </param>
         /// <param name="provisioningState"> Status of diagnostic provisioning. </param>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SelfHelp
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Global parameters that can be passed to all solutionIds. </summary>
+        /// <summary> Global parameters is an optional map which can be used to add key and  value to request body to improve the diagnostics results. </summary>
         public IDictionary<string, string> GlobalParameters { get; }
         /// <summary> SolutionIds that are needed to be invoked. </summary>
         public IList<SelfHelpDiagnosticInvocation> Insights { get; }
