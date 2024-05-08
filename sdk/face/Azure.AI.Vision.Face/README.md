@@ -1,4 +1,4 @@
-# Azure.AI.Vision.Face client library for .NET
+# Azure AI Face client library for .NET
 
 Azure.AI.Vision.Face is a managed service that helps developers get secret simply and securely.
 
