@@ -2,13 +2,14 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using System.Text;
 
 namespace System.ClientModel.Internal;
 
 // SSE specification: https://html.spec.whatwg.org/multipage/server-sent-events.html#parsing-an-event-stream
 internal readonly struct ServerSentEvent
 {
+    private const char LF = '\n';
+
     // Gets the value of the SSE "event type" buffer, used to distinguish between event kinds.
     public ReadOnlyMemory<char> EventName { get; }
     // Gets the value of the SSE "data" buffer, which holds the payload of the server-sent event.
@@ -18,53 +19,51 @@ internal readonly struct ServerSentEvent
     // If present, gets the defined "retry" value for the event, which represents the delay before reconnecting.
     public TimeSpan? ReconnectionTime { get; }
 
-    private readonly IReadOnlyList<ServerSentEventField> _fields;
-    private readonly string? _multiLineData;
-
     internal ServerSentEvent(IReadOnlyList<ServerSentEventField> fields)
     {
-        _fields = fields;
-        StringBuilder? multiLineDataBuilder = null;
-        for (int i = 0; i < _fields.Count; i++)
+        int dataLength = 0;
+        foreach (ServerSentEventField field in fields)
         {
-            ReadOnlyMemory<char> fieldValue = _fields[i].Value;
-            switch (_fields[i].FieldType)
+            switch (field.FieldType)
             {
                 case ServerSentEventFieldKind.Event:
-                    EventName = fieldValue;
+                    EventName = field.Value;
                     break;
                 case ServerSentEventFieldKind.Data:
-                    {
-                        if (multiLineDataBuilder != null)
-                        {
-                            multiLineDataBuilder.Append(fieldValue);
-                        }
-                        else if (Data.IsEmpty)
-                        {
-                            Data = fieldValue;
-                        }
-                        else
-                        {
-                            multiLineDataBuilder ??= new();
-                            multiLineDataBuilder.Append(fieldValue);
-                            Data = null;
-                        }
-                        break;
-                    }
+                    dataLength += field.Value.Length + 1;
+                    break;
                 case ServerSentEventFieldKind.Id:
-                    LastEventId = fieldValue;
+                    LastEventId = field.Value;
                     break;
                 case ServerSentEventFieldKind.Retry:
-                    ReconnectionTime = int.TryParse(fieldValue.ToString(), out int retry) ? TimeSpan.FromMilliseconds(retry) : null;
+#if NETSTANDARD2_0
+                    ReconnectionTime = int.TryParse(field.Value.ToString(), out int retry) ? TimeSpan.FromMilliseconds(retry) : null;
+#else
+                    ReconnectionTime = int.TryParse(field.Value.Span, out int retry) ? TimeSpan.FromMilliseconds(retry) : null;
+#endif
                     break;
                 default:
                     break;
             }
-            if (multiLineDataBuilder != null)
+        }
+
+        if (dataLength > 0)
+        {
+            Memory<char> buffer = new(new char[dataLength]);
+
+            int curr = 0;
+
+            foreach (ServerSentEventField field in fields)
             {
-                _multiLineData = multiLineDataBuilder.ToString();
-                Data = _multiLineData.AsMemory();
+                if (field.FieldType == ServerSentEventFieldKind.Data)
+                {
+                    field.Value.Span.CopyTo(buffer.Span.Slice(curr));
+                    buffer.Span[curr + field.Value.Length] = LF;
+                    curr += field.Value.Length + 1;
+                }
             }
+
+            Data = buffer;
         }
     }
 }

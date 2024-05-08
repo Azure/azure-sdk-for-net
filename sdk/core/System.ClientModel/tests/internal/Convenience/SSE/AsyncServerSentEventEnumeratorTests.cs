@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Internal;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -42,8 +43,38 @@ public class AsyncServerSentEventEnumeratorTests
         Assert.ThrowsAsync<OperationCanceledException>(async () => await enumerator.MoveNextAsync());
     }
 
-    // TODO: Add tests for dispose and handling cancellation token
-    // TODO: later, add tests for varying the _doneToken value.
+    [Test]
+    public async Task StopsOnStringBasedTerminalEvent()
+    {
+        string mockContent = """
+            event: event.0
+            data: 0
+
+            event: stop
+            data: ~stop~
+        
+            event: event.1
+            data: 1
+        
+
+            """;
+
+        using Stream contentStream = BinaryData.FromString(mockContent).ToStream();
+        AsyncServerSentEventEnumerator enumerator = new(contentStream, "~stop~");
+
+        List<ServerSentEvent> events = new();
+
+        while (await enumerator.MoveNextAsync())
+        {
+            events.Add(enumerator.Current);
+        }
+
+        Assert.AreEqual(events.Count, 1);
+        Assert.IsTrue(events[0].EventName.Span.SequenceEqual("event.0".AsSpan()));
+        Assert.IsTrue(events[0].Data.Span.SequenceEqual("0".AsSpan()));
+    }
+
+    // TODO: Add tests for dispose
 
     #region Helpers
 

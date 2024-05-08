@@ -83,14 +83,14 @@ public class ServerSentEventReaderTests
     [Test]
     public async Task HandlesDoneEvent()
     {
-        Stream contentStream = BinaryData.FromString("event: done\ndata: [DONE]\n\n").ToStream();
+        Stream contentStream = BinaryData.FromString("event: stop\ndata: ~stop~\n\n").ToStream();
         using ServerSentEventReader reader = new(contentStream);
 
         ServerSentEvent? sse = await reader.TryGetNextEventAsync();
 
         Assert.IsNotNull(sse);
-        Assert.IsTrue(sse.Value.EventName.Span.SequenceEqual($"done".AsSpan()));
-        Assert.IsTrue(sse.Value.Data.Span.SequenceEqual($"[DONE]".AsSpan()));
+        Assert.IsTrue(sse.Value.EventName.Span.SequenceEqual("stop".AsSpan()));
+        Assert.IsTrue(sse.Value.Data.Span.SequenceEqual("~stop~".AsSpan()));
         Assert.AreEqual(sse.Value.LastEventId.Length, 0);
         Assert.IsNull(sse.Value.ReconnectionTime);
     }
@@ -111,7 +111,7 @@ public class ServerSentEventReaderTests
 
         Assert.IsNotNull(sse);
         Assert.AreEqual(sse.Value.EventName.Length, 0);
-        Assert.IsTrue(sse.Value.Data.Span.SequenceEqual("YHOO\n+2\n10".AsSpan()));
+        Assert.IsTrue(sse.Value.Data.Span.SequenceEqual("YHOO\n+2\n10\n".AsSpan()));
         Assert.AreEqual(sse.Value.LastEventId.Length, 0);
         Assert.IsNull(sse.Value.ReconnectionTime);
     }
