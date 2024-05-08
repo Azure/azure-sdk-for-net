@@ -48,11 +48,8 @@ namespace Azure.AI.Vision.Face
         /// <summary> Initializes a new instance of <see cref="HairColor"/>. </summary>
         /// <param name="color"> Name of the hair color. </param>
         /// <param name="confidence"> Confidence level of the color. Range between [0,1]. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="color"/> is null. </exception>
-        internal HairColor(string color, float confidence)
+        internal HairColor(HairColorType color, float confidence)
         {
-            Argument.AssertNotNull(color, nameof(color));
-
             Color = color;
             Confidence = confidence;
         }
@@ -61,7 +58,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="color"> Name of the hair color. </param>
         /// <param name="confidence"> Confidence level of the color. Range between [0,1]. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HairColor(string color, float confidence, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HairColor(HairColorType color, float confidence, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Color = color;
             Confidence = confidence;
@@ -74,7 +71,7 @@ namespace Azure.AI.Vision.Face
         }
 
         /// <summary> Name of the hair color. </summary>
-        public string Color { get; }
+        public HairColorType Color { get; }
         /// <summary> Confidence level of the color. Range between [0,1]. </summary>
         public float Confidence { get; }
     }

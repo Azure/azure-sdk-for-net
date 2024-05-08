@@ -44,7 +44,7 @@ namespace Azure.AI.Vision.Face
             if (Optional.IsDefined(Glasses))
             {
                 writer.WritePropertyName("glasses"u8);
-                writer.WriteStringValue(Glasses);
+                writer.WriteStringValue(Glasses.Value.ToString());
             }
             if (Optional.IsDefined(HeadPose))
             {
@@ -137,7 +137,7 @@ namespace Azure.AI.Vision.Face
             float? age = default;
             float? smile = default;
             FacialHair facialHair = default;
-            string glasses = default;
+            GlassesType? glasses = default;
             HeadPose headPose = default;
             HairProperties hair = default;
             OcclusionProperties occlusion = default;
@@ -180,7 +180,11 @@ namespace Azure.AI.Vision.Face
                 }
                 if (property.NameEquals("glasses"u8))
                 {
-                    glasses = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    glasses = new GlassesType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("headPose"u8))

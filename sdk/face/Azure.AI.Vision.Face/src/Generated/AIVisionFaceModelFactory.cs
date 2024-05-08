@@ -129,7 +129,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="mask"> Properties describing the presence of a mask on a given face. </param>
         /// <param name="qualityForRecognition"> Properties describing the overall image quality regarding whether the image being used in the detection is of sufficient quality to attempt face recognition on. </param>
         /// <returns> A new <see cref="Face.FaceAttributes"/> instance for mocking. </returns>
-        public static FaceAttributes FaceAttributes(float? age = null, float? smile = null, FacialHair facialHair = null, string glasses = null, HeadPose headPose = null, HairProperties hair = null, OcclusionProperties occlusion = null, IEnumerable<AccessoryItem> accessories = null, BlurProperties blur = null, ExposureProperties exposure = null, NoiseProperties noise = null, MaskProperties mask = null, QualityForRecognition? qualityForRecognition = null)
+        public static FaceAttributes FaceAttributes(float? age = null, float? smile = null, FacialHair facialHair = null, GlassesType? glasses = null, HeadPose headPose = null, HairProperties hair = null, OcclusionProperties occlusion = null, IEnumerable<AccessoryItem> accessories = null, BlurProperties blur = null, ExposureProperties exposure = null, NoiseProperties noise = null, MaskProperties mask = null, QualityForRecognition? qualityForRecognition = null)
         {
             accessories ??= new List<AccessoryItem>();
 
@@ -186,7 +186,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="color"> Name of the hair color. </param>
         /// <param name="confidence"> Confidence level of the color. Range between [0,1]. </param>
         /// <returns> A new <see cref="Face.HairColor"/> instance for mocking. </returns>
-        public static HairColor HairColor(string color = null, float confidence = default)
+        public static HairColor HairColor(HairColorType color = default, float confidence = default)
         {
             return new HairColor(color, confidence, serializedAdditionalRawData: null);
         }
@@ -205,7 +205,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="type"> Type of the accessory. </param>
         /// <param name="confidence"> Confidence level of the accessory type. Range between [0,1]. </param>
         /// <returns> A new <see cref="Face.AccessoryItem"/> instance for mocking. </returns>
-        public static AccessoryItem AccessoryItem(string type = null, float confidence = default)
+        public static AccessoryItem AccessoryItem(AccessoryType type = default, float confidence = default)
         {
             return new AccessoryItem(type, confidence, serializedAdditionalRawData: null);
         }
@@ -214,7 +214,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="blurLevel"> An enum value indicating level of blurriness. </param>
         /// <param name="value"> A number indicating level of blurriness ranging from 0 to 1. </param>
         /// <returns> A new <see cref="Face.BlurProperties"/> instance for mocking. </returns>
-        public static BlurProperties BlurProperties(string blurLevel = null, float value = default)
+        public static BlurProperties BlurProperties(BlurLevel blurLevel = default, float value = default)
         {
             return new BlurProperties(blurLevel, value, serializedAdditionalRawData: null);
         }
@@ -223,7 +223,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="exposureLevel"> An enum value indicating level of exposure. </param>
         /// <param name="value"> A number indicating level of exposure level ranging from 0 to 1. [0, 0.25) is under exposure. [0.25, 0.75) is good exposure. [0.75, 1] is over exposure. </param>
         /// <returns> A new <see cref="Face.ExposureProperties"/> instance for mocking. </returns>
-        public static ExposureProperties ExposureProperties(string exposureLevel = null, float value = default)
+        public static ExposureProperties ExposureProperties(ExposureLevel exposureLevel = default, float value = default)
         {
             return new ExposureProperties(exposureLevel, value, serializedAdditionalRawData: null);
         }
@@ -232,7 +232,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="noiseLevel"> An enum value indicating level of noise. </param>
         /// <param name="value"> A number indicating level of noise level ranging from 0 to 1. [0, 0.25) is under exposure. [0.25, 0.75) is good exposure. [0.75, 1] is over exposure. [0, 0.3) is low noise level. [0.3, 0.7) is medium noise level. [0.7, 1] is high noise level. </param>
         /// <returns> A new <see cref="Face.NoiseProperties"/> instance for mocking. </returns>
-        public static NoiseProperties NoiseProperties(string noiseLevel = null, float value = default)
+        public static NoiseProperties NoiseProperties(NoiseLevel noiseLevel = default, float value = default)
         {
             return new NoiseProperties(noiseLevel, value, serializedAdditionalRawData: null);
         }
@@ -241,7 +241,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="noseAndMouthCovered"> A boolean value indicating whether nose and mouth are covered. </param>
         /// <param name="type"> Type of the mask. </param>
         /// <returns> A new <see cref="Face.MaskProperties"/> instance for mocking. </returns>
-        public static MaskProperties MaskProperties(bool noseAndMouthCovered = default, string type = null)
+        public static MaskProperties MaskProperties(bool noseAndMouthCovered = default, MaskType type = default)
         {
             return new MaskProperties(noseAndMouthCovered, type, serializedAdditionalRawData: null);
         }

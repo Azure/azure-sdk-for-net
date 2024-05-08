@@ -48,11 +48,8 @@ namespace Azure.AI.Vision.Face
         /// <summary> Initializes a new instance of <see cref="MaskProperties"/>. </summary>
         /// <param name="noseAndMouthCovered"> A boolean value indicating whether nose and mouth are covered. </param>
         /// <param name="type"> Type of the mask. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="type"/> is null. </exception>
-        internal MaskProperties(bool noseAndMouthCovered, string type)
+        internal MaskProperties(bool noseAndMouthCovered, MaskType type)
         {
-            Argument.AssertNotNull(type, nameof(type));
-
             NoseAndMouthCovered = noseAndMouthCovered;
             Type = type;
         }
@@ -61,7 +58,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="noseAndMouthCovered"> A boolean value indicating whether nose and mouth are covered. </param>
         /// <param name="type"> Type of the mask. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MaskProperties(bool noseAndMouthCovered, string type, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MaskProperties(bool noseAndMouthCovered, MaskType type, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NoseAndMouthCovered = noseAndMouthCovered;
             Type = type;
@@ -76,6 +73,6 @@ namespace Azure.AI.Vision.Face
         /// <summary> A boolean value indicating whether nose and mouth are covered. </summary>
         public bool NoseAndMouthCovered { get; }
         /// <summary> Type of the mask. </summary>
-        public string Type { get; }
+        public MaskType Type { get; }
     }
 }

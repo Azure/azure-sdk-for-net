@@ -66,7 +66,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="mask"> Properties describing the presence of a mask on a given face. </param>
         /// <param name="qualityForRecognition"> Properties describing the overall image quality regarding whether the image being used in the detection is of sufficient quality to attempt face recognition on. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FaceAttributes(float? age, float? smile, FacialHair facialHair, string glasses, HeadPose headPose, HairProperties hair, OcclusionProperties occlusion, IReadOnlyList<AccessoryItem> accessories, BlurProperties blur, ExposureProperties exposure, NoiseProperties noise, MaskProperties mask, QualityForRecognition? qualityForRecognition, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FaceAttributes(float? age, float? smile, FacialHair facialHair, GlassesType? glasses, HeadPose headPose, HairProperties hair, OcclusionProperties occlusion, IReadOnlyList<AccessoryItem> accessories, BlurProperties blur, ExposureProperties exposure, NoiseProperties noise, MaskProperties mask, QualityForRecognition? qualityForRecognition, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Age = age;
             Smile = smile;
@@ -91,7 +91,7 @@ namespace Azure.AI.Vision.Face
         /// <summary> Properties describing facial hair attributes. </summary>
         public FacialHair FacialHair { get; }
         /// <summary> Glasses type if any of the face. </summary>
-        public string Glasses { get; }
+        public GlassesType? Glasses { get; }
         /// <summary> 3-D roll/yaw/pitch angles for face direction. </summary>
         public HeadPose HeadPose { get; }
         /// <summary> Properties describing hair attributes. </summary>

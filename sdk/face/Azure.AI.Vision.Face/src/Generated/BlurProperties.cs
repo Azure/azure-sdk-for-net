@@ -48,11 +48,8 @@ namespace Azure.AI.Vision.Face
         /// <summary> Initializes a new instance of <see cref="BlurProperties"/>. </summary>
         /// <param name="blurLevel"> An enum value indicating level of blurriness. </param>
         /// <param name="value"> A number indicating level of blurriness ranging from 0 to 1. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="blurLevel"/> is null. </exception>
-        internal BlurProperties(string blurLevel, float value)
+        internal BlurProperties(BlurLevel blurLevel, float value)
         {
-            Argument.AssertNotNull(blurLevel, nameof(blurLevel));
-
             BlurLevel = blurLevel;
             Value = value;
         }
@@ -61,7 +58,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="blurLevel"> An enum value indicating level of blurriness. </param>
         /// <param name="value"> A number indicating level of blurriness ranging from 0 to 1. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BlurProperties(string blurLevel, float value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BlurProperties(BlurLevel blurLevel, float value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BlurLevel = blurLevel;
             Value = value;
@@ -74,7 +71,7 @@ namespace Azure.AI.Vision.Face
         }
 
         /// <summary> An enum value indicating level of blurriness. </summary>
-        public string BlurLevel { get; }
+        public BlurLevel BlurLevel { get; }
         /// <summary> A number indicating level of blurriness ranging from 0 to 1. </summary>
         public float Value { get; }
     }

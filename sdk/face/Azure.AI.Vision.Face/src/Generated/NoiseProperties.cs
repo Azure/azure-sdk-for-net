@@ -48,11 +48,8 @@ namespace Azure.AI.Vision.Face
         /// <summary> Initializes a new instance of <see cref="NoiseProperties"/>. </summary>
         /// <param name="noiseLevel"> An enum value indicating level of noise. </param>
         /// <param name="value"> A number indicating level of noise level ranging from 0 to 1. [0, 0.25) is under exposure. [0.25, 0.75) is good exposure. [0.75, 1] is over exposure. [0, 0.3) is low noise level. [0.3, 0.7) is medium noise level. [0.7, 1] is high noise level. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="noiseLevel"/> is null. </exception>
-        internal NoiseProperties(string noiseLevel, float value)
+        internal NoiseProperties(NoiseLevel noiseLevel, float value)
         {
-            Argument.AssertNotNull(noiseLevel, nameof(noiseLevel));
-
             NoiseLevel = noiseLevel;
             Value = value;
         }
@@ -61,7 +58,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="noiseLevel"> An enum value indicating level of noise. </param>
         /// <param name="value"> A number indicating level of noise level ranging from 0 to 1. [0, 0.25) is under exposure. [0.25, 0.75) is good exposure. [0.75, 1] is over exposure. [0, 0.3) is low noise level. [0.3, 0.7) is medium noise level. [0.7, 1] is high noise level. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NoiseProperties(string noiseLevel, float value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NoiseProperties(NoiseLevel noiseLevel, float value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NoiseLevel = noiseLevel;
             Value = value;
@@ -74,7 +71,7 @@ namespace Azure.AI.Vision.Face
         }
 
         /// <summary> An enum value indicating level of noise. </summary>
-        public string NoiseLevel { get; }
+        public NoiseLevel NoiseLevel { get; }
         /// <summary> A number indicating level of noise level ranging from 0 to 1. [0, 0.25) is under exposure. [0.25, 0.75) is good exposure. [0.75, 1] is over exposure. [0, 0.3) is low noise level. [0.3, 0.7) is medium noise level. [0.7, 1] is high noise level. </summary>
         public float Value { get; }
     }

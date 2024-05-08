@@ -125,7 +125,7 @@ namespace Azure.AI.Vision.Face
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> DetectFromUrlAsync(RequestContent content, string detectionModel = null, string recognitionModel = null, bool? returnFaceId = null, IEnumerable<string> returnFaceAttributes = null, bool? returnFaceLandmarks = null, bool? returnRecognitionModel = null, int? faceIdTimeToLive = null, RequestContext context = null)
+        internal virtual async Task<Response> DetectFromUrlAsync(RequestContent content, string detectionModel = null, string recognitionModel = null, bool? returnFaceId = null, IEnumerable<FaceAttributeType> returnFaceAttributes = null, bool? returnFaceLandmarks = null, bool? returnRecognitionModel = null, int? faceIdTimeToLive = null, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -165,7 +165,7 @@ namespace Azure.AI.Vision.Face
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response DetectFromUrl(RequestContent content, string detectionModel = null, string recognitionModel = null, bool? returnFaceId = null, IEnumerable<string> returnFaceAttributes = null, bool? returnFaceLandmarks = null, bool? returnRecognitionModel = null, int? faceIdTimeToLive = null, RequestContext context = null)
+        internal virtual Response DetectFromUrl(RequestContent content, string detectionModel = null, string recognitionModel = null, bool? returnFaceId = null, IEnumerable<FaceAttributeType> returnFaceAttributes = null, bool? returnFaceLandmarks = null, bool? returnRecognitionModel = null, int? faceIdTimeToLive = null, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -205,7 +205,7 @@ namespace Azure.AI.Vision.Face
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> DetectAsync(RequestContent content, string detectionModel = null, string recognitionModel = null, bool? returnFaceId = null, IEnumerable<string> returnFaceAttributes = null, bool? returnFaceLandmarks = null, bool? returnRecognitionModel = null, int? faceIdTimeToLive = null, RequestContext context = null)
+        internal virtual async Task<Response> DetectAsync(RequestContent content, string detectionModel = null, string recognitionModel = null, bool? returnFaceId = null, IEnumerable<FaceAttributeType> returnFaceAttributes = null, bool? returnFaceLandmarks = null, bool? returnRecognitionModel = null, int? faceIdTimeToLive = null, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -245,7 +245,7 @@ namespace Azure.AI.Vision.Face
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response Detect(RequestContent content, string detectionModel = null, string recognitionModel = null, bool? returnFaceId = null, IEnumerable<string> returnFaceAttributes = null, bool? returnFaceLandmarks = null, bool? returnRecognitionModel = null, int? faceIdTimeToLive = null, RequestContext context = null)
+        internal virtual Response Detect(RequestContent content, string detectionModel = null, string recognitionModel = null, bool? returnFaceId = null, IEnumerable<FaceAttributeType> returnFaceAttributes = null, bool? returnFaceLandmarks = null, bool? returnRecognitionModel = null, int? faceIdTimeToLive = null, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1935,7 +1935,7 @@ namespace Azure.AI.Vision.Face
             }
         }
 
-        internal HttpMessage CreateDetectFromUrlRequest(RequestContent content, string detectionModel, string recognitionModel, bool? returnFaceId, IEnumerable<string> returnFaceAttributes, bool? returnFaceLandmarks, bool? returnRecognitionModel, int? faceIdTimeToLive, RequestContext context)
+        internal HttpMessage CreateDetectFromUrlRequest(RequestContent content, string detectionModel, string recognitionModel, bool? returnFaceId, IEnumerable<FaceAttributeType> returnFaceAttributes, bool? returnFaceLandmarks, bool? returnRecognitionModel, int? faceIdTimeToLive, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1957,7 +1957,7 @@ namespace Azure.AI.Vision.Face
             {
                 uri.AppendQuery("returnFaceId", returnFaceId.Value, true);
             }
-            if (returnFaceAttributes != null && !(returnFaceAttributes is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
+            if (returnFaceAttributes != null && !(returnFaceAttributes is ChangeTrackingList<FaceAttributeType> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("returnFaceAttributes", returnFaceAttributes, ",", true);
             }
@@ -1980,7 +1980,7 @@ namespace Azure.AI.Vision.Face
             return message;
         }
 
-        internal HttpMessage CreateDetectRequest(RequestContent content, string detectionModel, string recognitionModel, bool? returnFaceId, IEnumerable<string> returnFaceAttributes, bool? returnFaceLandmarks, bool? returnRecognitionModel, int? faceIdTimeToLive, RequestContext context)
+        internal HttpMessage CreateDetectRequest(RequestContent content, string detectionModel, string recognitionModel, bool? returnFaceId, IEnumerable<FaceAttributeType> returnFaceAttributes, bool? returnFaceLandmarks, bool? returnRecognitionModel, int? faceIdTimeToLive, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -2002,7 +2002,7 @@ namespace Azure.AI.Vision.Face
             {
                 uri.AppendQuery("returnFaceId", returnFaceId.Value, true);
             }
-            if (returnFaceAttributes != null && !(returnFaceAttributes is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
+            if (returnFaceAttributes != null && !(returnFaceAttributes is ChangeTrackingList<FaceAttributeType> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("returnFaceAttributes", returnFaceAttributes, ",", true);
             }

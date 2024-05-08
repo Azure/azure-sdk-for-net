@@ -48,11 +48,8 @@ namespace Azure.AI.Vision.Face
         /// <summary> Initializes a new instance of <see cref="AccessoryItem"/>. </summary>
         /// <param name="type"> Type of the accessory. </param>
         /// <param name="confidence"> Confidence level of the accessory type. Range between [0,1]. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="type"/> is null. </exception>
-        internal AccessoryItem(string type, float confidence)
+        internal AccessoryItem(AccessoryType type, float confidence)
         {
-            Argument.AssertNotNull(type, nameof(type));
-
             Type = type;
             Confidence = confidence;
         }
@@ -61,7 +58,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="type"> Type of the accessory. </param>
         /// <param name="confidence"> Confidence level of the accessory type. Range between [0,1]. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AccessoryItem(string type, float confidence, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AccessoryItem(AccessoryType type, float confidence, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Type = type;
             Confidence = confidence;
@@ -74,7 +71,7 @@ namespace Azure.AI.Vision.Face
         }
 
         /// <summary> Type of the accessory. </summary>
-        public string Type { get; }
+        public AccessoryType Type { get; }
         /// <summary> Confidence level of the accessory type. Range between [0,1]. </summary>
         public float Confidence { get; }
     }

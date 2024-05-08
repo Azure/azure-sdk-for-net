@@ -27,7 +27,7 @@ namespace Azure.AI.Vision.Face
 
             writer.WriteStartObject();
             writer.WritePropertyName("exposureLevel"u8);
-            writer.WriteStringValue(ExposureLevel);
+            writer.WriteStringValue(ExposureLevel.ToString());
             writer.WritePropertyName("value"u8);
             writer.WriteNumberValue(Value);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -68,7 +68,7 @@ namespace Azure.AI.Vision.Face
             {
                 return null;
             }
-            string exposureLevel = default;
+            ExposureLevel exposureLevel = default;
             float value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -76,7 +76,7 @@ namespace Azure.AI.Vision.Face
             {
                 if (property.NameEquals("exposureLevel"u8))
                 {
-                    exposureLevel = property.Value.GetString();
+                    exposureLevel = new ExposureLevel(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("value"u8))

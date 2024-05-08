@@ -48,11 +48,8 @@ namespace Azure.AI.Vision.Face
         /// <summary> Initializes a new instance of <see cref="ExposureProperties"/>. </summary>
         /// <param name="exposureLevel"> An enum value indicating level of exposure. </param>
         /// <param name="value"> A number indicating level of exposure level ranging from 0 to 1. [0, 0.25) is under exposure. [0.25, 0.75) is good exposure. [0.75, 1] is over exposure. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="exposureLevel"/> is null. </exception>
-        internal ExposureProperties(string exposureLevel, float value)
+        internal ExposureProperties(ExposureLevel exposureLevel, float value)
         {
-            Argument.AssertNotNull(exposureLevel, nameof(exposureLevel));
-
             ExposureLevel = exposureLevel;
             Value = value;
         }
@@ -61,7 +58,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="exposureLevel"> An enum value indicating level of exposure. </param>
         /// <param name="value"> A number indicating level of exposure level ranging from 0 to 1. [0, 0.25) is under exposure. [0.25, 0.75) is good exposure. [0.75, 1] is over exposure. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExposureProperties(string exposureLevel, float value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ExposureProperties(ExposureLevel exposureLevel, float value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ExposureLevel = exposureLevel;
             Value = value;
@@ -74,7 +71,7 @@ namespace Azure.AI.Vision.Face
         }
 
         /// <summary> An enum value indicating level of exposure. </summary>
-        public string ExposureLevel { get; }
+        public ExposureLevel ExposureLevel { get; }
         /// <summary> A number indicating level of exposure level ranging from 0 to 1. [0, 0.25) is under exposure. [0.25, 0.75) is good exposure. [0.75, 1] is over exposure. </summary>
         public float Value { get; }
     }

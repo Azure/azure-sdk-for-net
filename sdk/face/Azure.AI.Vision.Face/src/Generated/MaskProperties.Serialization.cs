@@ -29,7 +29,7 @@ namespace Azure.AI.Vision.Face
             writer.WritePropertyName("noseAndMouthCovered"u8);
             writer.WriteBooleanValue(NoseAndMouthCovered);
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
+            writer.WriteStringValue(Type.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -69,7 +69,7 @@ namespace Azure.AI.Vision.Face
                 return null;
             }
             bool noseAndMouthCovered = default;
-            string type = default;
+            MaskType type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -81,7 +81,7 @@ namespace Azure.AI.Vision.Face
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString();
+                    type = new MaskType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

@@ -27,7 +27,7 @@ namespace Azure.AI.Vision.Face
 
             writer.WriteStartObject();
             writer.WritePropertyName("blurLevel"u8);
-            writer.WriteStringValue(BlurLevel);
+            writer.WriteStringValue(BlurLevel.ToString());
             writer.WritePropertyName("value"u8);
             writer.WriteNumberValue(Value);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -68,7 +68,7 @@ namespace Azure.AI.Vision.Face
             {
                 return null;
             }
-            string blurLevel = default;
+            BlurLevel blurLevel = default;
             float value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -76,7 +76,7 @@ namespace Azure.AI.Vision.Face
             {
                 if (property.NameEquals("blurLevel"u8))
                 {
-                    blurLevel = property.Value.GetString();
+                    blurLevel = new BlurLevel(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("value"u8))
