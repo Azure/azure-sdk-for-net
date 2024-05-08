@@ -131,7 +131,7 @@ namespace Azure.Provisioning
         public Azure.Provisioning.Output AddOutput(string outputName, System.Linq.Expressions.Expression<System.Func<T, object?>> propertySelector, Azure.Provisioning.BicepType outputType = Azure.Provisioning.BicepType.String, bool isSecure = false) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Provisioning.Output AddOutput(string outputName, System.Linq.Expressions.Expression<System.Func<T, object?>> propertySelector, bool isLiteral, bool isSecure) { throw null; }
-        public Azure.Provisioning.Output AddOutput(string outputName, string formattedString, System.Linq.Expressions.Expression<System.Func<T, object?>> propertySelector, Azure.Provisioning.BicepType outputType = Azure.Provisioning.BicepType.String, bool isLiteral = false, bool isSecure = false) { throw null; }
+        public Azure.Provisioning.Output AddOutput(string outputName, string formattedString, System.Linq.Expressions.Expression<System.Func<T, object?>> propertySelector, Azure.Provisioning.BicepType outputType = Azure.Provisioning.BicepType.String, bool isSecure = false) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Provisioning.Output AddOutput(string outputName, string formattedString, System.Linq.Expressions.Expression<System.Func<T, object?>> propertySelector, bool isLiteral, bool isSecure) { throw null; }
         public void AssignProperty(System.Linq.Expressions.Expression<System.Func<T, object?>> propertySelector, Azure.Provisioning.Parameter parameter) { }

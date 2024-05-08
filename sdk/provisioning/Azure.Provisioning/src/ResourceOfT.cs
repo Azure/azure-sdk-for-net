@@ -132,7 +132,7 @@ namespace Azure.Provisioning
         /// <returns>The <see cref="Output"/>.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public Output AddOutput(string outputName, string formattedString, Expression<Func<T, object?>> propertySelector, bool isLiteral, bool isSecure)
-            => AddOutput(outputName, formattedString, propertySelector, isLiteral, isSecure);
+            => AddOutput(outputName, formattedString, propertySelector, isSecure: isSecure);
 
         /// <summary>
         /// Adds an output to the resource.
@@ -141,14 +141,13 @@ namespace Azure.Provisioning
         /// <param name="outputType">The kind of the output.</param>
         /// <param name="propertySelector">A lambda expression to select the property to use as the source of the output.</param>
         /// <param name="formattedString">A tokenized string containing the output.</param>
-        /// <param name="isLiteral">Is the output literal.</param>
         /// <param name="isSecure">Is the output secure.</param>
         /// <returns>The <see cref="Output"/>.</returns>
-        public Output AddOutput(string outputName, string formattedString, Expression<Func<T, object?>> propertySelector, BicepType outputType = BicepType.String, bool isLiteral = false, bool isSecure = false)
+        public Output AddOutput(string outputName, string formattedString, Expression<Func<T, object?>> propertySelector, BicepType outputType = BicepType.String, bool isSecure = false)
         {
             (_, _, string expression) = EvaluateLambda(propertySelector, true);
 
-            return AddOutput(outputName, expression, isLiteral, isSecure, formattedString, outputType);
+            return AddOutput(outputName, expression, false, isSecure, formattedString, outputType);
         }
 
         private (object Instance, string PropertyName, string Expression) EvaluateLambda(Expression<Func<T, object?>> propertySelector, bool isOutput = false)
