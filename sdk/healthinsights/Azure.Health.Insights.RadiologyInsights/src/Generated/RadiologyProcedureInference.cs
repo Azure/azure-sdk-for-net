@@ -18,7 +18,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="imagingProcedures"> Imaging procedures. </param>
         /// <param name="orderedProcedure"> Ordered procedure information from the document information or text. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="imagingProcedures"/> or <paramref name="orderedProcedure"/> is null. </exception>
-        internal RadiologyProcedureInference(IEnumerable<ImagingProcedure> imagingProcedures, OrderedProcedure orderedProcedure)
+        public RadiologyProcedureInference(IEnumerable<ImagingProcedure> imagingProcedures, OrderedProcedure orderedProcedure)
         {
             Argument.AssertNotNull(imagingProcedures, nameof(imagingProcedures));
             Argument.AssertNotNull(orderedProcedure, nameof(orderedProcedure));
@@ -36,7 +36,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="procedureCodes"> LOINC codes for the procedure. </param>
         /// <param name="imagingProcedures"> Imaging procedures. </param>
         /// <param name="orderedProcedure"> Ordered procedure information from the document information or text. </param>
-        internal RadiologyProcedureInference(RadiologyInsightsInferenceType kind, IReadOnlyList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<FhirR4CodeableConcept> procedureCodes, IReadOnlyList<ImagingProcedure> imagingProcedures, OrderedProcedure orderedProcedure) : base(kind, extension, serializedAdditionalRawData)
+        internal RadiologyProcedureInference(RadiologyInsightsInferenceType kind, IList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<FhirR4CodeableConcept> procedureCodes, IList<ImagingProcedure> imagingProcedures, OrderedProcedure orderedProcedure) : base(kind, extension, serializedAdditionalRawData)
         {
             ProcedureCodes = procedureCodes;
             ImagingProcedures = imagingProcedures;
@@ -49,10 +49,10 @@ namespace Azure.Health.Insights.RadiologyInsights
         }
 
         /// <summary> LOINC codes for the procedure. </summary>
-        public IReadOnlyList<FhirR4CodeableConcept> ProcedureCodes { get; }
+        public IList<FhirR4CodeableConcept> ProcedureCodes { get; }
         /// <summary> Imaging procedures. </summary>
-        public IReadOnlyList<ImagingProcedure> ImagingProcedures { get; }
+        public IList<ImagingProcedure> ImagingProcedures { get; }
         /// <summary> Ordered procedure information from the document information or text. </summary>
-        public OrderedProcedure OrderedProcedure { get; }
+        public OrderedProcedure OrderedProcedure { get; set; }
     }
 }

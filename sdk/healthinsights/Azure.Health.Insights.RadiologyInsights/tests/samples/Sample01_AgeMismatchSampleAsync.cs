@@ -83,7 +83,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
             #region Snippet:Age_Mismatch_Async_Tests_Samples_ExtractEvidence
             foreach (FhirR4Extension extension in extensions)
             {
-                IReadOnlyList<FhirR4Extension> subExtensions = extension.Extension;
+                IList<FhirR4Extension> subExtensions = extension.Extension;
                 if (subExtensions != null)
                 {
                     evidence += ExtractEvidenceToken(subExtensions) + " ";
@@ -93,7 +93,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
             return evidence;
         }
 
-        private static String ExtractEvidenceToken(IReadOnlyList<FhirR4Extension> subExtensions)
+        private static String ExtractEvidenceToken(IList<FhirR4Extension> subExtensions)
         {
             String evidence = "";
             int offset = -1;

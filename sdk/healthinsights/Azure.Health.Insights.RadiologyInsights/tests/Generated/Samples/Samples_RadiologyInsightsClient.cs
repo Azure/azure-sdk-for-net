@@ -19,32 +19,14 @@ namespace Azure.Health.Insights.RadiologyInsights.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-<<<<<<< HEAD
-        public void Example_RadiologyInsightsClient_InferRadiologyInsights_ShortVersion()
-=======
         public void Example_RadiologyInsightsJob_InferRadiologyInsights_ShortVersion()
->>>>>>> b3f3b9ca9b3 (changes for new commit id)
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
 
-<<<<<<< HEAD
-            using RequestContent content = RequestContent.Create(new
-            {
-                patients = new object[]
-            {
-new
-{
-id = "<id>",
-}
-            },
-            });
-            Operation<BinaryData> operation = client.InferRadiologyInsights(WaitUntil.Completed, content);
-=======
             using RequestContent content = RequestContent.Create(new object());
             Operation<BinaryData> operation = client.InferRadiologyInsights(WaitUntil.Completed, "<id>", content);
->>>>>>> b3f3b9ca9b3 (changes for new commit id)
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -55,32 +37,14 @@ id = "<id>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-<<<<<<< HEAD
-        public async Task Example_RadiologyInsightsClient_InferRadiologyInsights_ShortVersion_Async()
-=======
         public async Task Example_RadiologyInsightsJob_InferRadiologyInsights_ShortVersion_Async()
->>>>>>> b3f3b9ca9b3 (changes for new commit id)
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
 
-<<<<<<< HEAD
-            using RequestContent content = RequestContent.Create(new
-            {
-                patients = new object[]
-            {
-new
-{
-id = "<id>",
-}
-            },
-            });
-            Operation<BinaryData> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, content);
-=======
             using RequestContent content = RequestContent.Create(new object());
             Operation<BinaryData> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, "<id>", content);
->>>>>>> b3f3b9ca9b3 (changes for new commit id)
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -91,61 +55,33 @@ id = "<id>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-<<<<<<< HEAD
-        public void Example_RadiologyInsightsClient_InferRadiologyInsights_ShortVersion_Convenience()
-=======
         public void Example_RadiologyInsightsJob_InferRadiologyInsights_ShortVersion_Convenience()
->>>>>>> b3f3b9ca9b3 (changes for new commit id)
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
 
-<<<<<<< HEAD
-            RadiologyInsightsData radiologyInsightsData = new RadiologyInsightsData(new PatientRecord[]
-            {
-new PatientRecord("<id>")
-            });
-            Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyInsights(WaitUntil.Completed, radiologyInsightsData);
-=======
             RadiologyInsightsJob resource = new RadiologyInsightsJob();
             Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyInsights(WaitUntil.Completed, "<id>", resource);
->>>>>>> b3f3b9ca9b3 (changes for new commit id)
             RadiologyInsightsInferenceResult responseData = operation.Value;
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-<<<<<<< HEAD
-        public async Task Example_RadiologyInsightsClient_InferRadiologyInsights_ShortVersion_Convenience_Async()
-=======
         public async Task Example_RadiologyInsightsJob_InferRadiologyInsights_ShortVersion_Convenience_Async()
->>>>>>> b3f3b9ca9b3 (changes for new commit id)
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
 
-<<<<<<< HEAD
-            RadiologyInsightsData radiologyInsightsData = new RadiologyInsightsData(new PatientRecord[]
-            {
-new PatientRecord("<id>")
-            });
-            Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, radiologyInsightsData);
-=======
             RadiologyInsightsJob resource = new RadiologyInsightsJob();
             Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, "<id>", resource);
->>>>>>> b3f3b9ca9b3 (changes for new commit id)
             RadiologyInsightsInferenceResult responseData = operation.Value;
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-<<<<<<< HEAD
-        public void Example_RadiologyInsightsClient_InferRadiologyInsights_AllParameters()
-=======
         public void Example_RadiologyInsightsJob_InferRadiologyInsights_AllParameters()
->>>>>>> b3f3b9ca9b3 (changes for new commit id)
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -153,22 +89,14 @@ new PatientRecord("<id>")
 
             using RequestContent content = RequestContent.Create(new
             {
-<<<<<<< HEAD
-                patients = new object[]
-=======
                 jobData = new
                 {
                     patients = new object[]
->>>>>>> b3f3b9ca9b3 (changes for new commit id)
             {
 new
 {
 id = "<id>",
-<<<<<<< HEAD
-info = new
-=======
 details = new
->>>>>>> b3f3b9ca9b3 (changes for new commit id)
 {
 sex = "female",
 birthDate = "2022-05-10",
@@ -320,13 +248,8 @@ new Dictionary<string, object>
 ["id"] = "<id>",
 ["period"] = new
 {
-<<<<<<< HEAD
 start = "2022-05-10T18:57:31.2311892Z",
 end = "2022-05-10T18:57:31.2311892Z",
-=======
-start = "2022-05-10T14:57:31.2311892-04:00",
-end = "2022-05-10T14:57:31.2311892-04:00",
->>>>>>> b3f3b9ca9b3 (changes for new commit id)
 },
 ["class"] = "inpatient"
 }
@@ -339,11 +262,7 @@ type = "note",
 clinicalType = "consultation",
 id = "<id>",
 language = "<language>",
-<<<<<<< HEAD
-createdDateTime = "2022-05-10T18:57:31.2311892Z",
-=======
-createdAt = "2022-05-10T14:57:31.2311892-04:00",
->>>>>>> b3f3b9ca9b3 (changes for new commit id)
+createdAt = "2022-05-10T18:57:31.2311892Z",
 authors = new object[]
 {
 new
@@ -359,18 +278,11 @@ orderedProcedures = new object[]
 {
 new
 {
-<<<<<<< HEAD
-=======
 description = "<description>",
->>>>>>> b3f3b9ca9b3 (changes for new commit id)
 extension = new object[]
 {
 null
 },
-<<<<<<< HEAD
-description = "<description>",
-=======
->>>>>>> b3f3b9ca9b3 (changes for new commit id)
 }
 },
 encounterId = "<encounterId>",
@@ -384,33 +296,6 @@ value = "<value>",
 },
 }
             },
-<<<<<<< HEAD
-                configuration = new
-                {
-                    verbose = true,
-                    includeEvidence = true,
-                    inferenceTypes = new object[]
-            {
-"ageMismatch"
-            },
-                    inferenceOptions = new
-                    {
-                        followupRecommendationOptions = new
-                        {
-                            includeRecommendationsWithNoSpecifiedModality = true,
-                            includeRecommendationsInReferences = true,
-                            provideFocusedSentenceEvidence = true,
-                        },
-                        findingOptions = new
-                        {
-                            provideFocusedSentenceEvidence = true,
-                        },
-                    },
-                    locale = "<locale>",
-                },
-            });
-            Operation<BinaryData> operation = client.InferRadiologyInsights(WaitUntil.Completed, content);
-=======
                     configuration = new
                     {
                         verbose = true,
@@ -437,7 +322,6 @@ value = "<value>",
                 },
             });
             Operation<BinaryData> operation = client.InferRadiologyInsights(WaitUntil.Completed, "<id>", content, expand: new string[] { "<expand>" });
->>>>>>> b3f3b9ca9b3 (changes for new commit id)
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -528,11 +412,7 @@ value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-<<<<<<< HEAD
-        public async Task Example_RadiologyInsightsClient_InferRadiologyInsights_AllParameters_Async()
-=======
         public async Task Example_RadiologyInsightsJob_InferRadiologyInsights_AllParameters_Async()
->>>>>>> b3f3b9ca9b3 (changes for new commit id)
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -540,22 +420,14 @@ value = "<value>",
 
             using RequestContent content = RequestContent.Create(new
             {
-<<<<<<< HEAD
-                patients = new object[]
-=======
                 jobData = new
                 {
                     patients = new object[]
->>>>>>> b3f3b9ca9b3 (changes for new commit id)
             {
 new
 {
 id = "<id>",
-<<<<<<< HEAD
-info = new
-=======
 details = new
->>>>>>> b3f3b9ca9b3 (changes for new commit id)
 {
 sex = "female",
 birthDate = "2022-05-10",
@@ -707,13 +579,8 @@ new Dictionary<string, object>
 ["id"] = "<id>",
 ["period"] = new
 {
-<<<<<<< HEAD
 start = "2022-05-10T18:57:31.2311892Z",
 end = "2022-05-10T18:57:31.2311892Z",
-=======
-start = "2022-05-10T14:57:31.2311892-04:00",
-end = "2022-05-10T14:57:31.2311892-04:00",
->>>>>>> b3f3b9ca9b3 (changes for new commit id)
 },
 ["class"] = "inpatient"
 }
@@ -726,11 +593,7 @@ type = "note",
 clinicalType = "consultation",
 id = "<id>",
 language = "<language>",
-<<<<<<< HEAD
-createdDateTime = "2022-05-10T18:57:31.2311892Z",
-=======
-createdAt = "2022-05-10T14:57:31.2311892-04:00",
->>>>>>> b3f3b9ca9b3 (changes for new commit id)
+createdAt = "2022-05-10T18:57:31.2311892Z",
 authors = new object[]
 {
 new
@@ -746,18 +609,11 @@ orderedProcedures = new object[]
 {
 new
 {
-<<<<<<< HEAD
-=======
 description = "<description>",
->>>>>>> b3f3b9ca9b3 (changes for new commit id)
 extension = new object[]
 {
 null
 },
-<<<<<<< HEAD
-description = "<description>",
-=======
->>>>>>> b3f3b9ca9b3 (changes for new commit id)
 }
 },
 encounterId = "<encounterId>",
@@ -771,33 +627,6 @@ value = "<value>",
 },
 }
             },
-<<<<<<< HEAD
-                configuration = new
-                {
-                    verbose = true,
-                    includeEvidence = true,
-                    inferenceTypes = new object[]
-            {
-"ageMismatch"
-            },
-                    inferenceOptions = new
-                    {
-                        followupRecommendationOptions = new
-                        {
-                            includeRecommendationsWithNoSpecifiedModality = true,
-                            includeRecommendationsInReferences = true,
-                            provideFocusedSentenceEvidence = true,
-                        },
-                        findingOptions = new
-                        {
-                            provideFocusedSentenceEvidence = true,
-                        },
-                    },
-                    locale = "<locale>",
-                },
-            });
-            Operation<BinaryData> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, content);
-=======
                     configuration = new
                     {
                         verbose = true,
@@ -824,7 +653,6 @@ value = "<value>",
                 },
             });
             Operation<BinaryData> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, "<id>", content, expand: new string[] { "<expand>" });
->>>>>>> b3f3b9ca9b3 (changes for new commit id)
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -915,23 +743,12 @@ value = "<value>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-<<<<<<< HEAD
-        public void Example_RadiologyInsightsClient_InferRadiologyInsights_AllParameters_Convenience()
-=======
         public void Example_RadiologyInsightsJob_InferRadiologyInsights_AllParameters_Convenience()
->>>>>>> b3f3b9ca9b3 (changes for new commit id)
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
 
-<<<<<<< HEAD
-            RadiologyInsightsData radiologyInsightsData = new RadiologyInsightsData(new PatientRecord[]
-            {
-new PatientRecord("<id>")
-{
-Info = new PatientDetails
-=======
             RadiologyInsightsJob resource = new RadiologyInsightsJob
             {
                 JobData = new RadiologyInsightsData(new PatientRecord[]
@@ -939,7 +756,6 @@ Info = new PatientDetails
 new PatientRecord("<id>")
 {
 Details = new PatientDetails
->>>>>>> b3f3b9ca9b3 (changes for new commit id)
 {
 Sex = PatientSex.Female,
 BirthDate = DateTimeOffset.Parse("2022-05-10"),
@@ -958,7 +774,6 @@ System = "<system>",
 Version = "<version>",
 Code = "<code>",
 Display = "<display>",
-<<<<<<< HEAD
 Id = "<id>",
 Extension = {new FhirR4Extension("<url>")
 {
@@ -1036,8 +851,6 @@ Extension = {default},
 Id = "<id>",
 Extension = {default},
 }},
-=======
->>>>>>> b3f3b9ca9b3 (changes for new commit id)
 }},
 Tag = {default},
 },
@@ -1045,8 +858,7 @@ ImplicitRules = "<implicitRules>",
 Language = "<language>",
 }},
 },
-<<<<<<< HEAD
-Encounters = {new Encounter("<id>")
+Encounters = {new PatientEncounter("<id>")
 {
 Period = new TimePeriod
 {
@@ -1055,29 +867,12 @@ End = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
 },
 Class = EncounterClass.InPatient,
 }},
-PatientDocuments = {new PatientDocument(DocumentType.Note, "<id>", new DocumentContent(DocumentContentSourceType.Inline, "<value>"))
-{
-ClinicalType = ClinicalDocumentType.Consultation,
-Language = "<language>",
-CreatedDateTime = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
-Authors = {new DocumentAuthor
-=======
-Encounters = {new PatientEncounter("<id>")
-{
-Period = new TimePeriod
-{
-Start = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
-End = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
-},
-Class = EncounterClass.InPatient,
-}},
 PatientDocuments = {new PatientDocument(ClinicalDocumentContentType.Note, "<id>", new ClinicalDocumentContent(DocumentContentSourceType.Inline, "<value>"))
 {
 ClinicalType = ClinicalDocumentType.Consultation,
 Language = "<language>",
-CreatedAt = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+CreatedAt = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
 Authors = {new ClinicalDocumentAuthor
->>>>>>> b3f3b9ca9b3 (changes for new commit id)
 {
 Id = "<id>",
 FullName = "<fullName>",
@@ -1087,46 +882,15 @@ AdministrativeMetadata = new DocumentAdministrativeMetadata
 {
 OrderedProcedures = {new OrderedProcedure
 {
-<<<<<<< HEAD
-Extension = {default},
-Code = default,
-Description = "<description>",
-=======
 Code = default,
 Description = "<description>",
 Extension = {default},
->>>>>>> b3f3b9ca9b3 (changes for new commit id)
 }},
 EncounterId = "<encounterId>",
 },
 }},
 }
             })
-<<<<<<< HEAD
-            {
-                Configuration = new RadiologyInsightsModelConfiguration
-                {
-                    Verbose = true,
-                    IncludeEvidence = true,
-                    InferenceTypes = { RadiologyInsightsInferenceType.AgeMismatch },
-                    InferenceOptions = new RadiologyInsightsInferenceOptions
-                    {
-                        FollowupRecommendationOptions = new FollowupRecommendationOptions
-                        {
-                            IncludeRecommendationsWithNoSpecifiedModality = true,
-                            IncludeRecommendationsInReferences = true,
-                            ProvideFocusedSentenceEvidence = true,
-                        },
-                        FindingOptions = new FindingOptions
-                        {
-                            ProvideFocusedSentenceEvidence = true,
-                        },
-                    },
-                    Locale = "<locale>",
-                },
-            };
-            Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyInsights(WaitUntil.Completed, radiologyInsightsData);
-=======
                 {
                     Configuration = new RadiologyInsightsModelConfiguration
                     {
@@ -1151,29 +915,17 @@ EncounterId = "<encounterId>",
                 },
             };
             Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyInsights(WaitUntil.Completed, "<id>", resource, expand: new string[] { "<expand>" });
->>>>>>> b3f3b9ca9b3 (changes for new commit id)
             RadiologyInsightsInferenceResult responseData = operation.Value;
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-<<<<<<< HEAD
-        public async Task Example_RadiologyInsightsClient_InferRadiologyInsights_AllParameters_Convenience_Async()
-=======
         public async Task Example_RadiologyInsightsJob_InferRadiologyInsights_AllParameters_Convenience_Async()
->>>>>>> b3f3b9ca9b3 (changes for new commit id)
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
 
-<<<<<<< HEAD
-            RadiologyInsightsData radiologyInsightsData = new RadiologyInsightsData(new PatientRecord[]
-            {
-new PatientRecord("<id>")
-{
-Info = new PatientDetails
-=======
             RadiologyInsightsJob resource = new RadiologyInsightsJob
             {
                 JobData = new RadiologyInsightsData(new PatientRecord[]
@@ -1181,7 +933,6 @@ Info = new PatientDetails
 new PatientRecord("<id>")
 {
 Details = new PatientDetails
->>>>>>> b3f3b9ca9b3 (changes for new commit id)
 {
 Sex = PatientSex.Female,
 BirthDate = DateTimeOffset.Parse("2022-05-10"),
@@ -1200,7 +951,6 @@ System = "<system>",
 Version = "<version>",
 Code = "<code>",
 Display = "<display>",
-<<<<<<< HEAD
 Id = "<id>",
 Extension = {new FhirR4Extension("<url>")
 {
@@ -1278,8 +1028,6 @@ Extension = {default},
 Id = "<id>",
 Extension = {default},
 }},
-=======
->>>>>>> b3f3b9ca9b3 (changes for new commit id)
 }},
 Tag = {default},
 },
@@ -1287,8 +1035,7 @@ ImplicitRules = "<implicitRules>",
 Language = "<language>",
 }},
 },
-<<<<<<< HEAD
-Encounters = {new Encounter("<id>")
+Encounters = {new PatientEncounter("<id>")
 {
 Period = new TimePeriod
 {
@@ -1297,29 +1044,12 @@ End = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
 },
 Class = EncounterClass.InPatient,
 }},
-PatientDocuments = {new PatientDocument(DocumentType.Note, "<id>", new DocumentContent(DocumentContentSourceType.Inline, "<value>"))
-{
-ClinicalType = ClinicalDocumentType.Consultation,
-Language = "<language>",
-CreatedDateTime = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
-Authors = {new DocumentAuthor
-=======
-Encounters = {new PatientEncounter("<id>")
-{
-Period = new TimePeriod
-{
-Start = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
-End = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
-},
-Class = EncounterClass.InPatient,
-}},
 PatientDocuments = {new PatientDocument(ClinicalDocumentContentType.Note, "<id>", new ClinicalDocumentContent(DocumentContentSourceType.Inline, "<value>"))
 {
 ClinicalType = ClinicalDocumentType.Consultation,
 Language = "<language>",
-CreatedAt = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+CreatedAt = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
 Authors = {new ClinicalDocumentAuthor
->>>>>>> b3f3b9ca9b3 (changes for new commit id)
 {
 Id = "<id>",
 FullName = "<fullName>",
@@ -1329,46 +1059,15 @@ AdministrativeMetadata = new DocumentAdministrativeMetadata
 {
 OrderedProcedures = {new OrderedProcedure
 {
-<<<<<<< HEAD
-Extension = {default},
-Code = default,
-Description = "<description>",
-=======
 Code = default,
 Description = "<description>",
 Extension = {default},
->>>>>>> b3f3b9ca9b3 (changes for new commit id)
 }},
 EncounterId = "<encounterId>",
 },
 }},
 }
             })
-<<<<<<< HEAD
-            {
-                Configuration = new RadiologyInsightsModelConfiguration
-                {
-                    Verbose = true,
-                    IncludeEvidence = true,
-                    InferenceTypes = { RadiologyInsightsInferenceType.AgeMismatch },
-                    InferenceOptions = new RadiologyInsightsInferenceOptions
-                    {
-                        FollowupRecommendationOptions = new FollowupRecommendationOptions
-                        {
-                            IncludeRecommendationsWithNoSpecifiedModality = true,
-                            IncludeRecommendationsInReferences = true,
-                            ProvideFocusedSentenceEvidence = true,
-                        },
-                        FindingOptions = new FindingOptions
-                        {
-                            ProvideFocusedSentenceEvidence = true,
-                        },
-                    },
-                    Locale = "<locale>",
-                },
-            };
-            Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, radiologyInsightsData);
-=======
                 {
                     Configuration = new RadiologyInsightsModelConfiguration
                     {
@@ -1393,7 +1092,6 @@ EncounterId = "<encounterId>",
                 },
             };
             Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, "<id>", resource, expand: new string[] { "<expand>" });
->>>>>>> b3f3b9ca9b3 (changes for new commit id)
             RadiologyInsightsInferenceResult responseData = operation.Value;
         }
     }

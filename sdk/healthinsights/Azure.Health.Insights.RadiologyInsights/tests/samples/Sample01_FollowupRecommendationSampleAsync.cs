@@ -66,7 +66,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
                     #region Snippet:Followup_Recommendation_Async_Tests_Samples_FollowupRecommendationInference
                     Console.Write("Follow Up Recommendation Inference found");
                     IList<FhirR4Extension> extensions = followupRecommendationInference.Extension;
-                    Console.Write("   Evidence: " + ExtractEvidence((IReadOnlyList<FhirR4Extension>)extensions));
+                    Console.Write("   Evidence: " + ExtractEvidence((IList<FhirR4Extension>)extensions));
                     Console.Write("   Is conditional: " + followupRecommendationInference.IsConditional);
                     Console.Write("   Is guideline: " + followupRecommendationInference.IsGuideline);
                     Console.Write("   Is hedging: " + followupRecommendationInference.IsHedging);
@@ -144,13 +144,13 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
             }
         }
 
-        private static String ExtractEvidence(IReadOnlyList<FhirR4Extension> extensions)
+        private static String ExtractEvidence(IList<FhirR4Extension> extensions)
         {
             String evidence = "";
             #region Snippet:Followup_Recommendation_Async_Tests_Samples_ExtractEvidence
             foreach (FhirR4Extension extension in extensions)
             {
-                IReadOnlyList<FhirR4Extension> subExtensions = extension.Extension;
+                IList<FhirR4Extension> subExtensions = extension.Extension;
                 if (subExtensions != null)
                 {
                     evidence += extractEvidenceToken(subExtensions) + " ";
@@ -160,7 +160,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
             return evidence;
         }
 
-        private static String extractEvidenceToken(IReadOnlyList<FhirR4Extension> subExtensions)
+        private static String extractEvidenceToken(IList<FhirR4Extension> subExtensions)
         {
             String evidence = "";
             int offset = -1;

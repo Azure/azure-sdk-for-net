@@ -49,7 +49,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="FhirR4ObservationReferenceRange"/>. </summary>
-        internal FhirR4ObservationReferenceRange()
+        public FhirR4ObservationReferenceRange()
         {
             AppliesTo = new ChangeTrackingList<FhirR4CodeableConcept>();
         }
@@ -62,7 +62,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="age"> Applicable age range, if relevant. </param>
         /// <param name="text"> Text based reference range in an observation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FhirR4ObservationReferenceRange(FhirR4Quantity low, FhirR4Quantity high, FhirR4CodeableConcept type, IReadOnlyList<FhirR4CodeableConcept> appliesTo, FhirR4Range age, string text, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FhirR4ObservationReferenceRange(FhirR4Quantity low, FhirR4Quantity high, FhirR4CodeableConcept type, IList<FhirR4CodeableConcept> appliesTo, FhirR4Range age, string text, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Low = low;
             High = high;
@@ -74,16 +74,16 @@ namespace Azure.Health.Insights.RadiologyInsights
         }
 
         /// <summary> Low Range, if relevant. </summary>
-        public FhirR4Quantity Low { get; }
+        public FhirR4Quantity Low { get; set; }
         /// <summary> High Range, if relevant. </summary>
-        public FhirR4Quantity High { get; }
+        public FhirR4Quantity High { get; set; }
         /// <summary> Reference range qualifier. </summary>
-        public FhirR4CodeableConcept Type { get; }
+        public FhirR4CodeableConcept Type { get; set; }
         /// <summary> Reference range population. </summary>
-        public IReadOnlyList<FhirR4CodeableConcept> AppliesTo { get; }
+        public IList<FhirR4CodeableConcept> AppliesTo { get; }
         /// <summary> Applicable age range, if relevant. </summary>
-        public FhirR4Range Age { get; }
+        public FhirR4Range Age { get; set; }
         /// <summary> Text based reference range in an observation. </summary>
-        public string Text { get; }
+        public string Text { get; set; }
     }
 }

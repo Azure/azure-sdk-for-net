@@ -16,7 +16,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <summary> Initializes a new instance of <see cref="SexMismatchInference"/>. </summary>
         /// <param name="sexIndication"> Sex indication : SNOMED CT code for gender finding. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sexIndication"/> is null. </exception>
-        internal SexMismatchInference(FhirR4CodeableConcept sexIndication)
+        public SexMismatchInference(FhirR4CodeableConcept sexIndication)
         {
             Argument.AssertNotNull(sexIndication, nameof(sexIndication));
 
@@ -29,7 +29,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="extension"> Additional Content defined by implementations. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="sexIndication"> Sex indication : SNOMED CT code for gender finding. </param>
-        internal SexMismatchInference(RadiologyInsightsInferenceType kind, IReadOnlyList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, FhirR4CodeableConcept sexIndication) : base(kind, extension, serializedAdditionalRawData)
+        internal SexMismatchInference(RadiologyInsightsInferenceType kind, IList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, FhirR4CodeableConcept sexIndication) : base(kind, extension, serializedAdditionalRawData)
         {
             SexIndication = sexIndication;
         }
@@ -40,6 +40,6 @@ namespace Azure.Health.Insights.RadiologyInsights
         }
 
         /// <summary> Sex indication : SNOMED CT code for gender finding. </summary>
-        public FhirR4CodeableConcept SexIndication { get; }
+        public FhirR4CodeableConcept SexIndication { get; set; }
     }
 }

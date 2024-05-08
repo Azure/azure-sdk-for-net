@@ -15,10 +15,10 @@ namespace Azure.Health.Insights.RadiologyInsights
     {
         /// <summary> Initializes a new instance of <see cref="FollowupCommunicationInference"/>. </summary>
         /// <param name="wasAcknowledged"> Communication was acknowledged. </param>
-        internal FollowupCommunicationInference(bool wasAcknowledged)
+        public FollowupCommunicationInference(bool wasAcknowledged)
         {
             Kind = RadiologyInsightsInferenceType.FollowupCommunication;
-            DateTime = new ChangeTrackingList<DateTimeOffset>();
+            CommunicatedAt = new ChangeTrackingList<DateTimeOffset>();
             Recipient = new ChangeTrackingList<MedicalProfessionalType>();
             WasAcknowledged = wasAcknowledged;
         }
@@ -27,12 +27,12 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="kind"> Discriminator. </param>
         /// <param name="extension"> Additional Content defined by implementations. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="dateTime"> Communication date and time. </param>
+        /// <param name="communicatedAt"> Communication date and time. </param>
         /// <param name="recipient"> Recipient of the communication. </param>
         /// <param name="wasAcknowledged"> Communication was acknowledged. </param>
-        internal FollowupCommunicationInference(RadiologyInsightsInferenceType kind, IReadOnlyList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<DateTimeOffset> dateTime, IReadOnlyList<MedicalProfessionalType> recipient, bool wasAcknowledged) : base(kind, extension, serializedAdditionalRawData)
+        internal FollowupCommunicationInference(RadiologyInsightsInferenceType kind, IList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<DateTimeOffset> communicatedAt, IList<MedicalProfessionalType> recipient, bool wasAcknowledged) : base(kind, extension, serializedAdditionalRawData)
         {
-            DateTime = dateTime;
+            CommunicatedAt = communicatedAt;
             Recipient = recipient;
             WasAcknowledged = wasAcknowledged;
         }
@@ -43,10 +43,10 @@ namespace Azure.Health.Insights.RadiologyInsights
         }
 
         /// <summary> Communication date and time. </summary>
-        public IReadOnlyList<DateTimeOffset> DateTime { get; }
+        public IList<DateTimeOffset> CommunicatedAt { get; }
         /// <summary> Recipient of the communication. </summary>
-        public IReadOnlyList<MedicalProfessionalType> Recipient { get; }
+        public IList<MedicalProfessionalType> Recipient { get; }
         /// <summary> Communication was acknowledged. </summary>
-        public bool WasAcknowledged { get; }
+        public bool WasAcknowledged { get; set; }
     }
 }

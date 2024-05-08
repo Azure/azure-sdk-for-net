@@ -16,7 +16,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <summary> Initializes a new instance of <see cref="CriticalResultInference"/>. </summary>
         /// <param name="result"> The complete Critical Result, as outlined below, will be reused for the recommendation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="result"/> is null. </exception>
-        internal CriticalResultInference(CriticalResult result)
+        public CriticalResultInference(CriticalResult result)
         {
             Argument.AssertNotNull(result, nameof(result));
 
@@ -29,7 +29,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="extension"> Additional Content defined by implementations. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="result"> The complete Critical Result, as outlined below, will be reused for the recommendation. </param>
-        internal CriticalResultInference(RadiologyInsightsInferenceType kind, IReadOnlyList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, CriticalResult result) : base(kind, extension, serializedAdditionalRawData)
+        internal CriticalResultInference(RadiologyInsightsInferenceType kind, IList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, CriticalResult result) : base(kind, extension, serializedAdditionalRawData)
         {
             Result = result;
         }
@@ -40,6 +40,6 @@ namespace Azure.Health.Insights.RadiologyInsights
         }
 
         /// <summary> The complete Critical Result, as outlined below, will be reused for the recommendation. </summary>
-        public CriticalResult Result { get; }
+        public CriticalResult Result { get; set; }
     }
 }

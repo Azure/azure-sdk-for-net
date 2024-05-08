@@ -117,7 +117,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
                     if (extension.Url != null && extension.Url.Equals("section"))
                     {
                         Console.Write("   Section:");
-                        IReadOnlyList<FhirR4Extension> subextensionList = extension.Extension;
+                        IList<FhirR4Extension> subextensionList = extension.Extension;
                         if (subextensionList != null)
                         {
                             foreach (FhirR4Extension subextension in subextensionList)
