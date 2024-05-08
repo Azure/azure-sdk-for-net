@@ -92,8 +92,8 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "DynamicThresholdCriterion": return DynamicMetricCriteria.DeserializeDynamicMetricCriteria(element, options);
                     case "StaticThresholdCriterion": return MetricCriteria.DeserializeMetricCriteria(element, options);
+                    case "DynamicThresholdCriterion": return DynamicMetricCriteria.DeserializeDynamicMetricCriteria(element, options);
                 }
             }
             return UnknownMultiMetricCriteria.DeserializeUnknownMultiMetricCriteria(element, options);

@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "4G": return UEInfo4G.DeserializeUEInfo4G(element, options);
                     case "5G": return UEInfo5G.DeserializeUEInfo5G(element, options);
+                    case "4G": return UEInfo4G.DeserializeUEInfo4G(element, options);
                 }
             }
             return UnknownExtendedUEInfoProperties.DeserializeUnknownExtendedUEInfoProperties(element, options);
