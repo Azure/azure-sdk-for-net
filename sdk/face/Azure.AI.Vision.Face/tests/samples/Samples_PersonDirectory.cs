@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.Vision.Face.Tests;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -112,14 +113,27 @@ namespace Azure.AI.Vision.Face.Samples
             var identifyPersonResponse = await faceClient.IdentifyFromPersonDirectoryAsync(new[] { targetFaceId }, personIds.Values.ToArray());
             foreach (var facesIdentifyResult in identifyPersonResponse.Value)
             {
-                Console.WriteLine($"For face {facesIdentifyResult.FaceId}");
+                Console.WriteLine($"For face {facesIdentifyResult.FaceId}, candidate number: {facesIdentifyResult.Candidates.Count}");
                 foreach (var candidate in facesIdentifyResult.Candidates)
                 {
                     Console.WriteLine($"Candidate {candidate.PersonId} with confidence {candidate.Confidence}");
                 }
             }
 
-            //TODO: identify from entire pd
+            var identifyAllPersonResponse = await faceClient.IdentifyFromEntirePersonDirectoryAsync(new[] { targetFaceId });
+            foreach (var facesIdentifyResult in identifyAllPersonResponse.Value)
+            {
+                Console.WriteLine($"For face {facesIdentifyResult.FaceId}, candidate number: {facesIdentifyResult.Candidates.Count}");
+                foreach (var candidate in facesIdentifyResult.Candidates)
+                {
+                    Console.WriteLine($"Candidate {candidate.PersonId} with confidence {candidate.Confidence}");
+                }
+            }
+
+            foreach (var personId in personIds.Values)
+            {
+                await administrationClient.DeletePersonAsync(WaitUntil.Started, personId);
+            }
         }
 
         [RecordedTest]
@@ -181,7 +195,7 @@ namespace Azure.AI.Vision.Face.Samples
             var identifyFamilyPersonResponse = await faceClient.IdentifyFromDynamicPersonGroupAsync(faceIds, familyGroupId);
             foreach (var facesIdentifyResult in identifyFamilyPersonResponse.Value)
             {
-                Console.WriteLine($"For face {facesIdentifyResult.FaceId}");
+                Console.WriteLine($"For face {facesIdentifyResult.FaceId}, candidate number: {facesIdentifyResult.Candidates.Count}");
                 foreach (var candidate in facesIdentifyResult.Candidates)
                 {
                     Console.WriteLine($"Candidate {candidate.PersonId} with confidence {candidate.Confidence}");
@@ -191,7 +205,7 @@ namespace Azure.AI.Vision.Face.Samples
             var identifyHikingPersonResponse = await faceClient.IdentifyFromDynamicPersonGroupAsync(faceIds, hikingGroupId);
             foreach (var facesIdentifyResult in identifyHikingPersonResponse.Value)
             {
-                Console.WriteLine($"For face {facesIdentifyResult.FaceId}");
+                Console.WriteLine($"For face {facesIdentifyResult.FaceId}, candidate number: {facesIdentifyResult.Candidates.Count}");
                 foreach (var candidate in facesIdentifyResult.Candidates)
                 {
                     Console.WriteLine($"Candidate {candidate.PersonId} with confidence {candidate.Confidence}");
@@ -216,7 +230,35 @@ namespace Azure.AI.Vision.Face.Samples
             await createPersonGillOperation.WaitForCompletionAsync();
             await lastAddFaceForGillOperation.WaitForCompletionAsync();
 
-            // TODO: update dpg with person
+            await administrationClient.UpdateDynamicPersonGroupWithPersonChangesAsync(WaitUntil.Started, familyGroupId, RequestContent.Create(
+                new Dictionary<string, List<Guid>> {
+                    { "addPersonIds", new List<Guid> { gillPersonId } },
+                    { "removePersonIds", new List<Guid> { personIds["Bill"] } }
+                }
+            ));
+            var lastUpdateDynamicPersonGroupOperation = await administrationClient.UpdateDynamicPersonGroupWithPersonChangesAsync(WaitUntil.Started, familyGroupId, RequestContent.Create(
+                new Dictionary<string, List<Guid>> {
+                    { "addPersonIds", new List<Guid> { personIds["Bill"] } }
+                }
+            ));
+
+            var identifyUpdatedGroupResponse = await faceClient.IdentifyFromDynamicPersonGroupAsync(faceIds, familyGroupId);
+            foreach (var facesIdentifyResult in identifyUpdatedGroupResponse.Value)
+            {
+                Console.WriteLine($"For face {facesIdentifyResult.FaceId}, candidate number: {facesIdentifyResult.Candidates.Count}");
+                foreach (var candidate in facesIdentifyResult.Candidates)
+                {
+                    Console.WriteLine($"Candidate {candidate.PersonId} with confidence {candidate.Confidence}");
+                }
+            }
+
+            // The LRO of dynamicPersonGroup Create/Update is only used for creating DynamicPersonGroupReferences. This is useful if you want to determine which groups a person is referenced in.
+            // It is an optimization to wait till the last update operation is finished processing in a series as all DPG changes are processed in series.
+            await lastUpdateDynamicPersonGroupOperation.WaitForCompletionResponseAsync();
+            var getGroupForBillResponse = await administrationClient.GetDynamicPersonGroupReferencesAsync(personIds["Bill"]);
+            Console.WriteLine($"Person Bill is in {getGroupForBillResponse.Value.DynamicPersonGroupIds.Count} groups: {string.Join(", ", getGroupForBillResponse.Value.DynamicPersonGroupIds)}");
+            var getGroupForClareResponse = await administrationClient.GetDynamicPersonGroupReferencesAsync(personIds["Clare"]);
+            Console.WriteLine($"Person Clare is in {getGroupForClareResponse.Value.DynamicPersonGroupIds.Count} groups: {string.Join(", ", getGroupForClareResponse.Value.DynamicPersonGroupIds)}");
 
             foreach (var personId in personIds.Values)
             {

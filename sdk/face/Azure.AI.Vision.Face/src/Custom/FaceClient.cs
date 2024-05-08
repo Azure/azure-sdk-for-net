@@ -241,5 +241,55 @@ namespace Azure.AI.Vision.Face
             value = array;
             return Response.FromValue(value, response);
         }
+
+        /// <summary> A remote procedure call (RPC) operation. </summary>
+        /// <param name="faceIds"> Array of query faces faceIds, created by the "Detect". Each of the faces are identified independently. The valid number of faceIds is between [1, 10]. </param>
+        /// <param name="maxNumOfCandidatesReturned"> The range of maxNumOfCandidatesReturned is between 1 and 100. Default value is 10. </param>
+        /// <param name="confidenceThreshold"> Customized identification confidence threshold, in the range of [0, 1]. Advanced user can tweak this value to override default internal threshold for better precision on their scenario data. Note there is no guarantee of this threshold value working on other data and after algorithm updates. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="faceIds"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<IReadOnlyList<FaceIdentificationResult>>> IdentifyFromEntirePersonDirectoryAsync(IEnumerable<Guid> faceIds, int? maxNumOfCandidatesReturned = null, float? confidenceThreshold = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(faceIds, nameof(faceIds));
+
+            IdentifyFromEntirePersonDirectoryRequest identifyFromEntirePersonDirectoryRequest = new IdentifyFromEntirePersonDirectoryRequest(faceIds.ToList(), maxNumOfCandidatesReturned, confidenceThreshold, null);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await IdentifyFromPersonDirectoryAsync(identifyFromEntirePersonDirectoryRequest.ToRequestContent(), context).ConfigureAwait(false);
+            IReadOnlyList<FaceIdentificationResult> value = default;
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            List<FaceIdentificationResult> array = new List<FaceIdentificationResult>();
+            foreach (var item in document.RootElement.EnumerateArray())
+            {
+                array.Add(FaceIdentificationResult.DeserializeFaceIdentificationResult(item));
+            }
+            value = array;
+            return Response.FromValue(value, response);
+        }
+
+        /// <summary> A remote procedure call (RPC) operation. </summary>
+        /// <param name="faceIds"> Array of query faces faceIds, created by the "Detect". Each of the faces are identified independently. The valid number of faceIds is between [1, 10]. </param>
+        /// <param name="maxNumOfCandidatesReturned"> The range of maxNumOfCandidatesReturned is between 1 and 100. Default value is 10. </param>
+        /// <param name="confidenceThreshold"> Customized identification confidence threshold, in the range of [0, 1]. Advanced user can tweak this value to override default internal threshold for better precision on their scenario data. Note there is no guarantee of this threshold value working on other data and after algorithm updates. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="faceIds"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<IReadOnlyList<FaceIdentificationResult>> IdentifyFromEntirePersonDirectory(IEnumerable<Guid> faceIds, int? maxNumOfCandidatesReturned = null, float? confidenceThreshold = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(faceIds, nameof(faceIds));
+
+            IdentifyFromEntirePersonDirectoryRequest identifyFromEntirePersonDirectoryRequest = new IdentifyFromEntirePersonDirectoryRequest(faceIds.ToList(), maxNumOfCandidatesReturned, confidenceThreshold, null);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = IdentifyFromPersonDirectory(identifyFromEntirePersonDirectoryRequest.ToRequestContent(), context);
+            IReadOnlyList<FaceIdentificationResult> value = default;
+            using var document = JsonDocument.Parse(response.ContentStream);
+            List<FaceIdentificationResult> array = new List<FaceIdentificationResult>();
+            foreach (var item in document.RootElement.EnumerateArray())
+            {
+                array.Add(FaceIdentificationResult.DeserializeFaceIdentificationResult(item));
+            }
+            value = array;
+            return Response.FromValue(value, response);
+        }
     }
 }
