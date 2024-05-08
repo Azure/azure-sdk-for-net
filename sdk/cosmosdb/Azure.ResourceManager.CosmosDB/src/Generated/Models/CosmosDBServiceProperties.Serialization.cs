@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 switch (discriminator.GetString())
                 {
                     case "DataTransfer": return DataTransferServiceProperties.DeserializeDataTransferServiceProperties(element, options);
+                    case "SqlDedicatedGateway": return SqlDedicatedGatewayServiceProperties.DeserializeSqlDedicatedGatewayServiceProperties(element, options);
                     case "GraphAPICompute": return GraphApiComputeServiceProperties.DeserializeGraphApiComputeServiceProperties(element, options);
                     case "MaterializedViewsBuilder": return MaterializedViewsBuilderServiceProperties.DeserializeMaterializedViewsBuilderServiceProperties(element, options);
-                    case "SqlDedicatedGateway": return SqlDedicatedGatewayServiceProperties.DeserializeSqlDedicatedGatewayServiceProperties(element, options);
                 }
             }
             return UnknownServiceResourceProperties.DeserializeUnknownServiceResourceProperties(element, options);

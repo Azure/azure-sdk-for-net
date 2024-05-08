@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary>
     /// Output for the task that migrates on-prem SQL Server databases to Azure SQL Database for online migrations
     /// Please note <see cref="MigrateSqlServerSqlDBSyncTaskOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="MigrateSqlServerSqlDBSyncTaskOutputDatabaseError"/>, <see cref="MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel"/>, <see cref="MigrateSqlServerSqlDBSyncTaskOutputError"/>, <see cref="MigrateSqlServerSqlDBSyncTaskOutputMigrationLevel"/> and <see cref="MigrateSqlServerSqlDBSyncTaskOutputTableLevel"/>.
+    /// The available derived classes include <see cref="MigrateSqlServerSqlDBSyncTaskOutputMigrationLevel"/>, <see cref="MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel"/>, <see cref="MigrateSqlServerSqlDBSyncTaskOutputTableLevel"/>, <see cref="MigrateSqlServerSqlDBSyncTaskOutputError"/> and <see cref="MigrateSqlServerSqlDBSyncTaskOutputDatabaseError"/>.
     /// </summary>
     public abstract partial class MigrateSqlServerSqlDBSyncTaskOutput
     {

@@ -130,8 +130,8 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Shared": return SharedScopeBenefitRecommendationProperties.DeserializeSharedScopeBenefitRecommendationProperties(element, options);
                     case "Single": return SingleScopeBenefitRecommendationProperties.DeserializeSingleScopeBenefitRecommendationProperties(element, options);
+                    case "Shared": return SharedScopeBenefitRecommendationProperties.DeserializeSharedScopeBenefitRecommendationProperties(element, options);
                 }
             }
             return UnknownBenefitRecommendationProperties.DeserializeUnknownBenefitRecommendationProperties(element, options);

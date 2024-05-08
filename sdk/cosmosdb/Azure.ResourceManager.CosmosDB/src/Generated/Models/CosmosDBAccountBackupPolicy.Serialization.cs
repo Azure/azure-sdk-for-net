@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Continuous": return ContinuousModeBackupPolicy.DeserializeContinuousModeBackupPolicy(element, options);
                     case "Periodic": return PeriodicModeBackupPolicy.DeserializePeriodicModeBackupPolicy(element, options);
+                    case "Continuous": return ContinuousModeBackupPolicy.DeserializeContinuousModeBackupPolicy(element, options);
                 }
             }
             return UnknownBackupPolicy.DeserializeUnknownBackupPolicy(element, options);
