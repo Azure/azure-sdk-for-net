@@ -346,7 +346,8 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 
 <!-- LINKS -->
 [source_code]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/face/Azure.AI.Vision.Face/src
-[face_nuget]: https://www.nuget.org/packages/Azure.AI.Vision.Face/
+<!-- [face_nuget]: https://www.nuget.org/packages/Azure.AI.Vision.Face/ -->
+[face_nuget]: https://www.nuget.org/
 [face_ref_docs]: https://aka.ms/azsdk-csharp-face-ref
 [face_product_docs]: https://learn.microsoft.com/azure/ai-services/computer-vision/overview-identity
 [face_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/face/Azure.AI.Vision.Face/samples
@@ -374,7 +375,8 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [liveness_tutorial]: https://learn.microsoft.com/azure/ai-services/computer-vision/tutorials/liveness
 [integrate_liveness_into_mobile_application]: https://learn.microsoft.com/azure/ai-services/computer-vision/tutorials/liveness#integrate-liveness-into-mobile-application
 [face_sample_liveness_session]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/face/Azure.AI.Vision.Face/samples/Sample_DetectLivenessWithSession.md
-[face_sample_liveness_with_verify_session]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/face/Azure.AI.Vision.Face/samples/Sample_DetectLivenessWithVerifyWithSession.md
+<!-- [face_sample_liveness_with_verify_session]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/face/Azure.AI.Vision.Face/samples/Sample_DetectLivenessWithVerifyWithSession.md -->
+[face_sample_liveness_with_verify_session]: https://github.com/Azure/azure-sdk-for-net/
 
 [logging]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core/samples/Diagnostics.md
 

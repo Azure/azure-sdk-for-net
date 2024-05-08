@@ -144,5 +144,5 @@ await sessionClient.DeleteLivenessWithVerifySessionAsync(sessionId);
 ```
 
 [README]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/face/Azure.AI.Vision.Face#getting-started
-[face_liveness]: https://learn.microsoft.com/en-us/azure/ai-services/computer-vision/tutorials/liveness
-[perform_liveness_detection_with_face_verification]: https://learn.microsoft.com/en-us/azure/ai-services/computer-vision/tutorials/liveness#perform-liveness-detection-with-face-verification
+[face_liveness]: https://learn.microsoft.com/azure/ai-services/computer-vision/tutorials/liveness
+[perform_liveness_detection_with_face_verification]: https://learn.microsoft.com/azure/ai-services/computer-vision/tutorials/liveness#perform-liveness-detection-with-face-verification
