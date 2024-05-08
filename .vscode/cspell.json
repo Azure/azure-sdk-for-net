@@ -255,7 +255,8 @@
         "ssdzrs",
         "dscp",
         "vmguest",
-        "vhdx"
+        "vhdx",
+        "Nvme"
       ]
     },
     {
