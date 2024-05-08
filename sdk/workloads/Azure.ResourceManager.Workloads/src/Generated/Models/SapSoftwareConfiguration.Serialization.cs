@@ -70,9 +70,9 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "External": return ExternalInstallationSoftwareConfiguration.DeserializeExternalInstallationSoftwareConfiguration(element, options);
-                    case "SAPInstallWithoutOSConfig": return SapInstallWithoutOSConfigSoftwareConfiguration.DeserializeSapInstallWithoutOSConfigSoftwareConfiguration(element, options);
                     case "ServiceInitiated": return ServiceInitiatedSoftwareConfiguration.DeserializeServiceInitiatedSoftwareConfiguration(element, options);
+                    case "SAPInstallWithoutOSConfig": return SapInstallWithoutOSConfigSoftwareConfiguration.DeserializeSapInstallWithoutOSConfigSoftwareConfiguration(element, options);
+                    case "External": return ExternalInstallationSoftwareConfiguration.DeserializeExternalInstallationSoftwareConfiguration(element, options);
                 }
             }
             return UnknownSoftwareConfiguration.DeserializeUnknownSoftwareConfiguration(element, options);

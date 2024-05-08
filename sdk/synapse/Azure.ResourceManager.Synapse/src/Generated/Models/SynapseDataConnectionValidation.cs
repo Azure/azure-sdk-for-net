@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="properties">
         /// The data connection properties to validate.
         /// Please note <see cref="SynapseDataConnectionData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SynapseEventGridDataConnection"/>, <see cref="SynapseEventHubDataConnection"/> and <see cref="SynapseIotHubDataConnection"/>.
+        /// The available derived classes include <see cref="SynapseEventHubDataConnection"/>, <see cref="SynapseIotHubDataConnection"/> and <see cref="SynapseEventGridDataConnection"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SynapseDataConnectionValidation(string dataConnectionName, SynapseDataConnectionData properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <summary>
         /// The data connection properties to validate.
         /// Please note <see cref="SynapseDataConnectionData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SynapseEventGridDataConnection"/>, <see cref="SynapseEventHubDataConnection"/> and <see cref="SynapseIotHubDataConnection"/>.
+        /// The available derived classes include <see cref="SynapseEventHubDataConnection"/>, <see cref="SynapseIotHubDataConnection"/> and <see cref="SynapseEventGridDataConnection"/>.
         /// </summary>
         public SynapseDataConnectionData Properties { get; set; }
     }

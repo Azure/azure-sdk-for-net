@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="expressCustomSetupProperties">
         /// Custom setup without script properties for a SSIS integration runtime.
         /// Please note <see cref="SynapseCustomSetupBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SynapseCmdkeySetup"/>, <see cref="SynapseComponentSetup"/> and <see cref="SynapseEnvironmentVariableSetup"/>.
+        /// The available derived classes include <see cref="SynapseCmdkeySetup"/>, <see cref="SynapseEnvironmentVariableSetup"/> and <see cref="SynapseComponentSetup"/>.
         /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal SynapseIntegrationRuntimeSsisProperties(SynapseIntegrationRuntimeSsisCatalogInfo catalogInfo, SynapseIntegrationRuntimeLicenseType? licenseType, SynapseIntegrationRuntimeCustomSetupScriptProperties customSetupScriptProperties, SynapseIntegrationRuntimeDataProxyProperties dataProxyProperties, SynapseIntegrationRuntimeEdition? edition, IList<SynapseCustomSetupBase> expressCustomSetupProperties, IDictionary<string, BinaryData> additionalProperties)
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <summary>
         /// Custom setup without script properties for a SSIS integration runtime.
         /// Please note <see cref="SynapseCustomSetupBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SynapseCmdkeySetup"/>, <see cref="SynapseComponentSetup"/> and <see cref="SynapseEnvironmentVariableSetup"/>.
+        /// The available derived classes include <see cref="SynapseCmdkeySetup"/>, <see cref="SynapseEnvironmentVariableSetup"/> and <see cref="SynapseComponentSetup"/>.
         /// </summary>
         public IList<SynapseCustomSetupBase> ExpressCustomSetupProperties { get; }
         /// <summary>
