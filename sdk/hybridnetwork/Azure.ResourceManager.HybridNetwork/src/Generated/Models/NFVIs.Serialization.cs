@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureArcKubernetes": return AzureArcK8SClusterNfviDetails.DeserializeAzureArcK8SClusterNfviDetails(element, options);
                     case "AzureCore": return AzureCoreNfviDetails.DeserializeAzureCoreNfviDetails(element, options);
+                    case "AzureArcKubernetes": return AzureArcK8SClusterNfviDetails.DeserializeAzureArcK8SClusterNfviDetails(element, options);
                     case "AzureOperatorNexus": return AzureOperatorNexusClusterNfviDetails.DeserializeAzureOperatorNexusClusterNfviDetails(element, options);
                 }
             }
