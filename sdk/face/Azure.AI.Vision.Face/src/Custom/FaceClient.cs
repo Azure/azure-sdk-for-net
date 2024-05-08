@@ -59,7 +59,7 @@ namespace Azure.AI.Vision.Face
 
             DetectFromUrlRequest detectFromUrlRequest = new DetectFromUrlRequest(url, null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await DetectFromUrlAsync(detectFromUrlRequest.ToRequestContent(), detectionModel.ToString(), recognitionModel.ToString(), returnFaceId, returnFaceAttributes?.Select(t => t.ToString()), returnFaceLandmarks, returnRecognitionModel, faceIdTimeToLive, context).ConfigureAwait(false);
+            Response response = await DetectFromUrlAsync(detectFromUrlRequest.ToRequestContent(), detectionModel.ToString(), recognitionModel.ToString(), returnFaceId, returnFaceAttributes, returnFaceLandmarks, returnRecognitionModel, faceIdTimeToLive, context).ConfigureAwait(false);
             IReadOnlyList<FaceDetectionResult> value = default;
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             List<FaceDetectionResult> array = new List<FaceDetectionResult>();
@@ -116,7 +116,7 @@ namespace Azure.AI.Vision.Face
 
             DetectFromUrlRequest detectFromUrlRequest = new DetectFromUrlRequest(url, null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = DetectFromUrl(detectFromUrlRequest.ToRequestContent(), detectionModel.ToString(), recognitionModel.ToString(), returnFaceId, returnFaceAttributes?.Select(t => t.ToString()), returnFaceLandmarks, returnRecognitionModel, faceIdTimeToLive, context);
+            Response response = DetectFromUrl(detectFromUrlRequest.ToRequestContent(), detectionModel.ToString(), recognitionModel.ToString(), returnFaceId, returnFaceAttributes, returnFaceLandmarks, returnRecognitionModel, faceIdTimeToLive, context);
             IReadOnlyList<FaceDetectionResult> value = default;
             using var document = JsonDocument.Parse(response.ContentStream);
             List<FaceDetectionResult> array = new List<FaceDetectionResult>();
@@ -173,7 +173,7 @@ namespace Azure.AI.Vision.Face
 
             using RequestContent content = imageContent;
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await DetectAsync(imageContent, detectionModel.ToString(), recognitionModel.ToString(), returnFaceId, returnFaceAttributes?.Select(t => t.ToString()), returnFaceLandmarks, returnRecognitionModel, faceIdTimeToLive, context).ConfigureAwait(false);
+            Response response = await DetectAsync(imageContent, detectionModel.ToString(), recognitionModel.ToString(), returnFaceId, returnFaceAttributes, returnFaceLandmarks, returnRecognitionModel, faceIdTimeToLive, context).ConfigureAwait(false);
             IReadOnlyList<FaceDetectionResult> value = default;
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             List<FaceDetectionResult> array = new List<FaceDetectionResult>();
@@ -230,7 +230,7 @@ namespace Azure.AI.Vision.Face
 
             using RequestContent content = imageContent;
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = Detect(imageContent, detectionModel.ToString(), recognitionModel.ToString(), returnFaceId, returnFaceAttributes?.Select(t => t.ToString()), returnFaceLandmarks, returnRecognitionModel, faceIdTimeToLive, context);
+            Response response = Detect(imageContent, detectionModel.ToString(), recognitionModel.ToString(), returnFaceId, returnFaceAttributes, returnFaceLandmarks, returnRecognitionModel, faceIdTimeToLive, context);
             IReadOnlyList<FaceDetectionResult> value = default;
             using var document = JsonDocument.Parse(response.ContentStream);
             List<FaceDetectionResult> array = new List<FaceDetectionResult>();
