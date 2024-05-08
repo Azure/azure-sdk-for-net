@@ -38,10 +38,18 @@ namespace Azure.Messaging.EventHubs
         public long LastEnqueuedSequenceNumber { get; }
 
         /// <summary>
-        ///   The offset of the last observed event to be enqueued in the partition.
+        ///   The global offset of the last observed event to be enqueued in the partition.
         /// </summary>
-        ///
-        public long LastEnqueuedOffset { get; }
+        public string LastEnqueuedGlobalOffset { get; }
+
+        ///// <summary>
+        /////   The Event Hubs service no longer uses offsets with numeric values. Use <see cref="LastEnqueuedGlobalOffset"/>
+        /////   instead. This property is populated with <see cref="LastEnqueuedSequenceNumber"/> to avoid breaking existing code that
+        /////   only uses offset properties.
+        ///// </summary>
+        /////
+        //[EditorBrowsable(EditorBrowsableState.Never)]
+        //public long LastEnqueuedOffset { get; }
 
         /// <summary>
         ///   The date and time, in UTC, that the last observed event was enqueued in the partition.
@@ -66,7 +74,7 @@ namespace Azure.Messaging.EventHubs
         /// <param name="isEmpty">Indicates whether or not the partition is currently empty.</param>
         /// <param name="beginningSequenceNumber">The first sequence number available for events in the partition.</param>
         /// <param name="lastSequenceNumber">The sequence number observed the last event to be enqueued in the partition.</param>
-        /// <param name="lastOffset">The offset of the last event to be enqueued in the partition.</param>
+        /// <param name="lastGlobalOffset">The global offset of the last event to be enqueued in the partition.</param>
         /// <param name="lastEnqueuedTime">The date and time, in UTC, that the last event was enqueued in the partition.</param>
         ///
         protected internal PartitionProperties(string eventHubName,
@@ -74,19 +82,20 @@ namespace Azure.Messaging.EventHubs
                                                bool isEmpty,
                                                long beginningSequenceNumber,
                                                long lastSequenceNumber,
-                                               long lastOffset,
+                                               string lastGlobalOffset,
                                                DateTimeOffset lastEnqueuedTime)
         {
             EventHubName = eventHubName;
             Id = partitionId;
             BeginningSequenceNumber = beginningSequenceNumber;
             LastEnqueuedSequenceNumber = lastSequenceNumber;
+            LastEnqueuedGlobalOffset = lastGlobalOffset;
 
             // The offset is intentionally mapped to sequence number. The service no longer accepts a numeric offset value, so the
             // new SDK populates the EventData offset property with the amqp message sequence number. This allows for backwards
             // compatibility to avoid breaking existing code that uses only offset properties.
 
-            LastEnqueuedOffset = lastSequenceNumber;
+            // TODO uncomment LastEnqueuedOffset = lastSequenceNumber;
             LastEnqueuedTime = lastEnqueuedTime;
             IsEmpty = isEmpty;
         }

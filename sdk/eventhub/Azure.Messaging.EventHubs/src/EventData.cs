@@ -294,16 +294,16 @@ namespace Azure.Messaging.EventHubs
         ///
         public string GlobalOffset => _amqpMessage.GetGlobalOffset(long.MinValue.ToString());
 
-        /// <summary>
-        ///   The Event Hubs service no longer uses offsets with numeric values. Use <see cref="GlobalOffset"/> instead. This
-        ///   property is populated with <see cref="SequenceNumber"/> to avoid breaking existing code that uses only offset properties.
-        /// </summary>
-        ///
-        /// <value>
-        ///   This value is read-only and will only be populated for events that have been read from Event Hubs. The default value
-        ///   when not populated is <see cref="long.MinValue"/>.
-        /// </value>
-        ///
+        ///// <summary>
+        /////   The Event Hubs service no longer uses offsets with numeric values. Use <see cref="GlobalOffset"/> instead. This
+        /////   property is populated with <see cref="SequenceNumber"/> to avoid breaking existing code that uses only offset properties.
+        ///// </summary>
+        /////
+        ///// <value>
+        /////   This value is read-only and will only be populated for events that have been read from Event Hubs. The default value
+        /////   when not populated is <see cref="long.MinValue"/>.
+        ///// </value>
+        /////
         //[EditorBrowsable(EditorBrowsableState.Never)]
         //public long Offset
         //{
@@ -408,18 +408,18 @@ namespace Azure.Messaging.EventHubs
         ///
         internal string LastPartitionGlobalOffset => _amqpMessage.GetLastPartitionGlobalOffset();
 
-        /// <summary>
-        ///   The Event Hubs service no longer uses offsets with numeric values. Use <see cref="LastPartitionGlobalOffset"/> instead.
-        ///   This property is populated with <see cref="LastPartitionSequenceNumber"/> to avoid breaking existing code that
-        ///   uses only offset properties.
-        /// </summary>
-        ///
-        /// <value>
-        ///   This value is read-only and will only be populated for events that have been read from Event Hubs by a consumer
-        ///   specifying <see cref="ReadEventOptions.TrackLastEnqueuedEventProperties" /> as enabled.  The default value when not
-        ///   populated is <c>null</c>.
-        /// </value>
-        ///
+        ///// <summary>
+        /////   The Event Hubs service no longer uses offsets with numeric values. Use <see cref="LastPartitionGlobalOffset"/> instead.
+        /////   This property is populated with <see cref="LastPartitionSequenceNumber"/> to avoid breaking existing code that
+        /////   uses only offset properties.
+        ///// </summary>
+        /////
+        ///// <value>
+        /////   This value is read-only and will only be populated for events that have been read from Event Hubs by a consumer
+        /////   specifying <see cref="ReadEventOptions.TrackLastEnqueuedEventProperties" /> as enabled.  The default value when not
+        /////   populated is <c>null</c>.
+        ///// </value>
+        /////
         //[EditorBrowsable(EditorBrowsableState.Never)]
         //internal long? LastPartitionOffset
         //{
@@ -671,7 +671,7 @@ namespace Azure.Messaging.EventHubs
                             long sequenceNumber = long.MinValue,
                             long offset = long.MinValue,
                             DateTimeOffset enqueuedTime = default,
-                            string partitionKey = null) : this(eventBody, properties, systemProperties, sequenceNumber, offset, enqueuedTime, partitionKey, lastPartitionSequenceNumber: null)
+                            string partitionKey = null) : this(eventBody, properties, systemProperties, sequenceNumber, string.Empty, enqueuedTime, partitionKey, lastPartitionSequenceNumber: null)
         {
         }
 
@@ -703,7 +703,7 @@ namespace Azure.Messaging.EventHubs
                             long sequenceNumber = long.MinValue,
                             long offset = long.MinValue,
                             DateTimeOffset enqueuedTime = default,
-                            string partitionKey = null) : this(new BinaryData(eventBody), properties, systemProperties, sequenceNumber, offset, enqueuedTime, partitionKey, lastPartitionSequenceNumber: null)
+                            string partitionKey = null) : this(new BinaryData(eventBody), properties, systemProperties, sequenceNumber, string.Empty, enqueuedTime, partitionKey, lastPartitionSequenceNumber: null)
         {
         }
 

@@ -132,7 +132,7 @@ namespace Azure.Messaging.EventHubs
             new FactoryPartitionContext("<< NULL >>", "<< NULL >>", "<< NULL >>", partitionId, lastEnqueuedEventProperties);
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="EventData"/> class.
+        ///   Initializes a new instance of the <see cref="Azure.Messaging.EventHubs.EventData"/> class.
         /// </summary>
         ///
         /// <param name="eventBody">The data to use as the body of the event.</param>
@@ -143,12 +143,43 @@ namespace Azure.Messaging.EventHubs
         /// <param name="offset">The offset of the event when it was received from the associated Event Hub partition.</param>
         /// <param name="enqueuedTime">The date and time, in UTC, of when the event was enqueued in the Event Hub partition.</param>
         ///
+        /// <remarks>
+        ///   The Event Hubs service no longer uses offsets with numeric values. It is strongly recommended to use the overload,
+        ///   <see cref="EventData(BinaryData, IDictionary{string, object}, IReadOnlyDictionary{string, object}, string, long, string, DateTimeOffset)"/> instead.
+        ///
+        ///   The <paramref name="offset"/> parameter is included for backwards compatibility, but is ignored. Instead, EventData.Offset (TODO) will be
+        ///   populated with <paramref name="sequenceNumber"/>.
+        /// </remarks>
+        ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static EventData EventData(BinaryData eventBody,
                                           IDictionary<string, object> properties = null,
                                           IReadOnlyDictionary<string, object> systemProperties = null,
                                           string partitionKey = null,
                                           long sequenceNumber = long.MinValue,
                                           long offset = long.MinValue,
+                                          DateTimeOffset enqueuedTime = default) =>
+             new EventData(eventBody, properties, systemProperties, sequenceNumber, string.Empty, enqueuedTime, partitionKey);
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="Azure.Messaging.EventHubs.EventData"/> class.
+        /// </summary>
+        ///
+        /// <param name="eventBody">The data to use as the body of the event.</param>
+        /// <param name="properties">The set of free-form event properties to send with the event.</param>
+        /// <param name="systemProperties">The set of system properties that accompany events read from the Event Hubs service.</param>
+        /// <param name="partitionKey">The partition hashing key associated with the event when it was published.</param>
+        /// <param name="sequenceNumber">The sequence number assigned to the event when it was enqueued in the associated Event Hub partition.</param>
+        /// <param name="offset">The offset of the event when it was received from the associated Event Hub partition.</param>
+        /// <param name="enqueuedTime">The date and time, in UTC, of when the event was enqueued in the Event Hub partition.</param>
+        ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static EventData EventData(BinaryData eventBody,
+                                          IDictionary<string, object> properties = null,
+                                          IReadOnlyDictionary<string, object> systemProperties = null,
+                                          string partitionKey = null,
+                                          long sequenceNumber = long.MinValue,
+                                          string offset = long.MinValue,
                                           DateTimeOffset enqueuedTime = default) =>
              new EventData(eventBody, properties, systemProperties, sequenceNumber, offset, enqueuedTime, partitionKey);
 

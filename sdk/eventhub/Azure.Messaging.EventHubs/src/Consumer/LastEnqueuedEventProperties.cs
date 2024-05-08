@@ -20,10 +20,18 @@ namespace Azure.Messaging.EventHubs.Consumer
         public long? SequenceNumber { get; }
 
         /// <summary>
-        ///   The offset of the last observed event to be enqueued in the partition.
+        ///   The global offset of the last observed event to be enqueued in that partition.
         /// </summary>
-        ///
-        public long? Offset { get; }
+        public string GlobalOffset { get; }
+
+        ///// <summary>
+        /////   The Event Hubs service no longer uses offsets with numeric values. Use <see cref="GlobalOffset"/> instead.
+        /////   This property is populated with <see cref="SequenceNumber"/> to avoid breaking existing code that uses only
+        /////   offset properties.
+        ///// </summary>
+        /////
+        //[EditorBrowsable(EditorBrowsableState.Never)]
+        //public long? Offset { get; }
 
         /// <summary>
         ///   The date and time, in UTC, that the last observed event was enqueued in the partition.
@@ -46,6 +54,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         /// <param name="lastEnqueuedTime">The date and time, in UTC, that the last event was enqueued in the partition.</param>
         /// <param name="lastReceivedTime">The date and time, in UTC, that the information was last received.</param>
         ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public LastEnqueuedEventProperties(long? lastSequenceNumber,
                                            long? lastOffset,
                                            DateTimeOffset? lastEnqueuedTime,
@@ -57,7 +66,34 @@ namespace Azure.Messaging.EventHubs.Consumer
             // new SDK populates the EventData offset property with the amqp message sequence number. This allows for backwards
             // compatibility to avoid breaking existing code that uses only offset properties.
 
-            Offset = lastSequenceNumber;
+            // TODO uncomment - Offset = lastSequenceNumber;
+            EnqueuedTime = lastEnqueuedTime;
+            LastReceivedTime = lastReceivedTime;
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="LastEnqueuedEventProperties"/> class.
+        /// </summary>
+        ///
+        /// <param name="lastSequenceNumber">The sequence number observed the last event to be enqueued in the partition.</param>
+        /// <param name="lastGlobalOffset">The global offset observed the last event to be enqueued in the partition.</param>
+        /// <param name="lastEnqueuedTime">The date and time, in UTC, that the last event was enqueued in the partition.</param>
+        /// <param name="lastReceivedTime">The date and time, in UTC, that the information was last received.</param>
+        ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public LastEnqueuedEventProperties(long? lastSequenceNumber,
+                                           string lastGlobalOffset,
+                                           DateTimeOffset? lastEnqueuedTime,
+                                           DateTimeOffset? lastReceivedTime)
+        {
+            SequenceNumber = lastSequenceNumber;
+            GlobalOffset = lastGlobalOffset;
+
+            // The offset is intentionally mapped to sequence number. The service no longer accepts a numeric offset value, so the
+            // new SDK populates the EventData offset property with the amqp message sequence number. This allows for backwards
+            // compatibility to avoid breaking existing code that uses only offset properties.
+
+            // TODO uncomment - Offset = lastSequenceNumber;
             EnqueuedTime = lastEnqueuedTime;
             LastReceivedTime = lastReceivedTime;
         }
@@ -70,10 +106,11 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///
         internal LastEnqueuedEventProperties(EventData sourceEvent) :
             this(sourceEvent?.LastPartitionSequenceNumber,
-                 sourceEvent?.LastPartitionOffset,
+                 sourceEvent?.LastPartitionGlobalOffset,
                  sourceEvent?.LastPartitionEnqueuedTime,
                  sourceEvent?.LastPartitionPropertiesRetrievalTime)
         {
+            // TODO uncomment Offset = sourceEvent?.LastPartitionOffset;
         }
 
         /// <summary>
@@ -86,10 +123,10 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///
         public bool Equals(LastEnqueuedEventProperties other)
         {
-            return (Offset == other.Offset)
+            return (GlobalOffset == other.GlobalOffset)
                 && (SequenceNumber == other.SequenceNumber)
                 && (EnqueuedTime == other.EnqueuedTime)
-                && (LastReceivedTime == other.LastReceivedTime);
+                && (LastReceivedTime == other.LastReceivedTime); //TODO
         }
 
         /// <summary>
@@ -118,7 +155,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         public override int GetHashCode()
         {
             var hashCode = new HashCodeBuilder();
-            hashCode.Add(Offset);
+            // TODO uncomment hashCode.Add(Offset);
             hashCode.Add(SequenceNumber);
             hashCode.Add(EnqueuedTime);
             hashCode.Add(LastReceivedTime);
@@ -133,7 +170,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         /// <returns>A <see cref="System.String" /> that represents this instance.</returns>
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override string ToString() => $"Sequence: [{ SequenceNumber }] | Offset: [{ Offset }] | Enqueued: [{ EnqueuedTime }] | Last Received: [{ LastReceivedTime }]";
+        public override string ToString() => $"Sequence: [{ SequenceNumber }] | Global Offset: [{ GlobalOffset }] | Enqueued: [{ EnqueuedTime }] | Last Received: [{ LastReceivedTime }]";
 
         /// <summary>
         ///   Determines whether the specified <see cref="LastEnqueuedEventProperties" /> instances are equal to each other.
