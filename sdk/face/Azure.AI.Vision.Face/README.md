@@ -348,31 +348,31 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [source_code]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/face/Azure.AI.Vision.Face/src
 [face_nuget]: https://www.nuget.org/packages/Azure.AI.Vision.Face/
 [face_ref_docs]: https://aka.ms/azsdk-csharp-face-ref
-[face_product_docs]: https://learn.microsoft.com/en-us/azure/ai-services/computer-vision/overview-identity
+[face_product_docs]: https://learn.microsoft.com/azure/ai-services/computer-vision/overview-identity
 [face_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/face/Azure.AI.Vision.Face/samples
 
 [nuget]: https://www.nuget.org/
-[steps_assign_an_azure_role]: https://learn.microsoft.com/en-us/azure/role-based-access-control/role-assignments-steps
+[steps_assign_an_azure_role]: https://learn.microsoft.com/azure/role-based-access-control/role-assignments-steps
 [azure_sub]: https://azure.microsoft.com/free/
 [azure_portal_list_face_account]: https://portal.azure.com/#blade/Microsoft_Azure_ProjectOxford/CognitiveServicesHub/Face
-[azure_ai_account]: https://learn.microsoft.com/en-us/azure/ai-services/multi-service-resource?tabs=windows&pivots=azportal
+[azure_ai_account]: https://learn.microsoft.com/azure/ai-services/multi-service-resource?tabs=windows&pivots=azportal
 [azure_portal_list_cognitive_service_account]: https://portal.azure.com/#view/Microsoft_Azure_ProjectOxford/CognitiveServicesHub/~/AllInOne
-[azure_portal_create_face_account]: https://ms.portal.azure.com/#create/Microsoft.CognitiveServicesFace
-[quick_start_create_account_via_azure_cli]: https://learn.microsoft.com/en-us/azure/ai-services/multi-service-resource?tabs=windows&pivots=azcli
-[quick_start_create_account_via_azure_powershell]: https://learn.microsoft.com/en-us/azure/ai-services/multi-service-resource?tabs=windows&pivots=azpowershell
+[azure_portal_create_face_account]: https://portal.azure.com/#create/Microsoft.CognitiveServicesFace
+[quick_start_create_account_via_azure_cli]: https://learn.microsoft.com/azure/ai-services/multi-service-resource?tabs=windows&pivots=azcli
+[quick_start_create_account_via_azure_powershell]: https://learn.microsoft.com/azure/ai-services/multi-service-resource?tabs=windows&pivots=azpowershell
 
 [regional_endpoints]: https://azure.microsoft.com/global-infrastructure/services/?products=cognitive-services
-[get_endpoint_via_azure_portal]: https://learn.microsoft.com/en-us/azure/ai-services/multi-service-resource?tabs=windows&pivots=azportal#get-the-keys-for-your-resource
-[get_endpoint_via_azure_cli]: https://learn.microsoft.com/en-us/azure/ai-services/multi-service-resource?tabs=windows&pivots=azcli#get-the-keys-for-your-resource
-[azure_sdk_net_azure_key_credential]: https://learn.microsoft.com/en-us/dotnet/api/azure.azurekeycredential?view=azure-dotnet
-[azure_sdk_net_identity]: https://learn.microsoft.com/en-us/dotnet/api/overview/azure/identity-readme?view=azure-dotnet
+[get_endpoint_via_azure_portal]: https://learn.microsoft.com/azure/ai-services/multi-service-resource?tabs=windows&pivots=azportal#get-the-keys-for-your-resource
+[get_endpoint_via_azure_cli]: https://learn.microsoft.com/azure/ai-services/multi-service-resource?tabs=windows&pivots=azcli#get-the-keys-for-your-resource
+[azure_sdk_net_azure_key_credential]: https://learn.microsoft.com/dotnet/api/azure.azurekeycredential?view=azure-dotnet
+[azure_sdk_net_identity]: https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet
 [custom_subdomain]: https://docs.microsoft.com/azure/cognitive-services/authentication#create-a-resource-with-a-custom-subdomain
-[azure_sdk_net_default_azure_credential]: https://learn.microsoft.com/en-us/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet
+[azure_sdk_net_default_azure_credential]: https://learn.microsoft.com/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet
 [register_aad_app]: https://docs.microsoft.com/azure/cognitive-services/authentication#assign-a-role-to-a-service-principal
 
 [face_sample_detection]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/face/Azure.AI.Vision.Face/samples/Sample_FaceDetection.md
-[liveness_tutorial]: https://learn.microsoft.com/en-us/azure/ai-services/computer-vision/tutorials/liveness
-[integrate_liveness_into_mobile_application]: https://learn.microsoft.com/en-us/azure/ai-services/computer-vision/tutorials/liveness#integrate-liveness-into-mobile-application
+[liveness_tutorial]: https://learn.microsoft.com/azure/ai-services/computer-vision/tutorials/liveness
+[integrate_liveness_into_mobile_application]: https://learn.microsoft.com/azure/ai-services/computer-vision/tutorials/liveness#integrate-liveness-into-mobile-application
 [face_sample_liveness_session]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/face/Azure.AI.Vision.Face/samples/Sample_DetectLivenessWithSession.md
 [face_sample_liveness_with_verify_session]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/face/Azure.AI.Vision.Face/samples/Sample_DetectLivenessWithVerifyWithSession.md
 
