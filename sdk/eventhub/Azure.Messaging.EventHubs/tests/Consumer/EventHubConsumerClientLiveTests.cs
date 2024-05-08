@@ -812,8 +812,9 @@ namespace Azure.Messaging.EventHubs.Tests
                     // Query the partition and determine the offset of the last enqueued event, then send the new set
                     // of events that should appear after the starting position.
 
-                    var lastOffset = (await consumer.GetPartitionPropertiesAsync(partition, cancellationSource.Token)).LastEnqueuedOffset;
-                    var startingPosition = EventPosition.FromOffset(lastOffset, isInclusive);
+                    // TODO need to check back compat
+                    var lastOffset = (await consumer.GetPartitionPropertiesAsync(partition, cancellationSource.Token)).LastEnqueuedGlobalOffset;
+                    var startingPosition = EventPosition.FromGlobalOffset(lastOffset, isInclusive);
 
                     await SendEventsAsync(connectionString, sourceEvents, new CreateBatchOptions { PartitionId = partition }, cancellationSource.Token);
 
@@ -832,7 +833,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
                     Assert.That(readState.Events.Count, Is.EqualTo(expectedCount), "The wrong number of events was read for the value of the inclusive flag.");
-                    Assert.That(readState.Events.Values.Any(readEvent => readEvent.Data.Offset == lastOffset), Is.EqualTo(isInclusive), $"The event with offset [{ lastOffset }] was { ((isInclusive) ? "not" : "") } in the set of read events, which is inconsistent with the inclusive flag.");
+                    Assert.That(readState.Events.Values.Any(readEvent => readEvent.Data.GlobalOffset == lastOffset), Is.EqualTo(isInclusive), $"The event with offset [{ lastOffset }] was { ((isInclusive) ? "not" : "") } in the set of read events, which is inconsistent with the inclusive flag.");
 
                     foreach (var sourceEvent in sourceEvents)
                     {
@@ -1977,7 +1978,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     Assert.That(partitionProperties.EventHubName, Is.EqualTo(scope.EventHubName).Using((IEqualityComparer<string>)StringComparer.InvariantCultureIgnoreCase), "The Event Hub path should match.");
                     Assert.That(partitionProperties.BeginningSequenceNumber, Is.Not.EqualTo(default(long)), "The beginning sequence number should have been populated.");
                     Assert.That(partitionProperties.LastEnqueuedSequenceNumber, Is.Not.EqualTo(default(long)), "The last sequence number should have been populated.");
-                    Assert.That(partitionProperties.LastEnqueuedOffset, Is.Not.EqualTo(default(long)), "The last offset should have been populated.");
+                    Assert.That(partitionProperties.LastEnqueuedGlobalOffset, Is.Not.EqualTo(default(string)), "The last offset should have been populated.");
                 }
             }
         }

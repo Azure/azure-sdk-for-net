@@ -50,6 +50,28 @@ namespace Azure.Messaging.EventHubs
                                                             bool isGeoReplicationEnabled) =>
            new EventHubProperties(name, createdOn, partitionIds, isGeoReplicationEnabled);
 
+        ///// <summary>
+        /////   Initializes a new instance of the <see cref="PartitionProperties"/> class.
+        ///// </summary>
+        /////
+        ///// <param name="eventHubName">The name of the Event Hub that contains the partitions.</param>
+        ///// <param name="partitionId">The identifier of the partition.</param>
+        ///// <param name="isEmpty">Indicates whether or not the partition is currently empty.</param>
+        ///// <param name="beginningSequenceNumber">The first sequence number available for events in the partition.</param>
+        ///// <param name="lastSequenceNumber">The sequence number observed the last event to be enqueued in the partition.</param>
+        ///// <param name="lastOffset">The offset of the last event to be enqueued in the partition.</param>
+        ///// <param name="lastEnqueuedTime">The date and time, in UTC, that the last event was enqueued in the partition.</param>
+        /////
+        //[EditorBrowsable(EditorBrowsableState.Never)]
+        //public static PartitionProperties PartitionProperties(string eventHubName,
+        //                                                      string partitionId,
+        //                                                      bool isEmpty,
+        //                                                      long beginningSequenceNumber,
+        //                                                      long lastSequenceNumber,
+        //                                                      long lastOffset,
+        //                                                      DateTimeOffset lastEnqueuedTime) =>
+        //    new PartitionProperties(eventHubName, partitionId, isEmpty, beginningSequenceNumber, lastSequenceNumber, lastOffset, lastEnqueuedTime);
+
         /// <summary>
         ///   Initializes a new instance of the <see cref="PartitionProperties"/> class.
         /// </summary>
@@ -67,7 +89,7 @@ namespace Azure.Messaging.EventHubs
                                                               bool isEmpty,
                                                               long beginningSequenceNumber,
                                                               long lastSequenceNumber,
-                                                              long lastOffset,
+                                                              string lastOffset,
                                                               DateTimeOffset lastEnqueuedTime) =>
             new PartitionProperties(eventHubName, partitionId, isEmpty, beginningSequenceNumber, lastSequenceNumber, lastOffset, lastEnqueuedTime);
 
@@ -179,7 +201,7 @@ namespace Azure.Messaging.EventHubs
                                           IReadOnlyDictionary<string, object> systemProperties = null,
                                           string partitionKey = null,
                                           long sequenceNumber = long.MinValue,
-                                          string offset = long.MinValue,
+                                          string offset = null,
                                           DateTimeOffset enqueuedTime = default) =>
              new EventData(eventBody, properties, systemProperties, sequenceNumber, offset, enqueuedTime, partitionKey);
 

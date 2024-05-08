@@ -656,8 +656,9 @@ namespace Azure.Messaging.EventHubs
         /// <param name="partitionKey">The partition hashing key associated with the event when it was published.</param>
         ///
         /// <remarks>
-        ///   <para>This constructor has been superseded by the <see cref="EventHubsModelFactory.EventData" /> factory method.
-        ///   It is strongly recommended that the model factory be preferred over use of this constructor.</para>
+        ///   <para>This constructor has been superseded by the
+        ///   <see cref="EventHubsModelFactory.EventData(BinaryData, IDictionary{string, object}, IReadOnlyDictionary{string, object}, string, long, string, DateTimeOffset)" />
+        ///   factory method. It is strongly recommended that the model factory be preferred over use of this constructor.</para>
         ///
         ///   <para>This overload was previously intended for mocking in support of testing efforts.  It is recommended that
         ///   it not be used in production scenarios, as it allows setting of data that is broker-owned and is only
@@ -688,8 +689,9 @@ namespace Azure.Messaging.EventHubs
         /// <param name="partitionKey">The partition hashing key associated with the event when it was published.</param>
         ///
         /// <remarks>
-        ///   <para>This constructor has been superseded by the <see cref="EventHubsModelFactory.EventData" /> factory method.
-        ///   It is strongly recommended that the model factory be preferred over use of this constructor.</para>
+        ///   <para>This constructor has been superseded by the
+        ///   <see cref="EventHubsModelFactory.EventData(BinaryData, IDictionary{string, object}, IReadOnlyDictionary{string, object}, string, long, string, DateTimeOffset)" />
+        ///   factory method. It is strongly recommended that the model factory be preferred over use of this constructor.</para>
         ///
         ///   <para>This overload was previously intended for mocking in support of testing efforts.  It is recommended that
         ///   it not be used in production scenarios, as it allows setting of data that is broker-owned and is only
