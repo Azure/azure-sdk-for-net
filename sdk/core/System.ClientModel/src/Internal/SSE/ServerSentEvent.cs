@@ -63,7 +63,20 @@ internal readonly struct ServerSentEvent
                 }
             }
 
-            Data = buffer;
+            // remove trailing LF.
+            Data = buffer.Slice(0, buffer.Length - 1);
+        }
+
+        if (Data.Length == 0)
+        {
+            // Per spec, if data buffer is empty, set event type buffer to empty.
+            EventName = ReadOnlyMemory<char>.Empty;
+        }
+
+        if (EventName.Length == 0)
+        {
+            // Per spec, if event type buffer is empty, set event.type to "message".
+            EventName = "message".ToCharArray();
         }
     }
 }

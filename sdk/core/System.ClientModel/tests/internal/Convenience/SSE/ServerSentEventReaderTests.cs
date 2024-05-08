@@ -74,7 +74,7 @@ public class ServerSentEventReaderTests
         ServerSentEvent? sse = await reader.TryGetNextEventAsync();
 
         Assert.IsNotNull(sse);
-        Assert.AreEqual(sse.Value.EventName.Length, 0);
+        Assert.IsTrue(sse.Value.EventName.Span.SequenceEqual("message".AsSpan()));
         Assert.AreEqual(sse.Value.Data.Length, 0);
         Assert.AreEqual(sse.Value.LastEventId.Length, 0);
         Assert.IsNull(sse.Value.ReconnectionTime);
@@ -99,6 +99,7 @@ public class ServerSentEventReaderTests
     public async Task ConcatenatesDataLines()
     {
         Stream contentStream = BinaryData.FromString("""
+            event: event
             data: YHOO
             data: +2
             data: 10
@@ -110,8 +111,8 @@ public class ServerSentEventReaderTests
         ServerSentEvent? sse = await reader.TryGetNextEventAsync();
 
         Assert.IsNotNull(sse);
-        Assert.AreEqual(sse.Value.EventName.Length, 0);
-        Assert.IsTrue(sse.Value.Data.Span.SequenceEqual("YHOO\n+2\n10\n".AsSpan()));
+        Assert.IsTrue(sse.Value.EventName.Span.SequenceEqual("event".AsSpan()));
+        Assert.IsTrue(sse.Value.Data.Span.SequenceEqual("YHOO\n+2\n10".AsSpan()));
         Assert.AreEqual(sse.Value.LastEventId.Length, 0);
         Assert.IsNull(sse.Value.ReconnectionTime);
     }
