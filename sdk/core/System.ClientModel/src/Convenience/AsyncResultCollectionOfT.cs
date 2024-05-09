@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.ClientModel.Internal;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Threading;
@@ -25,21 +24,6 @@ public abstract class AsyncResultCollection<T> : ClientResult, IAsyncEnumerable<
     {
     }
 
-    public static AsyncResultCollection<BinaryData> Create(PipelineResponse response, string terminalEvent)
-    {
-        Argument.AssertNotNull(response, nameof(response));
-
-        if (response.ContentStream is null)
-        {
-            throw new ArgumentException("Unable to create result collection from PipelineResponse with null ContentStream", nameof(response));
-        }
-
-        return new AsyncSseDataEventCollection(response, terminalEvent);
-    }
-
     public abstract IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = default);
-
-    // TODO: what input does it take?
-    //public virtual bool CloseStream() { }
 }
 #pragma warning restore CS1591 // public XML comments
