@@ -289,10 +289,10 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <value>
         ///   This value is read-only and will only be populated for events that have been read from Event Hubs. The default value
-        ///   when not populated is <see cref="long.MinValue"/>.
+        ///   when not populated is <c>null</c>.
         /// </value>
         ///
-        public long Offset => _amqpMessage.GetOffset(long.MinValue);
+        public string Offset => _amqpMessage.GetOffset(null);
 
         /// <summary>
         ///   The date and time, in UTC, of when the event was enqueued in the Event Hub partition.
@@ -383,7 +383,7 @@ namespace Azure.Messaging.EventHubs
         ///   populated is <c>null</c>.
         /// </value>
         ///
-        internal long? LastPartitionOffset => _amqpMessage.GetLastPartitionOffset();
+        internal string LastPartitionOffset => _amqpMessage.GetLastPartitionOffset();
 
         /// <summary>
         ///   The date and time, in UTC, that the last event was enqueued into the Event Hub partition from

@@ -188,13 +188,13 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         /// <returns>The offset, if represented in the <paramref name="instance"/>; otherwise, <paramref name="defaultValue"/>.</returns>
         ///
-        public static long GetOffset(this AmqpAnnotatedMessage instance,
-                                     long defaultValue = long.MinValue)
+        public static string GetOffset(this AmqpAnnotatedMessage instance,
+                                       string defaultValue = default)
         {
             if ((instance.HasSection(AmqpMessageSection.MessageAnnotations))
                 && (instance.MessageAnnotations.TryGetValue(AmqpProperty.Offset.ToString(), out var value)))
             {
-                return (long)value;
+                return (string)value;
             }
 
             return defaultValue;
@@ -298,13 +298,13 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         /// <returns>The offset of the last event published to the partition, if represented in the <paramref name="instance"/>; otherwise, <paramref name="defaultValue"/>.</returns>
         ///
-        public static long? GetLastPartitionOffset(this AmqpAnnotatedMessage instance,
-                                                   long? defaultValue = default)
+        public static string GetLastPartitionOffset(this AmqpAnnotatedMessage instance,
+                                                   string defaultValue = default)
         {
             if ((instance.HasSection(AmqpMessageSection.DeliveryAnnotations))
                 && (instance.DeliveryAnnotations.TryGetValue(AmqpProperty.PartitionLastEnqueuedOffset.ToString(), out var value)))
             {
-                return (long)value;
+                return (string)value;
             }
 
             return defaultValue;
