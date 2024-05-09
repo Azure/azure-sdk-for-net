@@ -38,7 +38,7 @@ First create your Infrastructure class.
 ```C# Snippet:SampleInfrastructure
 public class SampleInfrastructure : Infrastructure
 {
-    public SampleInfrastructure() : base(envName: "Sample", tenantId: Guid.Empty, configuration: new Configuration { UseInteractiveMode = true })
+    public SampleInfrastructure() : base(envName: "Sample", tenantId: Guid.Empty, subscriptionId: Guid.Empty, configuration: new Configuration { UseInteractiveMode = true })
     {
     }
 }
