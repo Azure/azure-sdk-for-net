@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
@@ -17,7 +18,7 @@ namespace Azure.ResourceManager.Monitor.Models
     public partial class MonitorScaleCapacity : IUtf8JsonSerializable
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal void WriteMinimum(Utf8JsonWriter writer)
+        internal void WriteMinimum(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             WriteIntToString(writer, Minimum);
         }
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal void WriteMaximum(Utf8JsonWriter writer)
+        internal void WriteMaximum(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             WriteIntToString(writer, Maximum);
         }
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal void WriteDefault(Utf8JsonWriter writer)
+        internal void WriteDefault(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             WriteIntToString(writer, Default);
         }

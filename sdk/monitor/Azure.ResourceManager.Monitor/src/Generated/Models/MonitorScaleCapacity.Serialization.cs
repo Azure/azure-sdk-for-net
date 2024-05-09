@@ -27,11 +27,11 @@ namespace Azure.ResourceManager.Monitor.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("minimum"u8);
-            WriteMinimum(writer);
+            WriteMinimum(writer, options);
             writer.WritePropertyName("maximum"u8);
-            WriteMaximum(writer);
+            WriteMaximum(writer, options);
             writer.WritePropertyName("default"u8);
-            WriteDefault(writer);
+            WriteDefault(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
