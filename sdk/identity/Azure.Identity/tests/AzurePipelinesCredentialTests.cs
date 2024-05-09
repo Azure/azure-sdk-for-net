@@ -40,7 +40,8 @@ namespace Azure.Identity.Tests
                 PlanId = "myplan",
                 JobId = "myjob",
                 TeamProjectId = "myteamproject",
-                SystemAccessToken = "mytoken"
+                SystemAccessToken = "mytoken",
+                HubName = "myhub",
             };
             if (config.Transport != null)
             {
