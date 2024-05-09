@@ -44,7 +44,7 @@ namespace Azure.Provisioning.Tests
                     "eng",
                     "scripts",
                     $"Validate-Bicep.ps1 {bicepPath}");
-                var processInfo = new ProcessStartInfo("pwsh.exe", args)
+                var processInfo = new ProcessStartInfo("pwsh", args)
                 {
                     UseShellExecute = false, RedirectStandardOutput = true, RedirectStandardError = true,
                 };
