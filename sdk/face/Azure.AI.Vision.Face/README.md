@@ -83,7 +83,7 @@ You will also need to [register a new AAD application and grant access][register
 Once completed, set the values of the client ID, tenant ID, and client secret of the AAD application as environment variables:
 `AZURE_CLIENT_ID`, `AZURE_TENANT_ID`, `AZURE_CLIENT_SECRET`.
 
-```C# Snippet:CreateFaceClientWithDefaultAzureCredential
+```C# Snippet:CreateFaceClient
 Uri endpoint = new Uri("<your endpoint>");
 DefaultAzureCredential credential = new DefaultAzureCredential();
 var client = new FaceClient(endpoint, credential);
@@ -93,14 +93,11 @@ var client = new FaceClient(endpoint, credential);
 
 To use an API key as the `credential` parameter, pass the key as a string into an instance of [AzureKeyCredential][azure_sdk_net_azure_key_credential].
 
-```C# Snippet:CreateFaceClient
+```C# Snippet:CreateFaceClientWithKey
 Uri endpoint = new Uri("<your endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<your apiKey>");
-
 var client = new FaceClient(endpoint, credential);
 ```
-
-
 
 ## Key concepts
 

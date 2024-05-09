@@ -12,8 +12,7 @@ You can set `endpoint` and `apiKey` based on an environment variable, a configur
 
 ```C# Snippet:CreateFaceClient
 Uri endpoint = new Uri("<your endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<your apiKey>");
-
+DefaultAzureCredential credential = new DefaultAzureCredential();
 var client = new FaceClient(endpoint, credential);
 ```
 

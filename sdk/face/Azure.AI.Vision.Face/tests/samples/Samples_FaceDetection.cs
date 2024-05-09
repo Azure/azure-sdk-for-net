@@ -12,7 +12,7 @@ namespace Azure.AI.Vision.Face.Samples
 {
     public partial class FaceSamples
     {
-        [RecordedTest]
+        [Test]
         public async Task Sample_Detect()
         {
             var client = CreateClient();
@@ -73,7 +73,7 @@ namespace Azure.AI.Vision.Face.Samples
             #endregion
         }
 
-        [RecordedTest]
+        [Test]
         public async Task Sample_DetectFromUrl()
         {
             var client = CreateClient();
@@ -109,7 +109,7 @@ namespace Azure.AI.Vision.Face.Samples
             #endregion
         }
 
-        [RecordedTest]
+        [Test]
         public async Task Sample_DetectFromUrl_InvalidUrl()
         {
             var client = CreateClient();

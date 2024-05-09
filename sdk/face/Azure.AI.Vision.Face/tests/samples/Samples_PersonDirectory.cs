@@ -14,7 +14,7 @@ namespace Azure.AI.Vision.Face.Samples
 {
     public partial class FaceSamples
     {
-        [RecordedTest]
+        [Test]
         public async Task Sample_VerifyFromPersonDirectory()
         {
             var administrationClient = CreateAdministrationClient();
@@ -69,7 +69,7 @@ namespace Azure.AI.Vision.Face.Samples
             #endregion
         }
 
-        [RecordedTest]
+        [Test]
         public async Task Sample_IdentifyFromPersonDirectory()
         {
             var administrationClient = CreateAdministrationClient();
@@ -150,7 +150,7 @@ namespace Azure.AI.Vision.Face.Samples
             }
         }
 
-        [RecordedTest]
+        [Test]
         public async Task Sample_IdentifyFromDynamicPersonGroup()
         {
             var administrationClient = CreateAdministrationClient();

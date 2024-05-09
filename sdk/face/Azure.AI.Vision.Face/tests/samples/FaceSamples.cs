@@ -9,11 +9,10 @@ using Azure.Identity;
 
 namespace Azure.AI.Vision.Face.Samples
 {
-    [LiveOnly]
     [AsyncOnly]
-    public partial class FaceSamples : RecordedTestBase<FaceTestEnvironment>
+    public partial class FaceSamples : SamplesBase<FaceTestEnvironment>
     {
-        public FaceSamples(bool isAsync) : base(isAsync, RecordedTestMode.Live)
+        public FaceSamples()
         {
         }
 
@@ -22,12 +21,10 @@ namespace Azure.AI.Vision.Face.Samples
             #region Snippet:CreateFaceClient
 #if SNIPPET
             Uri endpoint = new Uri("<your endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<your apiKey>");
 #else
             var endpoint = TestEnvironment.GetUrlVariable("FACE_ENDPOINT");
-            var credential = TestEnvironment.GetKeyVariable("FACE_KEY");
 #endif
-
+            DefaultAzureCredential credential = new DefaultAzureCredential();
             var client = new FaceClient(endpoint, credential);
             #endregion
             return client;
@@ -37,12 +34,10 @@ namespace Azure.AI.Vision.Face.Samples
         {
 #if SNIPPET
             Uri endpoint = new Uri("<your endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<your apiKey>");
 #else
             var endpoint = TestEnvironment.GetUrlVariable("FACE_ENDPOINT");
-            var credential = TestEnvironment.GetKeyVariable("FACE_KEY");
 #endif
-
+            DefaultAzureCredential credential = new DefaultAzureCredential();
             var client = new FaceAdministrationClient(endpoint, credential);
             return client;
         }
@@ -52,22 +47,20 @@ namespace Azure.AI.Vision.Face.Samples
             #region Snippet:CreateFaceSessionClient
 #if SNIPPET
             Uri endpoint = new Uri("<your endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<your apiKey>");
 #else
             var endpoint = TestEnvironment.GetUrlVariable("FACE_ENDPOINT");
-            var credential = TestEnvironment.GetKeyVariable("FACE_KEY");
 #endif
-
+            DefaultAzureCredential credential = new DefaultAzureCredential();
             var sessionClient = new FaceSessionClient(endpoint, credential);
             #endregion
             return sessionClient;
         }
 
-        public FaceClient CreateClientWithAzureDefaultCredential()
+        public FaceClient CreateClientWithKey()
         {
-            #region Snippet:CreateFaceClientWithDefaultAzureCredential
+            #region Snippet:CreateFaceClientWithKey
             Uri endpoint = new Uri("<your endpoint>");
-            DefaultAzureCredential credential = new DefaultAzureCredential();
+            AzureKeyCredential credential = new AzureKeyCredential("<your apiKey>");
             var client = new FaceClient(endpoint, credential);
             #endregion
             return client;

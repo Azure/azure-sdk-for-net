@@ -11,7 +11,7 @@ namespace Azure.AI.Vision.Face.Samples
 {
     public partial class FaceSamples
     {
-        [RecordedTest]
+        [Test]
         public async Task Sample_VerifyAndIdentifyFromLargePersonGroup()
         {
             var administrationClient = CreateAdministrationClient();

@@ -12,7 +12,7 @@ namespace Azure.AI.Vision.Face.Samples
 {
     public partial class FaceSamples
     {
-        [RecordedTest]
+        [Test]
         [TestCase(true)] // Change deleteSession to false to keep the session and perform liveness detection with liveness SDK
         public async Task SessionSample_DetectLivenessWithVerifySession(bool deleteSession)
         {
