@@ -6,7 +6,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using ClientModel.Tests.Internal.Mocks;
-using ClientModel.Tests.Mocks;
 using NUnit.Framework;
 using SyncAsyncTestBase = ClientModel.Tests.SyncAsyncTestBase;
 
@@ -77,7 +76,7 @@ public class ClientResultCollectionTests : SyncAsyncTestBase
     }
 
     [Test]
-    public async Task CreatesAsyncResultCollection()
+    public async Task StopsOnStringBasedTerminalEvent()
     {
         MockSseClient client = new();
         AsyncResultCollection<MockJsonModel> models = client.GetModelsStreamingAsync("[DONE]");
