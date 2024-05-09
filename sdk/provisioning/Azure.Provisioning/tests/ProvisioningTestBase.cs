@@ -18,7 +18,7 @@ namespace Azure.Provisioning.Tests
     [AsyncOnly]
     public class ProvisioningTestBase : ManagementRecordedTestBase<ProvisioningTestEnvironment>
     {
-        public ProvisioningTestBase(bool async) : base(async, RecordedTestMode.Record)
+        public ProvisioningTestBase(bool async) : base(async)
         {
             // Ignore the version of the AZ CLI used to generate the ARM template as this will differ based on the environment
             JsonPathSanitizers.Add("$.._generator.version");
