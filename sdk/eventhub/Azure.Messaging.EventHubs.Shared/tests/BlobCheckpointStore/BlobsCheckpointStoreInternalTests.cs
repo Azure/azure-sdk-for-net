@@ -362,8 +362,8 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task GetCheckpointUsesOffsetAsTheStartingPositionWhenNoSequenceNumberIsPresent()
         {
-            var expectedOffset = 13;
-            var expectedStartingPosition = EventPosition.FromOffset(expectedOffset, false);
+            var expectedOffset = "13";
+            var expectedStartingPosition = EventPosition.FromGlobalOffset(expectedOffset, false);
             var partition = Guid.NewGuid().ToString();
 
             var blobList = new List<BlobItem>
@@ -375,8 +375,9 @@ namespace Azure.Messaging.EventHubs.Tests
                                            new Dictionary<string, string>
                                            {
                                                {BlobMetadataKey.OwnerIdentifier, Guid.NewGuid().ToString()},
-                                               {BlobMetadataKey.Offset, expectedOffset.ToString()},
-                                               {BlobMetadataKey.SequenceNumber, long.MinValue.ToString()}
+                                               {BlobMetadataKey.Offset, ""},
+                                               {BlobMetadataKey.SequenceNumber, ""},
+                                               {BlobMetadataKey.GlobalOffset, expectedOffset}
                                            })
             };
             var target = new BlobCheckpointStoreInternal(new MockBlobContainerClient() { Blobs = blobList });
@@ -407,7 +408,8 @@ namespace Azure.Messaging.EventHubs.Tests
                                            {
                                                {BlobMetadataKey.OwnerIdentifier, Guid.NewGuid().ToString()},
                                                {BlobMetadataKey.Offset, ""},
-                                               {BlobMetadataKey.SequenceNumber, expectedSequence.ToString()}
+                                               {BlobMetadataKey.SequenceNumber, expectedSequence.ToString()},
+                                               {BlobMetadataKey.GlobalOffset, ""}
                                            })
             };
 
@@ -428,7 +430,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task GetCheckpointUsesSequenceNumberAsTheStartingPositionWhenOffsetIsMinValue()
+        public async Task GetCheckpointUsesSequenceNumberAsTheStartingPositionWhenOffsetIsEmpty()
         {
             var expectedSequence = 133;
             var expectedStartingPosition = EventPosition.FromSequenceNumber(expectedSequence, false);

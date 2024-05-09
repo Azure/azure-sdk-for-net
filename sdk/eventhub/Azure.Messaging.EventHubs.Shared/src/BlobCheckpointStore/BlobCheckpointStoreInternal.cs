@@ -507,6 +507,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             var sequenceNumber = default(long?);
             var clientIdentifier = default(string);
             var globalOffset = default(string);
+
             if (metadata.TryGetValue(BlobMetadataKey.GlobalOffset, out var globalOffsetResult) && !string.IsNullOrEmpty(globalOffset))
             {
                 globalOffset = globalOffsetResult;
@@ -587,15 +588,16 @@ namespace Azure.Messaging.EventHubs.Primitives
             if (TryReadLegacyCheckpoint(
                 memoryStream.GetBuffer().AsSpan(0, (int)memoryStream.Length),
                 out long? offset,
-                out long? sequenceNumber))
+                out long? sequenceNumber,
+                out string globalOffset))
             {
                 if (sequenceNumber.HasValue && sequenceNumber.Value != long.MinValue)
                 {
                     startingPosition = EventPosition.FromSequenceNumber(sequenceNumber.Value, false);
                 }
-                else if (offset.HasValue)
+                else if (!string.IsNullOrEmpty(globalOffset))
                 {
-                    startingPosition ??= EventPosition.FromOffset(offset.Value, false);
+                    startingPosition ??= EventPosition.FromGlobalOffset(globalOffset, false);
                 }
                 else
                 {
@@ -631,6 +633,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="data">The binary representation of the checkpoint JSON.</param>
         /// <param name="offset">The parsed offset. null if not found.</param>
         /// <param name="sequenceNumber">The parsed sequence number. null if not found.</param>
+        /// <param name="globalOffset">The parsed offset string value. null if not found.</param>
         ///
         /// <remarks>
         ///   Sample checkpoint JSON:
@@ -646,10 +649,12 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///
         private static bool TryReadLegacyCheckpoint(Span<byte> data,
                                                     out long? offset,
-                                                    out long? sequenceNumber)
+                                                    out long? sequenceNumber,
+                                                    out string globalOffset)
         {
             offset = null;
             sequenceNumber = null;
+            globalOffset = null;
 
             var hadOffset = false;
             var jsonReader = new Utf8JsonReader(data);
@@ -675,14 +680,8 @@ namespace Azure.Messaging.EventHubs.Primitives
                             var offsetString = jsonReader.GetString();
                             if (!string.IsNullOrEmpty(offsetString))
                             {
-                                if (long.TryParse(offsetString, out long offsetValue))
-                                {
-                                    offset = offsetValue;
-                                }
-                                else
-                                {
-                                    return false;
-                                }
+                                // Service now treats offset as an opaque string
+                                globalOffset = offsetString;
                             }
 
                             break;

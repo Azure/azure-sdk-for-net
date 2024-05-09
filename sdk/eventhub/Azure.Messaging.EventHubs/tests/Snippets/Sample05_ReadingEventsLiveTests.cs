@@ -431,7 +431,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
                 string firstPartition = (await consumer.GetPartitionIdsAsync(cancellationSource.Token)).First();
                 PartitionProperties properties = await consumer.GetPartitionPropertiesAsync(firstPartition, cancellationSource.Token);
-                EventPosition startingPosition = EventPosition.FromOffset(properties.LastEnqueuedOffset);
+                EventPosition startingPosition = EventPosition.FromGlobalOffset(properties.LastEnqueuedGlobalOffset);
 
                 await foreach (PartitionEvent partitionEvent in consumer.ReadEventsFromPartitionAsync(
                     firstPartition,

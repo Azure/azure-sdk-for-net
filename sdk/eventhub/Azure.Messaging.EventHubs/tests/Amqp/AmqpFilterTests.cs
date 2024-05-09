@@ -42,8 +42,8 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             // Set all properties for the event position.
 
-            var offset = 1;
-            var position = EventPosition.FromOffset(offset);
+            var offset = "1";
+            var position = EventPosition.FromGlobalOffset(offset);
             position.SequenceNumber = "222";
             position.EnqueuedTime = DateTimeOffset.Parse("2015-10-27T12:00:00Z");
 
@@ -122,7 +122,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void BuildFilterExpressionHonorsInclusiveFlagForOffset(bool inclusive)
         {
             var comparison = (inclusive) ? ">=" : ">";
-            var position = EventPosition.FromOffset(1);
+            var position = EventPosition.FromGlobalOffset("1");
             position.IsInclusive = inclusive;
 
             var filter = AmqpFilter.BuildFilterExpression(position);

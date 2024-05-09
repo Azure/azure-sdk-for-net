@@ -55,10 +55,44 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        public void TheSameGlobalOffsetAreEqual()
+        {
+            var first = EventPosition.FromGlobalOffset("12");
+            var second = EventPosition.FromGlobalOffset("12");
+
+            Assert.That(first.Equals((object)second), Is.True, "The default Equals comparison is incorrect.");
+            Assert.That(first.Equals(second), Is.True, "The IEquatable comparison is incorrect.");
+            Assert.That((first == second), Is.True, "The == operator comparison is incorrect.");
+            Assert.That((first != second), Is.False, "The != operator comparison is incorrect.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventPosition "/>
+        ///   equality.
+        /// </summary>
+        ///
+        [Test]
         public void DifferentOffsetsAreNotEqual()
         {
             var first = EventPosition.FromOffset(12);
             var second = EventPosition.FromOffset(34);
+
+            Assert.That(first.Equals((object)second), Is.False, "The default Equals comparison is incorrect.");
+            Assert.That(first.Equals(second), Is.False, "The IEquatable comparison is incorrect.");
+            Assert.That((first == second), Is.False, "The == operator comparison is incorrect.");
+            Assert.That((first != second), Is.True, "The != operator comparison is incorrect.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventPosition "/>
+        ///   equality.
+        /// </summary>
+        ///
+        [Test]
+        public void DifferentGlobalOffsetsAreNotEqual()
+        {
+            var first = EventPosition.FromGlobalOffset("12");
+            var second = EventPosition.FromGlobalOffset("34");
 
             Assert.That(first.Equals((object)second), Is.False, "The default Equals comparison is incorrect.");
             Assert.That(first.Equals(second), Is.False, "The IEquatable comparison is incorrect.");
@@ -179,7 +213,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void DifferentMembersAreNotEqual()
         {
             var first = EventPosition.FromSequenceNumber(234234);
-            var second = EventPosition.FromOffset(12);
+            var second = EventPosition.FromGlobalOffset("12");
 
             Assert.That(first.Equals((object)second), Is.False, "The default Equals comparison is incorrect.");
             Assert.That(first.Equals(second), Is.False, "The IEquatable comparison is incorrect.");
@@ -195,7 +229,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void GetHashCodeReturnsDifferentValuesForDifferentMembers()
         {
-            var first = EventPosition.FromOffset(12);
+            var first = EventPosition.FromGlobalOffset("12");
             var second = EventPosition.FromSequenceNumber(123);
 
             Assert.That(first.GetHashCode(), Is.Not.EqualTo(second.GetHashCode()));
@@ -211,15 +245,18 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var inclusive = true;
             var offset = 123;
+            var globalOffset = "555";
             var sequence = 778;
             var enqueued = DateTimeOffset.Now.AddHours(1);
 
             Assert.That(EventPosition.Earliest.ToString(), Contains.Substring(nameof(EventPosition.Earliest)), "Earliest should be represented.");
             Assert.That(EventPosition.Latest.ToString(), Contains.Substring(nameof(EventPosition.Latest)), "Latest should be represented.");
-            Assert.That(EventPosition.FromOffset(offset).ToString(), Contains.Substring($"[{ offset }]"), "The offset should be represented.");
+            Assert.That(EventPosition.FromOffset(offset).ToString(), Contains.Substring($"[{ offset }]"), "The offset should be represented as the sequence number."); // offset -> sequence number for back compat
             Assert.That(EventPosition.FromSequenceNumber(sequence).ToString(), Contains.Substring($"[{ sequence }]"), "The sequence should be represented.");
+            Assert.That(EventPosition.FromGlobalOffset(globalOffset).ToString(), Contains.Substring($"[{globalOffset}]"), "The global offset should be represented.");
             Assert.That(EventPosition.FromEnqueuedTime(enqueued).ToString(), Contains.Substring($"[{ enqueued }]"), "The enqueued time should be represented.");
             Assert.That(EventPosition.FromOffset(offset, inclusive).ToString(), Contains.Substring($"[{ inclusive }]"), "The inclusive flag should be represented for the offset.");
+            Assert.That(EventPosition.FromGlobalOffset(globalOffset, inclusive).ToString(), Contains.Substring($"[{inclusive}]"), "The inclusive flag should be represented for the global offset.");
             Assert.That(EventPosition.FromSequenceNumber(sequence, inclusive).ToString(), Contains.Substring($"[{ inclusive }]"), "The inclusive flag should be represented for the sequence number.");
         }
     }
