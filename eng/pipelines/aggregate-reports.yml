@@ -174,12 +174,16 @@ stages:
               azureSubscription: azure-sdk-apiscan
               scriptType: pscore
               scriptLocation: inlineScript
-              useGlobalConfig: true
+              addSpnToEnvironment: true
               inlineScript: |
                 az --version
                 az account show
+                Write-Host "##vso[task.setvariable variable=ARM_CLIENT_ID;issecret=true]$($env:servicePrincipalId)"
+                Write-Host "##vso[task.setvariable variable=ARM_TENANT_ID;issecret=true]$($env:tenantId)"
+                Write-Host "##vso[task.setvariable variable=ARM_OIDC_TOKEN;issecret=true]$($env:idToken)"
 
-          - pwsh: | 
+          - pwsh: |
+                az login --service-principal -u $(ARM_CLIENT_ID) --tenant $(ARM_TENANT_ID) --allow-no-subscriptions --federated-token $(ARM_OIDC_TOKEN)
                 az --version
                 az account show
             displayName: Check CLI Login
