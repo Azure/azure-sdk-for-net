@@ -6,10 +6,9 @@ namespace System.ClientModel.Internal;
 // SSE specification: https://html.spec.whatwg.org/multipage/server-sent-events.html#parsing-an-event-stream
 internal enum ServerSentEventFieldKind
 {
-    // TODO: zero value?
+    Ignore,
     Event,
     Data,
     Id,
     Retry,
-    Ignored
 }

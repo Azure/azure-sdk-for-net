@@ -6,60 +6,46 @@ namespace System.ClientModel.Internal;
 // SSE specification: https://html.spec.whatwg.org/multipage/server-sent-events.html#parsing-an-event-stream
 internal readonly struct ServerSentEventField
 {
+    private static readonly ReadOnlyMemory<char> s_eventFieldName = "event".AsMemory();
+    private static readonly ReadOnlyMemory<char> s_dataFieldName = "data".AsMemory();
+    private static readonly ReadOnlyMemory<char> s_lastEventIdFieldName = "id".AsMemory();
+    private static readonly ReadOnlyMemory<char> s_retryFieldName = "retry".AsMemory();
+
     public ServerSentEventFieldKind FieldType { get; }
 
-    // TODO: we should not expose UTF16 publicly
-    public ReadOnlyMemory<char> Value
-    {
-        get
-        {
-            if (_valueStartIndex >= _original.Length)
-            {
-                return ReadOnlyMemory<char>.Empty;
-            }
-            else
-            {
-                return _original.AsMemory(_valueStartIndex);
-            }
-        }
-    }
-
-    private readonly string _original;
-    private readonly int _valueStartIndex;
+    // Note: don't expose UTF16 publicly
+    public ReadOnlyMemory<char> Value { get; }
 
     internal ServerSentEventField(string line)
     {
-        _original = line;
-        int colonIndex = _original.AsSpan().IndexOf(':');
+        int colonIndex = line.AsSpan().IndexOf(':');
 
-        ReadOnlyMemory<char> fieldName = colonIndex < 0 ? _original.AsMemory(): _original.AsMemory(0, colonIndex);
+        ReadOnlyMemory<char> fieldName = colonIndex < 0 ?
+            line.AsMemory() :
+            line.AsMemory(0, colonIndex);
+
         FieldType = fieldName.Span switch
         {
             var x when x.SequenceEqual(s_eventFieldName.Span) => ServerSentEventFieldKind.Event,
             var x when x.SequenceEqual(s_dataFieldName.Span) => ServerSentEventFieldKind.Data,
             var x when x.SequenceEqual(s_lastEventIdFieldName.Span) => ServerSentEventFieldKind.Id,
             var x when x.SequenceEqual(s_retryFieldName.Span) => ServerSentEventFieldKind.Retry,
-            _ => ServerSentEventFieldKind.Ignored,
+            _ => ServerSentEventFieldKind.Ignore,
         };
 
         if (colonIndex < 0)
         {
-            _valueStartIndex = _original.Length;
-        }
-        else if (colonIndex + 1 < _original.Length && _original[colonIndex + 1] == ' ')
-        {
-            _valueStartIndex = colonIndex + 2;
+            Value = ReadOnlyMemory<char>.Empty;
         }
         else
         {
-            _valueStartIndex = colonIndex + 1;
+            Value = line.AsMemory(colonIndex + 1);
+
+            // Per spec, remove a leading space if present.
+            if (Value.Length > 0 && Value.Span[0] == ' ')
+            {
+                Value = Value.Slice(1);
+            }
         }
     }
-
-    public override string ToString() => _original;
-
-    private static readonly ReadOnlyMemory<char> s_eventFieldName = "event".AsMemory();
-    private static readonly ReadOnlyMemory<char> s_dataFieldName = "data".AsMemory();
-    private static readonly ReadOnlyMemory<char> s_lastEventIdFieldName = "id".AsMemory();
-    private static readonly ReadOnlyMemory<char> s_retryFieldName = "retry".AsMemory();
 }
