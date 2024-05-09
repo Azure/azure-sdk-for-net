@@ -175,7 +175,8 @@ namespace Azure.Communication.CallAutomation
 
             if (options != null)
             {
-                request.PlayOptions = new PlayOptionsInternal(options.Loop, options.InterruptCallMediaOperation);
+                request.PlayOptions = new PlayOptionsInternal(options.Loop);
+                request.InterruptCallMediaOperation = options.InterruptCallMediaOperation;
                 request.OperationContext = options.OperationContext;
                 request.OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri;
             }
@@ -393,117 +394,9 @@ namespace Azure.Communication.CallAutomation
         /// <param name="options">The options.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        [Obsolete("This operations is deprecated, please us Hold instead.")]
-        public virtual Response StartHoldMusic(StartHoldMusicOptions options, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StartHoldMusic)}");
-            scope.Start();
-            try
-            {
-                //ToDo: Media team needs to fix the options.Loop since StartHoldMusicRequestInternal does not have Lopp anymore.
-                // and work on the StartHoldMusicRequestInternal.operationCallbackUri
-                var request = new StartHoldMusicRequestInternal(
-                    CommunicationIdentifierSerializer.Serialize(options.TargetParticipant))
-                {
-                    OperationContext = options.OperationContext,
-                    PlaySourceInfo = TranslatePlaySourceToInternal(options.PlaySourceInfo),
-                };
-
-                return CallMediaRestClient.StartHoldMusic(CallConnectionId, request, cancellationToken: cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Hold participant from the call.
-        /// </summary>
-        /// <param name="options">The options.</param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        [Obsolete("This operations is deprecated, please us HoldAsync instead.")]
-        public virtual async Task<Response> StartHoldMusicAsync(StartHoldMusicOptions options, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StartHoldMusicAsync)}");
-            scope.Start();
-            try
-            {
-                var request = new StartHoldMusicRequestInternal(
-                    CommunicationIdentifierSerializer.Serialize(options.TargetParticipant))
-                {
-                    OperationContext = options.OperationContext,
-                    PlaySourceInfo = TranslatePlaySourceToInternal(options.PlaySourceInfo),
-                };
-
-                return await CallMediaRestClient.StartHoldMusicAsync(CallConnectionId, request, cancellationToken: cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Remove hold from participant.
-        /// </summary>
-        /// <param name="options">The options.</param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        [Obsolete("This operations is deprecated, please us UnholdAsync instead.")]
-        public virtual async Task<Response> StopHoldMusicAsync(StopHoldMusicOptions options, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StopHoldMusicAsync)}");
-            scope.Start();
-            try
-            {
-                StopHoldMusicRequestInternal request = new StopHoldMusicRequestInternal(CommunicationIdentifierSerializer.Serialize(options.TargetParticipant));
-
-                return await CallMediaRestClient.StopHoldMusicAsync(CallConnectionId, request, cancellationToken: cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Remove hold from participant.
-        /// </summary>
-        /// <param name="options">The options.</param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        [Obsolete("This operations is deprecated, please us Unhold instead.")]
-        public virtual Response StopHoldMusic(StopHoldMusicOptions options, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StopHoldMusicAsync)}");
-            scope.Start();
-            try
-            {
-                StopHoldMusicRequestInternal request = new StopHoldMusicRequestInternal(CommunicationIdentifierSerializer.Serialize(options.TargetParticipant));
-
-                return CallMediaRestClient.StopHoldMusic(CallConnectionId, request, cancellationToken: cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Hold participant from the call.
-        /// </summary>
-        /// <param name="options">The options.</param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
         public virtual async Task<Response> HoldAsync(HoldOptions options, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StartHoldMusicAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(HoldAsync)}");
             scope.Start();
             try
             {
@@ -561,7 +454,7 @@ namespace Azure.Communication.CallAutomation
         /// <returns></returns>
         public virtual async Task<Response> UnholdAsync(UnholdOptions options, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StopHoldMusicAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(UnholdAsync)}");
             scope.Start();
             try
             {
@@ -584,7 +477,7 @@ namespace Azure.Communication.CallAutomation
         /// <returns></returns>
         public virtual Response Unhold(UnholdOptions options, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StopHoldMusicAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(Unhold)}");
             scope.Start();
             try
             {

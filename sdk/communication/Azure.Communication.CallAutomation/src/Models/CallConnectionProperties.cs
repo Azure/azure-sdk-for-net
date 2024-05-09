@@ -19,8 +19,8 @@ namespace Azure.Communication.CallAutomation
             CommunicationIdentifier source,
             PhoneNumberIdentifier sourceCallerIdNumber,
             string sourceDisplayName,
-            string mediaSubscriptionId,
-            string dataSubscriptionId,
+            MediaStreamingSubscription mediaStreamingSubscription,
+            TranscriptionSubscription transcriptionSubscription,
             CommunicationUserIdentifier answeredBy
             )
         {
@@ -32,8 +32,8 @@ namespace Azure.Communication.CallAutomation
             Source = source;
             SourceCallerIdNumber = sourceCallerIdNumber;
             SourceDisplayName = sourceDisplayName;
-            MediaSubscriptionId = mediaSubscriptionId;
-            DataSubscriptionId = dataSubscriptionId;
+            MediaStreamingSubscription = mediaStreamingSubscription;
+            TranscriptionSubscription = transcriptionSubscription;
             AnsweredBy = answeredBy;
         }
 
@@ -53,8 +53,8 @@ namespace Azure.Communication.CallAutomation
             }
 
             CallbackUri = new Uri(callConnectionPropertiesDtoInternal.CallbackUri);
-            MediaSubscriptionId = callConnectionPropertiesDtoInternal.MediaSubscriptionId;
-            DataSubscriptionId = callConnectionPropertiesDtoInternal.DataSubscriptionId;
+            MediaStreamingSubscription = null; // #TODO callConnectionPropertiesDtoInternal.MediaStreamingSubscription;
+            TranscriptionSubscription = null; // #TODO callConnectionPropertiesDtoInternal.TranscriptionSubscription;
             Source = callConnectionPropertiesDtoInternal.Source == null? null : CommunicationIdentifierSerializer.Deserialize(callConnectionPropertiesDtoInternal.Source);
             SourceDisplayName = callConnectionPropertiesDtoInternal.SourceDisplayName;
             CorrelationId = callConnectionPropertiesDtoInternal.CorrelationId;
@@ -77,9 +77,9 @@ namespace Azure.Communication.CallAutomation
         /// <summary> The callback URI. </summary>
         public Uri CallbackUri { get; }
         /// <summary> SubscriptionId for media streaming. </summary>
-        public string MediaSubscriptionId { get; }
+        public MediaStreamingSubscription MediaStreamingSubscription{ get; }
         /// <summary> SubscriptionId for transcription. </summary>
-        public string DataSubscriptionId { get; }
+        public TranscriptionSubscription TranscriptionSubscription { get; }
         /// <summary>
         /// Caller ID phone number to appear on the invitee.
         /// </summary>

@@ -17,37 +17,14 @@ namespace Azure.Communication.CallAutomation
             {
                 return null;
             }
-            string operationContext = default;
-            ResultInformation resultInformation = default;
-            MediaStreamingUpdate mediaStreamingUpdate = default;
             string callConnectionId = default;
             string serverCallId = default;
             string correlationId = default;
+            string operationContext = default;
+            ResultInformation resultInformation = default;
+            MediaStreamingUpdate mediaStreamingUpdateResult = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("operationContext"u8))
-                {
-                    operationContext = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("resultInformation"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    resultInformation = ResultInformation.DeserializeResultInformation(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("mediaStreamingUpdate"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    mediaStreamingUpdate = MediaStreamingUpdate.DeserializeMediaStreamingUpdate(property.Value);
-                    continue;
-                }
                 if (property.NameEquals("callConnectionId"u8))
                 {
                     callConnectionId = property.Value.GetString();
@@ -63,14 +40,37 @@ namespace Azure.Communication.CallAutomation
                     correlationId = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("operationContext"u8))
+                {
+                    operationContext = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("resultInformation"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resultInformation = ResultInformation.DeserializeResultInformation(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("mediaStreamingUpdateResult"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    mediaStreamingUpdateResult = MediaStreamingUpdate.DeserializeMediaStreamingUpdate(property.Value);
+                    continue;
+                }
             }
             return new MediaStreamingFailed(
-                operationContext,
-                resultInformation,
-                mediaStreamingUpdate,
                 callConnectionId,
                 serverCallId,
-                correlationId);
+                correlationId,
+                operationContext,
+                resultInformation,
+                mediaStreamingUpdateResult);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
