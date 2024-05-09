@@ -20,6 +20,8 @@ namespace Azure.Provisioning.Tests
     {
         public ProvisioningTestBase(bool async) : base(async)
         {
+            // Ignore the version of the AZ CLI used to generate the ARM template as this will differ based on the environment
+            JsonPathSanitizers.Add("$.._generator.version");
         }
 
         protected async Task ValidateBicepAsync(BinaryData? parameters = null, bool interactiveMode = false)
@@ -90,33 +92,6 @@ namespace Azure.Provisioning.Tests
                 if (rg != null)
                 {
                     await rg.DeleteAsync(WaitUntil.Completed);
-                }
-            }
-        }
-
-        private static string GetGitRoot()
-        {
-            ProcessStartInfo startInfo = new ProcessStartInfo
-            {
-                FileName = "git",
-                Arguments = "rev-parse --show-toplevel",
-                RedirectStandardOutput = true,
-                UseShellExecute = false,
-                CreateNoWindow = true
-            };
-
-            using (Process process = Process.Start(startInfo)!)
-            {
-                process.WaitForExit();
-
-                if (process.ExitCode == 0)
-                {
-                    string gitRoot = process.StandardOutput.ReadToEnd().Trim();
-                    return gitRoot;
-                }
-                else
-                {
-                    throw new Exception("Failed to get the root of the Git repository.");
                 }
             }
         }
