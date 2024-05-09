@@ -114,8 +114,9 @@ public class ServerSentEventReaderTests
     }
 
     [Test]
-    public async Task SecondSpecCase()
+    public async Task SecondTestCaseFromSpec()
     {
+        // See: https://html.spec.whatwg.org/multipage/server-sent-events.html#event-stream-interpretation
         Stream contentStream = BinaryData.FromString("""
             : test stream
 
@@ -150,6 +151,62 @@ public class ServerSentEventReaderTests
 
         Assert.IsTrue(events[2].Data.Span.SequenceEqual(" third event".AsSpan()));
         Assert.AreEqual(events[2].LastEventId.Length, 0);
+    }
+
+    [Test]
+    public async Task ThirdSpecTestCase()
+    {
+        // See: https://html.spec.whatwg.org/multipage/server-sent-events.html#event-stream-interpretation
+        Stream contentStream = BinaryData.FromString("""
+            data
+
+            data
+            data
+
+            data:
+            """).ToStream();
+        using ServerSentEventReader reader = new(contentStream);
+
+        List<ServerSentEvent> events = new();
+
+        ServerSentEvent? sse = await reader.TryGetNextEventAsync();
+        while (sse is not null)
+        {
+            events.Add(sse.Value);
+            sse = await reader.TryGetNextEventAsync();
+        }
+
+        Assert.AreEqual(2, events.Count);
+
+        Assert.AreEqual(0, events[0].Data.Length);
+        Assert.IsTrue(events[1].Data.Span.SequenceEqual("\n".AsSpan()));
+    }
+
+    [Test]
+    public async Task FourthSpecTestCase()
+    {
+        // See: https://html.spec.whatwg.org/multipage/server-sent-events.html#event-stream-interpretation
+        Stream contentStream = BinaryData.FromString("""
+            data:test
+
+            data: test
+
+
+            """).ToStream();
+        using ServerSentEventReader reader = new(contentStream);
+
+        List<ServerSentEvent> events = new();
+
+        ServerSentEvent? sse = await reader.TryGetNextEventAsync();
+        while (sse is not null)
+        {
+            events.Add(sse.Value);
+            sse = await reader.TryGetNextEventAsync();
+        }
+
+        Assert.AreEqual(2, events.Count);
+
+        Assert.IsTrue(events[0].Data.Span.SequenceEqual(events[1].Data.Span));
     }
 
     [Test]

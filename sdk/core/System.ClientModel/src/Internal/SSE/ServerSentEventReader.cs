@@ -44,50 +44,17 @@ internal sealed class ServerSentEventReader : IDisposable, IAsyncDisposable
             // TODO: Pass cancellationToken?
             string? line = _reader.ReadLine();
 
-            if (line == null)
+            if (line is null)
             {
                 // A null line indicates end of input
                 return null;
             }
-            else if (line.Length == 0)
-            {
-                if (pending.DataLength == 0)
-                {
-                    // Per spec, if there's no data, don't dispatch an event.
-                    pending = default;
-                    continue;
-                }
 
+            ProcessLine(line, ref pending, out bool dispatch);
+
+            if (dispatch)
+            {
                 return new ServerSentEvent(pending);
-            }
-            else if (line[0] == ':')
-            {
-                // A line beginning with a colon is a comment and should be ignored
-                continue;
-            }
-            else
-            {
-                // Otherwise, process the field + value and accumulate it for the
-                // next dispatched event.
-                ServerSentEventField field = new(line);
-                switch (field.FieldType)
-                {
-                    case ServerSentEventFieldKind.Event:
-                        pending.EventNameField = field;
-                        break;
-                    case ServerSentEventFieldKind.Data:
-                        pending.DataFields.Add(field);
-                        break;
-                    case ServerSentEventFieldKind.Id:
-                        pending.IdField = field;
-                        break;
-                    case ServerSentEventFieldKind.Retry:
-                        pending.RetryField = field;
-                        break;
-                    default:
-                        // Ignore
-                        break;
-                }
             }
         }
     }
@@ -115,51 +82,61 @@ internal sealed class ServerSentEventReader : IDisposable, IAsyncDisposable
             // TODO: Pass cancellationToken?
             string? line = await _reader.ReadLineAsync().ConfigureAwait(false);
 
-            if (line == null)
+            if (line is null)
             {
                 // A null line indicates end of input
                 return null;
             }
-            else if (line.Length == 0)
-            {
-                if (pending.DataLength == 0)
-                {
-                    // Per spec, if there's no data, don't dispatch an event.
-                    pending = default;
-                    continue;
-                }
 
+            ProcessLine(line, ref pending, out bool dispatch);
+
+            if (dispatch)
+            {
                 return new ServerSentEvent(pending);
             }
-            else if (line[0] == ':')
+        }
+    }
+
+    private static void ProcessLine(string line, ref PendingEvent pending, out bool dispatch)
+    {
+        dispatch = false;
+
+        if (line.Length == 0)
+        {
+            if (pending.DataLength == 0)
             {
-                // A line beginning with a colon is a comment and should be ignored
-                continue;
+                // Per spec, if there's no data, don't dispatch an event.
+                pending = default;
             }
             else
             {
-                // Otherwise, process the field + value and accumulate it for the
-                // next dispatched event.
-                ServerSentEventField field = new(line);
-                switch (field.FieldType)
-                {
-                    case ServerSentEventFieldKind.Event:
-                        pending.EventNameField = field;
-                        break;
-                    case ServerSentEventFieldKind.Data:
-                        pending.DataLength += field.Value.Length + 1;
-                        pending.DataFields.Add(field);
-                        break;
-                    case ServerSentEventFieldKind.Id:
-                        pending.IdField = field;
-                        break;
-                    case ServerSentEventFieldKind.Retry:
-                        pending.RetryField = field;
-                        break;
-                    default:
-                        // Ignore
-                        break;
-                }
+                dispatch = true;
+            }
+        }
+        else if (line[0] != ':')
+        {
+            // Not a comment line that spec says to ignore.
+            // Process the field + value and accumulate it for the
+            // next dispatched event.
+            ServerSentEventField field = new(line);
+            switch (field.FieldType)
+            {
+                case ServerSentEventFieldKind.Event:
+                    pending.EventNameField = field;
+                    break;
+                case ServerSentEventFieldKind.Data:
+                    pending.DataLength += field.Value.Length + 1;
+                    pending.DataFields.Add(field);
+                    break;
+                case ServerSentEventFieldKind.Id:
+                    pending.IdField = field;
+                    break;
+                case ServerSentEventFieldKind.Retry:
+                    pending.RetryField = field;
+                    break;
+                default:
+                    // Ignore
+                    break;
             }
         }
     }
