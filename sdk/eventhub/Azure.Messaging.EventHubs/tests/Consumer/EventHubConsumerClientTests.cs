@@ -1224,7 +1224,7 @@ namespace Azure.Messaging.EventHubs.Tests
             using var cancellation = new CancellationTokenSource();
             cancellation.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
-            await foreach (PartitionEvent partitionEvent in consumer.ReadEventsFromPartitionAsync("0", EventPosition.FromSequenceNumber(123), readOptions, cancellation.Token))
+            await foreach (PartitionEvent partitionEvent in consumer.ReadEventsFromPartitionAsync("0", EventPosition.FromGlobalOffset("123"), readOptions, cancellation.Token))
             {
                 receivedEvents.Add(partitionEvent.Data);
 

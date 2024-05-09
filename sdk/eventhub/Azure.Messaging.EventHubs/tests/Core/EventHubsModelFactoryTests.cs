@@ -65,7 +65,9 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void PartitionPropertiesInitializesProperties()
+        [TestCase(true)]
+        [TestCase(false)]
+        public void PartitionPropertiesInitializesProperties(bool useOldOverload)
         {
             var eventHubName = "eventHubName";
             var partitionId = "0";
@@ -73,8 +75,18 @@ namespace Azure.Messaging.EventHubs.Tests
             var beginningSequenceNumber = 123;
             var lastSequenceNumber = 9999;
             var lastOffset = 767;
+            var lastGlobalOffset = "51249";
             var lastEnqueuedTime = new DateTimeOffset(2015, 10, 27, 12, 0, 0, TimeSpan.Zero);
-            var properties = EventHubsModelFactory.PartitionProperties(eventHubName, partitionId, isEmpty, beginningSequenceNumber, lastSequenceNumber, lastOffset, lastEnqueuedTime);
+            PartitionProperties properties;
+            if (useOldOverload)
+            {
+                properties = EventHubsModelFactory.PartitionProperties(eventHubName, partitionId, isEmpty, beginningSequenceNumber, lastSequenceNumber, lastOffset, lastEnqueuedTime);
+            }
+            else
+            {
+                properties = EventHubsModelFactory.PartitionProperties(eventHubName, partitionId, isEmpty, beginningSequenceNumber, lastSequenceNumber, lastGlobalOffset, lastEnqueuedTime);
+                Assert.That(properties.LastEnqueuedGlobalOffset, Is.EqualTo(lastGlobalOffset), "The last global offset should have been set.");
+            }
 
             Assert.That(properties, Is.Not.Null, "The properties should have been created.");
             Assert.That(properties.EventHubName, Is.EqualTo(eventHubName), "The event hub name should have been set.");
@@ -82,8 +94,9 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(properties.IsEmpty, Is.EqualTo(isEmpty), "The `is empty` flag should have been set.");
             Assert.That(properties.BeginningSequenceNumber, Is.EqualTo(beginningSequenceNumber), "The beginning sequence number should have been set.");
             Assert.That(properties.LastEnqueuedSequenceNumber, Is.EqualTo(lastSequenceNumber), "The last sequence number should have been set.");
-            Assert.That(properties.LastEnqueuedOffset, Is.EqualTo(lastSequenceNumber), "The last offset should have been set to the same value as the last sequence number.");
+            Assert.That(properties.LastEnqueuedOffset, Is.EqualTo(lastSequenceNumber), "The last offset should have been set to the same value as the last sequence number."); // offset -> sequence number for back compat
             Assert.That(properties.LastEnqueuedTime, Is.EqualTo(lastEnqueuedTime), "The last enqueue date/time should have been set.");
+            Assert.That(properties.LastEnqueuedGlobalOffset, Is.Null, "The last enqueued global offset should not have been set.");
         }
 
         /// <summary>

@@ -2111,7 +2111,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var partition = "55";
             var beginSequenceNumber = 555L;
             var lastSequenceNumber = 666L;
-            var lastOffset = 777L;
+            var lastGlobalOffset = "1|241310";
             var lastEnqueueTime = DateTimeOffset.Parse("2015-10-27T00:00:00z");
             var isEmpty = false;
             var converter = new AmqpMessageConverter();
@@ -2121,7 +2121,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 { AmqpManagement.ResponseMap.PartitionIdentifier, partition },
                 { AmqpManagement.ResponseMap.PartitionBeginSequenceNumber, beginSequenceNumber },
                 { AmqpManagement.ResponseMap.PartitionLastEnqueuedSequenceNumber, lastSequenceNumber },
-                { AmqpManagement.ResponseMap.PartitionLastEnqueuedOffset, lastOffset.ToString() },
+                { AmqpManagement.ResponseMap.PartitionLastEnqueuedOffset, lastGlobalOffset },
                 { AmqpManagement.ResponseMap.PartitionLastEnqueuedTimeUtc, lastEnqueueTime.UtcDateTime },
                 { AmqpManagement.ResponseMap.PartitionRuntimeInfoPartitionIsEmpty, isEmpty }
             };
@@ -2134,7 +2134,8 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(properties.Id, Is.EqualTo(partition), "The partition should match");
             Assert.That(properties.BeginningSequenceNumber, Is.EqualTo(beginSequenceNumber), "The beginning sequence number should match");
             Assert.That(properties.LastEnqueuedSequenceNumber, Is.EqualTo(lastSequenceNumber), "The last sequence number should match");
-            Assert.That(properties.LastEnqueuedOffset, Is.EqualTo(lastSequenceNumber), "The offset should match the last sequence number");
+            Assert.That(properties.LastEnqueuedOffset, Is.EqualTo(lastSequenceNumber), "The offset should match the last sequence number"); // offset -> sequence number for back compat
+            Assert.That(properties.LastEnqueuedGlobalOffset, Is.EqualTo(lastGlobalOffset), "The offset should match the last sequence number");
             Assert.That(properties.LastEnqueuedTime, Is.EqualTo(lastEnqueueTime), "The last enqueued time should match");
             Assert.That(properties.IsEmpty, Is.EqualTo(isEmpty), "The empty flag should match");
         }

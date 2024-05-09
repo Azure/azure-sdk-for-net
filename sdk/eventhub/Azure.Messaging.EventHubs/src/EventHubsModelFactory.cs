@@ -191,14 +191,7 @@ namespace Azure.Messaging.EventHubs
         /// <param name="partitionKey">The partition hashing key associated with the event when it was published.</param>
         /// <param name="sequenceNumber">The sequence number assigned to the event when it was enqueued in the associated Event Hub partition.</param>
         /// <param name="globalOffset">The global offset of the event when it was received from the associated Event Hub partition.</param>
-        /// <param name="offset">The offset of the event when it was received from the associated Event Hub partition.</param>
         /// <param name="enqueuedTime">The date and time, in UTC, of when the event was enqueued in the Event Hub partition.</param>
-        ///
-        /// <remarks>
-        ///   The Event Hubs service no longer uses offsets with numeric values. The <paramref name="offset"/> parameter is
-        ///   included for backwards compatibility, but is ignored. Instead, <see cref="EventData.Offset"/> is
-        ///   populated with <paramref name="sequenceNumber"/>.
-        /// </remarks>
         ///
         public static EventData EventData(BinaryData eventBody,
                                           IDictionary<string, object> properties = null,
@@ -206,7 +199,6 @@ namespace Azure.Messaging.EventHubs
                                           string partitionKey = null,
                                           long sequenceNumber = long.MinValue,
                                           string globalOffset = null,
-                                          long offset = long.MinValue,
                                           DateTimeOffset enqueuedTime = default) =>
              new EventData(eventBody, properties, systemProperties, sequenceNumber, globalOffset, enqueuedTime, partitionKey);
 

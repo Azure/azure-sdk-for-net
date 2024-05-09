@@ -664,7 +664,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <remarks>
         ///   <para>This constructor has been superseded by the
-        ///   <see cref="EventHubsModelFactory.EventData(BinaryData, IDictionary{string, object}, IReadOnlyDictionary{string, object}, string, long, string, long, DateTimeOffset)" />
+        ///   <see cref="EventHubsModelFactory.EventData(BinaryData, IDictionary{string, object}, IReadOnlyDictionary{string, object}, string, long, string, DateTimeOffset)" />
         ///   factory method. It is strongly recommended that the model factory be preferred over use of this constructor.</para>
         ///
         ///   <para>This overload was previously intended for mocking in support of testing efforts.  It is recommended that
@@ -697,7 +697,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <remarks>
         ///   <para>This constructor has been superseded by the
-        ///   <see cref="EventHubsModelFactory.EventData(BinaryData, IDictionary{string, object}, IReadOnlyDictionary{string, object}, string, long, string, long, DateTimeOffset)" />
+        ///   <see cref="EventHubsModelFactory.EventData(BinaryData, IDictionary{string, object}, IReadOnlyDictionary{string, object}, string, long, string, DateTimeOffset)" />
         ///   factory method. It is strongly recommended that the model factory be preferred over use of this constructor.</para>
         ///
         ///   <para>This overload was previously intended for mocking in support of testing efforts.  It is recommended that

@@ -1332,7 +1332,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var partitionId = "0";
             var startingPosition = EventPosition.FromGlobalOffset("433");
-            var checkpointStartingPosition = EventPosition.FromSequenceNumber(999);
+            var checkpointStartingPosition = EventPosition.FromSequenceNumber(122);
             var options = new EventProcessorOptions { DefaultStartingPosition = EventPosition.Latest };
             var mockCheckpointStore = new Mock<CheckpointStore>();
             var processorClient = new TestEventProcessorClient(mockCheckpointStore.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), options);
@@ -1353,7 +1353,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var checkpoint = await processorClient.InvokeGetCheckpointAsync(partitionId, cancellationSource.Token);
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
-            Assert.That(checkpoint, Is.Not.Null, "A checkpoints should have been found for the partition.");
+            Assert.That(checkpoint, Is.Not.Null, "A checkpoint should have been found for the partition.");
             Assert.That(checkpoint.StartingPosition, Is.EqualTo(checkpointStartingPosition), "The natural checkpoint should have respected the value that the initialization event handler set.");
 
             cancellationSource.Cancel();

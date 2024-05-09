@@ -437,6 +437,14 @@ namespace Azure.Messaging.EventHubs.Primitives
             var blobName = GetCheckpointBlobName(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId);
             var blobClient = ContainerClient.GetBlobClient(blobName);
 
+            if (sequenceNumber == long.MinValue)
+            {
+                // We don't want to set the sequence number in the checkpoint to long.MinValue. This can break in-process upgrade since old SDKs don't have
+                // the long.MinValue check. Since CheckpointPosition.SequenceNumber is not nullable, the default value is long.MinValue. If we get
+                // the default, just set it to null.
+                sequenceNumber = null;
+            }
+
             // Because the checkpoint format changed and offset is no longer populated by the EventProcessor, we need to ensure that a value is present for
             // the Functions scale controller which uses a null check on the offset to determine if a checkpoint is in the legacy format or current.  Because
             // GetCheckpointAsync will only populate the offset if a long.TryParse is successful, adding a nonsense string value to satisfy the null check
@@ -445,7 +453,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             var metadata = new Dictionary<string, string>()
             {
                 { BlobMetadataKey.Offset, offset.HasValue ? offset.Value.ToString(CultureInfo.InvariantCulture) : "no offset" },
-                { BlobMetadataKey.SequenceNumber, sequenceNumber.HasValue ? sequenceNumber.Value.ToString(CultureInfo.InvariantCulture) : "" },
+                { BlobMetadataKey.SequenceNumber, sequenceNumber.HasValue ? sequenceNumber.Value.ToString(CultureInfo.InvariantCulture) : "no sequence" },
                 { BlobMetadataKey.ClientIdentifier, clientIdentifier },
                 { BlobMetadataKey.GlobalOffset, globalOffset ?? "" }
             };

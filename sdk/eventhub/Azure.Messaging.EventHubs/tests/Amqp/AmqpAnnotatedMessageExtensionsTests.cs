@@ -305,7 +305,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var message = CreateDataBodyMessageWithSystemProperties(sequenceNumber, lastSequence, globalOffset, lastGlobalOffset, partitionKey, enqueueTime, lastEnqueue, lastRetrieve);
 
             Assert.That(message.GetSequenceNumber(), Is.EqualTo(sequenceNumber), "The sequence number should match.");
-            Assert.That(message.GetGlobalOffset(), Is.EqualTo(globalOffset), "The offset should match.");
+            Assert.That(message.GetOffset(), Is.EqualTo(globalOffset), "The offset should match.");
             Assert.That(message.GetEnqueuedTime(), Is.EqualTo(enqueueTime), "The enqueue time should match.");
             Assert.That(message.GetPartitionKey(), Is.EqualTo(partitionKey), "The partition key should match.");
             Assert.That(message.GetLastPartitionSequenceNumber(), Is.EqualTo(lastSequence), "The last sequence number should match.");
@@ -343,7 +343,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(message.ApplicationProperties, Is.EquivalentTo(properties), "The application properties should match.");
             Assert.That(message.GetSequenceNumber(), Is.EqualTo(sequenceNumber), "The sequence number should match.");
-            Assert.That(message.GetGlobalOffset(), Is.EqualTo(globalOffset), "The global offset should match.");
+            Assert.That(message.GetOffset(), Is.EqualTo(globalOffset), "The global offset should match.");
             Assert.That(message.GetEnqueuedTime(), Is.EqualTo(enqueueTime), "The enqueue time should match.");
             Assert.That(message.GetPartitionKey(), Is.EqualTo(partitionKey), "The partition key should match.");
             Assert.That(message.GetLastPartitionSequenceNumber(), Is.EqualTo(lastSequence), "The last sequence number should match.");
@@ -371,7 +371,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var message = CreateDataBodyMessageWithSystemProperties(default, default, default, default, default, default, default, default);
 
             Assert.That(message.GetSequenceNumber(sequenceNumber), Is.EqualTo(sequenceNumber), "The sequence number should match.");
-            Assert.That(message.GetGlobalOffset(offset), Is.EqualTo(offset), "The offset should match.");
+            Assert.That(message.GetOffset(offset), Is.EqualTo(offset), "The offset should match.");
             Assert.That(message.GetEnqueuedTime(enqueueTime), Is.EqualTo(enqueueTime), "The enqueue time should match.");
             Assert.That(message.GetPartitionKey(partitionKey), Is.EqualTo(partitionKey), "The partition key should match.");
             Assert.That(message.GetLastPartitionSequenceNumber(lastSequence), Is.EqualTo(lastSequence), "The last sequence number should match.");
@@ -391,7 +391,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var message = CreateDataBodyMessageWithSystemProperties(default, default, default, default, default, default, default, default);
 
             Assert.That(message.GetSequenceNumber(), Is.EqualTo(long.MinValue), "The sequence number should match.");
-            Assert.That(message.GetGlobalOffset(), Is.EqualTo(string.Empty), "The offset should match.");
+            Assert.That(message.GetOffset(), Is.EqualTo(string.Empty), "The offset should match.");
             Assert.That(message.GetEnqueuedTime(), Is.EqualTo(default(DateTimeOffset)), "The enqueue time should match.");
             Assert.That(message.GetPartitionKey(), Is.EqualTo(null), "The partition key should match.");
             Assert.That(message.GetLastPartitionSequenceNumber(), Is.EqualTo(null), "The last sequence number should match.");

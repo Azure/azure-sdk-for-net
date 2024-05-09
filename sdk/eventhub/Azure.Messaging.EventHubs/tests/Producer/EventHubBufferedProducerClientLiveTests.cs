@@ -1565,6 +1565,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(partitionProperties.BeginningSequenceNumber, Is.Not.EqualTo(default(long)), "The beginning sequence number should have been populated.");
             Assert.That(partitionProperties.LastEnqueuedSequenceNumber, Is.Not.EqualTo(default(long)), "The last sequence number should have been populated.");
             Assert.That(partitionProperties.LastEnqueuedOffset, Is.Not.EqualTo(default(long)), "The last offset should have been populated.");
+            Assert.That(partitionProperties.LastEnqueuedGlobalOffset, Is.Not.EqualTo(default(long)), "The last offset should have been populated.");
         }
 
         /// <summary>
