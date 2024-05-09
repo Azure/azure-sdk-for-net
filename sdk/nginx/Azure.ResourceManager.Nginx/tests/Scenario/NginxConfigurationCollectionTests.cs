@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
         {
         }
 
-        public NginxConfigurationCollectionTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public NginxConfigurationCollectionTests(bool isAsync) : base(isAsync)
         {
         }
 
