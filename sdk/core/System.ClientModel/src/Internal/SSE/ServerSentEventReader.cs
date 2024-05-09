@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -54,7 +56,7 @@ internal sealed class ServerSentEventReader : IDisposable, IAsyncDisposable
 
             if (dispatch)
             {
-                return new ServerSentEvent(pending);
+                return pending.ToEvent();
             }
         }
     }
@@ -92,7 +94,7 @@ internal sealed class ServerSentEventReader : IDisposable, IAsyncDisposable
 
             if (dispatch)
             {
-                return new ServerSentEvent(pending);
+                return pending.ToEvent();
             }
         }
     }
@@ -122,7 +124,7 @@ internal sealed class ServerSentEventReader : IDisposable, IAsyncDisposable
             switch (field.FieldType)
             {
                 case ServerSentEventFieldKind.Event:
-                    pending.EventNameField = field;
+                    pending.EventTypeField = field;
                     break;
                 case ServerSentEventFieldKind.Data:
                     pending.DataLength += field.Value.Length + 1;
@@ -138,6 +140,63 @@ internal sealed class ServerSentEventReader : IDisposable, IAsyncDisposable
                     // Ignore
                     break;
             }
+        }
+    }
+
+    private struct PendingEvent
+    {
+        private const char LF = '\n';
+
+        private List<ServerSentEventField>? _dataFields;
+
+        public int DataLength { get; set; }
+        public List<ServerSentEventField> DataFields => _dataFields ??= new();
+        public ServerSentEventField? EventTypeField { get; set; }
+        public ServerSentEventField? IdField { get; set; }
+        public ServerSentEventField? RetryField { get; set; }
+
+        public ServerSentEvent ToEvent()
+        {
+            ServerSentEvent item = default;
+
+            // Per spec, if event type buffer is empty, set event.type to "message".
+            item.EventType = EventTypeField.HasValue ?
+                EventTypeField.Value.Value.ToString() :
+                "message";
+
+            if (IdField.HasValue && IdField.Value.Value.Length > 0)
+            {
+                item.Id = IdField.Value.Value.ToString();
+            }
+
+            if (RetryField.HasValue)
+            {
+#if NETSTANDARD2_0
+                item.ReconnectionTime = int.TryParse(RetryField.Value.Value.ToString(), out int retry) ? TimeSpan.FromMilliseconds(retry) : null;
+#else
+                item.ReconnectionTime = int.TryParse(RetryField.Value.Value.Span, out int retry) ? TimeSpan.FromMilliseconds(retry) : null;
+#endif
+            }
+
+            Debug.Assert(DataLength > 0);
+
+            Memory<char> buffer = new(new char[DataLength]);
+
+            int curr = 0;
+
+            foreach (ServerSentEventField field in DataFields)
+            {
+                Debug.Assert(field.FieldType == ServerSentEventFieldKind.Data);
+
+                field.Value.Span.CopyTo(buffer.Span.Slice(curr));
+                buffer.Span[curr + field.Value.Length] = LF;
+                curr += field.Value.Length + 1;
+            }
+
+            // Per spec, remove trailing LF
+            item.Data = buffer.Slice(0, buffer.Length - 1).ToString();
+
+            return item;
         }
     }
 

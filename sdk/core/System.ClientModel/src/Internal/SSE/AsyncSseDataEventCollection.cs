@@ -56,7 +56,7 @@ internal class AsyncSseDataEventCollection : AsyncResultCollection<BinaryData>
 
             if (await _events.MoveNextAsync().ConfigureAwait(false))
             {
-                char[] chars = _events.Current.Data.ToArray();
+                char[] chars = _events.Current.Data.ToCharArray();
                 byte[] bytes = Encoding.UTF8.GetBytes(chars);
                 _current = new BinaryData(bytes);
                 return true;

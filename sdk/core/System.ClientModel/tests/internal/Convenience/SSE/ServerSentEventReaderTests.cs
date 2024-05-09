@@ -33,12 +33,12 @@ public class ServerSentEventReaderTests
         for (int i = 0; i < 3; i++)
         {
             ServerSentEvent sse = events[i];
-            Assert.IsTrue(sse.EventName.Span.SequenceEqual($"event.{i}".AsSpan()));
-            Assert.IsTrue(sse.Data.Span.SequenceEqual($"{{ \"id\": \"{i}\", \"object\": {i} }}".AsSpan()));
+            Assert.IsTrue(sse.EventType.AsSpan().SequenceEqual($"event.{i}".AsSpan()));
+            Assert.IsTrue(sse.Data.AsSpan().SequenceEqual($"{{ \"id\": \"{i}\", \"object\": {i} }}".AsSpan()));
         }
 
-        Assert.IsTrue(events[3].EventName.Span.SequenceEqual("done".AsSpan()));
-        Assert.IsTrue(events[3].Data.Span.SequenceEqual("[DONE]".AsSpan()));
+        Assert.IsTrue(events[3].EventType.AsSpan().SequenceEqual("done".AsSpan()));
+        Assert.IsTrue(events[3].Data.AsSpan().SequenceEqual("[DONE]".AsSpan()));
     }
 
     [Test]
@@ -85,9 +85,9 @@ public class ServerSentEventReaderTests
         ServerSentEvent? sse = await reader.TryGetNextEventAsync();
 
         Assert.IsNotNull(sse);
-        Assert.IsTrue(sse.Value.EventName.Span.SequenceEqual("stop".AsSpan()));
-        Assert.IsTrue(sse.Value.Data.Span.SequenceEqual("~stop~".AsSpan()));
-        Assert.AreEqual(sse.Value.LastEventId.Length, 0);
+        Assert.IsTrue(sse.Value.EventType.AsSpan().SequenceEqual("stop".AsSpan()));
+        Assert.IsTrue(sse.Value.Data.AsSpan().SequenceEqual("~stop~".AsSpan()));
+        Assert.IsNull(sse.Value.Id);
         Assert.IsNull(sse.Value.ReconnectionTime);
     }
 
@@ -107,9 +107,9 @@ public class ServerSentEventReaderTests
         ServerSentEvent? sse = await reader.TryGetNextEventAsync();
 
         Assert.IsNotNull(sse);
-        Assert.IsTrue(sse.Value.EventName.Span.SequenceEqual("event".AsSpan()));
-        Assert.IsTrue(sse.Value.Data.Span.SequenceEqual("YHOO\n+2\n10".AsSpan()));
-        Assert.AreEqual(sse.Value.LastEventId.Length, 0);
+        Assert.IsTrue(sse.Value.EventType.AsSpan().SequenceEqual("event".AsSpan()));
+        Assert.IsTrue(sse.Value.Data.AsSpan().SequenceEqual("YHOO\n+2\n10".AsSpan()));
+        Assert.IsNull(sse.Value.Id);
         Assert.IsNull(sse.Value.ReconnectionTime);
     }
 
@@ -143,14 +143,14 @@ public class ServerSentEventReaderTests
 
         Assert.AreEqual(3, events.Count);
 
-        Assert.IsTrue(events[0].Data.Span.SequenceEqual("first event".AsSpan()));
-        Assert.IsTrue(events[0].LastEventId.Span.SequenceEqual("1".AsSpan()));
+        Assert.IsTrue(events[0].Data.AsSpan().SequenceEqual("first event".AsSpan()));
+        Assert.IsTrue(events[0].Id.AsSpan().SequenceEqual("1".AsSpan()));
 
-        Assert.IsTrue(events[1].Data.Span.SequenceEqual("second event".AsSpan()));
-        Assert.AreEqual(events[1].LastEventId.Length, 0);
+        Assert.IsTrue(events[1].Data.AsSpan().SequenceEqual("second event".AsSpan()));
+        Assert.IsNull(events[1].Id);
 
-        Assert.IsTrue(events[2].Data.Span.SequenceEqual(" third event".AsSpan()));
-        Assert.AreEqual(events[2].LastEventId.Length, 0);
+        Assert.IsTrue(events[2].Data.AsSpan().SequenceEqual(" third event".AsSpan()));
+        Assert.IsNull(events[2].Id);
     }
 
     [Test]
@@ -179,7 +179,7 @@ public class ServerSentEventReaderTests
         Assert.AreEqual(2, events.Count);
 
         Assert.AreEqual(0, events[0].Data.Length);
-        Assert.IsTrue(events[1].Data.Span.SequenceEqual("\n".AsSpan()));
+        Assert.IsTrue(events[1].Data.AsSpan().SequenceEqual("\n".AsSpan()));
     }
 
     [Test]
@@ -205,8 +205,7 @@ public class ServerSentEventReaderTests
         }
 
         Assert.AreEqual(2, events.Count);
-
-        Assert.IsTrue(events[0].Data.Span.SequenceEqual(events[1].Data.Span));
+        Assert.AreEqual(events[0].Data, events[1].Data);
     }
 
     [Test]

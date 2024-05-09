@@ -23,8 +23,8 @@ public class AsyncServerSentEventEnumeratorTests
         {
             ServerSentEvent sse = enumerator.Current;
 
-            Assert.IsTrue(sse.EventName.Span.SequenceEqual($"event.{i}".AsSpan()));
-            Assert.IsTrue(sse.Data.Span.SequenceEqual($"{{ \"id\": \"{i}\", \"object\": {i} }}".AsSpan()));
+            Assert.IsTrue(sse.EventType.AsSpan().SequenceEqual($"event.{i}".AsSpan()));
+            Assert.IsTrue(sse.Data.AsSpan().SequenceEqual($"{{ \"id\": \"{i}\", \"object\": {i} }}".AsSpan()));
 
             i++;
         }
@@ -70,8 +70,8 @@ public class AsyncServerSentEventEnumeratorTests
         }
 
         Assert.AreEqual(events.Count, 1);
-        Assert.IsTrue(events[0].EventName.Span.SequenceEqual("event.0".AsSpan()));
-        Assert.IsTrue(events[0].Data.Span.SequenceEqual("0".AsSpan()));
+        Assert.IsTrue(events[0].EventType.AsSpan().SequenceEqual("event.0".AsSpan()));
+        Assert.IsTrue(events[0].Data.AsSpan().SequenceEqual("0".AsSpan()));
     }
 
     // TODO: Add tests for dispose

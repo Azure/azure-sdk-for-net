@@ -36,7 +36,7 @@ internal sealed class AsyncServerSentEventEnumerator : IAsyncEnumerator<ServerSe
 
         if (nextEvent.HasValue)
         {
-            if (nextEvent.Value.Data.Span.SequenceEqual(_terminalEvent.Span))
+            if (nextEvent.Value.Data.AsSpan().SequenceEqual(_terminalEvent.Span))
             {
                 _current = default;
                 return false;

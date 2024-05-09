@@ -23,8 +23,8 @@ public class ServerSentEventTests
     //    ServerSentEvent ssEvent = new(fields);
 
     //    Assert.IsNull(ssEvent.ReconnectionTime);
-    //    Assert.IsTrue(ssEvent.EventName.Span.SequenceEqual("event.name".AsSpan()));
-    //    Assert.IsTrue(ssEvent.Data.Span.SequenceEqual("""{"id":"a","object":"value"}""".AsSpan()));
-    //    Assert.AreEqual(ssEvent.LastEventId.Length, 0);
+    //    Assert.IsTrue(ssEvent.EventType.AsSpan().SequenceEqual("event.name".AsSpan()));
+    //    Assert.IsTrue(ssEvent.Data.AsSpan().SequenceEqual("""{"id":"a","object":"value"}""".AsSpan()));
+    //    Assert.AreEqual(ssEvent.Id.Length, 0);
     //}
 }
