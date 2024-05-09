@@ -718,12 +718,6 @@
 # ServiceLabel: %Network - Private Link
 # ServiceOwners:                                                   @privlinksuppgithub
 
-# PRLabel: %Nginx
-/sdk/nginx/                                                        @spencerofwiti @bangbingsyb @jamesfan
-
-# ServiceLabel: %Nginx
-# ServiceOwners:                                                   @spencerofwiti @bangbingsyb @jamesfan
-
 # ServiceLabel: %Notification Hub
 # ServiceOwners:                                                   @tjsomasundaram
 
@@ -921,6 +915,12 @@
 
 # PRLabel: %Mgmt
 /**/Azure.ResourceManager*/                                        @archerzz @ArcturusZhang @ArthurMa1978
+
+# PRLabel: %Nginx
+/sdk/nginx/                                                        @jamesfan1 @bangbingsyb @spencerofwiti
+
+# ServiceLabel: %Nginx
+# ServiceOwners:                                                   @jamesfan1 @bangbingsyb @spencerofwiti
 
 # -----------------------------------------------------------------
 # IMPORTANT NOTE:
