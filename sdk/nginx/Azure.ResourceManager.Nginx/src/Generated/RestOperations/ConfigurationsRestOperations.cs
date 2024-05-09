@@ -428,6 +428,23 @@ namespace Azure.ResourceManager.Nginx
             }
         }
 
+        internal RequestUriBuilder CreateAnalysisRequestUri(string subscriptionId, string resourceGroupName, string deploymentName, string configurationName, AnalysisCreate body)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Nginx.NginxPlus/nginxDeployments/", false);
+            uri.AppendPath(deploymentName, true);
+            uri.AppendPath("/configurations/", false);
+            uri.AppendPath(configurationName, true);
+            uri.AppendPath("/analyze", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateAnalysisRequest(string subscriptionId, string resourceGroupName, string deploymentName, string configurationName, AnalysisCreate body)
         {
             var message = _pipeline.CreateMessage();
@@ -520,6 +537,14 @@ namespace Azure.ResourceManager.Nginx
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string deploymentName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string deploymentName)
