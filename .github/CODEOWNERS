@@ -906,12 +906,6 @@
 # PRLabel: %Mgmt
 /**/Azure.ResourceManager*/                                        @archerzz @ArcturusZhang @ArthurMa1978
 
-# PRLabel: %Nginx
-/sdk/nginx/                                                        @jamesfan1 @bangbingsyb @spencerofwiti
-
-# ServiceLabel: %Nginx
-# ServiceOwners:                                                   @jamesfan1 @bangbingsyb @spencerofwiti
-
 # -----------------------------------------------------------------
 # IMPORTANT NOTE:
 #   This block acts as a catch-all, assigning Arthur triage for
@@ -955,6 +949,13 @@
 
 # ServiceLabel: %Network - Front Door %Mgmt
 # ServiceOwners:                                                   @ptnan7
+
+# PRLabel: %Nginx
+/sdk/nginx/                                                        @jamesfan1 @bangbingsyb @spencerofwiti
+
+# ServiceLabel: %Nginx
+# ServiceOwners:                                                   @jamesfan1 @bangbingsyb @spencerofwiti
+
 
 # ServiceLabel: %Recovery Services Backup %Mgmt
 # ServiceOwners:                                                   @Daya-Patil
