@@ -113,8 +113,8 @@ namespace Azure.Storage.Tests
 
             byte[] roundtripData;
             using (MemoryStream source = new(originalData))
-            using (StructuredMessageEncodingStream encode = new(source, segmentLength, flags))
-            using (StructuredMessageDecodingStream decode = new(encode))
+            using (Stream encode = new StructuredMessageEncodingStream(source, segmentLength, flags))
+            using (Stream decode = StructuredMessageDecodingStream.WrapStream(encode).DecodedStream)
             using (MemoryStream dest = new())
             {
                 await CopyStream(source, dest, readLen);
