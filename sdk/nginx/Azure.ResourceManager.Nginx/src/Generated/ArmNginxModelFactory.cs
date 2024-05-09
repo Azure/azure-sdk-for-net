@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -189,18 +188,6 @@ namespace Azure.ResourceManager.Nginx.Models
                 upgradeChannel != null ? new AutoUpgradeProfile(upgradeChannel, serializedAdditionalRawData: null) : null,
                 userPreferredEmail != null ? new NginxDeploymentUserProfile(userPreferredEmail, serializedAdditionalRawData: null) : null,
                 serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Nginx.Models.NginxCertificateProperties" />. </summary>
-        /// <param name="provisioningState"></param>
-        /// <param name="keyVirtualPath"></param>
-        /// <param name="certificateVirtualPath"></param>
-        /// <param name="keyVaultSecretId"></param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.Nginx.Models.NginxCertificateProperties" /> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NginxCertificateProperties NginxCertificateProperties(NginxProvisioningState? provisioningState, string keyVirtualPath, string certificateVirtualPath, string keyVaultSecretId)
-        {
-            return NginxCertificateProperties(provisioningState: provisioningState, keyVirtualPath: keyVirtualPath, certificateVirtualPath: certificateVirtualPath, keyVaultSecretId: keyVaultSecretId, sha1Thumbprint: default, keyVaultSecretVersion: default, keyVaultSecretCreated: default, certificateError: default);
         }
     }
 }
