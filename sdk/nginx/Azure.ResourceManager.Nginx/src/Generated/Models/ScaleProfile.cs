@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    /// <summary> Information on how the deployment will be scaled. </summary>
-    public partial class NginxDeploymentScalingProperties
+    /// <summary> The autoscale profile. </summary>
+    public partial class ScaleProfile
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,26 +45,38 @@ namespace Azure.ResourceManager.Nginx.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NginxDeploymentScalingProperties"/>. </summary>
-        public NginxDeploymentScalingProperties()
+        /// <summary> Initializes a new instance of <see cref="ScaleProfile"/>. </summary>
+        /// <param name="name"></param>
+        /// <param name="capacity"> The capacity parameters of the profile. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="capacity"/> is null. </exception>
+        public ScaleProfile(string name, ScaleProfileCapacity capacity)
         {
-            Profiles = new ChangeTrackingList<ScaleProfile>();
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(capacity, nameof(capacity));
+
+            Name = name;
+            Capacity = capacity;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NginxDeploymentScalingProperties"/>. </summary>
-        /// <param name="capacity"></param>
-        /// <param name="profiles"></param>
+        /// <summary> Initializes a new instance of <see cref="ScaleProfile"/>. </summary>
+        /// <param name="name"></param>
+        /// <param name="capacity"> The capacity parameters of the profile. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NginxDeploymentScalingProperties(int? capacity, IList<ScaleProfile> profiles, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ScaleProfile(string name, ScaleProfileCapacity capacity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            Name = name;
             Capacity = capacity;
-            Profiles = profiles;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the capacity. </summary>
-        public int? Capacity { get; set; }
-        /// <summary> Gets the profiles. </summary>
-        public IList<ScaleProfile> Profiles { get; }
+        /// <summary> Initializes a new instance of <see cref="ScaleProfile"/> for deserialization. </summary>
+        internal ScaleProfile()
+        {
+        }
+
+        /// <summary> Gets or sets the name. </summary>
+        public string Name { get; set; }
+        /// <summary> The capacity parameters of the profile. </summary>
+        public ScaleProfileCapacity Capacity { get; set; }
     }
 }

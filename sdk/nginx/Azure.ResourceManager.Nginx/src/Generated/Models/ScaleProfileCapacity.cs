@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    /// <summary> Information on how the deployment will be scaled. </summary>
-    public partial class NginxDeploymentScalingProperties
+    /// <summary> The capacity parameters of the profile. </summary>
+    public partial class ScaleProfileCapacity
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,26 +45,34 @@ namespace Azure.ResourceManager.Nginx.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NginxDeploymentScalingProperties"/>. </summary>
-        public NginxDeploymentScalingProperties()
+        /// <summary> Initializes a new instance of <see cref="ScaleProfileCapacity"/>. </summary>
+        /// <param name="min"> The minimum number of NCUs the deployment can be autoscaled to. </param>
+        /// <param name="max"> The maximum number of NCUs the deployment can be autoscaled to. </param>
+        public ScaleProfileCapacity(int min, int max)
         {
-            Profiles = new ChangeTrackingList<ScaleProfile>();
+            Min = min;
+            Max = max;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NginxDeploymentScalingProperties"/>. </summary>
-        /// <param name="capacity"></param>
-        /// <param name="profiles"></param>
+        /// <summary> Initializes a new instance of <see cref="ScaleProfileCapacity"/>. </summary>
+        /// <param name="min"> The minimum number of NCUs the deployment can be autoscaled to. </param>
+        /// <param name="max"> The maximum number of NCUs the deployment can be autoscaled to. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NginxDeploymentScalingProperties(int? capacity, IList<ScaleProfile> profiles, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ScaleProfileCapacity(int min, int max, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Capacity = capacity;
-            Profiles = profiles;
+            Min = min;
+            Max = max;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the capacity. </summary>
-        public int? Capacity { get; set; }
-        /// <summary> Gets the profiles. </summary>
-        public IList<ScaleProfile> Profiles { get; }
+        /// <summary> Initializes a new instance of <see cref="ScaleProfileCapacity"/> for deserialization. </summary>
+        internal ScaleProfileCapacity()
+        {
+        }
+
+        /// <summary> The minimum number of NCUs the deployment can be autoscaled to. </summary>
+        public int Min { get; set; }
+        /// <summary> The maximum number of NCUs the deployment can be autoscaled to. </summary>
+        public int Max { get; set; }
     }
 }

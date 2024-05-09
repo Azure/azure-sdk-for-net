@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    /// <summary> Information on how the deployment will be scaled. </summary>
-    public partial class NginxDeploymentScalingProperties
+    /// <summary> Autoupgrade settings of a deployment. </summary>
+    internal partial class AutoUpgradeProfile
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,26 +45,31 @@ namespace Azure.ResourceManager.Nginx.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NginxDeploymentScalingProperties"/>. </summary>
-        public NginxDeploymentScalingProperties()
+        /// <summary> Initializes a new instance of <see cref="AutoUpgradeProfile"/>. </summary>
+        /// <param name="upgradeChannel"> Channel used for autoupgrade. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="upgradeChannel"/> is null. </exception>
+        public AutoUpgradeProfile(string upgradeChannel)
         {
-            Profiles = new ChangeTrackingList<ScaleProfile>();
+            Argument.AssertNotNull(upgradeChannel, nameof(upgradeChannel));
+
+            UpgradeChannel = upgradeChannel;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NginxDeploymentScalingProperties"/>. </summary>
-        /// <param name="capacity"></param>
-        /// <param name="profiles"></param>
+        /// <summary> Initializes a new instance of <see cref="AutoUpgradeProfile"/>. </summary>
+        /// <param name="upgradeChannel"> Channel used for autoupgrade. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NginxDeploymentScalingProperties(int? capacity, IList<ScaleProfile> profiles, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AutoUpgradeProfile(string upgradeChannel, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Capacity = capacity;
-            Profiles = profiles;
+            UpgradeChannel = upgradeChannel;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the capacity. </summary>
-        public int? Capacity { get; set; }
-        /// <summary> Gets the profiles. </summary>
-        public IList<ScaleProfile> Profiles { get; }
+        /// <summary> Initializes a new instance of <see cref="AutoUpgradeProfile"/> for deserialization. </summary>
+        internal AutoUpgradeProfile()
+        {
+        }
+
+        /// <summary> Channel used for autoupgrade. </summary>
+        public string UpgradeChannel { get; set; }
     }
 }

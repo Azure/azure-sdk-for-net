@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    /// <summary> Information on how the deployment will be scaled. </summary>
-    public partial class NginxDeploymentScalingProperties
+    /// <summary> The request body for creating an analysis for an NGINX configuration. </summary>
+    public partial class AnalysisCreate
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,26 +45,31 @@ namespace Azure.ResourceManager.Nginx.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NginxDeploymentScalingProperties"/>. </summary>
-        public NginxDeploymentScalingProperties()
+        /// <summary> Initializes a new instance of <see cref="AnalysisCreate"/>. </summary>
+        /// <param name="config"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="config"/> is null. </exception>
+        public AnalysisCreate(AnalysisCreateConfig config)
         {
-            Profiles = new ChangeTrackingList<ScaleProfile>();
+            Argument.AssertNotNull(config, nameof(config));
+
+            Config = config;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NginxDeploymentScalingProperties"/>. </summary>
-        /// <param name="capacity"></param>
-        /// <param name="profiles"></param>
+        /// <summary> Initializes a new instance of <see cref="AnalysisCreate"/>. </summary>
+        /// <param name="config"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NginxDeploymentScalingProperties(int? capacity, IList<ScaleProfile> profiles, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AnalysisCreate(AnalysisCreateConfig config, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Capacity = capacity;
-            Profiles = profiles;
+            Config = config;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the capacity. </summary>
-        public int? Capacity { get; set; }
-        /// <summary> Gets the profiles. </summary>
-        public IList<ScaleProfile> Profiles { get; }
+        /// <summary> Initializes a new instance of <see cref="AnalysisCreate"/> for deserialization. </summary>
+        internal AnalysisCreate()
+        {
+        }
+
+        /// <summary> Gets the config. </summary>
+        public AnalysisCreateConfig Config { get; }
     }
 }

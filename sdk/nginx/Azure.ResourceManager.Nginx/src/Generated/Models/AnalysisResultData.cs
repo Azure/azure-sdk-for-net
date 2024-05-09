@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    /// <summary> Information on how the deployment will be scaled. </summary>
-    public partial class NginxDeploymentScalingProperties
+    /// <summary> The AnalysisResultData. </summary>
+    internal partial class AnalysisResultData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,26 +45,22 @@ namespace Azure.ResourceManager.Nginx.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NginxDeploymentScalingProperties"/>. </summary>
-        public NginxDeploymentScalingProperties()
+        /// <summary> Initializes a new instance of <see cref="AnalysisResultData"/>. </summary>
+        internal AnalysisResultData()
         {
-            Profiles = new ChangeTrackingList<ScaleProfile>();
+            Errors = new ChangeTrackingList<AnalysisDiagnostic>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="NginxDeploymentScalingProperties"/>. </summary>
-        /// <param name="capacity"></param>
-        /// <param name="profiles"></param>
+        /// <summary> Initializes a new instance of <see cref="AnalysisResultData"/>. </summary>
+        /// <param name="errors"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NginxDeploymentScalingProperties(int? capacity, IList<ScaleProfile> profiles, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AnalysisResultData(IReadOnlyList<AnalysisDiagnostic> errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Capacity = capacity;
-            Profiles = profiles;
+            Errors = errors;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the capacity. </summary>
-        public int? Capacity { get; set; }
-        /// <summary> Gets the profiles. </summary>
-        public IList<ScaleProfile> Profiles { get; }
+        /// <summary> Gets the errors. </summary>
+        public IReadOnlyList<AnalysisDiagnostic> Errors { get; }
     }
 }
