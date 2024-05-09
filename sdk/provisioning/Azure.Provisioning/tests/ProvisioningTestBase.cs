@@ -24,11 +24,6 @@ namespace Azure.Provisioning.Tests
 
         protected async Task ValidateBicepAsync(BinaryData? parameters = null, bool interactiveMode = false)
         {
-            if (CoreTestEnvironment.GlobalIsRunningInCI)
-            {
-                return;
-            }
-
             var testPath = GetOutputPath();
             var client = GetArmClient();
             ResourceGroupResource? rg = null;
