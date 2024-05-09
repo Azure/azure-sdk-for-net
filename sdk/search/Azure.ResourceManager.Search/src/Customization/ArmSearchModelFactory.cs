@@ -52,7 +52,8 @@ namespace Azure.ResourceManager.Search.Models
                                      replicaCount,
                                      partitionCount,
                                      hostingMode,
-                                     publicNetworkAccess?.ToSerialString(),
+                                     // need the explicit HasValue check to avoid passing null to implicit cast operation
+                                     publicNetworkAccess.HasValue ? publicNetworkAccess.Value.ToSerialString() : null,
                                      status,
                                      statusDetails,
                                      provisioningState,
