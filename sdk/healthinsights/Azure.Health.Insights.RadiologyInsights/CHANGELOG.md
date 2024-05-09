@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0 (2024-05-03)
+## 1.0.0 (Unreleased)
 - GA release
 ### Breaking Changes
 - Client Changes
