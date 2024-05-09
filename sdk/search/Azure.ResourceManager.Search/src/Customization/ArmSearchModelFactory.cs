@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Search.Models
                                      replicaCount,
                                      partitionCount,
                                      hostingMode,
-                                     publicNetworkAccess.ToString(),
+                                     publicNetworkAccess?.ToSerialString(),
                                      status,
                                      statusDetails,
                                      provisioningState,
