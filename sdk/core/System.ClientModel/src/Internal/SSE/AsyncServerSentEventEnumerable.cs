@@ -10,8 +10,6 @@ namespace System.ClientModel.Internal;
 
 internal class AsyncServerSentEventEnumerable : IAsyncEnumerable<ServerSentEvent>
 {
-    // Note: in this factoring, the creator of the enumerable has responsibility
-    // for disposing the content stream.
     private readonly Stream _contentStream;
 
     public AsyncServerSentEventEnumerable(Stream contentStream)
@@ -39,11 +37,6 @@ internal class AsyncServerSentEventEnumerable : IAsyncEnumerable<ServerSentEvent
 
         public async ValueTask<bool> MoveNextAsync()
         {
-            if (_reader is null)
-            {
-                throw new ObjectDisposedException(nameof(AsyncServerSentEventEnumerator));
-            }
-
             ServerSentEvent? nextEvent = await _reader.TryGetNextEventAsync(_cancellationToken).ConfigureAwait(false);
 
             if (nextEvent.HasValue)
@@ -56,6 +49,16 @@ internal class AsyncServerSentEventEnumerable : IAsyncEnumerable<ServerSentEvent
             return false;
         }
 
-        public ValueTask DisposeAsync() => new ValueTask();
+        public ValueTask DisposeAsync()
+        {
+            // The creator of the enumerable has responsibility for disposing
+            // the content stream passed to the enumerable constructor.
+
+#if NET6_0_OR_GREATER
+            return ValueTask.CompletedTask;
+#else
+            return new ValueTask();
+#endif
+        }
     }
 }

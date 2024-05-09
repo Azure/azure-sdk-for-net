@@ -58,7 +58,7 @@ public class ClientResultCollectionTests : SyncAsyncTestBase
     public async Task CanDelaySendingRequest()
     {
         MockSseClient client = new();
-        AsyncResultCollection<MockJsonModel> models = client.GetModelsStreamingAsync(_mockContent);
+        AsyncClientResultCollection<MockJsonModel> models = client.GetModelsStreamingAsync(_mockContent);
 
         Assert.IsFalse(client.ProtocolMethodCalled);
 
@@ -79,7 +79,7 @@ public class ClientResultCollectionTests : SyncAsyncTestBase
     public async Task StopsOnStringBasedTerminalEvent()
     {
         MockSseClient client = new();
-        AsyncResultCollection<MockJsonModel> models = client.GetModelsStreamingAsync("[DONE]");
+        AsyncClientResultCollection<MockJsonModel> models = client.GetModelsStreamingAsync("[DONE]");
 
         bool empty = true;
         await foreach (MockJsonModel model in models)
@@ -96,7 +96,7 @@ public class ClientResultCollectionTests : SyncAsyncTestBase
     public async Task CanEnumerateModelValues()
     {
         MockSseClient client = new();
-        AsyncResultCollection<MockJsonModel> models = client.GetModelsStreamingAsync(_mockContent);
+        AsyncClientResultCollection<MockJsonModel> models = client.GetModelsStreamingAsync(_mockContent);
 
         int i = 0;
         await foreach (MockJsonModel model in models)
@@ -114,7 +114,7 @@ public class ClientResultCollectionTests : SyncAsyncTestBase
     public void ModelCollectionThrowsIfCancelled()
     {
         MockSseClient client = new();
-        AsyncResultCollection<MockJsonModel> models = client.GetModelsStreamingAsync(_mockContent);
+        AsyncClientResultCollection<MockJsonModel> models = client.GetModelsStreamingAsync(_mockContent);
 
         // Set it to `cancelled: true` to validate functionality.
         CancellationToken token = new(true);

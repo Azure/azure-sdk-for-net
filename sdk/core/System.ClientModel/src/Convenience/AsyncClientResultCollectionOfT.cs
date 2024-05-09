@@ -8,19 +8,19 @@ using System.Threading;
 namespace System.ClientModel;
 
 #pragma warning disable CS1591 // public XML comments
-public abstract class AsyncResultCollection<T> : ClientResult, IAsyncEnumerable<T>
+public abstract class AsyncClientResultCollection<T> : ClientResult, IAsyncEnumerable<T>
 {
     // Constructor overload for collection implementations that postpone
     // sending a request until GetAsyncEnumerator is called. This will typically
     // be used by collections returned from client convenience methods.
-    protected internal AsyncResultCollection() : base(default)
+    protected internal AsyncClientResultCollection() : base(default)
     {
     }
 
     // Constructor overload for collection implementations where the service
     // has returned a response.  This will typically be used by collections
     // created from the return result of a client's protocol method.
-    protected internal AsyncResultCollection(PipelineResponse response) : base(response)
+    protected internal AsyncClientResultCollection(PipelineResponse response) : base(response)
     {
     }
 
