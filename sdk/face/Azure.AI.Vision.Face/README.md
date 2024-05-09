@@ -67,21 +67,10 @@ A custom subdomain, on the other hand, is a name that is unique to the Face reso
 az cognitiveservices account keys list --name "<resource-name>" --resource-group "<resource-group-name>"
 ```
 
-#### Create the client with AzureKeyCredential
+#### Create the client with a Microsoft Entra ID credential
 
-To use an API key as the `credential` parameter, pass the key as a string into an instance of [AzureKeyCredential][azure_sdk_net_azure_key_credential].
-
-```C# Snippet:CreateFaceClient
-Uri endpoint = new Uri("<your endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<your apiKey>");
-
-var client = new FaceClient(endpoint, credential);
-```
-
-#### Create the client with an Azure Active Directory credential
-
-`AzureKeyCredential` authentication is used in the examples in this getting started guide, but you can also authenticate with Azure Active Directory using the [azure-identity][azure_sdk_net_identity] library.
-Note that regional endpoints do not support AAD authentication. Create a [custom subdomain][custom_subdomain] name for your resource in order to use this type of authentication.
+You can authenticate our service with Microsoft Entra ID using the [azure-identity][azure_sdk_net_identity] library.
+Note that regional endpoints do not support Microsoft Entra ID authentication. Create a [custom subdomain][custom_subdomain] name for your resource in order to use this type of authentication.
 
 To use the [DefaultAzureCredential][azure_sdk_net_default_azure_credential] type shown below, or other credential types provided with the Azure SDK, please install the `azure-identity` package:
 
@@ -99,6 +88,19 @@ Uri endpoint = new Uri("<your endpoint>");
 DefaultAzureCredential credential = new DefaultAzureCredential();
 var client = new FaceClient(endpoint, credential);
 ```
+
+#### Create the client with AzureKeyCredential
+
+To use an API key as the `credential` parameter, pass the key as a string into an instance of [AzureKeyCredential][azure_sdk_net_azure_key_credential].
+
+```C# Snippet:CreateFaceClient
+Uri endpoint = new Uri("<your endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<your apiKey>");
+
+var client = new FaceClient(endpoint, credential);
+```
+
+
 
 ## Key concepts
 
