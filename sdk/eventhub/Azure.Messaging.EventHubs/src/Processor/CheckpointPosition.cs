@@ -38,6 +38,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   <see cref="FromEvent(EventData)"/> instead.
         /// </remarks>
         ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public CheckpointPosition(long sequenceNumber)
         {
             SequenceNumber = sequenceNumber;
@@ -51,7 +52,7 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="globalOffset">The global offset to associate with the checkpoint. This indicates that a processor should begin reading from the next event in the stream.</param>
         /// <param name="sequenceNumber">The sequence number to associate with this checkpoint. This value is only used as informational metadata for the checkpoint.</param>
         ///
-        public CheckpointPosition(string globalOffset, long sequenceNumber = default)
+        public CheckpointPosition(string globalOffset, long sequenceNumber = long.MinValue)
         {
             GlobalOffset = globalOffset;
             SequenceNumber = sequenceNumber;

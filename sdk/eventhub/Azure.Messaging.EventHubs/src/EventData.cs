@@ -292,17 +292,21 @@ namespace Azure.Messaging.EventHubs
         ///   when not populated is the string value of <see cref="long.MinValue"/>.
         /// </value>
         ///
-        public string GlobalOffset => _amqpMessage.GetGlobalOffset(long.MinValue.ToString());
+        public string GlobalOffset => _amqpMessage.GetOffset(null);
 
         /// <summary>
-        ///   The Event Hubs service no longer uses offsets with numeric values. Use <see cref="EventData.GlobalOffset"/> instead. This
-        ///   property is populated with <see cref="EventData.SequenceNumber"/> to avoid breaking existing code that uses only offset properties.
+        ///   The Event Hubs service no longer uses offsets with numeric values. Use <see cref="EventData.GlobalOffset"/> instead.
         /// </summary>
         ///
         /// <value>
         ///   This value is read-only and will only be populated for events that have been read from Event Hubs. The default value
         ///   when not populated is <see cref="long.MinValue"/>.
         /// </value>
+        ///
+        /// /// <remarks>
+        ///   This member exists only to preserve backward compatibility and is populated with the value of <see cref="SequenceNumber"/>.
+        ///   It is recommended to use the <see cref="GlobalOffset" /> instead.
+        /// </remarks>
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
         public long Offset
@@ -410,8 +414,6 @@ namespace Azure.Messaging.EventHubs
 
         /// <summary>
         ///   The Event Hubs service no longer uses offsets with numeric values. Use <see cref="LastPartitionGlobalOffset"/> instead.
-        ///   This property is populated with <see cref="LastPartitionSequenceNumber"/> to avoid breaking existing code that
-        ///   uses only offset properties.
         /// </summary>
         ///
         /// <value>
@@ -419,6 +421,11 @@ namespace Azure.Messaging.EventHubs
         ///   specifying <see cref="ReadEventOptions.TrackLastEnqueuedEventProperties" /> as enabled.  The default value when not
         ///   populated is <c>null</c>.
         /// </value>
+        ///
+        /// <remarks>
+        ///   This member exists only to preserve backward compatibility and is populated with the value of <see cref="LastPartitionSequenceNumber"/>.
+        ///   It is recommended to use the <see cref="LastPartitionGlobalOffset" /> instead.
+        /// </remarks>
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
         internal long? LastPartitionOffset
