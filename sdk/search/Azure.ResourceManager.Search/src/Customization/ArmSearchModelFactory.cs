@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Search.Models
                                      systemData,
                                      tags,
                                      location,
-                                     skuName.ToString(),
+                                     skuName?.ToSerialString(),
                                      identity,
                                      replicaCount,
                                      partitionCount,
