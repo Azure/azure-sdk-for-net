@@ -974,7 +974,8 @@ namespace Azure.Messaging.EventHubs.Tests
                         capturedEventArgs[index].Partition.PartitionId,
                         processorClient.Identifier,
                         It.Is<CheckpointPosition>(csp =>
-                            csp.SequenceNumber == capturedEventArgs[index].Data.SequenceNumber),
+                            csp.GlobalOffset == capturedEventArgs[index].Data.GlobalOffset
+                            && csp.SequenceNumber == capturedEventArgs[index].Data.SequenceNumber),
                         It.IsAny<CancellationToken>()),
                     Times.Once,
                     $"Creating a checkpoint for index { index } should have invoked the storage manager correctly.");
@@ -1465,7 +1466,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var partitionId = "3";
             var sequenceNumber = 789;
-            var checkpointStartingPosition = new CheckpointPosition(sequenceNumber);
+            var globalOffset = "1234";
+            var checkpointStartingPosition = new CheckpointPosition(globalOffset, sequenceNumber);
             var mockStorage = new Mock<CheckpointStore>();
             var processorClient = new TestEventProcessorClient(mockStorage.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
 
@@ -1479,7 +1481,8 @@ namespace Azure.Messaging.EventHubs.Tests
                     partitionId,
                     processorClient.Identifier,
                     It.Is<CheckpointPosition>(csp =>
-                        csp.SequenceNumber == sequenceNumber),
+                        csp.SequenceNumber == sequenceNumber
+                        && csp.GlobalOffset == globalOffset),
                     It.IsAny<CancellationToken>()),
                 Times.Once);
 

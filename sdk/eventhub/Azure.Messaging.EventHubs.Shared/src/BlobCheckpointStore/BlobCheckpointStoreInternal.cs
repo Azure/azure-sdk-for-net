@@ -510,7 +510,7 @@ namespace Azure.Messaging.EventHubs.Primitives
 
             if (metadata.TryGetValue(BlobMetadataKey.GlobalOffset, out var globalOffsetResult) && !string.IsNullOrEmpty(globalOffset))
             {
-                globalOffset = globalOffsetResult;
+                globalOffset = globalOffsetResult; // TODO - what is considered "invalid" for this string offset?
                 startingPosition = EventPosition.FromGlobalOffset(globalOffsetResult, false);
             }
 
