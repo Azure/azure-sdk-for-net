@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Kusto
 {
     public partial class KustoAttachedDatabaseConfigurationData : IUtf8JsonSerializable, IJsonModel<KustoAttachedDatabaseConfigurationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KustoAttachedDatabaseConfigurationData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KustoAttachedDatabaseConfigurationData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<KustoAttachedDatabaseConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Kusto
             if (Optional.IsDefined(TableLevelSharingProperties))
             {
                 writer.WritePropertyName("tableLevelSharingProperties"u8);
-                writer.WriteObjectValue<KustoDatabaseTableLevelSharingProperties>(TableLevelSharingProperties, options);
+                writer.WriteObjectValue(TableLevelSharingProperties, options);
             }
             if (Optional.IsDefined(DatabaseNameOverride))
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Kusto
 
         internal static KustoAttachedDatabaseConfigurationData DeserializeKustoAttachedDatabaseConfigurationData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Kusto
             string databaseNameOverride = default;
             string databaseNamePrefix = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -268,10 +268,10 @@ namespace Azure.ResourceManager.Kusto
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new KustoAttachedDatabaseConfigurationData(
                 id,
                 name,

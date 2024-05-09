@@ -20,7 +20,7 @@ namespace Azure.IoT.TimeSeriesInsights
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
-                writer.WriteObjectValue<TimeSeriesExpression>(Filter);
+                writer.WriteObjectValue(Filter);
             }
             writer.WriteEndObject();
         }
@@ -51,6 +51,22 @@ namespace Azure.IoT.TimeSeriesInsights
                 }
             }
             return new UnknownVariable(kind, filter);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new UnknownVariable FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeUnknownVariable(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<TimeSeriesVariable>(this);
+            return content;
         }
     }
 }

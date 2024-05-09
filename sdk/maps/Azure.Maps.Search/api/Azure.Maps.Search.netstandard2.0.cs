@@ -749,7 +749,7 @@ namespace Azure.Maps.Search.Models
     {
         internal SearchAddressResult() { }
         public int? FuzzyLevel { get { throw null; } }
-        public Azure.Core.GeoJson.GeoPosition GeoBias { get { throw null; } }
+        public Azure.Core.GeoJson.GeoPosition? GeoBias { get { throw null; } }
         public int? NumResults { get { throw null; } }
         public string Query { get { throw null; } }
         public int? QueryTime { get { throw null; } }
@@ -766,7 +766,7 @@ namespace Azure.Maps.Search.Models
         public Azure.Maps.Search.Models.AddressRanges AddressRanges { get { throw null; } }
         public string DataSourceInfo { get { throw null; } }
         public Azure.Maps.Search.Models.MapsDataSource DataSources { get { throw null; } }
-        public System.TimeSpan DetourTime { get { throw null; } }
+        public System.TimeSpan? DetourTime { get { throw null; } }
         public double? DistanceInMeters { get { throw null; } }
         public Azure.Maps.Search.GeographicEntity? EntityType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Maps.Search.Models.FacilityEntryPoint> EntryPoints { get { throw null; } }

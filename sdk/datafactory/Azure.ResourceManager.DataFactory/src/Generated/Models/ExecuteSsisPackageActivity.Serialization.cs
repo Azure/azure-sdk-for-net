@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class ExecuteSsisPackageActivity : IUtf8JsonSerializable, IJsonModel<ExecuteSsisPackageActivity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExecuteSsisPackageActivity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExecuteSsisPackageActivity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ExecuteSsisPackageActivity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
-                writer.WriteObjectValue<PipelineActivityPolicy>(Policy, options);
+                writer.WriteObjectValue(Policy, options);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue<PipelineActivityDependency>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -72,14 +72,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
-                    writer.WriteObjectValue<PipelineActivityUserProperty>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("packageLocation"u8);
-            writer.WriteObjectValue<SsisPackageLocation>(PackageLocation, options);
+            writer.WriteObjectValue(PackageLocation, options);
             if (Optional.IsDefined(Runtime))
             {
                 writer.WritePropertyName("runtime"u8);
@@ -98,10 +98,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ExecutionCredential))
             {
                 writer.WritePropertyName("executionCredential"u8);
-                writer.WriteObjectValue<SsisExecutionCredential>(ExecutionCredential, options);
+                writer.WriteObjectValue(ExecutionCredential, options);
             }
             writer.WritePropertyName("connectVia"u8);
-            writer.WriteObjectValue<IntegrationRuntimeReference>(ConnectVia, options);
+            writer.WriteObjectValue(ConnectVia, options);
             if (Optional.IsCollectionDefined(ProjectParameters))
             {
                 writer.WritePropertyName("projectParameters"u8);
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 foreach (var item in ProjectParameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<SsisExecutionParameter>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 foreach (var item in PackageParameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<SsisExecutionParameter>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     foreach (var item0 in item.Value)
                     {
                         writer.WritePropertyName(item0.Key);
-                        writer.WriteObjectValue<SsisExecutionParameter>(item0.Value, options);
+                        writer.WriteObjectValue(item0.Value, options);
                     }
                     writer.WriteEndObject();
                 }
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     foreach (var item0 in item.Value)
                     {
                         writer.WritePropertyName(item0.Key);
-                        writer.WriteObjectValue<SsisExecutionParameter>(item0.Value, options);
+                        writer.WriteObjectValue(item0.Value, options);
                     }
                     writer.WriteEndObject();
                 }
@@ -175,14 +175,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 foreach (var item in PropertyOverrides)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<SsisPropertyOverride>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
             if (Optional.IsDefined(LogLocation))
             {
                 writer.WritePropertyName("logLocation"u8);
-                writer.WriteObjectValue<SsisLogLocation>(LogLocation, options);
+                writer.WriteObjectValue(LogLocation, options);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static ExecuteSsisPackageActivity DeserializeExecuteSsisPackageActivity(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

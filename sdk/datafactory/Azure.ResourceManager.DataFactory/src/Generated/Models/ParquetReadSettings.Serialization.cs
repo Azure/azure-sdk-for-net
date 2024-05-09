@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class ParquetReadSettings : IUtf8JsonSerializable, IJsonModel<ParquetReadSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ParquetReadSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ParquetReadSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ParquetReadSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(CompressionProperties))
             {
                 writer.WritePropertyName("compressionProperties"u8);
-                writer.WriteObjectValue<CompressionReadSettings>(CompressionProperties, options);
+                writer.WriteObjectValue(CompressionProperties, options);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(FormatReadSettingsType);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static ParquetReadSettings DeserializeParquetReadSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

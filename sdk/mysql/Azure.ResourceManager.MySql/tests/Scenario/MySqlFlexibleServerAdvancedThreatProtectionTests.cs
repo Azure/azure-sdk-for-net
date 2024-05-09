@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MySql.Tests
     public class MySqlFlexibleServerAdvancedThreatProtectionTests: MySqlManagementTestBase
     {
         public MySqlFlexibleServerAdvancedThreatProtectionTests(bool isAsync)
-            : base(isAsync)
+            : base(isAsync)//,RecordedTestMode.Record)
         {
         }
 
@@ -23,8 +23,7 @@ namespace Azure.ResourceManager.MySql.Tests
         [RecordedTest]
         public async Task GetAndSetAdvancedThreatProtectionSettings()
         {
-            // Create a server
-            ResourceGroupResource rg = await CreateResourceGroupAsync(Subscription, "mysqlflexrg", AzureLocation.CentralUS);
+            ResourceGroupResource rg = await CreateResourceGroupAsync(Subscription, "mysqlflexrg", AzureLocation.EastUS);
             MySqlFlexibleServerCollection serverCollection = rg.GetMySqlFlexibleServers();
             string serverName = Recording.GenerateAssetName("mysqlflexserver");
             var serverData = new MySqlFlexibleServerData(rg.Data.Location)
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.MySql.Tests
                 AdministratorLogin = "testUser",
                 AdministratorLoginPassword = "testPassword1!",
                 Version = "5.7",
-                Storage = new MySqlFlexibleServerStorage() { StorageSizeInGB = 20 },
+                Storage = new MySqlFlexibleServerStorage() { StorageSizeInGB = 512 },
                 CreateMode = MySqlFlexibleServerCreateMode.Default,
                 Backup = new MySqlFlexibleServerBackupProperties()
                 {
@@ -42,8 +41,8 @@ namespace Azure.ResourceManager.MySql.Tests
                 Network = new MySqlFlexibleServerNetwork(),
                 HighAvailability = new MySqlFlexibleServerHighAvailability() { Mode = MySqlFlexibleServerHighAvailabilityMode.Disabled },
             };
-            ArmOperation<MySqlFlexibleServerResource> lroCreateServer = await serverCollection.CreateOrUpdateAsync(WaitUntil.Completed, serverName, serverData);
-            MySqlFlexibleServerResource mySqlFlexibleServer = lroCreateServer.Value;
+            var lro = await serverCollection.CreateOrUpdateAsync(WaitUntil.Completed, serverName, serverData);
+            MySqlFlexibleServerResource mySqlFlexibleServer = lro.Value;
             Assert.AreEqual(serverName, mySqlFlexibleServer.Data.Name);
 
             // List all Advance Threat Protection Settings

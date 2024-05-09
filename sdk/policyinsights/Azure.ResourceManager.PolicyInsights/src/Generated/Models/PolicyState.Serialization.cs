@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 {
     public partial class PolicyState : IUtf8JsonSerializable, IJsonModel<PolicyState>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicyState>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicyState>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PolicyState>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             if (Optional.IsDefined(PolicyEvaluationDetails))
             {
                 writer.WritePropertyName("policyEvaluationDetails"u8);
-                writer.WriteObjectValue<PolicyEvaluationDetails>(PolicyEvaluationDetails, options);
+                writer.WriteObjectValue(PolicyEvaluationDetails, options);
             }
             if (Optional.IsCollectionDefined(PolicyDefinitionGroupNames))
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Components)
                 {
-                    writer.WriteObjectValue<ComponentStateDetails>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 
         internal static PolicyState DeserializePolicyState(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

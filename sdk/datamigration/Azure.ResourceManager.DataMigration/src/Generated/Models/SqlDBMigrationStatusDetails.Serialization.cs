@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     public partial class SqlDBMigrationStatusDetails : IUtf8JsonSerializable, IJsonModel<SqlDBMigrationStatusDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlDBMigrationStatusDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlDBMigrationStatusDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SqlDBMigrationStatusDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in ListOfCopyProgressDetails)
                 {
-                    writer.WriteObjectValue<CopyProgressDetails>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static SqlDBMigrationStatusDetails DeserializeSqlDBMigrationStatusDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             IReadOnlyList<string> sqlDataCopyErrors = default;
             IReadOnlyList<CopyProgressDetails> listOfCopyProgressDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("migrationState"u8))
@@ -131,10 +131,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SqlDBMigrationStatusDetails(migrationState, sqlDataCopyErrors ?? new ChangeTrackingList<string>(), listOfCopyProgressDetails ?? new ChangeTrackingList<CopyProgressDetails>(), serializedAdditionalRawData);
         }
 

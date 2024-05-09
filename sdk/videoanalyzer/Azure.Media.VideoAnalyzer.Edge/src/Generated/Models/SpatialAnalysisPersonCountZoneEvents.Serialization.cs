@@ -17,14 +17,14 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("zone"u8);
-            writer.WriteObjectValue<NamedPolygonBase>(Zone);
+            writer.WriteObjectValue(Zone);
             if (Optional.IsCollectionDefined(Events))
             {
                 writer.WritePropertyName("events"u8);
                 writer.WriteStartArray();
                 foreach (var item in Events)
                 {
-                    writer.WriteObjectValue<SpatialAnalysisPersonCountEvent>(item);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -62,6 +62,22 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 }
             }
             return new SpatialAnalysisPersonCountZoneEvents(zone, events ?? new ChangeTrackingList<SpatialAnalysisPersonCountEvent>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SpatialAnalysisPersonCountZoneEvents FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSpatialAnalysisPersonCountZoneEvents(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

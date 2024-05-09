@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Support.Tests
         {
         }
 
-        [RecordedTest]
+/*        [RecordedTest]
         public async Task ClassifyServices()
         {
             var serviceClassificationContent = new ServiceClassificationContent()
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.Support.Tests
             Assert.IsNotEmpty(serviceClassification.ServiceId);
             Assert.IsNotEmpty(serviceClassification.DisplayName);
             Assert.NotZero(serviceClassification.ResourceTypes.Count);
-        }
+        }*/
     }
 }

@@ -58,12 +58,6 @@ jobs:
       Codeql.BuildIdentifier: ${{ parameters.ServiceDirectory }}
       Codeql.SkipTaskAutoInjection: false
 
-    templateContext:
-      outputs:
-        - output: pipelineArtifact
-          targetPath: '$(Build.ArtifactStagingDirectory)'
-          artifactName: 'packages'
-
     steps:
       - checkout: self
         fetchDepth: 0
@@ -78,12 +72,19 @@ jobs:
           echo "##vso[build.addbuildtag]Scheduled"
         displayName: "Tag scheduled builds"
         condition: and(eq(variables['Build.SourceBranchName'],variables['DefaultBranch']),eq(variables['Build.Reason'],'Schedule'))
-      # Both 'Dump property properties' and 'Update package properties with dev version' serve the same purpose of generating package json.
-      # We decided to only run the later one (update properties) in all pipelines for the following reasons:
-      # 1. 'Update properties' happens after 'build', we will have more information at the 'update properties' step.
-      # 2. We did not find any usage of package json before 'update properties' in .NET, so it is safe to skip the 'dump properties' for now.
-      - template: /eng/common/pipelines/templates/steps/daily-dev-build-variable.yml
+      # Set env variable SkipDevBuildNumber to generate package properties with non alpha version
+      # Package version is used to create or update package work item from CI pipeline
       - pwsh: |
+          echo "##vso[task.setvariable variable=SkipDevBuildNumber]true"
+        displayName: "Set SkipDevBuildNumber env variable"
+      - template: /eng/common/pipelines/templates/steps/daily-dev-build-variable.yml
+        parameters:
+          ServiceDirectory: ${{parameters.ServiceDirectory}}
+      - pwsh: |
+          # Reset SkipDevBuildNumber as empty
+          $skipDevBuildNumber = ""
+          echo "##vso[task.setvariable variable=SkipDevBuildNumber]$skipDevBuildNumber"
+          Write-Host "SkipDevBuildNumber: [$(SkipDevBuildNumber)]"
           $skipDevBuildNumber = "false"
           # For .NET builds the only case we want to not have dev build numbers on our packages is when it is manually queued and
           # the SetDevVersion property isn't set to true. All other cases should contain dev version numbers.
@@ -124,24 +125,12 @@ jobs:
           workingDirectory: $(Pipeline.Workspace)
         displayName: Update package properties with dev version
 
-      - template: /eng/common/pipelines/templates/steps/create-apireview.yml
-        parameters:
-          Artifacts: ${{parameters.Artifacts}}
-
       - template: ../steps/archetype-sdk-docs.yml
         parameters:
           ServiceDirectory: ${{parameters.ServiceDirectory}}
           Artifacts: ${{parameters.Artifacts}}
           DocGenerationDir: "$(Build.SourcesDirectory)/doc/ApiDocGeneration"
           LibType: 'client'
-
-      - template: /eng/common/pipelines/templates/steps/detect-api-changes.yml
-        parameters:
-          Artifacts: ${{ parameters.Artifacts }}
-
-      - template: /eng/common/pipelines/templates/steps/validate-all-packages.yml
-        parameters:
-          Artifacts: ${{ parameters.Artifacts }}
 
       - ${{ if eq(parameters.CheckAOTCompat, 'true') }}:
         - template: /eng/pipelines/templates/steps/aot-compatibility.yml
@@ -156,6 +145,23 @@ jobs:
         condition: and(succeededOrFailed(), ne(variables['Build.Reason'],'PullRequest'))
         inputs:
           ignoreDirectories: '.nuget'
+
+      - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml
+        parameters:
+          ArtifactPath: '$(Build.ArtifactStagingDirectory)'
+          ArtifactName: 'packages'
+
+      - template: /eng/common/pipelines/templates/steps/create-apireview.yml
+        parameters:
+          Artifacts: ${{parameters.Artifacts}}
+
+      - template: /eng/common/pipelines/templates/steps/detect-api-changes.yml
+        parameters:
+          Artifacts: ${{ parameters.Artifacts }}
+
+      - template: /eng/common/pipelines/templates/steps/validate-all-packages.yml
+        parameters:
+          Artifacts: ${{ parameters.Artifacts }}
 
   - job: "Analyze"
     timeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}

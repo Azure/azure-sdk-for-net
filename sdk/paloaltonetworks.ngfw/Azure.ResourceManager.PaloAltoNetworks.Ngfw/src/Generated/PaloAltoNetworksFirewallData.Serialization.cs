@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
     public partial class PaloAltoNetworksFirewallData : IUtf8JsonSerializable, IJsonModel<PaloAltoNetworksFirewallData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PaloAltoNetworksFirewallData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PaloAltoNetworksFirewallData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PaloAltoNetworksFirewallData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 writer.WriteStringValue(PanETag.Value.ToString());
             }
             writer.WritePropertyName("networkProfile"u8);
-            writer.WriteObjectValue<FirewallNetworkProfile>(NetworkProfile, options);
+            writer.WriteObjectValue(NetworkProfile, options);
             if (Optional.IsDefined(IsPanoramaManaged))
             {
                 writer.WritePropertyName("isPanoramaManaged"u8);
@@ -84,22 +84,22 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             if (Optional.IsDefined(PanoramaConfig))
             {
                 writer.WritePropertyName("panoramaConfig"u8);
-                writer.WriteObjectValue<FirewallPanoramaConfiguration>(PanoramaConfig, options);
+                writer.WriteObjectValue(PanoramaConfig, options);
             }
             if (Optional.IsDefined(AssociatedRulestack))
             {
                 writer.WritePropertyName("associatedRulestack"u8);
-                writer.WriteObjectValue<RulestackDetails>(AssociatedRulestack, options);
+                writer.WriteObjectValue(AssociatedRulestack, options);
             }
             writer.WritePropertyName("dnsSettings"u8);
-            writer.WriteObjectValue<FirewallDnsSettings>(DnsSettings, options);
+            writer.WriteObjectValue(DnsSettings, options);
             if (Optional.IsCollectionDefined(FrontEndSettings))
             {
                 writer.WritePropertyName("frontEndSettings"u8);
                 writer.WriteStartArray();
                 foreach (var item in FrontEndSettings)
                 {
-                    writer.WriteObjectValue<FirewallFrontendSetting>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -109,9 +109,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("planData"u8);
-            writer.WriteObjectValue<FirewallBillingPlanInfo>(PlanData, options);
+            writer.WriteObjectValue(PlanData, options);
             writer.WritePropertyName("marketplaceDetails"u8);
-            writer.WriteObjectValue<PanFirewallMarketplaceDetails>(MarketplaceDetails, options);
+            writer.WriteObjectValue(MarketplaceDetails, options);
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 
         internal static PaloAltoNetworksFirewallData DeserializePaloAltoNetworksFirewallData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             FirewallBillingPlanInfo planData = default;
             PanFirewallMarketplaceDetails marketplaceDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -318,10 +318,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PaloAltoNetworksFirewallData(
                 id,
                 name,

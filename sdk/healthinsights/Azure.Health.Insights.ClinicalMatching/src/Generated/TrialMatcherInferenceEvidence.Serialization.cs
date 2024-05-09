@@ -15,7 +15,7 @@ namespace Azure.Health.Insights.ClinicalMatching
 {
     public partial class TrialMatcherInferenceEvidence : IUtf8JsonSerializable, IJsonModel<TrialMatcherInferenceEvidence>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TrialMatcherInferenceEvidence>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TrialMatcherInferenceEvidence>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<TrialMatcherInferenceEvidence>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -34,12 +34,12 @@ namespace Azure.Health.Insights.ClinicalMatching
             if (Optional.IsDefined(PatientDataEvidence))
             {
                 writer.WritePropertyName("patientDataEvidence"u8);
-                writer.WriteObjectValue<ClinicalNoteEvidence>(PatientDataEvidence, options);
+                writer.WriteObjectValue(PatientDataEvidence, options);
             }
             if (Optional.IsDefined(PatientInfoEvidence))
             {
                 writer.WritePropertyName("patientInfoEvidence"u8);
-                writer.WriteObjectValue<ClinicalCodedElement>(PatientInfoEvidence, options);
+                writer.WriteObjectValue(PatientInfoEvidence, options);
             }
             if (Optional.IsDefined(Importance))
             {
@@ -78,7 +78,7 @@ namespace Azure.Health.Insights.ClinicalMatching
 
         internal static TrialMatcherInferenceEvidence DeserializeTrialMatcherInferenceEvidence(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -89,7 +89,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             ClinicalCodedElement patientInfoEvidence = default;
             float? importance = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eligibilityCriteriaEvidence"u8))
@@ -126,10 +126,10 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new TrialMatcherInferenceEvidence(eligibilityCriteriaEvidence, patientDataEvidence, patientInfoEvidence, importance, serializedAdditionalRawData);
         }
 
@@ -172,11 +172,11 @@ namespace Azure.Health.Insights.ClinicalMatching
             return DeserializeTrialMatcherInferenceEvidence(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<TrialMatcherInferenceEvidence>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

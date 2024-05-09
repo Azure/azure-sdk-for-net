@@ -18,19 +18,27 @@ namespace Azure.IoT.TimeSeriesInsights
             if (Optional.IsDefined(GetEvents))
             {
                 writer.WritePropertyName("getEvents"u8);
-                writer.WriteObjectValue<GetEvents>(GetEvents);
+                writer.WriteObjectValue(GetEvents);
             }
             if (Optional.IsDefined(GetSeries))
             {
                 writer.WritePropertyName("getSeries"u8);
-                writer.WriteObjectValue<GetSeries>(GetSeries);
+                writer.WriteObjectValue(GetSeries);
             }
             if (Optional.IsDefined(AggregateSeries))
             {
                 writer.WritePropertyName("aggregateSeries"u8);
-                writer.WriteObjectValue<AggregateSeries>(AggregateSeries);
+                writer.WriteObjectValue(AggregateSeries);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

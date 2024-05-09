@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     public partial class ContainerRegistryTaskPatch : IUtf8JsonSerializable, IJsonModel<ContainerRegistryTaskPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerRegistryTaskPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerRegistryTaskPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerRegistryTaskPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -53,12 +53,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(Platform))
             {
                 writer.WritePropertyName("platform"u8);
-                writer.WriteObjectValue<ContainerRegistryPlatformUpdateContent>(Platform, options);
+                writer.WriteObjectValue(Platform, options);
             }
             if (Optional.IsDefined(AgentConfiguration))
             {
                 writer.WritePropertyName("agentConfiguration"u8);
-                writer.WriteObjectValue<ContainerRegistryAgentProperties>(AgentConfiguration, options);
+                writer.WriteObjectValue(AgentConfiguration, options);
             }
             if (Optional.IsDefined(AgentPoolName))
             {
@@ -73,17 +73,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(Step))
             {
                 writer.WritePropertyName("step"u8);
-                writer.WriteObjectValue<ContainerRegistryTaskStepUpdateContent>(Step, options);
+                writer.WriteObjectValue(Step, options);
             }
             if (Optional.IsDefined(Trigger))
             {
                 writer.WritePropertyName("trigger"u8);
-                writer.WriteObjectValue<ContainerRegistryTriggerUpdateContent>(Trigger, options);
+                writer.WriteObjectValue(Trigger, options);
             }
             if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue<ContainerRegistryCredentials>(Credentials, options);
+                writer.WriteObjectValue(Credentials, options);
             }
             if (Optional.IsDefined(LogTemplate))
             {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         internal static ContainerRegistryTaskPatch DeserializeContainerRegistryTaskPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             ContainerRegistryCredentials credentials = default;
             string logTemplate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -254,10 +254,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerRegistryTaskPatch(
                 identity,
                 tags ?? new ChangeTrackingDictionary<string, string>(),

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Workloads.Models
 {
     public partial class SapDiskConfiguration : IUtf8JsonSerializable, IJsonModel<SapDiskConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapDiskConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapDiskConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SapDiskConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Workloads.Models
             if (Optional.IsDefined(RecommendedConfiguration))
             {
                 writer.WritePropertyName("recommendedConfiguration"u8);
-                writer.WriteObjectValue<DiskVolumeConfiguration>(RecommendedConfiguration, options);
+                writer.WriteObjectValue(RecommendedConfiguration, options);
             }
             if (Optional.IsCollectionDefined(SupportedConfigurations))
             {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedConfigurations)
                 {
-                    writer.WriteObjectValue<SupportedConfigurationsDiskDetails>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static SapDiskConfiguration DeserializeSapDiskConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Workloads.Models
             DiskVolumeConfiguration recommendedConfiguration = default;
             IReadOnlyList<SupportedConfigurationsDiskDetails> supportedConfigurations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recommendedConfiguration"u8))
@@ -110,10 +110,10 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SapDiskConfiguration(recommendedConfiguration, supportedConfigurations ?? new ChangeTrackingList<SupportedConfigurationsDiskDetails>(), serializedAdditionalRawData);
         }
 

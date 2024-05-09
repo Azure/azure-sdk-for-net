@@ -1,6 +1,17 @@
 # Release History
 
-## 12.18.0-beta.2 (Unreleased)
+## 12.18.0-beta.3 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+- Fixed bug where `ShareClient` and `ShareFileClient` did not throw an exception on empty/null share container names and file names, respectively, when constructing a client.
+
+### Other Changes
+
+## 12.18.0-beta.2 (2024-04-15)
 - Added support for service version 2024-05-04.
 - Added ability to retrieve file handle client name with ShareFile/DirectoryClient.GetHandles() and .GetHandlesAsync().
 - Added ability to call ShareFileClient.GetRangeListDiff() and .GetRangeListDiffAsync() on a file that has been renamed.

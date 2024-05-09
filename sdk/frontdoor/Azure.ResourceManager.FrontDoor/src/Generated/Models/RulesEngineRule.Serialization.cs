@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 {
     public partial class RulesEngineRule : IUtf8JsonSerializable, IJsonModel<RulesEngineRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RulesEngineRule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RulesEngineRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RulesEngineRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             writer.WritePropertyName("priority"u8);
             writer.WriteNumberValue(Priority);
             writer.WritePropertyName("action"u8);
-            writer.WriteObjectValue<RulesEngineAction>(Action, options);
+            writer.WriteObjectValue(Action, options);
             if (Optional.IsCollectionDefined(MatchConditions))
             {
                 if (MatchConditions != null)
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     writer.WriteStartArray();
                     foreach (var item in MatchConditions)
                     {
-                        writer.WriteObjectValue<RulesEngineMatchCondition>(item, options);
+                        writer.WriteObjectValue(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         internal static RulesEngineRule DeserializeRulesEngineRule(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             IList<RulesEngineMatchCondition> matchConditions = default;
             MatchProcessingBehavior? matchProcessingBehavior = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new RulesEngineRule(
                 name,
                 priority,

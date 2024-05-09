@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.EventGrid.Models
     [PersistableModelProxy(typeof(UnknownStaticRoutingEnrichment))]
     public partial class StaticRoutingEnrichment : IUtf8JsonSerializable, IJsonModel<StaticRoutingEnrichment>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StaticRoutingEnrichment>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StaticRoutingEnrichment>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StaticRoutingEnrichment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static StaticRoutingEnrichment DeserializeStaticRoutingEnrichment(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
 {
     public partial class NotificationHubPnsCredentials : IUtf8JsonSerializable, IJsonModel<NotificationHubPnsCredentials>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NotificationHubPnsCredentials>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NotificationHubPnsCredentials>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NotificationHubPnsCredentials>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             if (Optional.IsDefined(ApnsCredential))
             {
                 writer.WritePropertyName("apnsCredential"u8);
-                writer.WriteObjectValue<NotificationHubApnsCredential>(ApnsCredential, options);
+                writer.WriteObjectValue(ApnsCredential, options);
             }
             if (Optional.IsDefined(BaiduCredential))
             {
@@ -85,12 +85,12 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             if (Optional.IsDefined(GcmCredential))
             {
                 writer.WritePropertyName("gcmCredential"u8);
-                writer.WriteObjectValue<NotificationHubGcmCredential>(GcmCredential, options);
+                writer.WriteObjectValue(GcmCredential, options);
             }
             if (Optional.IsDefined(MpnsCredential))
             {
                 writer.WritePropertyName("mpnsCredential"u8);
-                writer.WriteObjectValue<NotificationHubMpnsCredential>(MpnsCredential, options);
+                writer.WriteObjectValue(MpnsCredential, options);
             }
             if (Optional.IsDefined(WnsCredential))
             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
 
         internal static NotificationHubPnsCredentials DeserializeNotificationHubPnsCredentials(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             XiaomiCredential xiaomiCredential = default;
             FcmV1Credential fcmV1Credential = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -303,10 +303,10 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new NotificationHubPnsCredentials(
                 id,
                 name,

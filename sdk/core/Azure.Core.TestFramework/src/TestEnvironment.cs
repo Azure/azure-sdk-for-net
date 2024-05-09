@@ -304,19 +304,23 @@ namespace Azure.Core.TestFramework
         private async Task ExtendResourceGroupExpirationAsync()
         {
             string resourceGroup = GetOptionalVariable("RESOURCE_GROUP");
+            string subscription = GetOptionalVariable("SUBSCRIPTION_ID");
+            string resourceManagerUrl = GetOptionalVariable("RESOURCE_MANAGER_URL");
 
-            if (Mode is not (RecordedTestMode.Live or RecordedTestMode.Record) || DisableBootstrapping || string.IsNullOrEmpty(resourceGroup))
+            if (Mode is not (RecordedTestMode.Live or RecordedTestMode.Record)
+                || DisableBootstrapping
+                || string.IsNullOrEmpty(resourceGroup)
+                || string.IsNullOrEmpty(subscription)
+                || string.IsNullOrEmpty(resourceManagerUrl))
             {
                 return;
             }
-
-            string subscription = GetVariable("SUBSCRIPTION_ID");
 
             HttpPipeline pipeline = HttpPipelineBuilder.Build(ClientOptions.Default, new BearerTokenAuthenticationPolicy(Credential, "https://management.azure.com/.default"));
 
             // create the GET request for the resource group information
             Request request = pipeline.CreateRequest();
-            Uri uri = new Uri($"{GetVariable("RESOURCE_MANAGER_URL")}/subscriptions/{subscription}/resourcegroups/{resourceGroup}?api-version=2021-04-01");
+            Uri uri = new Uri($"{resourceManagerUrl}/subscriptions/{subscription}/resourcegroups/{resourceGroup}?api-version=2021-04-01");
             request.Uri.Reset(uri);
             request.Method = RequestMethod.Get;
 
@@ -541,7 +545,7 @@ namespace Azure.Core.TestFramework
             return _recording.GetVariable(name, null);
         }
 
-        internal static string GetSourcePath(Assembly assembly)
+        public static string GetSourcePath(Assembly assembly)
         {
             if (assembly == null)
                 throw new ArgumentNullException(nameof(assembly));

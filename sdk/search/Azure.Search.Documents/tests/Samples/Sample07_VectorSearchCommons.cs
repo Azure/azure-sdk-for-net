@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Azure.AI.OpenAI;
 #pragma warning disable SA1402 // File may only contain a single type
 
@@ -19,7 +17,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
             AzureKeyCredential credential = new AzureKeyCredential(key);
 
             OpenAIClient openAIClient = new OpenAIClient(endpoint, credential);
-            EmbeddingsOptions embeddingsOptions = new("EmbeddingsModelName", new string[] { input });
+            EmbeddingsOptions embeddingsOptions = new("text-embedding-ada-002", new string[] { input });
 
             Embeddings embeddings = openAIClient.GetEmbeddings(embeddingsOptions);
             return embeddings.Data[0].Embedding;

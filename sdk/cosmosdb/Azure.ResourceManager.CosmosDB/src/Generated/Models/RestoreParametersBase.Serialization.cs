@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 {
     public partial class RestoreParametersBase : IUtf8JsonSerializable, IJsonModel<RestoreParametersBase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RestoreParametersBase>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RestoreParametersBase>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RestoreParametersBase>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("restoreTimestampInUtc"u8);
                 writer.WriteStringValue(RestoreTimestampInUtc.Value, "O");
             }
-            if (Optional.IsDefined(RestoreWithTtlDisabled))
+            if (Optional.IsDefined(IsRestoreWithTtlDisabled))
             {
                 writer.WritePropertyName("restoreWithTtlDisabled"u8);
-                writer.WriteBooleanValue(RestoreWithTtlDisabled.Value);
+                writer.WriteBooleanValue(IsRestoreWithTtlDisabled.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static RestoreParametersBase DeserializeRestoreParametersBase(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             DateTimeOffset? restoreTimestampInUtc = default;
             bool? restoreWithTtlDisabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("restoreSource"u8))
@@ -112,10 +112,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new RestoreParametersBase(restoreSource, restoreTimestampInUtc, restoreWithTtlDisabled, serializedAdditionalRawData);
         }
 
@@ -131,15 +131,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RestoreSource), out propertyOverride);
-            if (Optional.IsDefined(RestoreSource) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  restoreSource: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RestoreSource))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  restoreSource: ");
                     if (RestoreSource.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -153,31 +154,33 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RestoreTimestampInUtc), out propertyOverride);
-            if (Optional.IsDefined(RestoreTimestampInUtc) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  restoreTimestampInUtc: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RestoreTimestampInUtc))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  restoreTimestampInUtc: ");
                     var formattedDateTimeString = TypeFormatters.ToString(RestoreTimestampInUtc.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RestoreWithTtlDisabled), out propertyOverride);
-            if (Optional.IsDefined(RestoreWithTtlDisabled) || hasPropertyOverride)
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsRestoreWithTtlDisabled), out propertyOverride);
+            if (hasPropertyOverride)
             {
                 builder.Append("  restoreWithTtlDisabled: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsRestoreWithTtlDisabled))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    var boolValue = RestoreWithTtlDisabled.Value == true ? "true" : "false";
+                    builder.Append("  restoreWithTtlDisabled: ");
+                    var boolValue = IsRestoreWithTtlDisabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
