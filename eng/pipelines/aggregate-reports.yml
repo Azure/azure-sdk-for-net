@@ -159,14 +159,14 @@ stages:
         steps:
           - template: /eng/pipelines/templates/steps/install-dotnet.yml
 
-      #    - task: PowerShell@2
-      #      displayName: Download Latest Dev Packages
-      #      inputs:
-      #        pwsh: true
-      #        filePath: 'eng/scripts/DownloadDevPackages.ps1'
-      #        arguments: >
-      #          -WorkingDirectory '$(Build.ArtifactStagingDirectory)'
-      #          -NupkgFilesDestination 'nupkgFiles'
+          - task: PowerShell@2
+            displayName: Download Latest Dev Packages
+            inputs:
+              pwsh: true
+              filePath: 'eng/scripts/DownloadDevPackages.ps1'
+              arguments: >
+                -WorkingDirectory '$(Build.ArtifactStagingDirectory)'
+                -NupkgFilesDestination 'nupkgFiles'
 
           - task: AzureCLI@2
             displayName: Azure CLI Login
