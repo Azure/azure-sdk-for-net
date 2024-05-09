@@ -564,7 +564,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
                     Debug.WriteLine($"Partition: { partitionEvent.Partition.PartitionId }");
                     Debug.WriteLine($"\tThe last sequence number is: { properties.SequenceNumber }");
-                    Debug.WriteLine($"\tThe last offset is: { properties.Offset }");
+                    Debug.WriteLine($"\tThe last global offset is: { properties.GlobalOffset }");
                     Debug.WriteLine($"\tThe last enqueued time is: { properties.EnqueuedTime }, in UTC.");
                     Debug.WriteLine($"\tThe information was updated at: { properties.LastReceivedTime }, in UTC.");
                 }

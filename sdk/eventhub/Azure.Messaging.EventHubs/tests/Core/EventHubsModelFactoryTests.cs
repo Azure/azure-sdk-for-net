@@ -121,7 +121,29 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="EventHubsModelFactory.LastEnqueuedEventProperties" />
+        ///   Verifies functionality of the <see cref="EventHubsModelFactory.LastEnqueuedEventProperties(long?, long?, DateTimeOffset?, DateTimeOffset?)" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void LastEnqueuedEventPropertiesInitializesPropertiesOldOverload()
+        {
+            var lastSequence = long.MaxValue - 100;
+            var offset = long.MaxValue - 10;
+            var lastEnqueued = new DateTimeOffset(2015, 10, 27, 12, 0, 0, TimeSpan.Zero);
+            var lastReceived = new DateTimeOffset(2012, 03, 04, 08, 0, 0, TimeSpan.Zero);
+            var properties = EventHubsModelFactory.LastEnqueuedEventProperties(lastSequence, offset, lastEnqueued, lastReceived);
+
+            Assert.That(properties, Is.Not.Null, "The properties should have been created.");
+            Assert.That(properties.SequenceNumber, Is.EqualTo(lastSequence), "The sequence number should have been set.");
+            Assert.That(properties.Offset, Is.EqualTo(offset), "The offset should have been set.");
+            Assert.That(properties.EnqueuedTime, Is.EqualTo(lastEnqueued), "The enqueued date/time should have been set.");
+            Assert.That(properties.LastReceivedTime, Is.EqualTo(lastReceived), "The last received date/time should have been set.");
+            Assert.That(properties.GlobalOffset, Is.Null, "The global offset should not have been set.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubsModelFactory.LastEnqueuedEventProperties(long?, string, DateTimeOffset?, DateTimeOffset?)" />
         ///   method.
         /// </summary>
         ///
@@ -129,18 +151,17 @@ namespace Azure.Messaging.EventHubs.Tests
         public void LastEnqueuedEventPropertiesInitializesProperties()
         {
             var lastSequence = long.MaxValue - 100;
-            var lastOffset = long.MaxValue - 10;
+            var lastGlobalOffset = "13434312312311343431231231";
             var lastEnqueued = new DateTimeOffset(2015, 10, 27, 12, 0, 0, TimeSpan.Zero);
             var lastReceived = new DateTimeOffset(2012, 03, 04, 08, 0, 0, TimeSpan.Zero);
-            var properties = EventHubsModelFactory.LastEnqueuedEventProperties(lastSequence, lastOffset, lastEnqueued, lastReceived);
+            var properties = EventHubsModelFactory.LastEnqueuedEventProperties(lastSequence, lastGlobalOffset, lastEnqueued, lastReceived);
 
             Assert.That(properties, Is.Not.Null, "The properties should have been created.");
             Assert.That(properties.SequenceNumber, Is.EqualTo(lastSequence), "The sequence number should have been set.");
-
-            // The offset is intentionally mapped to sequence number.
-            Assert.That(properties.Offset, Is.EqualTo(lastSequence), "The offset should have been set.");
+            Assert.That(properties.Offset, Is.EqualTo(lastSequence), "The offset should have been set."); // offset -> sequence number for back compat
             Assert.That(properties.EnqueuedTime, Is.EqualTo(lastEnqueued), "The enqueued date/time should have been set.");
             Assert.That(properties.LastReceivedTime, Is.EqualTo(lastReceived), "The last received date/time should have been set.");
+            Assert.That(properties.GlobalOffset, Is.EqualTo(lastGlobalOffset), "The global offset should have been set.");
         }
 
         /// <summary>

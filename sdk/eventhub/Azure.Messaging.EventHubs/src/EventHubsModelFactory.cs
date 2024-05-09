@@ -110,7 +110,7 @@ namespace Azure.Messaging.EventHubs
             new(isIdempotentPublishingEnabled, producerGroupId, ownerLevel, lastPublishedSequenceNumber);
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="LastEnqueuedEventProperties"/> class.
+        ///   Initializes a new instance of the <see cref="Azure.Messaging.EventHubs.Consumer.LastEnqueuedEventProperties"/> class.
         /// </summary>
         ///
         /// <param name="lastSequenceNumber">The sequence number observed the last event to be enqueued in the partition.</param>
@@ -118,11 +118,33 @@ namespace Azure.Messaging.EventHubs
         /// <param name="lastEnqueuedTime">The date and time, in UTC, that the last event was enqueued in the partition.</param>
         /// <param name="lastReceivedTime">The date and time, in UTC, that the information was last received.</param>
         ///
+        /// <remarks>
+        ///   The Event Hubs service no longer uses offsets with numeric values. Instead, use
+        ///   <see cref="EventHubsModelFactory.LastEnqueuedEventProperties(long?, string, DateTimeOffset?, DateTimeOffset?)"/>
+        ///   to accurately reflect current SDK behavior.
+        /// </remarks>
+        ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static LastEnqueuedEventProperties LastEnqueuedEventProperties(long? lastSequenceNumber,
                                                                               long? lastOffset,
                                                                               DateTimeOffset? lastEnqueuedTime,
                                                                               DateTimeOffset? lastReceivedTime) =>
             new LastEnqueuedEventProperties(lastSequenceNumber, lastOffset, lastEnqueuedTime, lastReceivedTime);
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="Azure.Messaging.EventHubs.Consumer.LastEnqueuedEventProperties"/> class.
+        /// </summary>
+        ///
+        /// <param name="lastSequenceNumber">The sequence number observed the last event to be enqueued in the partition.</param>
+        /// <param name="lastGlobalOffset">The offset of the last event to be enqueued in the partition.</param>
+        /// <param name="lastEnqueuedTime">The date and time, in UTC, that the last event was enqueued in the partition.</param>
+        /// <param name="lastReceivedTime">The date and time, in UTC, that the information was last received.</param>
+        ///
+        public static LastEnqueuedEventProperties LastEnqueuedEventProperties(long? lastSequenceNumber,
+                                                                              string lastGlobalOffset,
+                                                                              DateTimeOffset? lastEnqueuedTime,
+                                                                              DateTimeOffset? lastReceivedTime) =>
+            new LastEnqueuedEventProperties(lastSequenceNumber, lastGlobalOffset, lastEnqueuedTime, lastReceivedTime);
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="Consumer.PartitionContext"/> class.

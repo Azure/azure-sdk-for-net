@@ -836,6 +836,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(information.SequenceNumber, Is.EqualTo(defaultProperties.SequenceNumber), "The sequence number should match.");
             Assert.That(information.Offset, Is.EqualTo(defaultProperties.Offset), "The offset should match.");
+            Assert.That(information.GlobalOffset, Is.EqualTo(defaultProperties.GlobalOffset), "The global offset should match.");
             Assert.That(information.EnqueuedTime, Is.EqualTo(defaultProperties.EnqueuedTime), "The last enqueue time should match.");
             Assert.That(information.LastReceivedTime, Is.EqualTo(defaultProperties.LastReceivedTime), "The retrieval time should match.");
         }
