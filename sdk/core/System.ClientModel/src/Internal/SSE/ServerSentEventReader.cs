@@ -117,9 +117,9 @@ internal sealed class ServerSentEventReader : IDisposable, IAsyncDisposable
         }
         else if (line[0] != ':')
         {
-            // Not a comment line that spec says to ignore.
-            // Process the field + value and accumulate it for the
-            // next dispatched event.
+            // Per spec, ignore comment lines (i.e. that begin with ':').
+            // If we got this far, process the field + value and accumulate
+            // it for the next dispatched event.
             ServerSentEventField field = new(line);
             switch (field.FieldType)
             {
@@ -127,6 +127,7 @@ internal sealed class ServerSentEventReader : IDisposable, IAsyncDisposable
                     pending.EventTypeField = field;
                     break;
                 case ServerSentEventFieldKind.Data:
+                    // Per spec, we'll append \n when we concatenate the data lines.
                     pending.DataLength += field.Value.Length + 1;
                     pending.DataFields.Add(field);
                     break;
@@ -157,26 +158,16 @@ internal sealed class ServerSentEventReader : IDisposable, IAsyncDisposable
 
         public ServerSentEvent ToEvent()
         {
-            ServerSentEvent item = default;
-
             // Per spec, if event type buffer is empty, set event.type to "message".
-            item.EventType = EventTypeField.HasValue ?
+            string type = EventTypeField.HasValue ?
                 EventTypeField.Value.Value.ToString() :
                 "message";
 
-            if (IdField.HasValue && IdField.Value.Value.Length > 0)
-            {
-                item.Id = IdField.Value.Value.ToString();
-            }
+            string? id = IdField.HasValue && IdField.Value.Value.Length > 0 ?
+                IdField.Value.Value.ToString() : default;
 
-            if (RetryField.HasValue)
-            {
-#if NETSTANDARD2_0
-                item.ReconnectionTime = int.TryParse(RetryField.Value.Value.ToString(), out int retry) ? TimeSpan.FromMilliseconds(retry) : null;
-#else
-                item.ReconnectionTime = int.TryParse(RetryField.Value.Value.Span, out int retry) ? TimeSpan.FromMilliseconds(retry) : null;
-#endif
-            }
+            string? retry = RetryField.HasValue && RetryField.Value.Value.Length > 0 ?
+                RetryField.Value.Value.ToString() : default;
 
             Debug.Assert(DataLength > 0);
 
@@ -194,9 +185,9 @@ internal sealed class ServerSentEventReader : IDisposable, IAsyncDisposable
             }
 
             // Per spec, remove trailing LF
-            item.Data = buffer.Slice(0, buffer.Length - 1).ToString();
+            string data = buffer.Slice(0, buffer.Length - 1).ToString();
 
-            return item;
+            return new ServerSentEvent(type, data, id, retry);
         }
     }
 
