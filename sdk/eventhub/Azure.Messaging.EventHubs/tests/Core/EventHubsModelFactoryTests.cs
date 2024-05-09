@@ -222,11 +222,10 @@ namespace Azure.Messaging.EventHubs.Tests
             var properties = new Dictionary<string, object> { { "id", 12 } };
             var systemProperties = new Dictionary<string, object> { { "custom", "sys-value" } };
             var sequenceNumber = long.MaxValue - 512;
-            var globalOffset = "1721948";
             var offset = long.MaxValue - 1024;
             var enqueueTime = new DateTimeOffset(2015, 10, 27, 12, 0, 0, TimeSpan.Zero);
             var partitionKey = "omghai!";
-            var eventData = EventHubsModelFactory.EventData(body, properties, systemProperties, partitionKey, sequenceNumber, globalOffset, offset, enqueueTime);
+            var eventData = EventHubsModelFactory.EventData(body, properties, systemProperties, partitionKey, sequenceNumber, offset, enqueueTime);
 
             Assert.That(eventData, Is.Not.Null, "The event should have been created.");
             Assert.That(eventData.EventBody.ToString(), Is.EqualTo(body.ToString()), "The event body should have been set.");
@@ -235,7 +234,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(eventData.PartitionKey, Is.EqualTo(partitionKey), "The partition key should have been set.");
             Assert.That(eventData.SequenceNumber, Is.EqualTo(sequenceNumber), "The sequence number should have been set.");
             Assert.That(eventData.Offset, Is.EqualTo(sequenceNumber), "The offset should have been set to the sequence number."); // offset -> sequence number for back compat
-            Assert.That(eventData.GlobalOffset, Is.EqualTo(offset.ToString()), "The global offset should have been set.");
+            Assert.That(eventData.GlobalOffset, Is.EqualTo(null), "The global offset should not have been set.");
             Assert.That(eventData.EnqueuedTime, Is.EqualTo(enqueueTime), "The sequence number should have been set.");
         }
 

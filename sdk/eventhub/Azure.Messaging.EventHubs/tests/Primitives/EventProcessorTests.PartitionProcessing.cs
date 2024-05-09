@@ -914,8 +914,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var eventBatch = new List<EventData>
             {
-                EventHubsModelFactory.EventData(new BinaryData(Array.Empty<byte>()), offset: 0, sequenceNumber: long.Parse(startSequenceNumber)),
-                EventHubsModelFactory.EventData(new BinaryData(Array.Empty<byte>()), offset: 1, sequenceNumber: long.Parse(endSequenceNumber))
+                EventHubsModelFactory.EventData(new BinaryData(Array.Empty<byte>()), globalOffset: "0", sequenceNumber: long.Parse(startSequenceNumber)),
+                EventHubsModelFactory.EventData(new BinaryData(Array.Empty<byte>()), globalOffset: "1", sequenceNumber: long.Parse(endSequenceNumber))
             };
 
             mockConsumer
