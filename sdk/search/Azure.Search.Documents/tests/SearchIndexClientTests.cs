@@ -21,6 +21,7 @@ namespace Azure.Search.Documents.Tests
         public SearchIndexClientTests(bool async, SearchClientOptions.ServiceVersion serviceVersion)
             : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
+            SanitizersToRemove.Add("AZSDK3431"); // $..token
         }
 
         [Test]

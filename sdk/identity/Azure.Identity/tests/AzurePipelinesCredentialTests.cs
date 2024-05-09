@@ -83,6 +83,7 @@ namespace Azure.Identity.Tests
                 Assert.AreEqual("mockPlanId", options.PlanId);
                 Assert.AreEqual("mockSystemAccessToken", options.SystemAccessToken);
                 Assert.AreEqual("mockTeamProjectId", options.TeamProjectId);
+                Assert.AreEqual("mockHubName", options.HubName);
             }
         }
 
