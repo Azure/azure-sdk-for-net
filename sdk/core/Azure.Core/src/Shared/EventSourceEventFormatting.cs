@@ -80,8 +80,8 @@ internal static class EventSourceEventFormatting
                 for (int i = 0; i < bytes.Length; i++)
                 {
                     byte b = bytes[i];
-                    buffer[i * 2] = ToHex(b >> 4);
-                    buffer[i * 2 + 1] = ToHex(b & 0xF);
+                    buffer[i * 2] = ToHex(b >> 4); // Shift upper nibble into lower 4 bits and convert to hex
+                    buffer[i * 2 + 1] = ToHex(b & 0xF); // Mask off lower nibble and convert to hex
                 }
 
                 return buffer.ToString();
