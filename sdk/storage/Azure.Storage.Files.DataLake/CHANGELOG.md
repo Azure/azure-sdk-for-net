@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed bug where `DataLakeFileSystemClient` and `DatalakeFileClient` did not throw an exception on empty/null filesystem names and file names, respectively, when constructing a client.
 
 ### Other Changes
 

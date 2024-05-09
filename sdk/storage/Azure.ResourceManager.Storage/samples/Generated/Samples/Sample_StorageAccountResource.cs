@@ -1032,9 +1032,10 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
             {
 new BlobRestoreRange("container/blobpath1","container/blobpath2"),new BlobRestoreRange("container2/blobpath3","")
             });
-            await storageAccount.RestoreBlobRangesAsync(WaitUntil.Completed, content);
+            ArmOperation<BlobRestoreStatus> lro = await storageAccount.RestoreBlobRangesAsync(WaitUntil.Completed, content);
+            BlobRestoreStatus result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine($"Succeeded: {result}");
         }
 
         // StorageAccountRevokeUserDelegationKeys

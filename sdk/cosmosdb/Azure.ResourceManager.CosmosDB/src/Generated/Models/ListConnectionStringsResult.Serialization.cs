@@ -116,17 +116,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConnectionStrings), out propertyOverride);
-            if (Optional.IsCollectionDefined(ConnectionStrings) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (ConnectionStrings.Any() || hasPropertyOverride)
+                builder.Append("  connectionStrings: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ConnectionStrings))
                 {
-                    builder.Append("  connectionStrings: ");
-                    if (hasPropertyOverride)
+                    if (ConnectionStrings.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  connectionStrings: ");
                         builder.AppendLine("[");
                         foreach (var item in ConnectionStrings)
                         {

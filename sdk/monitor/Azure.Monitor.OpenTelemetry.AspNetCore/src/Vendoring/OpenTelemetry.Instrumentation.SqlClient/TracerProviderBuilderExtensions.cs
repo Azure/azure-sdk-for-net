@@ -1,6 +1,8 @@
 // Copyright The OpenTelemetry Authors
 // SPDX-License-Identifier: Apache-2.0
 
+#nullable disable
+
 #if NET6_0_OR_GREATER
 using System.Diagnostics.CodeAnalysis;
 #endif

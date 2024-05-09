@@ -10,7 +10,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests
 {
-    [ClientTestFixture(true, "2022-08-01", "2021-04-01", "2020-06-01", "2022-11-01", "2023-03-01", "2023-07-01", "2023-09-01")]
+    [ClientTestFixture(true, "2022-08-01", "2021-04-01", "2020-06-01", "2022-11-01", "2023-03-01", "2023-07-01", "2023-09-01", "2024-03-01")]
     public class VirtualMachineScaleSetOperationsTests : VirtualMachineScaleSetTestBase
     {
         public VirtualMachineScaleSetOperationsTests(bool isAsync, string apiVersion)
@@ -49,6 +49,7 @@ namespace Azure.ResourceManager.Compute.Tests
 
         [TestCase]
         [RecordedTest]
+        [LiveOnly(Reason = "PrincipalId cannot be stored in test recordings.")]
         public async Task Update()
         {
             var vmssName = Recording.GenerateAssetName("testVMSS-");

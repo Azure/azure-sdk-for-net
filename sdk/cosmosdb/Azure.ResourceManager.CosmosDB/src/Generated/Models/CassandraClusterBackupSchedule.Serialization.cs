@@ -127,15 +127,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScheduleName), out propertyOverride);
-            if (Optional.IsDefined(ScheduleName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  scheduleName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ScheduleName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  scheduleName: ");
                     if (ScheduleName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -149,15 +150,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CronExpression), out propertyOverride);
-            if (Optional.IsDefined(CronExpression) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  cronExpression: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CronExpression))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  cronExpression: ");
                     if (CronExpression.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -171,15 +173,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RetentionInHours), out propertyOverride);
-            if (Optional.IsDefined(RetentionInHours) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  retentionInHours: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RetentionInHours))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  retentionInHours: ");
                     builder.AppendLine($"{RetentionInHours.Value}");
                 }
             }

@@ -16,7 +16,7 @@ namespace Azure.Communication.Rooms.Tests
         private const string DateTimeStampRegEx = @"[0-9]*-[0-9]*-[0-9]*T[0-9]*:[0-9]*:[0-9]*.[0-9]*Z";
         private const string URIDomainNameReplacerRegEx = @"https://([^/?]+)";
         private const string URIIdentityReplacerRegEx = @"/identities/([^/?]+)";
-        private const string URIRoomsIdReplacerRegEx = @"/rooms/\d*";
+        private const string URIRoomsIdReplacerRegEx = @"/rooms/\d+";
 
         public RoomsClientLiveTestBase(bool isAsync) : base(isAsync)
         {

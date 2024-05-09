@@ -56,7 +56,7 @@ namespace Azure.AI.OpenAI.Assistants
             if (ExpiredAt != null)
             {
                 writer.WritePropertyName("expired_at"u8);
-                writer.WriteStringValue(ExpiredAt.Value, "O");
+                writer.WriteNumberValue(ExpiredAt.Value, "U");
             }
             else
             {
@@ -65,7 +65,7 @@ namespace Azure.AI.OpenAI.Assistants
             if (CompletedAt != null)
             {
                 writer.WritePropertyName("completed_at"u8);
-                writer.WriteStringValue(CompletedAt.Value, "O");
+                writer.WriteNumberValue(CompletedAt.Value, "U");
             }
             else
             {
@@ -74,7 +74,7 @@ namespace Azure.AI.OpenAI.Assistants
             if (CancelledAt != null)
             {
                 writer.WritePropertyName("cancelled_at"u8);
-                writer.WriteStringValue(CancelledAt.Value, "O");
+                writer.WriteNumberValue(CancelledAt.Value, "U");
             }
             else
             {
@@ -83,7 +83,7 @@ namespace Azure.AI.OpenAI.Assistants
             if (FailedAt != null)
             {
                 writer.WritePropertyName("failed_at"u8);
-                writer.WriteStringValue(FailedAt.Value, "O");
+                writer.WriteNumberValue(FailedAt.Value, "U");
             }
             else
             {

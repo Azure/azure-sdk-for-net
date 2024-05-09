@@ -98,13 +98,14 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
-            builder.Append("  status: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.Append("  status: ");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
+                builder.Append("  status: ");
                 builder.AppendLine($"'{Status.ToString()}'");
             }
 

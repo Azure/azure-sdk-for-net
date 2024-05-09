@@ -55,8 +55,12 @@ namespace Azure.Monitor.Query
         /// </summary>
         /// <param name="endpoint">The Azure Resource Manager service endpoint to use. Some examples include:
         /// <list type="bullet">
-        ///     <item><c>https://management.usgovcloudapi.net</c> for Azure US Government Cloud</item>
-        ///     <item><c>https://management.chinacloudapi.cn</c> for Azure China Cloud</item>
+        /// <item>
+        /// <description><c>https://management.usgovcloudapi.net</c> for Azure US Government Cloud</description>
+        /// </item>
+        /// <item>
+        /// <description><c>https://management.chinacloudapi.cn</c> for Azure China Cloud</description>
+        /// </item>
         /// </list>
         /// </param>
         /// <param name="credential">The <see cref="TokenCredential"/> instance to use for authentication.</param>
