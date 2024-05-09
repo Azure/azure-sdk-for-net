@@ -22,6 +22,7 @@ namespace Azure.Provisioning.Tests
         {
             // Ignore the version of the AZ CLI used to generate the ARM template as this will differ based on the environment
             JsonPathSanitizers.Add("$.._generator.version");
+            JsonPathSanitizers.Add("$.._generator.templateHash");
         }
 
         protected async Task ValidateBicepAsync(BinaryData? parameters = null, bool interactiveMode = false)
