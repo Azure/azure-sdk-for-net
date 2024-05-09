@@ -41,6 +41,7 @@ Azure AI Face supports both [multi-service][azure_ai_account] and single-service
 
 In order to interact with the Face service, you will need to create an instance of a client.
 An **endpoint** and **credential** are necessary to instantiate the client object.
+For enhanced security, we strongly recommend utilizing Microsoft Entra ID credential for authentication in the production environment, while AzureKeyCredential should be reserved exclusively for the testing environment.
 
 #### Get the endpoint and API keys
 
@@ -58,7 +59,7 @@ Regional endpoint: https://<region>.api.cognitive.microsoft.com/
 Custom subdomain: https://<resource-name>.cognitiveservices.azure.com/
 ```
 
-A regional endpoint is the same for every resource in a region. A complete list of supported regional endpoints can be consulted [here][regional_endpoints]. Please note that regional endpoints do not support AAD authentication.
+A regional endpoint is the same for every resource in a region. A complete list of supported regional endpoints can be consulted [here][regional_endpoints]. Please note that regional endpoints do not support Microsoft Entra ID authentication.
 
 A custom subdomain, on the other hand, is a name that is unique to the Face resource. They can only be used by [single-service resources][azure_portal_create_face_account].
 
