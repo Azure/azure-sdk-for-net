@@ -3,7 +3,10 @@
 
 namespace System.ClientModel.Internal;
 
-// SSE specification: https://html.spec.whatwg.org/multipage/server-sent-events.html
+/// <summary>
+/// Represents a field that can be composed into an SSE event.
+/// See SSE specification: https://html.spec.whatwg.org/multipage/server-sent-events.html
+/// </summary>
 internal readonly struct ServerSentEventField
 {
     private static readonly ReadOnlyMemory<char> s_eventFieldName = "event".AsMemory();
@@ -13,7 +16,7 @@ internal readonly struct ServerSentEventField
 
     public ServerSentEventFieldKind FieldType { get; }
 
-    // Note: don't expose UTF16 publicly
+    // Note: we don't plan to expose UTF16 publicly
     public ReadOnlyMemory<char> Value { get; }
 
     internal ServerSentEventField(string line)

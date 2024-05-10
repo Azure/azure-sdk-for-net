@@ -9,7 +9,11 @@ using System.Threading.Tasks;
 
 namespace System.ClientModel.Internal;
 
-// SSE specification: https://html.spec.whatwg.org/multipage/server-sent-events.html
+/// <summary>
+/// An SSE event reader that reads lines from an SSE stream and composes them
+/// into SSE events.
+/// See SSE specification: https://html.spec.whatwg.org/multipage/server-sent-events.html
+/// </summary>
 internal sealed class ServerSentEventReader
 {
     private readonly Stream? _stream;

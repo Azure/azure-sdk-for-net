@@ -7,6 +7,9 @@ using System.IO;
 
 namespace System.ClientModel.Internal;
 
+/// <summary>
+/// Represents a collection of SSE events that can be enumerated as a C# collection.
+/// </summary>
 internal class ServerSentEventEnumerable : IEnumerable<ServerSentEvent>
 {
     private readonly Stream _contentStream;

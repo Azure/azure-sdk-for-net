@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace System.ClientModel.Internal;
 
+/// <summary>
+/// Represents a collection of SSE events that can be enumerated as a C# async stream.
+/// </summary>
 internal class AsyncServerSentEventEnumerable : IAsyncEnumerable<ServerSentEvent>
 {
     private readonly Stream _contentStream;
