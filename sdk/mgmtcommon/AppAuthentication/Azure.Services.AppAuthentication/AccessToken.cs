@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
 
             try
             {
-                // Access token as 3 parts. We are interested in the second part, which has claims. 
+                // Access token has 3 parts. We are interested in the second part, which has claims. 
                 string[] splitStrings = accessToken.Split('.');
 
                 var token = JsonHelper.Deserialize<AccessToken>(DecodeBytes(splitStrings[1]));
