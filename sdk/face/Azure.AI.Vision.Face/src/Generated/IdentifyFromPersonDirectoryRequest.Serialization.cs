@@ -34,12 +34,7 @@ namespace Azure.AI.Vision.Face
             }
             writer.WriteEndArray();
             writer.WritePropertyName("personIds"u8);
-            writer.WriteStartArray();
-            foreach (var item in PersonIds)
-            {
-                writer.WriteStringValue(item);
-            }
-            writer.WriteEndArray();
+            SerializePersonIdsValue(writer);
             if (Optional.IsDefined(MaxNumOfCandidatesReturned))
             {
                 writer.WritePropertyName("maxNumOfCandidatesReturned"u8);

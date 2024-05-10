@@ -253,7 +253,7 @@ namespace Azure.AI.Vision.Face
         {
             Argument.AssertNotNull(faceIds, nameof(faceIds));
 
-            IdentifyFromEntirePersonDirectoryRequest identifyFromEntirePersonDirectoryRequest = new IdentifyFromEntirePersonDirectoryRequest(faceIds.ToList(), maxNumOfCandidatesReturned, confidenceThreshold, null);
+            IdentifyFromPersonDirectoryRequest identifyFromEntirePersonDirectoryRequest = new IdentifyFromPersonDirectoryRequest(faceIds.ToList(), null, maxNumOfCandidatesReturned, confidenceThreshold, null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await IdentifyFromPersonDirectoryAsync(identifyFromEntirePersonDirectoryRequest.ToRequestContent(), context).ConfigureAwait(false);
             IReadOnlyList<FaceIdentificationResult> value = default;
@@ -278,7 +278,7 @@ namespace Azure.AI.Vision.Face
         {
             Argument.AssertNotNull(faceIds, nameof(faceIds));
 
-            IdentifyFromEntirePersonDirectoryRequest identifyFromEntirePersonDirectoryRequest = new IdentifyFromEntirePersonDirectoryRequest(faceIds.ToList(), maxNumOfCandidatesReturned, confidenceThreshold, null);
+            IdentifyFromPersonDirectoryRequest identifyFromEntirePersonDirectoryRequest = new IdentifyFromPersonDirectoryRequest(faceIds.ToList(), null, maxNumOfCandidatesReturned, confidenceThreshold, null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = IdentifyFromPersonDirectory(identifyFromEntirePersonDirectoryRequest.ToRequestContent(), context);
             IReadOnlyList<FaceIdentificationResult> value = default;
