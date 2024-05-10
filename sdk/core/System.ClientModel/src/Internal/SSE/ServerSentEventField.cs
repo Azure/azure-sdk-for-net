@@ -3,7 +3,7 @@
 
 namespace System.ClientModel.Internal;
 
-// SSE specification: https://html.spec.whatwg.org/multipage/server-sent-events.html#parsing-an-event-stream
+// SSE specification: https://html.spec.whatwg.org/multipage/server-sent-events.html
 internal readonly struct ServerSentEventField
 {
     private static readonly ReadOnlyMemory<char> s_eventFieldName = "event".AsMemory();

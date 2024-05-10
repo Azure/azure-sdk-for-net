@@ -2,29 +2,21 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Internal;
-using System.Collections.Generic;
 using NUnit.Framework;
 
 namespace System.ClientModel.Tests.Convenience;
 
 public class ServerSentEventTests
 {
-    //[Test]
-    //public void SetsPropertiesFromFields()
-    //{
-    //    string eventLine = "event: event.name";
-    //    string dataLine = """data: {"id":"a","object":"value"}""";
+    [Test]
+    public void ParsesReconnectionTime()
+    {
+        string retryTimeInMillis = "2500";
+        ServerSentEvent sse = new("message", "data", id: default, retryTimeInMillis);
 
-    //    List<ServerSentEventField> fields = new() {
-    //        new ServerSentEventField(eventLine),
-    //        new ServerSentEventField(dataLine)
-    //    };
-
-    //    ServerSentEvent ssEvent = new(fields);
-
-    //    Assert.IsNull(ssEvent.ReconnectionTime);
-    //    Assert.IsTrue(ssEvent.EventType.AsSpan().SequenceEqual("event.name".AsSpan()));
-    //    Assert.IsTrue(ssEvent.Data.AsSpan().SequenceEqual("""{"id":"a","object":"value"}""".AsSpan()));
-    //    Assert.AreEqual(ssEvent.Id.Length, 0);
-    //}
+        Assert.AreEqual("message", sse.EventType);
+        Assert.AreEqual("data", sse.Data);
+        Assert.IsNull(sse.Id);
+        Assert.AreEqual(new TimeSpan(0, 0, 0, 2, 500), sse.ReconnectionTime);
+    }
 }

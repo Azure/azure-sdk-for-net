@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace System.ClientModel.Internal;
 
-// TODO: Different sync and async readers to dispose differently?
+// SSE specification: https://html.spec.whatwg.org/multipage/server-sent-events.html
 internal sealed class ServerSentEventReader : IDisposable, IAsyncDisposable
 {
     private Stream? _stream;
@@ -43,7 +43,8 @@ internal sealed class ServerSentEventReader : IDisposable, IAsyncDisposable
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            // TODO: Pass cancellationToken?
+            // Note: would be nice to have polyfill that takes cancellation token,
+            // but may become moot if we shift to all UTF-8.
             string? line = _reader.ReadLine();
 
             if (line is null)
@@ -81,7 +82,8 @@ internal sealed class ServerSentEventReader : IDisposable, IAsyncDisposable
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            // TODO: Pass cancellationToken?
+            // Note: would be nice to have polyfill that takes cancellation token,
+            // but may become moot if we shift to all UTF-8.
             string? line = await _reader.ReadLineAsync().ConfigureAwait(false);
 
             if (line is null)

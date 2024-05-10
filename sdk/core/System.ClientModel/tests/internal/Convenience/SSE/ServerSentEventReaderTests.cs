@@ -6,13 +6,17 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using ClientModel.Tests.Internal.Mocks;
 using NUnit.Framework;
+using SyncAsyncTestBase = ClientModel.Tests.SyncAsyncTestBase;
 
 namespace System.ClientModel.Tests.Convenience;
 
-public class ServerSentEventReaderTests
+public class ServerSentEventReaderTests : SyncAsyncTestBase
 {
-    // TODO: Test both sync and async
+    public ServerSentEventReaderTests(bool isAsync) : base(isAsync)
+    {
+    }
 
     [Test]
     public async Task GetsEventsFromStream()
@@ -21,11 +25,11 @@ public class ServerSentEventReaderTests
         using ServerSentEventReader reader = new(contentStream);
 
         List<ServerSentEvent> events = new();
-        ServerSentEvent? ssEvent = await reader.TryGetNextEventAsync();
+        ServerSentEvent? ssEvent = await reader.TryGetNextEventSyncOrAsync(IsAsync);
         while (ssEvent is not null)
         {
             events.Add(ssEvent.Value);
-            ssEvent = await reader.TryGetNextEventAsync();
+            ssEvent = await reader.TryGetNextEventSyncOrAsync(IsAsync);
         }
 
         Assert.AreEqual(events.Count, 4);
@@ -33,12 +37,12 @@ public class ServerSentEventReaderTests
         for (int i = 0; i < 3; i++)
         {
             ServerSentEvent sse = events[i];
-            Assert.IsTrue(sse.EventType.AsSpan().SequenceEqual($"event.{i}".AsSpan()));
-            Assert.IsTrue(sse.Data.AsSpan().SequenceEqual($"{{ \"id\": \"{i}\", \"object\": {i} }}".AsSpan()));
+            Assert.AreEqual($"event.{i}", sse.EventType);
+            Assert.AreEqual($"{{ \"id\": \"{i}\", \"object\": {i} }}", sse.Data);
         }
 
-        Assert.IsTrue(events[3].EventType.AsSpan().SequenceEqual("done".AsSpan()));
-        Assert.IsTrue(events[3].Data.AsSpan().SequenceEqual("[DONE]".AsSpan()));
+        Assert.AreEqual("done", events[3].EventType);
+        Assert.AreEqual("[DONE]", events[3].Data);
     }
 
     [Test]
@@ -47,7 +51,7 @@ public class ServerSentEventReaderTests
         Stream contentStream = BinaryData.FromString(string.Empty).ToStream();
         using ServerSentEventReader reader = new(contentStream);
 
-        ServerSentEvent? ssEvent = await reader.TryGetNextEventAsync();
+        ServerSentEvent? ssEvent = await reader.TryGetNextEventSyncOrAsync(IsAsync);
         Assert.IsNull(ssEvent);
     }
 
@@ -57,7 +61,7 @@ public class ServerSentEventReaderTests
         Stream contentStream = BinaryData.FromString(": comment").ToStream();
         using ServerSentEventReader reader = new(contentStream);
 
-        ServerSentEvent? ssEvent = await reader.TryGetNextEventAsync();
+        ServerSentEvent? ssEvent = await reader.TryGetNextEventSyncOrAsync(IsAsync);
         Assert.IsNull(ssEvent);
     }
 
@@ -71,7 +75,7 @@ public class ServerSentEventReaderTests
             """).ToStream();
         using ServerSentEventReader reader = new(contentStream);
 
-        ServerSentEvent? sse = await reader.TryGetNextEventAsync();
+        ServerSentEvent? sse = await reader.TryGetNextEventSyncOrAsync(IsAsync);
 
         Assert.IsNull(sse);
     }
@@ -82,11 +86,11 @@ public class ServerSentEventReaderTests
         Stream contentStream = BinaryData.FromString("event: stop\ndata: ~stop~\n\n").ToStream();
         using ServerSentEventReader reader = new(contentStream);
 
-        ServerSentEvent? sse = await reader.TryGetNextEventAsync();
+        ServerSentEvent? sse = await reader.TryGetNextEventSyncOrAsync(IsAsync);
 
         Assert.IsNotNull(sse);
-        Assert.IsTrue(sse.Value.EventType.AsSpan().SequenceEqual("stop".AsSpan()));
-        Assert.IsTrue(sse.Value.Data.AsSpan().SequenceEqual("~stop~".AsSpan()));
+        Assert.AreEqual("stop", sse.Value.EventType);
+        Assert.AreEqual("~stop~", sse.Value.Data);
         Assert.IsNull(sse.Value.Id);
         Assert.IsNull(sse.Value.ReconnectionTime);
     }
@@ -95,7 +99,6 @@ public class ServerSentEventReaderTests
     public async Task ConcatenatesDataLines()
     {
         Stream contentStream = BinaryData.FromString("""
-            event: event
             data: YHOO
             data: +2
             data: 10
@@ -104,11 +107,29 @@ public class ServerSentEventReaderTests
             """).ToStream();
         using ServerSentEventReader reader = new(contentStream);
 
-        ServerSentEvent? sse = await reader.TryGetNextEventAsync();
+        ServerSentEvent? sse = await reader.TryGetNextEventSyncOrAsync(IsAsync);
 
         Assert.IsNotNull(sse);
-        Assert.IsTrue(sse.Value.EventType.AsSpan().SequenceEqual("event".AsSpan()));
-        Assert.IsTrue(sse.Value.Data.AsSpan().SequenceEqual("YHOO\n+2\n10".AsSpan()));
+        Assert.AreEqual("YHOO\n+2\n10", sse.Value.Data);
+        Assert.IsNull(sse.Value.Id);
+        Assert.IsNull(sse.Value.ReconnectionTime);
+    }
+
+    [Test]
+    public async Task DefaultsEventTypeToMessage()
+    {
+        Stream contentStream = BinaryData.FromString("""
+            data: data
+
+
+            """).ToStream();
+        using ServerSentEventReader reader = new(contentStream);
+
+        ServerSentEvent? sse = await reader.TryGetNextEventSyncOrAsync(IsAsync);
+
+        Assert.IsNotNull(sse);
+        Assert.AreEqual("message", sse.Value.EventType);
+        Assert.AreEqual("data", sse.Value.Data);
         Assert.IsNull(sse.Value.Id);
         Assert.IsNull(sse.Value.ReconnectionTime);
     }
@@ -134,22 +155,22 @@ public class ServerSentEventReaderTests
 
         List<ServerSentEvent> events = new();
 
-        ServerSentEvent? sse = await reader.TryGetNextEventAsync();
+        ServerSentEvent? sse = await reader.TryGetNextEventSyncOrAsync(IsAsync);
         while (sse is not null)
         {
             events.Add(sse.Value);
-            sse = await reader.TryGetNextEventAsync();
+            sse = await reader.TryGetNextEventSyncOrAsync(IsAsync);
         }
 
         Assert.AreEqual(3, events.Count);
 
-        Assert.IsTrue(events[0].Data.AsSpan().SequenceEqual("first event".AsSpan()));
-        Assert.IsTrue(events[0].Id.AsSpan().SequenceEqual("1".AsSpan()));
+        Assert.AreEqual("first event", events[0].Data);
+        Assert.AreEqual("1", events[0].Id);
 
-        Assert.IsTrue(events[1].Data.AsSpan().SequenceEqual("second event".AsSpan()));
+        Assert.AreEqual("second event", events[1].Data);
         Assert.IsNull(events[1].Id);
 
-        Assert.IsTrue(events[2].Data.AsSpan().SequenceEqual(" third event".AsSpan()));
+        Assert.AreEqual(" third event", events[2].Data);
         Assert.IsNull(events[2].Id);
     }
 
@@ -169,17 +190,16 @@ public class ServerSentEventReaderTests
 
         List<ServerSentEvent> events = new();
 
-        ServerSentEvent? sse = await reader.TryGetNextEventAsync();
+        ServerSentEvent? sse = await reader.TryGetNextEventSyncOrAsync(IsAsync);
         while (sse is not null)
         {
             events.Add(sse.Value);
-            sse = await reader.TryGetNextEventAsync();
+            sse = await reader.TryGetNextEventSyncOrAsync(IsAsync);
         }
 
         Assert.AreEqual(2, events.Count);
-
         Assert.AreEqual(0, events[0].Data.Length);
-        Assert.IsTrue(events[1].Data.AsSpan().SequenceEqual("\n".AsSpan()));
+        Assert.AreEqual("\n", events[1].Data);
     }
 
     [Test]
@@ -197,11 +217,11 @@ public class ServerSentEventReaderTests
 
         List<ServerSentEvent> events = new();
 
-        ServerSentEvent? sse = await reader.TryGetNextEventAsync();
+        ServerSentEvent? sse = await reader.TryGetNextEventSyncOrAsync(IsAsync);
         while (sse is not null)
         {
             events.Add(sse.Value);
-            sse = await reader.TryGetNextEventAsync();
+            sse = await reader.TryGetNextEventSyncOrAsync(IsAsync);
         }
 
         Assert.AreEqual(2, events.Count);
@@ -223,7 +243,7 @@ public class ServerSentEventReaderTests
     #region Helpers
 
     // Note: raw string literal quirk removes \n from final line.
-    private string _mockContent = """
+    private readonly string _mockContent = """
         event: event.0
         data: { "id": "0", "object": 0 }
 

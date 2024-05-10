@@ -46,11 +46,9 @@ public class AsyncServerSentEventEnumerableTests
         Assert.ThrowsAsync<OperationCanceledException>(async () => await enumerator.MoveNextAsync());
     }
 
-    // TODO: Add tests for dispose
-
     #region Helpers
 
-    private string _mockContent = """
+    private readonly string _mockContent = """
         event: event.0
         data: { "id": "0", "object": 0 }
 

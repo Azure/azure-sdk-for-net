@@ -14,7 +14,7 @@ public class ServerSentEventFieldTests
         string line = "event: event.name";
         ServerSentEventField field = new(line);
 
-        Assert.AreEqual(field.FieldType, ServerSentEventFieldKind.Event);
-        Assert.IsTrue(field.Value.Span.SequenceEqual("event.name".AsSpan()));
+        Assert.AreEqual(ServerSentEventFieldKind.Event, field.FieldType);
+        Assert.IsTrue("event.name".AsSpan().SequenceEqual(field.Value.Span));
     }
 }

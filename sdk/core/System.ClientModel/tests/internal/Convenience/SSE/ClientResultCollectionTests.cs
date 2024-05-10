@@ -18,7 +18,7 @@ public class ClientResultCollectionTests : SyncAsyncTestBase
     }
 
     [Test]
-    public async Task CanEnumerateBinaryDataValues()
+    public async Task EnumeratesDataValues()
     {
         MockSseClient client = new();
         ClientResult result = client.GetModelsStreamingAsync(_mockContent, new RequestOptions());
@@ -28,17 +28,17 @@ public class ClientResultCollectionTests : SyncAsyncTestBase
         {
             MockJsonModel model = data.ToObjectFromJson<MockJsonModel>();
 
-            Assert.AreEqual(model.IntValue, i);
-            Assert.AreEqual(model.StringValue, i.ToString());
+            Assert.AreEqual(i, model.IntValue);
+            Assert.AreEqual(i.ToString(), model.StringValue);
 
             i++;
         }
 
-        Assert.AreEqual(i, 3);
+        Assert.AreEqual(3, i);
     }
 
     [Test]
-    public void BinaryDataCollectionThrowsIfCancelled()
+    public void DataCollectionThrowsIfCancelled()
     {
         MockSseClient client = new();
         ClientResult result = client.GetModelsStreamingAsync(_mockContent, new RequestOptions());
@@ -55,7 +55,38 @@ public class ClientResultCollectionTests : SyncAsyncTestBase
     }
 
     [Test]
-    public async Task CanDelaySendingRequest()
+    public async Task DataCollectionDoesNotDisposeStream()
+    {
+        MockSseClient client = new();
+        ClientResult result = client.GetModelsStreamingAsync(_mockContent, new RequestOptions());
+
+        await foreach (BinaryData data in result.GetRawResponse().EnumerateDataEvents())
+        {
+        }
+
+        Assert.DoesNotThrow(() => { var p = result.GetRawResponse().ContentStream!.Position; });
+    }
+
+    [Test]
+    public async Task EnumeratesModelValues()
+    {
+        MockSseClient client = new();
+        AsyncClientResultCollection<MockJsonModel> models = client.GetModelsStreamingAsync(_mockContent);
+
+        int i = 0;
+        await foreach (MockJsonModel model in models)
+        {
+            Assert.AreEqual(i, model.IntValue);
+            Assert.AreEqual(i.ToString(), model.StringValue);
+
+            i++;
+        }
+
+        Assert.AreEqual(i, 3);
+    }
+
+    [Test]
+    public async Task ModelCollectionDelaysSendingRequest()
     {
         MockSseClient client = new();
         AsyncClientResultCollection<MockJsonModel> models = client.GetModelsStreamingAsync(_mockContent);
@@ -65,49 +96,14 @@ public class ClientResultCollectionTests : SyncAsyncTestBase
         int i = 0;
         await foreach (MockJsonModel model in models)
         {
-            Assert.AreEqual(model.IntValue, i);
-            Assert.AreEqual(model.StringValue, i.ToString());
+            Assert.AreEqual(i, model.IntValue);
+            Assert.AreEqual(i.ToString(), model.StringValue);
 
             i++;
         }
 
-        Assert.AreEqual(i, 3);
+        Assert.AreEqual(3, i);
         Assert.IsTrue(client.ProtocolMethodCalled);
-    }
-
-    [Test]
-    public async Task StopsOnStringBasedTerminalEvent()
-    {
-        MockSseClient client = new();
-        AsyncClientResultCollection<MockJsonModel> models = client.GetModelsStreamingAsync("[DONE]");
-
-        bool empty = true;
-        await foreach (MockJsonModel model in models)
-        {
-            empty = false;
-        }
-
-        Assert.IsNotNull(models);
-        Assert.AreEqual(models.GetRawResponse().Content.ToString(), "[DONE]");
-        Assert.IsTrue(empty);
-    }
-
-    [Test]
-    public async Task CanEnumerateModelValues()
-    {
-        MockSseClient client = new();
-        AsyncClientResultCollection<MockJsonModel> models = client.GetModelsStreamingAsync(_mockContent);
-
-        int i = 0;
-        await foreach (MockJsonModel model in models)
-        {
-            Assert.AreEqual(model.IntValue, i);
-            Assert.AreEqual(model.StringValue, i.ToString());
-
-            i++;
-        }
-
-        Assert.AreEqual(i, 3);
     }
 
     [Test]
@@ -125,6 +121,45 @@ public class ClientResultCollectionTests : SyncAsyncTestBase
             {
             }
         });
+    }
+
+    [Test]
+    public async Task ModelCollectionDisposesStream()
+    {
+        MockSseClient client = new();
+        AsyncClientResultCollection<MockJsonModel> models = client.GetModelsStreamingAsync(_mockContent);
+
+        await foreach (MockJsonModel model in models)
+        {
+        }
+
+        PipelineResponse response = models.GetRawResponse();
+        Assert.Throws<ObjectDisposedException>(() => { var p = response.ContentStream!.Position; });
+    }
+
+    [Test]
+    public void ModelCollectionGetRawResponseThrowsBeforeEnumerated()
+    {
+        MockSseClient client = new();
+        AsyncClientResultCollection<MockJsonModel> models = client.GetModelsStreamingAsync(_mockContent);
+        Assert.Throws<InvalidOperationException>(() => { PipelineResponse response = models.GetRawResponse(); });
+    }
+
+    [Test]
+    public async Task StopsOnStringBasedTerminalEvent()
+    {
+        MockSseClient client = new();
+        AsyncClientResultCollection<MockJsonModel> models = client.GetModelsStreamingAsync("[DONE]");
+
+        bool empty = true;
+        await foreach (MockJsonModel model in models)
+        {
+            empty = false;
+        }
+
+        Assert.IsNotNull(models);
+        Assert.AreEqual("[DONE]", models.GetRawResponse().Content.ToString());
+        Assert.IsTrue(empty);
     }
 
     #region Helpers

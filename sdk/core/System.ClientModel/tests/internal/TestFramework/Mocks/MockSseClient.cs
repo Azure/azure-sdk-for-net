@@ -61,7 +61,6 @@ public class MockSseClient
         {
             async Task<ClientResult> getResultAsync()
             {
-                // TODO: simulate async correctly
                 await Task.Delay(0, cancellationToken);
                 return _protocolMethod(_content, /*options:*/ default);
             }
@@ -103,24 +102,8 @@ public class MockSseClient
                 }
 
                 _cancellationToken.ThrowIfCancellationRequested();
-
-                // TODO: refactor for clarity
-                // Lazily initialize
-                if (_events is null)
-                {
-                    ClientResult result = await _getResultAsync().ConfigureAwait(false);
-                    PipelineResponse response = result.GetRawResponse();
-                    _enumerable.SetRawResponse(response);
-
-                    if (response.ContentStream is null)
-                    {
-                        throw new ArgumentException("Unable to create result from response with null ContentStream", nameof(response));
-                    }
-
-                    AsyncServerSentEventEnumerable enumerable = new(response.ContentStream);
-                    _events = enumerable.GetAsyncEnumerator(_cancellationToken);
-                    _started = true;
-                }
+                _events ??= await CreateEventEnumeratorAsync().ConfigureAwait(false);
+                _started = true;
 
                 if (await _events.MoveNextAsync().ConfigureAwait(false))
                 {
@@ -131,7 +114,6 @@ public class MockSseClient
                     }
 
                     BinaryData data = BinaryData.FromString(_events.Current.Data);
-
                     MockJsonModel? model = ModelReaderWriter.Read<MockJsonModel>(data) ??
                         throw new JsonException($"Failed to deserialize expected type MockJsonModel from sse data payload '{_events.Current.Data}'.");
 
@@ -143,7 +125,50 @@ public class MockSseClient
                 return false;
             }
 
-            ValueTask IAsyncDisposable.DisposeAsync() => new();
+            private async Task<IAsyncEnumerator<ServerSentEvent>> CreateEventEnumeratorAsync()
+            {
+                ClientResult result = await _getResultAsync().ConfigureAwait(false);
+                PipelineResponse response = result.GetRawResponse();
+                _enumerable.SetRawResponse(response);
+
+                if (response.ContentStream is null)
+                {
+                    throw new ArgumentException("Unable to create result from response with null ContentStream", nameof(response));
+                }
+
+                AsyncServerSentEventEnumerable enumerable = new(response.ContentStream);
+                return enumerable.GetAsyncEnumerator(_cancellationToken);
+            }
+
+            public async ValueTask DisposeAsync()
+            {
+                await DisposeAsyncCore().ConfigureAwait(false);
+
+                GC.SuppressFinalize(this);
+            }
+
+            private async ValueTask DisposeAsyncCore()
+            {
+                if (_events is not null)
+                {
+                    // Disposing the sse enumerator should be a no-op.
+                    await _events.DisposeAsync().ConfigureAwait(false);
+                    _events = null;
+
+                    // But we also need to dispose the response content stream
+                    // so we don't leave the unbuffered network stream open.
+                    PipelineResponse response = _enumerable.GetRawResponse();
+
+                    if (response.ContentStream is IAsyncDisposable asyncDisposable)
+                    {
+                        await asyncDisposable.DisposeAsync().ConfigureAwait(false);
+                    }
+                    else if (response.ContentStream is IDisposable disposable)
+                    {
+                        disposable.Dispose();
+                    }
+                }
+            }
         }
     }
 }
