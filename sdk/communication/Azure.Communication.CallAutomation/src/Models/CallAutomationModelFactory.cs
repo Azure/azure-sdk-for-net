@@ -10,7 +10,17 @@ using Azure.Core;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> Model factory for read-only models. </summary>
+    [CodeGenSuppress("CallTransferFailed", typeof(string), typeof(ResultInformation), typeof(string), typeof(string), typeof(string))]
+    [CodeGenSuppress("ContinuousDtmfRecognitionStopped", typeof(string), typeof(ResultInformation), typeof(string), typeof(string), typeof(string))]
+    [CodeGenSuppress("ContinuousDtmfRecognitionToneFailed", typeof(ResultInformation), typeof(string), typeof(string), typeof(string), typeof(string))]
+    [CodeGenSuppress("ContinuousDtmfRecognitionToneReceived", typeof(ResultInformation), typeof(int?), typeof(DtmfTone?), typeof(string), typeof(string), typeof(string), typeof(string))]
+    [CodeGenSuppress("PlayCompleted", typeof(ResultInformation), typeof(string), typeof(string), typeof(string), typeof(string))]
     [CodeGenSuppress("PlayFailed", typeof(string), typeof(ResultInformation), typeof(string), typeof(string), typeof(string))]
+    [CodeGenSuppress("RecognizeFailed", typeof(string), typeof(ResultInformation), typeof(string), typeof(string), typeof(string))]
+    [CodeGenSuppress("RecordingStateChanged", typeof(string), typeof(RecordingState), typeof(DateTimeOffset?), typeof(RecordingKind?), typeof(string), typeof(string), typeof(string))]
+    [CodeGenSuppress("SendDtmfTonesCompleted", typeof(string), typeof(ResultInformation), typeof(string), typeof(string), typeof(string))]
+    [CodeGenSuppress("SendDtmfTonesFailed", typeof(string), typeof(ResultInformation), typeof(string), typeof(string), typeof(string))]
+    [CodeGenSuppress("HoldFailed", typeof(string), typeof(ResultInformation), typeof(string), typeof(string), typeof(string))]
     [CodeGenModel("CommunicationCallAutomationModelFactory")]
     public static partial class CallAutomationModelFactory
     {
@@ -21,7 +31,7 @@ namespace Azure.Communication.CallAutomation
         /// <returns> A new <see cref="CallAutomation.AddParticipantResult"/> instance for mocking. </returns>
         public static AddParticipantResult AddParticipantsResult(CallParticipant participant = default, string operationContext = default, string invitationId = null)
         {
-            return new AddParticipantResult(participant: participant, operationContext, invitationId: invitationId);
+            return new AddParticipantResult(participant, operationContext, invitationId);
         }
 
         /// <summary> Initializes a new instance of AnswerCallResult. </summary>
@@ -366,7 +376,19 @@ namespace Azure.Communication.CallAutomation
         /// <returns> A new <see cref="CallAutomation.PlayCompleted"/> instance for mocking. </returns>
         public static PlayCompleted PlayCompleted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
         {
-            return new PlayCompleted(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
+            return new PlayCompleted(resultInformation, operationContext, callConnectionId, serverCallId, correlationId);
+        }
+
+        /// <summary> Initializes a new instance of PlayFailed. </summary>
+        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
+        /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
+        /// <param name="callConnectionId"> Call connection ID. </param>
+        /// <param name="serverCallId"> Server call ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        /// <returns> A new <see cref="CallAutomation.PlayFailed"/> instance for mocking. </returns>
+        public static PlayFailed PlayFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
+        {
+            return new PlayFailed(operationContext, resultInformation, callConnectionId, serverCallId, correlationId);
         }
 
         /// <summary> Initializes a new instance of PlayCanceled. </summary>
@@ -389,6 +411,18 @@ namespace Azure.Communication.CallAutomation
         public static RecognizeCanceled RecognizeCanceled(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null)
         {
             return new RecognizeCanceled(callConnectionId, serverCallId, correlationId, operationContext);
+        }
+
+        /// <summary> Initializes a new instance of RecognizeFailed. </summary>
+        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
+        /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
+        /// <param name="callConnectionId"> Call connection ID. </param>
+        /// <param name="serverCallId"> Server call ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        /// <returns> A new <see cref="CallAutomation.RecognizeFailed"/> instance for mocking. </returns>
+        public static RecognizeFailed RecognizeFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
+        {
+            return new RecognizeFailed(operationContext, resultInformation, callConnectionId, serverCallId, correlationId);
         }
 
         /// <summary> Initializes a new instance of RecordingStateChanged. </summary>
@@ -452,7 +486,7 @@ namespace Azure.Communication.CallAutomation
         /// <returns> A new <see cref="CallAutomation.HoldFailed"/> instance for mocking. </returns>
         public static HoldFailed HoldFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
         {
-            return new HoldFailed(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
+            return new HoldFailed(operationContext, resultInformation, callConnectionId, serverCallId, correlationId);
         }
     }
 }
