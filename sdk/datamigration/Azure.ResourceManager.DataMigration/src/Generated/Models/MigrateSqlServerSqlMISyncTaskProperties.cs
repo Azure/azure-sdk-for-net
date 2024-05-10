@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="commands">
         /// Array of command properties.
         /// Please note <see cref="CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MongoDBCancelCommand"/>, <see cref="MongoDBFinishCommand"/>, <see cref="MigrateMISyncCompleteCommandProperties"/>, <see cref="MigrateSyncCompleteCommandProperties"/> and <see cref="MongoDBRestartCommand"/>.
+        /// The available derived classes include <see cref="MigrateSyncCompleteCommandProperties"/>, <see cref="MigrateMISyncCompleteCommandProperties"/>, <see cref="MongoDBCancelCommand"/>, <see cref="MongoDBFinishCommand"/> and <see cref="MongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="output">
         /// Task output. This is ignored if submitted.
         /// Please note <see cref="MigrateSqlServerSqlMISyncTaskOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel"/>, <see cref="MigrateSqlServerSqlMISyncTaskOutputError"/> and <see cref="MigrateSqlServerSqlMISyncTaskOutputMigrationLevel"/>.
+        /// The available derived classes include <see cref="MigrateSqlServerSqlMISyncTaskOutputMigrationLevel"/>, <see cref="MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel"/> and <see cref="MigrateSqlServerSqlMISyncTaskOutputError"/>.
         /// </param>
         /// <param name="createdOn"> DateTime in UTC when the task was created. </param>
         internal MigrateSqlServerSqlMISyncTaskProperties(TaskType taskType, IReadOnlyList<ODataError> errors, TaskState? state, IReadOnlyList<CommandProperties> commands, IDictionary<string, string> clientData, IDictionary<string, BinaryData> serializedAdditionalRawData, MigrateSqlServerSqlMISyncTaskInput input, IReadOnlyList<MigrateSqlServerSqlMISyncTaskOutput> output, string createdOn) : base(taskType, errors, state, commands, clientData, serializedAdditionalRawData)
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary>
         /// Task output. This is ignored if submitted.
         /// Please note <see cref="MigrateSqlServerSqlMISyncTaskOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel"/>, <see cref="MigrateSqlServerSqlMISyncTaskOutputError"/> and <see cref="MigrateSqlServerSqlMISyncTaskOutputMigrationLevel"/>.
+        /// The available derived classes include <see cref="MigrateSqlServerSqlMISyncTaskOutputMigrationLevel"/>, <see cref="MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel"/> and <see cref="MigrateSqlServerSqlMISyncTaskOutputError"/>.
         /// </summary>
         public IReadOnlyList<MigrateSqlServerSqlMISyncTaskOutput> Output { get; }
         /// <summary> DateTime in UTC when the task was created. </summary>

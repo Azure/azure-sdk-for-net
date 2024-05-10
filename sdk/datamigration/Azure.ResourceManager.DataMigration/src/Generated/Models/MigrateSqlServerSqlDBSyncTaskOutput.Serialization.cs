@@ -75,11 +75,11 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "DatabaseLevelErrorOutput": return MigrateSqlServerSqlDBSyncTaskOutputDatabaseError.DeserializeMigrateSqlServerSqlDBSyncTaskOutputDatabaseError(element, options);
-                    case "DatabaseLevelOutput": return MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel.DeserializeMigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel(element, options);
-                    case "ErrorOutput": return MigrateSqlServerSqlDBSyncTaskOutputError.DeserializeMigrateSqlServerSqlDBSyncTaskOutputError(element, options);
                     case "MigrationLevelOutput": return MigrateSqlServerSqlDBSyncTaskOutputMigrationLevel.DeserializeMigrateSqlServerSqlDBSyncTaskOutputMigrationLevel(element, options);
+                    case "DatabaseLevelOutput": return MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel.DeserializeMigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel(element, options);
                     case "TableLevelOutput": return MigrateSqlServerSqlDBSyncTaskOutputTableLevel.DeserializeMigrateSqlServerSqlDBSyncTaskOutputTableLevel(element, options);
+                    case "ErrorOutput": return MigrateSqlServerSqlDBSyncTaskOutputError.DeserializeMigrateSqlServerSqlDBSyncTaskOutputError(element, options);
+                    case "DatabaseLevelErrorOutput": return MigrateSqlServerSqlDBSyncTaskOutputDatabaseError.DeserializeMigrateSqlServerSqlDBSyncTaskOutputDatabaseError(element, options);
                 }
             }
             return UnknownMigrateSqlServerSqlDBSyncTaskOutput.DeserializeUnknownMigrateSqlServerSqlDBSyncTaskOutput(element, options);
