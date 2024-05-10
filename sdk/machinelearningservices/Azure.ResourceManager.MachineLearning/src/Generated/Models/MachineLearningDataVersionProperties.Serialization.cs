@@ -167,6 +167,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     case "mltable": return MachineLearningTable.DeserializeMachineLearningTable(element, options);
                     case "uri_file": return MachineLearningUriFileDataVersion.DeserializeMachineLearningUriFileDataVersion(element, options);
+                    case "uri_folder": return DataImport.DeserializeDataImport(element, options);
                     case "uri_folder": return MachineLearningUriFolderDataVersion.DeserializeMachineLearningUriFolderDataVersion(element, options);
                 }
             }

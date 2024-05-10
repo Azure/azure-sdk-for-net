@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="properties">
         /// [Required] Additional attributes of the entity.
         /// Please note <see cref="MachineLearningDataVersionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MachineLearningTable"/>, <see cref="MachineLearningUriFileDataVersion"/> and <see cref="MachineLearningUriFolderDataVersion"/>.
+        /// The available derived classes include <see cref="MachineLearningTable"/>, <see cref="MachineLearningUriFileDataVersion"/>, <see cref="DataImport"/> and <see cref="MachineLearningUriFolderDataVersion"/>.
         /// </param>
         /// <returns> A new <see cref="MachineLearning.MachineLearningDataVersionData"/> instance for mocking. </returns>
         public static MachineLearningDataVersionData MachineLearningDataVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MachineLearningDataVersionProperties properties = null)
