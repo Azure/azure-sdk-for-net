@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="properties">
         /// The data connection properties to validate.
         /// Please note <see cref="KustoDataConnectionData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="KustoCosmosDBDataConnection"/>, <see cref="KustoEventGridDataConnection"/>, <see cref="KustoEventHubDataConnection"/> and <see cref="KustoIotHubDataConnection"/>.
+        /// The available derived classes include <see cref="KustoEventHubDataConnection"/>, <see cref="KustoIotHubDataConnection"/>, <see cref="KustoEventGridDataConnection"/> and <see cref="KustoCosmosDBDataConnection"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DataConnectionValidationContent(string dataConnectionName, KustoDataConnectionData properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <summary>
         /// The data connection properties to validate.
         /// Please note <see cref="KustoDataConnectionData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="KustoCosmosDBDataConnection"/>, <see cref="KustoEventGridDataConnection"/>, <see cref="KustoEventHubDataConnection"/> and <see cref="KustoIotHubDataConnection"/>.
+        /// The available derived classes include <see cref="KustoEventHubDataConnection"/>, <see cref="KustoIotHubDataConnection"/>, <see cref="KustoEventGridDataConnection"/> and <see cref="KustoCosmosDBDataConnection"/>.
         /// </summary>
         public KustoDataConnectionData Properties { get; set; }
     }

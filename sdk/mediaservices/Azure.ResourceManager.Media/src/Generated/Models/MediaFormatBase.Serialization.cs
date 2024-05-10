@@ -72,12 +72,12 @@ namespace Azure.ResourceManager.Media.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "#Microsoft.Media.ImageFormat": return OutputImageFileFormat.DeserializeOutputImageFileFormat(element, options);
                     case "#Microsoft.Media.JpgFormat": return JpgFormat.DeserializeJpgFormat(element, options);
-                    case "#Microsoft.Media.Mp4Format": return Mp4Format.DeserializeMp4Format(element, options);
-                    case "#Microsoft.Media.MultiBitrateFormat": return MultiBitrateFormat.DeserializeMultiBitrateFormat(element, options);
                     case "#Microsoft.Media.PngFormat": return PngFormat.DeserializePngFormat(element, options);
+                    case "#Microsoft.Media.ImageFormat": return OutputImageFileFormat.DeserializeOutputImageFileFormat(element, options);
+                    case "#Microsoft.Media.Mp4Format": return Mp4Format.DeserializeMp4Format(element, options);
                     case "#Microsoft.Media.TransportStreamFormat": return TransportStreamFormat.DeserializeTransportStreamFormat(element, options);
+                    case "#Microsoft.Media.MultiBitrateFormat": return MultiBitrateFormat.DeserializeMultiBitrateFormat(element, options);
                 }
             }
             return UnknownFormat.DeserializeUnknownFormat(element, options);

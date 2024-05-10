@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="includedTracks">
         /// The list of TrackDescriptors which define the metadata and selection of tracks in the input.
         /// Please note <see cref="TrackDescriptor"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AudioTrackDescriptor"/>, <see cref="SelectAudioTrackByAttribute"/>, <see cref="SelectAudioTrackById"/>, <see cref="SelectVideoTrackByAttribute"/>, <see cref="SelectVideoTrackById"/> and <see cref="VideoTrackDescriptor"/>.
+        /// The available derived classes include <see cref="SelectAudioTrackByAttribute"/>, <see cref="SelectAudioTrackById"/>, <see cref="AudioTrackDescriptor"/>, <see cref="SelectVideoTrackByAttribute"/>, <see cref="SelectVideoTrackById"/> and <see cref="VideoTrackDescriptor"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FromAllInputFile(string odataType, IList<TrackDescriptor> includedTracks, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(odataType, includedTracks, serializedAdditionalRawData)

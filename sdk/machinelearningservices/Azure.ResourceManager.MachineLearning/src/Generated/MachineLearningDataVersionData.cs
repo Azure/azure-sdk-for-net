@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="properties">
         /// [Required] Additional attributes of the entity.
         /// Please note <see cref="MachineLearningDataVersionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MachineLearningTable"/>, <see cref="MachineLearningUriFileDataVersion"/> and <see cref="MachineLearningUriFolderDataVersion"/>.
+        /// The available derived classes include <see cref="DataImport"/>, <see cref="MachineLearningTable"/>, <see cref="MachineLearningUriFileDataVersion"/> and <see cref="MachineLearningUriFolderDataVersion"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public MachineLearningDataVersionData(MachineLearningDataVersionProperties properties)
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="properties">
         /// [Required] Additional attributes of the entity.
         /// Please note <see cref="MachineLearningDataVersionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MachineLearningTable"/>, <see cref="MachineLearningUriFileDataVersion"/> and <see cref="MachineLearningUriFolderDataVersion"/>.
+        /// The available derived classes include <see cref="DataImport"/>, <see cref="MachineLearningTable"/>, <see cref="MachineLearningUriFileDataVersion"/> and <see cref="MachineLearningUriFolderDataVersion"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MachineLearningDataVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MachineLearningDataVersionProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary>
         /// [Required] Additional attributes of the entity.
         /// Please note <see cref="MachineLearningDataVersionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MachineLearningTable"/>, <see cref="MachineLearningUriFileDataVersion"/> and <see cref="MachineLearningUriFolderDataVersion"/>.
+        /// The available derived classes include <see cref="DataImport"/>, <see cref="MachineLearningTable"/>, <see cref="MachineLearningUriFileDataVersion"/> and <see cref="MachineLearningUriFolderDataVersion"/>.
         /// </summary>
         public MachineLearningDataVersionProperties Properties { get; set; }
     }

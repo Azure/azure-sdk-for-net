@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary>
     /// Machine Learning compute object.
     /// Please note <see cref="MachineLearningComputeProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="MachineLearningAksCompute"/>, <see cref="AmlCompute"/>, <see cref="MachineLearningComputeInstance"/>, <see cref="MachineLearningDatabricksCompute"/>, <see cref="MachineLearningDataFactoryCompute"/>, <see cref="MachineLearningDataLakeAnalytics"/>, <see cref="MachineLearningHDInsightCompute"/>, <see cref="MachineLearningKubernetesCompute"/>, <see cref="MachineLearningSynapseSpark"/> and <see cref="MachineLearningVirtualMachineCompute"/>.
+    /// The available derived classes include <see cref="MachineLearningAksCompute"/>, <see cref="MachineLearningKubernetesCompute"/>, <see cref="AmlCompute"/>, <see cref="MachineLearningComputeInstance"/>, <see cref="MachineLearningVirtualMachineCompute"/>, <see cref="MachineLearningHDInsightCompute"/>, <see cref="MachineLearningDataFactoryCompute"/>, <see cref="MachineLearningDatabricksCompute"/>, <see cref="MachineLearningDataLakeAnalytics"/> and <see cref="MachineLearningSynapseSpark"/>.
     /// </summary>
     public abstract partial class MachineLearningComputeProperties
     {
