@@ -149,7 +149,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var enqueueTime = new DateTimeOffset(2015, 10, 27, 00, 00, 00, TimeSpan.Zero);
             var partitionKey = "fake-key";
             var lastSequence = 321L;
-            var lastOffset = 654L;
+            var lastOffset = "654L";
             var lastEnqueue = new DateTimeOffset(2012, 03, 04, 08, 00, 00, TimeSpan.Zero);
             var lastRetrieve = new DateTimeOffset(2020, 01, 01, 05, 15, 37, TimeSpan.Zero);
             var message = CreateFullyPopulatedAmqpMessage(sequenceNumber, lastSequence, offset, lastOffset, partitionKey, enqueueTime, lastEnqueue, lastRetrieve);
@@ -342,7 +342,7 @@ namespace Azure.Messaging.EventHubs.Tests
         private static AmqpAnnotatedMessage CreateFullyPopulatedAmqpMessage(long sequenceNumber,
                                                                             long lastSequenceNumber,
                                                                             string offset,
-                                                                            long lastOffset,
+                                                                            string lastOffset,
                                                                             string partitionKey,
                                                                             DateTimeOffset enqueueTime,
                                                                             DateTimeOffset lastEnqueueTime,

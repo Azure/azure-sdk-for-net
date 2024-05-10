@@ -443,7 +443,7 @@ namespace Azure.Messaging.EventHubs.Primitives
 
             var metadata = new Dictionary<string, string>()
             {
-                { BlobMetadataKey.Offset, offset.HasValue ? offset.Value.ToString(CultureInfo.InvariantCulture) : "no offset" },
+                { BlobMetadataKey.Offset, offset.HasValue ? offset.Value.ToString(CultureInfo.InvariantCulture) : "" },
                 { BlobMetadataKey.SequenceNumber, sequenceNumber.HasValue ? sequenceNumber.Value.ToString(CultureInfo.InvariantCulture) : "" },
                 { BlobMetadataKey.ClientIdentifier, clientIdentifier }
             };
@@ -508,14 +508,14 @@ namespace Azure.Messaging.EventHubs.Primitives
             if (metadata.TryGetValue(BlobMetadataKey.Offset, out var offsetStr) && !string.IsNullOrEmpty(offsetStr))
             {
                 offset = offsetStr;
-                startingPosition ??= EventPosition.FromOffset(offsetStr, false);
+                startingPosition = EventPosition.FromOffset(offsetStr, false);
             }
             if (metadata.TryGetValue(BlobMetadataKey.SequenceNumber, out var sequenceStr) && long.TryParse(sequenceStr, NumberStyles.Integer, CultureInfo.InvariantCulture, out var sequenceResult))
             {
                 sequenceNumber = sequenceResult;
                 if (sequenceNumber != long.MinValue) // If the sequence number is not equal to the default (long.MinValue), then a value was passed in.
                 {
-                    startingPosition = EventPosition.FromSequenceNumber(sequenceResult, false);
+                    startingPosition ??= EventPosition.FromSequenceNumber(sequenceResult, false);
                 }
             }
             if (metadata.TryGetValue(BlobMetadataKey.ClientIdentifier, out var idStr))

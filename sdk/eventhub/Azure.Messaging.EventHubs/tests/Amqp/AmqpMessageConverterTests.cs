@@ -1291,7 +1291,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void CreateEventFromMessagePopulatesTypedSystemPropertiesAndMetrics()
         {
-            var offset = "123";
+            string offset = "123";
             var lastOffset = "987";
             var sequenceNumber = (long.MaxValue - 10);
             var lastSequenceNumber = (long.MaxValue - 100);
@@ -1306,13 +1306,13 @@ namespace Azure.Messaging.EventHubs.Tests
             message.ApplicationProperties.Map.Add("First", 1);
             message.ApplicationProperties.Map.Add("Second", "2");
 
-            message.MessageAnnotations.Map.Add(AmqpProperty.Offset, offset);
+            message.MessageAnnotations.Map.Add(AmqpProperty.Offset, offset.ToString());
             message.MessageAnnotations.Map.Add(AmqpProperty.SequenceNumber, sequenceNumber);
             message.MessageAnnotations.Map.Add(AmqpProperty.EnqueuedTime, enqueuedTime.Ticks);
             message.MessageAnnotations.Map.Add(AmqpProperty.PartitionKey, partitionKey);
 
             message.DeliveryAnnotations.Map.Add(AmqpProperty.PartitionLastEnqueuedSequenceNumber, lastSequenceNumber);
-            message.DeliveryAnnotations.Map.Add(AmqpProperty.PartitionLastEnqueuedOffset, lastOffset);
+            message.DeliveryAnnotations.Map.Add(AmqpProperty.PartitionLastEnqueuedOffset, lastOffset.ToString());
             message.DeliveryAnnotations.Map.Add(AmqpProperty.PartitionLastEnqueuedTimeUtc, lastEnqueuedTime.Ticks);
             message.DeliveryAnnotations.Map.Add(AmqpProperty.LastPartitionPropertiesRetrievalTimeUtc, lastRetrievalTime.Ticks);
 

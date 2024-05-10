@@ -511,7 +511,7 @@ namespace Azure.Messaging.EventHubs.Tests
         private static AmqpAnnotatedMessage CreateDataBodyMessageWithSystemProperties(long? sequenceNumber,
                                                                                       long? lastSequenceNumber,
                                                                                       string offset,
-                                                                                      long? lastOffset,
+                                                                                      string lastOffset,
                                                                                       string partitionKey,
                                                                                       DateTimeOffset? enqueueTime,
                                                                                       DateTimeOffset? lastEnqueueTime,
@@ -550,9 +550,9 @@ namespace Azure.Messaging.EventHubs.Tests
                 message.DeliveryAnnotations.Add(AmqpProperty.PartitionLastEnqueuedSequenceNumber.ToString(), lastSequenceNumber.Value);
             }
 
-            if (lastOffset.HasValue)
+            if (!string.IsNullOrEmpty(lastOffset))
             {
-                message.DeliveryAnnotations.Add(AmqpProperty.PartitionLastEnqueuedOffset.ToString(), lastOffset.Value);
+                message.DeliveryAnnotations.Add(AmqpProperty.PartitionLastEnqueuedOffset.ToString(), lastOffset);
             }
 
             if (lastEnqueueTime.HasValue)

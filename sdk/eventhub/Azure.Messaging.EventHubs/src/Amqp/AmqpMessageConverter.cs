@@ -39,9 +39,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         private static readonly HashSet<string> SystemPropertyLongKeys = new()
         {
             AmqpProperty.SequenceNumber.ToString(),
-            AmqpProperty.Offset.ToString(),
             AmqpProperty.PartitionLastEnqueuedSequenceNumber.ToString(),
-            AmqpProperty.PartitionLastEnqueuedOffset.ToString()
         };
 
         /// <summary>

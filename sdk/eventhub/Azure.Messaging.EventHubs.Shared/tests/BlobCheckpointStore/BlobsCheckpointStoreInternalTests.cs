@@ -465,11 +465,11 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task GetCheckpointPrefersSequenceNumberAsTheStartingPosition()
+        public async Task GetCheckpointPrefersOffsetAsTheStartingPosition()
         {
-            var offset = 13;
+            var offset = "13";
             var sequenceNumber = 7777;
-            var expectedStartingPosition = EventPosition.FromSequenceNumber(sequenceNumber, false);
+            var expectedStartingPosition = EventPosition.FromOffset(offset, false);
             var partition = Guid.NewGuid().ToString();
 
             var blobList = new List<BlobItem>
@@ -481,7 +481,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                            new Dictionary<string, string>
                                            {
                                                {BlobMetadataKey.OwnerIdentifier, Guid.NewGuid().ToString()},
-                                               {BlobMetadataKey.Offset, offset.ToString()},
+                                               {BlobMetadataKey.Offset, offset},
                                                {BlobMetadataKey.SequenceNumber, sequenceNumber.ToString()}
                                            })
             };
