@@ -14,12 +14,23 @@ public class ClientResult
     private PipelineResponse? _response;
 
     /// <summary>
+    /// Create a new instance of <see cref="ClientResult"/>.
+    /// </summary>
+    /// <remarks>If no <see cref="PipelineResponse"/> is provided when the
+    /// <see cref="ClientResult"/> instance is created, it is expected that
+    /// a derived type will call <see cref="SetRawResponse(PipelineResponse)"/>
+    /// prior to a user calling <see cref="GetRawResponse"/>.</remarks>
+    protected ClientResult()
+    {
+    }
+
+    /// <summary>
     /// Create a new instance of <see cref="ClientResult"/> from a service
     /// response.
     /// </summary>
     /// <param name="response">The <see cref="PipelineResponse"/> received
     /// from the service.</param>
-    protected ClientResult(PipelineResponse? response)
+    protected ClientResult(PipelineResponse response)
     {
         _response = response;
     }

@@ -13,7 +13,7 @@ public abstract class AsyncClientResultCollection<T> : ClientResult, IAsyncEnume
     // Constructor overload for collection implementations that postpone
     // sending a request until GetAsyncEnumerator is called. This will typically
     // be used by collections returned from client convenience methods.
-    protected internal AsyncClientResultCollection() : base(default)
+    protected internal AsyncClientResultCollection() : base()
     {
     }
 

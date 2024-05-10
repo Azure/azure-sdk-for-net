@@ -9,8 +9,8 @@ namespace System.ClientModel
     }
     public abstract partial class AsyncClientResultCollection<T> : System.ClientModel.ClientResult, System.Collections.Generic.IAsyncEnumerable<T>
     {
-        protected internal AsyncClientResultCollection() : base (default(System.ClientModel.Primitives.PipelineResponse)) { }
-        protected internal AsyncClientResultCollection(System.ClientModel.Primitives.PipelineResponse response) : base (default(System.ClientModel.Primitives.PipelineResponse)) { }
+        protected internal AsyncClientResultCollection() { }
+        protected internal AsyncClientResultCollection(System.ClientModel.Primitives.PipelineResponse response) { }
         public abstract System.Collections.Generic.IAsyncEnumerator<T> GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     }
     public abstract partial class BinaryContent : System.IDisposable
@@ -26,7 +26,8 @@ namespace System.ClientModel
     }
     public partial class ClientResult
     {
-        protected ClientResult(System.ClientModel.Primitives.PipelineResponse? response) { }
+        protected ClientResult() { }
+        protected ClientResult(System.ClientModel.Primitives.PipelineResponse response) { }
         public static System.ClientModel.ClientResult<T?> FromOptionalValue<T>(T? value, System.ClientModel.Primitives.PipelineResponse response) { throw null; }
         public static System.ClientModel.ClientResult FromResponse(System.ClientModel.Primitives.PipelineResponse response) { throw null; }
         public static System.ClientModel.ClientResult<T> FromValue<T>(T value, System.ClientModel.Primitives.PipelineResponse response) { throw null; }
@@ -35,8 +36,8 @@ namespace System.ClientModel
     }
     public abstract partial class ClientResultCollection<T> : System.ClientModel.ClientResult, System.Collections.Generic.IEnumerable<T>, System.Collections.IEnumerable
     {
-        protected internal ClientResultCollection() : base (default(System.ClientModel.Primitives.PipelineResponse)) { }
-        protected internal ClientResultCollection(System.ClientModel.Primitives.PipelineResponse response) : base (default(System.ClientModel.Primitives.PipelineResponse)) { }
+        protected internal ClientResultCollection() { }
+        protected internal ClientResultCollection(System.ClientModel.Primitives.PipelineResponse response) { }
         public abstract System.Collections.Generic.IEnumerator<T> GetEnumerator();
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
@@ -50,7 +51,7 @@ namespace System.ClientModel
     }
     public partial class ClientResult<T> : System.ClientModel.ClientResult
     {
-        protected internal ClientResult(T value, System.ClientModel.Primitives.PipelineResponse response) : base (default(System.ClientModel.Primitives.PipelineResponse)) { }
+        protected internal ClientResult(T value, System.ClientModel.Primitives.PipelineResponse response) { }
         public virtual T Value { get { throw null; } }
         public static implicit operator T (System.ClientModel.ClientResult<T> result) { throw null; }
     }
