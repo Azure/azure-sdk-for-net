@@ -394,7 +394,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Read the initial set back, marking the offset and sequence number of the last event in the initial set.
 
-            var startingOffset = 0L;
+            string startingOffset = null;
 
             await using (var consumer = new EventHubConsumerClient(scope.ConsumerGroups.First(), connectionString))
             {

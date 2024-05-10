@@ -1149,7 +1149,7 @@ namespace Azure.Messaging.EventHubs.Tests
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var createConsumerCalls = 0;
-            var expectedStartingPosition = EventPosition.FromOffset(775, true);
+            var expectedStartingPosition = EventPosition.FromOffset("775", true);
             var partitionId = "27";
             var partitionIds = new[] { "0", partitionId, "11" };
             var ownedPartitions = new List<string> { partitionId };

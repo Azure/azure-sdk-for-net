@@ -815,7 +815,7 @@ namespace Azure.Messaging.EventHubs.Primitives
 
                                 lastEvent = (eventBatch != null && eventBatch.Count > 0) ? eventBatch[eventBatch.Count - 1] : null;
 
-                                if ((lastEvent != null) && (lastEvent.Offset != long.MinValue))
+                                if (!string.IsNullOrEmpty(lastEvent.Offset))
                                 {
                                     startingPosition = EventPosition.FromOffset(lastEvent.Offset, false);
                                 }

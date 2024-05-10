@@ -362,7 +362,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task GetCheckpointUsesOffsetAsTheStartingPositionWhenNoSequenceNumberIsPresent()
         {
-            var expectedOffset = 13;
+            var expectedOffset = "13";
             var expectedStartingPosition = EventPosition.FromOffset(expectedOffset, false);
             var partition = Guid.NewGuid().ToString();
 

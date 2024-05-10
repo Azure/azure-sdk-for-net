@@ -33,11 +33,11 @@ namespace Azure.Messaging.EventHubs.Amqp
         public static void PopulateFromEventProperties(this AmqpAnnotatedMessage instance,
                                                        IDictionary<string, object> properties = null,
                                                        long? sequenceNumber = null,
-                                                       long? offset = null,
+                                                       string offset = null,
                                                        DateTimeOffset? enqueuedTime = null,
                                                        string partitionKey = null,
                                                        long? lastPartitionSequenceNumber = null,
-                                                       long? lastPartitionOffset = null,
+                                                       string lastPartitionOffset = null,
                                                        DateTimeOffset? lastPartitionEnqueuedTime = null,
                                                        DateTimeOffset? lastPartitionPropertiesRetrievalTime = null)
         {
@@ -51,9 +51,9 @@ namespace Azure.Messaging.EventHubs.Amqp
                instance.MessageAnnotations[AmqpProperty.SequenceNumber.ToString()] = sequenceNumber.Value;
            }
 
-           if (offset.HasValue)
+           if (!string.IsNullOrEmpty(offset))
            {
-               instance.MessageAnnotations[AmqpProperty.Offset.ToString()] = offset.Value;
+               instance.MessageAnnotations[AmqpProperty.Offset.ToString()] = offset;
            }
 
            if (enqueuedTime.HasValue)
@@ -71,9 +71,9 @@ namespace Azure.Messaging.EventHubs.Amqp
                instance.DeliveryAnnotations[AmqpProperty.PartitionLastEnqueuedSequenceNumber.ToString()] = lastPartitionSequenceNumber.Value;
            }
 
-           if (lastPartitionOffset.HasValue)
+           if (!string.IsNullOrEmpty(lastPartitionOffset))
            {
-               instance.DeliveryAnnotations[AmqpProperty.PartitionLastEnqueuedOffset.ToString()] = lastPartitionOffset.Value;
+               instance.DeliveryAnnotations[AmqpProperty.PartitionLastEnqueuedOffset.ToString()] = lastPartitionOffset;
            }
 
            if (lastPartitionEnqueuedTime.HasValue)

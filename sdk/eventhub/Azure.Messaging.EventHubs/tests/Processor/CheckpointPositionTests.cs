@@ -72,7 +72,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void FromEventSetsProperties()
         {
             var sequence = 4566;
-            var eventData = new EventData(new BinaryData("Hello"), sequenceNumber: sequence, offset: 123);
+            var eventData = new EventData(new BinaryData("Hello"), sequenceNumber: sequence, offset: "123");
 
             var checkpoint = CheckpointPosition.FromEvent(eventData);
 
@@ -102,7 +102,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ToStringReflectsTheStateFromEventData()
         {
-            var offset = 400;
+            var offset = "400";
             var sequence = 121;
             var eventData = new EventData(new BinaryData("Hello"), sequenceNumber: sequence, offset: offset);
 

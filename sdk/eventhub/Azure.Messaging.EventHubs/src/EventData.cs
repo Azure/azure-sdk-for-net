@@ -553,11 +553,11 @@ namespace Azure.Messaging.EventHubs
                            IDictionary<string, object> properties = null,
                            IReadOnlyDictionary<string, object> systemProperties = null,
                            long? sequenceNumber = null,
-                           long? offset = null,
+                           string offset = null,
                            DateTimeOffset? enqueuedTime = null,
                            string partitionKey = null,
                            long? lastPartitionSequenceNumber = null,
-                           long? lastPartitionOffset = null,
+                           string lastPartitionOffset = null,
                            DateTimeOffset? lastPartitionEnqueuedTime = null,
                            DateTimeOffset? lastPartitionPropertiesRetrievalTime = null,
                            int? publishedSequenceNumber = null,
@@ -621,7 +621,7 @@ namespace Azure.Messaging.EventHubs
                             IDictionary<string, object> properties = null,
                             IReadOnlyDictionary<string, object> systemProperties = null,
                             long sequenceNumber = long.MinValue,
-                            long offset = long.MinValue,
+                            string offset = null,
                             DateTimeOffset enqueuedTime = default,
                             string partitionKey = null) : this(eventBody, properties, systemProperties, sequenceNumber, offset, enqueuedTime, partitionKey, lastPartitionSequenceNumber: null)
         {
@@ -653,7 +653,7 @@ namespace Azure.Messaging.EventHubs
                             IDictionary<string, object> properties = null,
                             IReadOnlyDictionary<string, object> systemProperties = null,
                             long sequenceNumber = long.MinValue,
-                            long offset = long.MinValue,
+                            string offset = null,
                             DateTimeOffset enqueuedTime = default,
                             string partitionKey = null) : this(new BinaryData(eventBody), properties, systemProperties, sequenceNumber, offset, enqueuedTime, partitionKey, lastPartitionSequenceNumber: null)
         {

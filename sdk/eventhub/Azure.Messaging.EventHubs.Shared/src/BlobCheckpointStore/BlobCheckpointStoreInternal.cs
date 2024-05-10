@@ -501,24 +501,21 @@ namespace Azure.Messaging.EventHubs.Primitives
                                                           DateTimeOffset modifiedDate)
         {
             var startingPosition = default(EventPosition?);
-            var offset = default(long?);
+            string offset = null;
             var sequenceNumber = default(long?);
             var clientIdentifier = default(string);
 
+            if (metadata.TryGetValue(BlobMetadataKey.Offset, out var offsetStr) && !string.IsNullOrEmpty(offsetStr))
+            {
+                offset = offsetStr;
+                startingPosition ??= EventPosition.FromOffset(offsetStr, false);
+            }
             if (metadata.TryGetValue(BlobMetadataKey.SequenceNumber, out var sequenceStr) && long.TryParse(sequenceStr, NumberStyles.Integer, CultureInfo.InvariantCulture, out var sequenceResult))
             {
                 sequenceNumber = sequenceResult;
                 if (sequenceNumber != long.MinValue) // If the sequence number is not equal to the default (long.MinValue), then a value was passed in.
                 {
                     startingPosition = EventPosition.FromSequenceNumber(sequenceResult, false);
-                }
-            }
-            if (metadata.TryGetValue(BlobMetadataKey.Offset, out var offsetStr) && long.TryParse(offsetStr, NumberStyles.Integer, CultureInfo.InvariantCulture, out var offsetResult))
-            {
-                offset = offsetResult;
-                if (offset != long.MinValue) // If the offset is not equal to the default (long.MinValue), then a value was passed in.
-                {
-                    startingPosition ??= EventPosition.FromOffset(offsetResult, false);
                 }
             }
             if (metadata.TryGetValue(BlobMetadataKey.ClientIdentifier, out var idStr))
@@ -577,16 +574,16 @@ namespace Azure.Messaging.EventHubs.Primitives
 
             if (TryReadLegacyCheckpoint(
                 memoryStream.GetBuffer().AsSpan(0, (int)memoryStream.Length),
-                out long? offset,
+                out string offset,
                 out long? sequenceNumber))
             {
-                if (sequenceNumber.HasValue && sequenceNumber.Value != long.MinValue)
+                if (!string.IsNullOrEmpty(offset))
+                {
+                    startingPosition ??= EventPosition.FromOffset(offset, false);
+                }
+                else if (sequenceNumber.HasValue && sequenceNumber.Value != long.MinValue)
                 {
                     startingPosition = EventPosition.FromSequenceNumber(sequenceNumber.Value, false);
-                }
-                else if (offset.HasValue)
-                {
-                    startingPosition ??= EventPosition.FromOffset(offset.Value, false);
                 }
                 else
                 {
@@ -616,7 +613,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         }
 
         /// <summary>
-        ///   Attempts to read a legacy checkpoint JSON format and extract an offset and a sequence number
+        ///   Attempts to read a legacy checkpoint JSON format and extract an offset and a sequence number.
         /// </summary>
         ///
         /// <param name="data">The binary representation of the checkpoint JSON.</param>
@@ -636,7 +633,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// </remarks>
         ///
         private static bool TryReadLegacyCheckpoint(Span<byte> data,
-                                                    out long? offset,
+                                                    out string offset,
                                                     out long? sequenceNumber)
         {
             offset = null;
@@ -666,14 +663,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                             var offsetString = jsonReader.GetString();
                             if (!string.IsNullOrEmpty(offsetString))
                             {
-                                if (long.TryParse(offsetString, out long offsetValue))
-                                {
-                                    offset = offsetValue;
-                                }
-                                else
-                                {
-                                    return false;
-                                }
+                                offset = offsetString;
                             }
 
                             break;
@@ -975,7 +965,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///
         internal class BlobStorageCheckpoint : EventProcessorCheckpoint
         {
-            public long? Offset { get; set; }
+            public string Offset { get; set; }
             public long? SequenceNumber { get; set; }
         }
     }

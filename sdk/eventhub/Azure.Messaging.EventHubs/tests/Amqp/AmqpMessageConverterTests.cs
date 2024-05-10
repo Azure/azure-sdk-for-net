@@ -1240,7 +1240,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(eventData.SequenceNumber, Is.EqualTo(sequenceNumber), "The sequence number should match.");
             Assert.That(eventData.EnqueuedTime, Is.EqualTo(enqueuedTime), "The enqueue time should match.");
             Assert.That(eventData.PartitionKey, Is.EqualTo(partitionKey), "The partition key should match.");
-            Assert.That(eventData.LastPartitionOffset.HasValue, Is.False, "The last offset should not be set.");
+            Assert.That(eventData.LastPartitionOffset, Is.Null, "The last offset should not be set.");
             Assert.That(eventData.LastPartitionSequenceNumber.HasValue, Is.False, "The last sequence number should not be set.");
             Assert.That(eventData.LastPartitionEnqueuedTime.HasValue, Is.False, "The last enqueued time should not be set.");
             Assert.That(eventData.LastPartitionPropertiesRetrievalTime.HasValue, Is.False, "The last retrieval time should not be set.");

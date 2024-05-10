@@ -330,11 +330,11 @@ namespace Azure.Messaging.EventHubs.Tests
             };
 
             var sequenceNumber = 123L;
-            var offset = 456L;
+            var offset = "456L";
             var enqueueTime = new DateTimeOffset(2015, 10, 27, 00, 00, 00, TimeSpan.Zero);
             var partitionKey = "fake-key";
             var lastSequence = 321L;
-            var lastOffset = 654L;
+            var lastOffset = "654L";
             var lastEnqueue = new DateTimeOffset(2012, 03, 04, 08, 00, 00, TimeSpan.Zero);
             var lastRetrieve = new DateTimeOffset(2020, 01, 01, 05, 15, 37, TimeSpan.Zero);
 
@@ -361,11 +361,11 @@ namespace Azure.Messaging.EventHubs.Tests
         public void SystemPropertiesReturnCustomDefaultValuesWhenNotInTheMessage()
         {
             var sequenceNumber = 123L;
-            var offset = 456L;
+            var offset = "456L";
             var enqueueTime = new DateTimeOffset(2015, 10, 27, 00, 00, 00, TimeSpan.Zero);
             var partitionKey = "fake-key";
             var lastSequence = 321L;
-            var lastOffset = 654L;
+            var lastOffset = "654L";
             var lastEnqueue = new DateTimeOffset(2012, 03, 04, 08, 00, 00, TimeSpan.Zero);
             var lastRetrieve = new DateTimeOffset(2020, 01, 01, 05, 15, 37, TimeSpan.Zero);
             var message = CreateDataBodyMessageWithSystemProperties(default, default, default, default, default, default, default, default);

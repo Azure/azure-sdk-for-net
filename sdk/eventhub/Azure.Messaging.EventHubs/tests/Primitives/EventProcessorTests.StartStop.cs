@@ -1364,7 +1364,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var firstCall = true;
             var partition = new EventProcessorPartition { PartitionId = "99" };
-            var position = EventPosition.FromOffset(12);
+            var position = EventPosition.FromOffset("12");
             var options = new EventProcessorOptions { TrackLastEnqueuedEventProperties = false, RetryOptions = new EventHubsRetryOptions { MaximumRetries = 0, MaximumDelay = TimeSpan.FromMilliseconds(5) } };
             var handlerCompletion = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var mockEventSource = new Mock<EventHubsEventSource>();

@@ -42,7 +42,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitionId = "27";
             var partitionIds = new[] { "0", partitionId };
             var ownedPartitions = new List<string>();
-            var lastEventProperties = new LastEnqueuedEventProperties(1234, 9876, DateTimeOffset.Parse("2015-10-27T00:00:00Z"), DateTimeOffset.Parse("2012-03-04T08:30:00Z"));
+            var lastEventProperties = new LastEnqueuedEventProperties(1234, "9876", DateTimeOffset.Parse("2015-10-27T00:00:00Z"), DateTimeOffset.Parse("2012-03-04T08:30:00Z"));
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var options = new EventProcessorOptions { LoadBalancingUpdateInterval = TimeSpan.FromMinutes(5), TrackLastEnqueuedEventProperties = true };
             var mockLoadBalancer = new Mock<PartitionLoadBalancer>();
@@ -112,7 +112,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var partitionId = "27";
             var partitionIds = new[] { "0", partitionId };
-            var lastEventProperties = new LastEnqueuedEventProperties(1234, 9876, DateTimeOffset.Parse("2015-10-27T00:00:00Z"), DateTimeOffset.Parse("2012-03-04T08:30:00Z"));
+            var lastEventProperties = new LastEnqueuedEventProperties(1234, "9876", DateTimeOffset.Parse("2015-10-27T00:00:00Z"), DateTimeOffset.Parse("2012-03-04T08:30:00Z"));
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var options = new EventProcessorOptions { LoadBalancingUpdateInterval = TimeSpan.FromMinutes(5), TrackLastEnqueuedEventProperties = true };
             var mockLoadBalancer = new Mock<PartitionLoadBalancer>();
