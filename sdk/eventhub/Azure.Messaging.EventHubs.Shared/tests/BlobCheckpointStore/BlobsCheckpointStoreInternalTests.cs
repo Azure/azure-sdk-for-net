@@ -428,48 +428,10 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task GetCheckpointUsesSequenceNumberAsTheStartingPositionWhenOffsetIsMinValue()
+        public async Task GetCheckpointUsesOffsetAsTheStartingPosition()
         {
-            var expectedSequence = 133;
-            var expectedStartingPosition = EventPosition.FromSequenceNumber(expectedSequence, false);
-            var partition = Guid.NewGuid().ToString();
-
-            var blobList = new List<BlobItem>
-            {
-                BlobsModelFactory.BlobItem($"{FullyQualifiedNamespaceLowercase}/{EventHubNameLowercase}/{ConsumerGroupLowercase}/checkpoint/{partition}",
-                                           false,
-                                           BlobsModelFactory.BlobItemProperties(true, lastModified: DateTime.UtcNow, eTag: new ETag(MatchingEtag)),
-                                           "snapshot",
-                                           new Dictionary<string, string>
-                                           {
-                                               {BlobMetadataKey.OwnerIdentifier, Guid.NewGuid().ToString()},
-                                               {BlobMetadataKey.Offset, long.MinValue.ToString()},
-                                               {BlobMetadataKey.SequenceNumber, expectedSequence.ToString()}
-                                           })
-            };
-
-            var target = new BlobCheckpointStoreInternal(new MockBlobContainerClient() { Blobs = blobList });
-            var checkpoint = await target.GetCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partition, CancellationToken.None);
-
-            Assert.That(checkpoint, Is.Not.Null, "A checkpoint should have been returned.");
-            Assert.That(checkpoint.StartingPosition, Is.EqualTo(expectedStartingPosition));
-
-            Assert.That(checkpoint, Is.InstanceOf<BlobCheckpointStoreInternal.BlobStorageCheckpoint>(), "Checkpoint instance was not the expected type.");
-            var blobCheckpoint = (BlobCheckpointStoreInternal.BlobStorageCheckpoint)checkpoint;
-            Assert.That(blobCheckpoint.Offset, Is.EqualTo(long.MinValue), "The offset should have been long.MinValue.");
-            Assert.That(expectedSequence, Is.EqualTo(blobCheckpoint.SequenceNumber), "Checkpoint sequence number did not have the correct value.");
-        }
-
-        /// <summary>
-        ///   Verifies basic functionality of GetCheckpointAsync and ensures the starting position is set correctly.
-        /// </summary>
-        ///
-        [Test]
-        public async Task GetCheckpointUsesSequenceNumberAsTheStartingPositionWhenInvalidOffsetIsPresent()
-        {
-            var expectedSequence = 133;
-            var expectedOffset = "invalid offset";
-            var expectedStartingPosition = EventPosition.FromSequenceNumber(expectedSequence, false);
+            var expectedOffset = "133";
+            var expectedStartingPosition = EventPosition.FromOffset(expectedOffset, false);
             var partition = Guid.NewGuid().ToString();
 
             var blobList = new List<BlobItem>
@@ -482,7 +444,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                            {
                                                {BlobMetadataKey.OwnerIdentifier, Guid.NewGuid().ToString()},
                                                {BlobMetadataKey.Offset, expectedOffset},
-                                               {BlobMetadataKey.SequenceNumber, expectedSequence.ToString()}
+                                               {BlobMetadataKey.SequenceNumber, long.MinValue.ToString()}
                                            })
             };
 
@@ -494,8 +456,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(checkpoint, Is.InstanceOf<BlobCheckpointStoreInternal.BlobStorageCheckpoint>(), "Checkpoint instance was not the expected type.");
             var blobCheckpoint = (BlobCheckpointStoreInternal.BlobStorageCheckpoint)checkpoint;
-            Assert.That(blobCheckpoint.Offset, Is.Null, $"The offset should not have been populated, as it was an invalid number.");
-            Assert.That(expectedSequence, Is.EqualTo(blobCheckpoint.SequenceNumber), "Checkpoint sequence number did not have the correct value.");
+            Assert.That(blobCheckpoint.SequenceNumber, Is.EqualTo(long.MinValue), "The offset should have been long.MinValue.");
+            Assert.That(expectedOffset, Is.EqualTo(blobCheckpoint.Offset), "Checkpoint sequence number did not have the correct value.");
         }
 
         /// <summary>
@@ -548,7 +510,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                            new Dictionary<string, string>
                                            {
                                                {BlobMetadataKey.OwnerIdentifier, Guid.NewGuid().ToString()},
-                                               {BlobMetadataKey.Offset, "invalid"},
+                                               {BlobMetadataKey.Offset, ""},
                                                {BlobMetadataKey.SequenceNumber, long.MinValue.ToString()}
                                            })
             };
@@ -569,7 +531,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task GetCheckpointUsesSequenceNumberAsTheStartingPositionWhenPresentInLegacyCheckpoint()
+        public async Task GetCheckpointUsesOffsetAsTheStartingPositionWhenPresentInLegacyCheckpoint()
         {
             var blobList = new List<BlobItem>
             {
@@ -596,7 +558,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var checkpoint = await target.GetCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, "0", CancellationToken.None);
 
             Assert.That(checkpoint, Is.Not.Null, "A checkpoints should have been returned.");
-            Assert.That(checkpoint.StartingPosition, Is.EqualTo(EventPosition.FromSequenceNumber(960180, false)));
+            Assert.That(checkpoint.StartingPosition, Is.EqualTo(EventPosition.FromOffset("13", false)));
             Assert.That(checkpoint.PartitionId, Is.EqualTo("0"));
         }
 
@@ -1388,12 +1350,12 @@ namespace Azure.Messaging.EventHubs.Tests
             var checkpoint = await target.GetCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, "0", CancellationToken.None);
 
             Assert.That(checkpoint, Is.Not.Null, "A single checkpoint should have been returned.");
-            Assert.That(checkpoint.StartingPosition, Is.EqualTo(EventPosition.FromSequenceNumber(960182, false)));
+            Assert.That(checkpoint.StartingPosition, Is.EqualTo(EventPosition.FromOffset("14", false)));
             Assert.That(checkpoint.PartitionId, Is.EqualTo("0"));
 
             Assert.That(checkpoint, Is.InstanceOf<BlobCheckpointStoreInternal.BlobStorageCheckpoint>(), "Checkpoint instance was not the expected type.");
             var blobCheckpoint = (BlobCheckpointStoreInternal.BlobStorageCheckpoint)checkpoint;
-            Assert.That(14, Is.EqualTo(blobCheckpoint.Offset), "Checkpoint offset did not have the correct value.");
+            Assert.That("14", Is.EqualTo(blobCheckpoint.Offset), "Checkpoint offset did not have the correct value.");
             Assert.That(960182, Is.EqualTo(blobCheckpoint.SequenceNumber), "Checkpoint sequence number did not have the correct value.");
         }
 
@@ -1430,7 +1392,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var checkpoint = await target.GetCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, "0", CancellationToken.None);
 
             Assert.That(checkpoint, Is.Not.Null, "A set of checkpoints should have been returned.");
-            Assert.That(checkpoint.StartingPosition, Is.EqualTo(EventPosition.FromSequenceNumber(960180, false)));
+            Assert.That(checkpoint.StartingPosition, Is.EqualTo(EventPosition.FromOffset("13", false)));
             Assert.That(checkpoint.PartitionId, Is.EqualTo("0"));
         }
 

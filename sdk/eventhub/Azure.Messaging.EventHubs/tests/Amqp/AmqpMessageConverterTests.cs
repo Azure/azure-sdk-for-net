@@ -1214,7 +1214,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void CreateEventFromMessagePopulatesTypedSystemProperties()
         {
-            var offset = 123;
+            var offset = "123";
             var sequenceNumber = (long.MaxValue - 10);
             var enqueuedTime = DateTimeOffset.Parse("2015-10-27T12:00:00Z");
             var partitionKey = "OMG! partition!";
@@ -1225,7 +1225,7 @@ namespace Azure.Messaging.EventHubs.Tests
             message.ApplicationProperties.Map.Add("First", 1);
             message.ApplicationProperties.Map.Add("Second", "2");
 
-            message.MessageAnnotations.Map.Add(AmqpProperty.Offset, offset.ToString());
+            message.MessageAnnotations.Map.Add(AmqpProperty.Offset, offset);
             message.MessageAnnotations.Map.Add(AmqpProperty.SequenceNumber, sequenceNumber);
             message.MessageAnnotations.Map.Add(AmqpProperty.EnqueuedTime, enqueuedTime.Ticks);
             message.MessageAnnotations.Map.Add(AmqpProperty.PartitionKey, partitionKey);
@@ -1291,8 +1291,8 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void CreateEventFromMessagePopulatesTypedSystemPropertiesAndMetrics()
         {
-            var offset = 123;
-            var lastOffset = 987;
+            var offset = "123";
+            var lastOffset = "987";
             var sequenceNumber = (long.MaxValue - 10);
             var lastSequenceNumber = (long.MaxValue - 100);
             var enqueuedTime = DateTimeOffset.Parse("2015-10-27T12:00:00Z");
@@ -1306,13 +1306,13 @@ namespace Azure.Messaging.EventHubs.Tests
             message.ApplicationProperties.Map.Add("First", 1);
             message.ApplicationProperties.Map.Add("Second", "2");
 
-            message.MessageAnnotations.Map.Add(AmqpProperty.Offset, offset.ToString());
+            message.MessageAnnotations.Map.Add(AmqpProperty.Offset, offset);
             message.MessageAnnotations.Map.Add(AmqpProperty.SequenceNumber, sequenceNumber);
             message.MessageAnnotations.Map.Add(AmqpProperty.EnqueuedTime, enqueuedTime.Ticks);
             message.MessageAnnotations.Map.Add(AmqpProperty.PartitionKey, partitionKey);
 
             message.DeliveryAnnotations.Map.Add(AmqpProperty.PartitionLastEnqueuedSequenceNumber, lastSequenceNumber);
-            message.DeliveryAnnotations.Map.Add(AmqpProperty.PartitionLastEnqueuedOffset, lastOffset.ToString());
+            message.DeliveryAnnotations.Map.Add(AmqpProperty.PartitionLastEnqueuedOffset, lastOffset);
             message.DeliveryAnnotations.Map.Add(AmqpProperty.PartitionLastEnqueuedTimeUtc, lastEnqueuedTime.Ticks);
             message.DeliveryAnnotations.Map.Add(AmqpProperty.LastPartitionPropertiesRetrievalTimeUtc, lastRetrievalTime.Ticks);
 
@@ -1564,11 +1564,11 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void CreateEventFromMessageAllowsAnEmptyMessageWithProperties()
         {
-            var propertyValue = 1;
+            var propertyValue = "1";
 
             using var message = AmqpMessage.Create();
             message.ApplicationProperties.Map.Add("Test", propertyValue);
-            message.MessageAnnotations.Map.Add(AmqpProperty.Offset, propertyValue.ToString());
+            message.MessageAnnotations.Map.Add(AmqpProperty.Offset, propertyValue);
 
             var eventData = new AmqpMessageConverter().CreateEventFromMessage(message);
             Assert.That(eventData, Is.Not.Null, "The event should have been created.");
@@ -2046,7 +2046,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var partition = "55";
             var beginSequenceNumber = 555L;
             var lastSequenceNumber = 666L;
-            var lastOffset = 777L;
+            var lastOffset = "777L";
             var lastEnqueueTime = DateTimeOffset.Parse("2015-10-27T00:00:00z");
             var isEmpty = false;
             var converter = new AmqpMessageConverter();
@@ -2056,7 +2056,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 { AmqpManagement.ResponseMap.PartitionIdentifier, partition },
                 { AmqpManagement.ResponseMap.PartitionBeginSequenceNumber, beginSequenceNumber },
                 { AmqpManagement.ResponseMap.PartitionLastEnqueuedSequenceNumber, lastSequenceNumber },
-                { AmqpManagement.ResponseMap.PartitionLastEnqueuedOffset, lastOffset.ToString() },
+                { AmqpManagement.ResponseMap.PartitionLastEnqueuedOffset, lastOffset },
                 { AmqpManagement.ResponseMap.PartitionLastEnqueuedTimeUtc, lastEnqueueTime.UtcDateTime },
                 { AmqpManagement.ResponseMap.PartitionRuntimeInfoPartitionIsEmpty, isEmpty }
             };

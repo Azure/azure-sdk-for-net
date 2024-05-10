@@ -145,7 +145,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void NonIdempotentStatePropertyAcessorsDeferToTheAmqpMessage()
         {
             var sequenceNumber = 123L;
-            var offset = 456L;
+            var offset = "456L";
             var enqueueTime = new DateTimeOffset(2015, 10, 27, 00, 00, 00, TimeSpan.Zero);
             var partitionKey = "fake-key";
             var lastSequence = 321L;
@@ -341,7 +341,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         private static AmqpAnnotatedMessage CreateFullyPopulatedAmqpMessage(long sequenceNumber,
                                                                             long lastSequenceNumber,
-                                                                            long offset,
+                                                                            string offset,
                                                                             long lastOffset,
                                                                             string partitionKey,
                                                                             DateTimeOffset enqueueTime,
