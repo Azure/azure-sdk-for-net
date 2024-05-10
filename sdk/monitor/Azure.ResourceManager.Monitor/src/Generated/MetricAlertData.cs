@@ -62,12 +62,13 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="criteria">
         /// defines the specific alert criteria information.
         /// Please note <see cref="MetricAlertCriteria"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MetricAlertMultipleResourceMultipleMetricCriteria"/>, <see cref="MetricAlertSingleResourceMultipleMetricCriteria"/> and <see cref="WebtestLocationAvailabilityCriteria"/>.
+        /// The available derived classes include <see cref="MetricAlertSingleResourceMultipleMetricCriteria"/>, <see cref="WebtestLocationAvailabilityCriteria"/> and <see cref="MetricAlertMultipleResourceMultipleMetricCriteria"/>.
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scopes"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scopes"/> or <paramref name="criteria"/> is null. </exception>
         public MetricAlertData(AzureLocation location, int severity, bool isEnabled, IEnumerable<string> scopes, TimeSpan evaluationFrequency, TimeSpan windowSize, MetricAlertCriteria criteria) : base(location)
         {
             Argument.AssertNotNull(scopes, nameof(scopes));
+            Argument.AssertNotNull(criteria, nameof(criteria));
 
             Severity = severity;
             IsEnabled = isEnabled;
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="criteria">
         /// defines the specific alert criteria information.
         /// Please note <see cref="MetricAlertCriteria"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MetricAlertMultipleResourceMultipleMetricCriteria"/>, <see cref="MetricAlertSingleResourceMultipleMetricCriteria"/> and <see cref="WebtestLocationAvailabilityCriteria"/>.
+        /// The available derived classes include <see cref="MetricAlertSingleResourceMultipleMetricCriteria"/>, <see cref="WebtestLocationAvailabilityCriteria"/> and <see cref="MetricAlertMultipleResourceMultipleMetricCriteria"/>.
         /// </param>
         /// <param name="isAutoMitigateEnabled"> the flag that indicates whether the alert should be auto resolved or not. The default is true. </param>
         /// <param name="actions"> the array of actions that are performed when the alert rule becomes active, and when an alert condition is resolved. </param>
@@ -145,7 +146,7 @@ namespace Azure.ResourceManager.Monitor
         /// <summary>
         /// defines the specific alert criteria information.
         /// Please note <see cref="MetricAlertCriteria"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MetricAlertMultipleResourceMultipleMetricCriteria"/>, <see cref="MetricAlertSingleResourceMultipleMetricCriteria"/> and <see cref="WebtestLocationAvailabilityCriteria"/>.
+        /// The available derived classes include <see cref="MetricAlertSingleResourceMultipleMetricCriteria"/>, <see cref="WebtestLocationAvailabilityCriteria"/> and <see cref="MetricAlertMultipleResourceMultipleMetricCriteria"/>.
         /// </summary>
         public MetricAlertCriteria Criteria { get; set; }
         /// <summary> the flag that indicates whether the alert should be auto resolved or not. The default is true. </summary>

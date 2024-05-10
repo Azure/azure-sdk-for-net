@@ -75,9 +75,9 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "Microsoft.Azure.Management.Insights.Models.ThresholdRuleCondition": return ThresholdRuleCondition.DeserializeThresholdRuleCondition(element, options);
                     case "Microsoft.Azure.Management.Insights.Models.LocationThresholdRuleCondition": return LocationThresholdRuleCondition.DeserializeLocationThresholdRuleCondition(element, options);
                     case "Microsoft.Azure.Management.Insights.Models.ManagementEventRuleCondition": return ManagementEventRuleCondition.DeserializeManagementEventRuleCondition(element, options);
-                    case "Microsoft.Azure.Management.Insights.Models.ThresholdRuleCondition": return ThresholdRuleCondition.DeserializeThresholdRuleCondition(element, options);
                 }
             }
             return UnknownRuleCondition.DeserializeUnknownRuleCondition(element, options);
