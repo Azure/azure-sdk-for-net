@@ -200,13 +200,8 @@ namespace Azure.Data.AppConfiguration
                     case 200:
                     case 201:
                         return await CreateResponseAsync(response, cancellationToken).ConfigureAwait(false);
-                    case 412:
-                    case 401:
-                    case 403:
-                    case 429:
-                        throw new RequestFailedException(response, null, new ConfigurationRequestFailedDetailsParser());
                     default:
-                        throw new RequestFailedException(response);
+                        throw new RequestFailedException(response, null, new ConfigurationRequestFailedDetailsParser());
                 }
             }
             catch (Exception e)
@@ -242,13 +237,8 @@ namespace Azure.Data.AppConfiguration
                     case 200:
                     case 201:
                         return CreateResponse(response);
-                    case 412:
-                    case 401:
-                    case 403:
-                    case 429:
-                        throw new RequestFailedException(response, null, new ConfigurationRequestFailedDetailsParser());
                     default:
-                        throw new RequestFailedException(response);
+                        throw new RequestFailedException(response, null, new ConfigurationRequestFailedDetailsParser());
                 }
             }
             catch (Exception e)
@@ -315,10 +305,6 @@ namespace Azure.Data.AppConfiguration
                 return response.Status switch
                 {
                     200 => await CreateResponseAsync(response, cancellationToken).ConfigureAwait(false),
-                    409 => throw new RequestFailedException(response, null, new ConfigurationRequestFailedDetailsParser()),
-                    401 => throw new RequestFailedException(response, null, new ConfigurationRequestFailedDetailsParser()),
-                    403 => throw new RequestFailedException(response, null, new ConfigurationRequestFailedDetailsParser()),
-                    429 => throw new RequestFailedException(response, null, new ConfigurationRequestFailedDetailsParser()),
 
                     // Throws on 412 if resource was modified.
                     _ => throw new RequestFailedException(response),
@@ -361,13 +347,9 @@ namespace Azure.Data.AppConfiguration
                 return response.Status switch
                 {
                     200 => CreateResponse(response),
-                    409 => throw new RequestFailedException(response, null, new ConfigurationRequestFailedDetailsParser()),
-                    401 => throw new RequestFailedException(response, null, new ConfigurationRequestFailedDetailsParser()),
-                    403 => throw new RequestFailedException(response, null, new ConfigurationRequestFailedDetailsParser()),
-                    429 => throw new RequestFailedException(response, null, new ConfigurationRequestFailedDetailsParser()),
 
                     // Throws on 412 if resource was modified.
-                    _ => throw new RequestFailedException(response),
+                    _ => throw new RequestFailedException(response, null, new ConfigurationRequestFailedDetailsParser()),
                 };
             }
             catch (Exception e)
@@ -453,13 +435,9 @@ namespace Azure.Data.AppConfiguration
                 {
                     200 => response,
                     204 => response,
-                    409 => throw new RequestFailedException(response, null, new ConfigurationRequestFailedDetailsParser()),
-                    401 => throw new RequestFailedException(response, null, new ConfigurationRequestFailedDetailsParser()),
-                    403 => throw new RequestFailedException(response, null, new ConfigurationRequestFailedDetailsParser()),
-                    429 => throw new RequestFailedException(response, null, new ConfigurationRequestFailedDetailsParser()),
 
                     // Throws on 412 if resource was modified.
-                    _ => throw new RequestFailedException(response)
+                    _ => throw new RequestFailedException(response, null, new ConfigurationRequestFailedDetailsParser()),
                 };
             }
             catch (Exception e)
@@ -485,13 +463,9 @@ namespace Azure.Data.AppConfiguration
                 {
                     200 => response,
                     204 => response,
-                    409 => throw new RequestFailedException(response, null, new ConfigurationRequestFailedDetailsParser()),
-                    401 => throw new RequestFailedException(response, null, new ConfigurationRequestFailedDetailsParser()),
-                    403 => throw new RequestFailedException(response, null, new ConfigurationRequestFailedDetailsParser()),
-                    429 => throw new RequestFailedException(response, null, new ConfigurationRequestFailedDetailsParser()),
 
                     // Throws on 412 if resource was modified.
-                    _ => throw new RequestFailedException(response)
+                    _ => throw new RequestFailedException(response, null, new ConfigurationRequestFailedDetailsParser()),
                 };
             }
             catch (Exception e)
@@ -614,10 +588,7 @@ namespace Azure.Data.AppConfiguration
                 {
                     200 => await CreateResponseAsync(response, cancellationToken).ConfigureAwait(false),
                     304 => CreateResourceModifiedResponse(response),
-                    401 => throw new RequestFailedException(response, null, new ConfigurationRequestFailedDetailsParser()),
-                    403 => throw new RequestFailedException(response, null, new ConfigurationRequestFailedDetailsParser()),
-                    429 => throw new RequestFailedException(response, null, new ConfigurationRequestFailedDetailsParser()),
-                    _ => throw new RequestFailedException(response),
+                    _ => throw new RequestFailedException(response, null, new ConfigurationRequestFailedDetailsParser())
                 };
             }
             catch (Exception e)
@@ -654,10 +625,7 @@ namespace Azure.Data.AppConfiguration
                 {
                     200 => CreateResponse(response),
                     304 => CreateResourceModifiedResponse(response),
-                    401 => throw new RequestFailedException(response, null, new ConfigurationRequestFailedDetailsParser()),
-                    403 => throw new RequestFailedException(response, null, new ConfigurationRequestFailedDetailsParser()),
-                    429 => throw new RequestFailedException(response, null, new ConfigurationRequestFailedDetailsParser()),
-                    _ => throw new RequestFailedException(response),
+                    _ => throw new RequestFailedException(response, null, new ConfigurationRequestFailedDetailsParser())
                 };
             }
             catch (Exception e)
@@ -1410,10 +1378,7 @@ namespace Azure.Data.AppConfiguration
                     200 => async
                         ? await CreateResponseAsync(response, cancellationToken).ConfigureAwait(false)
                         : CreateResponse(response),
-                    401 => throw new RequestFailedException(response, null, new ConfigurationRequestFailedDetailsParser()),
-                    403 => throw new RequestFailedException(response, null, new ConfigurationRequestFailedDetailsParser()),
-                    429 => throw new RequestFailedException(response, null, new ConfigurationRequestFailedDetailsParser()),
-                    _ => throw new RequestFailedException(response)
+                    _ => throw new RequestFailedException(response, null, new ConfigurationRequestFailedDetailsParser()),
                 };
             }
             catch (Exception e)
@@ -1496,37 +1461,24 @@ namespace Azure.Data.AppConfiguration
 
         private class ConfigurationRequestFailedDetailsParser : RequestFailedDetailsParser
         {
-            private const string TroubleshootingText =
-                "For more information about this error, please see the troubleshooting guide at https://aka.ms/azsdk/net/appconfiguration/troubleshoot";
-            private const string GeneralTsgSectionText = $"{TroubleshootingText}#general-troubleshooting";
-            private const string LimitIssuesTroubleshootingText = $"{TroubleshootingText}#limit-issues";
-            private const string AuthenticationTroubleshootingText = $"{TroubleshootingText}#troubleshooting-authentication-issues";
-            private readonly Dictionary<int, string> _statusCodeToErrorMessage = new()
-            {
-                { 401, AuthenticationTroubleshootingText },
-                { 403, AuthenticationTroubleshootingText },
-                { 409, "The setting is read only" },
-                { 412, "Setting was already present." },
-                { 429, LimitIssuesTroubleshootingText },
-            };
+            private const string TroubleshootingMessage =
+                "For troubleshooting information, see https://aka.ms/azsdk/net/appconfiguration/troubleshoot.";
             public override bool TryParse(Response response, out ResponseError error, out IDictionary<string, string> data)
             {
-                string errorMessage = _statusCodeToErrorMessage.TryGetValue(response.Status, out string err) ? err : GeneralTsgSectionText;
-
                 switch (response.Status)
                 {
                     case 409:
+                        error = new ResponseError(null, $"The setting is read only. {TroubleshootingMessage}");
+                        data = null;
+                        return true;
                     case 412:
-                    case 401:
-                    case 403:
-                    case 429:
-                        error = new ResponseError(null, errorMessage);
+                        error = new ResponseError(null, $"Setting was already present. {TroubleshootingMessage}");
                         data = null;
                         return true;
                     default:
-                        error = null;
+                        error = new ResponseError(null, TroubleshootingMessage);
                         data = null;
-                        return false;
+                        return true;
                 }
             }
         }

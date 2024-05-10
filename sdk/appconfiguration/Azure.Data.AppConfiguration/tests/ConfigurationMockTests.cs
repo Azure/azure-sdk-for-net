@@ -111,10 +111,10 @@ namespace Azure.Data.AppConfiguration.Tests
 
         // This test validates that the client throws an exception with the expected error message when it receives a
         // non-success status code from the service.
-        [TestCase((int)HttpStatusCode.Unauthorized, true)]
-        [TestCase(403, true)]
-        [TestCase((int)HttpStatusCode.NotFound, false)]
-        public void GetUnsucessfulResponse(int statusCode, bool containsTsg)
+        [TestCase((int)HttpStatusCode.Unauthorized)]
+        [TestCase(403)]
+        [TestCase((int)HttpStatusCode.NotFound)]
+        public void GetUnsucessfulResponse(int statusCode)
         {
             var response = new MockResponse(statusCode);
             var mockTransport = new MockTransport(response);
@@ -127,14 +127,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
             Assert.AreEqual(statusCode, exception.Status);
 
-            if (containsTsg)
-            {
-                Assert.True(exception?.Message.Contains(s_troubleshootingLink));
-            }
-            else
-            {
-                Assert.False(exception?.Message.Contains(s_troubleshootingLink));
-            }
+            Assert.True(exception?.Message.Contains(s_troubleshootingLink));
         }
 
         [Test]
