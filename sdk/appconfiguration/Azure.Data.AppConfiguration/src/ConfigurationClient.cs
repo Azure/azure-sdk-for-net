@@ -307,7 +307,7 @@ namespace Azure.Data.AppConfiguration
                     200 => await CreateResponseAsync(response, cancellationToken).ConfigureAwait(false),
 
                     // Throws on 412 if resource was modified.
-                    _ => throw new RequestFailedException(response),
+                    _ => throw new RequestFailedException(response, null, new ConfigurationRequestFailedDetailsParser()),
                 };
             }
             catch (Exception e)
