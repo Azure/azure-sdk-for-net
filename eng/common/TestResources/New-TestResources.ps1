@@ -92,8 +92,13 @@ param (
     [Parameter()]
     [switch] $SuppressVsoCommands = ($null -eq $env:SYSTEM_TEAMPROJECTID),
 
+    # Default behavior is to use -UserAuth
     [Parameter()]
-    [switch] $UserAuth,
+    [switch] $ServicePrincipalAuth,
+
+    [Parameter()]
+    [switch] $FederatedAuth,
+
 
     # Captures any arguments not declared here (no parameter errors)
     # This enables backwards compatibility with old script versions in
@@ -104,6 +109,16 @@ param (
 )
 
 . $PSScriptRoot/SubConfig-Helpers.ps1
+
+if ($FederatedAuth -and $ServicePrincipalAuth) {
+    Write-Error "Only one of 'FederatedAuth' and 'ServicePrincipalAuth' can be set."
+    exit 1
+}
+
+$UserAuth = $true
+if ($ServicePrincipalAuth) {
+    $UserAuth = $false
+}
 
 # By default stop for any error.
 if (!$PSBoundParameters.ContainsKey('ErrorAction')) {
@@ -268,7 +283,6 @@ function BuildDeploymentOutputs([string]$serviceName, [object]$azContext, [objec
     # Add default values
     $deploymentOutputs = [Ordered]@{
         "${serviceDirectoryPrefix}CLIENT_ID" = $TestApplicationId;
-        "${serviceDirectoryPrefix}CLIENT_SECRET" = $TestApplicationSecret;
         "${serviceDirectoryPrefix}TENANT_ID" = $azContext.Tenant.Id;
         "${serviceDirectoryPrefix}SUBSCRIPTION_ID" =  $azContext.Subscription.Id;
         "${serviceDirectoryPrefix}RESOURCE_GROUP" = $resourceGroup.ResourceGroupName;
@@ -278,6 +292,10 @@ function BuildDeploymentOutputs([string]$serviceName, [object]$azContext, [objec
         "${serviceDirectoryPrefix}RESOURCE_MANAGER_URL" = $azContext.Environment.ResourceManagerUrl;
         "${serviceDirectoryPrefix}SERVICE_MANAGEMENT_URL" = $azContext.Environment.ServiceManagementUrl;
         "AZURE_SERVICE_DIRECTORY" = $serviceName.ToUpperInvariant();
+    }
+
+    if (!$FederatedAuth) {
+        $deploymentOutputs["${serviceDirectoryPrefix}CLIENT_SECRET"] = $TestApplicationSecret;
     }
 
     MergeHashes $environmentVariables $(Get-Variable deploymentOutputs)
@@ -518,8 +536,9 @@ try {
         }
     }
 
-    # If a provisioner service principal was provided, log into it to perform the pre- and post-scripts and deployments.
-    if ($ProvisionerApplicationId) {
+    # If a provisioner service principal was provided (and not using Federated
+    # Auth), log into it to perform the pre- and post-scripts and deployments.
+    if ($ProvisionerApplicationId -and !$FederatedAuth) {
         $null = Disable-AzContextAutosave -Scope Process
 
         Log "Logging into service principal '$ProvisionerApplicationId'."
@@ -614,7 +633,7 @@ try {
         }
     }
 
-    if ($UserAuth) {
+    if (!$CI -and !$FederatedAuth -and $UserAuth) {
         if ($TestApplicationId) {
             Write-Warning "The specified TestApplicationId '$TestApplicationId' will be ignored when UserAuth is set."
         }
@@ -625,8 +644,8 @@ try {
         $userAccountName = $userAccount.UserPrincipalName
         Log "User authentication with user '$userAccountName' ('$TestApplicationId') will be used."
     }
-    # If no test application ID was specified during an interactive session, create a new service principal.
-    elseif (!$CI -and !$TestApplicationId) {
+    # If user has specified -ServicePrincipalAuth
+    elseif (!$CI -and $ServicePrincipalAuth) {
         # Cache the created service principal in this session for frequent reuse.
         $servicePrincipal = if ($AzureTestPrincipal -and (Get-AzADServicePrincipal -ApplicationId $AzureTestPrincipal.AppId) -and $AzureTestSubscription -eq $SubscriptionId) {
             Log "TestApplicationId was not specified; loading cached service principal '$($AzureTestPrincipal.AppId)'"
@@ -686,7 +705,9 @@ try {
     # Make sure pre- and post-scripts are passed formerly required arguments.
     $PSBoundParameters['TestApplicationId'] = $TestApplicationId
     $PSBoundParameters['TestApplicationOid'] = $TestApplicationOid
-    $PSBoundParameters['TestApplicationSecret'] = $TestApplicationSecret
+    if (!$FederatedAuth) {
+        $PSBoundParameters['TestApplicationSecret'] = $TestApplicationSecret
+    }
 
     # If the role hasn't been explicitly assigned to the resource group and a cached service principal or user authentication is in use,
     # query to see if the grant is needed.
@@ -704,7 +725,7 @@ try {
    # considered a critical failure, as the test application may have subscription-level permissions and not require
    # the explicit grant.
    if (!$resourceGroupRoleAssigned) {
-        $idSlug = if ($userAuth) { "User '$userAccountName' ('$TestApplicationId')"} else { "Test Application '$TestApplicationId'"};
+        $idSlug = if ($UserAuth) { "User '$userAccountName' ('$TestApplicationId')" } else { "Test Application '$TestApplicationId'"};
         Log "Attempting to assign the 'Owner' role for '$ResourceGroupName' to the $idSlug"
         $ownerAssignment = New-AzRoleAssignment `
                             -RoleDefinitionName "Owner" `
@@ -734,7 +755,7 @@ try {
     if ($TenantId) {
         $templateParameters.Add('tenantId', $TenantId)
     }
-    if ($TestApplicationSecret) {
+    if ($TestApplicationSecret -and !$FederatedAuth) {
         $templateParameters.Add('testApplicationSecret', $TestApplicationSecret)
     }
 
@@ -1028,6 +1049,18 @@ Bicep templates, test-resources.bicep.env.
 By default, the -CI parameter will print out secrets to logs with Azure Pipelines log
 commands that cause them to be redacted. For CI environments that don't support this (like
 stress test clusters), this flag can be set to $false to avoid printing out these secrets to the logs.
+
+.PARAMETER ServicePrincipalAuth
+Use the signed in user's credentials to create a service principal for
+provisioning. This is useful for some local development scenarios.
+
+.PARAMETER FederatedAuth
+Use signed in user's credentials for provisioninig. No service principal will be
+created. This is used in CI where the execution context already has a signed in
+user.
+
+In cases where provisioner or test applications are specified, secrets for those
+apps will not be exported or made available to pre- or post- scripts.
 
 .EXAMPLE
 Connect-AzAccount -Subscription 'REPLACE_WITH_SUBSCRIPTION_ID'

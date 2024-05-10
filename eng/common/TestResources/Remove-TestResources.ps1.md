@@ -14,8 +14,9 @@ Deletes the resource group deployed for a service directory from Azure.
 
 ### Default (Default)
 ```
-Remove-TestResources.ps1 [-BaseName <String>] [-SubscriptionId <String>] [-ServiceDirectory] <String>
- [-Environment <String>] [-Force] [-RemoveTestResourcesRemainingArguments <Object>] [-WhatIf] [-Confirm]
+Remove-TestResources.ps1 [-BaseName <String>] [-SubscriptionId <String>] [[-ServiceDirectory] <String>]
+ [-Environment <String>] [-ResourceType <String>] [-FederatedAuth] [-Force]
+ [-RemoveTestResourcesRemainingArguments <Object>] [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm]
  [<CommonParameters>]
 ```
 
@@ -23,23 +24,26 @@ Remove-TestResources.ps1 [-BaseName <String>] [-SubscriptionId <String>] [-Servi
 ```
 Remove-TestResources.ps1 -BaseName <String> -TenantId <String> [-SubscriptionId <String>]
  -ProvisionerApplicationId <String> -ProvisionerApplicationSecret <String> [[-ServiceDirectory] <String>]
- [-Environment <String>] [-Force] [-RemoveTestResourcesRemainingArguments <Object>] [-WhatIf] [-Confirm]
+ [-Environment <String>] [-ResourceType <String>] [-FederatedAuth] [-Force]
+ [-RemoveTestResourcesRemainingArguments <Object>] [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm]
  [<CommonParameters>]
 ```
 
 ### ResourceGroup+Provisioner
 ```
-Remove-TestResources.ps1 -ResourceGroupName <String> -TenantId <String> [-SubscriptionId <String>]
+Remove-TestResources.ps1 [-ResourceGroupName <String>] -TenantId <String> [-SubscriptionId <String>]
  -ProvisionerApplicationId <String> -ProvisionerApplicationSecret <String> [[-ServiceDirectory] <String>]
- [-Environment <String>] [-CI] [-Force] [-RemoveTestResourcesRemainingArguments <Object>] [-WhatIf] [-Confirm]
+ [-Environment <String>] [-CI] [-ResourceType <String>] [-FederatedAuth] [-Force]
+ [-RemoveTestResourcesRemainingArguments <Object>] [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm]
  [<CommonParameters>]
 ```
 
 ### ResourceGroup
 ```
-Remove-TestResources.ps1 -ResourceGroupName <String> [-SubscriptionId <String>] [[-ServiceDirectory] <String>]
- [-Environment <String>] [-CI] [-Force] [-RemoveTestResourcesRemainingArguments <Object>] [-WhatIf] [-Confirm]
- [<CommonParameters>]
+Remove-TestResources.ps1 [-ResourceGroupName <String>] [-SubscriptionId <String>]
+ [[-ServiceDirectory] <String>] [-Environment <String>] [-CI] [-ResourceType <String>] [-FederatedAuth]
+ [-Force] [-RemoveTestResourcesRemainingArguments <Object>] [-ProgressAction <ActionPreference>] [-WhatIf]
+ [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -112,7 +116,7 @@ Type: String
 Parameter Sets: ResourceGroup+Provisioner, ResourceGroup
 Aliases:
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -193,19 +197,7 @@ specified - in which to discover pre removal script named 'remove-test-resources
 
 ```yaml
 Type: String
-Parameter Sets: Default
-Aliases:
-
-Required: True
-Position: 1
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-```yaml
-Type: String
-Parameter Sets: Default+Provisioner, ResourceGroup+Provisioner, ResourceGroup
+Parameter Sets: (All)
 Aliases:
 
 Required: False
@@ -233,7 +225,52 @@ Accept wildcard characters: False
 ```
 
 ### -CI
-Run script in CI mode. Infers various environment variable names based on CI convention.
+Run script in CI mode.
+Infers various environment variable names based on CI convention.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: ResourceGroup+Provisioner, ResourceGroup
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ResourceType
+{{ Fill ResourceType Description }}
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: Test
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -FederatedAuth
+Use signed in user's credentials for provisioninig.
+This is used in CI where
+the execution context already has a signed in user.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ### -Force
 Force removal of resource group without asking for user confirmation
@@ -296,8 +333,23 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](https://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

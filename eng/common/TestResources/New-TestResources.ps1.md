@@ -19,7 +19,7 @@ New-TestResources.ps1 [-BaseName <String>] [-ResourceGroupName <String>] [-Servi
  [-TestApplicationOid <String>] [-SubscriptionId <String>] [-DeleteAfterHours <Int32>] [-Location <String>]
  [-Environment <String>] [-ResourceType <String>] [-ArmTemplateParameters <Hashtable>]
  [-AdditionalParameters <Hashtable>] [-EnvironmentVariables <Hashtable>] [-CI] [-Force] [-OutFile]
- [-SuppressVsoCommands] [-UserAuth] [-NewTestResourcesRemainingArguments <Object>]
+ [-SuppressVsoCommands] [-ServicePrincipalAuth] [-FederatedAuth] [-NewTestResourcesRemainingArguments <Object>]
  [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
@@ -32,7 +32,7 @@ New-TestResources.ps1 [-BaseName <String>] [-ResourceGroupName <String>] [-Servi
  -ProvisionerApplicationSecret <String> [-DeleteAfterHours <Int32>] [-Location <String>]
  [-Environment <String>] [-ResourceType <String>] [-ArmTemplateParameters <Hashtable>]
  [-AdditionalParameters <Hashtable>] [-EnvironmentVariables <Hashtable>] [-CI] [-Force] [-OutFile]
- [-SuppressVsoCommands] [-UserAuth] [-NewTestResourcesRemainingArguments <Object>]
+ [-SuppressVsoCommands] [-ServicePrincipalAuth] [-FederatedAuth] [-NewTestResourcesRemainingArguments <Object>]
  [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
@@ -629,15 +629,32 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -UserAuth
-Create the resource group and deploy the template using the signed in user's credentials.
-No service principal will be created or used.
+### -ServicePrincipalAuth
+Use the signed in user's credentials to create a service principal for
+provisioning.
+This is useful for some local development scenarios.
 
-The environment file will be named for the test resources template that it was
-generated for.
-For ARM templates, it will be test-resources.json.env.
-For
-Bicep templates, test-resources.bicep.env.
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -FederatedAuth
+Use signed in user's credentials for provisioninig.
+No service principal will be
+created.
+This is used in CI where the execution context already has a signed in
+user.
+
+In cases where provisioner or test applications are specified, secrets for those
+apps will not be exported or made available to pre- or post- scripts.
 
 ```yaml
 Type: SwitchParameter
@@ -716,7 +733,7 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](https://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

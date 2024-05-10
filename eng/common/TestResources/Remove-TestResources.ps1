@@ -57,6 +57,9 @@ param (
     [string] $ResourceType = 'test',
 
     [Parameter()]
+    [switch] $FederatedAuth,
+
+    [Parameter()]
     [switch] $Force,
 
     # Captures any arguments not declared here (no parameter errors)
@@ -110,7 +113,7 @@ function Retry([scriptblock] $Action, [int] $Attempts = 5) {
     }
 }
 
-if ($ProvisionerApplicationId) {
+if ($ProvisionerApplicationId -and !$FederatedAuth) {
     $null = Disable-AzContextAutosave -Scope Process
 
     Log "Logging into service principal '$ProvisionerApplicationId'"
@@ -304,6 +307,10 @@ Run script in CI mode. Infers various environment variable names based on CI con
 
 .PARAMETER Force
 Force removal of resource group without asking for user confirmation
+
+.PARAMETER FederatedAuth
+Use signed in user's credentials for provisioninig. This is used in CI where
+the execution context already has a signed in user.
 
 .EXAMPLE
 Remove-TestResources.ps1 keyvault -Force
