@@ -199,8 +199,10 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             var response = callConnection.GetCallMedia().PlayToAll(new PlayToAllOptions(new FileSource(new Uri(CallBackUri))) { OperationContext = OperationContext });
             Assert.AreEqual(successCode, response.GetRawResponse().Status);
 
+            var internalEvent = new PlayCompletedInternal(CallConnectionId, ServerCallId, CorelationId, OperationContext, new ResultInformation() { });
+
             // Create and send event to event processor
-            SendAndProcessEvent(handler, new PlayCompleted(new ResultInformation() { }, OperationContext, CallConnectionId, ServerCallId, CorelationId));
+            SendAndProcessEvent(handler, new PlayCompleted(internalEvent));
 
             PlayEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
 
@@ -225,8 +227,10 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             var response = callConnection.GetCallMedia().PlayToAll(new PlayToAllOptions(new FileSource(new Uri(CallBackUri))) { OperationContext = OperationContext });
             Assert.AreEqual(successCode, response.GetRawResponse().Status);
 
+            var internalEvent = new PlayFailedInternal(CallConnectionId, ServerCallId, CorelationId, OperationContext, new ResultInformation() { }, null);
+
             // Create and send event to event processor
-            SendAndProcessEvent(handler, new PlayFailed(OperationContext, new ResultInformation() { }, CallConnectionId, ServerCallId, CorelationId));
+            SendAndProcessEvent(handler, new PlayFailed(internalEvent));
 
             PlayEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
 
@@ -327,8 +331,10 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             var response = callConnection.GetCallMedia().StartRecognizing(new CallMediaRecognizeDtmfOptions(new CommunicationUserIdentifier(TargetId), 1) { OperationContext = OperationContext });
             Assert.AreEqual(successCode, response.GetRawResponse().Status);
 
+            var internalEvent = new RecognizeFailedInternal(CallConnectionId, ServerCallId, CorelationId, OperationContext, new ResultInformation() { }, null);
+
             // Create and send event to event processor
-            SendAndProcessEvent(handler, new RecognizeFailed(OperationContext, new ResultInformation(), CallConnectionId, ServerCallId, CorelationId));
+            SendAndProcessEvent(handler, new RecognizeFailed(internalEvent));
 
             StartRecognizingEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
 

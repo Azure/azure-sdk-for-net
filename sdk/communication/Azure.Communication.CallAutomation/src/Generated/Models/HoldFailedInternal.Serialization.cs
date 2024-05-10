@@ -9,9 +9,9 @@ using System.Text.Json;
 
 namespace Azure.Communication.CallAutomation
 {
-    public partial class RecognizeFailed
+    internal partial class HoldFailedInternal
     {
-        internal static RecognizeFailed DeserializeRecognizeFailed(JsonElement element)
+        internal static HoldFailedInternal DeserializeHoldFailedInternal(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -22,7 +22,6 @@ namespace Azure.Communication.CallAutomation
             string correlationId = default;
             string operationContext = default;
             ResultInformation resultInformation = default;
-            int? failedPlaySourceIndex = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("callConnectionId"u8))
@@ -54,31 +53,16 @@ namespace Azure.Communication.CallAutomation
                     resultInformation = ResultInformation.DeserializeResultInformation(property.Value);
                     continue;
                 }
-                if (property.NameEquals("failedPlaySourceIndex"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    failedPlaySourceIndex = property.Value.GetInt32();
-                    continue;
-                }
             }
-            return new RecognizeFailed(
-                callConnectionId,
-                serverCallId,
-                correlationId,
-                operationContext,
-                resultInformation,
-                failedPlaySourceIndex);
+            return new HoldFailedInternal(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static RecognizeFailed FromResponse(Response response)
+        internal static HoldFailedInternal FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeRecognizeFailed(document.RootElement);
+            return DeserializeHoldFailedInternal(document.RootElement);
         }
     }
 }

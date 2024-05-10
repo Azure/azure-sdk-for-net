@@ -9,9 +9,9 @@ using System.Text.Json;
 
 namespace Azure.Communication.CallAutomation
 {
-    public partial class PlayCompleted
+    internal partial class PlayFailedInternal
     {
-        internal static PlayCompleted DeserializePlayCompleted(JsonElement element)
+        internal static PlayFailedInternal DeserializePlayFailedInternal(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -22,6 +22,7 @@ namespace Azure.Communication.CallAutomation
             string correlationId = default;
             string operationContext = default;
             ResultInformation resultInformation = default;
+            int? failedPlaySourceIndex = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("callConnectionId"u8))
@@ -53,16 +54,31 @@ namespace Azure.Communication.CallAutomation
                     resultInformation = ResultInformation.DeserializeResultInformation(property.Value);
                     continue;
                 }
+                if (property.NameEquals("failedPlaySourceIndex"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    failedPlaySourceIndex = property.Value.GetInt32();
+                    continue;
+                }
             }
-            return new PlayCompleted(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
+            return new PlayFailedInternal(
+                callConnectionId,
+                serverCallId,
+                correlationId,
+                operationContext,
+                resultInformation,
+                failedPlaySourceIndex);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static PlayCompleted FromResponse(Response response)
+        internal static PlayFailedInternal FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializePlayCompleted(document.RootElement);
+            return DeserializePlayFailedInternal(document.RootElement);
         }
     }
 }

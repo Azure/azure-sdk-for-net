@@ -376,7 +376,9 @@ namespace Azure.Communication.CallAutomation
         /// <returns> A new <see cref="CallAutomation.PlayCompleted"/> instance for mocking. </returns>
         public static PlayCompleted PlayCompleted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
         {
-            return new PlayCompleted(resultInformation, operationContext, callConnectionId, serverCallId, correlationId);
+            var internalObject = new PlayCompletedInternal(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
+
+            return new PlayCompleted(internalObject);
         }
 
         /// <summary> Initializes a new instance of PlayFailed. </summary>
@@ -385,10 +387,13 @@ namespace Azure.Communication.CallAutomation
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        /// <param name="failedPlaySourceIndex"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <returns> A new <see cref="CallAutomation.PlayFailed"/> instance for mocking. </returns>
-        public static PlayFailed PlayFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
+        public static PlayFailed PlayFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null, int? failedPlaySourceIndex = null)
         {
-            return new PlayFailed(operationContext, resultInformation, callConnectionId, serverCallId, correlationId);
+            var internalObject = new PlayFailedInternal(callConnectionId, serverCallId, correlationId, operationContext, resultInformation, failedPlaySourceIndex);
+
+            return new PlayFailed(internalObject);
         }
 
         /// <summary> Initializes a new instance of PlayCanceled. </summary>
@@ -419,10 +424,13 @@ namespace Azure.Communication.CallAutomation
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        /// <param name="failedPlaySourceIndex"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <returns> A new <see cref="CallAutomation.RecognizeFailed"/> instance for mocking. </returns>
-        public static RecognizeFailed RecognizeFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
+        public static RecognizeFailed RecognizeFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null, int? failedPlaySourceIndex = null)
         {
-            return new RecognizeFailed(operationContext, resultInformation, callConnectionId, serverCallId, correlationId);
+            var internalObject = new RecognizeFailedInternal(callConnectionId, serverCallId, correlationId, operationContext, resultInformation, failedPlaySourceIndex);
+
+            return new RecognizeFailed(internalObject);
         }
 
         /// <summary> Initializes a new instance of RecordingStateChanged. </summary>
@@ -486,7 +494,9 @@ namespace Azure.Communication.CallAutomation
         /// <returns> A new <see cref="CallAutomation.HoldFailed"/> instance for mocking. </returns>
         public static HoldFailed HoldFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
         {
-            return new HoldFailed(operationContext, resultInformation, callConnectionId, serverCallId, correlationId);
+            var internalObject = new HoldFailedInternal(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
+
+            return new HoldFailed(internalObject);
         }
     }
 }
