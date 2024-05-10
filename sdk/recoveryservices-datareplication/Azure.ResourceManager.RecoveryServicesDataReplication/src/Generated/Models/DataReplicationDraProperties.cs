@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="customProperties">
         /// Dra model custom properties.
         /// Please note <see cref="DraModelCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="GeneralDraModelCustomProperties"/> and <see cref="VMwareDraModelCustomProperties"/>.
+        /// The available derived classes include <see cref="VMwareDraModelCustomProperties"/> and <see cref="GeneralDraModelCustomProperties"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="machineId"/>, <paramref name="machineName"/>, <paramref name="authenticationIdentity"/>, <paramref name="resourceAccessIdentity"/> or <paramref name="customProperties"/> is null. </exception>
         public DataReplicationDraProperties(string machineId, string machineName, DataReplicationIdentity authenticationIdentity, DataReplicationIdentity resourceAccessIdentity, DraModelCustomProperties customProperties)
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="customProperties">
         /// Dra model custom properties.
         /// Please note <see cref="DraModelCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="GeneralDraModelCustomProperties"/> and <see cref="VMwareDraModelCustomProperties"/>.
+        /// The available derived classes include <see cref="VMwareDraModelCustomProperties"/> and <see cref="GeneralDraModelCustomProperties"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DataReplicationDraProperties(string correlationId, string machineId, string machineName, DataReplicationIdentity authenticationIdentity, DataReplicationIdentity resourceAccessIdentity, bool? isResponsive, DateTimeOffset? lastHeartbeatOn, string versionNumber, DataReplicationProvisioningState? provisioningState, IReadOnlyList<DataReplicationHealthErrorInfo> healthErrors, DraModelCustomProperties customProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <summary>
         /// Dra model custom properties.
         /// Please note <see cref="DraModelCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="GeneralDraModelCustomProperties"/> and <see cref="VMwareDraModelCustomProperties"/>.
+        /// The available derived classes include <see cref="VMwareDraModelCustomProperties"/> and <see cref="GeneralDraModelCustomProperties"/>.
         /// </summary>
         public DraModelCustomProperties CustomProperties { get; set; }
     }
