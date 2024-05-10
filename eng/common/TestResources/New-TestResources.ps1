@@ -120,6 +120,13 @@ if ($ServicePrincipalAuth) {
     $UserAuth = $false
 }
 
+if ($FederatedAuth) {
+    # Clear secrets if FederatedAuth is set. This prevents secrets from being
+    # passed to pre- and post-scripts.
+    $PSBoundParameters['TestApplicationSecret'] = $TestApplicationSecret = ''
+    $PSBoundParameters['ProvisionerApplicationSecret'] = $ProvisionerApplicationSecret = ''
+}
+
 # By default stop for any error.
 if (!$PSBoundParameters.ContainsKey('ErrorAction')) {
     $ErrorActionPreference = 'Stop'
@@ -282,8 +289,6 @@ function BuildDeploymentOutputs([string]$serviceName, [object]$azContext, [objec
     $serviceDirectoryPrefix = BuildServiceDirectoryPrefix $serviceName
     # Add default values
     $deploymentOutputs = [Ordered]@{
-        "${serviceDirectoryPrefix}CLIENT_ID" = $TestApplicationId;
-        "${serviceDirectoryPrefix}TENANT_ID" = $azContext.Tenant.Id;
         "${serviceDirectoryPrefix}SUBSCRIPTION_ID" =  $azContext.Subscription.Id;
         "${serviceDirectoryPrefix}RESOURCE_GROUP" = $resourceGroup.ResourceGroupName;
         "${serviceDirectoryPrefix}LOCATION" = $resourceGroup.Location;
@@ -295,7 +300,9 @@ function BuildDeploymentOutputs([string]$serviceName, [object]$azContext, [objec
     }
 
     if (!$FederatedAuth) {
+        $deploymentOutputs["${serviceDirectoryPrefix}CLIENT_ID"] = $TestApplicationId;
         $deploymentOutputs["${serviceDirectoryPrefix}CLIENT_SECRET"] = $TestApplicationSecret;
+        $deploymentOutputs["${serviceDirectoryPrefix}TENANT_ID"] = $azContext.Tenant.Id;
     }
 
     MergeHashes $environmentVariables $(Get-Variable deploymentOutputs)
