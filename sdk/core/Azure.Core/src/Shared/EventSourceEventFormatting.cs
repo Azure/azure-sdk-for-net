@@ -71,29 +71,34 @@ internal static class EventSourceEventFormatting
 #if NET6_0_OR_GREATER
             return Convert.ToHexString(bytes);
 #else
-            int length = 2 * bytes.Length; // Two hex characters per byte
-            if (length < 256)
-            {
-                static char ToHex(int value) => (char)(value < 10 ? value + '0' : value - 10 + 'A');
+            // Down-level implementation of Convert.ToHexString that uses a
+            // Span<char> instead of a StringBuilder to avoid allocations.
+            // The implementation is copied from .NET's HexConverter.ToString
+            // See https://github.com/dotnet/runtime/blob/acd31754892ab0431ac2c40038f541ffa7168be7/src/libraries/Common/src/System/HexConverter.cs#L180
+            // The only modification is that we allow larger stack allocations.
+            Span<char> result = bytes.Length > 32 ?
+                new char[bytes.Length * 2] :
+                stackalloc char[bytes.Length * 2];
 
-                Span<char> buffer = stackalloc char[length];
-                for (int i = 0; i < bytes.Length; i++)
-                {
-                    byte b = bytes[i];
-                    buffer[i * 2] = ToHex(b >> 4); // Shift upper nibble into lower 4 bits and convert to hex
-                    buffer[i * 2 + 1] = ToHex(b & 0xF); // Mask off lower nibble and convert to hex
-                }
-
-                return buffer.ToString();
-            }
-
-            var stringBuilder = new StringBuilder(length);
+            int pos = 0;
             foreach (byte b in bytes)
             {
-                stringBuilder.AppendFormat(CultureInfo.InvariantCulture, "{0:X2}", b);
+                ToCharsBuffer(b, result, pos);
+                pos += 2;
             }
 
-            return stringBuilder.ToString();
+            return result.ToString();
+
+            static void ToCharsBuffer(byte value, Span<char> buffer, int startingIndex)
+            {
+                // An explanation of this algorithm can be found at
+                // https://github.com/dotnet/runtime/blob/acd31754892ab0431ac2c40038f541ffa7168be7/src/libraries/Common/src/System/HexConverter.cs#L33
+                uint difference = ((value & 0xF0U) << 4) + (value & 0x0FU) - 0x8989U;
+                uint packedResult = (((uint)(-(int)difference) & 0x7070U) >> 4) + difference + 0xB9B9U;
+
+                buffer[startingIndex + 1] = (char)(packedResult & 0xFF);
+                buffer[startingIndex] = (char)(packedResult >> 8);
+            }
 #endif
         }
 
