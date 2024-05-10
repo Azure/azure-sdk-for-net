@@ -128,7 +128,7 @@ namespace Azure.AI.OpenAI
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue<ChatCompletionsToolDefinition>(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

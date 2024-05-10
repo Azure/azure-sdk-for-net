@@ -41,6 +41,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteNumberValue(Capacity.Value);
             }
+            if (Optional.IsDefined(Family))
+            {
+                writer.WritePropertyName("family"u8);
+                writer.WriteStringValue(Family.Value.ToString());
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -82,6 +87,7 @@ namespace Azure.ResourceManager.Network.Models
             ApplicationGatewaySkuName? name = default;
             ApplicationGatewayTier? tier = default;
             int? capacity = default;
+            ApplicationGatewaySkuFamily? family = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,13 +119,22 @@ namespace Azure.ResourceManager.Network.Models
                     capacity = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("family"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    family = new ApplicationGatewaySkuFamily(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ApplicationGatewaySku(name, tier, capacity, serializedAdditionalRawData);
+            return new ApplicationGatewaySku(name, tier, capacity, family, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationGatewaySku>.Write(ModelReaderWriterOptions options)

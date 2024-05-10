@@ -92,7 +92,6 @@ namespace Azure.Search.Documents.Tests
             await using SearchResources resources = await SearchResources.CreateLargeHotelsIndexAsync(this, size);
             SearchClient client = resources.GetQueryClient();
 
-            ReadOnlyMemory<float> vectorizedResult = VectorSearchEmbeddings.DefaultVectorizeDescription;
             SearchResults<SearchDocument> response = await client.SearchAsync<SearchDocument>("*",
                     new SearchOptions
                     {

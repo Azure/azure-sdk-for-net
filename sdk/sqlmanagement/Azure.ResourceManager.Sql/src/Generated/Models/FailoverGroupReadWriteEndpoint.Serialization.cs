@@ -113,26 +113,28 @@ namespace Azure.ResourceManager.Sql.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FailoverPolicy), out propertyOverride);
-            builder.Append("  failoverPolicy: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.Append("  failoverPolicy: ");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
+                builder.Append("  failoverPolicy: ");
                 builder.AppendLine($"'{FailoverPolicy.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FailoverWithDataLossGracePeriodMinutes), out propertyOverride);
-            if (Optional.IsDefined(FailoverWithDataLossGracePeriodMinutes) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  failoverWithDataLossGracePeriodMinutes: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FailoverWithDataLossGracePeriodMinutes))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  failoverWithDataLossGracePeriodMinutes: ");
                     builder.AppendLine($"{FailoverWithDataLossGracePeriodMinutes.Value}");
                 }
             }

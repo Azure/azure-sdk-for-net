@@ -313,7 +313,7 @@ namespace Azure.Messaging.EventHubs.Primitives
 
                 try
                 {
-                    var blobName = string.Format(CultureInfo.InvariantCulture, CheckpointPrefix, fullyQualifiedNamespace.ToLowerInvariant(), eventHubName.ToLowerInvariant(), consumerGroup.ToLowerInvariant()) + partitionId;
+                    var blobName = GetCheckpointBlobName(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId);
                     var blob = await ContainerClient
                         .GetBlobClient(blobName)
                         .GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -397,17 +397,53 @@ namespace Azure.Messaging.EventHubs.Primitives
                                                          CancellationToken cancellationToken)
             => await UpdateCheckpointInternalAsync(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, clientIdentifier, null, startingPosition.SequenceNumber, cancellationToken).ConfigureAwait(false);
 
+        /// <summary>
+        ///   Gets the name of the Storage Blob representing the checkpoint for a given partition.
+        /// </summary>
+        ///
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the ownership are associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub the ownership are associated with, relative to the Event Hubs namespace that contains it.</param>
+        /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
+        /// <param name="partitionId">The identifier of the partition the checkpoint is for.</param>
+        ///
+        /// <returns>The name of the blob.</returns>
+        ///
+        internal string GetCheckpointBlobName(string fullyQualifiedNamespace,
+                                              string eventHubName,
+                                              string consumerGroup,
+                                              string partitionId) =>
+             string.Format(CultureInfo.InvariantCulture, CheckpointPrefix + partitionId, fullyQualifiedNamespace.ToLowerInvariant(), eventHubName.ToLowerInvariant(), consumerGroup.ToLowerInvariant());
+
+        /// <summary>
+        ///   Creates or updates a checkpoint for a specific partition, identifying a position in the partition's event stream
+        ///   that an event processor should begin reading from.
+        /// </summary>
+        ///
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the ownership are associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub the ownership are associated with, relative to the Event Hubs namespace that contains it.</param>
+        /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
+        /// <param name="partitionId">The identifier of the partition the checkpoint is for.</param>
+        /// <param name="clientIdentifier">The unique identifier of the client that authored this checkpoint.</param>
+        /// <param name="offset">The offset to associate with the checkpoint. Informational, unless the <paramref name="sequenceNumber"/> has no value.</param>
+        /// <param name="sequenceNumber">The sequence number to associate with the checkpoint, indicating that a processor should begin reading from the next event in the stream.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal a request to cancel the operation.</param>
+        ///
         private async Task UpdateCheckpointInternalAsync(string fullyQualifiedNamespace, string eventHubName, string consumerGroup, string partitionId, string clientIdentifier, long? offset, long? sequenceNumber, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             UpdateCheckpointStart(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, sequenceNumber.ToString(), "-1", offset.ToString());
 
-            var blobName = string.Format(CultureInfo.InvariantCulture, CheckpointPrefix + partitionId, fullyQualifiedNamespace.ToLowerInvariant(), eventHubName.ToLowerInvariant(), consumerGroup.ToLowerInvariant());
+            var blobName = GetCheckpointBlobName(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId);
             var blobClient = ContainerClient.GetBlobClient(blobName);
+
+            // Because the checkpoint format changed and offset is no longer populated by the EventProcessor, we need to ensure that a value is present for
+            // the Functions scale controller which uses a null check on the offset to determine if a checkpoint is in the legacy format or current.  Because
+            // GetCheckpointAsync will only populate the offset if a long.TryParse is successful, adding a nonsense string value to satisfy the null check
+            // will not impact the EventProcessor behavior.
 
             var metadata = new Dictionary<string, string>()
             {
-                { BlobMetadataKey.Offset, offset.HasValue ? offset.Value.ToString(CultureInfo.InvariantCulture) : "" },
+                { BlobMetadataKey.Offset, offset.HasValue ? offset.Value.ToString(CultureInfo.InvariantCulture) : "no offset" },
                 { BlobMetadataKey.SequenceNumber, sequenceNumber.HasValue ? sequenceNumber.Value.ToString(CultureInfo.InvariantCulture) : "" },
                 { BlobMetadataKey.ClientIdentifier, clientIdentifier }
             };
