@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Redis.Models
             if (Optional.IsDefined(RdbBackupMaxSnapshotCount))
             {
                 writer.WritePropertyName("rdb-backup-max-snapshot-count"u8);
-                WriteRdbBackupMaxSnapshotCount(writer);
+                WriteRdbBackupMaxSnapshotCount(writer, options);
             }
             if (Optional.IsDefined(RdbStorageConnectionString))
             {

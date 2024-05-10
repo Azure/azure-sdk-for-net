@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -244,7 +245,7 @@ public partial class CompletionsOptions
     // IDictionary<string, int> instead of a IDictionary<int, int>.
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private void SerializeTokenSelectionBiases(Utf8JsonWriter writer)
+    private void SerializeTokenSelectionBiases(Utf8JsonWriter writer, ModelReaderWriterOptions options)
     {
         writer.WriteStartObject();
         foreach (var item in TokenSelectionBiases)
