@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="properties">
         /// placement policy properties
         /// Please note <see cref="PlacementPolicyProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="VmHostPlacementPolicyProperties"/> and <see cref="VmPlacementPolicyProperties"/>.
+        /// The available derived classes include <see cref="VmPlacementPolicyProperties"/> and <see cref="VmHostPlacementPolicyProperties"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PlacementPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PlacementPolicyProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Avs
         /// <summary>
         /// placement policy properties
         /// Please note <see cref="PlacementPolicyProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="VmHostPlacementPolicyProperties"/> and <see cref="VmPlacementPolicyProperties"/>.
+        /// The available derived classes include <see cref="VmPlacementPolicyProperties"/> and <see cref="VmHostPlacementPolicyProperties"/>.
         /// </summary>
         public PlacementPolicyProperties Properties { get; set; }
     }

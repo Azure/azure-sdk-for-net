@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 switch (discriminator.GetString())
                 {
                     case "Daily": return DailyRecurrence.DeserializeDailyRecurrence(element, options);
-                    case "Monthly": return AlertProcessingRuleMonthlyRecurrence.DeserializeAlertProcessingRuleMonthlyRecurrence(element, options);
                     case "Weekly": return AlertProcessingRuleWeeklyRecurrence.DeserializeAlertProcessingRuleWeeklyRecurrence(element, options);
+                    case "Monthly": return AlertProcessingRuleMonthlyRecurrence.DeserializeAlertProcessingRuleMonthlyRecurrence(element, options);
                 }
             }
             return UnknownRecurrence.DeserializeUnknownRecurrence(element, options);
