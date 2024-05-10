@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            IReadOnlyList<WorkbookData> value = default;
+            IReadOnlyList<ApplicationInsightsWorkbookData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -93,10 +93,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     {
                         continue;
                     }
-                    List<WorkbookData> array = new List<WorkbookData>();
+                    List<ApplicationInsightsWorkbookData> array = new List<ApplicationInsightsWorkbookData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WorkbookData.DeserializeWorkbookData(item, options));
+                        array.Add(ApplicationInsightsWorkbookData.DeserializeApplicationInsightsWorkbookData(item, options));
                     }
                     value = array;
                     continue;
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new WorkbooksListResult(value ?? new ChangeTrackingList<WorkbookData>(), nextLink, serializedAdditionalRawData);
+            return new WorkbooksListResult(value ?? new ChangeTrackingList<ApplicationInsightsWorkbookData>(), nextLink, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -127,17 +127,18 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Value), out propertyOverride);
-            if (Optional.IsCollectionDefined(Value) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Value.Any() || hasPropertyOverride)
+                builder.Append("  value: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Value))
                 {
-                    builder.Append("  value: ");
-                    if (hasPropertyOverride)
+                    if (Value.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  value: ");
                         builder.AppendLine("[");
                         foreach (var item in Value)
                         {
@@ -149,15 +150,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NextLink), out propertyOverride);
-            if (Optional.IsDefined(NextLink) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  nextLink: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NextLink))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  nextLink: ");
                     if (NextLink.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

@@ -138,31 +138,33 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TemplateData), out propertyOverride);
-            if (Optional.IsDefined(TemplateData) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  templateData: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TemplateData))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  templateData: ");
                     builder.AppendLine($"'{TemplateData.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Galleries), out propertyOverride);
-            if (Optional.IsCollectionDefined(Galleries) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Galleries.Any() || hasPropertyOverride)
+                builder.Append("  galleries: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Galleries))
                 {
-                    builder.Append("  galleries: ");
-                    if (hasPropertyOverride)
+                    if (Galleries.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  galleries: ");
                         builder.AppendLine("[");
                         foreach (var item in Galleries)
                         {

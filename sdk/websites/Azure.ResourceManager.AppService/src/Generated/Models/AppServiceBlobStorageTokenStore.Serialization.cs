@@ -101,15 +101,16 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SasUrlSettingName), out propertyOverride);
-            if (Optional.IsDefined(SasUrlSettingName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  sasUrlSettingName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SasUrlSettingName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  sasUrlSettingName: ");
                     if (SasUrlSettingName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

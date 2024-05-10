@@ -23,6 +23,8 @@ public class RequestOptions
 
     private List<HeadersUpdate>? _headersUpdates;
 
+    private bool? _bufferResponse;
+
     /// <summary>
     /// Initializes a new instance of the <see cref="RequestOptions"/> class
     /// </summary>
@@ -57,6 +59,27 @@ public class RequestOptions
             AssertNotFrozen();
 
             _errorOptions = value;
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the response content should be
+    /// buffered in-memory by the pipeline. If specified, this value will
+    /// override any client default.
+    /// </summary>
+    /// <remarks>Please note that setting this value to <c>false</c> will result
+    /// in the <see cref="PipelineResponse.ContentStream"/> obtained from
+    /// <see cref="ClientResult.GetRawResponse"/> holding a live network stream.
+    /// It is the responsibility of the caller to ensure the stream is disposed.
+    /// </remarks>
+    public bool? BufferResponse
+    {
+        get => _bufferResponse;
+        set
+        {
+            AssertNotFrozen();
+
+            _bufferResponse = value;
         }
     }
 
@@ -150,6 +173,12 @@ public class RequestOptions
         message.PerCallPolicies = _perCallPolicies;
         message.PerTryPolicies = _perTryPolicies;
         message.BeforeTransportPolicies = _beforeTransportPolicies;
+
+        // Override any BufferResponse value set on the message.
+        if (BufferResponse.HasValue)
+        {
+            message.BufferResponse = BufferResponse.Value;
+        }
 
         // Apply adds and sets to request headers if applicable.
         if (_headersUpdates is not null)
