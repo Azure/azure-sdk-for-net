@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
         /// <summary>
         /// Creates an instance of the AzureServiceTokenProvider class.
         /// If no connection string is specified, Managed Service Identity, Visual Studio, Azure CLI, and Integrated Windows Authentication are tried to get a token.
-        /// Even If no connection string is specified in code, one can be specified in the AzureServicesAuthConnectionString environment variable. 
+        /// Even if no connection string is specified in code, one can be specified in the AzureServicesAuthConnectionString environment variable. 
         /// </summary>
         /// <param name="connectionString">Connection string to specify which option to use to get the token.</param>
         /// <param name="azureAdInstance">Specify a value for clouds other than the Public Cloud.</param>
@@ -85,7 +85,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
 
             _azureAdInstance = azureAdInstance;
 
-            // Check the environment variable to see if a connection string is specified. 
+            // Check the environment variables to see if a connection string is specified. 
             if (connectionString == default)
             {
                 connectionString = EnvironmentHelper.GetEnvironmentVariable("AzureServicesAuthConnectionString");
