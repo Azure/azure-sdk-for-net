@@ -78,8 +78,8 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         public bool Equals(CheckpointPosition other)
         {
-            return (SequenceNumber == other.SequenceNumber)
-                   && (Offset == other.Offset);
+            return ((SequenceNumber == other.SequenceNumber)
+                   && (Offset == other.Offset));
         }
 
         /// <summary>
