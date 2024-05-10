@@ -1016,6 +1016,7 @@ namespace Azure.AI.Vision.Face
         /// <exception cref="ArgumentNullException"> <paramref name="faceIds"/> or <paramref name="personIds"/> is null. </exception>
         /// <remarks>
         /// For each face in the faceIds array, Face Identify will compute similarities between the query face and all the faces in the Person Directory Persons (given by personIds), and return candidate person(s) for that face ranked by similarity confidence.
+        /// Passing personIds with an array with one element "*" can perform the operation over entire person directory.
         /// &gt; [!NOTE]
         /// &gt;
         /// &gt; *
@@ -1054,6 +1055,7 @@ namespace Azure.AI.Vision.Face
         /// <exception cref="ArgumentNullException"> <paramref name="faceIds"/> or <paramref name="personIds"/> is null. </exception>
         /// <remarks>
         /// For each face in the faceIds array, Face Identify will compute similarities between the query face and all the faces in the Person Directory Persons (given by personIds), and return candidate person(s) for that face ranked by similarity confidence.
+        /// Passing personIds with an array with one element "*" can perform the operation over entire person directory.
         /// &gt; [!NOTE]
         /// &gt;
         /// &gt; *

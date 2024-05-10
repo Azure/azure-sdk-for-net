@@ -50,7 +50,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="parameters"> The parameters for creating session. </param>
         /// <param name="verifyImage"> The image stream for verify. Content-Disposition header field for this part must have filename. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> or <paramref name="verifyImage"/> is null. </exception>
-        public CreateLivenessWithVerifySessionContent(CreateLivenessSessionContentForMultipart parameters, Stream verifyImage)
+        public CreateLivenessWithVerifySessionContent(CreateLivenessSessionContent parameters, Stream verifyImage)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
             Argument.AssertNotNull(verifyImage, nameof(verifyImage));
@@ -63,7 +63,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="parameters"> The parameters for creating session. </param>
         /// <param name="verifyImage"> The image stream for verify. Content-Disposition header field for this part must have filename. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CreateLivenessWithVerifySessionContent(CreateLivenessSessionContentForMultipart parameters, Stream verifyImage, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CreateLivenessWithVerifySessionContent(CreateLivenessSessionContent parameters, Stream verifyImage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Parameters = parameters;
             VerifyImage = verifyImage;
@@ -76,7 +76,7 @@ namespace Azure.AI.Vision.Face
         }
 
         /// <summary> The parameters for creating session. </summary>
-        public CreateLivenessSessionContentForMultipart Parameters { get; }
+        public CreateLivenessSessionContent Parameters { get; }
         /// <summary> The image stream for verify. Content-Disposition header field for this part must have filename. </summary>
         public Stream VerifyImage { get; }
     }

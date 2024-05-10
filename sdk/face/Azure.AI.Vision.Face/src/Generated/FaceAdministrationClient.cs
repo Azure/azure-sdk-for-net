@@ -652,7 +652,7 @@ namespace Azure.AI.Vision.Face
         ///   * "targetFace" rectangle should contain one face. Zero or multiple faces will be regarded as an error. If the provided "targetFace" rectangle is not returned from "Detect", there's no guarantee to detect and add the face successfully.
         ///   * Out of detectable face size (36x36 - 4096x4096 pixels), large head-pose, or large occlusions will cause failures.
         ///   * The minimum detectable face size is 36x36 pixels in an image no larger than 1920x1080 pixels. Images with dimensions higher than 1920x1080 pixels will need a proportionally larger minimum face size.
-        ///   * Different 'detectionModel' values can be provided. To use and compare different detection models, please refer to https://learn.microsoft.com/en-us/azure/ai-services/computer-vision/how-to/specify-detection-model
+        ///   * Different 'detectionModel' values can be provided. To use and compare different detection models, please refer to https://learn.microsoft.com/azure/ai-services/computer-vision/how-to/specify-detection-model
         /// </remarks>
         /// <include file="Docs/FaceAdministrationClient.xml" path="doc/members/member[@name='AddFaceListFaceFromUrlAsync(string,Uri,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)']/*" />
         public virtual async Task<Response<AddFaceResult>> AddFaceListFaceFromUrlAsync(string faceListId, Uri url, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
@@ -687,7 +687,7 @@ namespace Azure.AI.Vision.Face
         ///   * "targetFace" rectangle should contain one face. Zero or multiple faces will be regarded as an error. If the provided "targetFace" rectangle is not returned from "Detect", there's no guarantee to detect and add the face successfully.
         ///   * Out of detectable face size (36x36 - 4096x4096 pixels), large head-pose, or large occlusions will cause failures.
         ///   * The minimum detectable face size is 36x36 pixels in an image no larger than 1920x1080 pixels. Images with dimensions higher than 1920x1080 pixels will need a proportionally larger minimum face size.
-        ///   * Different 'detectionModel' values can be provided. To use and compare different detection models, please refer to https://learn.microsoft.com/en-us/azure/ai-services/computer-vision/how-to/specify-detection-model
+        ///   * Different 'detectionModel' values can be provided. To use and compare different detection models, please refer to https://learn.microsoft.com/azure/ai-services/computer-vision/how-to/specify-detection-model
         /// </remarks>
         /// <include file="Docs/FaceAdministrationClient.xml" path="doc/members/member[@name='AddFaceListFaceFromUrl(string,Uri,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)']/*" />
         public virtual Response<AddFaceResult> AddFaceListFaceFromUrl(string faceListId, Uri url, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
@@ -812,7 +812,7 @@ namespace Azure.AI.Vision.Face
         ///   * "targetFace" rectangle should contain one face. Zero or multiple faces will be regarded as an error. If the provided "targetFace" rectangle is not returned from "Detect", there's no guarantee to detect and add the face successfully.
         ///   * Out of detectable face size (36x36 - 4096x4096 pixels), large head-pose, or large occlusions will cause failures.
         ///   * The minimum detectable face size is 36x36 pixels in an image no larger than 1920x1080 pixels. Images with dimensions higher than 1920x1080 pixels will need a proportionally larger minimum face size.
-        ///   * Different 'detectionModel' values can be provided. To use and compare different detection models, please refer to https://learn.microsoft.com/en-us/azure/ai-services/computer-vision/how-to/specify-detection-model
+        ///   * Different 'detectionModel' values can be provided. To use and compare different detection models, please refer to https://learn.microsoft.com/azure/ai-services/computer-vision/how-to/specify-detection-model
         /// </remarks>
         /// <include file="Docs/FaceAdministrationClient.xml" path="doc/members/member[@name='AddFaceListFaceAsync(string,BinaryData,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)']/*" />
         public virtual async Task<Response<AddFaceResult>> AddFaceListFaceAsync(string faceListId, BinaryData imageContent, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
@@ -847,7 +847,7 @@ namespace Azure.AI.Vision.Face
         ///   * "targetFace" rectangle should contain one face. Zero or multiple faces will be regarded as an error. If the provided "targetFace" rectangle is not returned from "Detect", there's no guarantee to detect and add the face successfully.
         ///   * Out of detectable face size (36x36 - 4096x4096 pixels), large head-pose, or large occlusions will cause failures.
         ///   * The minimum detectable face size is 36x36 pixels in an image no larger than 1920x1080 pixels. Images with dimensions higher than 1920x1080 pixels will need a proportionally larger minimum face size.
-        ///   * Different 'detectionModel' values can be provided. To use and compare different detection models, please refer to https://learn.microsoft.com/en-us/azure/ai-services/computer-vision/how-to/specify-detection-model
+        ///   * Different 'detectionModel' values can be provided. To use and compare different detection models, please refer to https://learn.microsoft.com/azure/ai-services/computer-vision/how-to/specify-detection-model
         /// </remarks>
         /// <include file="Docs/FaceAdministrationClient.xml" path="doc/members/member[@name='AddFaceListFace(string,BinaryData,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)']/*" />
         public virtual Response<AddFaceResult> AddFaceListFace(string faceListId, BinaryData imageContent, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
@@ -1728,7 +1728,7 @@ namespace Azure.AI.Vision.Face
         ///   * "targetFace" rectangle should contain one face. Zero or multiple faces will be regarded as an error. If the provided "targetFace" rectangle is not returned from "Detect", there's no guarantee to detect and add the face successfully.
         ///   * Out of detectable face size (36x36 - 4096x4096 pixels), large head-pose, or large occlusions will cause failures.
         ///   * The minimum detectable face size is 36x36 pixels in an image no larger than 1920x1080 pixels. Images with dimensions higher than 1920x1080 pixels will need a proportionally larger minimum face size.
-        ///   * Different 'detectionModel' values can be provided. To use and compare different detection models, please refer to https://learn.microsoft.com/en-us/azure/ai-services/computer-vision/how-to/specify-detection-model
+        ///   * Different 'detectionModel' values can be provided. To use and compare different detection models, please refer to https://learn.microsoft.com/azure/ai-services/computer-vision/how-to/specify-detection-model
         ///
         /// &gt; [!NOTE]
         /// &gt;
@@ -1769,7 +1769,7 @@ namespace Azure.AI.Vision.Face
         ///   * "targetFace" rectangle should contain one face. Zero or multiple faces will be regarded as an error. If the provided "targetFace" rectangle is not returned from "Detect", there's no guarantee to detect and add the face successfully.
         ///   * Out of detectable face size (36x36 - 4096x4096 pixels), large head-pose, or large occlusions will cause failures.
         ///   * The minimum detectable face size is 36x36 pixels in an image no larger than 1920x1080 pixels. Images with dimensions higher than 1920x1080 pixels will need a proportionally larger minimum face size.
-        ///   * Different 'detectionModel' values can be provided. To use and compare different detection models, please refer to https://learn.microsoft.com/en-us/azure/ai-services/computer-vision/how-to/specify-detection-model
+        ///   * Different 'detectionModel' values can be provided. To use and compare different detection models, please refer to https://learn.microsoft.com/azure/ai-services/computer-vision/how-to/specify-detection-model
         ///
         /// &gt; [!NOTE]
         /// &gt;
@@ -1900,7 +1900,7 @@ namespace Azure.AI.Vision.Face
         ///   * "targetFace" rectangle should contain one face. Zero or multiple faces will be regarded as an error. If the provided "targetFace" rectangle is not returned from "Detect", there's no guarantee to detect and add the face successfully.
         ///   * Out of detectable face size (36x36 - 4096x4096 pixels), large head-pose, or large occlusions will cause failures.
         ///   * The minimum detectable face size is 36x36 pixels in an image no larger than 1920x1080 pixels. Images with dimensions higher than 1920x1080 pixels will need a proportionally larger minimum face size.
-        ///   * Different 'detectionModel' values can be provided. To use and compare different detection models, please refer to https://learn.microsoft.com/en-us/azure/ai-services/computer-vision/how-to/specify-detection-model
+        ///   * Different 'detectionModel' values can be provided. To use and compare different detection models, please refer to https://learn.microsoft.com/azure/ai-services/computer-vision/how-to/specify-detection-model
         ///
         /// &gt; [!NOTE]
         /// &gt;
@@ -1941,7 +1941,7 @@ namespace Azure.AI.Vision.Face
         ///   * "targetFace" rectangle should contain one face. Zero or multiple faces will be regarded as an error. If the provided "targetFace" rectangle is not returned from "Detect", there's no guarantee to detect and add the face successfully.
         ///   * Out of detectable face size (36x36 - 4096x4096 pixels), large head-pose, or large occlusions will cause failures.
         ///   * The minimum detectable face size is 36x36 pixels in an image no larger than 1920x1080 pixels. Images with dimensions higher than 1920x1080 pixels will need a proportionally larger minimum face size.
-        ///   * Different 'detectionModel' values can be provided. To use and compare different detection models, please refer to https://learn.microsoft.com/en-us/azure/ai-services/computer-vision/how-to/specify-detection-model
+        ///   * Different 'detectionModel' values can be provided. To use and compare different detection models, please refer to https://learn.microsoft.com/azure/ai-services/computer-vision/how-to/specify-detection-model
         ///
         /// &gt; [!NOTE]
         /// &gt;
@@ -3741,7 +3741,7 @@ namespace Azure.AI.Vision.Face
         ///   * "targetFace" rectangle should contain one face. Zero or multiple faces will be regarded as an error. If the provided "targetFace" rectangle is not returned from "Detect", there's no guarantee to detect and add the face successfully.
         ///   * Out of detectable face size (36x36 - 4096x4096 pixels), large head-pose, or large occlusions will cause failures.
         ///   * The minimum detectable face size is 36x36 pixels in an image no larger than 1920x1080 pixels. Images with dimensions higher than 1920x1080 pixels will need a proportionally larger minimum face size.
-        ///   * Different 'detectionModel' values can be provided. To use and compare different detection models, please refer to https://learn.microsoft.com/en-us/azure/ai-services/computer-vision/how-to/specify-detection-model
+        ///   * Different 'detectionModel' values can be provided. To use and compare different detection models, please refer to https://learn.microsoft.com/azure/ai-services/computer-vision/how-to/specify-detection-model
         /// </remarks>
         /// <include file="Docs/FaceAdministrationClient.xml" path="doc/members/member[@name='AddPersonGroupPersonFaceFromUrlAsync(string,Guid,Uri,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)']/*" />
         public virtual async Task<Response<AddFaceResult>> AddPersonGroupPersonFaceFromUrlAsync(string personGroupId, Guid personId, Uri url, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
@@ -3777,7 +3777,7 @@ namespace Azure.AI.Vision.Face
         ///   * "targetFace" rectangle should contain one face. Zero or multiple faces will be regarded as an error. If the provided "targetFace" rectangle is not returned from "Detect", there's no guarantee to detect and add the face successfully.
         ///   * Out of detectable face size (36x36 - 4096x4096 pixels), large head-pose, or large occlusions will cause failures.
         ///   * The minimum detectable face size is 36x36 pixels in an image no larger than 1920x1080 pixels. Images with dimensions higher than 1920x1080 pixels will need a proportionally larger minimum face size.
-        ///   * Different 'detectionModel' values can be provided. To use and compare different detection models, please refer to https://learn.microsoft.com/en-us/azure/ai-services/computer-vision/how-to/specify-detection-model
+        ///   * Different 'detectionModel' values can be provided. To use and compare different detection models, please refer to https://learn.microsoft.com/azure/ai-services/computer-vision/how-to/specify-detection-model
         /// </remarks>
         /// <include file="Docs/FaceAdministrationClient.xml" path="doc/members/member[@name='AddPersonGroupPersonFaceFromUrl(string,Guid,Uri,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)']/*" />
         public virtual Response<AddFaceResult> AddPersonGroupPersonFaceFromUrl(string personGroupId, Guid personId, Uri url, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
@@ -3905,7 +3905,7 @@ namespace Azure.AI.Vision.Face
         ///   * "targetFace" rectangle should contain one face. Zero or multiple faces will be regarded as an error. If the provided "targetFace" rectangle is not returned from "Detect", there's no guarantee to detect and add the face successfully.
         ///   * Out of detectable face size (36x36 - 4096x4096 pixels), large head-pose, or large occlusions will cause failures.
         ///   * The minimum detectable face size is 36x36 pixels in an image no larger than 1920x1080 pixels. Images with dimensions higher than 1920x1080 pixels will need a proportionally larger minimum face size.
-        ///   * Different 'detectionModel' values can be provided. To use and compare different detection models, please refer to https://learn.microsoft.com/en-us/azure/ai-services/computer-vision/how-to/specify-detection-model
+        ///   * Different 'detectionModel' values can be provided. To use and compare different detection models, please refer to https://learn.microsoft.com/azure/ai-services/computer-vision/how-to/specify-detection-model
         /// </remarks>
         /// <include file="Docs/FaceAdministrationClient.xml" path="doc/members/member[@name='AddPersonGroupPersonFaceAsync(string,Guid,BinaryData,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)']/*" />
         public virtual async Task<Response<AddFaceResult>> AddPersonGroupPersonFaceAsync(string personGroupId, Guid personId, BinaryData imageContent, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
@@ -3941,7 +3941,7 @@ namespace Azure.AI.Vision.Face
         ///   * "targetFace" rectangle should contain one face. Zero or multiple faces will be regarded as an error. If the provided "targetFace" rectangle is not returned from "Detect", there's no guarantee to detect and add the face successfully.
         ///   * Out of detectable face size (36x36 - 4096x4096 pixels), large head-pose, or large occlusions will cause failures.
         ///   * The minimum detectable face size is 36x36 pixels in an image no larger than 1920x1080 pixels. Images with dimensions higher than 1920x1080 pixels will need a proportionally larger minimum face size.
-        ///   * Different 'detectionModel' values can be provided. To use and compare different detection models, please refer to https://learn.microsoft.com/en-us/azure/ai-services/computer-vision/how-to/specify-detection-model
+        ///   * Different 'detectionModel' values can be provided. To use and compare different detection models, please refer to https://learn.microsoft.com/azure/ai-services/computer-vision/how-to/specify-detection-model
         /// </remarks>
         /// <include file="Docs/FaceAdministrationClient.xml" path="doc/members/member[@name='AddPersonGroupPersonFace(string,Guid,BinaryData,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)']/*" />
         public virtual Response<AddFaceResult> AddPersonGroupPersonFace(string personGroupId, Guid personId, BinaryData imageContent, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
@@ -5583,7 +5583,7 @@ namespace Azure.AI.Vision.Face
         ///   * "targetFace" rectangle should contain one face. Zero or multiple faces will be regarded as an error. If the provided "targetFace" rectangle is not returned from "Detect", there's no guarantee to detect and add the face successfully.
         ///   * Out of detectable face size (36x36 - 4096x4096 pixels), large head-pose, or large occlusions will cause failures.
         ///   * The minimum detectable face size is 36x36 pixels in an image no larger than 1920x1080 pixels. Images with dimensions higher than 1920x1080 pixels will need a proportionally larger minimum face size.
-        ///   * Different 'detectionModel' values can be provided. To use and compare different detection models, please refer to https://learn.microsoft.com/en-us/azure/ai-services/computer-vision/how-to/specify-detection-model
+        ///   * Different 'detectionModel' values can be provided. To use and compare different detection models, please refer to https://learn.microsoft.com/azure/ai-services/computer-vision/how-to/specify-detection-model
         /// </remarks>
         /// <include file="Docs/FaceAdministrationClient.xml" path="doc/members/member[@name='AddLargePersonGroupPersonFaceFromUrlAsync(string,Guid,Uri,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)']/*" />
         public virtual async Task<Response<AddFaceResult>> AddLargePersonGroupPersonFaceFromUrlAsync(string largePersonGroupId, Guid personId, Uri url, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
@@ -5619,7 +5619,7 @@ namespace Azure.AI.Vision.Face
         ///   * "targetFace" rectangle should contain one face. Zero or multiple faces will be regarded as an error. If the provided "targetFace" rectangle is not returned from "Detect", there's no guarantee to detect and add the face successfully.
         ///   * Out of detectable face size (36x36 - 4096x4096 pixels), large head-pose, or large occlusions will cause failures.
         ///   * The minimum detectable face size is 36x36 pixels in an image no larger than 1920x1080 pixels. Images with dimensions higher than 1920x1080 pixels will need a proportionally larger minimum face size.
-        ///   * Different 'detectionModel' values can be provided. To use and compare different detection models, please refer to https://learn.microsoft.com/en-us/azure/ai-services/computer-vision/how-to/specify-detection-model
+        ///   * Different 'detectionModel' values can be provided. To use and compare different detection models, please refer to https://learn.microsoft.com/azure/ai-services/computer-vision/how-to/specify-detection-model
         /// </remarks>
         /// <include file="Docs/FaceAdministrationClient.xml" path="doc/members/member[@name='AddLargePersonGroupPersonFaceFromUrl(string,Guid,Uri,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)']/*" />
         public virtual Response<AddFaceResult> AddLargePersonGroupPersonFaceFromUrl(string largePersonGroupId, Guid personId, Uri url, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
@@ -5747,7 +5747,7 @@ namespace Azure.AI.Vision.Face
         ///   * "targetFace" rectangle should contain one face. Zero or multiple faces will be regarded as an error. If the provided "targetFace" rectangle is not returned from "Detect", there's no guarantee to detect and add the face successfully.
         ///   * Out of detectable face size (36x36 - 4096x4096 pixels), large head-pose, or large occlusions will cause failures.
         ///   * The minimum detectable face size is 36x36 pixels in an image no larger than 1920x1080 pixels. Images with dimensions higher than 1920x1080 pixels will need a proportionally larger minimum face size.
-        ///   * Different 'detectionModel' values can be provided. To use and compare different detection models, please refer to https://learn.microsoft.com/en-us/azure/ai-services/computer-vision/how-to/specify-detection-model
+        ///   * Different 'detectionModel' values can be provided. To use and compare different detection models, please refer to https://learn.microsoft.com/azure/ai-services/computer-vision/how-to/specify-detection-model
         /// </remarks>
         /// <include file="Docs/FaceAdministrationClient.xml" path="doc/members/member[@name='AddLargePersonGroupPersonFaceAsync(string,Guid,BinaryData,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)']/*" />
         public virtual async Task<Response<AddFaceResult>> AddLargePersonGroupPersonFaceAsync(string largePersonGroupId, Guid personId, BinaryData imageContent, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
@@ -5783,7 +5783,7 @@ namespace Azure.AI.Vision.Face
         ///   * "targetFace" rectangle should contain one face. Zero or multiple faces will be regarded as an error. If the provided "targetFace" rectangle is not returned from "Detect", there's no guarantee to detect and add the face successfully.
         ///   * Out of detectable face size (36x36 - 4096x4096 pixels), large head-pose, or large occlusions will cause failures.
         ///   * The minimum detectable face size is 36x36 pixels in an image no larger than 1920x1080 pixels. Images with dimensions higher than 1920x1080 pixels will need a proportionally larger minimum face size.
-        ///   * Different 'detectionModel' values can be provided. To use and compare different detection models, please refer to https://learn.microsoft.com/en-us/azure/ai-services/computer-vision/how-to/specify-detection-model
+        ///   * Different 'detectionModel' values can be provided. To use and compare different detection models, please refer to https://learn.microsoft.com/azure/ai-services/computer-vision/how-to/specify-detection-model
         /// </remarks>
         /// <include file="Docs/FaceAdministrationClient.xml" path="doc/members/member[@name='AddLargePersonGroupPersonFace(string,Guid,BinaryData,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)']/*" />
         public virtual Response<AddFaceResult> AddLargePersonGroupPersonFace(string largePersonGroupId, Guid personId, BinaryData imageContent, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
@@ -7929,7 +7929,7 @@ namespace Azure.AI.Vision.Face
         ///   * "targetFace" rectangle should contain one face. Zero or multiple faces will be regarded as an error. If the provided "targetFace" rectangle is not returned from "Detect", there's no guarantee to detect and add the face successfully.
         ///   * Out of detectable face size (36x36 - 4096x4096 pixels), large head-pose, or large occlusions will cause failures.
         ///   * The minimum detectable face size is 36x36 pixels in an image no larger than 1920x1080 pixels. Images with dimensions higher than 1920x1080 pixels will need a proportionally larger minimum face size.
-        ///   * Different 'detectionModel' values can be provided. To use and compare different detection models, please refer to https://learn.microsoft.com/en-us/azure/ai-services/computer-vision/how-to/specify-detection-model
+        ///   * Different 'detectionModel' values can be provided. To use and compare different detection models, please refer to https://learn.microsoft.com/azure/ai-services/computer-vision/how-to/specify-detection-model
         /// *
         ///   * Adding/deleting faces to/from a same person will be processed sequentially. Adding/deleting faces to/from different persons are processed in parallel.
         ///   * This is a long running operation. Use Response Header "Operation-Location" to determine when the AddFace operation has successfully propagated for future requests to "Identify". For further information about Operation-Locations see "Get Face Operation Status".
@@ -7967,7 +7967,7 @@ namespace Azure.AI.Vision.Face
         ///   * "targetFace" rectangle should contain one face. Zero or multiple faces will be regarded as an error. If the provided "targetFace" rectangle is not returned from "Detect", there's no guarantee to detect and add the face successfully.
         ///   * Out of detectable face size (36x36 - 4096x4096 pixels), large head-pose, or large occlusions will cause failures.
         ///   * The minimum detectable face size is 36x36 pixels in an image no larger than 1920x1080 pixels. Images with dimensions higher than 1920x1080 pixels will need a proportionally larger minimum face size.
-        ///   * Different 'detectionModel' values can be provided. To use and compare different detection models, please refer to https://learn.microsoft.com/en-us/azure/ai-services/computer-vision/how-to/specify-detection-model
+        ///   * Different 'detectionModel' values can be provided. To use and compare different detection models, please refer to https://learn.microsoft.com/azure/ai-services/computer-vision/how-to/specify-detection-model
         /// *
         ///   * Adding/deleting faces to/from a same person will be processed sequentially. Adding/deleting faces to/from different persons are processed in parallel.
         ///   * This is a long running operation. Use Response Header "Operation-Location" to determine when the AddFace operation has successfully propagated for future requests to "Identify". For further information about Operation-Locations see "Get Face Operation Status".
@@ -8099,7 +8099,7 @@ namespace Azure.AI.Vision.Face
         ///   * "targetFace" rectangle should contain one face. Zero or multiple faces will be regarded as an error. If the provided "targetFace" rectangle is not returned from "Detect", there's no guarantee to detect and add the face successfully.
         ///   * Out of detectable face size (36x36 - 4096x4096 pixels), large head-pose, or large occlusions will cause failures.
         ///   * The minimum detectable face size is 36x36 pixels in an image no larger than 1920x1080 pixels. Images with dimensions higher than 1920x1080 pixels will need a proportionally larger minimum face size.
-        ///   * Different 'detectionModel' values can be provided. To use and compare different detection models, please refer to https://learn.microsoft.com/en-us/azure/ai-services/computer-vision/how-to/specify-detection-model
+        ///   * Different 'detectionModel' values can be provided. To use and compare different detection models, please refer to https://learn.microsoft.com/azure/ai-services/computer-vision/how-to/specify-detection-model
         /// *
         ///   * Adding/deleting faces to/from a same person will be processed sequentially. Adding/deleting faces to/from different persons are processed in parallel.
         ///   * This is a long running operation. Use Response Header "Operation-Location" to determine when the AddFace operation has successfully propagated for future requests to "Identify". For further information about Operation-Locations see "Get Face Operation Status".
@@ -8137,7 +8137,7 @@ namespace Azure.AI.Vision.Face
         ///   * "targetFace" rectangle should contain one face. Zero or multiple faces will be regarded as an error. If the provided "targetFace" rectangle is not returned from "Detect", there's no guarantee to detect and add the face successfully.
         ///   * Out of detectable face size (36x36 - 4096x4096 pixels), large head-pose, or large occlusions will cause failures.
         ///   * The minimum detectable face size is 36x36 pixels in an image no larger than 1920x1080 pixels. Images with dimensions higher than 1920x1080 pixels will need a proportionally larger minimum face size.
-        ///   * Different 'detectionModel' values can be provided. To use and compare different detection models, please refer to https://learn.microsoft.com/en-us/azure/ai-services/computer-vision/how-to/specify-detection-model
+        ///   * Different 'detectionModel' values can be provided. To use and compare different detection models, please refer to https://learn.microsoft.com/azure/ai-services/computer-vision/how-to/specify-detection-model
         /// *
         ///   * Adding/deleting faces to/from a same person will be processed sequentially. Adding/deleting faces to/from different persons are processed in parallel.
         ///   * This is a long running operation. Use Response Header "Operation-Location" to determine when the AddFace operation has successfully propagated for future requests to "Identify". For further information about Operation-Locations see "Get Face Operation Status".
