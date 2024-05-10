@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="providerSettings">
         /// Defines the provider specific properties.
         /// Please note <see cref="ProviderSpecificProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DB2ProviderInstanceProperties"/>, <see cref="MsSqlServerProviderInstanceProperties"/>, <see cref="PrometheusHAClusterProviderInstanceProperties"/>, <see cref="PrometheusOSProviderInstanceProperties"/>, <see cref="HanaDBProviderInstanceProperties"/> and <see cref="SapNetWeaverProviderInstanceProperties"/>.
+        /// The available derived classes include <see cref="HanaDBProviderInstanceProperties"/>, <see cref="SapNetWeaverProviderInstanceProperties"/>, <see cref="PrometheusOSProviderInstanceProperties"/>, <see cref="DB2ProviderInstanceProperties"/>, <see cref="PrometheusHAClusterProviderInstanceProperties"/> and <see cref="MsSqlServerProviderInstanceProperties"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SapProviderInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, UserAssignedServiceIdentity identity, WorkloadMonitorProvisioningState? provisioningState, ResponseError errors, ProviderSpecificProperties providerSettings, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Workloads
         /// <summary>
         /// Defines the provider specific properties.
         /// Please note <see cref="ProviderSpecificProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DB2ProviderInstanceProperties"/>, <see cref="MsSqlServerProviderInstanceProperties"/>, <see cref="PrometheusHAClusterProviderInstanceProperties"/>, <see cref="PrometheusOSProviderInstanceProperties"/>, <see cref="HanaDBProviderInstanceProperties"/> and <see cref="SapNetWeaverProviderInstanceProperties"/>.
+        /// The available derived classes include <see cref="HanaDBProviderInstanceProperties"/>, <see cref="SapNetWeaverProviderInstanceProperties"/>, <see cref="PrometheusOSProviderInstanceProperties"/>, <see cref="DB2ProviderInstanceProperties"/>, <see cref="PrometheusHAClusterProviderInstanceProperties"/> and <see cref="MsSqlServerProviderInstanceProperties"/>.
         /// </summary>
         public ProviderSpecificProperties ProviderSettings { get; set; }
     }

@@ -71,8 +71,8 @@ namespace Azure.ResourceManager.Synapse.Models
                 switch (discriminator.GetString())
                 {
                     case "CmdkeySetup": return SynapseCmdkeySetup.DeserializeSynapseCmdkeySetup(element, options);
-                    case "ComponentSetup": return SynapseComponentSetup.DeserializeSynapseComponentSetup(element, options);
                     case "EnvironmentVariableSetup": return SynapseEnvironmentVariableSetup.DeserializeSynapseEnvironmentVariableSetup(element, options);
+                    case "ComponentSetup": return SynapseComponentSetup.DeserializeSynapseComponentSetup(element, options);
                 }
             }
             return UnknownCustomSetupBase.DeserializeUnknownCustomSetupBase(element, options);

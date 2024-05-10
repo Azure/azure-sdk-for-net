@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary>
     /// The base definition of the custom setup.
     /// Please note <see cref="SynapseCustomSetupBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="SynapseCmdkeySetup"/>, <see cref="SynapseComponentSetup"/> and <see cref="SynapseEnvironmentVariableSetup"/>.
+    /// The available derived classes include <see cref="SynapseCmdkeySetup"/>, <see cref="SynapseEnvironmentVariableSetup"/> and <see cref="SynapseComponentSetup"/>.
     /// </summary>
     public abstract partial class SynapseCustomSetupBase
     {

@@ -1634,7 +1634,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity"> Identity of the workspace. Current supported identity types: None, SystemAssigned, SystemAssigned,UserAssigned. </param>
+        /// <param name="identity"> Identity of the workspace. Current supported identity types: None, SystemAssigned, SystemAssignedUserAssigned. </param>
         /// <param name="defaultDataLakeStorage"> Workspace default data lake storage account details. </param>
         /// <param name="sqlAdministratorLoginPassword"> SQL administrator login password. </param>
         /// <param name="managedResourceGroupName"> Workspace managed resource group. The resource group name uniquely identifies the resource group within the user subscriptionId. The resource group name must be no longer than 90 characters long, and must be alphanumeric characters (Char.IsLetterOrDigit()) and '-', '_', '(', ')' and'.'. Note that the name cannot end with '.'. </param>
@@ -1718,7 +1718,7 @@ namespace Azure.ResourceManager.Synapse.Models
 
         /// <summary> Initializes a new instance of <see cref="Models.SynapseWorkspacePatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="identity"> The identity of the workspace. Current supported identity types: None, SystemAssigned, SystemAssigned,UserAssigned. </param>
+        /// <param name="identity"> The identity of the workspace. Current supported identity types: None, SystemAssigned, SystemAssignedUserAssigned. </param>
         /// <param name="sqlAdministratorLoginPassword"> SQL administrator login password. </param>
         /// <param name="managedVirtualNetworkSettings"> Managed Virtual Network Settings. </param>
         /// <param name="workspaceRepositoryConfiguration"> Git integration settings. </param>

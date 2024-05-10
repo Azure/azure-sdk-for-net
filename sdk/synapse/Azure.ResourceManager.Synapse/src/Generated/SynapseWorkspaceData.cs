@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity"> Identity of the workspace. Current supported identity types: None, SystemAssigned, SystemAssigned,UserAssigned. </param>
+        /// <param name="identity"> Identity of the workspace. Current supported identity types: None, SystemAssigned, SystemAssignedUserAssigned. </param>
         /// <param name="defaultDataLakeStorage"> Workspace default data lake storage account details. </param>
         /// <param name="sqlAdministratorLoginPassword"> SQL administrator login password. </param>
         /// <param name="managedResourceGroupName"> Workspace managed resource group. The resource group name uniquely identifies the resource group within the user subscriptionId. The resource group name must be no longer than 90 characters long, and must be alphanumeric characters (Char.IsLetterOrDigit()) and '-', '_', '(', ')' and'.'. Note that the name cannot end with '.'. </param>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Synapse
         {
         }
 
-        /// <summary> Identity of the workspace. Current supported identity types: None, SystemAssigned, SystemAssigned,UserAssigned. </summary>
+        /// <summary> Identity of the workspace. Current supported identity types: None, SystemAssigned, SystemAssignedUserAssigned. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Workspace default data lake storage account details. </summary>
         public SynapseDataLakeStorageAccountDetails DefaultDataLakeStorage { get; set; }
