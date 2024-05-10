@@ -32,6 +32,8 @@ public class ClientResult
     /// from the service.</param>
     protected ClientResult(PipelineResponse response)
     {
+        Argument.AssertNotNull(response, nameof(response));
+
         _response = response;
     }
 

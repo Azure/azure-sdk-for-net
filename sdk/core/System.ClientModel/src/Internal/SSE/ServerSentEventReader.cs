@@ -10,15 +10,16 @@ using System.Threading.Tasks;
 namespace System.ClientModel.Internal;
 
 // SSE specification: https://html.spec.whatwg.org/multipage/server-sent-events.html
-internal sealed class ServerSentEventReader : IDisposable, IAsyncDisposable
+internal sealed class ServerSentEventReader
 {
-    private Stream? _stream;
-    private StreamReader? _reader;
-
-    public int? LastEventId { get; private set; }
+    private readonly Stream? _stream;
+    private readonly StreamReader? _reader;
 
     public ServerSentEventReader(Stream stream)
     {
+        // Creator of the reader has responsibility for disposing the stream
+        // passed to the reader constructor.
+
         _stream = stream;
         _reader = new StreamReader(stream);
     }
@@ -160,6 +161,8 @@ internal sealed class ServerSentEventReader : IDisposable, IAsyncDisposable
 
         public ServerSentEvent ToEvent()
         {
+            Debug.Assert(DataLength > 0);
+
             // Per spec, if event type buffer is empty, set event.type to "message".
             string type = EventTypeField.HasValue ?
                 EventTypeField.Value.Value.ToString() :
@@ -171,75 +174,24 @@ internal sealed class ServerSentEventReader : IDisposable, IAsyncDisposable
             string? retry = RetryField.HasValue && RetryField.Value.Value.Length > 0 ?
                 RetryField.Value.Value.ToString() : default;
 
-            Debug.Assert(DataLength > 0);
-
             Memory<char> buffer = new(new char[DataLength]);
 
             int curr = 0;
-
             foreach (ServerSentEventField field in DataFields)
             {
                 Debug.Assert(field.FieldType == ServerSentEventFieldKind.Data);
 
                 field.Value.Span.CopyTo(buffer.Span.Slice(curr));
+
+                // Per spec, append trailing LF to each data field value.
                 buffer.Span[curr + field.Value.Length] = LF;
                 curr += field.Value.Length + 1;
             }
 
-            // Per spec, remove trailing LF
+            // Per spec, remove trailing LF from concatenated data fields.
             string data = buffer.Slice(0, buffer.Length - 1).ToString();
 
             return new ServerSentEvent(type, data, id, retry);
         }
-    }
-
-    public void Dispose()
-    {
-        Dispose(disposing: true);
-        GC.SuppressFinalize(this);
-    }
-
-    private void Dispose(bool disposing)
-    {
-        if (disposing)
-        {
-            _reader?.Dispose();
-            _reader = null;
-
-            _stream?.Dispose();
-            _stream = null;
-        }
-    }
-
-    public async ValueTask DisposeAsync()
-    {
-        await DisposeAsyncCore().ConfigureAwait(false);
-
-        Dispose(disposing: false);
-        GC.SuppressFinalize(this);
-    }
-
-    private async ValueTask DisposeAsyncCore()
-    {
-        if (_reader is IAsyncDisposable reader)
-        {
-            await reader.DisposeAsync().ConfigureAwait(false);
-        }
-        else
-        {
-            _reader?.Dispose();
-        }
-
-        if (_stream is IAsyncDisposable stream)
-        {
-            await stream.DisposeAsync().ConfigureAwait(false);
-        }
-        else
-        {
-            _stream?.Dispose();
-        }
-
-        _reader = null;
-        _stream = null;
     }
 }

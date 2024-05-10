@@ -23,8 +23,7 @@ internal readonly struct ServerSentEvent
         EventType = type;
         Data = data;
         Id = id;
-        ReconnectionTime = retry is null ?
-            default :
+        ReconnectionTime = retry is null ? null :
             int.TryParse(retry, out int time) ? TimeSpan.FromMilliseconds(time) : null;
     }
 }

@@ -22,7 +22,7 @@ public class ServerSentEventReaderTests : SyncAsyncTestBase
     public async Task GetsEventsFromStream()
     {
         Stream contentStream = BinaryData.FromString(_mockContent).ToStream();
-        using ServerSentEventReader reader = new(contentStream);
+        ServerSentEventReader reader = new(contentStream);
 
         List<ServerSentEvent> events = new();
         ServerSentEvent? ssEvent = await reader.TryGetNextEventSyncOrAsync(IsAsync);
@@ -49,7 +49,7 @@ public class ServerSentEventReaderTests : SyncAsyncTestBase
     public async Task HandlesNullLine()
     {
         Stream contentStream = BinaryData.FromString(string.Empty).ToStream();
-        using ServerSentEventReader reader = new(contentStream);
+        ServerSentEventReader reader = new(contentStream);
 
         ServerSentEvent? ssEvent = await reader.TryGetNextEventSyncOrAsync(IsAsync);
         Assert.IsNull(ssEvent);
@@ -59,7 +59,7 @@ public class ServerSentEventReaderTests : SyncAsyncTestBase
     public async Task DiscardsCommentLine()
     {
         Stream contentStream = BinaryData.FromString(": comment").ToStream();
-        using ServerSentEventReader reader = new(contentStream);
+        ServerSentEventReader reader = new(contentStream);
 
         ServerSentEvent? ssEvent = await reader.TryGetNextEventSyncOrAsync(IsAsync);
         Assert.IsNull(ssEvent);
@@ -73,7 +73,7 @@ public class ServerSentEventReaderTests : SyncAsyncTestBase
 
 
             """).ToStream();
-        using ServerSentEventReader reader = new(contentStream);
+        ServerSentEventReader reader = new(contentStream);
 
         ServerSentEvent? sse = await reader.TryGetNextEventSyncOrAsync(IsAsync);
 
@@ -84,7 +84,7 @@ public class ServerSentEventReaderTests : SyncAsyncTestBase
     public async Task HandlesDoneEvent()
     {
         Stream contentStream = BinaryData.FromString("event: stop\ndata: ~stop~\n\n").ToStream();
-        using ServerSentEventReader reader = new(contentStream);
+        ServerSentEventReader reader = new(contentStream);
 
         ServerSentEvent? sse = await reader.TryGetNextEventSyncOrAsync(IsAsync);
 
@@ -105,7 +105,7 @@ public class ServerSentEventReaderTests : SyncAsyncTestBase
 
 
             """).ToStream();
-        using ServerSentEventReader reader = new(contentStream);
+        ServerSentEventReader reader = new(contentStream);
 
         ServerSentEvent? sse = await reader.TryGetNextEventSyncOrAsync(IsAsync);
 
@@ -123,7 +123,7 @@ public class ServerSentEventReaderTests : SyncAsyncTestBase
 
 
             """).ToStream();
-        using ServerSentEventReader reader = new(contentStream);
+        ServerSentEventReader reader = new(contentStream);
 
         ServerSentEvent? sse = await reader.TryGetNextEventSyncOrAsync(IsAsync);
 
@@ -151,7 +151,7 @@ public class ServerSentEventReaderTests : SyncAsyncTestBase
 
 
             """).ToStream();
-        using ServerSentEventReader reader = new(contentStream);
+        ServerSentEventReader reader = new(contentStream);
 
         List<ServerSentEvent> events = new();
 
@@ -186,7 +186,7 @@ public class ServerSentEventReaderTests : SyncAsyncTestBase
 
             data:
             """).ToStream();
-        using ServerSentEventReader reader = new(contentStream);
+        ServerSentEventReader reader = new(contentStream);
 
         List<ServerSentEvent> events = new();
 
@@ -213,7 +213,7 @@ public class ServerSentEventReaderTests : SyncAsyncTestBase
 
 
             """).ToStream();
-        using ServerSentEventReader reader = new(contentStream);
+        ServerSentEventReader reader = new(contentStream);
 
         List<ServerSentEvent> events = new();
 
@@ -234,7 +234,7 @@ public class ServerSentEventReaderTests : SyncAsyncTestBase
         CancellationToken token = new(true);
 
         using Stream contentStream = BinaryData.FromString(_mockContent).ToStream();
-        using ServerSentEventReader reader = new(contentStream);
+        ServerSentEventReader reader = new(contentStream);
 
         Assert.ThrowsAsync<OperationCanceledException>(async ()
             => await reader.TryGetNextEventAsync(token));
