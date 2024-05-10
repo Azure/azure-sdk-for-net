@@ -24,7 +24,7 @@ public class MockSseClient
     public bool ProtocolMethodCalled { get; private set; }
 
     // mock convenience method
-    public virtual AsyncClientResultCollection<MockJsonModel> GetModelsStreamingAsync(string content)
+    public virtual AsyncResultCollection<MockJsonModel> GetModelsStreamingAsync(string content)
     {
         return new AsyncMockJsonModelCollection(content, GetModelsStreamingAsync);
     }
@@ -46,7 +46,7 @@ public class MockSseClient
     // Internal client implementation of convenience-layer AsyncResultCollection.
     // This currently layers over an internal AsyncResultCollection<BinaryData>
     // representing the event.data values, but does not strictly have to.
-    private class AsyncMockJsonModelCollection : AsyncClientResultCollection<MockJsonModel>
+    private class AsyncMockJsonModelCollection : AsyncResultCollection<MockJsonModel>
     {
         private readonly string _content;
         private readonly Func<string, RequestOptions?, ClientResult> _protocolMethod;
