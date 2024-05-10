@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="actions">
         /// A collection of the actions which are triggered if all the configured rules evaluations, within at least one rule set, are true.
         /// Please note <see cref="SecurityAutomationAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecurityAutomationActionEventHub"/>, <see cref="SecurityAutomationActionLogicApp"/> and <see cref="SecurityAutomationActionWorkspace"/>.
+        /// The available derived classes include <see cref="SecurityAutomationActionLogicApp"/>, <see cref="SecurityAutomationActionEventHub"/> and <see cref="SecurityAutomationActionWorkspace"/>.
         /// </param>
         /// <param name="kind"> Kind of the resource. </param>
         /// <param name="eTag"> Entity tag is used for comparing two or more entities from the same requested resource. </param>
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary>
         /// A collection of the actions which are triggered if all the configured rules evaluations, within at least one rule set, are true.
         /// Please note <see cref="SecurityAutomationAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecurityAutomationActionEventHub"/>, <see cref="SecurityAutomationActionLogicApp"/> and <see cref="SecurityAutomationActionWorkspace"/>.
+        /// The available derived classes include <see cref="SecurityAutomationActionLogicApp"/>, <see cref="SecurityAutomationActionEventHub"/> and <see cref="SecurityAutomationActionWorkspace"/>.
         /// </summary>
         public IList<SecurityAutomationAction> Actions { get; }
         /// <summary> Kind of the resource. </summary>

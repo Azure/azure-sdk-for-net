@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="value">
         /// The settings list.
         /// Please note <see cref="SecuritySettingData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecurityAlertSyncSettings"/> and <see cref="DataExportSettings"/>.
+        /// The available derived classes include <see cref="DataExportSettings"/> and <see cref="SecurityAlertSyncSettings"/>.
         /// </param>
         /// <param name="nextLink"> The URI to fetch the next page. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary>
         /// The settings list.
         /// Please note <see cref="SecuritySettingData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecurityAlertSyncSettings"/> and <see cref="DataExportSettings"/>.
+        /// The available derived classes include <see cref="DataExportSettings"/> and <see cref="SecurityAlertSyncSettings"/>.
         /// </summary>
         public IReadOnlyList<SecuritySettingData> Value { get; }
         /// <summary> The URI to fetch the next page. </summary>

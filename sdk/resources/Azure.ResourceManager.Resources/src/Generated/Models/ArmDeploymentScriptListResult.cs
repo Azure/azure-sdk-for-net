@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="value">
         /// An array of deployment scripts.
         /// Please note <see cref="ArmDeploymentScriptData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureCliScript"/> and <see cref="AzurePowerShellScript"/>.
+        /// The available derived classes include <see cref="AzurePowerShellScript"/> and <see cref="AzureCliScript"/>.
         /// </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary>
         /// An array of deployment scripts.
         /// Please note <see cref="ArmDeploymentScriptData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureCliScript"/> and <see cref="AzurePowerShellScript"/>.
+        /// The available derived classes include <see cref="AzurePowerShellScript"/> and <see cref="AzureCliScript"/>.
         /// </summary>
         public IReadOnlyList<ArmDeploymentScriptData> Value { get; }
         /// <summary> The URL to use for getting the next set of results. </summary>

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     /// <summary>
     /// The secret info
     /// Please note <see cref="SecretBaseInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="KeyVaultSecretReferenceSecretInfo"/>, <see cref="KeyVaultSecretUriSecretInfo"/> and <see cref="RawValueSecretInfo"/>.
+    /// The available derived classes include <see cref="RawValueSecretInfo"/>, <see cref="KeyVaultSecretReferenceSecretInfo"/> and <see cref="KeyVaultSecretUriSecretInfo"/>.
     /// </summary>
     public abstract partial class SecretBaseInfo
     {

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="organizationalData">
         /// The Gcp project's organizational data
         /// Please note <see cref="GcpOrganizationalInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="GcpMemberOrganizationalInfo"/> and <see cref="GcpParentOrganizationalInfo"/>.
+        /// The available derived classes include <see cref="GcpParentOrganizationalInfo"/> and <see cref="GcpMemberOrganizationalInfo"/>.
         /// </param>
         /// <param name="projectDetails"> The Gcp project's details. </param>
         /// <param name="scanInterval"> Scan interval in hours (value should be between 1-hour to 24-hours). </param>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary>
         /// The Gcp project's organizational data
         /// Please note <see cref="GcpOrganizationalInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="GcpMemberOrganizationalInfo"/> and <see cref="GcpParentOrganizationalInfo"/>.
+        /// The available derived classes include <see cref="GcpParentOrganizationalInfo"/> and <see cref="GcpMemberOrganizationalInfo"/>.
         /// </summary>
         public GcpOrganizationalInfo OrganizationalData { get; set; }
         /// <summary> The Gcp project's details. </summary>

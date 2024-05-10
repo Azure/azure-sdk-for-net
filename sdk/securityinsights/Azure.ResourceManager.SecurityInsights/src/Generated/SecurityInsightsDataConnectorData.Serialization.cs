@@ -95,14 +95,14 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 switch (discriminator.GetString())
                 {
-                    case "AmazonWebServicesCloudTrail": return SecurityInsightsAwsCloudTrailDataConnector.DeserializeSecurityInsightsAwsCloudTrailDataConnector(element, options);
                     case "AzureActiveDirectory": return SecurityInsightsAadDataConnector.DeserializeSecurityInsightsAadDataConnector(element, options);
                     case "AzureAdvancedThreatProtection": return SecurityInsightsAatpDataConnector.DeserializeSecurityInsightsAatpDataConnector(element, options);
                     case "AzureSecurityCenter": return SecurityInsightsAscDataConnector.DeserializeSecurityInsightsAscDataConnector(element, options);
+                    case "AmazonWebServicesCloudTrail": return SecurityInsightsAwsCloudTrailDataConnector.DeserializeSecurityInsightsAwsCloudTrailDataConnector(element, options);
                     case "MicrosoftCloudAppSecurity": return McasDataConnector.DeserializeMcasDataConnector(element, options);
                     case "MicrosoftDefenderAdvancedThreatProtection": return MdatpDataConnector.DeserializeMdatpDataConnector(element, options);
-                    case "Office365": return SecurityInsightsOfficeDataConnector.DeserializeSecurityInsightsOfficeDataConnector(element, options);
                     case "ThreatIntelligence": return SecurityInsightsTIDataConnector.DeserializeSecurityInsightsTIDataConnector(element, options);
+                    case "Office365": return SecurityInsightsOfficeDataConnector.DeserializeSecurityInsightsOfficeDataConnector(element, options);
                 }
             }
             return UnknownDataConnector.DeserializeUnknownDataConnector(element, options);

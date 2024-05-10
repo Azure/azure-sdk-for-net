@@ -7,6 +7,7 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -69,7 +70,20 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     case "Bundles": return SecurityAlertSimulatorBundlesRequestProperties.DeserializeSecurityAlertSimulatorBundlesRequestProperties(element, options);
                 }
             }
-            return UnknownAlertSimulatorRequestProperties.DeserializeUnknownAlertSimulatorRequestProperties(element, options);
+            SecurityCenterKind kind = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("kind"u8))
+                {
+                    kind = new SecurityCenterKind(property.Value.GetString());
+                    continue;
+                }
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+            }
+            additionalProperties = additionalPropertiesDictionary;
+            return new SecurityAlertSimulatorRequestProperties(kind, additionalProperties);
         }
 
         BinaryData IPersistableModel<SecurityAlertSimulatorRequestProperties>.Write(ModelReaderWriterOptions options)

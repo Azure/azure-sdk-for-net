@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary>
     /// Represents a security solution external to Microsoft Defender for Cloud which sends information to an OMS workspace and whose data is displayed by Microsoft Defender for Cloud.
     /// Please note <see cref="ExternalSecuritySolution"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AadExternalSecuritySolution"/>, <see cref="AtaExternalSecuritySolution"/> and <see cref="CefExternalSecuritySolution"/>.
+    /// The available derived classes include <see cref="CefExternalSecuritySolution"/>, <see cref="AtaExternalSecuritySolution"/> and <see cref="AadExternalSecuritySolution"/>.
     /// </summary>
     public partial class ExternalSecuritySolution : ResourceData
     {

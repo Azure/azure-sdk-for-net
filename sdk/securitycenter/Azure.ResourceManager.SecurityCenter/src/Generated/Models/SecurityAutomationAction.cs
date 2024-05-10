@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary>
     /// The action that should be triggered.
     /// Please note <see cref="SecurityAutomationAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="SecurityAutomationActionEventHub"/>, <see cref="SecurityAutomationActionLogicApp"/> and <see cref="SecurityAutomationActionWorkspace"/>.
+    /// The available derived classes include <see cref="SecurityAutomationActionLogicApp"/>, <see cref="SecurityAutomationActionEventHub"/> and <see cref="SecurityAutomationActionWorkspace"/>.
     /// </summary>
     public abstract partial class SecurityAutomationAction
     {
