@@ -100,8 +100,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Open": return ConfigurationValueWithoutSecrets.DeserializeConfigurationValueWithoutSecrets(element, options);
                     case "Secret": return ConfigurationValueWithSecrets.DeserializeConfigurationValueWithSecrets(element, options);
+                    case "Open": return ConfigurationValueWithoutSecrets.DeserializeConfigurationValueWithoutSecrets(element, options);
                 }
             }
             return UnknownConfigurationGroupValuePropertiesFormat.DeserializeUnknownConfigurationGroupValuePropertiesFormat(element, options);
