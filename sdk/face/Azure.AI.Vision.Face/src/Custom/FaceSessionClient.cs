@@ -48,7 +48,7 @@ namespace Azure.AI.Vision.Face
                 return await CreateLivenessWithVerifySessionAsync(createLivenessSessionContent, cancellationToken).ConfigureAwait(false);
             }
 
-            var createLivenessWithVerifySessionContent = new CreateLivenessWithVerifySessionContent(createLivenessSessionContent.ToMultipartContent(), verifyImage);
+            var createLivenessWithVerifySessionContent = new CreateLivenessWithVerifySessionContent(createLivenessSessionContent, verifyImage);
             return await CreateLivenessWithVerifySessionWithVerifyImageAsync(createLivenessWithVerifySessionContent, cancellationToken).ConfigureAwait(false);
         }
 
@@ -88,7 +88,7 @@ namespace Azure.AI.Vision.Face
                 return CreateLivenessWithVerifySession(createLivenessSessionContent, cancellationToken);
             }
 
-            var createLivenessWithVerifySessionContent = new CreateLivenessWithVerifySessionContent(createLivenessSessionContent.ToMultipartContent(), verifyImage);
+            var createLivenessWithVerifySessionContent = new CreateLivenessWithVerifySessionContent(createLivenessSessionContent, verifyImage);
             return CreateLivenessWithVerifySessionWithVerifyImage(createLivenessWithVerifySessionContent, cancellationToken);
         }
     }
