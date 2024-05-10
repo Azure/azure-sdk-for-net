@@ -155,7 +155,7 @@ namespace Azure.AI.Vision.Face
         ///     * 'detection_03': Face attributes (mask and headPose only) and landmarks are supported if you choose this detection model.
         ///   * Different 'recognitionModel' values are provided. If follow-up operations like "Verify", "Identify", "Find Similar" are needed, please specify the recognition model with 'recognitionModel' parameter. The default value for 'recognitionModel' is 'recognition_01', if latest model needed, please explicitly specify the model you need in this parameter. Once specified, the detected faceIds will be associated with the specified recognition model. More details, please refer to https://learn.microsoft.com/en-us/azure/ai-services/computer-vision/how-to/specify-recognition-model.
         /// </remarks>
-        internal virtual async Task<Response<IReadOnlyList<FaceDetectionResult>>> DetectAsync(
+        public virtual async Task<Response<IReadOnlyList<FaceDetectionResult>>> DetectAsync(
             BinaryData imageContent,
             FaceDetectionModel detectionModel,
             FaceRecognitionModel recognitionModel,
@@ -212,7 +212,7 @@ namespace Azure.AI.Vision.Face
         ///     * 'detection_03': Face attributes (mask and headPose only) and landmarks are supported if you choose this detection model.
         ///   * Different 'recognitionModel' values are provided. If follow-up operations like "Verify", "Identify", "Find Similar" are needed, please specify the recognition model with 'recognitionModel' parameter. The default value for 'recognitionModel' is 'recognition_01', if latest model needed, please explicitly specify the model you need in this parameter. Once specified, the detected faceIds will be associated with the specified recognition model. More details, please refer to https://learn.microsoft.com/en-us/azure/ai-services/computer-vision/how-to/specify-recognition-model.
         /// </remarks>
-        internal virtual Response<IReadOnlyList<FaceDetectionResult>> Detect(
+        public virtual Response<IReadOnlyList<FaceDetectionResult>> Detect(
             BinaryData imageContent,
             FaceDetectionModel detectionModel,
             FaceRecognitionModel recognitionModel,
