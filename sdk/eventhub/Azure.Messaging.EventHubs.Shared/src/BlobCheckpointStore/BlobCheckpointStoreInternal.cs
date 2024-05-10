@@ -501,7 +501,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                                                           DateTimeOffset modifiedDate)
         {
             var startingPosition = default(EventPosition?);
-            string offset = null;
+            var offset = default(string);
             var sequenceNumber = default(long?);
             var clientIdentifier = default(string);
 
