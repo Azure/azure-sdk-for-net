@@ -47,13 +47,14 @@ namespace Azure.ResourceManager.Search.Models
                                      systemData,
                                      tags,
                                      location,
-                                     skuName?.ToSerialString(),
+                                     // ternary operator must use a nullable instance of the type to avoid triggering the implicit cast on the null
+                                     skuName.HasValue ? new SearchServiceSkuName?(skuName.Value.ToSerialString()) : null,
                                      identity,
                                      replicaCount,
                                      partitionCount,
                                      hostingMode,
-                                     // need the explicit HasValue check to avoid passing null to implicit cast operation
-                                     publicNetworkAccess.HasValue ? publicNetworkAccess.Value.ToSerialString() : null,
+                                     // ternary operator must use a nullable instance of the type to avoid triggering the implicit cast on the null
+                                     publicNetworkAccess.HasValue ? new SearchServicePublicInternetAccess?(publicNetworkAccess.Value.ToSerialString()) : null,
                                      status,
                                      statusDetails,
                                      provisioningState,
