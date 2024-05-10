@@ -1092,7 +1092,7 @@ namespace Azure.Communication.CallAutomation.Tests.Events
             MediaStreamingStarted @event = CallAutomationModelFactory.MediaStreamingStarted(
                 operationContext: "operationContext",
                 resultInformation: new ResultInformation(code: 200, subCode: 0, message: "Action completed successfully"),
-                me: new MediaStreamingUpdate("contentType", MediaStreamingStatus.MediaStreamingStarted, MediaStreamingStatusDetails.SubscriptionStarted),
+                mediaStreamingUpdateResult: new MediaStreamingUpdate("contentType", MediaStreamingStatus.MediaStreamingStarted, MediaStreamingStatusDetails.SubscriptionStarted),
                 callConnectionId: "callConnectionId",
                 serverCallId: "serverCallId",
                 correlationId: "correlationId");
