@@ -1214,7 +1214,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void CreateEventFromMessagePopulatesTypedSystemProperties()
         {
-            var offset = 123;
+            var offset = "123";
             var sequenceNumber = (long.MaxValue - 10);
             var enqueuedTime = DateTimeOffset.Parse("2015-10-27T12:00:00Z");
             var partitionKey = "OMG! partition!";
@@ -1225,7 +1225,7 @@ namespace Azure.Messaging.EventHubs.Tests
             message.ApplicationProperties.Map.Add("First", 1);
             message.ApplicationProperties.Map.Add("Second", "2");
 
-            message.MessageAnnotations.Map.Add(AmqpProperty.Offset, offset.ToString());
+            message.MessageAnnotations.Map.Add(AmqpProperty.Offset, offset);
             message.MessageAnnotations.Map.Add(AmqpProperty.SequenceNumber, sequenceNumber);
             message.MessageAnnotations.Map.Add(AmqpProperty.EnqueuedTime, enqueuedTime.Ticks);
             message.MessageAnnotations.Map.Add(AmqpProperty.PartitionKey, partitionKey);
@@ -1236,11 +1236,13 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(eventData, Is.Not.Null, "The event should have been created.");
             Assert.That(eventData.EventBody, Is.Not.Null, "The event should have a body.");
             Assert.That(eventData.Properties.Count, Is.EqualTo(message.ApplicationProperties.Map.Count()), "The event should have a set of properties.");
-            Assert.That(eventData.Offset, Is.EqualTo(sequenceNumber), "The offset should match.");
+            Assert.That(eventData.Offset, Is.EqualTo(sequenceNumber), "The offset should match."); // offset -> sequence number for back compat
+            Assert.That(eventData.GlobalOffset, Is.EqualTo(offset), "The global offset should match.");
             Assert.That(eventData.SequenceNumber, Is.EqualTo(sequenceNumber), "The sequence number should match.");
             Assert.That(eventData.EnqueuedTime, Is.EqualTo(enqueuedTime), "The enqueue time should match.");
             Assert.That(eventData.PartitionKey, Is.EqualTo(partitionKey), "The partition key should match.");
             Assert.That(eventData.LastPartitionOffset.HasValue, Is.False, "The last offset should not be set.");
+            Assert.That(string.IsNullOrEmpty(eventData.LastPartitionGlobalOffset), Is.True, "The last global offset should not be set.");
             Assert.That(eventData.LastPartitionSequenceNumber.HasValue, Is.False, "The last sequence number should not be set.");
             Assert.That(eventData.LastPartitionEnqueuedTime.HasValue, Is.False, "The last enqueued time should not be set.");
             Assert.That(eventData.LastPartitionPropertiesRetrievalTime.HasValue, Is.False, "The last retrieval time should not be set.");
@@ -1291,8 +1293,8 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void CreateEventFromMessagePopulatesTypedSystemPropertiesAndMetrics()
         {
-            var offset = 123;
-            var lastOffset = 987;
+            var offset = "123";
+            var lastOffset = "987";
             var sequenceNumber = (long.MaxValue - 10);
             var lastSequenceNumber = (long.MaxValue - 100);
             var enqueuedTime = DateTimeOffset.Parse("2015-10-27T12:00:00Z");
@@ -1306,7 +1308,7 @@ namespace Azure.Messaging.EventHubs.Tests
             message.ApplicationProperties.Map.Add("First", 1);
             message.ApplicationProperties.Map.Add("Second", "2");
 
-            message.MessageAnnotations.Map.Add(AmqpProperty.Offset, offset.ToString());
+            message.MessageAnnotations.Map.Add(AmqpProperty.Offset, offset);
             message.MessageAnnotations.Map.Add(AmqpProperty.SequenceNumber, sequenceNumber);
             message.MessageAnnotations.Map.Add(AmqpProperty.EnqueuedTime, enqueuedTime.Ticks);
             message.MessageAnnotations.Map.Add(AmqpProperty.PartitionKey, partitionKey);
@@ -1322,11 +1324,13 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(eventData, Is.Not.Null, "The event should have been created.");
             Assert.That(eventData.EventBody, Is.Not.Null, "The event should have a body.");
             Assert.That(eventData.Properties.Count, Is.EqualTo(message.ApplicationProperties.Map.Count()), "The event should have a set of properties.");
-            Assert.That(eventData.Offset, Is.EqualTo(sequenceNumber), "The offset should match.");
+            Assert.That(eventData.Offset, Is.EqualTo(sequenceNumber), "The offset should match."); // offset -> sequence number for back compat
+            Assert.That(eventData.GlobalOffset, Is.EqualTo(offset), "The global offset should match.");
             Assert.That(eventData.SequenceNumber, Is.EqualTo(sequenceNumber), "The sequence number should match.");
             Assert.That(eventData.EnqueuedTime, Is.EqualTo(enqueuedTime), "The enqueue time should match.");
             Assert.That(eventData.PartitionKey, Is.EqualTo(partitionKey), "The partition key should match.");
-            Assert.That(eventData.LastPartitionOffset, Is.EqualTo(lastSequenceNumber), "The last offset should match the sequence number.");
+            Assert.That(eventData.LastPartitionOffset, Is.EqualTo(lastSequenceNumber), "The last offset should match the sequence number."); // offset -> sequence number for back compat
+            Assert.That(eventData.LastPartitionGlobalOffset, Is.EqualTo(lastOffset));
             Assert.That(eventData.LastPartitionSequenceNumber, Is.EqualTo(lastSequenceNumber), "The last sequence number should match.");
             Assert.That(eventData.LastPartitionEnqueuedTime, Is.EqualTo(lastEnqueuedTime), "The last enqueued time should match.");
             Assert.That(eventData.LastPartitionPropertiesRetrievalTime, Is.EqualTo(lastRetrievalTime), "The last retrieval time should match.");
@@ -2107,7 +2111,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var partition = "55";
             var beginSequenceNumber = 555L;
             var lastSequenceNumber = 666L;
-            var lastOffset = 777L;
+            var lastGlobalOffset = "1|241310";
             var lastEnqueueTime = DateTimeOffset.Parse("2015-10-27T00:00:00z");
             var isEmpty = false;
             var converter = new AmqpMessageConverter();
@@ -2117,7 +2121,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 { AmqpManagement.ResponseMap.PartitionIdentifier, partition },
                 { AmqpManagement.ResponseMap.PartitionBeginSequenceNumber, beginSequenceNumber },
                 { AmqpManagement.ResponseMap.PartitionLastEnqueuedSequenceNumber, lastSequenceNumber },
-                { AmqpManagement.ResponseMap.PartitionLastEnqueuedOffset, lastOffset.ToString() },
+                { AmqpManagement.ResponseMap.PartitionLastEnqueuedOffset, lastGlobalOffset },
                 { AmqpManagement.ResponseMap.PartitionLastEnqueuedTimeUtc, lastEnqueueTime.UtcDateTime },
                 { AmqpManagement.ResponseMap.PartitionRuntimeInfoPartitionIsEmpty, isEmpty }
             };
@@ -2130,7 +2134,8 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(properties.Id, Is.EqualTo(partition), "The partition should match");
             Assert.That(properties.BeginningSequenceNumber, Is.EqualTo(beginSequenceNumber), "The beginning sequence number should match");
             Assert.That(properties.LastEnqueuedSequenceNumber, Is.EqualTo(lastSequenceNumber), "The last sequence number should match");
-            Assert.That(properties.LastEnqueuedOffset, Is.EqualTo(lastSequenceNumber), "The offset should match the last sequence number");
+            Assert.That(properties.LastEnqueuedOffset, Is.EqualTo(lastSequenceNumber), "The offset should match the last sequence number"); // offset -> sequence number for back compat
+            Assert.That(properties.LastEnqueuedGlobalOffset, Is.EqualTo(lastGlobalOffset), "The offset should match the last sequence number");
             Assert.That(properties.LastEnqueuedTime, Is.EqualTo(lastEnqueueTime), "The last enqueued time should match");
             Assert.That(properties.IsEmpty, Is.EqualTo(isEmpty), "The empty flag should match");
         }

@@ -65,7 +65,9 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void PartitionPropertiesInitializesProperties()
+        [TestCase(true)]
+        [TestCase(false)]
+        public void PartitionPropertiesInitializesProperties(bool useOldOverload)
         {
             var eventHubName = "eventHubName";
             var partitionId = "0";
@@ -73,8 +75,18 @@ namespace Azure.Messaging.EventHubs.Tests
             var beginningSequenceNumber = 123;
             var lastSequenceNumber = 9999;
             var lastOffset = 767;
+            var lastGlobalOffset = "51249";
             var lastEnqueuedTime = new DateTimeOffset(2015, 10, 27, 12, 0, 0, TimeSpan.Zero);
-            var properties = EventHubsModelFactory.PartitionProperties(eventHubName, partitionId, isEmpty, beginningSequenceNumber, lastSequenceNumber, lastOffset, lastEnqueuedTime);
+            PartitionProperties properties;
+            if (useOldOverload)
+            {
+                properties = EventHubsModelFactory.PartitionProperties(eventHubName, partitionId, isEmpty, beginningSequenceNumber, lastSequenceNumber, lastOffset, lastEnqueuedTime);
+            }
+            else
+            {
+                properties = EventHubsModelFactory.PartitionProperties(eventHubName, partitionId, isEmpty, beginningSequenceNumber, lastSequenceNumber, lastGlobalOffset, lastEnqueuedTime);
+                Assert.That(properties.LastEnqueuedGlobalOffset, Is.EqualTo(lastGlobalOffset), "The last global offset should have been set.");
+            }
 
             Assert.That(properties, Is.Not.Null, "The properties should have been created.");
             Assert.That(properties.EventHubName, Is.EqualTo(eventHubName), "The event hub name should have been set.");
@@ -82,8 +94,9 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(properties.IsEmpty, Is.EqualTo(isEmpty), "The `is empty` flag should have been set.");
             Assert.That(properties.BeginningSequenceNumber, Is.EqualTo(beginningSequenceNumber), "The beginning sequence number should have been set.");
             Assert.That(properties.LastEnqueuedSequenceNumber, Is.EqualTo(lastSequenceNumber), "The last sequence number should have been set.");
-            Assert.That(properties.LastEnqueuedOffset, Is.EqualTo(lastSequenceNumber), "The last offset should have been set to the same value as the last sequence number.");
+            Assert.That(properties.LastEnqueuedOffset, Is.EqualTo(lastSequenceNumber), "The last offset should have been set to the same value as the last sequence number."); // offset -> sequence number for back compat
             Assert.That(properties.LastEnqueuedTime, Is.EqualTo(lastEnqueuedTime), "The last enqueue date/time should have been set.");
+            Assert.That(properties.LastEnqueuedGlobalOffset, Is.Null, "The last enqueued global offset should not have been set.");
         }
 
         /// <summary>
@@ -108,7 +121,29 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="EventHubsModelFactory.LastEnqueuedEventProperties" />
+        ///   Verifies functionality of the <see cref="EventHubsModelFactory.LastEnqueuedEventProperties(long?, long?, DateTimeOffset?, DateTimeOffset?)" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void LastEnqueuedEventPropertiesInitializesPropertiesOldOverload()
+        {
+            var lastSequence = long.MaxValue - 100;
+            var offset = long.MaxValue - 10;
+            var lastEnqueued = new DateTimeOffset(2015, 10, 27, 12, 0, 0, TimeSpan.Zero);
+            var lastReceived = new DateTimeOffset(2012, 03, 04, 08, 0, 0, TimeSpan.Zero);
+            var properties = EventHubsModelFactory.LastEnqueuedEventProperties(lastSequence, offset, lastEnqueued, lastReceived);
+
+            Assert.That(properties, Is.Not.Null, "The properties should have been created.");
+            Assert.That(properties.SequenceNumber, Is.EqualTo(lastSequence), "The sequence number should have been set.");
+            Assert.That(properties.Offset, Is.EqualTo(offset), "The offset should have been set.");
+            Assert.That(properties.EnqueuedTime, Is.EqualTo(lastEnqueued), "The enqueued date/time should have been set.");
+            Assert.That(properties.LastReceivedTime, Is.EqualTo(lastReceived), "The last received date/time should have been set.");
+            Assert.That(properties.GlobalOffset, Is.Null, "The global offset should not have been set.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubsModelFactory.LastEnqueuedEventProperties(long?, string, DateTimeOffset?, DateTimeOffset?)" />
         ///   method.
         /// </summary>
         ///
@@ -116,18 +151,17 @@ namespace Azure.Messaging.EventHubs.Tests
         public void LastEnqueuedEventPropertiesInitializesProperties()
         {
             var lastSequence = long.MaxValue - 100;
-            var lastOffset = long.MaxValue - 10;
+            var lastGlobalOffset = "13434312312311343431231231";
             var lastEnqueued = new DateTimeOffset(2015, 10, 27, 12, 0, 0, TimeSpan.Zero);
             var lastReceived = new DateTimeOffset(2012, 03, 04, 08, 0, 0, TimeSpan.Zero);
-            var properties = EventHubsModelFactory.LastEnqueuedEventProperties(lastSequence, lastOffset, lastEnqueued, lastReceived);
+            var properties = EventHubsModelFactory.LastEnqueuedEventProperties(lastSequence, lastGlobalOffset, lastEnqueued, lastReceived);
 
             Assert.That(properties, Is.Not.Null, "The properties should have been created.");
             Assert.That(properties.SequenceNumber, Is.EqualTo(lastSequence), "The sequence number should have been set.");
-
-            // The offset is intentionally mapped to sequence number.
-            Assert.That(properties.Offset, Is.EqualTo(lastSequence), "The offset should have been set.");
+            Assert.That(properties.Offset, Is.EqualTo(lastSequence), "The offset should have been set."); // offset -> sequence number for back compat
             Assert.That(properties.EnqueuedTime, Is.EqualTo(lastEnqueued), "The enqueued date/time should have been set.");
             Assert.That(properties.LastReceivedTime, Is.EqualTo(lastReceived), "The last received date/time should have been set.");
+            Assert.That(properties.GlobalOffset, Is.EqualTo(lastGlobalOffset), "The global offset should have been set.");
         }
 
         /// <summary>
@@ -177,12 +211,12 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="EventHubsModelFactory.EventData" />
+        ///   Verifies functionality of the <see cref="EventHubsModelFactory.EventData(BinaryData, IDictionary{string, object}, IReadOnlyDictionary{string, object}, string, long, long, DateTimeOffset)" />
         ///   method.
         /// </summary>
         ///
         [Test]
-        public void EventDataInitializesProperties()
+        public void EventDataOldInitializesProperties()
         {
             var body = new BinaryData("Hello");
             var properties = new Dictionary<string, object> { { "id", 12 } };
@@ -199,7 +233,36 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(eventData.SystemProperties, Is.EquivalentTo(systemProperties), "The system properties should have been set.");
             Assert.That(eventData.PartitionKey, Is.EqualTo(partitionKey), "The partition key should have been set.");
             Assert.That(eventData.SequenceNumber, Is.EqualTo(sequenceNumber), "The sequence number should have been set.");
-            Assert.That(eventData.Offset, Is.EqualTo(sequenceNumber), "The offset should have been set to the sequence number.");
+            Assert.That(eventData.Offset, Is.EqualTo(sequenceNumber), "The offset should have been set to the sequence number."); // offset -> sequence number for back compat
+            Assert.That(eventData.GlobalOffset, Is.EqualTo(null), "The global offset should not have been set.");
+            Assert.That(eventData.EnqueuedTime, Is.EqualTo(enqueueTime), "The sequence number should have been set.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubsModelFactory.EventData(BinaryData, IDictionary{string, object}, IReadOnlyDictionary{string, object}, string, long, string, long, DateTimeOffset)" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void EventDataInitializesProperties()
+        {
+            var body = new BinaryData("Hello");
+            var properties = new Dictionary<string, object> { { "id", 12 } };
+            var systemProperties = new Dictionary<string, object> { { "custom", "sys-value" } };
+            var sequenceNumber = long.MaxValue - 512;
+            var offset = long.MaxValue - 1024;
+            var enqueueTime = new DateTimeOffset(2015, 10, 27, 12, 0, 0, TimeSpan.Zero);
+            var partitionKey = "omghai!";
+            var eventData = EventHubsModelFactory.EventData(body, properties, systemProperties, partitionKey, sequenceNumber, globalOffset: offset.ToString(), enqueuedTime: enqueueTime);
+
+            Assert.That(eventData, Is.Not.Null, "The event should have been created.");
+            Assert.That(eventData.EventBody.ToString(), Is.EqualTo(body.ToString()), "The event body should have been set.");
+            Assert.That(eventData.Properties, Is.EquivalentTo(properties), "The properties should have been set.");
+            Assert.That(eventData.SystemProperties, Is.EquivalentTo(systemProperties), "The system properties should have been set.");
+            Assert.That(eventData.PartitionKey, Is.EqualTo(partitionKey), "The partition key should have been set.");
+            Assert.That(eventData.SequenceNumber, Is.EqualTo(sequenceNumber), "The sequence number should have been set.");
+            Assert.That(eventData.Offset, Is.EqualTo(sequenceNumber), "The offset should have been set to the sequence number."); // offset -> sequence number for back compat
+            Assert.That(eventData.GlobalOffset, Is.EqualTo(offset.ToString()), "The global offset should have been set.");
             Assert.That(eventData.EnqueuedTime, Is.EqualTo(enqueueTime), "The sequence number should have been set.");
         }
 

@@ -284,7 +284,18 @@ namespace Azure.Messaging.EventHubs
         public long SequenceNumber => _amqpMessage.GetSequenceNumber(long.MinValue);
 
         /// <summary>
-        ///   The offset of the event when it was received from the associated Event Hub partition.
+        ///   The sequence number assigned to the event when it was enqueued in the associated Event Hub partition.
+        /// </summary>
+        ///
+        /// <value>
+        ///   This value is read-only and will only be populated for events that have been read from Event Hubs. The default value
+        ///   when not populated is the string value of <see cref="long.MinValue"/>.
+        /// </value>
+        ///
+        public string GlobalOffset => _amqpMessage.GetOffset(null);
+
+        /// <summary>
+        ///   The Event Hubs service no longer uses offsets with numeric values. Use <see cref="EventData.GlobalOffset"/> instead.
         /// </summary>
         ///
         /// <value>
@@ -292,11 +303,17 @@ namespace Azure.Messaging.EventHubs
         ///   when not populated is <see cref="long.MinValue"/>.
         /// </value>
         ///
+        /// /// <remarks>
+        ///   This member exists only to preserve backward compatibility and is populated with the value of <see cref="SequenceNumber"/>.
+        ///   It is recommended to use the <see cref="GlobalOffset" /> instead.
+        /// </remarks>
+        ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public long Offset
         {
             get
             {
-                // The offset is intentionally mapped to sequence number. The service no longer accepts a numeric offset value, so the
+                // The offset is intentionally mapped to sequence number. The service no longer uses a numeric offset value, so the
                 // new SDK populates the EventData offset property with the amqp message sequence number. This allows for backwards
                 // compatibility to avoid breaking existing code that uses only offset properties.
 
@@ -383,8 +400,8 @@ namespace Azure.Messaging.EventHubs
         internal long? LastPartitionSequenceNumber => _amqpMessage.GetLastPartitionSequenceNumber();
 
         /// <summary>
-        ///   The offset of the event that was last enqueued into the Event Hub partition from which this event was
-        ///   received.
+        ///   The global offset of the event that was last enqueued into the Event Hub partition from which this
+        ///   event was received.
         /// </summary>
         ///
         /// <value>
@@ -393,11 +410,29 @@ namespace Azure.Messaging.EventHubs
         ///   populated is <c>null</c>.
         /// </value>
         ///
+        internal string LastPartitionGlobalOffset => _amqpMessage.GetLastPartitionGlobalOffset();
+
+        /// <summary>
+        ///   The Event Hubs service no longer uses offsets with numeric values. Use <see cref="LastPartitionGlobalOffset"/> instead.
+        /// </summary>
+        ///
+        /// <value>
+        ///   This value is read-only and will only be populated for events that have been read from Event Hubs by a consumer
+        ///   specifying <see cref="ReadEventOptions.TrackLastEnqueuedEventProperties" /> as enabled.  The default value when not
+        ///   populated is <c>null</c>.
+        /// </value>
+        ///
+        /// <remarks>
+        ///   This member exists only to preserve backward compatibility and is populated with the value of <see cref="LastPartitionSequenceNumber"/>.
+        ///   It is recommended to use the <see cref="LastPartitionGlobalOffset" /> instead.
+        /// </remarks>
+        ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
         internal long? LastPartitionOffset
         {
             get
             {
-                // The offset is intentionally mapped to sequence number. The service no longer accepts a numeric offset value, so the
+                // The offset is intentionally mapped to sequence number. The service no longer uses a numeric offset value, so the
                 // new SDK populates the EventData offset property with the amqp message sequence number. This allows for backwards
                 // compatibility to avoid breaking existing code that uses only offset properties.
 
@@ -557,11 +592,11 @@ namespace Azure.Messaging.EventHubs
         /// <param name="properties">The set of free-form event properties to send with the event.</param>
         /// <param name="systemProperties">The set of system properties received from the Event Hubs service.</param>
         /// <param name="sequenceNumber">The sequence number assigned to the event when it was enqueued in the associated Event Hub partition.</param>
-        /// <param name="offset">The offset of the event when it was received from the associated Event Hub partition.</param>
+        /// <param name="globalOffset">The global offset of the event when it was received from the associated Event Hub partition.</param>
         /// <param name="enqueuedTime">The date and time, in UTC, of when the event was enqueued in the Event Hub partition.</param>
         /// <param name="partitionKey">The partition hashing key applied to the batch that the associated <see cref="EventData"/>, was sent with.</param>
         /// <param name="lastPartitionSequenceNumber">The sequence number that was last enqueued into the Event Hub partition.</param>
-        /// <param name="lastPartitionOffset">The offset that was last enqueued into the Event Hub partition.</param>
+        /// <param name="lastPartitionGlobalOffset">The global offset that was last enqueued into the Event Hub partition.</param>
         /// <param name="lastPartitionEnqueuedTime">The date and time, in UTC, of the event that was last enqueued into the Event Hub partition.</param>
         /// <param name="lastPartitionPropertiesRetrievalTime">The date and time, in UTC, that the last event information for the Event Hub partition was retrieved from the service.</param>
         /// <param name="publishedSequenceNumber">The publishing sequence number assigned to the event at the time it was successfully published.</param>
@@ -573,11 +608,11 @@ namespace Azure.Messaging.EventHubs
                            IDictionary<string, object> properties = null,
                            IReadOnlyDictionary<string, object> systemProperties = null,
                            long? sequenceNumber = null,
-                           long? offset = null,
+                           string globalOffset = null,
                            DateTimeOffset? enqueuedTime = null,
                            string partitionKey = null,
                            long? lastPartitionSequenceNumber = null,
-                           long? lastPartitionOffset = null,
+                           string lastPartitionGlobalOffset = null,
                            DateTimeOffset? lastPartitionEnqueuedTime = null,
                            DateTimeOffset? lastPartitionPropertiesRetrievalTime = null,
                            int? publishedSequenceNumber = null,
@@ -591,11 +626,11 @@ namespace Azure.Messaging.EventHubs
             _amqpMessage.PopulateFromEventProperties(
                 properties,
                 sequenceNumber,
-                offset,
+                globalOffset,
                 enqueuedTime,
                 partitionKey,
                 lastPartitionSequenceNumber,
-                lastPartitionOffset,
+                lastPartitionGlobalOffset,
                 lastPartitionEnqueuedTime,
                 lastPartitionPropertiesRetrievalTime);
 
@@ -628,8 +663,9 @@ namespace Azure.Messaging.EventHubs
         /// <param name="partitionKey">The partition hashing key associated with the event when it was published.</param>
         ///
         /// <remarks>
-        ///   <para>This constructor has been superseded by the <see cref="EventHubsModelFactory.EventData" /> factory method.
-        ///   It is strongly recommended that the model factory be preferred over use of this constructor.</para>
+        ///   <para>This constructor has been superseded by the
+        ///   <see cref="EventHubsModelFactory.EventData(BinaryData, IDictionary{string, object}, IReadOnlyDictionary{string, object}, string, long, string, DateTimeOffset)" />
+        ///   factory method. It is strongly recommended that the model factory be preferred over use of this constructor.</para>
         ///
         ///   <para>This overload was previously intended for mocking in support of testing efforts.  It is recommended that
         ///   it not be used in production scenarios, as it allows setting of data that is broker-owned and is only
@@ -643,7 +679,7 @@ namespace Azure.Messaging.EventHubs
                             long sequenceNumber = long.MinValue,
                             long offset = long.MinValue,
                             DateTimeOffset enqueuedTime = default,
-                            string partitionKey = null) : this(eventBody, properties, systemProperties, sequenceNumber, offset, enqueuedTime, partitionKey, lastPartitionSequenceNumber: null)
+                            string partitionKey = null) : this(eventBody, properties, systemProperties, sequenceNumber, string.Empty, enqueuedTime, partitionKey, lastPartitionSequenceNumber: null)
         {
         }
 
@@ -660,8 +696,9 @@ namespace Azure.Messaging.EventHubs
         /// <param name="partitionKey">The partition hashing key associated with the event when it was published.</param>
         ///
         /// <remarks>
-        ///   <para>This constructor has been superseded by the <see cref="EventHubsModelFactory.EventData" /> factory method.
-        ///   It is strongly recommended that the model factory be preferred over use of this constructor.</para>
+        ///   <para>This constructor has been superseded by the
+        ///   <see cref="EventHubsModelFactory.EventData(BinaryData, IDictionary{string, object}, IReadOnlyDictionary{string, object}, string, long, string, DateTimeOffset)" />
+        ///   factory method. It is strongly recommended that the model factory be preferred over use of this constructor.</para>
         ///
         ///   <para>This overload was previously intended for mocking in support of testing efforts.  It is recommended that
         ///   it not be used in production scenarios, as it allows setting of data that is broker-owned and is only
@@ -675,7 +712,7 @@ namespace Azure.Messaging.EventHubs
                             long sequenceNumber = long.MinValue,
                             long offset = long.MinValue,
                             DateTimeOffset enqueuedTime = default,
-                            string partitionKey = null) : this(new BinaryData(eventBody), properties, systemProperties, sequenceNumber, offset, enqueuedTime, partitionKey, lastPartitionSequenceNumber: null)
+                            string partitionKey = null) : this(new BinaryData(eventBody), properties, systemProperties, sequenceNumber, string.Empty, enqueuedTime, partitionKey, lastPartitionSequenceNumber: null)
         {
         }
 

@@ -23,6 +23,9 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <summary>The key to the sequence number metadata.</summary>
         public const string SequenceNumber = "sequencenumber";
 
+        /// <summary>The key to the global offset metadata.</summary>
+        public const string GlobalOffset = "globaloffset";
+
         /// <summary>The unique identifier of the client that authored this checkpoint.</summary>
         public const string ClientIdentifier = "clientidentifier";
     }

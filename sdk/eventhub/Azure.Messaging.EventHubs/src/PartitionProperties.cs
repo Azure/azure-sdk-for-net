@@ -38,9 +38,20 @@ namespace Azure.Messaging.EventHubs
         public long LastEnqueuedSequenceNumber { get; }
 
         /// <summary>
-        ///   The offset of the last observed event to be enqueued in the partition.
+        ///   The global offset of the last observed event to be enqueued in the partition.
+        /// </summary>
+        public string LastEnqueuedGlobalOffset { get; }
+
+        /// <summary>
+        ///   WARNING: The Event Hubs service no longer uses offsets with numeric values. Use <see cref="LastEnqueuedGlobalOffset"/>
+        ///   instead.
         /// </summary>
         ///
+        /// <remarks>
+        ///   This value is be populated with the value of <see cref="LastEnqueuedSequenceNumber"/> for backwards compatibility.
+        /// </remarks>
+        ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public long LastEnqueuedOffset { get; }
 
         /// <summary>
@@ -69,6 +80,12 @@ namespace Azure.Messaging.EventHubs
         /// <param name="lastOffset">The offset of the last event to be enqueued in the partition.</param>
         /// <param name="lastEnqueuedTime">The date and time, in UTC, that the last event was enqueued in the partition.</param>
         ///
+        /// <remarks>
+        ///   WARNING: The Event Hubs service no longer uses offsets with numeric values. Use the
+        ///   <see cref="PartitionProperties(string, string, bool, long, long, string, DateTimeOffset)"/> constructor instead.
+        /// </remarks>
+        ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
         protected internal PartitionProperties(string eventHubName,
                                                string partitionId,
                                                bool isEmpty,
@@ -81,6 +98,36 @@ namespace Azure.Messaging.EventHubs
             Id = partitionId;
             BeginningSequenceNumber = beginningSequenceNumber;
             LastEnqueuedSequenceNumber = lastSequenceNumber;
+            LastEnqueuedOffset = lastOffset;
+            LastEnqueuedTime = lastEnqueuedTime;
+            IsEmpty = isEmpty;
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="PartitionProperties"/> class.
+        /// </summary>
+        ///
+        /// <param name="eventHubName">The name of the Event Hub that contains the partitions.</param>
+        /// <param name="partitionId">The identifier of the partition.</param>
+        /// <param name="isEmpty">Indicates whether or not the partition is currently empty.</param>
+        /// <param name="beginningSequenceNumber">The first sequence number available for events in the partition.</param>
+        /// <param name="lastSequenceNumber">The sequence number observed the last event to be enqueued in the partition.</param>
+        /// <param name="lastGlobalOffset">The global offset of the last event to be enqueued in the partition.</param>
+        /// <param name="lastEnqueuedTime">The date and time, in UTC, that the last event was enqueued in the partition.</param>
+        ///
+        protected internal PartitionProperties(string eventHubName,
+                                               string partitionId,
+                                               bool isEmpty,
+                                               long beginningSequenceNumber,
+                                               long lastSequenceNumber,
+                                               string lastGlobalOffset,
+                                               DateTimeOffset lastEnqueuedTime)
+        {
+            EventHubName = eventHubName;
+            Id = partitionId;
+            BeginningSequenceNumber = beginningSequenceNumber;
+            LastEnqueuedSequenceNumber = lastSequenceNumber;
+            LastEnqueuedGlobalOffset = lastGlobalOffset;
 
             // The offset is intentionally mapped to sequence number. The service no longer accepts a numeric offset value, so the
             // new SDK populates the EventData offset property with the amqp message sequence number. This allows for backwards

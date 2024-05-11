@@ -793,7 +793,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var capturedEventArgs = default(PartitionInitializingEventArgs);
             var partitionId = "0";
-            var startingPosition = EventPosition.FromOffset(433);
+            var startingPosition = EventPosition.FromGlobalOffset("433");
             var options = new EventProcessorOptions { DefaultStartingPosition = startingPosition };
             var processorClient = new TestEventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), options);
 
@@ -974,7 +974,8 @@ namespace Azure.Messaging.EventHubs.Tests
                         capturedEventArgs[index].Partition.PartitionId,
                         processorClient.Identifier,
                         It.Is<CheckpointPosition>(csp =>
-                            csp.SequenceNumber == capturedEventArgs[index].Data.SequenceNumber),
+                            csp.GlobalOffset == capturedEventArgs[index].Data.GlobalOffset
+                            && csp.SequenceNumber == capturedEventArgs[index].Data.SequenceNumber),
                         It.IsAny<CancellationToken>()),
                     Times.Once,
                     $"Creating a checkpoint for index { index } should have invoked the storage manager correctly.");
@@ -1291,7 +1292,7 @@ namespace Azure.Messaging.EventHubs.Tests
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var partitionId = "0";
-            var startingPosition = EventPosition.FromOffset(433);
+            var startingPosition = EventPosition.FromGlobalOffset("433");
             var options = new EventProcessorOptions { DefaultStartingPosition = EventPosition.Latest };
             var mockCheckpointStore = new Mock<CheckpointStore>();
             var processorClient = new TestEventProcessorClient(mockCheckpointStore.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), options);
@@ -1330,8 +1331,8 @@ namespace Azure.Messaging.EventHubs.Tests
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var partitionId = "0";
-            var startingPosition = EventPosition.FromOffset(433);
-            var checkpointStartingPosition = EventPosition.FromSequenceNumber(999);
+            var startingPosition = EventPosition.FromGlobalOffset("433");
+            var checkpointStartingPosition = EventPosition.FromSequenceNumber(122);
             var options = new EventProcessorOptions { DefaultStartingPosition = EventPosition.Latest };
             var mockCheckpointStore = new Mock<CheckpointStore>();
             var processorClient = new TestEventProcessorClient(mockCheckpointStore.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), options);
@@ -1352,7 +1353,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var checkpoint = await processorClient.InvokeGetCheckpointAsync(partitionId, cancellationSource.Token);
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
-            Assert.That(checkpoint, Is.Not.Null, "A checkpoints should have been found for the partition.");
+            Assert.That(checkpoint, Is.Not.Null, "A checkpoint should have been found for the partition.");
             Assert.That(checkpoint.StartingPosition, Is.EqualTo(checkpointStartingPosition), "The natural checkpoint should have respected the value that the initialization event handler set.");
 
             cancellationSource.Cancel();
@@ -1465,7 +1466,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var partitionId = "3";
             var sequenceNumber = 789;
-            var checkpointStartingPosition = new CheckpointPosition(sequenceNumber);
+            var globalOffset = "1234";
+            var checkpointStartingPosition = new CheckpointPosition(globalOffset, sequenceNumber);
             var mockStorage = new Mock<CheckpointStore>();
             var processorClient = new TestEventProcessorClient(mockStorage.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
 
@@ -1479,7 +1481,8 @@ namespace Azure.Messaging.EventHubs.Tests
                     partitionId,
                     processorClient.Identifier,
                     It.Is<CheckpointPosition>(csp =>
-                        csp.SequenceNumber == sequenceNumber),
+                        csp.SequenceNumber == sequenceNumber
+                        && csp.GlobalOffset == globalOffset),
                     It.IsAny<CancellationToken>()),
                 Times.Once);
 
@@ -1560,7 +1563,8 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitionId = "3";
             var sequenceNumber = 789;
             var offset = 123;
-            var checkpointStartingPosition = new CheckpointPosition(sequenceNumber);
+            var globalOffset = "341";
+            var checkpointStartingPosition = new CheckpointPosition(globalOffset, sequenceNumber);
             var mockLogger = new Mock<EventProcessorClientEventSource>();
             var processorClient = new TestEventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
 
@@ -1576,7 +1580,8 @@ namespace Azure.Messaging.EventHubs.Tests
                         processorClient.EventHubName,
                         processorClient.ConsumerGroup,
                         sequenceNumber.ToString(),
-                        offset.ToString()),
+                        offset.ToString(),
+                        null),
                     Times.Once);
 
                 mockLogger
@@ -1586,7 +1591,8 @@ namespace Azure.Messaging.EventHubs.Tests
                         processorClient.EventHubName,
                         processorClient.ConsumerGroup,
                         sequenceNumber.ToString(),
-                        offset.ToString()),
+                        offset.ToString(),
+                        null),
                     Times.Once);
             }
             else
@@ -1600,7 +1606,8 @@ namespace Azure.Messaging.EventHubs.Tests
                     processorClient.EventHubName,
                     processorClient.ConsumerGroup,
                     sequenceNumber.ToString(),
-                    null),
+                    null,
+                    globalOffset),
                 Times.Once);
 
                 mockLogger
@@ -1610,7 +1617,8 @@ namespace Azure.Messaging.EventHubs.Tests
                         processorClient.EventHubName,
                         processorClient.ConsumerGroup,
                         sequenceNumber.ToString(),
-                        null),
+                        null,
+                        globalOffset),
                     Times.Once);
             }
 
@@ -1634,7 +1642,8 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitionId = "3";
             var sequenceNumber = 789;
             var offset = 123;
-            var checkpointStartingPosition = new CheckpointPosition(sequenceNumber);
+            var globalOffset = "444";
+            var checkpointStartingPosition = new CheckpointPosition(globalOffset, sequenceNumber);
             var mockLogger = new Mock<EventProcessorClientEventSource>();
             var mockStorage = new Mock<CheckpointStore>();
             var processorClient = new TestEventProcessorClient(mockStorage.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
@@ -1675,7 +1684,8 @@ namespace Azure.Messaging.EventHubs.Tests
                     processorClient.ConsumerGroup,
                     expectedException.Message,
                     sequenceNumber.ToString(),
-                    offset.ToString()),
+                    offset.ToString(),
+                    null),
                 Times.Once);
             }
             else
@@ -1690,7 +1700,8 @@ namespace Azure.Messaging.EventHubs.Tests
                     processorClient.ConsumerGroup,
                     expectedException.Message,
                     sequenceNumber.ToString(),
-                    null),
+                    null,
+                    globalOffset),
                 Times.Once);
             }
 
