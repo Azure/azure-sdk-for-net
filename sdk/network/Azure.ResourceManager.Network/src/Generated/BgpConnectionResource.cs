@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _bgpConnectionVirtualHubBgpConnectionsRestClient.ListLearnedRoutesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<IDictionary<string, IList<PeerRoute>>>(new IDictionaryOperationSource(), _bgpConnectionVirtualHubBgpConnectionsClientDiagnostics, Pipeline, _bgpConnectionVirtualHubBgpConnectionsRestClient.CreateListLearnedRoutesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkArmOperation<IDictionary<string, IList<PeerRoute>>>(new Network.IDictionaryOperationSource(), _bgpConnectionVirtualHubBgpConnectionsClientDiagnostics, Pipeline, _bgpConnectionVirtualHubBgpConnectionsRestClient.CreateListLearnedRoutesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _bgpConnectionVirtualHubBgpConnectionsRestClient.ListLearnedRoutes(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new NetworkArmOperation<IDictionary<string, IList<PeerRoute>>>(new IDictionaryOperationSource(), _bgpConnectionVirtualHubBgpConnectionsClientDiagnostics, Pipeline, _bgpConnectionVirtualHubBgpConnectionsRestClient.CreateListLearnedRoutesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkArmOperation<IDictionary<string, IList<PeerRoute>>>(new Network.IDictionaryOperationSource(), _bgpConnectionVirtualHubBgpConnectionsClientDiagnostics, Pipeline, _bgpConnectionVirtualHubBgpConnectionsRestClient.CreateListLearnedRoutesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _bgpConnectionVirtualHubBgpConnectionsRestClient.ListAdvertisedRoutesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<IDictionary<string, IList<PeerRoute>>>(new IDictionaryOperationSource(), _bgpConnectionVirtualHubBgpConnectionsClientDiagnostics, Pipeline, _bgpConnectionVirtualHubBgpConnectionsRestClient.CreateListAdvertisedRoutesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkArmOperation<IDictionary<string, IList<PeerRoute>>>(new Network.IDictionaryOperationSource(), _bgpConnectionVirtualHubBgpConnectionsClientDiagnostics, Pipeline, _bgpConnectionVirtualHubBgpConnectionsRestClient.CreateListAdvertisedRoutesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -507,7 +507,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _bgpConnectionVirtualHubBgpConnectionsRestClient.ListAdvertisedRoutes(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new NetworkArmOperation<IDictionary<string, IList<PeerRoute>>>(new IDictionaryOperationSource(), _bgpConnectionVirtualHubBgpConnectionsClientDiagnostics, Pipeline, _bgpConnectionVirtualHubBgpConnectionsRestClient.CreateListAdvertisedRoutesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkArmOperation<IDictionary<string, IList<PeerRoute>>>(new Network.IDictionaryOperationSource(), _bgpConnectionVirtualHubBgpConnectionsClientDiagnostics, Pipeline, _bgpConnectionVirtualHubBgpConnectionsRestClient.CreateListAdvertisedRoutesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
