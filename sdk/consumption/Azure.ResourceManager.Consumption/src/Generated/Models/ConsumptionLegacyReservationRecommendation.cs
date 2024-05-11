@@ -16,15 +16,10 @@ namespace Azure.ResourceManager.Consumption.Models
     public partial class ConsumptionLegacyReservationRecommendation : ConsumptionReservationRecommendation
     {
         /// <summary> Initializes a new instance of <see cref="ConsumptionLegacyReservationRecommendation"/>. </summary>
-        /// <param name="scope"> Shared or single recommendation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        internal ConsumptionLegacyReservationRecommendation(string scope)
+        internal ConsumptionLegacyReservationRecommendation()
         {
-            Argument.AssertNotNull(scope, nameof(scope));
-
-            Scope = scope;
             SkuProperties = new ChangeTrackingList<ConsumptionSkuProperty>();
-            Kind = ReservationRecommendationKind.Legacy;
+            Scope = "legacy";
         }
 
         /// <summary> Initializes a new instance of <see cref="ConsumptionLegacyReservationRecommendation"/>. </summary>
@@ -66,14 +61,8 @@ namespace Azure.ResourceManager.Consumption.Models
             TotalCostWithReservedInstances = totalCostWithReservedInstances;
             NetSavings = netSavings;
             FirstUsageOn = firstUsageOn;
-            Scope = scope;
+            Scope = scope ?? "legacy";
             SkuProperties = skuProperties;
-            Kind = kind;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ConsumptionLegacyReservationRecommendation"/> for deserialization. </summary>
-        internal ConsumptionLegacyReservationRecommendation()
-        {
         }
 
         /// <summary> The number of days of usage to look back for recommendation. </summary>

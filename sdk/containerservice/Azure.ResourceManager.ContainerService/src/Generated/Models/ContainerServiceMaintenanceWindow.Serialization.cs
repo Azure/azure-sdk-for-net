@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(StartDate))
             {
                 writer.WritePropertyName("startDate"u8);
-                writer.WriteStringValue(StartDate);
+                writer.WriteStringValue(StartDate.Value, "D");
             }
             writer.WritePropertyName("startTime"u8);
             writer.WriteStringValue(StartTime);
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             ContainerServiceMaintenanceSchedule schedule = default;
             int durationHours = default;
             string utcOffset = default;
-            string startDate = default;
+            DateTimeOffset? startDate = default;
             string startTime = default;
             IList<ContainerServiceDateSpan> notAllowedDates = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -117,7 +117,11 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 if (property.NameEquals("startDate"u8))
                 {
-                    startDate = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    startDate = property.Value.GetDateTimeOffset("D");
                     continue;
                 }
                 if (property.NameEquals("startTime"u8))
