@@ -14,8 +14,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
     internal class TokenResponse
     {
         private const string TokenResponseFormatExceptionMessage = "Token response is not in the expected format.";
-
-
+        
         // VS token service and MSI endpoint return access_token
         [DataMember(Name = "access_token", IsRequired = false)]
         public string AccessToken { get; private set; }
@@ -61,6 +60,5 @@ namespace Microsoft.Azure.Services.AppAuthentication
                 throw new FormatException($"{TokenResponseFormatExceptionMessage} Exception Message: {exp.Message}");
             }
         }
-
     }
 }
