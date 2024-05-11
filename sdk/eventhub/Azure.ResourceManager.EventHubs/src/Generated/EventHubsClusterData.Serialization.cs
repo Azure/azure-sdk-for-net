@@ -75,6 +75,11 @@ namespace Azure.ResourceManager.EventHubs
                 writer.WritePropertyName("createdAt"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
             if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updatedAt"u8);
@@ -142,6 +147,7 @@ namespace Azure.ResourceManager.EventHubs
             ResourceType type = default;
             SystemData systemData = default;
             DateTimeOffset? createdAt = default;
+            EventHubsClusterProvisioningState? provisioningState = default;
             DateTimeOffset? updatedAt = default;
             string metricId = default;
             string status = default;
@@ -220,6 +226,15 @@ namespace Azure.ResourceManager.EventHubs
                             createdAt = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
+                        if (property0.NameEquals("provisioningState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisioningState = new EventHubsClusterProvisioningState(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("updatedAt"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -266,6 +281,7 @@ namespace Azure.ResourceManager.EventHubs
                 location,
                 sku,
                 createdAt,
+                provisioningState,
                 updatedAt,
                 metricId,
                 status,
@@ -416,6 +432,21 @@ namespace Azure.ResourceManager.EventHubs
                     builder.Append("    createdAt: ");
                     var formattedDateTimeString = TypeFormatters.ToString(CreatedOn.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    provisioningState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    builder.Append("    provisioningState: ");
+                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
                 }
             }
 

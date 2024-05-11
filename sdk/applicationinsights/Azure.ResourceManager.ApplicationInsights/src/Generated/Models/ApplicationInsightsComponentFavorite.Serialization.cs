@@ -58,10 +58,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 writer.WritePropertyName("SourceType"u8);
                 writer.WriteStringValue(SourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(TimeModified))
+            if (options.Format != "W" && Optional.IsDefined(ModifiedOn))
             {
                 writer.WritePropertyName("TimeModified"u8);
-                writer.WriteStringValue(TimeModified);
+                writer.WriteStringValue(ModifiedOn.Value, "O");
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -130,9 +130,9 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             string config = default;
             string version = default;
             string favoriteId = default;
-            FavoriteType? favoriteType = default;
+            ComponentFavoriteType? favoriteType = default;
             string sourceType = default;
-            string timeModified = default;
+            DateTimeOffset? timeModified = default;
             IList<string> tags = default;
             string category = default;
             bool? isGeneratedFromTemplate = default;
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     {
                         continue;
                     }
-                    favoriteType = property.Value.GetString().ToFavoriteType();
+                    favoriteType = property.Value.GetString().ToComponentFavoriteType();
                     continue;
                 }
                 if (property.NameEquals("SourceType"u8))
@@ -177,7 +177,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
                 if (property.NameEquals("TimeModified"u8))
                 {
-                    timeModified = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    timeModified = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("Tags"u8))
@@ -375,7 +379,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TimeModified), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ModifiedOn), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  TimeModified: ");
@@ -383,18 +387,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
             else
             {
-                if (Optional.IsDefined(TimeModified))
+                if (Optional.IsDefined(ModifiedOn))
                 {
                     builder.Append("  TimeModified: ");
-                    if (TimeModified.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{TimeModified}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{TimeModified}'");
-                    }
+                    var formattedDateTimeString = TypeFormatters.ToString(ModifiedOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 

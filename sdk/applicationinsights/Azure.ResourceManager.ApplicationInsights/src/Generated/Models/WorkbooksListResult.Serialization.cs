@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            IReadOnlyList<WorkbookData> value = default;
+            IReadOnlyList<ApplicationInsightsWorkbookData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -93,10 +93,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     {
                         continue;
                     }
-                    List<WorkbookData> array = new List<WorkbookData>();
+                    List<ApplicationInsightsWorkbookData> array = new List<ApplicationInsightsWorkbookData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WorkbookData.DeserializeWorkbookData(item, options));
+                        array.Add(ApplicationInsightsWorkbookData.DeserializeApplicationInsightsWorkbookData(item, options));
                     }
                     value = array;
                     continue;
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new WorkbooksListResult(value ?? new ChangeTrackingList<WorkbookData>(), nextLink, serializedAdditionalRawData);
+            return new WorkbooksListResult(value ?? new ChangeTrackingList<ApplicationInsightsWorkbookData>(), nextLink, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

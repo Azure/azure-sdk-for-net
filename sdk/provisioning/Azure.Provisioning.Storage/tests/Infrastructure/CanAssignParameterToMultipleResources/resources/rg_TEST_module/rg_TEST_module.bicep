@@ -10,6 +10,9 @@ resource storageAccount_ZnnWSenAP 'Microsoft.Storage/storageAccounts@2022-09-01'
   }
   kind: 'BlockBlobStorage'
   properties: {
+    networkAcls: {
+      defaultAction: 'Deny'
+    }
   }
 }
 
@@ -22,6 +25,9 @@ resource storageAccount_OmNRM19HT 'Microsoft.Storage/storageAccounts@2022-09-01'
   kind: 'BlobStorage'
   properties: {
     accessTier: 'Hot'
+    networkAcls: {
+      defaultAction: 'Deny'
+    }
   }
 }
 
@@ -34,5 +40,8 @@ resource storageAccount_hOGnwcQFE 'Microsoft.Storage/storageAccounts@2022-09-01'
   kind: 'BlobStorage'
   properties: {
     accessTier: 'Hot'
+    networkAcls: {
+      defaultAction: 'Deny'
+    }
   }
 }

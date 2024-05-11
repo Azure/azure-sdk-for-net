@@ -231,11 +231,12 @@ namespace Azure.Provisioning
         /// <param name="isLiteral">Is the output literal.</param>
         /// <param name="isSecure">Is the output secure.</param>
         /// <param name="formatString">The format string.</param>
+        /// <param name="type">The kind of the output.</param>
         /// <returns>The <see cref="Output"/>.</returns>
-        private protected Output AddOutput(string name, string expression, bool isLiteral = false, bool isSecure = false, string? formatString = default)
+        private protected Output AddOutput(string name, string expression, bool isLiteral = false, bool isSecure = false, string? formatString = default, BicepType type = BicepType.String)
         {
             string? formatted = formatString != null ? string.Format(formatString, $"{Name}.{expression}") : $"{Name}.{expression}";
-            var result = new Output(name, formatted, Scope, this, isLiteral, isSecure);
+            var result = new Output(name, formatted, Scope, this, isLiteral, isSecure, type);
             Scope.AddOutput(result);
             return result;
         }

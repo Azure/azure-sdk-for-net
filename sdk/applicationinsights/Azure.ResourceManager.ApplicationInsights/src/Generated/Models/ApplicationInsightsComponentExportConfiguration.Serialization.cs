@@ -82,30 +82,30 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 writer.WritePropertyName("IsUserEnabled"u8);
                 writer.WriteStringValue(IsUserEnabled);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastUserUpdate))
+            if (options.Format != "W" && Optional.IsDefined(LastUserUpdatedOn))
             {
                 writer.WritePropertyName("LastUserUpdate"u8);
-                writer.WriteStringValue(LastUserUpdate);
+                writer.WriteStringValue(LastUserUpdatedOn.Value, "O");
             }
-            if (Optional.IsDefined(NotificationQueueEnabled))
+            if (Optional.IsDefined(IsNotificationQueueEnabled))
             {
                 writer.WritePropertyName("NotificationQueueEnabled"u8);
-                writer.WriteStringValue(NotificationQueueEnabled);
+                writer.WriteStringValue(IsNotificationQueueEnabled);
             }
             if (options.Format != "W" && Optional.IsDefined(ExportStatus))
             {
                 writer.WritePropertyName("ExportStatus"u8);
                 writer.WriteStringValue(ExportStatus);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastSuccessTime))
+            if (options.Format != "W" && Optional.IsDefined(LastSucceededOn))
             {
                 writer.WritePropertyName("LastSuccessTime"u8);
-                writer.WriteStringValue(LastSuccessTime);
+                writer.WriteStringValue(LastSucceededOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastGapTime))
+            if (options.Format != "W" && Optional.IsDefined(LastGappedOn))
             {
                 writer.WritePropertyName("LastGapTime"u8);
-                writer.WriteStringValue(LastGapTime);
+                writer.WriteStringValue(LastGappedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(PermanentErrorReason))
             {
@@ -168,14 +168,14 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             string resourceGroup = default;
             string destinationStorageSubscriptionId = default;
             string destinationStorageLocationId = default;
-            string destinationAccountId = default;
+            ResourceIdentifier destinationAccountId = default;
             string destinationType = default;
             string isUserEnabled = default;
-            string lastUserUpdate = default;
+            DateTimeOffset? lastUserUpdate = default;
             string notificationQueueEnabled = default;
             string exportStatus = default;
-            string lastSuccessTime = default;
-            string lastGapTime = default;
+            DateTimeOffset? lastSuccessTime = default;
+            DateTimeOffset? lastGapTime = default;
             string permanentErrorReason = default;
             string storageName = default;
             string containerName = default;
@@ -225,7 +225,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
                 if (property.NameEquals("DestinationAccountId"u8))
                 {
-                    destinationAccountId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    destinationAccountId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("DestinationType"u8))
@@ -240,7 +244,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
                 if (property.NameEquals("LastUserUpdate"u8))
                 {
-                    lastUserUpdate = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    lastUserUpdate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("NotificationQueueEnabled"u8))
@@ -255,12 +263,20 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
                 if (property.NameEquals("LastSuccessTime"u8))
                 {
-                    lastSuccessTime = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    lastSuccessTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("LastGapTime"u8))
                 {
-                    lastGapTime = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    lastGapTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("PermanentErrorReason"u8))
@@ -513,15 +529,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 if (Optional.IsDefined(DestinationAccountId))
                 {
                     builder.Append("  DestinationAccountId: ");
-                    if (DestinationAccountId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{DestinationAccountId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{DestinationAccountId}'");
-                    }
+                    builder.AppendLine($"'{DestinationAccountId.ToString()}'");
                 }
             }
 
@@ -571,7 +579,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastUserUpdate), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastUserUpdatedOn), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  LastUserUpdate: ");
@@ -579,22 +587,15 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
             else
             {
-                if (Optional.IsDefined(LastUserUpdate))
+                if (Optional.IsDefined(LastUserUpdatedOn))
                 {
                     builder.Append("  LastUserUpdate: ");
-                    if (LastUserUpdate.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{LastUserUpdate}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{LastUserUpdate}'");
-                    }
+                    var formattedDateTimeString = TypeFormatters.ToString(LastUserUpdatedOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NotificationQueueEnabled), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsNotificationQueueEnabled), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  NotificationQueueEnabled: ");
@@ -602,17 +603,17 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
             else
             {
-                if (Optional.IsDefined(NotificationQueueEnabled))
+                if (Optional.IsDefined(IsNotificationQueueEnabled))
                 {
                     builder.Append("  NotificationQueueEnabled: ");
-                    if (NotificationQueueEnabled.Contains(Environment.NewLine))
+                    if (IsNotificationQueueEnabled.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
-                        builder.AppendLine($"{NotificationQueueEnabled}'''");
+                        builder.AppendLine($"{IsNotificationQueueEnabled}'''");
                     }
                     else
                     {
-                        builder.AppendLine($"'{NotificationQueueEnabled}'");
+                        builder.AppendLine($"'{IsNotificationQueueEnabled}'");
                     }
                 }
             }
@@ -640,7 +641,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastSuccessTime), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastSucceededOn), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  LastSuccessTime: ");
@@ -648,22 +649,15 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
             else
             {
-                if (Optional.IsDefined(LastSuccessTime))
+                if (Optional.IsDefined(LastSucceededOn))
                 {
                     builder.Append("  LastSuccessTime: ");
-                    if (LastSuccessTime.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{LastSuccessTime}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{LastSuccessTime}'");
-                    }
+                    var formattedDateTimeString = TypeFormatters.ToString(LastSucceededOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastGapTime), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastGappedOn), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  LastGapTime: ");
@@ -671,18 +665,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
             else
             {
-                if (Optional.IsDefined(LastGapTime))
+                if (Optional.IsDefined(LastGappedOn))
                 {
                     builder.Append("  LastGapTime: ");
-                    if (LastGapTime.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{LastGapTime}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{LastGapTime}'");
-                    }
+                    var formattedDateTimeString = TypeFormatters.ToString(LastGappedOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 

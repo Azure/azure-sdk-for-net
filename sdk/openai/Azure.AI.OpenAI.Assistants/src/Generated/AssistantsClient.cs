@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -3181,13 +3182,14 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="filename"> A filename to associate with the uploaded data. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<OpenAIFile>> UploadFileAsync(BinaryData data, OpenAIFilePurpose purpose, string filename = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<OpenAIFile>> UploadFileAsync(Stream data, OpenAIFilePurpose purpose, string filename = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
             UploadFileRequest uploadFileRequest = new UploadFileRequest(data, purpose, filename, null);
+            using MultipartFormDataRequestContent content = uploadFileRequest.ToMultipartRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await UploadFileAsync(uploadFileRequest.ToRequestContent(), context).ConfigureAwait(false);
+            Response response = await UploadFileAsync(content, content.ContentType, context).ConfigureAwait(false);
             return Response.FromValue(OpenAIFile.FromResponse(response), response);
         }
 
@@ -3197,13 +3199,14 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="filename"> A filename to associate with the uploaded data. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<OpenAIFile> UploadFile(BinaryData data, OpenAIFilePurpose purpose, string filename = null, CancellationToken cancellationToken = default)
+        public virtual Response<OpenAIFile> UploadFile(Stream data, OpenAIFilePurpose purpose, string filename = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
             UploadFileRequest uploadFileRequest = new UploadFileRequest(data, purpose, filename, null);
+            using MultipartFormDataRequestContent content = uploadFileRequest.ToMultipartRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = UploadFile(uploadFileRequest.ToRequestContent(), context);
+            Response response = UploadFile(content, content.ContentType, context);
             return Response.FromValue(OpenAIFile.FromResponse(response), response);
         }
 
@@ -3218,11 +3221,12 @@ namespace Azure.AI.OpenAI.Assistants
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType"> The 'content-type' header value, always 'multipart/format-data' for this operation. Allowed values: "multipart/form-data". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> UploadFileAsync(RequestContent content, RequestContext context = null)
+        internal virtual async Task<Response> UploadFileAsync(RequestContent content, string contentType, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -3230,7 +3234,7 @@ namespace Azure.AI.OpenAI.Assistants
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUploadFileRequest(content, context);
+                using HttpMessage message = CreateUploadFileRequest(content, contentType, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -3251,11 +3255,12 @@ namespace Azure.AI.OpenAI.Assistants
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType"> The 'content-type' header value, always 'multipart/format-data' for this operation. Allowed values: "multipart/form-data". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response UploadFile(RequestContent content, RequestContext context = null)
+        internal virtual Response UploadFile(RequestContent content, string contentType, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -3263,7 +3268,7 @@ namespace Azure.AI.OpenAI.Assistants
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUploadFileRequest(content, context);
+                using HttpMessage message = CreateUploadFileRequest(content, contentType, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)

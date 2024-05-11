@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Updated the `Microsoft.Azure.Amqp` dependency to 2.6.6, which includes a bug fix for an internal `NullReferenceException` that would sometimes impact creating new links. _(see: [#258](https://github.com/azure/azure-amqp/issues/258))_
+
 ## 5.11.2 (2024-04-10)
 
 ### Bugs Fixed

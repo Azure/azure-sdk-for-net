@@ -735,35 +735,40 @@ Response<BinaryData> response = await client.GenerateSpeechFromTextAsync(speechO
 File.WriteAllBytes("myAudioFile.mp3", response.Value.ToArray());
 ```
 
-### Chat with images using gpt-4-vision-preview
+### Chat with images using gpt-4-turbo
 
-The `gpt-4-vision-preview` model allows you to use images as input components into chat completions.
+The `gpt-4-turbo` model (previously, the `gpt-4-vision-preview` model) allows you to use images as input components into chat completions.
 
-To do this, provide distinct content items on the user message(s) for the chat completions request:
+To do this, provide distinct content items on the user message(s) for the chat completions request, using
+`ChatMessageImageContent(Uri)` when specifying an internet location and `ChatMessageImageContent(Stream,string)` or
+`ChatMessageImageContentItem(BinaryData,string)` when providing raw image data, including from local files. When
+providing a `Stream` or `BinaryData`, the SDK will automatically encode the image into the request using the provided
+MIME type (like `image/png`) and no manual construction of a `data:` URI is necessary.
 
 ```C# Snippet:AddImageToChat
 const string rawImageUri = "<URI to your image>";
+using Stream jpegImageStream = File.OpenRead("<path to a local image file>");
+
 ChatCompletionsOptions chatCompletionsOptions = new()
 {
-    DeploymentName = "gpt-4-vision-preview",
+    DeploymentName = "gpt-4-turbo",
     Messages =
     {
         new ChatRequestSystemMessage("You are a helpful assistant that describes images."),
         new ChatRequestUserMessage(
-            new ChatMessageTextContentItem("Hi! Please describe this image"),
-            new ChatMessageImageContentItem(new Uri(rawImageUri))),
+            new ChatMessageTextContentItem("Hi! Please describe these images"),
+            new ChatMessageImageContentItem(new Uri(rawImageUri)),
+            new ChatMessageImageContentItem(jpegImageStream, "image/jpg", ChatMessageImageDetailLevel.Low)),
     },
 };
 ```
 
-Chat Completions will then proceed as usual, though the model may report the more informative `finish_details` in lieu
-of `finish_reason`; this will converge as `gpt-4-vision-preview` is updated but checking for either one is recommended
-in the interim:
+Chat Completions will then proceed as usual, with the model evaluating the content of provided images:
 
 ```C# Snippet:GetResponseFromImages
 Response<ChatCompletions> chatResponse = await client.GetChatCompletionsAsync(chatCompletionsOptions);
 ChatChoice choice = chatResponse.Value.Choices[0];
-if (choice.FinishDetails is StopFinishDetails stopDetails || choice.FinishReason == CompletionsFinishReason.Stopped)
+if (choice.FinishReason == CompletionsFinishReason.Stopped)
 {
     Console.WriteLine($"{choice.Message.Role}: {choice.Message.Content}");
 }

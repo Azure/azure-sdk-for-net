@@ -51,16 +51,24 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AutomatedCheckResult"/>. </summary>
+        /// <param name="version"> Version for automated check result. </param>
+        /// <param name="status"> Status for automated check result. </param>
         /// <param name="result"> Insight Article Content. </param>
         /// <param name="resultType"> Type of Result. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutomatedCheckResult(string result, AutomatedCheckResultType? resultType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AutomatedCheckResult(string version, string status, string result, AutomatedCheckResultType? resultType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            Version = version;
+            Status = status;
             Result = result;
             ResultType = resultType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Version for automated check result. </summary>
+        public string Version { get; }
+        /// <summary> Status for automated check result. </summary>
+        public string Status { get; }
         /// <summary> Insight Article Content. </summary>
         public string Result { get; }
         /// <summary> Type of Result. </summary>

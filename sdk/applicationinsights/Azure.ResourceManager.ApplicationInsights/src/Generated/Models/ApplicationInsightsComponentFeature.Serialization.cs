@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             string featureName = default;
             string meterId = default;
             string meterRateFrequency = default;
-            string resouceId = default;
+            ResourceIdentifier resouceId = default;
             bool? isHidden = default;
             IReadOnlyList<ApplicationInsightsComponentFeatureCapability> capabilities = default;
             string title = default;
@@ -146,7 +146,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
                 if (property.NameEquals("ResouceId"u8))
                 {
-                    resouceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resouceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("IsHidden"u8))
@@ -301,15 +305,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 if (Optional.IsDefined(ResourceId))
                 {
                     builder.Append("  ResouceId: ");
-                    if (ResourceId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ResourceId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ResourceId}'");
-                    }
+                    builder.AppendLine($"'{ResourceId.ToString()}'");
                 }
             }
 
