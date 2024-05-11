@@ -85,7 +85,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
         // Azure App Services MSI endpoint constants
         private const string AppServicesApiVersion = "2019-08-01";
 
-        // Each environment require different header
+        // Each environment requires a different header
         internal const string AppServicesHeader = "X-IDENTITY-HEADER";
         internal const string AzureVMImdsHeader = "Metadata";
         internal const string ServiceFabricHeader = "secret";
