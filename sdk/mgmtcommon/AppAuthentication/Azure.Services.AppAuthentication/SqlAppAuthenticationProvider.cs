@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
         public Principal PrincipalUsed { get; private set; }
 
         /// <summary>
-        /// If the userId parameter is a valid GUID, return an token provider connection string to use a user-assigned managed identity
+        /// If the userId parameter is a valid GUID, return a token provider connection string to use a user-assigned managed identity
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
