@@ -7,6 +7,7 @@
 
 using System;
 using System.Threading.Tasks;
+using System.Xml;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
@@ -289,7 +290,7 @@ new AzureLocation("eastus2"),new AzureLocation("usnorth")
                         MaxPercentUpgradeDomainDeltaUnhealthyNodes = 40,
                         MaxPercentDeltaUnhealthyApplications = 40,
                     },
-                    MonitoringPolicy = new ManagedClusterMonitoringPolicy(TimeSpan.Parse("00:05:00"), TimeSpan.Parse("00:45:00"), "00:55:00", "12:00:00", "03:00:00"),
+                    MonitoringPolicy = new ManagedClusterMonitoringPolicy(XmlConvert.ToTimeSpan("00:05:00"), XmlConvert.ToTimeSpan("00:45:00"), "00:55:00", "12:00:00", "03:00:00"),
                 },
                 HttpGatewayTokenAuthConnectionPort = 19081,
                 IsHttpGatewayExclusiveAuthModeEnabled = true,
