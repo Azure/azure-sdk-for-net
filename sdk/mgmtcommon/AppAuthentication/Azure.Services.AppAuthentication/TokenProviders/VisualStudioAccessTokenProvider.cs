@@ -149,7 +149,6 @@ namespace Microsoft.Azure.Services.AppAuthentication
                         }
 
                         return AppAuthenticationResult.Create(tokenResponse);
-
                     }
                     catch (Exception exp)
                     {
@@ -170,7 +169,6 @@ namespace Microsoft.Azure.Services.AppAuthentication
 
                 // Throw exception if none of the token providers worked
                 throw new Exception(message);
-                
             }
             catch (Exception exp)
             {
