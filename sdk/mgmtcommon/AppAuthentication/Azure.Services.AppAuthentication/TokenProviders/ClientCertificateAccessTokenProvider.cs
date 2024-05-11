@@ -235,6 +235,5 @@ namespace Microsoft.Azure.Services.AppAuthentication
 
             throw new AzureServiceTokenProviderException(ConnectionString, resource, authority, message);
         }
-
     }
 }
