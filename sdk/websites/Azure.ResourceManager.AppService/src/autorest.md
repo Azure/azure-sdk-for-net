@@ -849,4 +849,64 @@ directive:
             "Aborted",
             "Running"
         ]
+  - from: CommonDefinitions.json
+    where: $.definitions
+    transform: >
+        $["HybridConnectionCollection"] = {
+            "description": "Collection of hostname bindings.",
+                  "required": [
+                    "value"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "value": {
+                      "description": "Collection of resources.",
+                      "type": "array",
+                      "items": {
+                        "$ref": "./CommonDefinitions.json#/definitions/HybridConnection"
+                      }
+                    },
+                    "nextLink": {
+                      "description": "Link to next page of resources.",
+                      "type": "string",
+                      "readOnly": true
+                    }
+                  }
+          };
+  - from: WebApps.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridConnectionRelays'].get
+    transform: >
+        $['operationId'] = "WebApps_GetAllTheHybridConnectionData";
+        $['responses'] = {
+          "200": {
+            "description": "Description for Retrieves all Service Bus Hybrid Connections used by this Web App.",
+            "schema": {
+              "$ref": "./CommonDefinitions.json#/definitions/HybridConnectionCollection"
+            }
+          },
+          "default": {
+            "description": "App Service error response.",
+            "schema": {
+              "$ref": "./CommonDefinitions.json#/definitions/DefaultErrorResponse"
+            }
+          }
+        };
+  - from: WebApps.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridConnectionRelays'].get
+    transform: >
+        $['operationId'] = "WebApps_GetAllTheHybridConnectionSlotData";
+        $['responses'] = {
+          "200": {
+            "description": "Description for Retrieves all Service Bus Hybrid Connections used by this Web App.",
+            "schema": {
+              "$ref": "./CommonDefinitions.json#/definitions/HybridConnectionCollection"
+            }
+          },
+          "default": {
+            "description": "App Service error response.",
+            "schema": {
+              "$ref": "./CommonDefinitions.json#/definitions/DefaultErrorResponse"
+            }
+          }
+        }; 
 ```

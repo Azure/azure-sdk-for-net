@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Threading;
@@ -140,6 +141,8 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [Obsolete("This method is obsolete and will be removed in a future release, please use `GetAllTheHybridConnectionDataAsync` instead", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<HybridConnectionData>> GetAllHybridConnectionDataAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteResource.GetAllHybridConnectionData");
@@ -170,6 +173,8 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [Obsolete("This method is obsolete and will be removed in a future release, please use `GetAllTheHybridConnectionData` instead", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<HybridConnectionData> GetAllHybridConnectionData(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteResource.GetAllHybridConnectionData");
@@ -185,7 +190,6 @@ namespace Azure.ResourceManager.AppService
                 throw;
             }
         }
-
         /// <summary>
         /// Description for Gets hybrid connections configured for an app (or deployment slot, if specified).
         /// <list type="bullet">
