@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
         private const string GetTokenCommand = "az account get-access-token -o json";
         private const string ResourceArgumentName = "--resource";
 
-        // This is the path that a develop can set to tell this class what the install path for Azure CLI is. 
+        // This is the path that a developer can set to tell this class what the install path for Azure CLI is. 
         private const string AzureCliPath = "AzureCLIPath";
 
         // The default install paths are used to find Azure CLI. This is for security, so that any path in the calling program's Path environment is not used to execute Azure CLI.
@@ -54,7 +54,6 @@ namespace Microsoft.Azure.Services.AppAuthentication
 
         private ProcessStartInfo GetProcessStartInfo(string resource)
         {
-
             ProcessStartInfo startInfo;
             string processPath;
             string currentPath = EnvironmentHelper.GetEnvironmentVariable("PATH");
