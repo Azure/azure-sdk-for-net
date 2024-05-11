@@ -36,6 +36,22 @@ namespace Azure.Messaging.EventHubs.Tests
         ///   Verifies functionality of the <see cref="CheckpointPosition "/>
         ///   equality.
         /// </summary>
+        [Test]
+        public void TheSamePositionAreEqualWithOffset()
+        {
+            var first = new CheckpointPosition("44", 121);
+            var second = new CheckpointPosition("44", 121);
+
+            Assert.That(first.Equals((object)second), Is.True, "The default Equals comparison is incorrect.");
+            Assert.That(first.Equals(second), Is.True, "The IEquatable comparison is incorrect.");
+            Assert.That((first == second), Is.True, "The == operator comparison is incorrect.");
+            Assert.That((first != second), Is.False, "The != operator comparison is incorrect.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="CheckpointPosition "/>
+        ///   equality.
+        /// </summary>
         ///
         [Test]
         public void DifferentPositionsAreNotEqual()
@@ -50,11 +66,45 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="CheckpointPosition.GetHashCode "/>
-        ///   method.
+        ///   Verifies functionality of the <see cref="CheckpointPosition "/>
+        ///   equality.
         /// </summary>
         ///
         [Test]
+        public void DifferentPositionsAreNotEqualWithDifferentMembers()
+        {
+            var first = new CheckpointPosition(10);
+            var second = new CheckpointPosition("121");
+
+            Assert.That(first.Equals((object)second), Is.False, "The default Equals comparison is incorrect.");
+            Assert.That(first.Equals(second), Is.False, "The IEquatable comparison is incorrect.");
+            Assert.That((first == second), Is.False, "The == operator comparison is incorrect.");
+            Assert.That((first != second), Is.True, "The != operator comparison is incorrect.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="CheckpointPosition "/>
+        ///   equality.
+        /// </summary>
+        ///
+        [Test]
+        public void DifferentPositionsAreNotEqualWithOffset()
+        {
+            var first = new CheckpointPosition("10");
+            var second = new CheckpointPosition("121");
+
+            Assert.That(first.Equals((object)second), Is.False, "The default Equals comparison is incorrect.");
+            Assert.That(first.Equals(second), Is.False, "The IEquatable comparison is incorrect.");
+            Assert.That((first == second), Is.False, "The == operator comparison is incorrect.");
+            Assert.That((first != second), Is.True, "The != operator comparison is incorrect.");
+        }
+
+            /// <summary>
+            ///   Verifies functionality of the <see cref="CheckpointPosition.GetHashCode "/>
+            ///   method.
+            /// </summary>
+            ///
+            [Test]
         public void GetHashCodeReturnsDifferentValuesForDifferentMembers()
         {
             var first = new CheckpointPosition(10);

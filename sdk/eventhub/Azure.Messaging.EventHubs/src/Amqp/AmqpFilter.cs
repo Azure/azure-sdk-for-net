@@ -72,7 +72,7 @@ namespace Azure.Messaging.EventHubs
                 return $"{ EnqueuedTimeName } > { eventPosition.EnqueuedTime.Value.ToUnixTimeMilliseconds() }";
             }
 
-            // If no filter was built, than the event position is not valid for filtering.
+            // If no filter was built, then the event position is not valid for filtering.
 
             throw new ArgumentException(Resources.InvalidEventPositionForFilter, nameof(eventPosition));
         }
