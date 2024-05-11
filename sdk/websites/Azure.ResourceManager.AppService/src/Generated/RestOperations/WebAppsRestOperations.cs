@@ -9341,6 +9341,7 @@ namespace Azure.ResourceManager.AppService
             return uri;
         }
 
+        internal HttpMessage CreateGetAllTheHybridConnectionDataRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -26275,6 +26276,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateGetAllTheHybridConnectionSlotDataRequestUri(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
