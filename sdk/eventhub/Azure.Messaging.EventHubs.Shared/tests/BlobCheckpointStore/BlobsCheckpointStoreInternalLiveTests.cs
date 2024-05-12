@@ -131,8 +131,8 @@ namespace Azure.Messaging.EventHubs.Tests
                 };
 
                 await checkpointStore.ClaimOwnershipAsync(ownershipList, default);
-                Assert.That(async () => await checkpointStore.UpdateCheckpointAsync("namespace", "eventHubName", "consumerGroup", "partitionId", "Id", new CheckpointPosition(10), default), Throws.Nothing);
-                Assert.That(async () => await checkpointStore.UpdateCheckpointAsync("namespace", "eventHubName", "consumerGroup", "partitionId", 0, 10, default), Throws.Nothing);
+                Assert.That(async () => await checkpointStore.UpdateCheckpointAsync("namespace", "eventHubName", "consumerGroup", "partitionId", "Id", new CheckpointPosition("0", 10), default), Throws.Nothing);
+                Assert.That(async () => await checkpointStore.UpdateCheckpointAsync("namespace", "eventHubName", "consumerGroup", "partitionId", "0", 10, default), Throws.Nothing);
             }
         }
 
@@ -736,7 +736,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 var mockEvent = new MockEventData(
                     eventBody: Array.Empty<byte>(),
-                    offset: 10,
+                    offset: "10",
                     sequenceNumber: 20);
 
                 // There should be no blobs or checkpoints before the first call.
@@ -805,7 +805,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 var mockEvent = new MockEventData(
                     eventBody: Array.Empty<byte>(),
-                    offset: 10,
+                    offset: "10",
                     sequenceNumber: 20);
 
                 // Calling update should create the checkpoint.
@@ -862,7 +862,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 var mockEvent = new MockEventData(
                     eventBody: Array.Empty<byte>(),
-                    offset: 10,
+                    offset: "10",
                     sequenceNumber: 20);
 
                 // Calling update should create the checkpoint.
@@ -891,7 +891,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 mockEvent = new MockEventData(
                     eventBody: Array.Empty<byte>(),
-                    offset: 50,
+                    offset: "50",
                     sequenceNumber: 60);
 
                 await checkpointStore.UpdateCheckpointAsync(checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.PartitionId, checkpoint.ClientIdentifier, new CheckpointPosition(mockEvent.SequenceNumber), default);

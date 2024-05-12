@@ -41,7 +41,7 @@ namespace Azure.Messaging.EventHubs
         ///   The offset of the last observed event to be enqueued in the partition.
         /// </summary>
         ///
-        public long LastEnqueuedOffset { get; }
+        public string LastEnqueuedOffset { get; }
 
         /// <summary>
         ///   The date and time, in UTC, that the last observed event was enqueued in the partition.
@@ -74,7 +74,7 @@ namespace Azure.Messaging.EventHubs
                                                bool isEmpty,
                                                long beginningSequenceNumber,
                                                long lastSequenceNumber,
-                                               long lastOffset,
+                                               string lastOffset,
                                                DateTimeOffset lastEnqueuedTime)
         {
             EventHubName = eventHubName;

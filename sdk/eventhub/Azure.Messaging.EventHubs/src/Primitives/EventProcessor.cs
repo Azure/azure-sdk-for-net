@@ -207,6 +207,12 @@ namespace Azure.Messaging.EventHubs.Primitives
         protected EventHubsRetryPolicy RetryPolicy { get; }
 
         /// <summary>
+        ///    The properties associated with the Event Hub being read from. This value is updated in each load balancing cycle.
+        /// </summary>
+        ///
+        protected EventHubProperties EventHubProperties { get; private set; }
+
+        /// <summary>
         ///   Indicates whether or not this event processor should instrument batch event processing calls with distributed tracing.
         ///   Implementations that instrument event processing themselves should set this to <c>false</c>.
         /// </summary>
@@ -815,7 +821,7 @@ namespace Azure.Messaging.EventHubs.Primitives
 
                                 lastEvent = (eventBatch != null && eventBatch.Count > 0) ? eventBatch[eventBatch.Count - 1] : null;
 
-                                if ((lastEvent != null) && (lastEvent.Offset != long.MinValue))
+                                if (!string.IsNullOrEmpty(lastEvent?.Offset))
                                 {
                                     startingPosition = EventPosition.FromOffset(lastEvent.Offset, false);
                                 }
@@ -1088,18 +1094,11 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   be called instead.
         /// </remarks>
         ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
         protected virtual Task UpdateCheckpointAsync(string partitionId,
-                                                     long offset,
+                                                     string offset,
                                                      long? sequenceNumber,
-                                                     CancellationToken cancellationToken)
-        {
-            if (sequenceNumber.HasValue)
-            {
-                return UpdateCheckpointAsync(partitionId, new CheckpointPosition(sequenceNumber.Value), cancellationToken);
-            }
-
-            throw new NotImplementedException();
-        }
+                                                     CancellationToken cancellationToken) => UpdateCheckpointAsync(partitionId, new CheckpointPosition(offset, sequenceNumber.Value), cancellationToken);
 
         /// <summary>
         ///   Creates or updates a checkpoint for a specific partition, identifying a position in the partition's event stream
@@ -1295,9 +1294,11 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///
         /// <returns>The set of identifiers for the Event Hub partitions.</returns>
         ///
-        protected virtual async Task<string[]> ListPartitionIdsAsync(EventHubConnection connection,
-                                                                     CancellationToken cancellationToken) =>
-            await connection.GetPartitionIdsAsync(RetryPolicy, cancellationToken).ConfigureAwait(false);
+        protected virtual Task<string[]> ListPartitionIdsAsync(EventHubConnection connection,
+                                                                     CancellationToken cancellationToken)
+        {
+            return Task.FromResult(EventHubProperties.PartitionIds);
+        }
 
         /// <summary>
         ///   Allows reporting that a partition was stolen by another event consumer causing ownership
@@ -1634,6 +1635,7 @@ namespace Azure.Messaging.EventHubs.Primitives
 
                     try
                     {
+                        EventHubProperties = await connection.GetPropertiesAsync(RetryPolicy, cancellationToken).ConfigureAwait(false);
                         partitionIds = await ListPartitionIdsAsync(connection, cancellationToken).ConfigureAwait(false);
                     }
                     catch (Exception ex) when (ex.IsNotType<TaskCanceledException>())

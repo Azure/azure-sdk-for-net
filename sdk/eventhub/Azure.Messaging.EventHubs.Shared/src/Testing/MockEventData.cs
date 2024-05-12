@@ -29,7 +29,7 @@ namespace Azure.Messaging.EventHubs.Tests
                              IDictionary<string, object> properties = null,
                              IReadOnlyDictionary<string, object> systemProperties = null,
                              long sequenceNumber = long.MinValue,
-                             long offset = long.MinValue,
+                             string offset = null,
                              DateTimeOffset enqueuedTime = default,
                              string partitionKey = null) : base(eventBody, properties, systemProperties, sequenceNumber, offset, enqueuedTime, partitionKey)
         {

@@ -82,11 +82,12 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="sequenceNumber">The sequence number to associate with the checkpoint, indicating that a processor should begin reading from the next event in the stream.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal a request to cancel the operation.</param>
         ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Task UpdateCheckpointAsync(string fullyQualifiedNamespace,
                                                   string eventHubName,
                                                   string consumerGroup,
                                                   string partitionId,
-                                                  long offset,
+                                                  string offset,
                                                   long? sequenceNumber,
                                                   CancellationToken cancellationToken) => throw new NotImplementedException();
 

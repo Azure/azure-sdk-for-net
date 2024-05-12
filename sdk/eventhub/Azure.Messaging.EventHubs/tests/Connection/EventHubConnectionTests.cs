@@ -835,7 +835,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var transportClient = new ObservableTransportClientMock();
             var connection = new InjectableTransportClientMock(transportClient, "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake");
-            var expectedPosition = EventPosition.FromOffset(65);
+            var expectedPosition = EventPosition.FromOffset("65");
             var expectedPartition = "2123";
             var expectedIdentifier = "OMG-ID";
             var expectedConsumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;

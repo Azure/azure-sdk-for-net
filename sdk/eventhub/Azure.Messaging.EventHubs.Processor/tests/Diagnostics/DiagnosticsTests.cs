@@ -62,7 +62,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(Mock.Of<EventHubConnection>());
 
             mockLogger
-                .Setup(log => log.UpdateCheckpointComplete(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+                .Setup(log => log.UpdateCheckpointComplete(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
                 .Callback(() => completionSource.TrySetResult(true));
 
             mockProcessor.Object.Logger = mockLogger.Object;
@@ -93,8 +93,8 @@ namespace Azure.Messaging.EventHubs.Tests
             var enqueuedTime = DateTimeOffset.UtcNow;
             var eventBatch = new[]
             {
-                new MockEventData(new byte[] { 0x11 }, offset: 123, sequenceNumber: 123, enqueuedTime: enqueuedTime),
-                new MockEventData(new byte[] { 0x22 }, offset: 456, sequenceNumber: 456, enqueuedTime: enqueuedTime)
+                new MockEventData(new byte[] { 0x11 }, offset: "123", sequenceNumber: 123, enqueuedTime: enqueuedTime),
+                new MockEventData(new byte[] { 0x22 }, offset: "456", sequenceNumber: 456, enqueuedTime: enqueuedTime)
             };
 
             for (int i = 0; i < eventBatch.Length; i++)
@@ -150,8 +150,8 @@ namespace Azure.Messaging.EventHubs.Tests
             using var listener = new ClientDiagnosticListener(DiagnosticProperty.DiagnosticNamespace);
             var eventBatch = new[]
             {
-                new MockEventData(new byte[] { 0x11 }, offset: 123, sequenceNumber: 123),
-                new MockEventData(new byte[] { 0x22 }, offset: 456, sequenceNumber: 456)
+                new MockEventData(new byte[] { 0x11 }, offset: "123", sequenceNumber: 123),
+                new MockEventData(new byte[] { 0x22 }, offset: "456", sequenceNumber: 456)
             };
 
             var mockLogger = new Mock<EventProcessorClientEventSource>();
@@ -199,8 +199,8 @@ namespace Azure.Messaging.EventHubs.Tests
             var enqueuedTime = DateTimeOffset.UtcNow;
             var eventBatch = new[]
             {
-                new MockEventData(new byte[] { 0x11 }, offset: 123, sequenceNumber: 123, enqueuedTime: enqueuedTime),
-                new MockEventData(new byte[] { 0x22 }, offset: 456, sequenceNumber: 456, enqueuedTime: enqueuedTime)
+                new MockEventData(new byte[] { 0x11 }, offset: "123", sequenceNumber: 123, enqueuedTime: enqueuedTime),
+                new MockEventData(new byte[] { 0x22 }, offset: "456", sequenceNumber: 456, enqueuedTime: enqueuedTime)
             };
 
             var mockLogger = new Mock<EventProcessorClientEventSource>();

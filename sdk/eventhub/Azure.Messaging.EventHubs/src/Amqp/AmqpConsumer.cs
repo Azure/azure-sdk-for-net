@@ -297,7 +297,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                             firstReceivedEvent = receivedEvents[0];
                             lastReceivedEvent = receivedEvents[receivedEventCount - 1];
 
-                            if (lastReceivedEvent.Offset > long.MinValue)
+                            if (!string.IsNullOrEmpty(lastReceivedEvent.Offset))
                             {
                                 CurrentEventPosition = EventPosition.FromOffset(lastReceivedEvent.Offset, false);
                             }
