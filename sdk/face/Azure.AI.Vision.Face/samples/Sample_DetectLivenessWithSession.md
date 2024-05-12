@@ -36,7 +36,7 @@ var createContent = new CreateLivenessSessionContent(LivenessOperationMode.Passi
     DeviceCorrelationId = Guid.NewGuid().ToString(),
 };
 
-var createResponse = await sessionClient.CreateLivenessSessionAsync(createContent);
+var createResponse = sessionClient.CreateLivenessSession(createContent);
 
 var sessionId = createResponse.Value.SessionId;
 Console.WriteLine($"Session created, SessionId: {sessionId}");
@@ -56,7 +56,7 @@ Client device should notify app server that liveness session has completed.
 After you've performed liveness detection, you can retrieve the result by providing the session ID.
 
 ```C# Snippet:GetLivenessSessionResult
-var getResultResponse = await sessionClient.GetLivenessSessionResultAsync(sessionId);
+var getResultResponse = sessionClient.GetLivenessSessionResult(sessionId);
 var sessionResult = getResultResponse.Value;
 Console.WriteLine($"Id: {sessionResult.Id}");
 Console.WriteLine($"CreatedDateTime: {sessionResult.CreatedDateTime}");
@@ -100,7 +100,7 @@ public void WriteLivenessSessionAuditEntry(LivenessSessionAuditEntry auditEntry)
 If there are multiple liveness calls, you can retrieve the result by getting liveness audit entries.
 
 ```C# Snippet:GetLivenessSessionAuditEntries
-var getAuditEntriesResponse = await sessionClient.GetLivenessSessionAuditEntriesAsync(sessionId);
+var getAuditEntriesResponse = sessionClient.GetLivenessSessionAuditEntries(sessionId);
 foreach (var auditEntry in getAuditEntriesResponse.Value)
 {
     WriteLivenessSessionAuditEntry(auditEntry);
@@ -112,7 +112,7 @@ foreach (var auditEntry in getAuditEntriesResponse.Value)
 All existing sessions can be listed by sending a request to the service.
 
 ```C# Snippet:GetLivenessSessions
-var listResponse = await sessionClient.GetLivenessSessionsAsync();
+var listResponse = sessionClient.GetLivenessSessions();
 foreach (var session in listResponse.Value)
 {
     Console.WriteLine($"SessionId: {session.Id}");
@@ -129,7 +129,7 @@ foreach (var session in listResponse.Value)
 Session can be revoked by sending delete request to the service. Corresponding authorization token will no longer have access to the service.
 
 ```C# Snippet:DeleteLivenessSession
-await sessionClient.DeleteLivenessSessionAsync(sessionId);
+sessionClient.DeleteLivenessSession(sessionId);
 ```
 
 [README]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/face/Azure.AI.Vision.Face#getting-started

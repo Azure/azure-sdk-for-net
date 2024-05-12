@@ -14,7 +14,7 @@ namespace Azure.AI.Vision.Face.Samples
     {
         [Test]
         [TestCase(true)] // Change deleteSession to false to keep the session and perform liveness detection with liveness SDK
-        public async Task SessionSample_DetectLivenessWithVerifySession(bool deleteSession)
+        public void SessionSample_DetectLivenessWithVerifySession(bool deleteSession)
         {
             var sessionClient = CreateSessionClient();
 
@@ -26,7 +26,7 @@ namespace Azure.AI.Vision.Face.Samples
 
             using var fileStream = new FileStream(FaceTestConstant.LocalSampleImage, FileMode.Open, FileAccess.Read);
 
-            var createResponse = await sessionClient.CreateLivenessWithVerifySessionAsync(parameters, fileStream);
+            var createResponse = sessionClient.CreateLivenessWithVerifySession(parameters, fileStream);
 
             var sessionId = createResponse.Value.SessionId;
             Console.WriteLine($"Session created, SessionId: {sessionId}");
@@ -38,19 +38,19 @@ namespace Azure.AI.Vision.Face.Samples
             if (deleteSession)
             {
                 #region Snippet:DeleteLivenessWithVerifySession
-                await sessionClient.DeleteLivenessWithVerifySessionAsync(sessionId);
+                sessionClient.DeleteLivenessWithVerifySession(sessionId);
                 #endregion
             }
         }
 
         [Ignore("Enable this case when you have performed liveness operation with liveness SDK")]
         [TestCase("cc3fc6b7-33bd-4137-9e8d-eb83e150c525")] // Replace session id with your session which sent underlying liveness request with liveness SDK to get the result
-        public async Task SessionSample_GetDetectLivenessWithVerifySessionResult(string sessionId)
+        public void SessionSample_GetDetectLivenessWithVerifySessionResult(string sessionId)
         {
             var sessionClient = CreateSessionClient();
 
             #region Snippet:GetLivenessWithVerifySessionResult
-            var getResultResponse = await sessionClient.GetLivenessWithVerifySessionResultAsync(sessionId);
+            var getResultResponse = sessionClient.GetLivenessWithVerifySessionResult(sessionId);
             var sessionResult = getResultResponse.Value;
             Console.WriteLine($"Id: {sessionResult.Id}");
             Console.WriteLine($"CreatedDateTime: {sessionResult.CreatedDateTime}");
@@ -65,7 +65,7 @@ namespace Azure.AI.Vision.Face.Samples
             #endregion
 
             #region Snippet:GetLivenessWithVerifySessionAuditEntries
-            var getAuditEntriesResponse = await sessionClient.GetLivenessWithVerifySessionAuditEntriesAsync(sessionId);
+            var getAuditEntriesResponse = sessionClient.GetLivenessWithVerifySessionAuditEntries(sessionId);
             foreach (var auditEntry in getAuditEntriesResponse.Value)
             {
                 WriteLivenessWithVerifySessionAuditEntry(auditEntry);
@@ -73,12 +73,12 @@ namespace Azure.AI.Vision.Face.Samples
             #endregion
         }
 
-        public async Task SessionSample_ListDetectLivenessWithVerifySessions()
+        public void SessionSample_ListDetectLivenessWithVerifySessions()
         {
             var sessionClient = CreateSessionClient();
 
             #region Snippet:GetLivenessWithVerifySessions
-            var listResponse = await sessionClient.GetLivenessWithVerifySessionsAsync();
+            var listResponse = sessionClient.GetLivenessWithVerifySessions();
             foreach (var session in listResponse.Value)
             {
                 Console.WriteLine($"SessionId: {session.Id}");

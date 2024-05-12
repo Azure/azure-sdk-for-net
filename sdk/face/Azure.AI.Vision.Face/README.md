@@ -161,7 +161,7 @@ Detect faces and analyze them from an binary data.
 ```C# Snippet:DetectFaces
 using var stream = new FileStream(imagePath, FileMode.Open, FileAccess.Read);
 
-var detectResponse = await client.DetectAsync(
+var detectResponse = client.Detect(
     BinaryData.FromStream(stream),
     FaceDetectionModel.Detection03,
     FaceRecognitionModel.Recognition04,
@@ -240,7 +240,7 @@ var createContent = new CreateLivenessSessionContent(LivenessOperationMode.Passi
     DeviceCorrelationId = Guid.NewGuid().ToString(),
 };
 
-var createResponse = await sessionClient.CreateLivenessSessionAsync(createContent);
+var createResponse = sessionClient.CreateLivenessSession(createContent);
 
 var sessionId = createResponse.Value.SessionId;
 Console.WriteLine($"Session created, SessionId: {sessionId}");
@@ -250,7 +250,7 @@ Console.WriteLine($"AuthToken: {createResponse.Value.AuthToken}");
 After you've performed liveness detection with verification , you can retrieve the result by providing the session ID.
 
 ```C# Snippet:GetLivenessSessionResult
-var getResultResponse = await sessionClient.GetLivenessSessionResultAsync(sessionId);
+var getResultResponse = sessionClient.GetLivenessSessionResult(sessionId);
 var sessionResult = getResultResponse.Value;
 Console.WriteLine($"Id: {sessionResult.Id}");
 Console.WriteLine($"CreatedDateTime: {sessionResult.CreatedDateTime}");
@@ -278,7 +278,7 @@ For example, if you submit a image with an invalid `Uri`, a `400` error is retur
 ```C# Snippet:DetectFacesInvalidUrl
 var invalidUri = new Uri("http://invalid.uri");
 try {
-    var detectResponse = await client.DetectFromUrlAsync(
+    var detectResponse = client.DetectFromUrl(
         invalidUri,
         FaceDetectionModel.Detection01,
         FaceRecognitionModel.Recognition04,

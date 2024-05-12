@@ -30,7 +30,7 @@ var sessionClient = new FaceSessionClient(endpoint, credential);
 
 Before you can detect liveness in a face, you need to create a liveness detection session with Azure AI Face Service. The service creates a liveness-session and responds back with a session-authorization-token.
 
-```C# Snippet:CreateLivenessWithVerifySession
+```C# Snippet:CreateLivenessWithVerifySessionAsync
 var parameters = new CreateLivenessSessionContent(LivenessOperationMode.Passive) {
     SendResultsToClient = true,
     DeviceCorrelationId = Guid.NewGuid().ToString(),
@@ -38,7 +38,7 @@ var parameters = new CreateLivenessSessionContent(LivenessOperationMode.Passive)
 
 using var fileStream = new FileStream(FaceTestConstant.LocalSampleImage, FileMode.Open, FileAccess.Read);
 
-var createResponse = sessionClient.CreateLivenessWithVerifySession(parameters, fileStream);
+var createResponse = await sessionClient.CreateLivenessWithVerifySessionAsync(parameters, fileStream);
 
 var sessionId = createResponse.Value.SessionId;
 Console.WriteLine($"Session created, SessionId: {sessionId}");
@@ -60,8 +60,8 @@ Client device should notify app server that liveness session has completed.
 
 After you've performed liveness detection with verification , you can retrieve the result by providing the session ID.
 
-```C# Snippet:GetLivenessWithVerifySessionResult
-var getResultResponse = sessionClient.GetLivenessWithVerifySessionResult(sessionId);
+```C# Snippet:GetLivenessWithVerifySessionResultAsync
+var getResultResponse = await sessionClient.GetLivenessWithVerifySessionResultAsync(sessionId);
 var sessionResult = getResultResponse.Value;
 Console.WriteLine($"Id: {sessionResult.Id}");
 Console.WriteLine($"CreatedDateTime: {sessionResult.CreatedDateTime}");
@@ -109,8 +109,8 @@ public void WriteLivenessWithVerifySessionAuditEntry(LivenessSessionAuditEntry a
 
 If there are multiple liveness calls, you can retrieve the result by getting liveness audit entries.
 
-```C# Snippet:GetLivenessWithVerifySessionAuditEntries
-var getAuditEntriesResponse = sessionClient.GetLivenessWithVerifySessionAuditEntries(sessionId);
+```C# Snippet:GetLivenessWithVerifySessionAuditEntriesAsync
+var getAuditEntriesResponse = await sessionClient.GetLivenessWithVerifySessionAuditEntriesAsync(sessionId);
 foreach (var auditEntry in getAuditEntriesResponse.Value)
 {
     WriteLivenessWithVerifySessionAuditEntry(auditEntry);
@@ -121,8 +121,8 @@ foreach (var auditEntry in getAuditEntriesResponse.Value)
 
 All existing sessions can be listed by sending a request to the service.
 
-```C# Snippet:GetLivenessWithVerifySessions
-var listResponse = sessionClient.GetLivenessWithVerifySessions();
+```C# Snippet:GetLivenessWithVerifySessionsAsync
+var listResponse = await sessionClient.GetLivenessWithVerifySessionsAsync();
 foreach (var session in listResponse.Value)
 {
     Console.WriteLine($"SessionId: {session.Id}");
@@ -138,8 +138,8 @@ foreach (var session in listResponse.Value)
 
 Session can be revoked by sending delete request to the service. Corresponding authorization token will no longer have access to the service.
 
-```C# Snippet:DeleteLivenessWithVerifySession
-sessionClient.DeleteLivenessWithVerifySession(sessionId);
+```C# Snippet:DeleteLivenessWithVerifySessionAsync
+await sessionClient.DeleteLivenessWithVerifySessionAsync(sessionId);
 ```
 
 [README]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/face/Azure.AI.Vision.Face#getting-started

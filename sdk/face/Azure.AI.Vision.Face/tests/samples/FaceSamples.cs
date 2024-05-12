@@ -9,7 +9,6 @@ using Azure.Identity;
 
 namespace Azure.AI.Vision.Face.Samples
 {
-    [AsyncOnly]
     public partial class FaceSamples : SamplesBase<FaceTestEnvironment>
     {
         public FaceSamples()

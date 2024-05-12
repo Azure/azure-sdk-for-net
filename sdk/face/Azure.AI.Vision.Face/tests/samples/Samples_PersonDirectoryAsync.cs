@@ -15,11 +15,11 @@ namespace Azure.AI.Vision.Face.Samples
     public partial class FaceSamples
     {
         [Test]
-        public void Sample_VerifyFromPersonDirectory()
+        public async Task Sample_VerifyFromPersonDirectoryAsync()
         {
             var administrationClient = CreateAdministrationClient();
 
-            #region Snippet:VerifyFromPersonDirectory_CreatePersonAndAddFace
+            #region Snippet:VerifyFromPersonDirectory_CreatePersonAndAddFaceAsync
             var personData = new[]
             {
                 new { Name = "Bill", UserData = "Family1,singing", ImageUrls = new[] { FaceTestConstant.UrlFamily1Dad1Image, FaceTestConstant.UrlFamily1Dad2Image } },
@@ -30,13 +30,13 @@ namespace Azure.AI.Vision.Face.Samples
 
             foreach (var person in personData)
             {
-                var createPersonOperation = administrationClient.CreatePerson(WaitUntil.Started, person.Name, userData: person.UserData);
+                var createPersonOperation = await administrationClient.CreatePersonAsync(WaitUntil.Started, person.Name, userData: person.UserData);
                 var personId = createPersonOperation.Value.PersonId;
                 personIds.Add(person.Name, personId);
 
                 foreach (var imageUrl in person.ImageUrls)
                 {
-                    administrationClient.AddPersonFaceFromUrl(
+                    await administrationClient.AddPersonFaceFromUrlAsync(
                         WaitUntil.Started,
                         personId,
                         FaceRecognitionModel.Recognition04,
@@ -48,33 +48,33 @@ namespace Azure.AI.Vision.Face.Samples
 
             var faceClient = CreateClient();
 
-            #region Snippet:VerifyFromPersonDirectory_VerifyPerson
-            var detectResponse = faceClient.DetectFromUrl(
+            #region Snippet:VerifyFromPersonDirectory_VerifyPersonAsync
+            var detectResponse = await faceClient.DetectFromUrlAsync(
                 new Uri(FaceTestConstant.UrlFamily1Dad3Image),
                 recognitionModel: FaceRecognitionModel.Recognition04,
                 detectionModel: FaceDetectionModel.Detection03,
                 returnFaceId: true);
             var targetFaceId = detectResponse.Value[0].FaceId.Value;
 
-            var verifyBillResponse = faceClient.VerifyFromPersonDirectory(targetFaceId, personIds["Bill"]);
+            var verifyBillResponse = await faceClient.VerifyFromPersonDirectoryAsync(targetFaceId, personIds["Bill"]);
             Console.WriteLine($"Face verification result for person Bill. IsIdentical: {verifyBillResponse.Value.IsIdentical}, Confidence: {verifyBillResponse.Value.Confidence}");
 
-            var verifyRonResponse = faceClient.VerifyFromPersonDirectory(targetFaceId, personIds["Ron"]);
+            var verifyRonResponse = await faceClient.VerifyFromPersonDirectoryAsync(targetFaceId, personIds["Ron"]);
             Console.WriteLine($"Face verification result for person Ron. IsIdentical: {verifyRonResponse.Value.IsIdentical}, Confidence: {verifyRonResponse.Value.Confidence}");
             #endregion
 
-            #region Snippet:VerifyFromPersonDirectory_DeletePerson
-            administrationClient.DeletePerson(WaitUntil.Started, personIds["Bill"]);
-            administrationClient.DeletePerson(WaitUntil.Started, personIds["Ron"]);
+            #region Snippet:VerifyFromPersonDirectory_DeletePersonAsync
+            await administrationClient.DeletePersonAsync(WaitUntil.Started, personIds["Bill"]);
+            await administrationClient.DeletePersonAsync(WaitUntil.Started, personIds["Ron"]);
             #endregion
         }
 
         [Test]
-        public void Sample_IdentifyFromPersonDirectory()
+        public async Task Sample_IdentifyFromPersonDirectoryAsync()
         {
             var administrationClient = CreateAdministrationClient();
 
-            #region Snippet:IdentifyFromPersonDirectory_CreatePersonAndAddFace
+            #region Snippet:IdentifyFromPersonDirectory_CreatePersonAndAddFaceAsync
             var personData = new[]
             {
                 new { Name = "Ron", UserData = "Family1", ImageUrls = new[] { FaceTestConstant.UrlFamily1Son1Image, FaceTestConstant.UrlFamily1Son2Image } },
@@ -88,7 +88,7 @@ namespace Azure.AI.Vision.Face.Samples
 
             foreach (var person in personData)
             {
-                var createPersonOperation = administrationClient.CreatePerson(WaitUntil.Started, person.Name, userData: person.UserData);
+                var createPersonOperation = await administrationClient.CreatePersonAsync(WaitUntil.Started, person.Name, userData: person.UserData);
                 createPersonOperations.Add(createPersonOperation);
                 var personId = createPersonOperation.Value.PersonId;
                 personIds.Add(person.Name, personId);
@@ -97,7 +97,7 @@ namespace Azure.AI.Vision.Face.Samples
                 Operation<PersonDirectoryFace> lastAddFaceOperation = null;
                 foreach (var imageUrl in person.ImageUrls)
                 {
-                    lastAddFaceOperation = administrationClient.AddPersonFaceFromUrl(
+                    lastAddFaceOperation = await administrationClient.AddPersonFaceFromUrlAsync(
                         WaitUntil.Started,
                         personId,
                         FaceRecognitionModel.Recognition04,
@@ -107,21 +107,21 @@ namespace Azure.AI.Vision.Face.Samples
                 lastAddFaceOperations.Add(lastAddFaceOperation);
             }
 
-            createPersonOperations.ForEach(operation => operation.WaitForCompletion());
-            lastAddFaceOperations.ForEach(operation => operation.WaitForCompletion());
+            createPersonOperations.ForEach(async operation => await operation.WaitForCompletionAsync());
+            lastAddFaceOperations.ForEach(async operation => await operation.WaitForCompletionAsync());
             #endregion
 
             var faceClient = CreateClient();
 
-            #region Snippet:IdentifyFromPersonDirectory_IdentifyFromSpecificPerson
-            var detectResponse = faceClient.DetectFromUrl(
+            #region Snippet:IdentifyFromPersonDirectory_IdentifyFromSpecificPersonAsync
+            var detectResponse = await faceClient.DetectFromUrlAsync(
                 new Uri(FaceTestConstant.UrlFamily1Daughter3Image),
                 recognitionModel: FaceRecognitionModel.Recognition04,
                 detectionModel: FaceDetectionModel.Detection03,
                 returnFaceId: true);
             var targetFaceId = detectResponse.Value[0].FaceId.Value;
 
-            var identifyPersonResponse = faceClient.IdentifyFromPersonDirectory(new[] { targetFaceId }, personIds.Values.ToArray());
+            var identifyPersonResponse = await faceClient.IdentifyFromPersonDirectoryAsync(new[] { targetFaceId }, personIds.Values.ToArray());
             foreach (var facesIdentifyResult in identifyPersonResponse.Value)
             {
                 Console.WriteLine($"For face {facesIdentifyResult.FaceId}, candidate number: {facesIdentifyResult.Candidates.Count}");
@@ -132,8 +132,8 @@ namespace Azure.AI.Vision.Face.Samples
             }
             #endregion
 
-            #region Snippet:IdentifyFromPersonDirectory_IdentifyFromEntirePersonDirectory
-            var identifyAllPersonResponse = faceClient.IdentifyFromEntirePersonDirectory(new[] { targetFaceId });
+            #region Snippet:IdentifyFromPersonDirectory_IdentifyFromEntirePersonDirectoryAsync
+            var identifyAllPersonResponse = await faceClient.IdentifyFromEntirePersonDirectoryAsync(new[] { targetFaceId });
             foreach (var facesIdentifyResult in identifyAllPersonResponse.Value)
             {
                 Console.WriteLine($"For face {facesIdentifyResult.FaceId}, candidate number: {facesIdentifyResult.Candidates.Count}");
@@ -146,16 +146,16 @@ namespace Azure.AI.Vision.Face.Samples
 
             foreach (var personId in personIds.Values)
             {
-                administrationClient.DeletePerson(WaitUntil.Started, personId);
+                await administrationClient.DeletePersonAsync(WaitUntil.Started, personId);
             }
         }
 
         [Test]
-        public void Sample_IdentifyFromDynamicPersonGroup()
+        public async Task Sample_IdentifyFromDynamicPersonGroupAsync()
         {
             var administrationClient = CreateAdministrationClient();
 
-            #region Snippet:IdentifyFromDynamicPersonGroup_CreatePersonAndAddFace
+            #region Snippet:IdentifyFromDynamicPersonGroup_CreatePersonAndAddFaceAsync
             var personData = new[]
             {
                 new { Name = "Bill", UserData = "Family1,singing", ImageUrls = new[] { FaceTestConstant.UrlFamily1Dad1Image, FaceTestConstant.UrlFamily1Dad2Image } },
@@ -170,7 +170,7 @@ namespace Azure.AI.Vision.Face.Samples
 
             foreach (var person in personData)
             {
-                var createPersonOperation = administrationClient.CreatePerson(WaitUntil.Started, person.Name, userData: person.UserData);
+                var createPersonOperation = await administrationClient.CreatePersonAsync(WaitUntil.Started, person.Name, userData: person.UserData);
                 createPersonOperations.Add(createPersonOperation);
                 var personId = createPersonOperation.Value.PersonId;
                 personIds.Add(person.Name, personId);
@@ -179,7 +179,7 @@ namespace Azure.AI.Vision.Face.Samples
                 Operation<PersonDirectoryFace> lastAddFaceOperation = null;
                 foreach (var imageUrl in person.ImageUrls)
                 {
-                    lastAddFaceOperation = administrationClient.AddPersonFaceFromUrl(
+                    lastAddFaceOperation = await administrationClient.AddPersonFaceFromUrlAsync(
                         WaitUntil.Started,
                         personId,
                         FaceRecognitionModel.Recognition04,
@@ -190,29 +190,29 @@ namespace Azure.AI.Vision.Face.Samples
             }
             #endregion
 
-            #region Snippet:IdentifyFromDynamicPersonGroup_CreateDynamicPersonGroupAndAddPerson
-            createPersonOperations.Take(3).ToList().ForEach(operation => operation.WaitForCompletion());
+            #region Snippet:IdentifyFromDynamicPersonGroup_CreateDynamicPersonGroupAndAddPersonAsync
+            createPersonOperations.Take(3).ToList().ForEach(async operation => await operation.WaitForCompletionAsync());
             var familyGroupId = "pd_family1";
-            administrationClient.CreateDynamicPersonGroupWithPerson(WaitUntil.Started, familyGroupId, "Dynamic Person Group for Family 1", new[] { personIds["Bill"], personIds["Clare"], personIds["Ron"] });
+            await administrationClient.CreateDynamicPersonGroupWithPersonAsync(WaitUntil.Started, familyGroupId, "Dynamic Person Group for Family 1", new[] { personIds["Bill"], personIds["Clare"], personIds["Ron"] });
 
-            createPersonOperations[3].WaitForCompletion();
+            await createPersonOperations[3].WaitForCompletionAsync();
             var hikingGroupId = "pd_hiking_club";
-            administrationClient.CreateDynamicPersonGroupWithPerson(WaitUntil.Started, hikingGroupId, "Dynamic Person Group for hiking club", new[] { personIds["Clare"], personIds["Anna"] });
+            await administrationClient.CreateDynamicPersonGroupWithPersonAsync(WaitUntil.Started, hikingGroupId, "Dynamic Person Group for hiking club", new[] { personIds["Clare"], personIds["Anna"] });
             #endregion
 
-            lastAddFaceOperations.ForEach(operation => operation.WaitForCompletion());
+            lastAddFaceOperations.ForEach(async operation => await operation.WaitForCompletionAsync());
 
             var faceClient = CreateClient();
 
-            #region Snippet:IdentifyFromDynamicPersonGroup_IdentifyFromDynamicPersonGroup
-            var detectResponse = faceClient.DetectFromUrl(
+            #region Snippet:IdentifyFromDynamicPersonGroup_IdentifyFromDynamicPersonGroupAsync
+            var detectResponse = await faceClient.DetectFromUrlAsync(
                 new Uri(FaceTestConstant.UrlIdentification1Image),
                 recognitionModel: FaceRecognitionModel.Recognition04,
                 detectionModel: FaceDetectionModel.Detection03,
                 returnFaceId: true);
             var faceIds = detectResponse.Value.Select(face => face.FaceId.Value);
 
-            var identifyFamilyPersonResponse = faceClient.IdentifyFromDynamicPersonGroup(faceIds, familyGroupId);
+            var identifyFamilyPersonResponse = await faceClient.IdentifyFromDynamicPersonGroupAsync(faceIds, familyGroupId);
             foreach (var facesIdentifyResult in identifyFamilyPersonResponse.Value)
             {
                 Console.WriteLine($"For face {facesIdentifyResult.FaceId}, candidate number: {facesIdentifyResult.Candidates.Count}");
@@ -222,7 +222,7 @@ namespace Azure.AI.Vision.Face.Samples
                 }
             }
 
-            var identifyHikingPersonResponse = faceClient.IdentifyFromDynamicPersonGroup(faceIds, hikingGroupId);
+            var identifyHikingPersonResponse = await faceClient.IdentifyFromDynamicPersonGroupAsync(faceIds, hikingGroupId);
             foreach (var facesIdentifyResult in identifyHikingPersonResponse.Value)
             {
                 Console.WriteLine($"For face {facesIdentifyResult.FaceId}, candidate number: {facesIdentifyResult.Candidates.Count}");
@@ -233,38 +233,38 @@ namespace Azure.AI.Vision.Face.Samples
             }
             #endregion
 
-            #region Snippet:IdentifyFromDynamicPersonGroup_UpdateDynamicPersonGroup
-            var createPersonGillOperation = administrationClient.CreatePerson(WaitUntil.Started, "Gill", userData: "Family1");
+            #region Snippet:IdentifyFromDynamicPersonGroup_UpdateDynamicPersonGroupAsync
+            var createPersonGillOperation = await administrationClient.CreatePersonAsync(WaitUntil.Started, "Gill", userData: "Family1");
             var gillPersonId = createPersonGillOperation.Value.PersonId;
-            administrationClient.AddPersonFaceFromUrl(
+            await administrationClient.AddPersonFaceFromUrlAsync(
                 WaitUntil.Started,
                 gillPersonId,
                 FaceRecognitionModel.Recognition04,
                 new Uri(FaceTestConstant.UrlFamily1Daughter1Image),
                 detectionModel: FaceDetectionModel.Detection03);
-            var lastAddFaceForGillOperation = administrationClient.AddPersonFaceFromUrl(
+            var lastAddFaceForGillOperation = await administrationClient.AddPersonFaceFromUrlAsync(
                 WaitUntil.Started,
                 gillPersonId,
                 FaceRecognitionModel.Recognition04,
                 new Uri(FaceTestConstant.UrlFamily1Daughter2Image),
                 detectionModel: FaceDetectionModel.Detection03);
 
-            createPersonGillOperation.WaitForCompletion();
-            lastAddFaceForGillOperation.WaitForCompletion();
+            await createPersonGillOperation.WaitForCompletionAsync();
+            await lastAddFaceForGillOperation.WaitForCompletionAsync();
 
-            administrationClient.UpdateDynamicPersonGroupWithPersonChanges(WaitUntil.Started, familyGroupId, RequestContent.Create(
+            await administrationClient.UpdateDynamicPersonGroupWithPersonChangesAsync(WaitUntil.Started, familyGroupId, RequestContent.Create(
                 new Dictionary<string, List<Guid>> {
                     { "addPersonIds", new List<Guid> { gillPersonId } },
                     { "removePersonIds", new List<Guid> { personIds["Bill"] } }
                 }
             ));
-            var lastUpdateDynamicPersonGroupOperation = administrationClient.UpdateDynamicPersonGroupWithPersonChanges(WaitUntil.Started, familyGroupId, RequestContent.Create(
+            var lastUpdateDynamicPersonGroupOperation = await administrationClient.UpdateDynamicPersonGroupWithPersonChangesAsync(WaitUntil.Started, familyGroupId, RequestContent.Create(
                 new Dictionary<string, List<Guid>> {
                     { "addPersonIds", new List<Guid> { personIds["Bill"] } }
                 }
             ));
 
-            var identifyUpdatedGroupResponse = faceClient.IdentifyFromDynamicPersonGroup(faceIds, familyGroupId);
+            var identifyUpdatedGroupResponse = await faceClient.IdentifyFromDynamicPersonGroupAsync(faceIds, familyGroupId);
             foreach (var facesIdentifyResult in identifyUpdatedGroupResponse.Value)
             {
                 Console.WriteLine($"For face {facesIdentifyResult.FaceId}, candidate number: {facesIdentifyResult.Candidates.Count}");
@@ -277,22 +277,22 @@ namespace Azure.AI.Vision.Face.Samples
 
             // The LRO of dynamicPersonGroup Create/Update is only used for creating DynamicPersonGroupReferences. This is useful if you want to determine which groups a person is referenced in.
             // It is an optimization to wait till the last update operation is finished processing in a series as all DPG changes are processed in series.
-            #region Snippet:IdentifyFromDynamicPersonGroup_GetDynamicPersonGroupReferences
-            lastUpdateDynamicPersonGroupOperation.WaitForCompletionResponse();
-            var getGroupForBillResponse = administrationClient.GetDynamicPersonGroupReferences(personIds["Bill"]);
+            #region Snippet:IdentifyFromDynamicPersonGroup_GetDynamicPersonGroupReferencesAsync
+            await lastUpdateDynamicPersonGroupOperation.WaitForCompletionResponseAsync();
+            var getGroupForBillResponse = await administrationClient.GetDynamicPersonGroupReferencesAsync(personIds["Bill"]);
             Console.WriteLine($"Person Bill is in {getGroupForBillResponse.Value.DynamicPersonGroupIds.Count} groups: {string.Join(", ", getGroupForBillResponse.Value.DynamicPersonGroupIds)}");
-            var getGroupForClareResponse = administrationClient.GetDynamicPersonGroupReferences(personIds["Clare"]);
+            var getGroupForClareResponse = await administrationClient.GetDynamicPersonGroupReferencesAsync(personIds["Clare"]);
             Console.WriteLine($"Person Clare is in {getGroupForClareResponse.Value.DynamicPersonGroupIds.Count} groups: {string.Join(", ", getGroupForClareResponse.Value.DynamicPersonGroupIds)}");
             #endregion
 
-            #region Snippet:IdentifyFromDynamicPersonGroup_DeleteDynamicPersonGroup
+            #region Snippet:IdentifyFromDynamicPersonGroup_DeleteDynamicPersonGroupAsync
             foreach (var personId in personIds.Values)
             {
-                administrationClient.DeletePerson(WaitUntil.Started, personId);
+                await administrationClient.DeletePersonAsync(WaitUntil.Started, personId);
             }
             #endregion
-            administrationClient.DeleteDynamicPersonGroup(WaitUntil.Started, familyGroupId);
-            administrationClient.DeleteDynamicPersonGroup(WaitUntil.Started, hikingGroupId);
+            await administrationClient.DeleteDynamicPersonGroupAsync(WaitUntil.Started, familyGroupId);
+            await administrationClient.DeleteDynamicPersonGroupAsync(WaitUntil.Started, hikingGroupId);
         }
     }
 }
