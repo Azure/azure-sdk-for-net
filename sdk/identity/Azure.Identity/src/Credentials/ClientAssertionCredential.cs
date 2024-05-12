@@ -25,7 +25,7 @@ namespace Azure.Identity
         internal TenantIdResolverBase TenantIdResolver { get; }
 
         /// <summary>
-        /// Protected constructor for mocking.
+        /// Protected constructor for <see href="https://aka.ms/azsdk/net/mocking">mocking</see>.
         /// </summary>
         protected ClientAssertionCredential()
         { }

@@ -1,5 +1,15 @@
 # Release History
 
+## 7.18.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 7.18.0-beta.1 (2024-05-08)
 
 ### Features Added
@@ -11,6 +21,10 @@
 ### Bugs Fixed
 
 - Fixed issue where the `SupportOrdering` property was not being respected when set on `CreateTopicOptions`.
+
+### Other Changes
+
+- Updated the `Microsoft.Azure.Amqp` dependency to 2.6.6, which includes a bug fix for an internal `NullReferenceException` that would sometimes impact creating new links. _(see: [#258](https://github.com/azure/azure-amqp/issues/258))_
 
 ## 7.17.5 (2024-04-09)
 

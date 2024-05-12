@@ -104,6 +104,7 @@ known_content_issues:
   - ['sdk/eventhub/README.md','Not a package: azure-sdk-tools/issues/42']
   - ['sdk/extensions/README.md','Not a package: azure-sdk-tools/issues/42']
   - ['sdk/personalizer/README.md','Not a package: azure-sdk-tools/issues/42']
+  - ['sdk/provisioning/README.md','Not a package: azure-sdk-tools/issues/42']
   - ['sdk/search/README.md','Not a package: azure-sdk-tools/issues/42']
   - ['sdk/storage/README.md','Not a package: azure-sdk-tools/issues/42']
 

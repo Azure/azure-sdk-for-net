@@ -40,6 +40,11 @@ namespace Azure.Identity
         /// </summary>
         internal string TeamProjectId { get; set; } = Environment.GetEnvironmentVariable("SYSTEM_TEAMPROJECTID");
 
+        /// <summary>
+        /// The hub under which this pipeline is running - typically "build" or "release".
+        /// </summary>
+        internal string HubName { get; set; } = Environment.GetEnvironmentVariable("SYSTEM_HOSTTYPE");
+
         /// <inheritdoc/>
         public IList<string> AdditionallyAllowedTenants { get; internal set; } = new List<string>();
 
