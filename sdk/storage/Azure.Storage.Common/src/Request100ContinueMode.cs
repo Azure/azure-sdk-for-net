@@ -6,7 +6,7 @@ namespace Azure.Storage
     /// <summary>
     /// Mode for applying expect-continue to a PUT request.
     /// </summary>
-    public enum ExpectContinueMode
+    public enum Request100ContinueMode
     {
         /// <summary>
         /// If no options are provided, this is the default behavior.
@@ -19,17 +19,17 @@ namespace Azure.Storage
         /// Response codes that trigger this behavior are 429, 500, and 503.
         /// </para>
         /// </summary>
-        ApplyOnThrottle = 0,
+        Auto = 0,
 
         /// <summary>
         /// Expect-continue will be applied regardless of recent error status. There may be
         /// some additionally defined thresholds for applying the header.
         /// </summary>
-        On = 1,
+        Always = 1,
 
         /// <summary>
         /// Expect-Continue will never be applied.
         /// </summary>
-        Off = 2,
+        Never = 2,
     }
 }

@@ -191,7 +191,7 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// Behavior options for setting HTTP header <c>Expect: 100-continue</c> on requests.
         /// </summary>
-        public ExpectContinueOptions ExpectContinueBehavior { get; set; }
+        public Request100ContinueOptions Request100ContinueOptions { get; set; }
 
         #region Advanced Options
         internal ClientSideEncryptionOptions _clientSideEncryptionOptions;
@@ -344,7 +344,7 @@ namespace Azure.Storage.Blobs
         /// <returns>An HttpPipeline to use for Storage requests.</returns>
         internal HttpPipeline Build(HttpPipelinePolicy authentication = null)
         {
-            return this.Build(authentication, GeoRedundantSecondaryUri, ExpectContinueBehavior);
+            return this.Build(authentication, GeoRedundantSecondaryUri, Request100ContinueOptions);
         }
 
         /// <summary>
@@ -354,7 +354,7 @@ namespace Azure.Storage.Blobs
         /// <returns>An HttpPipeline to use for Storage requests.</returns>
         internal HttpPipeline Build(object credentials)
         {
-            return this.Build(credentials, GeoRedundantSecondaryUri, ExpectContinueBehavior);
+            return this.Build(credentials, GeoRedundantSecondaryUri, Request100ContinueOptions);
         }
 
         /// <inheritdoc />
