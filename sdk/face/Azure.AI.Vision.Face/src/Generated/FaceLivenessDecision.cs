@@ -23,15 +23,15 @@ namespace Azure.AI.Vision.Face
         }
 
         private const string UncertainValue = "uncertain";
-        private const string RealfaceValue = "realface";
-        private const string SpooffaceValue = "spoofface";
+        private const string RealFaceValue = "realface";
+        private const string SpoofFaceValue = "spoofface";
 
         /// <summary> The algorithm could not classify the target face as either real or spoof. </summary>
         public static FaceLivenessDecision Uncertain { get; } = new FaceLivenessDecision(UncertainValue);
         /// <summary> The algorithm has classified the target face as real. </summary>
-        public static FaceLivenessDecision Realface { get; } = new FaceLivenessDecision(RealfaceValue);
+        public static FaceLivenessDecision RealFace { get; } = new FaceLivenessDecision(RealFaceValue);
         /// <summary> The algorithm has classified the target face as a spoof. </summary>
-        public static FaceLivenessDecision Spoofface { get; } = new FaceLivenessDecision(SpooffaceValue);
+        public static FaceLivenessDecision SpoofFace { get; } = new FaceLivenessDecision(SpoofFaceValue);
         /// <summary> Determines if two <see cref="FaceLivenessDecision"/> values are the same. </summary>
         public static bool operator ==(FaceLivenessDecision left, FaceLivenessDecision right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FaceLivenessDecision"/> values are not the same. </summary>

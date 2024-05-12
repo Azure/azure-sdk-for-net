@@ -26,11 +26,11 @@ namespace Azure.AI.Vision.Face
         private const string InfraredValue = "Infrared";
         private const string DepthValue = "Depth";
 
-        /// <summary> Color. </summary>
+        /// <summary> Color image. </summary>
         public static FaceImageType Color { get; } = new FaceImageType(ColorValue);
-        /// <summary> Infrared. </summary>
+        /// <summary> Infrared image. </summary>
         public static FaceImageType Infrared { get; } = new FaceImageType(InfraredValue);
-        /// <summary> Depth. </summary>
+        /// <summary> Depth image. </summary>
         public static FaceImageType Depth { get; } = new FaceImageType(DepthValue);
         /// <summary> Determines if two <see cref="FaceImageType"/> values are the same. </summary>
         public static bool operator ==(FaceImageType left, FaceImageType right) => left.Equals(right);

@@ -34,7 +34,7 @@ namespace Azure.AI.Vision.Face
             }
             writer.WriteEndArray();
             writer.WritePropertyName("personIds"u8);
-            SerializePersonIdsValue(writer);
+            SerializePersonIdsValue(writer, options);
             if (Optional.IsDefined(MaxNumOfCandidatesReturned))
             {
                 writer.WritePropertyName("maxNumOfCandidatesReturned"u8);
