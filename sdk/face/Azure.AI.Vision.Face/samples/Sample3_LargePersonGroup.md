@@ -8,7 +8,7 @@ To get started you'll need an Azure AI resource or a Face resource. See [README]
 
 To create a large person group, you'll need the ID of the large person group you want to create with a name and optional user data.
 
-```C# Snippet:Sample_LargePersonGroup_CreateLargePersonGroup
+```C# Snippet:VerifyAndIdentifyFromLargePersonGroup_CreateLargePersonGroup
 var groupId = "lpg_family1";
 
 administrationClient.CreateLargePersonGroup(groupId, "Family 1", userData: "A sweet family", recognitionModel: FaceRecognitionModel.Recognition04);
@@ -18,7 +18,7 @@ administrationClient.CreateLargePersonGroup(groupId, "Family 1", userData: "A sw
 
 The `Person` object is used to represent the individual you want to identify. You can call `CreateLargePersonGroupPerson` to create it within Large Person Group. Call `AddLargePersonGroupPersonFace` to add faces to the person.
 
-```C# Snippet:Sample_LargePersonGroup_CreatePersonAndAddFaces
+```C# Snippet:VerifyAndIdentifyFromLargePersonGroup_CreatePersonAndAddFaces
 var persons = new[]
 {
     new { Name = "Bill", UserData = "Dad", ImageUrls = new[] { FaceTestConstant.UrlFamily1Dad1Image, FaceTestConstant.UrlFamily1Dad2Image } },
@@ -44,7 +44,7 @@ foreach (var person in persons)
 
 Before you can identify faces, you must train the large person group. Call `TrainLargePersonGroup` to start the training process. `TrainLargePersonGroup` is a long-running operation that may take a while to complete.
 
-```C# Snippet:Sample_LargePersonGroup_Train
+```C# Snippet:VerifyAndIdentifyFromLargePersonGroup_Train
 var operation = administrationClient.TrainLargePersonGroup(WaitUntil.Completed, groupId);
 operation.WaitForCompletionResponse();
 ```
@@ -53,7 +53,7 @@ operation.WaitForCompletionResponse();
 
 To verify a face against a `Person` in the large person group, call `VerifyFromLargePersonGroup`. This method returns a `VerifyResult` object that contains the confidence score of the verification.
 
-```C# Snippet:Sample_LargePersonGroup_Verify
+```C# Snippet:VerifyAndIdentifyFromLargePersonGroup_Verify
 var verifyDadResponse = faceClient.VerifyFromLargePersonGroup(faceId, groupId, personIds["Bill"]);
 Console.WriteLine($"Is the detected face Bill? {verifyDadResponse.Value.IsIdentical} ({verifyDadResponse.Value.Confidence})");
 
@@ -65,7 +65,7 @@ Console.WriteLine($"Is the detected face Clare? {verifyMomResponse.Value.IsIdent
 
 To identify a face from the large person group, call `IdentifyFromLargePersonGroup`. This method returns a list of `IdentifyResult` objects, each containing the `Person` ID and the confidence score of the identification.
 
-```C# Snippet:Sample_LargePersonGroup_Identify
+```C# Snippet:VerifyAndIdentifyFromLargePersonGroup_Identify
 var identifyResponse = faceClient.IdentifyFromLargePersonGroup(new[] { faceId }, groupId);
 foreach (var candidate in identifyResponse.Value[0].Candidates)
 {
@@ -78,7 +78,7 @@ foreach (var candidate in identifyResponse.Value[0].Candidates)
 
 When you no longer need the large person group, you can delete it by calling `DeleteLargePersonGroup`. The associated persons and faces will also be deleted.
 
-```C# Snippet:Sample_LargePersonGroup_DeleteLargePersonGroup
+```C# Snippet:VerifyAndIdentifyFromLargePersonGroup_DeleteLargePersonGroup
 administrationClient.DeleteLargePersonGroup(groupId);
 ```
 

@@ -10,18 +10,18 @@ using NUnit.Framework;
 
 namespace Azure.AI.Vision.Face.Samples
 {
-    public partial class FaceSamples
+    public partial class Samples1_FaceDetection : FaceSamplesBase
     {
         [Test]
-        public async Task Sample_DetectAsync()
+        public void Detect()
         {
             var client = CreateClient();
             var imagePath = FaceTestConstant.LocalMultipleFaceSampleImage;
 
-            #region Snippet:DetectFacesAsync
+            #region Snippet:DetectFaces
             using var stream = new FileStream(imagePath, FileMode.Open, FileAccess.Read);
 
-            var detectResponse = await client.DetectAsync(
+            var detectResponse = client.Detect(
                 BinaryData.FromStream(stream),
                 FaceDetectionModel.Detection03,
                 FaceRecognitionModel.Recognition04,
@@ -74,14 +74,14 @@ namespace Azure.AI.Vision.Face.Samples
         }
 
         [Test]
-        public async Task Sample_DetectFromUrlAsync()
+        public void DetectFromUrl()
         {
             var client = CreateClient();
             var imageUri = new Uri(FaceTestConstant.UrlSampleImage);
 
-            #region Snippet:DetectFacesFromUrlAsync
+            #region Snippet:DetectFacesFromUrl
 
-            var detectResponse = await client.DetectFromUrlAsync(
+            var detectResponse = client.DetectFromUrl(
                 imageUri,
                 FaceDetectionModel.Detection01,
                 FaceRecognitionModel.Recognition04,
@@ -105,6 +105,27 @@ namespace Azure.AI.Vision.Face.Samples
                 Console.WriteLine($"Glasses: {detectedFace.FaceAttributes.Glasses}");
                 Console.WriteLine($"Exposure Level: {detectedFace.FaceAttributes.Exposure.ExposureLevel}, Value: {detectedFace.FaceAttributes.Exposure.Value}");
                 Console.WriteLine($"Noise Level: {detectedFace.FaceAttributes.Noise.NoiseLevel}, Value: {detectedFace.FaceAttributes.Noise.Value}");
+            }
+            #endregion
+        }
+
+        [Test]
+        public void DetectFromUrl_InvalidUrl()
+        {
+            var client = CreateClient();
+
+            #region Snippet:DetectFacesInvalidUrl
+            var invalidUri = new Uri("http://invalid.uri");
+            try {
+                var detectResponse = client.DetectFromUrl(
+                    invalidUri,
+                    FaceDetectionModel.Detection01,
+                    FaceRecognitionModel.Recognition04,
+                    returnFaceId: false);
+            }
+            catch (RequestFailedException ex)
+            {
+                Console.WriteLine(ex.ToString());
             }
             #endregion
         }

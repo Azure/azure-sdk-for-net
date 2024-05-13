@@ -10,19 +10,19 @@ using NUnit.Framework;
 
 namespace Azure.AI.Vision.Face.Samples
 {
-    public partial class FaceSamples
+    public partial class Samples3_LargePersonGroup : FaceSamplesBase
     {
         [Test]
-        public async Task Sample_VerifyAndIdentifyFromLargePersonGroupAsync()
+        public async Task VerifyAndIdentifyFromLargePersonGroupAsync()
         {
             var administrationClient = CreateAdministrationClient();
-            #region Snippet:Sample_LargePersonGroup_CreateLargePersonGroupAsync
+            #region Snippet:VerifyAndIdentifyFromLargePersonGroup_CreateLargePersonGroupAsync
             var groupId = "lpg_family1";
 
             await administrationClient.CreateLargePersonGroupAsync(groupId, "Family 1", userData: "A sweet family", recognitionModel: FaceRecognitionModel.Recognition04);
             #endregion
 
-            #region Snippet:Sample_LargePersonGroup_CreatePersonAndAddFacesAsync
+            #region Snippet:VerifyAndIdentifyFromLargePersonGroup_CreatePersonAndAddFacesAsync
             var persons = new[]
             {
                 new { Name = "Bill", UserData = "Dad", ImageUrls = new[] { FaceTestConstant.UrlFamily1Dad1Image, FaceTestConstant.UrlFamily1Dad2Image } },
@@ -44,7 +44,7 @@ namespace Azure.AI.Vision.Face.Samples
             }
             #endregion
 
-            #region Snippet:Sample_LargePersonGroup_TrainAsync
+            #region Snippet:VerifyAndIdentifyFromLargePersonGroup_TrainAsync
             var operation = await administrationClient.TrainLargePersonGroupAsync(WaitUntil.Completed, groupId);
             await operation.WaitForCompletionResponseAsync();
             #endregion
@@ -53,7 +53,7 @@ namespace Azure.AI.Vision.Face.Samples
             var detectResponse = await faceClient.DetectFromUrlAsync(new Uri(FaceTestConstant.UrlFamily1Dad3Image), FaceDetectionModel.Detection03, FaceRecognitionModel.Recognition04, true);
             var faceId = detectResponse.Value[0].FaceId.Value;
 
-            #region Snippet:Sample_LargePersonGroup_VerifyAsync
+            #region Snippet:VerifyAndIdentifyFromLargePersonGroup_VerifyAsync
             var verifyDadResponse = await faceClient.VerifyFromLargePersonGroupAsync(faceId, groupId, personIds["Bill"]);
             Console.WriteLine($"Is the detected face Bill? {verifyDadResponse.Value.IsIdentical} ({verifyDadResponse.Value.Confidence})");
 
@@ -61,7 +61,7 @@ namespace Azure.AI.Vision.Face.Samples
             Console.WriteLine($"Is the detected face Clare? {verifyMomResponse.Value.IsIdentical} ({verifyMomResponse.Value.Confidence})");
             #endregion
 
-            #region Snippet:Sample_LargePersonGroup_IdentifyAsync
+            #region Snippet:VerifyAndIdentifyFromLargePersonGroup_IdentifyAsync
             var identifyResponse = await faceClient.IdentifyFromLargePersonGroupAsync(new[] { faceId }, groupId);
             foreach (var candidate in identifyResponse.Value[0].Candidates)
             {
@@ -70,7 +70,7 @@ namespace Azure.AI.Vision.Face.Samples
             }
             #endregion
 
-            #region Snippet:Sample_LargePersonGroup_DeleteLargePersonGroupAsync
+            #region Snippet:VerifyAndIdentifyFromLargePersonGroup_DeleteLargePersonGroupAsync
             await administrationClient.DeleteLargePersonGroupAsync(groupId);
             #endregion
         }

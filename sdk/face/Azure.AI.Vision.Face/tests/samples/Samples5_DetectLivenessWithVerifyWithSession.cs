@@ -2,49 +2,55 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
 using System.Threading.Tasks;
+using Azure.AI.Vision.Face.Tests;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.Vision.Face.Samples
 {
-    public partial class FaceSamples
+    public partial class Samples5_DetectLivenessWithVerifyWithSession : FaceSamplesBase
     {
         [Test]
         [TestCase(true)] // Change deleteSession to false to keep the session and perform liveness detection with liveness SDK
-        public void SessionSample_CreateDetectLivenessSession(bool deleteSession)
+        public void DetectLivenessWithVerifySession(bool deleteSession)
         {
             var sessionClient = CreateSessionClient();
 
-            #region Snippet:CreateLivenessSession
-            var createContent = new CreateLivenessSessionContent(LivenessOperationMode.Passive) {
+            #region Snippet:CreateLivenessWithVerifySession
+            var parameters = new CreateLivenessSessionContent(LivenessOperationMode.Passive) {
                 SendResultsToClient = true,
                 DeviceCorrelationId = Guid.NewGuid().ToString(),
             };
 
-            var createResponse = sessionClient.CreateLivenessSession(createContent);
+            using var fileStream = new FileStream(FaceTestConstant.LocalSampleImage, FileMode.Open, FileAccess.Read);
+
+            var createResponse = sessionClient.CreateLivenessWithVerifySession(parameters, fileStream);
 
             var sessionId = createResponse.Value.SessionId;
             Console.WriteLine($"Session created, SessionId: {sessionId}");
             Console.WriteLine($"AuthToken: {createResponse.Value.AuthToken}");
+            Console.WriteLine($"VerifyImage.FaceRectangle: {createResponse.Value.VerifyImage.FaceRectangle.Top}, {createResponse.Value.VerifyImage.FaceRectangle.Left}, {createResponse.Value.VerifyImage.FaceRectangle.Width}, {createResponse.Value.VerifyImage.FaceRectangle.Height}");
+            Console.WriteLine($"VerifyImage.QualityForRecognition: {createResponse.Value.VerifyImage.QualityForRecognition}");
             #endregion
 
             if (deleteSession)
             {
-                #region Snippet:DeleteLivenessSession
-                sessionClient.DeleteLivenessSession(sessionId);
+                #region Snippet:DeleteLivenessWithVerifySession
+                sessionClient.DeleteLivenessWithVerifySession(sessionId);
                 #endregion
             }
         }
 
         [Ignore("Enable this case when you have performed liveness operation with liveness SDK")]
         [TestCase("cc3fc6b7-33bd-4137-9e8d-eb83e150c525")] // Replace session id with your session which sent underlying liveness request with liveness SDK to get the result
-        public void SessionSample_GetDetectLivenessSessionResult(string sessionId)
+        public void GetDetectLivenessWithVerifySessionResult(string sessionId)
         {
             var sessionClient = CreateSessionClient();
 
-            #region Snippet:GetLivenessSessionResult
-            var getResultResponse = sessionClient.GetLivenessSessionResult(sessionId);
+            #region Snippet:GetLivenessWithVerifySessionResult
+            var getResultResponse = sessionClient.GetLivenessWithVerifySessionResult(sessionId);
             var sessionResult = getResultResponse.Value;
             Console.WriteLine($"Id: {sessionResult.Id}");
             Console.WriteLine($"CreatedDateTime: {sessionResult.CreatedDateTime}");
@@ -54,25 +60,25 @@ namespace Azure.AI.Vision.Face.Samples
             Console.WriteLine($"Status: {sessionResult.Status}");
             Console.WriteLine($"SessionStartDateTime: {sessionResult.SessionStartDateTime}");
             if (sessionResult.Result != null) {
-                WriteLivenessSessionAuditEntry(sessionResult.Result);
+                WriteLivenessWithVerifySessionAuditEntry(sessionResult.Result);
             }
             #endregion
 
-            #region Snippet:GetLivenessSessionAuditEntries
-            var getAuditEntriesResponse = sessionClient.GetLivenessSessionAuditEntries(sessionId);
+            #region Snippet:GetLivenessWithVerifySessionAuditEntries
+            var getAuditEntriesResponse = sessionClient.GetLivenessWithVerifySessionAuditEntries(sessionId);
             foreach (var auditEntry in getAuditEntriesResponse.Value)
             {
-                WriteLivenessSessionAuditEntry(auditEntry);
+                WriteLivenessWithVerifySessionAuditEntry(auditEntry);
             }
             #endregion
         }
 
-        public void SessionSample_ListDetectLivenessSessions()
+        public void ListDetectLivenessWithVerifySessions()
         {
             var sessionClient = CreateSessionClient();
 
-            #region Snippet:GetLivenessSessions
-            var listResponse = sessionClient.GetLivenessSessions();
+            #region Snippet:GetLivenessWithVerifySessions
+            var listResponse = sessionClient.GetLivenessWithVerifySessions();
             foreach (var session in listResponse.Value)
             {
                 Console.WriteLine($"SessionId: {session.Id}");
@@ -85,8 +91,8 @@ namespace Azure.AI.Vision.Face.Samples
             #endregion
         }
 
-        #region Snippet:WriteLivenessSessionAuditEntry
-        public void WriteLivenessSessionAuditEntry(LivenessSessionAuditEntry auditEntry)
+        #region Snippet:WriteLivenessWithVerifySessionAuditEntry
+        public void WriteLivenessWithVerifySessionAuditEntry(LivenessSessionAuditEntry auditEntry)
         {
             Console.WriteLine($"Id: {auditEntry.Id}");
             Console.WriteLine($"SessionId: {auditEntry.SessionId}");
@@ -109,6 +115,11 @@ namespace Azure.AI.Vision.Face.Samples
             Console.WriteLine($"        Response Body Target FileName: {auditEntry.Response.Body.Target.FileName}");
             Console.WriteLine($"        Response Body Target TimeOffsetWithinFile: {auditEntry.Response.Body.Target.TimeOffsetWithinFile}");
             Console.WriteLine($"        Response Body Target FaceImageType: {auditEntry.Response.Body.Target.ImageType}");
+
+            Console.WriteLine($"        Response Body VerifyResult IsIdentical: {auditEntry.Response.Body.VerifyResult.IsIdentical}");
+            Console.WriteLine($"        Response Body VerifyResult MatchConfidence: {auditEntry.Response.Body.VerifyResult.MatchConfidence}");
+            Console.WriteLine($"        Response Body VerifyResult VerifyImage.FaceRectangle: {auditEntry.Response.Body.VerifyResult.VerifyImage.FaceRectangle.Top}, {auditEntry.Response.Body.VerifyResult.VerifyImage.FaceRectangle.Left}, {auditEntry.Response.Body.VerifyResult.VerifyImage.FaceRectangle.Width}, {auditEntry.Response.Body.VerifyResult.VerifyImage.FaceRectangle.Height}");
+            Console.WriteLine($"        Response Body VerifyResult VerifyImage.QualityForRecognition: {auditEntry.Response.Body.VerifyResult.VerifyImage.QualityForRecognition}");
         }
         #endregion
     }

@@ -12,10 +12,10 @@ using NUnit.Framework;
 
 namespace Azure.AI.Vision.Face.Samples
 {
-    public partial class FaceSamples
+    public partial class Samples2_PersonDirectory : FaceSamplesBase
     {
         [Test]
-        public void Sample_VerifyFromPersonDirectory()
+        public void VerifyFromPersonDirectory()
         {
             var administrationClient = CreateAdministrationClient();
 
@@ -70,7 +70,7 @@ namespace Azure.AI.Vision.Face.Samples
         }
 
         [Test]
-        public void Sample_IdentifyFromPersonDirectory()
+        public void IdentifyFromPersonDirectory()
         {
             var administrationClient = CreateAdministrationClient();
 
@@ -151,7 +151,7 @@ namespace Azure.AI.Vision.Face.Samples
         }
 
         [Test]
-        public void Sample_IdentifyFromDynamicPersonGroup()
+        public void IdentifyFromDynamicPersonGroup()
         {
             var administrationClient = CreateAdministrationClient();
 
@@ -190,13 +190,27 @@ namespace Azure.AI.Vision.Face.Samples
             }
             #endregion
 
+            var familyGroupId = "pd_family1";
+            var hikingGroupId = "pd_hiking_club";
+
+            // Perform cleanup if the group already exists
+            try {
+                administrationClient.DeleteDynamicPersonGroup(WaitUntil.Completed, familyGroupId);
+            } catch (RequestFailedException ex) when (ex.Status == 404)
+            {
+            }
+
+            try {
+                administrationClient.DeleteDynamicPersonGroup(WaitUntil.Completed, hikingGroupId);
+            } catch (RequestFailedException ex) when (ex.Status == 404)
+            {
+            }
+
             #region Snippet:IdentifyFromDynamicPersonGroup_CreateDynamicPersonGroupAndAddPerson
             createPersonOperations.Take(3).ToList().ForEach(operation => operation.WaitForCompletion());
-            var familyGroupId = "pd_family1";
             administrationClient.CreateDynamicPersonGroupWithPerson(WaitUntil.Started, familyGroupId, "Dynamic Person Group for Family 1", new[] { personIds["Bill"], personIds["Clare"], personIds["Ron"] });
 
             createPersonOperations[3].WaitForCompletion();
-            var hikingGroupId = "pd_hiking_club";
             administrationClient.CreateDynamicPersonGroupWithPerson(WaitUntil.Started, hikingGroupId, "Dynamic Person Group for hiking club", new[] { personIds["Clare"], personIds["Anna"] });
             #endregion
 

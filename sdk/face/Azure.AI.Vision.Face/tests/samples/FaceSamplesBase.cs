@@ -6,15 +6,12 @@ using Azure.AI.Vision.Face;
 using Azure.AI.Vision.Face.Tests;
 using Azure.Core.TestFramework;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.AI.Vision.Face.Samples
 {
-    public partial class FaceSamples : SamplesBase<FaceTestEnvironment>
+    public class FaceSamplesBase : SamplesBase<FaceTestEnvironment>
     {
-        public FaceSamples()
-        {
-        }
-
         public FaceClient CreateClient()
         {
             #region Snippet:CreateFaceClient

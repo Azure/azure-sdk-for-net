@@ -12,10 +12,10 @@ using NUnit.Framework;
 
 namespace Azure.AI.Vision.Face.Samples
 {
-    public partial class FaceSamples
+    public partial class Samples2_PersonDirectory : FaceSamplesBase
     {
         [Test]
-        public async Task Sample_VerifyFromPersonDirectoryAsync()
+        public async Task VerifyFromPersonDirectoryAsync()
         {
             var administrationClient = CreateAdministrationClient();
 
@@ -70,7 +70,7 @@ namespace Azure.AI.Vision.Face.Samples
         }
 
         [Test]
-        public async Task Sample_IdentifyFromPersonDirectoryAsync()
+        public async Task IdentifyFromPersonDirectoryAsync()
         {
             var administrationClient = CreateAdministrationClient();
 
@@ -151,7 +151,7 @@ namespace Azure.AI.Vision.Face.Samples
         }
 
         [Test]
-        public async Task Sample_IdentifyFromDynamicPersonGroupAsync()
+        public async Task IdentifyFromDynamicPersonGroupAsync()
         {
             var administrationClient = CreateAdministrationClient();
 
@@ -190,13 +190,31 @@ namespace Azure.AI.Vision.Face.Samples
             }
             #endregion
 
+            var familyGroupId = "pd_family1";
+            var hikingGroupId = "pd_hiking_club";
+
+            // Perform cleanup if the group already exists
+            try
+            {
+                await administrationClient.DeleteDynamicPersonGroupAsync(WaitUntil.Completed, familyGroupId);
+            }
+            catch (RequestFailedException ex) when (ex.Status == 404)
+            {
+            }
+
+            try
+            {
+                await administrationClient.DeleteDynamicPersonGroupAsync(WaitUntil.Completed, hikingGroupId);
+            }
+            catch (RequestFailedException ex) when (ex.Status == 404)
+            {
+            }
+
             #region Snippet:IdentifyFromDynamicPersonGroup_CreateDynamicPersonGroupAndAddPersonAsync
             createPersonOperations.Take(3).ToList().ForEach(async operation => await operation.WaitForCompletionAsync());
-            var familyGroupId = "pd_family1";
             await administrationClient.CreateDynamicPersonGroupWithPersonAsync(WaitUntil.Started, familyGroupId, "Dynamic Person Group for Family 1", new[] { personIds["Bill"], personIds["Clare"], personIds["Ron"] });
 
             await createPersonOperations[3].WaitForCompletionAsync();
-            var hikingGroupId = "pd_hiking_club";
             await administrationClient.CreateDynamicPersonGroupWithPersonAsync(WaitUntil.Started, hikingGroupId, "Dynamic Person Group for hiking club", new[] { personIds["Clare"], personIds["Anna"] });
             #endregion
 
