@@ -17,11 +17,14 @@ param location string = resourceGroup().location
 @description('The location of the resource. By default, this is the same as the resource group.')
 param deidLocation string = 'eastus2euap'
 
+param deploymentTime string = utcNow('u')
+
 var realtimeDataUserRoleId = 'bb6577c4-ea0a-40b2-8962-ea18cb8ecd4e'
 var batchDataOwnerRoleId = '8a90fa6b-6997-4a07-8a95-30633a7c97b9'
 var storageBlobDataContributor = 'ba92f5b4-2d11-453d-a403-e96b0029c9fe'
 
 var blobStorageName = take(toLower(replace('blob-${baseName}', '-', '')), 24)
+var blobContainerName = 'container-${baseName}'
 
 resource storageAccount 'Microsoft.Storage/storageAccounts@2022-05-01' = {
   name: blobStorageName
@@ -42,7 +45,7 @@ resource blobService 'Microsoft.Storage/storageAccounts/blobServices@2022-05-01'
 
 resource container 'Microsoft.Storage/storageAccounts/blobServices/containers@2022-05-01' = {
   parent: blobService
-  name: 'container-${baseName}'
+  name: blobContainerName
 }
 
 resource storageRoleAssignment 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {
@@ -77,8 +80,18 @@ resource batchRole 'Microsoft.Authorization/roleAssignments@2020-10-01-preview' 
   }
 }
 
+// https://learn.microsoft.com/en-us/rest/api/storagerp/storage-accounts/list-account-sas?view=rest-storagerp-2023-01-01&tabs=HTTP
+var blobStorageSASUri = listAccountSAS(storageAccount.name, '2023-01-01', {
+  signedProtocol: 'https'
+  signedResourceTypes: 'sco'
+  signedPermission: 'rwlca'
+  signedServices: 'b'
+  signedExpiry: dateTimeAdd(deploymentTime, 'PT1H')
+}).accountSasToken
+
 var blobStorageConnectionString = 'DefaultEndpointsProtocol=https;AccountName=${storageAccount.name};EndpointSuffix=${environment().suffixes.storage};AccountKey=${storageAccount.listKeys().keys[0].value}'
 
 output DEID_SERVICE_ENDPOINT string = testDeidService.properties.serviceUrl
 output STORAGE_ACCOUNT_CONNECTION_STRING string = blobStorageConnectionString
+output STORAGE_ACCOUNT_SAS_URI string = '${storageAccount.properties.primaryEndpoints.blob}${blobContainerName}?${blobStorageSASUri}'
 output STORAGE_CONTAINER_NAME string = container.name
