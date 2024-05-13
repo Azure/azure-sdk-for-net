@@ -239,7 +239,7 @@ namespace System.ClientModel.Primitives
     public partial class RequestOptions
     {
         public RequestOptions() { }
-        public bool? BufferResponse { get { throw null; } set { } }
+        public bool BufferResponse { get { throw null; } set { } }
         public System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
         public System.ClientModel.Primitives.ClientErrorBehaviors ErrorOptions { get { throw null; } set { } }
         public void AddHeader(string name, string value) { }
