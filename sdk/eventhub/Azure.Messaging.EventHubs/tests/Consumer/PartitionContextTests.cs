@@ -89,7 +89,7 @@ namespace Azure.Messaging.EventHubs.Tests
             (
                 eventBody: new BinaryData(Array.Empty<byte>()),
                 lastPartitionSequenceNumber: 1234,
-                lastPartitionOffset: 42,
+                lastPartitionOffset: "42",
                 lastPartitionEnqueuedTime: DateTimeOffset.Parse("2015-10-27T00:00:00Z"),
                 lastPartitionPropertiesRetrievalTime: DateTimeOffset.Parse("2012-03-04T08:42Z")
             );

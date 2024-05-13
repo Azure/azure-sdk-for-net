@@ -582,7 +582,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ConnectionStringConstructorSetsTheInitialPosition()
         {
-            var expectedPosition = EventPosition.FromOffset(999);
+            var expectedPosition = EventPosition.FromOffset("999");
             var connectionString = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub";
             var receiver = new PartitionReceiver("cg", "pid", expectedPosition, connectionString);
 
@@ -596,7 +596,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void TokenCredentialConstructorSetsTheInitialPosition()
         {
-            var expectedPosition = EventPosition.FromOffset(999);
+            var expectedPosition = EventPosition.FromOffset("999");
             var receiver = new PartitionReceiver("cg", "pid", expectedPosition, "fqns", "eh", Mock.Of<TokenCredential>());
 
             Assert.That(receiver.InitialPosition, Is.EqualTo(expectedPosition));
@@ -609,7 +609,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void SharedKeyCredentialConstructorSetsTheInitialPosition()
         {
-            var expectedPosition = EventPosition.FromOffset(999);
+            var expectedPosition = EventPosition.FromOffset("999");
             var receiver = new PartitionReceiver("cg", "pid", expectedPosition, "fqns", "eh", new AzureNamedKeyCredential("key", "value"));
 
             Assert.That(receiver.InitialPosition, Is.EqualTo(expectedPosition));
@@ -622,7 +622,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void SasCredentialConstructorSetsTheInitialPosition()
         {
-            var expectedPosition = EventPosition.FromOffset(999);
+            var expectedPosition = EventPosition.FromOffset("999");
             var receiver = new PartitionReceiver("cg", "pid", expectedPosition, "fqns", "eh", new AzureSasCredential(new SharedAccessSignature("sb://this.is.Fake/blah", "key", "value").Value));
 
             Assert.That(receiver.InitialPosition, Is.EqualTo(expectedPosition));
@@ -635,7 +635,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ConnectionConstructorSetsTheInitialPosition()
         {
-            var expectedPosition = EventPosition.FromOffset(999);
+            var expectedPosition = EventPosition.FromOffset("999");
             var receiver = new PartitionReceiver("cg", "pid", expectedPosition, Mock.Of<EventHubConnection>());
 
             Assert.That(receiver.InitialPosition, Is.EqualTo(expectedPosition));
@@ -730,7 +730,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var expectedConsumerGroup = "consumerGroup";
             var expectedPartitionId = "partitionId";
             var expectedIdentifier = "customIdent!fi3r!";
-            var expectedPosition = EventPosition.FromOffset(55);
+            var expectedPosition = EventPosition.FromOffset("55");
             var expectedInvalidateOnSteal = false;
 
             var expectedOptions = new PartitionReceiverOptions
@@ -771,7 +771,7 @@ namespace Azure.Messaging.EventHubs.Tests
             (
                 eventBody: new BinaryData(Array.Empty<byte>()),
                 lastPartitionSequenceNumber: 1234,
-                lastPartitionOffset: 42,
+                lastPartitionOffset: "42",
                 lastPartitionEnqueuedTime: DateTimeOffset.Parse("2015-10-27T00:00:00Z"),
                 lastPartitionPropertiesRetrievalTime: DateTimeOffset.Parse("2012-03-04T08:42Z")
             );

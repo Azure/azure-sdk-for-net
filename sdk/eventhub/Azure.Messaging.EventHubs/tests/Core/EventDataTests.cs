@@ -145,11 +145,11 @@ namespace Azure.Messaging.EventHubs.Tests
         public void NonIdempotentStatePropertyAcessorsDeferToTheAmqpMessage()
         {
             var sequenceNumber = 123L;
-            var offset = 456L;
+            var offset = "456L";
             var enqueueTime = new DateTimeOffset(2015, 10, 27, 00, 00, 00, TimeSpan.Zero);
             var partitionKey = "fake-key";
             var lastSequence = 321L;
-            var lastOffset = 654L;
+            var lastOffset = "654L";
             var lastEnqueue = new DateTimeOffset(2012, 03, 04, 08, 00, 00, TimeSpan.Zero);
             var lastRetrieve = new DateTimeOffset(2020, 01, 01, 05, 15, 37, TimeSpan.Zero);
             var message = CreateFullyPopulatedAmqpMessage(sequenceNumber, lastSequence, offset, lastOffset, partitionKey, enqueueTime, lastEnqueue, lastRetrieve);
@@ -245,11 +245,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 new Dictionary<string, object> { { "Test", 123 } },
                 new Dictionary<string, object> { { "System", "Hello" } },
                 33334444,
-                666777,
+                "666777",
                 DateTimeOffset.Parse("2015-10-27T00:00:00Z"),
                 "TestKey",
                 111222,
-                999888,
+                "999888",
                 DateTimeOffset.Parse("2012-03-04T09:00:00Z"),
                 DateTimeOffset.Parse("2003-09-27T15:00:00Z"),
                 787878,
@@ -275,11 +275,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 null,
                 null,
                 33334444,
-                666777,
+                "666777",
                 DateTimeOffset.Parse("2015-10-27T00:00:00Z"),
                 "TestKey",
                 111222,
-                999888,
+                "999888",
                 DateTimeOffset.Parse("2012-03-04T09:00:00Z"),
                 DateTimeOffset.Parse("2003-09-27T15:00:00Z"),
                 787878,
@@ -304,11 +304,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 new Dictionary<string, object> { { "Test", 123 } },
                 new Dictionary<string, object> { { "System", "Hello" } },
                 33334444,
-                666777,
+                "666777",
                 DateTimeOffset.Parse("2015-10-27T00:00:00Z"),
                 "TestKey",
                 111222,
-                999888,
+                "999888",
                 DateTimeOffset.Parse("2012-03-04T09:00:00Z"),
                 DateTimeOffset.Parse("2003-09-27T15:00:00Z"),
                 787878,
@@ -341,8 +341,8 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         private static AmqpAnnotatedMessage CreateFullyPopulatedAmqpMessage(long sequenceNumber,
                                                                             long lastSequenceNumber,
-                                                                            long offset,
-                                                                            long lastOffset,
+                                                                            string offset,
+                                                                            string lastOffset,
                                                                             string partitionKey,
                                                                             DateTimeOffset enqueueTime,
                                                                             DateTimeOffset lastEnqueueTime,

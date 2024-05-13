@@ -590,7 +590,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 // Once sent, query the partition and determine the offset of the last enqueued event, then send the new set
                 // of events that should appear after the starting position.
 
-                long lastOffset;
+                string lastOffset;
                 EventPosition startingPosition;
 
                 await using (var producer = new EventHubProducerClient(connectionString))

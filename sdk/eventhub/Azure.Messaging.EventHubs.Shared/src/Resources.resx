@@ -354,4 +354,7 @@
   <data name="ProcessorLoadBalancingFatalErrorMask" xml:space="preserve">
     <value>FATAL: The processor has experienced a fatal error in its load balancing and health check task.  Recovery is NOT possible; the processor is shutting down.  Error message: {0}</value>
   </data>
+  <data name="ProcessorAttemptingToWriteCheckpointWithoutOffset" xml:space="preserve">
+    <value>WARNING: A processor for a geo-replication-enabled Event Hub is trying to write a checkpoint without an offset.  Readers of geo-replicated Event Hubs cannot be positioned without an offset.</value>
+  </data>
 </root>

@@ -911,15 +911,16 @@ namespace Azure.Messaging.EventHubs
         /// <param name="sequenceNumber">The sequence number to associate with the checkpoint, indicating that a processor should begin reading from the next event in the stream.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal a request to cancel the operation.</param>
         ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
         protected override Task UpdateCheckpointAsync(string partitionId,
-                                                      long offset,
+                                                      string offset,
                                                       long? sequenceNumber,
                                                       CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Argument.AssertNotNull(partitionId, nameof(partitionId));
 
-            Logger.UpdateCheckpointStart(partitionId, Identifier, EventHubName, ConsumerGroup);
+            Logger.UpdateCheckpointStart(partitionId, Identifier, EventHubName, ConsumerGroup, sequenceNumber?.ToString(), offset);
 
             using var scope = ClientDiagnostics.CreateScope(DiagnosticProperty.EventProcessorCheckpointActivityName, ActivityKind.Internal);
             scope.Start();
@@ -934,13 +935,13 @@ namespace Azure.Messaging.EventHubs
                 // be thrown directly to the caller here.
 
                 scope.Failed(ex);
-                Logger.UpdateCheckpointError(partitionId, Identifier, EventHubName, ConsumerGroup, ex.Message);
+                Logger.UpdateCheckpointError(partitionId, Identifier, EventHubName, ConsumerGroup, ex.Message, sequenceNumber?.ToString(), offset);
 
                 throw;
             }
             finally
             {
-                Logger.UpdateCheckpointComplete(partitionId, Identifier, EventHubName, ConsumerGroup);
+                Logger.UpdateCheckpointComplete(partitionId, Identifier, EventHubName, ConsumerGroup, sequenceNumber?.ToString(), offset);
             }
         }
 
@@ -960,9 +961,19 @@ namespace Azure.Messaging.EventHubs
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             Argument.AssertNotNull(partitionId, nameof(partitionId));
-            Argument.AssertAtLeast(startingPosition.SequenceNumber, 0, nameof(startingPosition.SequenceNumber));
+            if (string.IsNullOrEmpty(startingPosition.Offset))
+            {
+                if (EventHubProperties?.IsGeoReplicationEnabled ?? false)
+                {
+                    var message = string.Format(CultureInfo.InvariantCulture, Resources.ProcessorAttemptingToWriteCheckpointWithoutOffset);
+                    var updateCheckpointException = new EventHubsException(true, EventHubName, message, EventHubsException.FailureReason.GeneralError);
+                    _ = InvokeOnProcessingErrorAsync(updateCheckpointException, Resources.OperationEventProcessingLoop, CancellationToken.None);
+                }
 
-            Logger.UpdateCheckpointStart(partitionId, Identifier, EventHubName, ConsumerGroup);
+                Argument.AssertAtLeast(startingPosition.SequenceNumber, 0, nameof(startingPosition.SequenceNumber));
+            }
+
+            Logger.UpdateCheckpointStart(partitionId, Identifier, EventHubName, ConsumerGroup, startingPosition.SequenceNumber.ToString(), startingPosition.Offset);
 
             using var scope = ClientDiagnostics.CreateScope(DiagnosticProperty.EventProcessorCheckpointActivityName, ActivityKind.Internal);
             scope.Start();
@@ -977,15 +988,28 @@ namespace Azure.Messaging.EventHubs
                 // be thrown directly to the caller here.
 
                 scope.Failed(ex);
-                Logger.UpdateCheckpointError(partitionId, Identifier, EventHubName, ConsumerGroup, ex.Message);
+                Logger.UpdateCheckpointError(partitionId, Identifier, EventHubName, ConsumerGroup, ex.Message, startingPosition.SequenceNumber.ToString(), startingPosition.Offset);
 
                 throw;
             }
             finally
             {
-                Logger.UpdateCheckpointComplete(partitionId, Identifier, EventHubName, ConsumerGroup);
+                Logger.UpdateCheckpointComplete(partitionId, Identifier, EventHubName, ConsumerGroup, startingPosition.SequenceNumber.ToString(), startingPosition.Offset);
             }
         }
+
+        /// <summary>
+        ///   Performs the tasks needed invoke the <see cref="OnProcessingErrorAsync" /> method in the background,
+        ///   as it is intended to be a fire-and-forget operation.
+        /// </summary>
+        ///
+        /// <param name="exception">The exception that occurred during operation of the event processor.</param>
+        /// <param name="operationDescription">A short textual description of the operation during which the exception occurred; intended to be informational only.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the processing.</param>
+        ///
+        private Task InvokeOnProcessingErrorAsync(Exception exception,
+                                                  string operationDescription,
+                                                  CancellationToken cancellationToken) => Task.Run(() => OnProcessingErrorAsync(exception, null, operationDescription, cancellationToken), CancellationToken.None);
 
         /// <summary>
         ///   Creates an <see cref="EventHubConnection" /> to use for communicating with the Event Hubs service.

@@ -23,7 +23,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   The offset of the last observed event to be enqueued in the partition.
         /// </summary>
         ///
-        public long? Offset { get; }
+        public string Offset { get; }
 
         /// <summary>
         ///   The date and time, in UTC, that the last observed event was enqueued in the partition.
@@ -47,7 +47,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         /// <param name="lastReceivedTime">The date and time, in UTC, that the information was last received.</param>
         ///
         public LastEnqueuedEventProperties(long? lastSequenceNumber,
-                                           long? lastOffset,
+                                           string lastOffset,
                                            DateTimeOffset? lastEnqueuedTime,
                                            DateTimeOffset? lastReceivedTime)
         {

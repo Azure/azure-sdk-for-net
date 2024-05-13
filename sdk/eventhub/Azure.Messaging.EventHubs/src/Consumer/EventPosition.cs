@@ -81,12 +81,12 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///
         /// <returns>The specified position of an event in the partition.</returns>
         ///
-        public static EventPosition FromOffset(long offset,
+        public static EventPosition FromOffset(string offset,
                                                bool isInclusive = true)
         {
             return new EventPosition
             {
-                Offset = offset.ToString(CultureInfo.InvariantCulture),
+                Offset = offset,
                 IsInclusive = isInclusive
             };
         }

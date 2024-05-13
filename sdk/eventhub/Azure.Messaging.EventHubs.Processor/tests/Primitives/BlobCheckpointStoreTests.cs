@@ -151,7 +151,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var expectedHub = "fakeHub";
             var expectedConsumerGroup = "fakeGroup";
             var expectedPartition = "fakePart";
-            var expectedOffset = 123;
+            var expectedOffset = "123";
             var expectedSequence = 999;
             var mockCheckpointStore = new Mock<CheckpointStore>();
             var blobCheckpointStore = new BlobCheckpointStore(mockCheckpointStore.Object);

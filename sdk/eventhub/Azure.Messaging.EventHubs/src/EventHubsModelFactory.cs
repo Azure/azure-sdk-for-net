@@ -51,7 +51,7 @@ namespace Azure.Messaging.EventHubs
                                                               bool isEmpty,
                                                               long beginningSequenceNumber,
                                                               long lastSequenceNumber,
-                                                              long lastOffset,
+                                                              string lastOffset,
                                                               DateTimeOffset lastEnqueuedTime) =>
             new PartitionProperties(eventHubName, partitionId, isEmpty, beginningSequenceNumber, lastSequenceNumber, lastOffset, lastEnqueuedTime);
 
@@ -81,7 +81,7 @@ namespace Azure.Messaging.EventHubs
         /// <param name="lastReceivedTime">The date and time, in UTC, that the information was last received.</param>
         ///
         public static LastEnqueuedEventProperties LastEnqueuedEventProperties(long? lastSequenceNumber,
-                                                                              long? lastOffset,
+                                                                              string lastOffset,
                                                                               DateTimeOffset? lastEnqueuedTime,
                                                                               DateTimeOffset? lastReceivedTime) =>
             new LastEnqueuedEventProperties(lastSequenceNumber, lastOffset, lastEnqueuedTime, lastReceivedTime);
@@ -132,7 +132,7 @@ namespace Azure.Messaging.EventHubs
                                           IReadOnlyDictionary<string, object> systemProperties = null,
                                           string partitionKey = null,
                                           long sequenceNumber = long.MinValue,
-                                          long offset = long.MinValue,
+                                          string offset = default,
                                           DateTimeOffset enqueuedTime = default) =>
              new EventData(eventBody, properties, systemProperties, sequenceNumber, offset, enqueuedTime, partitionKey);
 
