@@ -1,4 +1,3 @@
-
 parameters:
   ServiceDirectory: not-set
   ArmTemplateParameters: '@{}'
@@ -42,16 +41,40 @@ steps:
 
   - template: /eng/common/TestResources/setup-environments.yml
 
-  - task: AzurePowerShell@5
-    displayName: Deploy test resources
-    env:
-      TEMP: $(Agent.TempDirectory)
-    inputs:
-      azureSubscription: ${{ parameters.ServiceConnection }}
-      azurePowerShellVersion: LatestVersion
-      pwsh: true
-      ScriptType: InlineScript
-      Inline: |
+  - ${{ if eq('true', parameters.UseFederatedAuth) }}:
+    - task: AzurePowerShell@5
+      displayName: Deploy test resources
+      env:
+        TEMP: $(Agent.TempDirectory)
+      inputs:
+        azureSubscription: ${{ parameters.ServiceConnection }}
+        azurePowerShellVersion: LatestVersion
+        pwsh: true
+        ScriptType: InlineScript
+        Inline: |
+          eng/common/scripts/Import-AzModules.ps1
+
+          $subscriptionConfiguration = @'
+            ${{ parameters.SubscriptionConfiguration }}
+          '@ | ConvertFrom-Json -AsHashtable;
+
+          # The subscriptionConfiguration may have ArmTemplateParameters defined, so
+          # pass those in via the ArmTemplateParameters flag, and handle any
+          # additional parameters from the pipelines via AdditionalParameters
+          eng/common/TestResources/New-TestResources.ps1 `
+            -ResourceType '${{ parameters.ResourceType }}' `
+            -ServiceDirectory '${{ parameters.ServiceDirectory }}' `
+            -Location '${{ parameters.Location }}' `
+            -DeleteAfterHours '${{ parameters.DeleteAfterHours }}' `
+            @subscriptionConfiguration `
+            -AdditionalParameters ${{ parameters.ArmTemplateParameters }} `
+            -CI `
+            -UseFederatedAuth `
+            -Force `
+            -Verbose | Out-Null
+
+  - ${{ else }}:
+    - pwsh: |
         eng/common/scripts/Import-AzModules.ps1
 
         $subscriptionConfiguration = @'
@@ -69,6 +92,8 @@ steps:
           @subscriptionConfiguration `
           -AdditionalParameters ${{ parameters.ArmTemplateParameters }} `
           -CI `
-          -FederatedAuth:$${{ parameters.UseFederatedAuth }} `
           -Force `
           -Verbose | Out-Null
+      displayName: Deploy test resources
+      env:
+        TEMP: $(Agent.TempDirectory)
