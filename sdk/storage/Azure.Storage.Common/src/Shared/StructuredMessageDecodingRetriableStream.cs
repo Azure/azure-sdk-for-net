@@ -141,8 +141,6 @@ internal class StructuredMessageDecodingRetriableStream : Stream
 
     public override bool CanTimeout => _innerRetriable.CanTimeout;
 
-    public override Task CopyToAsync(Stream destination, int bufferSize, CancellationToken cancellationToken) => _innerRetriable.CopyToAsync(destination, bufferSize, cancellationToken);
-
     public override long Length => _innerRetriable.Length;
 
     public override long Position { get => _innerRetriable.Position; set => _innerRetriable.Position = value; }
@@ -172,8 +170,6 @@ internal class StructuredMessageDecodingRetriableStream : Stream
     public override int WriteTimeout { get => _innerRetriable.WriteTimeout; set => _innerRetriable.WriteTimeout = value; }
 
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_0_OR_GREATER
-    public override void CopyTo(Stream destination, int bufferSize) => _innerRetriable.CopyTo(destination, bufferSize);
-
     public override void Write(ReadOnlySpan<byte> buffer) => _innerRetriable.Write(buffer);
 
     public override ValueTask WriteAsync(ReadOnlyMemory<byte> buffer, CancellationToken cancellationToken = default) => _innerRetriable.WriteAsync(buffer, cancellationToken);

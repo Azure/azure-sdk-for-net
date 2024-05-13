@@ -53,7 +53,8 @@ public class StructuredMessageDecodingRetriableStreamTests
     {
         const int segments = 4;
         const int segmentLen = Constants.KB;
-        const int interruptPos = segmentLen + 10;
+        const int readLen = 128;
+        const int interruptPos = segmentLen + (3 * readLen) + 10;
 
         Random r = new();
         byte[] data = r.NextBytesInline(segments * Constants.KB).ToArray();
@@ -77,7 +78,7 @@ public class StructuredMessageDecodingRetriableStreamTests
             1))
         using (Stream dst = new MemoryStream(dest))
         {
-            await retriableSrc.CopyToInternal(dst, 128, Async, default);
+            await retriableSrc.CopyToInternal(dst, readLen, Async, default);
         }
 
         Assert.AreEqual(data, dest);
