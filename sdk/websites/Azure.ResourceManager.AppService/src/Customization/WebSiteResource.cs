@@ -190,6 +190,7 @@ namespace Azure.ResourceManager.AppService
                 throw;
             }
         }
+
         /// <summary>
         /// Description for Gets hybrid connections configured for an app (or deployment slot, if specified).
         /// <list type="bullet">

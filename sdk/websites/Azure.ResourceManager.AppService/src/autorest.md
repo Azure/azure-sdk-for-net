@@ -849,30 +849,6 @@ directive:
             "Aborted",
             "Running"
         ]
-  - from: CommonDefinitions.json
-    where: $.definitions
-    transform: >
-        $["HybridConnectionCollection"] = {
-            "description": "Collection of hostname bindings.",
-                  "required": [
-                    "value"
-                  ],
-                  "type": "object",
-                  "properties": {
-                    "value": {
-                      "description": "Collection of resources.",
-                      "type": "array",
-                      "items": {
-                        "$ref": "./CommonDefinitions.json#/definitions/HybridConnection"
-                      }
-                    },
-                    "nextLink": {
-                      "description": "Link to next page of resources.",
-                      "type": "string",
-                      "readOnly": true
-                    }
-                  }
-          };
   - from: WebApps.json
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridConnectionRelays'].get
     transform: >
@@ -881,7 +857,7 @@ directive:
           "200": {
             "description": "Description for Retrieves all Service Bus Hybrid Connections used by this Web App.",
             "schema": {
-              "$ref": "./CommonDefinitions.json#/definitions/HybridConnectionCollection"
+              "$ref": "./AppServicePlans.json#/definitions/HybridConnectionCollection"
             }
           },
           "default": {
@@ -899,7 +875,7 @@ directive:
           "200": {
             "description": "Description for Retrieves all Service Bus Hybrid Connections used by this Web App.",
             "schema": {
-              "$ref": "./CommonDefinitions.json#/definitions/HybridConnectionCollection"
+              "$ref": "./AppServicePlans.json#/definitions/HybridConnectionCollection"
             }
           },
           "default": {
