@@ -15,6 +15,17 @@ public abstract class PageableCollection<T> : ResultCollection<T> where T : notn
     // Note: we don't have a constructor that takes response because
     // pageables delay the first request so they don't need to be disposed.
 
-    public abstract IEnumerable<ClientPage<T>> AsPages(string? continuationToken, int? pageSizeHint);
+    public abstract IEnumerable<ClientPage<T>> AsPages(string? continuationToken = default, int? pageSizeHint = default);
+
+    public override IEnumerator<T> GetEnumerator()
+    {
+        foreach (ClientPage<T> page in AsPages())
+        {
+            foreach (T value in page)
+            {
+                yield return value;
+            }
+        }
+    }
 }
 #pragma warning restore CS1591 // public XML comments

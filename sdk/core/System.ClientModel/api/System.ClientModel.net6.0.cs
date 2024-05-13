@@ -10,7 +10,8 @@ namespace System.ClientModel
     public abstract partial class AsyncPageableCollection<T> : System.ClientModel.AsyncResultCollection<T> where T : notnull
     {
         protected internal AsyncPageableCollection() { }
-        public abstract System.Collections.Generic.IAsyncEnumerable<System.ClientModel.ClientPage<T>> AsPages(string? continuationToken, int? pageSizeHint);
+        public abstract System.Collections.Generic.IAsyncEnumerable<System.ClientModel.ClientPage<T>> AsPages(string? continuationToken = null, int? pageSizeHint = default(int?));
+        public override System.Collections.Generic.IAsyncEnumerator<T> GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public abstract partial class AsyncResultCollection<T> : System.ClientModel.ClientResult, System.Collections.Generic.IAsyncEnumerable<T>
     {
@@ -29,12 +30,10 @@ namespace System.ClientModel
         public abstract void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         public abstract System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     }
-    public abstract partial class ClientPage<T> : System.ClientModel.ClientResult, System.Collections.Generic.IEnumerable<T>, System.Collections.IEnumerable where T : notnull
+    public abstract partial class ClientPage<T> : System.ClientModel.ResultCollection<T>
     {
         public string? ContinuationToken;
         protected ClientPage() { }
-        public abstract System.Collections.Generic.IEnumerator<T> GetEnumerator();
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class ClientResult
     {
@@ -63,7 +62,8 @@ namespace System.ClientModel
     public abstract partial class PageableCollection<T> : System.ClientModel.ResultCollection<T> where T : notnull
     {
         protected internal PageableCollection() { }
-        public abstract System.Collections.Generic.IEnumerable<System.ClientModel.ClientPage<T>> AsPages(string? continuationToken, int? pageSizeHint);
+        public abstract System.Collections.Generic.IEnumerable<System.ClientModel.ClientPage<T>> AsPages(string? continuationToken = null, int? pageSizeHint = default(int?));
+        public override System.Collections.Generic.IEnumerator<T> GetEnumerator() { throw null; }
     }
     public abstract partial class ResultCollection<T> : System.ClientModel.ClientResult, System.Collections.Generic.IEnumerable<T>, System.Collections.IEnumerable
     {
