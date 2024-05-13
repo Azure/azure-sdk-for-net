@@ -4573,7 +4573,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>WebApps_GetAllTheHybridConnectionData</description>
+        /// <description>WebApps_ListHybridConnections</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -4587,10 +4587,10 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="HybridConnectionData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<HybridConnectionData> GetAllTheHybridConnectionDataAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<HybridConnectionData> GetHybridConnectionsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteWebAppsRestClient.CreateGetAllTheHybridConnectionDataRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => HybridConnectionData.DeserializeHybridConnectionData(e), _webSiteWebAppsClientDiagnostics, Pipeline, "WebSiteResource.GetAllTheHybridConnectionData", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteWebAppsRestClient.CreateListHybridConnectionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => HybridConnectionData.DeserializeHybridConnectionData(e), _webSiteWebAppsClientDiagnostics, Pipeline, "WebSiteResource.GetHybridConnections", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -4602,7 +4602,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>WebApps_GetAllTheHybridConnectionData</description>
+        /// <description>WebApps_ListHybridConnections</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -4616,10 +4616,10 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HybridConnectionData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<HybridConnectionData> GetAllTheHybridConnectionData(CancellationToken cancellationToken = default)
+        public virtual Pageable<HybridConnectionData> GetHybridConnections(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteWebAppsRestClient.CreateGetAllTheHybridConnectionDataRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => HybridConnectionData.DeserializeHybridConnectionData(e), _webSiteWebAppsClientDiagnostics, Pipeline, "WebSiteResource.GetAllTheHybridConnectionData", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteWebAppsRestClient.CreateListHybridConnectionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => HybridConnectionData.DeserializeHybridConnectionData(e), _webSiteWebAppsClientDiagnostics, Pipeline, "WebSiteResource.GetHybridConnections", "value", null, cancellationToken);
         }
 
         /// <summary>

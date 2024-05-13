@@ -141,22 +141,11 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [Obsolete("This method is obsolete and will be removed in a future release, please use `GetAllTheHybridConnectionDataAsync` instead", false)]
+        [Obsolete("This method is obsolete and will be removed in a future release, please use `GetHybridConnectionsAsync` instead", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<Response<HybridConnectionData>> GetAllHybridConnectionDataAsync(CancellationToken cancellationToken = default)
+        public virtual Task<Response<HybridConnectionData>> GetAllHybridConnectionDataAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteResource.GetAllHybridConnectionData");
-            scope.Start();
-            try
-            {
-                var response = await _webSiteWebAppsRestClient.ListHybridConnectionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new Exception("Obsolete method, Use GetHybridConnectionsAsync instead.");
         }
 
         /// <summary>
@@ -169,26 +158,16 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_ListHybridConnections</description>
+        /// <description>WebApps_ListHybridConnections</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [Obsolete("This method is obsolete and will be removed in a future release, please use `GetAllTheHybridConnectionData` instead", false)]
+        [Obsolete("This method is obsolete and will be removed in a future release, please use `GetHybridConnectionsAsync` instead", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<HybridConnectionData> GetAllHybridConnectionData(CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteResource.GetAllHybridConnectionData");
-            scope.Start();
-            try
-            {
-                var response = _webSiteWebAppsRestClient.ListHybridConnections(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new Exception("Obsolete method, Use GetHybridConnectionsAsync instead.");
         }
 
         /// <summary>

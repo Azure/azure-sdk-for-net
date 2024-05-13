@@ -4235,7 +4235,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>WebApps_GetAllTheHybridConnectionSlotData</description>
+        /// <description>WebApps_ListHybridConnectionsSlot</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -4249,10 +4249,10 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="HybridConnectionData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<HybridConnectionData> GetAllTheHybridConnectionSlotDataAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<HybridConnectionData> GetHybridConnectionsSlotAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteSlotWebAppsRestClient.CreateGetAllTheHybridConnectionSlotDataRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => HybridConnectionData.DeserializeHybridConnectionData(e), _webSiteSlotWebAppsClientDiagnostics, Pipeline, "WebSiteSlotResource.GetAllTheHybridConnectionSlotData", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteSlotWebAppsRestClient.CreateListHybridConnectionsSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => HybridConnectionData.DeserializeHybridConnectionData(e), _webSiteSlotWebAppsClientDiagnostics, Pipeline, "WebSiteSlotResource.GetHybridConnectionsSlot", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -4264,7 +4264,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>WebApps_GetAllTheHybridConnectionSlotData</description>
+        /// <description>WebApps_ListHybridConnectionsSlot</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -4278,10 +4278,10 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HybridConnectionData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<HybridConnectionData> GetAllTheHybridConnectionSlotData(CancellationToken cancellationToken = default)
+        public virtual Pageable<HybridConnectionData> GetHybridConnectionsSlot(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteSlotWebAppsRestClient.CreateGetAllTheHybridConnectionSlotDataRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => HybridConnectionData.DeserializeHybridConnectionData(e), _webSiteSlotWebAppsClientDiagnostics, Pipeline, "WebSiteSlotResource.GetAllTheHybridConnectionSlotData", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteSlotWebAppsRestClient.CreateListHybridConnectionsSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => HybridConnectionData.DeserializeHybridConnectionData(e), _webSiteSlotWebAppsClientDiagnostics, Pipeline, "WebSiteSlotResource.GetHybridConnectionsSlot", "value", null, cancellationToken);
         }
 
         /// <summary>

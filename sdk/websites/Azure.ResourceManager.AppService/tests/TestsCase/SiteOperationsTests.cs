@@ -49,13 +49,13 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
         //Manual operation needed to create website/hybridconnection resource, get it from existing one.
         [TestCase]
         [RecordedTest]
-        public async Task GetAllTheHybridConnectionData()
+        public async Task GetHybridConnections()
         {
             ResourceGroupCollection rgCollection = DefaultSubscription.GetResourceGroups();
             ResourceGroupResource rg = await rgCollection.GetAsync("Rg_Lwm");
             WebSiteCollection webSiteCollection = rg.GetWebSites();
             WebSiteResource webSiteResource = await webSiteCollection.GetAsync("sitelwm01");
-            var hybridConnectionDataCollection = webSiteResource.GetAllTheHybridConnectionDataAsync();
+            var hybridConnectionDataCollection = webSiteResource.GetHybridConnectionsAsync();
             int count = 0;
             await foreach (HybridConnectionData item in hybridConnectionDataCollection)
             {
@@ -66,11 +66,11 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
         //Manual operation needed to create website/hybridconnection resource, get it from existing one.
         [TestCase]
         [RecordedTest]
-        public async Task GetAllTheHybridConnectionSlotData()
+        public async Task GetHybridConnectionsSlot()
         {
             var wbSiteSlotID = WebSiteSlotResource.CreateResourceIdentifier(DefaultSubscription.Data.SubscriptionId, "Rg_Lwm", "sitelwm01", "slotsitelwm01");
             WebSiteSlotResource wsSlotResource = Client.GetWebSiteSlotResource(wbSiteSlotID);
-            var hybridConnectionDataCollection = wsSlotResource.GetAllTheHybridConnectionSlotDataAsync();
+            var hybridConnectionDataCollection = wsSlotResource.GetHybridConnectionsSlotAsync();
             int count = 0;
             await foreach (HybridConnectionData item in hybridConnectionDataCollection)
             {
