@@ -7,6 +7,13 @@ namespace Azure.Storage.DataMovement.Blobs
 {
     internal class DataMovementBlobConstants
     {
+        internal class ResourceId
+        {
+            internal const string BlockBlob = "BlockBlob";
+            internal const string PageBlob = "PageBlob";
+            internal const string AppendBlob = "AppendBlob";
+        }
+
         internal class SourceCheckpointData
         {
             internal const int SchemaVersion = 1;

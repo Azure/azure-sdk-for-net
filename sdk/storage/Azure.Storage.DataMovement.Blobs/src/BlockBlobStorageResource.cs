@@ -28,7 +28,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </summary>
         private ConcurrentDictionary<long, string> _blocks;
 
-        protected override string ResourceId => "BlockBlob";
+        protected override string ResourceId => DataMovementBlobConstants.ResourceId.BlockBlob;
 
         public override Uri Uri => BlobClient.Uri;
 

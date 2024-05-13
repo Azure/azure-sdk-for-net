@@ -34,8 +34,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 .Returns(new MockResourceCheckpointData());
             mock.Setup(r => r.GetDestinationCheckpointData())
                 .Returns(new MockResourceCheckpointData());
-            mock.Setup(r => r.GetStorageResourceReference(It.IsAny<string>()))
-                .Returns<string>(path =>
+            mock.Setup(r => r.GetStorageResourceReference(It.IsAny<string>(), It.IsAny<string>()))
+                .Returns<string,string>((path,resourceId) =>
                 {
                     return GetMockBlockBlobResource(path).Object;
                 });
@@ -194,7 +194,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             blobItems.Zip(destinationItems, (b, d) =>
             {
                 Assert.AreEqual(new BlobUriBuilder(b.Uri).BlobName, new BlobUriBuilder(d.Uri).BlobName);
-                Assert.AreEqual(b.GetType(), d.GetType());
+                Assert.AreEqual(b.ResourceId, d.ResourceId);
                 return true;
             });
         }

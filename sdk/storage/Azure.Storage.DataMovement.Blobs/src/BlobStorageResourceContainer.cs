@@ -64,8 +64,37 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Retrieves a single blob resource based on this respective resource.
         /// </summary>
         /// <param name="path">The path to the storage resource, relative to the directory prefix if any.</param>
-        protected override StorageResourceItem GetStorageResourceReference(string path)
-            => GetBlobAsStorageResource(ApplyOptionalPrefix(path), type: _options?.BlobType ?? BlobType.Block);
+        /// <param name="resourceId">Defines the resource id type.</param>
+        protected override StorageResourceItem GetStorageResourceReference(string path, string resourceId)
+            => GetBlobAsStorageResource(ApplyOptionalPrefix(path), type: _options?.BlobType ?? ToBlobType(resourceId));
+
+        private BlobType ToBlobType(string resourceId)
+        {
+            if (string.IsNullOrEmpty(resourceId))
+            {
+                return BlobType.Block;
+            }
+
+            if (DataMovementBlobConstants.ResourceId.BlockBlob.Equals(resourceId))
+            {
+                return BlobType.Block;
+            }
+            else if (DataMovementBlobConstants.ResourceId.PageBlob.Equals(resourceId))
+            {
+                return BlobType.Page;
+            }
+            else if (DataMovementBlobConstants.ResourceId.AppendBlob.Equals(resourceId))
+            {
+                return BlobType.Append;
+            }
+            else
+            {
+                // By default, return BlockBlob for other resource types (e.g. ShareFile, local file)
+                // when we call GetStorageResourceReference we will check the options bag if they manually
+                // set the blob type.
+                return BlobType.Block;
+            }
+        }
 
         /// <summary>
         /// Retrieves a single blob resource based on this respective resource.

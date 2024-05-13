@@ -19,7 +19,7 @@ namespace Azure.Storage.DataMovement.Blobs
         internal AppendBlobClient BlobClient { get; set; }
         internal AppendBlobStorageResourceOptions _options;
 
-        protected override string ResourceId => "AppendBlob";
+        protected override string ResourceId => DataMovementBlobConstants.ResourceId.AppendBlob;
 
         public override Uri Uri => BlobClient.Uri;
 

@@ -20,7 +20,7 @@ namespace Azure.Storage.DataMovement.Blobs
         internal PageBlobClient BlobClient { get; set; }
         internal PageBlobStorageResourceOptions _options;
 
-        protected override string ResourceId => "PageBlob";
+        protected override string ResourceId => DataMovementBlobConstants.ResourceId.PageBlob;
 
         public override Uri Uri => BlobClient.Uri;
 

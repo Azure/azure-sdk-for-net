@@ -254,7 +254,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             StorageResourceContainer containerResource =
                 new BlobStorageResourceContainer(test.Container, new() { BlobDirectoryPrefix = prefix });
 
-            StorageResourceItem resource = containerResource.GetStorageResourceReference("bar");
+            StorageResourceItem resource = containerResource.GetStorageResourceReference("bar", default);
 
             // Assert
             StorageResourceItemProperties properties = await resource.GetPropertiesAsync();

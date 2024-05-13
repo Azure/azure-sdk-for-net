@@ -48,12 +48,12 @@ namespace Azure.Storage.DataMovement.Tests
                 if (transferType == TransferDirection.Upload)
                 {
                     string destinationChildName = childSourceResource.Uri.LocalPath.Substring(sourceResource.Uri.LocalPath.Length + 1);
-                    childDestinationResource = destinationResource.GetStorageResourceReference(destinationChildName);
+                    childDestinationResource = destinationResource.GetStorageResourceReference(destinationChildName, default);
                 }
                 else
                 {
                     string destinationChildName = childSourceResource.Uri.AbsoluteUri.Substring(sourceResource.Uri.AbsoluteUri.Length + 1);
-                    childDestinationResource = destinationResource.GetStorageResourceReference(destinationChildName);
+                    childDestinationResource = destinationResource.GetStorageResourceReference(destinationChildName, default);
                 }
                 await AssertSourceAndDestinationAsync(
                     transferType: transferType,
