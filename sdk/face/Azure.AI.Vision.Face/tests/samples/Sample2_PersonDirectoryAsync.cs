@@ -12,7 +12,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.Vision.Face.Samples
 {
-    public partial class Samples2_PersonDirectory : FaceSamplesBase
+    public partial class Sample2_PersonDirectory : FaceSamplesBase
     {
         [Test]
         public async Task VerifyFromPersonDirectoryAsync()

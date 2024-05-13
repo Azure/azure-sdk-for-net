@@ -10,7 +10,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.Vision.Face.Samples
 {
-    public partial class Samples3_LargePersonGroup : FaceSamplesBase
+    public partial class Sample3_LargePersonGroup : FaceSamplesBase
     {
         [Test]
         public async Task VerifyAndIdentifyFromLargePersonGroupAsync()

@@ -10,7 +10,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.Vision.Face.Samples
 {
-    public partial class Samples1_FaceDetection : FaceSamplesBase
+    public partial class Sample1_FaceDetection : FaceSamplesBase
     {
         [Test]
         public async Task DetectAsync()

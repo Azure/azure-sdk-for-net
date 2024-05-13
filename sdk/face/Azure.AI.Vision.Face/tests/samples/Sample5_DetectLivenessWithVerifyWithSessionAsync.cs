@@ -10,7 +10,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.Vision.Face.Samples
 {
-    public partial class Samples5_DetectLivenessWithVerifyWithSession : FaceSamplesBase
+    public partial class Sample5_DetectLivenessWithVerifyWithSession : FaceSamplesBase
     {
         [Test]
         [TestCase(true)] // Change deleteSession to false to keep the session and perform liveness detection with liveness SDK
