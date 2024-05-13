@@ -22,17 +22,17 @@ namespace Azure.Storage.Files.Shares.Models
         FileAttributes = 1,
 
         /// <summary>
-        /// Created Always.
+        /// Created On.
         /// </summary>
         CreatedOn = 2,
 
         /// <summary>
-        /// Last Written Always.
+        /// Last Written On.
         /// </summary>
         LastWrittenOn = 4,
 
         /// <summary>
-        /// Changed Always.
+        /// Changed On.
         /// </summary>
         ChangedOn = 8,
 

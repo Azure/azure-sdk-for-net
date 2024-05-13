@@ -282,7 +282,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 filePermissionKey = Encoding.UTF8.GetString(reader.ReadBytes(filePermissionKeyLength));
             }
 
-            // File Created Always
+            // File Created On
             DateTimeOffset? fileCreatedOn = default;
             if (fileCreatedOnOffset > 0)
             {

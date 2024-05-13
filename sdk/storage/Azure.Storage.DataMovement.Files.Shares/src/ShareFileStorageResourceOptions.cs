@@ -107,21 +107,21 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// <summary>
         /// The creation time of the file.
         ///
-        /// By default preserves the File Created Always Time from the source.
+        /// By default preserves the File Created On Time from the source.
         /// </summary>
         public DataTransferProperty<DateTimeOffset?> FileCreatedOn { get; set; }
 
         /// <summary>
         /// The last write time of the file.
         ///
-        /// By default preserves the File Last Written Always Time from the source.
+        /// By default preserves the File Last Written On Time from the source.
         /// </summary>
         public DataTransferProperty<DateTimeOffset?> FileLastWrittenOn { get; set; }
 
         /// <summary>
         /// The change time of the file.
         ///
-        /// By default preserves the File Changed Always Time from the source.
+        /// By default preserves the File Changed On Time from the source.
         /// </summary>
         public DataTransferProperty<DateTimeOffset?> FileChangedOn { get; set; }
 
