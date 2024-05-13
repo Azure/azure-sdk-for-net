@@ -18,13 +18,14 @@ internal class StructuredMessageDecodingRetriableStream : Stream
     private readonly Stream _innerRetriable;
     private long _decodedBytesRead;
 
-    private readonly List<StructuredMessageDecodingStream.DecodedData> _decodedDatas = new();
+    private readonly List<StructuredMessageDecodingStream.DecodedData> _decodedDatas;
 
     private readonly Func<long, (Stream DecodingStream, StructuredMessageDecodingStream.DecodedData DecodedData)> _decodingStreamFactory;
     private readonly Func<long, ValueTask<(Stream DecodingStream, StructuredMessageDecodingStream.DecodedData DecodedData)>> _decodingAsyncStreamFactory;
 
     public StructuredMessageDecodingRetriableStream(
-        Stream initialResponse,
+        Stream initialDecodingStream,
+        StructuredMessageDecodingStream.DecodedData initialDecodedData,
         Func<long, (Stream DecodingStream, StructuredMessageDecodingStream.DecodedData DecodedData)> decodingStreamFactory,
         Func<long, ValueTask<(Stream DecodingStream, StructuredMessageDecodingStream.DecodedData DecodedData)>> decodingAsyncStreamFactory,
         ResponseClassifier responseClassifier,
@@ -32,7 +33,8 @@ internal class StructuredMessageDecodingRetriableStream : Stream
     {
         _decodingStreamFactory = decodingStreamFactory;
         _decodingAsyncStreamFactory = decodingAsyncStreamFactory;
-        _innerRetriable = RetriableStream.Create(initialResponse, StreamFactory, StreamFactoryAsync, responseClassifier, maxRetries);
+        _innerRetriable = RetriableStream.Create(initialDecodingStream, StreamFactory, StreamFactoryAsync, responseClassifier, maxRetries);
+        _decodedDatas = new() { initialDecodedData };
     }
 
     private Stream StreamFactory(long _)
@@ -85,7 +87,6 @@ internal class StructuredMessageDecodingRetriableStream : Stream
     }
 
     #region Read
-
     public override int Read(byte[] buffer, int offset, int count)
     {
         int read = _innerRetriable.Read(buffer, offset, count);
