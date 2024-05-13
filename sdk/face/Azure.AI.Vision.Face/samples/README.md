@@ -12,10 +12,10 @@ description: Samples for the Azure.AI.Vision.Face client library
 
 Azure AI Vision Face is a cloud service that  gives you access to advanced algorithms that process images and return information based on the visual features you're interested in.
 
-- [Detect faces from image](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/face/Azure.AI.Vision.Face/samples/Sample_FaceDetection.md)
+- Detect faces from image [synchronously](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/face/Azure.AI.Vision.Face/samples/Sample_FaceDetection.md) or [asynchronously](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/face/Azure.AI.Vision.Face/samples/Sample_FaceDetectionAsync.md)
   - From local image file
   - From URL
-- [Verification and identification from Person Directory](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/face/Azure.AI.Vision.Face/samples/Sample_PersonDirectory.md)
-- [Verification and identification from Large Person Group](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/face/Azure.AI.Vision.Face/samples/Sample_LargePersonGroup.md)
-- [Detect liveness in faces with session](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/face/Azure.AI.Vision.Face/samples/Sample_DetectLivenessWithSession.md)
-- [Detect liveness with face verification with session](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/face/Azure.AI.Vision.Face/samples/Sample_DetectLivenessWithVeirfyWithSession.md)
+- Detect liveness in faces with session [synchronously](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/face/Azure.AI.Vision.Face/samples/Sample_DetectLivenessWithSession.md) or [asynchronously](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/face/Azure.AI.Vision.Face/samples/Sample_DetectLivenessWithSessionAsync.md)
+- Detect liveness with face verification with session [synchronously](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/face/Azure.AI.Vision.Face/samples/Sample_DetectLivenessWithVeirfyWithSession.md) or [asynchronously](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/face/Azure.AI.Vision.Face/samples/Sample_DetectLivenessWithVeirfyWithSessionAsync.md)
+- Verification and identification from Person Directory [synchronously](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/face/Azure.AI.Vision.Face/samples/Sample_PersonDirectory.md) or [asynchronously](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/face/Azure.AI.Vision.Face/samples/Sample_PersonDirectoryAsync.md)
+- Verification and identification from Large Person Group [synchronously](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/face/Azure.AI.Vision.Face/samples/Sample_LargePersonGroup.md) or [asynchronously](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/face/Azure.AI.Vision.Face/samples/Sample_LargePersonGroupAsync.md)
