@@ -200,11 +200,9 @@ You can create a `DynamicPersonGroup` by calling the `CreateDynamicPersonGroup` 
 
 ```C# Snippet:IdentifyFromDynamicPersonGroup_CreateDynamicPersonGroupAndAddPersonAsync
 createPersonOperations.Take(3).ToList().ForEach(async operation => await operation.WaitForCompletionAsync());
-var familyGroupId = "pd_family1";
 await administrationClient.CreateDynamicPersonGroupWithPersonAsync(WaitUntil.Started, familyGroupId, "Dynamic Person Group for Family 1", new[] { personIds["Bill"], personIds["Clare"], personIds["Ron"] });
 
 await createPersonOperations[3].WaitForCompletionAsync();
-var hikingGroupId = "pd_hiking_club";
 await administrationClient.CreateDynamicPersonGroupWithPersonAsync(WaitUntil.Started, hikingGroupId, "Dynamic Person Group for hiking club", new[] { personIds["Clare"], personIds["Anna"] });
 ```
 
