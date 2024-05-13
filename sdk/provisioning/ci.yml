@@ -59,3 +59,5 @@ extends:
       safeName: AzureProvisioningSql
     - name: Azure.Provisioning.Storage
       safeName: AzureProvisioningStorage
+    - name: Azure.Provisioning.WebPubSub
+      safeName: AzureProvisioningWebPubSub

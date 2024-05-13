@@ -11,7 +11,7 @@ We will create an instace of `SearchIndex` and define `Hotel` fields.
 ```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Index_UsingVectorizableTextQuery
 string vectorSearchProfileName = "my-vector-profile";
 string vectorSearchHnswConfig = "my-hsnw-vector-config";
-string modelName = "text-embedding-ada-002";
+string deploymentId = "text-embedding-ada-002";
 int modelDimensions = 1536;
 
 string indexName = "hotel";
@@ -47,7 +47,8 @@ SearchIndex searchIndex = new(indexName)
                 {
                     ResourceUri = new Uri(Environment.GetEnvironmentVariable("OPENAI_ENDPOINT")),
                     ApiKey = Environment.GetEnvironmentVariable("OPENAI_KEY"),
-                    DeploymentId = modelName,
+                    DeploymentId = deploymentId,
+                    ModelName = AzureOpenAIModelName.TextEmbeddingAda002
                 }
             }
         }
@@ -94,7 +95,7 @@ public static ReadOnlyMemory<float> GetEmbeddings(string input)
     AzureKeyCredential credential = new AzureKeyCredential(key);
 
     OpenAIClient openAIClient = new OpenAIClient(endpoint, credential);
-    EmbeddingsOptions embeddingsOptions = new("EmbeddingsModelName", new string[] { input });
+    EmbeddingsOptions embeddingsOptions = new("text-embedding-ada-002", new string[] { input });
 
     Embeddings embeddings = openAIClient.GetEmbeddings(embeddingsOptions);
     return embeddings.Data[0].Embedding;
