@@ -141,6 +141,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// due to this isssue https://github.com/Azure/azure-sdk-for-net/issues/43813, and this method doesn't work,so just throw Exception.
         [Obsolete("This method is obsolete and will be removed in a future release, please use `GetHybridConnectionsAsync` instead", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Task<Response<HybridConnectionData>> GetAllHybridConnectionDataAsync(CancellationToken cancellationToken = default)
@@ -163,6 +164,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        ///due to this isssue https://github.com/Azure/azure-sdk-for-net/issues/43813, and this method doesn't work,so just throw Exception.
         [Obsolete("This method is obsolete and will be removed in a future release, please use `GetHybridConnectionsAsync` instead", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<HybridConnectionData> GetAllHybridConnectionData(CancellationToken cancellationToken = default)
