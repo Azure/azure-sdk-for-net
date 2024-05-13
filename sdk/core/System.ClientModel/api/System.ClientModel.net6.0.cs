@@ -33,7 +33,7 @@ namespace System.ClientModel
     public abstract partial class ClientPage<T> : System.ClientModel.ResultCollection<T>
     {
         public string? ContinuationToken;
-        protected ClientPage() { }
+        public ClientPage(System.ClientModel.Primitives.PipelineResponse response) { }
     }
     public partial class ClientResult
     {
