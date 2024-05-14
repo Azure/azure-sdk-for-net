@@ -42,10 +42,9 @@ namespace Azure.Identity.Tests
                 Condition = new Condition { UriRegex = ".*/token([?].*)?$" },
                 Value = "=" + SanitizeValue
             });
-            HeaderTransforms.Add(new HeaderTransform(
-                "WWW-Authenticate",
-                $"Basic realm={Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "mock-arc-mi-key.key")}")
+            HeaderTransforms.Add(new HeaderTransform("WWW-Authenticate")
             {
+                Value = $"Basic realm={Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "mock-arc-mi-key.key")}",
                 Condition = new Condition
                 {
                     ResponseHeader = new HeaderCondition
