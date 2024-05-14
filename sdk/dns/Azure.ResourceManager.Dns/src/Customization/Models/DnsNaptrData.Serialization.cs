@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Dns
                 writer.WritePropertyName("targetResource");
                 JsonSerializer.Serialize(writer, TargetResource);
             }
-            if (Optional.IsCollectionDefined(DnsNaptrRecorNaptr))
+            if (Optional.IsCollectionDefined(DnsNaptrRecords))
             {
                 writer.WritePropertyName("NaptrRecords");
                 writer.WriteStartArray();
