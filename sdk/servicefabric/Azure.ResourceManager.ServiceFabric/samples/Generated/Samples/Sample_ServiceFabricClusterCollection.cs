@@ -7,6 +7,7 @@
 
 using System;
 using System.Threading.Tasks;
+using System.Xml;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
@@ -207,7 +208,7 @@ new ClusterServerCertificateCommonName("abc.com",BinaryData.FromString("\"125992
 },
                     X509StoreName = ClusterCertificateStoreName.My,
                 },
-                UpgradeDescription = new ClusterUpgradePolicy(TimeSpan.Parse("00:10:00"), TimeSpan.Parse("00:00:30"), TimeSpan.Parse("00:00:30"), TimeSpan.Parse("00:05:00"), TimeSpan.Parse("01:00:00"), TimeSpan.Parse("00:15:00"), new ClusterHealthPolicy()
+                UpgradeDescription = new ClusterUpgradePolicy(XmlConvert.ToTimeSpan("00:10:00"), XmlConvert.ToTimeSpan("00:00:30"), XmlConvert.ToTimeSpan("00:00:30"), XmlConvert.ToTimeSpan("00:05:00"), XmlConvert.ToTimeSpan("01:00:00"), XmlConvert.ToTimeSpan("00:15:00"), new ClusterHealthPolicy()
                 {
                     MaxPercentUnhealthyNodes = 0,
                     MaxPercentUnhealthyApplications = 0,
