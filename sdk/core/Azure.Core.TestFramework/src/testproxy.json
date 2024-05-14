@@ -692,7 +692,7 @@
         "key": {
           "type": "string"
         },
-        "value": {
+        "sanitizedValue": {
           "type": "string"
         },
         "condition": {
@@ -700,8 +700,7 @@
         }
       },
       "required": [
-        "key",
-        "value"
+        "key"
       ]
     },
     "BodyKeySanitizer": {
@@ -711,7 +710,7 @@
         "jsonPath": {
           "type": "string"
         },
-        "value": {
+        "sanitizedValue": {
           "type": "string"
         },
         "regex": {
@@ -722,7 +721,7 @@
         }
       },
       "required": [
-        "value"
+        "jsonPath"
       ]
     },
     "BodyRegexSanitizer": {
@@ -732,7 +731,7 @@
         "regex": {
           "type": "string"
         },
-        "value": {
+        "sanitizedValue": {
           "type": "string"
         },
         "groupForReplace": {
@@ -743,8 +742,7 @@
         }
       },
       "required": [
-        "regex",
-        "value"
+        "regex"
       ]
     },
     "HeaderRegexSanitizer": {
@@ -754,7 +752,7 @@
         "key": {
           "type": "string"
         },
-        "value": {
+        "sanitizedValue": {
           "type": "string"
         },
         "regex": {
@@ -765,8 +763,7 @@
         }
       },
       "required": [
-        "key",
-        "value"
+        "key"
       ]
     },
     "UriRegexSanitizer": {
@@ -776,7 +773,7 @@
         "regex": {
           "type": "string"
         },
-        "value": {
+        "sanitizedValue": {
           "type": "string"
         },
         "groupForReplace": {
@@ -784,8 +781,7 @@
         }
       },
       "required": [
-        "regex",
-        "value"
+        "regex"
       ]
     },
     "Condition": {
