@@ -64,10 +64,11 @@ namespace Azure.ResourceManager.Monitor
         /// Please note <see cref="MetricAlertCriteria"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MetricAlertMultipleResourceMultipleMetricCriteria"/>, <see cref="MetricAlertSingleResourceMultipleMetricCriteria"/> and <see cref="WebtestLocationAvailabilityCriteria"/>.
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scopes"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scopes"/> or <paramref name="criteria"/> is null. </exception>
         public MetricAlertData(AzureLocation location, int severity, bool isEnabled, IEnumerable<string> scopes, TimeSpan evaluationFrequency, TimeSpan windowSize, MetricAlertCriteria criteria) : base(location)
         {
             Argument.AssertNotNull(scopes, nameof(scopes));
+            Argument.AssertNotNull(criteria, nameof(criteria));
 
             Severity = severity;
             IsEnabled = isEnabled;
