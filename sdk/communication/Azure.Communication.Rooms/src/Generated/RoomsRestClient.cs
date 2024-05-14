@@ -49,7 +49,7 @@ namespace Azure.Communication.Rooms
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Repeatability-Request-ID", Guid.NewGuid());
-            request.Headers.Add("Repeatability-First-Sent", DateTimeOffset.Now, "R");
+            request.Headers.Add("Repeatability-First-Sent", DateTimeOffset.Now, "O");
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             CreateRoomRequest createRoomRequest = new CreateRoomRequest()
