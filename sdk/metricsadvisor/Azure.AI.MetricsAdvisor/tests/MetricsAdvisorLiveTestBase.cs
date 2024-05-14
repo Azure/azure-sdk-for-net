@@ -17,6 +17,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         protected const string TempDataFeedMetricName = "metric";
         protected const string TempDataFeedDimensionNameA = "dimensionA";
         protected const string TempDataFeedDimensionNameB = "dimensionB";
+        protected static string EmptyGuid = Guid.Empty.ToString();
 
         public MetricsAdvisorLiveTestBase(bool isAsync, RecordedTestMode? mode = default) : base(isAsync, mode)
         {

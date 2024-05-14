@@ -182,18 +182,15 @@ namespace Azure.Provisioning
             GetAllOutputsRecursive(this, outputsToWrite, false);
             foreach (var output in outputsToWrite)
             {
-                string value;
-                if (output.IsLiteral || ReferenceEquals(this, output.Resource.ModuleScope))
-                {
-                    value = output.IsLiteral ? $"'{output.Value}'" : output.Value;
-                }
-                else
-                {
-                    value = $"{output.Resource.ModuleScope!.Name}.outputs.{output.Name}";
-                }
-                string name = output.Name;
-                stream.WriteLine($"output {name} string = {value}");
+                stream.WriteLine(GetOutputString(output));
             }
+        }
+
+        private string GetOutputString(Output output)
+        {
+            string value = ReferenceEquals(this, output.Resource.ModuleScope) ? output.Value : $"{output.Resource.ModuleScope!.Name}.outputs.{output.Name}";
+
+            return $"output {output.Name} {output.OutputType.ToString().ToLower()} = {value}";
         }
 
         private void GetAllOutputsRecursive(IConstruct construct, HashSet<Output> visited, bool isChild)
@@ -221,17 +218,49 @@ namespace Azure.Provisioning
                 {
                     continue;
                 }
-                string defaultValue =
-                    parameter.DefaultValue is null ?
-                        string.Empty :
-                        parameter.IsExpression ? $" = {parameter.DefaultValue}" : $" = '{parameter.DefaultValue}'";
 
                 if (parameter.IsSecure)
+                {
                     stream.WriteLine($"@secure()");
+                }
 
                 stream.WriteLine($"@description('{parameter.Description}')");
-                stream.WriteLine($"param {parameter.Name} string{defaultValue}{Environment.NewLine}");
+                stream.WriteLine($"{GetParameterDeclaration(parameter)}{Environment.NewLine}");
             }
+        }
+
+        private string GetParameterDeclaration(Parameter parameter)
+        {
+            string declaration = $"param {parameter.Name} {parameter.ParameterType.ToString().ToLower()}";
+            string value;
+
+            if (parameter.DefaultValue is null)
+            {
+                value = string.Empty;
+            }
+            else if (parameter.IsExpression)
+            {
+                value = parameter.DefaultValue.ToString()!;
+            }
+            else
+            {
+                value = parameter.ParameterType switch
+                {
+                    BicepType.Bool => parameter.DefaultValue.ToString()!.ToLower(),
+                    BicepType.Int => parameter.DefaultValue.ToString()!,
+                    BicepType.Array => parameter.DefaultValue.ToString()!,
+                    BicepType.Object => parameter.DefaultValue.ToString()!,
+                    BicepType.String => $"'{parameter.DefaultValue}'",
+                    _ => throw new NotSupportedException("Invalid parameter kind.")
+                };
+            }
+
+            if (!string.IsNullOrEmpty(value))
+            {
+                declaration += $" = {value}";
+            }
+
+            return declaration;
         }
 
         private bool ShouldExposeParameter(Parameter parameter, HashSet<Output> outputs)

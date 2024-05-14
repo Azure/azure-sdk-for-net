@@ -447,7 +447,7 @@ namespace Azure.Storage.Files.Shares.Tests
             var smbProperties = new FileSmbProperties
             {
                 FilePermissionKey = createPermissionResponse.Value.FilePermissionKey,
-                FileAttributes = ShareExtensions.ToFileAttributes("Archive|ReadOnly"),
+                FileAttributes = ShareModelExtensions.ToFileAttributes("Archive|ReadOnly"),
                 FileCreatedOn = new DateTimeOffset(2019, 8, 15, 5, 15, 25, 60, TimeSpan.Zero),
                 FileLastWrittenOn = new DateTimeOffset(2019, 8, 26, 5, 15, 25, 60, TimeSpan.Zero),
             };
@@ -1385,7 +1385,7 @@ namespace Azure.Storage.Files.Shares.Tests
             var smbProperties = new FileSmbProperties
             {
                 FilePermissionKey = createPermissionResponse.Value.FilePermissionKey,
-                FileAttributes = ShareExtensions.ToFileAttributes("Archive|ReadOnly"),
+                FileAttributes = ShareModelExtensions.ToFileAttributes("Archive|ReadOnly"),
                 FileCreatedOn = new DateTimeOffset(2019, 8, 15, 5, 15, 25, 60, TimeSpan.Zero),
                 FileLastWrittenOn = new DateTimeOffset(2019, 8, 26, 5, 15, 25, 60, TimeSpan.Zero),
             };
@@ -1733,7 +1733,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             FileSmbProperties smbProperties = new FileSmbProperties
             {
-                FileAttributes = ShareExtensions.ToFileAttributes("Archive|ReadOnly"),
+                FileAttributes = ShareModelExtensions.ToFileAttributes("Archive|ReadOnly"),
                 FileCreatedOn = new DateTimeOffset(2019, 8, 15, 5, 15, 25, 60, TimeSpan.Zero),
                 FileLastWrittenOn = new DateTimeOffset(2019, 8, 26, 5, 15, 25, 60, TimeSpan.Zero)
             };
@@ -1827,7 +1827,7 @@ namespace Azure.Storage.Files.Shares.Tests
             FileSmbProperties smbProperties = new FileSmbProperties
             {
                 FilePermissionKey = createPermissionResponse.Value.FilePermissionKey,
-                FileAttributes = ShareExtensions.ToFileAttributes("Archive|ReadOnly"),
+                FileAttributes = ShareModelExtensions.ToFileAttributes("Archive|ReadOnly"),
                 FileCreatedOn = new DateTimeOffset(2019, 8, 15, 5, 15, 25, 60, TimeSpan.Zero),
                 FileLastWrittenOn = new DateTimeOffset(2019, 8, 26, 5, 15, 25, 60, TimeSpan.Zero)
             };
@@ -2111,7 +2111,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 SmbPropertiesToCopy = CopyableFileSmbProperties.FileAttributes,
                 SmbProperties = new FileSmbProperties
                 {
-                    FileAttributes = ShareExtensions.ToFileAttributes("Archive|ReadOnly")
+                    FileAttributes = ShareModelExtensions.ToFileAttributes("Archive|ReadOnly")
                 }
             };
 
@@ -5994,7 +5994,7 @@ namespace Azure.Storage.Files.Shares.Tests
             FileSmbProperties smbProperties = new FileSmbProperties
             {
                 FilePermissionKey = createPermissionResponse.Value.FilePermissionKey,
-                FileAttributes = ShareExtensions.ToFileAttributes("Archive|ReadOnly"),
+                FileAttributes = ShareModelExtensions.ToFileAttributes("Archive|ReadOnly"),
                 FileCreatedOn = new DateTimeOffset(2019, 8, 15, 5, 15, 25, 60, TimeSpan.Zero),
                 FileLastWrittenOn = new DateTimeOffset(2019, 8, 26, 5, 15, 25, 60, TimeSpan.Zero),
                 FileChangedOn = new DateTimeOffset(2010, 8, 26, 5, 15, 21, 60, TimeSpan.Zero),

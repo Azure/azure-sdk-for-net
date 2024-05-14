@@ -61,6 +61,7 @@ namespace Azure.Search.Documents.Tests
                 {
                     (SearchFieldDataType.String, nameof(ReflectableModel.Text)),
                     (SearchFieldDataType.SByte, nameof(ReflectableModel.SByte)),
+                    (SearchFieldDataType.Byte, nameof(ReflectableModel.Byte)),
                     (SearchFieldDataType.Int16, nameof(ReflectableModel.Short)),
                     (SearchFieldDataType.Int32, nameof(ReflectableModel.Id)),
                     (SearchFieldDataType.Int64, nameof(ReflectableModel.BigNumber)),
@@ -98,6 +99,11 @@ namespace Azure.Search.Documents.Tests
                     (SearchFieldDataType.SByte, nameof(ReflectableModel.SByteIEnumerable)),
                     (SearchFieldDataType.SByte, nameof(ReflectableModel.SByteList)),
                     (SearchFieldDataType.SByte, nameof(ReflectableModel.SByteICollection)),
+                    (SearchFieldDataType.Byte, nameof(ReflectableModel.ByteArray)),
+                    (SearchFieldDataType.Byte, nameof(ReflectableModel.ByteIList)),
+                    (SearchFieldDataType.Byte, nameof(ReflectableModel.ByteIEnumerable)),
+                    (SearchFieldDataType.Byte, nameof(ReflectableModel.ByteList)),
+                    (SearchFieldDataType.Byte, nameof(ReflectableModel.ByteICollection)),
                     (SearchFieldDataType.Int16, nameof(ReflectableModel.ShortArray)),
                     (SearchFieldDataType.Int16, nameof(ReflectableModel.ShortIList)),
                     (SearchFieldDataType.Int16, nameof(ReflectableModel.ShortIEnumerable)),
@@ -506,6 +512,7 @@ namespace Azure.Search.Documents.Tests
                         Assert.AreEqual(1536, field.VectorSearchDimensions);
                         Assert.AreEqual("test-config", field.VectorSearchProfileName);
                         Assert.IsTrue(field.IsStored);
+                        Assert.AreEqual(VectorEncodingFormat.PackedBit, field.VectorEncodingFormat);
                         Assert.IsFalse(field.IsHidden);
                         break;
 
@@ -611,7 +618,7 @@ namespace Azure.Search.Documents.Tests
             public string ID { get; set; }
 
             [SimpleField(IsFilterable = true)]
-            public IEnumerable<byte> Buffer { get; set; }
+            public IEnumerable<char> Buffer { get; set; }
         }
 
         private class ModelWithUnsupportedCollectionType
@@ -690,7 +697,7 @@ namespace Azure.Search.Documents.Tests
             [SimpleField(IsKey = true)]
             public string ID { get; set; }
 
-            [VectorSearchField(VectorSearchDimensions = 1536, VectorSearchProfileName = "test-config", IsStored = true)]
+            [VectorSearchField(VectorSearchDimensions = 1536, VectorSearchProfileName = "test-config", IsStored = true, VectorEncodingFormat = VectorEncodingFormat.Values.PackedBit)]
             public IReadOnlyList<float> TitleVector { get; set; }
         }
     }
