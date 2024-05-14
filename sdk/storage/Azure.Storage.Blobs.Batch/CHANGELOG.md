@@ -1,6 +1,6 @@
 # Release History
 
-## 12.17.0 (2024-05-13)
+## 12.17.0 (2024-05-14)
 - Includes all features from 12.17.0-beta.1 and 12.17.0-beta.2.
 
 ## 12.17.0-beta.2 (2024-04-15)
