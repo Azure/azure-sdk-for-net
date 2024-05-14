@@ -1,14 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Compute.Tests.Helpers;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests
@@ -32,7 +31,6 @@ namespace Azure.ResourceManager.Compute.Tests
 
         [TestCase]
         [RecordedTest]
-        [LiveOnly(Reason = "PrincipalId cannot be stored in test recordings.")]
         public async Task CreateVmWithSystemAssignedIdentity()
         {
             var collection = await GetVirtualMachineCollectionAsync();
@@ -51,7 +49,6 @@ namespace Azure.ResourceManager.Compute.Tests
 
         [TestCase]
         [RecordedTest]
-        [LiveOnly(Reason = "PrincipalId cannot be stored in test recordings.")]
         public async Task CreateVmWithUserAssignedIdentity()
         {
             var collection = await GetVirtualMachineCollectionAsync();
@@ -72,7 +69,6 @@ namespace Azure.ResourceManager.Compute.Tests
 
         [TestCase]
         [RecordedTest]
-        [LiveOnly(Reason = "PrincipalId cannot be stored in test recordings.")]
         public async Task CreateVmWithSystemAndUserAssignedIdentity()
         {
             var collection = await GetVirtualMachineCollectionAsync();
@@ -93,7 +89,6 @@ namespace Azure.ResourceManager.Compute.Tests
 
         [Test]
         [RecordedTest]
-        [LiveOnly(Reason = "PrincipalId cannot be stored in test recordings.")]
         public async Task UpdateVmIdentityFromNoneToSystem()
         {
             var collection = await GetVirtualMachineCollectionAsync();
@@ -119,7 +114,6 @@ namespace Azure.ResourceManager.Compute.Tests
 
         [Test]
         [RecordedTest]
-        [LiveOnly(Reason = "PrincipalId cannot be stored in test recordings.")]
         public async Task UpdateVmIdentityFromNoneToUser()
         {
             var collection = await GetVirtualMachineCollectionAsync();
@@ -148,7 +142,6 @@ namespace Azure.ResourceManager.Compute.Tests
 
         [Test]
         [RecordedTest]
-        [LiveOnly(Reason = "PrincipalId cannot be stored in test recordings.")]
         public async Task UpdateVmIdentityFromNoneToSystemAndUser()
         {
             var collection = await GetVirtualMachineCollectionAsync();
@@ -177,7 +170,6 @@ namespace Azure.ResourceManager.Compute.Tests
 
         [Test]
         [RecordedTest]
-        [LiveOnly(Reason = "PrincipalId cannot be stored in test recordings.")]
         public async Task UpdateVmIdentityFromSystemToNone()
         {
             var collection = await GetVirtualMachineCollectionAsync();
@@ -205,7 +197,6 @@ namespace Azure.ResourceManager.Compute.Tests
 
         [Test]
         [RecordedTest]
-        [LiveOnly(Reason = "PrincipalId cannot be stored in test recordings.")]
         public async Task UpdateVmIdentityFromSystemToUser()
         {
             var collection = await GetVirtualMachineCollectionAsync();
@@ -238,7 +229,6 @@ namespace Azure.ResourceManager.Compute.Tests
 
         [Test]
         [RecordedTest]
-        [LiveOnly(Reason = "PrincipalId cannot be stored in test recordings.")]
         public async Task UpdateVmIdentityFromSystemToSystemUser()
         {
             var collection = await GetVirtualMachineCollectionAsync();
@@ -271,7 +261,6 @@ namespace Azure.ResourceManager.Compute.Tests
 
         [Test]
         [RecordedTest]
-        [LiveOnly(Reason = "PrincipalId cannot be stored in test recordings.")]
         public async Task UpdateVmIdentityFromUserToNone()
         {
             var collection = await GetVirtualMachineCollectionAsync();
@@ -301,7 +290,6 @@ namespace Azure.ResourceManager.Compute.Tests
 
         [Test]
         [RecordedTest]
-        [LiveOnly(Reason = "PrincipalId cannot be stored in test recordings.")]
         public async Task UpdateVmIdentityFromUserToSystem()
         {
             var collection = await GetVirtualMachineCollectionAsync();
@@ -333,7 +321,6 @@ namespace Azure.ResourceManager.Compute.Tests
 
         [Test]
         [RecordedTest]
-        [LiveOnly(Reason = "PrincipalId cannot be stored in test recordings.")]
         public async Task UpdateVmIdentityFromUserToSystemUser()
         {
             var collection = await GetVirtualMachineCollectionAsync();
@@ -366,7 +353,6 @@ namespace Azure.ResourceManager.Compute.Tests
 
         [Test]
         [RecordedTest]
-        [LiveOnly(Reason = "PrincipalId cannot be stored in test recordings.")]
         public async Task UpdateVmIdentityFromUserToTwoUsers()
         {
             var collection = await GetVirtualMachineCollectionAsync();
@@ -435,7 +421,6 @@ namespace Azure.ResourceManager.Compute.Tests
 
         [Test]
         [RecordedTest]
-        [LiveOnly(Reason = "PrincipalId cannot be stored in test recordings.")]
         public async Task UpdateVmIdentityFromTwoUsersToOneUser()
         {
             var collection = await GetVirtualMachineCollectionAsync();
@@ -474,7 +459,6 @@ namespace Azure.ResourceManager.Compute.Tests
 
         [Test]
         [RecordedTest]
-        [LiveOnly(Reason = "PrincipalId cannot be stored in test recordings.")]
         public async Task UpdateVmIdentityFromSystemUserToNone()
         {
             var collection = await GetVirtualMachineCollectionAsync();
@@ -504,7 +488,6 @@ namespace Azure.ResourceManager.Compute.Tests
 
         [Test]
         [RecordedTest]
-        [LiveOnly(Reason = "PrincipalId cannot be stored in test recordings.")]
         public async Task UpdateVmIdentityFromSystemUserToSystem()
         {
             var collection = await GetVirtualMachineCollectionAsync();
@@ -536,7 +519,6 @@ namespace Azure.ResourceManager.Compute.Tests
 
         [Test]
         [RecordedTest]
-        [LiveOnly(Reason = "PrincipalId cannot be stored in test recordings.")]
         public async Task UpdateVmIdentityFromSystemUserToUser()
         {
             var collection = await GetVirtualMachineCollectionAsync();

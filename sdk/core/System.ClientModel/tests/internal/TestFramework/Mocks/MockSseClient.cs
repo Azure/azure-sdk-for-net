@@ -21,10 +21,27 @@ namespace ClientModel.Tests.Internal.Mocks;
 // will no longer be needed.
 public class MockSseClient
 {
+    // Note: raw string literal removes \n from final line.
+    internal const string DefaultMockContent = """
+        event: event.0
+        data: { "IntValue": 0, "StringValue": "0" }
+
+        event: event.1
+        data: { "IntValue": 1, "StringValue": "1" }
+
+        event: event.2
+        data: { "IntValue": 2, "StringValue": "2" }
+
+        event: done
+        data: [DONE]
+
+
+        """;
+
     public bool ProtocolMethodCalled { get; private set; }
 
     // mock convenience method
-    public virtual AsyncResultCollection<MockJsonModel> GetModelsStreamingAsync(string content)
+    public virtual AsyncResultCollection<MockJsonModel> GetModelsStreamingAsync(string content = DefaultMockContent)
     {
         return new AsyncMockJsonModelCollection(content, GetModelsStreamingAsync);
     }
@@ -114,7 +131,7 @@ public class MockSseClient
                     }
 
                     BinaryData data = BinaryData.FromString(_events.Current.Data);
-                    MockJsonModel? model = ModelReaderWriter.Read<MockJsonModel>(data) ??
+                    MockJsonModel model = ModelReaderWriter.Read<MockJsonModel>(data) ??
                         throw new JsonException($"Failed to deserialize expected type MockJsonModel from sse data payload '{_events.Current.Data}'.");
 
                     _current = model;

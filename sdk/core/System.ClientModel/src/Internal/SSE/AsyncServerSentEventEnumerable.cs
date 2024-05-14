@@ -17,30 +17,45 @@ internal class AsyncServerSentEventEnumerable : IAsyncEnumerable<ServerSentEvent
 
     public AsyncServerSentEventEnumerable(Stream contentStream)
     {
+        Argument.AssertNotNull(contentStream, nameof(contentStream));
+
         _contentStream = contentStream;
+
+        LastEventId = string.Empty;
+        ReconnectionInterval = Timeout.InfiniteTimeSpan;
     }
+
+    public string LastEventId { get; private set; }
+
+    public TimeSpan ReconnectionInterval { get; private set; }
 
     public IAsyncEnumerator<ServerSentEvent> GetAsyncEnumerator(CancellationToken cancellationToken = default)
     {
-        return new AsyncServerSentEventEnumerator(_contentStream, cancellationToken);
+        return new AsyncServerSentEventEnumerator(_contentStream, this, cancellationToken);
     }
 
     private sealed class AsyncServerSentEventEnumerator : IAsyncEnumerator<ServerSentEvent>
     {
-        private readonly CancellationToken _cancellationToken;
         private readonly ServerSentEventReader _reader;
+        private readonly AsyncServerSentEventEnumerable _enumerable;
+        private readonly CancellationToken _cancellationToken;
 
         public ServerSentEvent Current { get; private set; }
 
-        public AsyncServerSentEventEnumerator(Stream contentStream, CancellationToken cancellationToken = default)
+        public AsyncServerSentEventEnumerator(Stream contentStream,
+            AsyncServerSentEventEnumerable enumerable,
+            CancellationToken cancellationToken = default)
         {
             _reader = new(contentStream);
+            _enumerable = enumerable;
             _cancellationToken = cancellationToken;
         }
 
         public async ValueTask<bool> MoveNextAsync()
         {
             ServerSentEvent? nextEvent = await _reader.TryGetNextEventAsync(_cancellationToken).ConfigureAwait(false);
+            _enumerable.LastEventId = _reader.LastEventId;
+            _enumerable.ReconnectionInterval = _reader.ReconnectionInterval;
 
             if (nextEvent.HasValue)
             {

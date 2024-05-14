@@ -24,7 +24,8 @@ internal class ExpectContinueOnThrottlePolicy : HttpPipelineSynchronousPolicy
     public override void OnSendingRequest(HttpMessage message)
     {
         if (message.Request.Content == null ||
-            (message.Request.Content.TryComputeLength(out long contentLength) && contentLength < ContentLengthThreshold))
+            (message.Request.Content.TryComputeLength(out long contentLength) && contentLength < ContentLengthThreshold) ||
+            CompatSwitches.DisableExpectContinueHeader)
         {
             return;
         }

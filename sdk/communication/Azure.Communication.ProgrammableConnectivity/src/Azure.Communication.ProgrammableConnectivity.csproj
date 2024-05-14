@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Description>This is the ProgrammableConnectivity client library for developing .NET applications interacting with Azure Programmable Connectivity Gateways.</Description>
     <AssemblyTitle>Azure SDK Code Generation ProgrammableConnectivity for Azure Data Plane</AssemblyTitle>
-    <Version>1.0.0-beta.1</Version>
+    <Version>1.0.0-beta.2</Version>
     <PackageTags>Azure ProgrammableConnectivity</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>

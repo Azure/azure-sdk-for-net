@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using ClientModel.Tests.Internal.Mocks;
 using NUnit.Framework;
 
 namespace System.ClientModel.Tests.Convenience;
@@ -15,7 +16,7 @@ public class AsyncServerSentEventEnumerableTests
     [Test]
     public async Task EnumeratesEvents()
     {
-        using Stream contentStream = BinaryData.FromString(_mockContent).ToStream();
+        using Stream contentStream = BinaryData.FromString(MockSseClient.DefaultMockContent).ToStream();
         AsyncServerSentEventEnumerable enumerable = new(contentStream);
 
         List<ServerSentEvent> events = new();
@@ -30,7 +31,7 @@ public class AsyncServerSentEventEnumerableTests
         for (int i = 0; i < 3; i++)
         {
             Assert.AreEqual($"event.{i}", events[i].EventType);
-            Assert.AreEqual($"{{ \"id\": \"{i}\", \"object\": {i} }}", events[i].Data);
+            Assert.AreEqual($"{{ \"IntValue\": {i}, \"StringValue\": \"{i}\" }}", events[i].Data);
         }
     }
 
@@ -39,30 +40,10 @@ public class AsyncServerSentEventEnumerableTests
     {
         CancellationToken token = new(true);
 
-        using Stream contentStream = BinaryData.FromString(_mockContent).ToStream();
+        using Stream contentStream = BinaryData.FromString(MockSseClient.DefaultMockContent).ToStream();
         AsyncServerSentEventEnumerable enumerable = new(contentStream);
         IAsyncEnumerator<ServerSentEvent> enumerator = enumerable.GetAsyncEnumerator(token);
 
         Assert.ThrowsAsync<OperationCanceledException>(async () => await enumerator.MoveNextAsync());
     }
-
-    #region Helpers
-
-    private readonly string _mockContent = """
-        event: event.0
-        data: { "id": "0", "object": 0 }
-
-        event: event.1
-        data: { "id": "1", "object": 1 }
-
-        event: event.2
-        data: { "id": "2", "object": 2 }
-
-        event: done
-        data: [DONE]
-
-
-        """;
-
-    #endregion
 }
