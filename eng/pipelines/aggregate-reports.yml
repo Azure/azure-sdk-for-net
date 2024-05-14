@@ -17,142 +17,142 @@ variables:
   - template: templates/variables/globals.yml
 
 stages:
-  # - stage: AggregateReports
-  #   displayName: Aggregate Reports
+  - stage: AggregateReports
+    displayName: Aggregate Reports
 
-  #   jobs:
-  #     - job: GenerateReports
-  #       timeoutInMinutes: 120
-  #       steps:
-  #         - template: /eng/pipelines/templates/steps/install-dotnet.yml
+    jobs:
+      - job: GenerateReports
+        timeoutInMinutes: 120
+        steps:
+          - template: /eng/pipelines/templates/steps/install-dotnet.yml
 
-  #         - task: PowerShell@2
-  #           displayName: Download Latest Dev Packages
-  #           inputs:
-  #             pwsh: true
-  #             filePath: 'eng/scripts/DownloadDevPackages.ps1'
-  #             arguments: >
-  #               -WorkingDirectory '$(Build.ArtifactStagingDirectory)'
-  #               -NupkgFilesDestination 'nupkgFiles'
+          - task: PowerShell@2
+            displayName: Download Latest Dev Packages
+            inputs:
+              pwsh: true
+              filePath: 'eng/scripts/DownloadDevPackages.ps1'
+              arguments: >
+                -WorkingDirectory '$(Build.ArtifactStagingDirectory)'
+                -NupkgFilesDestination 'nupkgFiles'
 
-  #         - pwsh: |
-  #             ."eng/common/spelling/Invoke-Cspell.ps1" `
-  #               -CSpellConfigPath "./.vscode/cspell.json" `
-  #               -ScanGlobs "sdk/*/*/api/*.cs"
-  #           displayName: Check spelling of public API surface
-  #           # Spelling errors in public api surface are not blockers yet but will
-  #           # become blockers when this is rolled out to all services. For now, turn
-  #           # the pipeline yellow if spelling errors are detected but do not block.
-  #           continueOnError: true
+          - pwsh: |
+              ."eng/common/spelling/Invoke-Cspell.ps1" `
+                -CSpellConfigPath "./.vscode/cspell.json" `
+                -ScanGlobs "sdk/*/*/api/*.cs"
+            displayName: Check spelling of public API surface
+            # Spelling errors in public api surface are not blockers yet but will
+            # become blockers when this is rolled out to all services. For now, turn
+            # the pipeline yellow if spelling errors are detected but do not block.
+            continueOnError: true
 
-  #         - template: /eng/common/pipelines/templates/steps/verify-links.yml
-  #           parameters:
-  #             Directory: ""
-  #             CheckLinkGuidance: $true
+          - template: /eng/common/pipelines/templates/steps/verify-links.yml
+            parameters:
+              Directory: ""
+              CheckLinkGuidance: $true
 
-  #         - pwsh: |
-  #             New-Item -Path '$(Build.ArtifactStagingDirectory)' -Name 'reports' -ItemType 'directory'
-  #           displayName: Create Directory for Aggregate Reports
+          - pwsh: |
+              New-Item -Path '$(Build.ArtifactStagingDirectory)' -Name 'reports' -ItemType 'directory'
+            displayName: Create Directory for Aggregate Reports
 
-  #         - task: PowerShell@2
-  #           displayName: Generate Dependency Report
-  #           inputs:
-  #             pwsh: true
-  #             filePath: 'eng/scripts/dependencies/AnalyzeDeps.ps1'
-  #             arguments: >
-  #               -PackagesPath '$(Build.ArtifactStagingDirectory)/nupkgFiles'
-  #               -LockfilePath '$(Build.SourcesDirectory)/eng/Packages.Data.props'
-  #               -OutPath '$(Build.ArtifactStagingDirectory)/reports/dependencies.html'
-  #               -DumpPath '$(Build.ArtifactStagingDirectory)/reports'
+          - task: PowerShell@2
+            displayName: Generate Dependency Report
+            inputs:
+              pwsh: true
+              filePath: 'eng/scripts/dependencies/AnalyzeDeps.ps1'
+              arguments: >
+                -PackagesPath '$(Build.ArtifactStagingDirectory)/nupkgFiles'
+                -LockfilePath '$(Build.SourcesDirectory)/eng/Packages.Data.props'
+                -OutPath '$(Build.ArtifactStagingDirectory)/reports/dependencies.html'
+                -DumpPath '$(Build.ArtifactStagingDirectory)/reports'
 
-  #         - task: PowerShell@2
-  #           displayName: 'Generate azure-sdk.deps.json'
-  #           inputs:
-  #             pwsh: true
-  #             filePath: 'eng/scripts/dependencies/generate-deps.ps1'
-  #             arguments: >
-  #               -PackagesPath '$(Build.ArtifactStagingDirectory)/nupkgFiles'
-  #               -DepsOutputFile '$(Build.ArtifactStagingDirectory)/reports/azure-sdk.deps.json'
-  #               -ProjectRefPath '$(Build.ArtifactStagingDirectory)/reports'
+          - task: PowerShell@2
+            displayName: 'Generate azure-sdk.deps.json'
+            inputs:
+              pwsh: true
+              filePath: 'eng/scripts/dependencies/generate-deps.ps1'
+              arguments: >
+                -PackagesPath '$(Build.ArtifactStagingDirectory)/nupkgFiles'
+                -DepsOutputFile '$(Build.ArtifactStagingDirectory)/reports/azure-sdk.deps.json'
+                -ProjectRefPath '$(Build.ArtifactStagingDirectory)/reports'
 
-  #         - task: PowerShell@2
-  #           displayName: 'Validate dependencies with pwsh servicing'
-  #           inputs:
-  #             pwsh: true
-  #             filePath: 'eng/scripts/dependencies/compare-deps-files.ps1'
-  #             arguments: >
-  #               -PSDepsFile 'https://aka.ms/ps-deps-servicing'
-  #               -AzSdkDepsFile '$(Build.ArtifactStagingDirectory)/reports/azure-sdk.deps.json'
+          - task: PowerShell@2
+            displayName: 'Validate dependencies with pwsh servicing'
+            inputs:
+              pwsh: true
+              filePath: 'eng/scripts/dependencies/compare-deps-files.ps1'
+              arguments: >
+                -PSDepsFile 'https://aka.ms/ps-deps-servicing'
+                -AzSdkDepsFile '$(Build.ArtifactStagingDirectory)/reports/azure-sdk.deps.json'
 
-  #         - task: PowerShell@2
-  #           displayName: 'Validate dependencies with pwsh stable'
-  #           inputs:
-  #             pwsh: true
-  #             filePath: 'eng/scripts/dependencies/compare-deps-files.ps1'
-  #             arguments: >
-  #               -PSDepsFile 'https://aka.ms/ps-deps-stable'
-  #               -AzSdkDepsFile '$(Build.ArtifactStagingDirectory)/reports/azure-sdk.deps.json'
+          - task: PowerShell@2
+            displayName: 'Validate dependencies with pwsh stable'
+            inputs:
+              pwsh: true
+              filePath: 'eng/scripts/dependencies/compare-deps-files.ps1'
+              arguments: >
+                -PSDepsFile 'https://aka.ms/ps-deps-stable'
+                -AzSdkDepsFile '$(Build.ArtifactStagingDirectory)/reports/azure-sdk.deps.json'
 
-  #         - task: PowerShell@2
-  #           displayName: 'Validate dependencies with pwsh preview'
-  #           inputs:
-  #             pwsh: true
-  #             filePath: 'eng/scripts/dependencies/compare-deps-files.ps1'
-  #             arguments: >
-  #               -PSDepsFile 'https://aka.ms/ps-deps-preview'
-  #               -AzSdkDepsFile '$(Build.ArtifactStagingDirectory)/reports/azure-sdk.deps.json'
+          - task: PowerShell@2
+            displayName: 'Validate dependencies with pwsh preview'
+            inputs:
+              pwsh: true
+              filePath: 'eng/scripts/dependencies/compare-deps-files.ps1'
+              arguments: >
+                -PSDepsFile 'https://aka.ms/ps-deps-preview'
+                -AzSdkDepsFile '$(Build.ArtifactStagingDirectory)/reports/azure-sdk.deps.json'
 
-  #         - task: PublishPipelineArtifact@1
-  #           displayName: 'Publish Report Artifacts'
-  #           inputs:
-  #             artifactName: reports
-  #             path: '$(Build.ArtifactStagingDirectory)/reports'
+          - task: PublishPipelineArtifact@1
+            displayName: 'Publish Report Artifacts'
+            inputs:
+              artifactName: reports
+              path: '$(Build.ArtifactStagingDirectory)/reports'
 
-  #         - task: AzureFileCopy@6
-  #           displayName: 'Upload Dependency Report'
-  #           inputs:
-  #             sourcePath: '$(Build.ArtifactStagingDirectory)/reports/*'
-  #             azureSubscription: 'Azure SDK Artifacts'
-  #             destination: AzureBlob
-  #             storage: azuresdkartifacts
-  #             containerName: 'azure-sdk-for-net'
-  #             blobPrefix: dependencies
-  #             AdditionalArgumentsForBlobCopy: '--exclude-pattern=*data.js*'
+          - task: AzureFileCopy@6
+            displayName: 'Upload Dependency Report'
+            inputs:
+              sourcePath: '$(Build.ArtifactStagingDirectory)/reports/*'
+              azureSubscription: 'Azure SDK Artifacts'
+              destination: AzureBlob
+              storage: azuresdkartifacts
+              containerName: 'azure-sdk-for-net'
+              blobPrefix: dependencies
+              AdditionalArgumentsForBlobCopy: '--exclude-pattern=*data.js*'
 
-  #         - task: AzureFileCopy@6
-  #           displayName: 'Upload Dependency Graph'
-  #           inputs:
-  #             sourcePath: '$(Build.ArtifactStagingDirectory)/reports/*'
-  #             azureSubscription: 'Azure SDK Artifacts'
-  #             destination: AzureBlob
-  #             storage: azuresdkartifacts
-  #             containerName: 'azure-sdk-for-net'
-  #             blobPrefix: dependencies/dependencyGraph
-  #             AdditionalArgumentsForBlobCopy: '--include-pattern=*data.js*'
+          - task: AzureFileCopy@6
+            displayName: 'Upload Dependency Graph'
+            inputs:
+              sourcePath: '$(Build.ArtifactStagingDirectory)/reports/*'
+              azureSubscription: 'Azure SDK Artifacts'
+              destination: AzureBlob
+              storage: azuresdkartifacts
+              containerName: 'azure-sdk-for-net'
+              blobPrefix: dependencies/dependencyGraph
+              AdditionalArgumentsForBlobCopy: '--include-pattern=*data.js*'
 
-  #         - task: PowerShell@2
-  #           displayName: "Verify Repository Resource Refs"
-  #           inputs:
-  #             pwsh: true
-  #             workingDirectory: $(Build.SourcesDirectory)
-  #             filePath: eng/common/scripts/Verify-Resource-Ref.ps1
+          - task: PowerShell@2
+            displayName: "Verify Repository Resource Refs"
+            inputs:
+              pwsh: true
+              workingDirectory: $(Build.SourcesDirectory)
+              filePath: eng/common/scripts/Verify-Resource-Ref.ps1
 
   - stage: ComplianceTools
     displayName: Compliance Tools
     dependsOn: []
 
     jobs:
-      # - job: ComplianceTools
-      #   timeoutInMinutes: 120
-      #   steps:
-      #     - template: /eng/common/pipelines/templates/steps/policheck.yml
-      #       parameters:
-      #         ExclusionDataBaseFileName: "DotNetPoliCheckExclusion"
-      #         PublishAnalysisLogs: false
+      - job: ComplianceTools
+        timeoutInMinutes: 120
+        steps:
+          - template: /eng/common/pipelines/templates/steps/policheck.yml
+            parameters:
+              ExclusionDataBaseFileName: "DotNetPoliCheckExclusion"
+              PublishAnalysisLogs: false
 
-      #     - template: /eng/common/pipelines/templates/steps/credscan.yml
-      #       parameters:
-      #         BaselineFilePath: $(Build.sourcesdirectory)/eng/dotnet.gdnbaselines
+          - template: /eng/common/pipelines/templates/steps/credscan.yml
+            parameters:
+              BaselineFilePath: $(Build.sourcesdirectory)/eng/dotnet.gdnbaselines
 
       - job: APIScan
         timeoutInMinutes: 180
@@ -183,10 +183,11 @@ stages:
                 Write-Host "##vso[task.setvariable variable=ARM_OIDC_TOKEN;issecret=true]$($env:idToken)"
 
           - pwsh: |
+                # Need to re-login with the az login so that it presists and can be used in the APISca task
                 az login --service-principal -u $(ARM_CLIENT_ID) --tenant $(ARM_TENANT_ID) --allow-no-subscriptions --federated-token $(ARM_OIDC_TOKEN)
                 az --version
                 az account show
-            displayName: Check CLI Login
+            displayName: Persist CLI Login for ApiScan usage
 
           - task: securedevelopmentteam.vss-secure-development-tools.build-task-apiscan.APIScan@2
             displayName: 'Run APIScan'
@@ -200,6 +201,13 @@ stages:
               verbosityLevel: standard
             env:
               AzureServicesAuthConnectionString: RunAs=Developer;DeveloperTool=AzureCli
+
+          - pwsh: |
+                az account show
+                az Logout
+                az account clear
+            displayName: Logout of Azure CLI
+            condition: succeededOrFailed()
 
           - task: securedevelopmentteam.vss-secure-development-tools.build-task-postanalysis.PostAnalysis@2
             displayName: 'Post Analysis (ApiScan)'
