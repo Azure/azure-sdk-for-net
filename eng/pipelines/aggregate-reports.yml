@@ -204,7 +204,7 @@ stages:
 
           - pwsh: |
                 az account show
-                az Logout
+                az logout
                 az account clear
             displayName: Logout of Azure CLI
             condition: succeededOrFailed()
