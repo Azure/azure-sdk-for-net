@@ -46,7 +46,6 @@ steps:
             -ServiceDirectory "${{ parameters.ServiceDirectory }}" `
             -CI `
             -Force `
-            -UseFederatedAuth `
             -Verbose
 
   - ${{ else }}:
@@ -61,6 +60,7 @@ steps:
           @subscriptionConfiguration `
           -ResourceType '${{ parameters.ResourceType }}' `
           -ServiceDirectory "${{ parameters.ServiceDirectory }}" `
+          -ServicePrincipalAuth `
           -CI `
           -Force `
           -Verbose

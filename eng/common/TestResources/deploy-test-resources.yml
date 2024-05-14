@@ -69,7 +69,6 @@ steps:
             @subscriptionConfiguration `
             -AdditionalParameters ${{ parameters.ArmTemplateParameters }} `
             -CI `
-            -UseFederatedAuth `
             -Force `
             -Verbose | Out-Null
 
@@ -92,6 +91,7 @@ steps:
           @subscriptionConfiguration `
           -AdditionalParameters ${{ parameters.ArmTemplateParameters }} `
           -CI `
+          -ServicePrincipalAuth `
           -Force `
           -Verbose | Out-Null
       displayName: Deploy test resources
