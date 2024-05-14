@@ -186,7 +186,7 @@ stages:
                 # Need to re-login with the az login so that it presists and can be used in the APISca task
                 az login --service-principal -u $(ARM_CLIENT_ID) --tenant $(ARM_TENANT_ID) --allow-no-subscriptions --federated-token $(ARM_OIDC_TOKEN)
                 az --version
-                az account show
+                az account show -o json
             displayName: Persist CLI Login for ApiScan usage
 
           - task: securedevelopmentteam.vss-secure-development-tools.build-task-apiscan.APIScan@2
