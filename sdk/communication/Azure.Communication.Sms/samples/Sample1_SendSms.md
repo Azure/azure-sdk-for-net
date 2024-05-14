@@ -10,7 +10,7 @@ SMS clients can be authenticated using the connection string acquired from an Az
 
 ```C# Snippet:Azure_Communication_Sms_Tests_Samples_CreateSmsClientWithToken
 string endpoint = "<endpoint_url>";
-TokenCredential tokenCredential = new DefaultAzureCredential();
+TokenCredential tokenCredential = TestEnvironment.Credential;
 SmsClient client = new SmsClient(new Uri(endpoint), tokenCredential);
 ```
 
