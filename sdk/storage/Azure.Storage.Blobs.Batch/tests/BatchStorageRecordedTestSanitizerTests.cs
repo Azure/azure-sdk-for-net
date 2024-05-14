@@ -25,7 +25,7 @@ namespace Azure.Storage.Blobs.Batch.Tests
             var regex = new Regex(bodyRegexSanitizer.Regex);
 
             // Assert
-            Assert.AreEqual("Sanitized", bodyRegexSanitizer.Value);
+            Assert.AreEqual("Sanitized", bodyRegexSanitizer.SanitizedValue);
             var match = regex.Match(sampleBody);
             Assert.AreEqual("sig=abcde", match.Groups[0].ToString());
             Assert.AreEqual("abcde", match.Groups[1].ToString());

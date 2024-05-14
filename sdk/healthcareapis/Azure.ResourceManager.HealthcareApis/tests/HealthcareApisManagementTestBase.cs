@@ -24,16 +24,32 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
         : base(isAsync, mode)
         {
             JsonPathSanitizers.Add("$..authority");
-            UriRegexSanitizers.Add(new UriRegexSanitizer(@"/Microsoft.EventHub/namespaces/[^/]+api-version=(?<group>[a-z0-9-]+)", "**") { GroupForReplace = "group" });
-            UriRegexSanitizers.Add(new UriRegexSanitizer(@"/Microsoft.EventHub/namespaces/[^/]+/eventhubs/[^/]+api-version=(?<group>[a-z0-9-]+)", "**") { GroupForReplace = "group" });
+            UriRegexSanitizers.Add(new UriRegexSanitizer(@"/Microsoft.EventHub/namespaces/[^/]+api-version=(?<group>[a-z0-9-]+)") 
+            { 
+                GroupForReplace = "group",
+                SanitizedValue = "**"
+            });
+            UriRegexSanitizers.Add(new UriRegexSanitizer(@"/Microsoft.EventHub/namespaces/[^/]+/eventhubs/[^/]+api-version=(?<group>[a-z0-9-]+)") 
+            { 
+                GroupForReplace = "group",
+                SanitizedValue = "**"
+            });
         }
 
         protected HealthcareApisManagementTestBase(bool isAsync)
             : base(isAsync)
         {
             JsonPathSanitizers.Add("$..authority");
-            UriRegexSanitizers.Add(new UriRegexSanitizer(@"/Microsoft.EventHub/namespaces/[^/]+api-version=(?<group>[a-z0-9-]+)", "**") { GroupForReplace = "group" });
-            UriRegexSanitizers.Add(new UriRegexSanitizer(@"/Microsoft.EventHub/namespaces/[^/]+/eventhubs/[^/]+api-version=(?<group>[a-z0-9-]+)", "**") { GroupForReplace = "group" });
+            UriRegexSanitizers.Add(new UriRegexSanitizer(@"/Microsoft.EventHub/namespaces/[^/]+api-version=(?<group>[a-z0-9-]+)") 
+            { 
+                GroupForReplace = "group",
+                SanitizedValue = "**"
+            });
+            UriRegexSanitizers.Add(new UriRegexSanitizer(@"/Microsoft.EventHub/namespaces/[^/]+/eventhubs/[^/]+api-version=(?<group>[a-z0-9-]+)") 
+            { 
+                GroupForReplace = "group",
+                SanitizedValue = "**"
+            });
         }
 
         [SetUp]
