@@ -18,60 +18,10 @@ public class ClientResultCollectionTests : SyncAsyncTestBase
     }
 
     [Test]
-    public async Task EnumeratesDataValues()
-    {
-        MockSseClient client = new();
-        ClientResult result = client.GetModelsStreamingAsync(_mockContent, new RequestOptions());
-
-        int i = 0;
-        await foreach (BinaryData data in result.GetRawResponse().EnumerateDataEvents())
-        {
-            MockJsonModel model = data.ToObjectFromJson<MockJsonModel>();
-
-            Assert.AreEqual(i, model.IntValue);
-            Assert.AreEqual(i.ToString(), model.StringValue);
-
-            i++;
-        }
-
-        Assert.AreEqual(3, i);
-    }
-
-    [Test]
-    public void DataCollectionThrowsIfCancelled()
-    {
-        MockSseClient client = new();
-        ClientResult result = client.GetModelsStreamingAsync(_mockContent, new RequestOptions());
-
-        // Set it to `cancelled: true` to validate functionality.
-        CancellationToken token = new(true);
-
-        Assert.ThrowsAsync<OperationCanceledException>(async () =>
-        {
-            await foreach (BinaryData data in result.GetRawResponse().EnumerateDataEvents().WithCancellation(token))
-            {
-            }
-        });
-    }
-
-    [Test]
-    public async Task DataCollectionDoesNotDisposeStream()
-    {
-        MockSseClient client = new();
-        ClientResult result = client.GetModelsStreamingAsync(_mockContent, new RequestOptions());
-
-        await foreach (BinaryData data in result.GetRawResponse().EnumerateDataEvents())
-        {
-        }
-
-        Assert.DoesNotThrow(() => { var p = result.GetRawResponse().ContentStream!.Position; });
-    }
-
-    [Test]
     public async Task EnumeratesModelValues()
     {
         MockSseClient client = new();
-        AsyncResultCollection<MockJsonModel> models = client.GetModelsStreamingAsync(_mockContent);
+        AsyncResultCollection<MockJsonModel> models = client.GetModelsStreamingAsync();
 
         int i = 0;
         await foreach (MockJsonModel model in models)
@@ -89,7 +39,7 @@ public class ClientResultCollectionTests : SyncAsyncTestBase
     public async Task ModelCollectionDelaysSendingRequest()
     {
         MockSseClient client = new();
-        AsyncResultCollection<MockJsonModel> models = client.GetModelsStreamingAsync(_mockContent);
+        AsyncResultCollection<MockJsonModel> models = client.GetModelsStreamingAsync();
 
         Assert.IsFalse(client.ProtocolMethodCalled);
 
@@ -110,7 +60,7 @@ public class ClientResultCollectionTests : SyncAsyncTestBase
     public void ModelCollectionThrowsIfCancelled()
     {
         MockSseClient client = new();
-        AsyncResultCollection<MockJsonModel> models = client.GetModelsStreamingAsync(_mockContent);
+        AsyncResultCollection<MockJsonModel> models = client.GetModelsStreamingAsync();
 
         // Set it to `cancelled: true` to validate functionality.
         CancellationToken token = new(true);
@@ -127,7 +77,7 @@ public class ClientResultCollectionTests : SyncAsyncTestBase
     public async Task ModelCollectionDisposesStream()
     {
         MockSseClient client = new();
-        AsyncResultCollection<MockJsonModel> models = client.GetModelsStreamingAsync(_mockContent);
+        AsyncResultCollection<MockJsonModel> models = client.GetModelsStreamingAsync();
 
         await foreach (MockJsonModel model in models)
         {
@@ -141,7 +91,7 @@ public class ClientResultCollectionTests : SyncAsyncTestBase
     public void ModelCollectionGetRawResponseThrowsBeforeEnumerated()
     {
         MockSseClient client = new();
-        AsyncResultCollection<MockJsonModel> models = client.GetModelsStreamingAsync(_mockContent);
+        AsyncResultCollection<MockJsonModel> models = client.GetModelsStreamingAsync();
         Assert.Throws<InvalidOperationException>(() => { PipelineResponse response = models.GetRawResponse(); });
     }
 
@@ -162,23 +112,53 @@ public class ClientResultCollectionTests : SyncAsyncTestBase
         Assert.IsTrue(empty);
     }
 
-    #region Helpers
+    [Test]
+    public async Task EnumeratesDataValues()
+    {
+        MockSseClient client = new();
+        ClientResult result = client.GetModelsStreamingAsync(MockSseClient.DefaultMockContent, new RequestOptions());
 
-    private readonly string _mockContent = """
-        event: event.0
-        data: { "IntValue": 0, "StringValue": "0" }
+        int i = 0;
+        await foreach (BinaryData data in result.GetRawResponse().EnumerateDataEvents())
+        {
+            MockJsonModel model = data.ToObjectFromJson<MockJsonModel>();
 
-        event: event.1
-        data: { "IntValue": 1, "StringValue": "1" }
+            Assert.AreEqual(i, model.IntValue);
+            Assert.AreEqual(i.ToString(), model.StringValue);
 
-        event: event.2
-        data: { "IntValue": 2, "StringValue": "2" }
+            i++;
+        }
 
-        event: done
-        data: [DONE]
+        Assert.AreEqual(3, i);
+    }
 
+    [Test]
+    public void DataCollectionThrowsIfCancelled()
+    {
+        MockSseClient client = new();
+        ClientResult result = client.GetModelsStreamingAsync(MockSseClient.DefaultMockContent, new RequestOptions());
 
-        """;
+        // Set it to `cancelled: true` to validate functionality.
+        CancellationToken token = new(true);
 
-    #endregion
+        Assert.ThrowsAsync<OperationCanceledException>(async () =>
+        {
+            await foreach (BinaryData data in result.GetRawResponse().EnumerateDataEvents().WithCancellation(token))
+            {
+            }
+        });
+    }
+
+    [Test]
+    public async Task DataCollectionDoesNotDisposeStream()
+    {
+        MockSseClient client = new();
+        ClientResult result = client.GetModelsStreamingAsync(MockSseClient.DefaultMockContent, new RequestOptions());
+
+        await foreach (BinaryData data in result.GetRawResponse().EnumerateDataEvents())
+        {
+        }
+
+        Assert.DoesNotThrow(() => { var p = result.GetRawResponse().ContentStream!.Position; });
+    }
 }

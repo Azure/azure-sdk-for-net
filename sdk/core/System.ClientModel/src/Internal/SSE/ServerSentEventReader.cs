@@ -16,15 +16,12 @@ namespace System.ClientModel.Internal;
 /// </summary>
 internal sealed class ServerSentEventReader
 {
-    private readonly Stream? _stream;
-    private readonly StreamReader? _reader;
+    private readonly StreamReader _reader;
 
     public ServerSentEventReader(Stream stream)
     {
-        // Creator of the reader has responsibility for disposing the stream
-        // passed to the reader constructor.
-
-        _stream = stream;
+        // The creator of the reader has responsibility for disposing the
+        // stream passed to the reader's constructor.
         _reader = new StreamReader(stream);
     }
 
@@ -38,11 +35,6 @@ internal sealed class ServerSentEventReader
     /// </returns>
     public ServerSentEvent? TryGetNextEvent(CancellationToken cancellationToken = default)
     {
-        if (_reader is null)
-        {
-            throw new ObjectDisposedException(nameof(ServerSentEventReader));
-        }
-
         PendingEvent pending = default;
         while (true)
         {
@@ -77,11 +69,6 @@ internal sealed class ServerSentEventReader
     /// </returns>
     public async Task<ServerSentEvent?> TryGetNextEventAsync(CancellationToken cancellationToken = default)
     {
-        if (_reader is null)
-        {
-            throw new ObjectDisposedException(nameof(ServerSentEventReader));
-        }
-
         PendingEvent pending = default;
         while (true)
         {

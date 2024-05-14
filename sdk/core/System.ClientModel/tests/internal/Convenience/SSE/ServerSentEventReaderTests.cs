@@ -21,7 +21,7 @@ public class ServerSentEventReaderTests : SyncAsyncTestBase
     [Test]
     public async Task GetsEventsFromStream()
     {
-        Stream contentStream = BinaryData.FromString(_mockContent).ToStream();
+        Stream contentStream = BinaryData.FromString(MockSseClient.DefaultMockContent).ToStream();
         ServerSentEventReader reader = new(contentStream);
 
         List<ServerSentEvent> events = new();
@@ -38,7 +38,7 @@ public class ServerSentEventReaderTests : SyncAsyncTestBase
         {
             ServerSentEvent sse = events[i];
             Assert.AreEqual($"event.{i}", sse.EventType);
-            Assert.AreEqual($"{{ \"id\": \"{i}\", \"object\": {i} }}", sse.Data);
+            Assert.AreEqual($"{{ \"IntValue\": {i}, \"StringValue\": \"{i}\" }}", sse.Data);
         }
 
         Assert.AreEqual("done", events[3].EventType);
@@ -233,31 +233,10 @@ public class ServerSentEventReaderTests : SyncAsyncTestBase
     {
         CancellationToken token = new(true);
 
-        using Stream contentStream = BinaryData.FromString(_mockContent).ToStream();
+        using Stream contentStream = BinaryData.FromString(MockSseClient.DefaultMockContent).ToStream();
         ServerSentEventReader reader = new(contentStream);
 
         Assert.ThrowsAsync<OperationCanceledException>(async ()
             => await reader.TryGetNextEventAsync(token));
     }
-
-    #region Helpers
-
-    // Note: raw string literal quirk removes \n from final line.
-    private readonly string _mockContent = """
-        event: event.0
-        data: { "id": "0", "object": 0 }
-
-        event: event.1
-        data: { "id": "1", "object": 1 }
-
-        event: event.2
-        data: { "id": "2", "object": 2 }
-
-        event: done
-        data: [DONE]
-
-
-        """;
-
-    #endregion
 }
