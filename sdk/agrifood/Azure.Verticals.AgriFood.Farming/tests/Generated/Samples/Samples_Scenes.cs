@@ -204,8 +204,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
             using RequestContent content = RequestContent.Create(new
             {
-                startDateTime = "2022-05-10T18:57:31.2311892Z",
-                endDateTime = "2022-05-10T18:57:31.2311892Z",
+                startDateTime = "2022-05-10T14:57:31.2311892-04:00",
+                endDateTime = "2022-05-10T14:57:31.2311892-04:00",
             });
             Response response = client.SearchFeatures("Sentinel_2_L2A", content);
 
@@ -229,8 +229,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
             using RequestContent content = RequestContent.Create(new
             {
-                startDateTime = "2022-05-10T18:57:31.2311892Z",
-                endDateTime = "2022-05-10T18:57:31.2311892Z",
+                startDateTime = "2022-05-10T14:57:31.2311892-04:00",
+                endDateTime = "2022-05-10T14:57:31.2311892-04:00",
             });
             Response response = await client.SearchFeaturesAsync("Sentinel_2_L2A", content);
 
@@ -254,8 +254,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
             using RequestContent content = RequestContent.Create(new
             {
-                startDateTime = "2022-05-10T18:57:31.2311892Z",
-                endDateTime = "2022-05-10T18:57:31.2311892Z",
+                startDateTime = "2022-05-10T14:57:31.2311892-04:00",
+                endDateTime = "2022-05-10T14:57:31.2311892-04:00",
                 intersects = new
                 {
                     coordinates = new object[]
@@ -315,8 +315,8 @@ new object[]
 
             using RequestContent content = RequestContent.Create(new
             {
-                startDateTime = "2022-05-10T18:57:31.2311892Z",
-                endDateTime = "2022-05-10T18:57:31.2311892Z",
+                startDateTime = "2022-05-10T14:57:31.2311892-04:00",
+                endDateTime = "2022-05-10T14:57:31.2311892-04:00",
                 intersects = new
                 {
                     coordinates = new object[]
@@ -504,7 +504,7 @@ new object[]
             TokenCredential credential = new DefaultAzureCredential();
             Scenes client = new FarmBeatsClient(endpoint, credential).GetScenesClient(apiVersion: "2022-11-01-preview");
 
-            foreach (BinaryData item in client.GetScenes("<provider>", "<partyId>", "<boundaryId>", "<source>", DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 123.45, 123.45, new string[] { "<imageNames>" }, new double[] { 123.45 }, new string[] { "<imageFormats>" }, 1234, "<skipToken>", null))
+            foreach (BinaryData item in client.GetScenes("<provider>", "<partyId>", "<boundaryId>", "<source>", DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), 123.45, 123.45, new string[] { "<imageNames>" }, new double[] { 123.45 }, new string[] { "<imageFormats>" }, 1234, "<skipToken>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("sceneDateTime").ToString());
@@ -533,7 +533,7 @@ new object[]
             TokenCredential credential = new DefaultAzureCredential();
             Scenes client = new FarmBeatsClient(endpoint, credential).GetScenesClient(apiVersion: "2022-11-01-preview");
 
-            await foreach (BinaryData item in client.GetScenesAsync("<provider>", "<partyId>", "<boundaryId>", "<source>", DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 123.45, 123.45, new string[] { "<imageNames>" }, new double[] { 123.45 }, new string[] { "<imageFormats>" }, 1234, "<skipToken>", null))
+            await foreach (BinaryData item in client.GetScenesAsync("<provider>", "<partyId>", "<boundaryId>", "<source>", DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), 123.45, 123.45, new string[] { "<imageNames>" }, new double[] { 123.45 }, new string[] { "<imageFormats>" }, 1234, "<skipToken>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("sceneDateTime").ToString());
@@ -566,8 +566,8 @@ new object[]
             {
                 partyId = "<partyId>",
                 boundaryId = "<boundaryId>",
-                startDateTime = "2022-05-10T18:57:31.2311892Z",
-                endDateTime = "2022-05-10T18:57:31.2311892Z",
+                startDateTime = "2022-05-10T14:57:31.2311892-04:00",
+                endDateTime = "2022-05-10T14:57:31.2311892-04:00",
                 source = "Sentinel_2_L2A",
             });
             Operation<BinaryData> operation = client.CreateSatelliteDataIngestionJob(WaitUntil.Completed, "<jobId>", content);
@@ -593,8 +593,8 @@ new object[]
             {
                 partyId = "<partyId>",
                 boundaryId = "<boundaryId>",
-                startDateTime = "2022-05-10T18:57:31.2311892Z",
-                endDateTime = "2022-05-10T18:57:31.2311892Z",
+                startDateTime = "2022-05-10T14:57:31.2311892-04:00",
+                endDateTime = "2022-05-10T14:57:31.2311892-04:00",
                 source = "Sentinel_2_L2A",
             });
             Operation<BinaryData> operation = await client.CreateSatelliteDataIngestionJobAsync(WaitUntil.Completed, "<jobId>", content);
@@ -620,8 +620,8 @@ new object[]
             {
                 partyId = "<partyId>",
                 boundaryId = "<boundaryId>",
-                startDateTime = "2022-05-10T18:57:31.2311892Z",
-                endDateTime = "2022-05-10T18:57:31.2311892Z",
+                startDateTime = "2022-05-10T14:57:31.2311892-04:00",
+                endDateTime = "2022-05-10T14:57:31.2311892-04:00",
                 provider = "Microsoft",
                 source = "Sentinel_2_L2A",
                 data = new
@@ -687,8 +687,8 @@ new object[]
             {
                 partyId = "<partyId>",
                 boundaryId = "<boundaryId>",
-                startDateTime = "2022-05-10T18:57:31.2311892Z",
-                endDateTime = "2022-05-10T18:57:31.2311892Z",
+                startDateTime = "2022-05-10T14:57:31.2311892-04:00",
+                endDateTime = "2022-05-10T14:57:31.2311892-04:00",
                 provider = "Microsoft",
                 source = "Sentinel_2_L2A",
                 data = new

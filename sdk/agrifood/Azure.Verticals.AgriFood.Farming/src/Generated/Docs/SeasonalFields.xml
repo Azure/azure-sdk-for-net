@@ -347,7 +347,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 SeasonalFields client = new FarmBeatsClient(endpoint, credential).GetSeasonalFieldsClient(apiVersion: "2022-11-01-preview");
 
-await foreach (BinaryData item in client.GetSeasonalFieldsByPartyIdAsync("<partyId>", new string[] { "<farmIds>" }, new string[] { "<fieldIds>" }, new string[] { "<seasonIds>" }, new string[] { "<cropProductIds>" }, new string[] { "<cropIds>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+await foreach (BinaryData item in client.GetSeasonalFieldsByPartyIdAsync("<partyId>", new string[] { "<farmIds>" }, new string[] { "<fieldIds>" }, new string[] { "<seasonIds>" }, new string[] { "<cropProductIds>" }, new string[] { "<cropIds>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), 1234, "<skipToken>", null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -390,7 +390,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 SeasonalFields client = new FarmBeatsClient(endpoint, credential).GetSeasonalFieldsClient(apiVersion: "2022-11-01-preview");
 
-foreach (BinaryData item in client.GetSeasonalFieldsByPartyId("<partyId>", new string[] { "<farmIds>" }, new string[] { "<fieldIds>" }, new string[] { "<seasonIds>" }, new string[] { "<cropProductIds>" }, new string[] { "<cropIds>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+foreach (BinaryData item in client.GetSeasonalFieldsByPartyId("<partyId>", new string[] { "<farmIds>" }, new string[] { "<fieldIds>" }, new string[] { "<seasonIds>" }, new string[] { "<cropProductIds>" }, new string[] { "<cropIds>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), 1234, "<skipToken>", null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -433,7 +433,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 SeasonalFields client = new FarmBeatsClient(endpoint, credential).GetSeasonalFieldsClient(apiVersion: "2022-11-01-preview");
 
-await foreach (BinaryData item in client.GetSeasonalFieldsAsync(new string[] { "<farmIds>" }, new string[] { "<fieldIds>" }, new string[] { "<seasonIds>" }, new string[] { "<cropProductIds>" }, new string[] { "<cropIds>" }, new string[] { "<seasonalFieldIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+await foreach (BinaryData item in client.GetSeasonalFieldsAsync(new string[] { "<farmIds>" }, new string[] { "<fieldIds>" }, new string[] { "<seasonIds>" }, new string[] { "<cropProductIds>" }, new string[] { "<cropIds>" }, new string[] { "<seasonalFieldIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), 1234, "<skipToken>", null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -476,7 +476,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 SeasonalFields client = new FarmBeatsClient(endpoint, credential).GetSeasonalFieldsClient(apiVersion: "2022-11-01-preview");
 
-foreach (BinaryData item in client.GetSeasonalFields(new string[] { "<farmIds>" }, new string[] { "<fieldIds>" }, new string[] { "<seasonIds>" }, new string[] { "<cropProductIds>" }, new string[] { "<cropIds>" }, new string[] { "<seasonalFieldIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+foreach (BinaryData item in client.GetSeasonalFields(new string[] { "<farmIds>" }, new string[] { "<fieldIds>" }, new string[] { "<seasonIds>" }, new string[] { "<cropProductIds>" }, new string[] { "<cropIds>" }, new string[] { "<seasonalFieldIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), 1234, "<skipToken>", null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("partyId").ToString());

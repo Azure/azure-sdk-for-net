@@ -175,15 +175,15 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 cropId = "<cropId>",
                 cropProductId = "<cropProductId>",
                 seasonId = "<seasonId>",
-                plantingDateTime = "2022-05-10T18:57:31.2311892Z",
+                plantingDateTime = "2022-05-10T14:57:31.2311892-04:00",
                 growthStage = "<growthStage>",
                 plantPart = "<plantPart>",
                 plantPosition = "<plantPosition>",
                 plantAppearance = "<plantAppearance>",
                 sampleCollectionCondition = "<sampleCollectionCondition>",
-                sampleCollectionDateTime = "2022-05-10T18:57:31.2311892Z",
-                sampleReceivedDateTime = "2022-05-10T18:57:31.2311892Z",
-                sampleTestResultDateTime = "2022-05-10T18:57:31.2311892Z",
+                sampleCollectionDateTime = "2022-05-10T14:57:31.2311892-04:00",
+                sampleReceivedDateTime = "2022-05-10T14:57:31.2311892-04:00",
+                sampleTestResultDateTime = "2022-05-10T14:57:31.2311892-04:00",
                 labDetails = new
                 {
                     code = "<code>",
@@ -249,15 +249,15 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 cropId = "<cropId>",
                 cropProductId = "<cropProductId>",
                 seasonId = "<seasonId>",
-                plantingDateTime = "2022-05-10T18:57:31.2311892Z",
+                plantingDateTime = "2022-05-10T14:57:31.2311892-04:00",
                 growthStage = "<growthStage>",
                 plantPart = "<plantPart>",
                 plantPosition = "<plantPosition>",
                 plantAppearance = "<plantAppearance>",
                 sampleCollectionCondition = "<sampleCollectionCondition>",
-                sampleCollectionDateTime = "2022-05-10T18:57:31.2311892Z",
-                sampleReceivedDateTime = "2022-05-10T18:57:31.2311892Z",
-                sampleTestResultDateTime = "2022-05-10T18:57:31.2311892Z",
+                sampleCollectionDateTime = "2022-05-10T14:57:31.2311892-04:00",
+                sampleReceivedDateTime = "2022-05-10T14:57:31.2311892-04:00",
+                sampleTestResultDateTime = "2022-05-10T14:57:31.2311892-04:00",
                 labDetails = new
                 {
                     code = "<code>",
@@ -481,7 +481,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
 
-            foreach (BinaryData item in client.GetPlantTissueAnalysesByPartyId("<partyId>", new string[] { "<seasonIds>" }, new string[] { "<cropIds>" }, new string[] { "<cropProductsIds>" }, new string[] { "<fieldIds>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+            foreach (BinaryData item in client.GetPlantTissueAnalysesByPartyId("<partyId>", new string[] { "<seasonIds>" }, new string[] { "<cropIds>" }, new string[] { "<cropProductsIds>" }, new string[] { "<fieldIds>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), 1234, "<skipToken>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -525,7 +525,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
 
-            await foreach (BinaryData item in client.GetPlantTissueAnalysesByPartyIdAsync("<partyId>", new string[] { "<seasonIds>" }, new string[] { "<cropIds>" }, new string[] { "<cropProductsIds>" }, new string[] { "<fieldIds>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+            await foreach (BinaryData item in client.GetPlantTissueAnalysesByPartyIdAsync("<partyId>", new string[] { "<seasonIds>" }, new string[] { "<cropIds>" }, new string[] { "<cropProductsIds>" }, new string[] { "<fieldIds>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), 1234, "<skipToken>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -599,7 +599,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
 
-            foreach (BinaryData item in client.GetPlantTissueAnalyses(new string[] { "<seasonIds>" }, new string[] { "<cropIds>" }, new string[] { "<cropProductsIds>" }, new string[] { "<fieldIds>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+            foreach (BinaryData item in client.GetPlantTissueAnalyses(new string[] { "<seasonIds>" }, new string[] { "<cropIds>" }, new string[] { "<cropProductsIds>" }, new string[] { "<fieldIds>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), 1234, "<skipToken>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -643,7 +643,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
 
-            await foreach (BinaryData item in client.GetPlantTissueAnalysesAsync(new string[] { "<seasonIds>" }, new string[] { "<cropIds>" }, new string[] { "<cropProductsIds>" }, new string[] { "<fieldIds>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+            await foreach (BinaryData item in client.GetPlantTissueAnalysesAsync(new string[] { "<seasonIds>" }, new string[] { "<cropIds>" }, new string[] { "<cropProductsIds>" }, new string[] { "<fieldIds>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), 1234, "<skipToken>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("partyId").ToString());
