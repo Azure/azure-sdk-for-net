@@ -194,11 +194,11 @@ namespace Azure.Storage.Blobs
             }
             if (ifModifiedSince != null)
             {
-                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "R");
+                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "O");
             }
             if (ifUnmodifiedSince != null)
             {
-                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "R");
+                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "O");
             }
             request.Headers.Add("x-ms-version", _version);
             request.Headers.Add("Accept", "application/xml");
@@ -269,7 +269,7 @@ namespace Azure.Storage.Blobs
             }
             if (ifModifiedSince != null)
             {
-                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "R");
+                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "O");
             }
             request.Headers.Add("x-ms-version", _version);
             request.Headers.Add("Accept", "application/xml");
@@ -425,11 +425,11 @@ namespace Azure.Storage.Blobs
             }
             if (ifModifiedSince != null)
             {
-                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "R");
+                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "O");
             }
             if (ifUnmodifiedSince != null)
             {
-                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "R");
+                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "O");
             }
             request.Headers.Add("x-ms-version", _version);
             request.Headers.Add("Accept", "application/xml");
@@ -837,11 +837,11 @@ namespace Azure.Storage.Blobs
             }
             if (ifModifiedSince != null)
             {
-                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "R");
+                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "O");
             }
             if (ifUnmodifiedSince != null)
             {
-                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "R");
+                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "O");
             }
             request.Headers.Add("x-ms-version", _version);
             request.Headers.Add("Accept", "application/xml");
@@ -917,7 +917,7 @@ namespace Azure.Storage.Blobs
             }
             if (requestConditions != null)
             {
-                request.Headers.Add(requestConditions, "R");
+                request.Headers.Add(requestConditions, "O");
             }
             return message;
         }
@@ -1024,11 +1024,11 @@ namespace Azure.Storage.Blobs
             request.Headers.Add("x-ms-lease-id", leaseId);
             if (ifModifiedSince != null)
             {
-                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "R");
+                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "O");
             }
             if (ifUnmodifiedSince != null)
             {
-                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "R");
+                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "O");
             }
             request.Headers.Add("x-ms-version", _version);
             request.Headers.Add("Accept", "application/xml");
@@ -1105,11 +1105,11 @@ namespace Azure.Storage.Blobs
             request.Headers.Add("x-ms-lease-id", leaseId);
             if (ifModifiedSince != null)
             {
-                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "R");
+                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "O");
             }
             if (ifUnmodifiedSince != null)
             {
-                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "R");
+                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "O");
             }
             request.Headers.Add("x-ms-version", _version);
             request.Headers.Add("Accept", "application/xml");
@@ -1189,11 +1189,11 @@ namespace Azure.Storage.Blobs
             }
             if (ifModifiedSince != null)
             {
-                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "R");
+                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "O");
             }
             if (ifUnmodifiedSince != null)
             {
-                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "R");
+                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "O");
             }
             request.Headers.Add("x-ms-version", _version);
             request.Headers.Add("Accept", "application/xml");
@@ -1259,11 +1259,11 @@ namespace Azure.Storage.Blobs
             request.Headers.Add("x-ms-proposed-lease-id", proposedLeaseId);
             if (ifModifiedSince != null)
             {
-                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "R");
+                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "O");
             }
             if (ifUnmodifiedSince != null)
             {
-                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "R");
+                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "O");
             }
             request.Headers.Add("x-ms-version", _version);
             request.Headers.Add("Accept", "application/xml");

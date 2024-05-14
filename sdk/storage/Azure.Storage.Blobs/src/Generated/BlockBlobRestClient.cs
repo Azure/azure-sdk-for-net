@@ -107,11 +107,11 @@ namespace Azure.Storage.Blobs
             }
             if (ifModifiedSince != null)
             {
-                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "R");
+                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "O");
             }
             if (ifUnmodifiedSince != null)
             {
-                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "R");
+                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "O");
             }
             if (ifMatch != null)
             {
@@ -132,7 +132,7 @@ namespace Azure.Storage.Blobs
             }
             if (immutabilityPolicyExpiry != null)
             {
-                request.Headers.Add("x-ms-immutability-policy-until-date", immutabilityPolicyExpiry.Value, "R");
+                request.Headers.Add("x-ms-immutability-policy-until-date", immutabilityPolicyExpiry.Value, "O");
             }
             if (immutabilityPolicyMode != null)
             {
@@ -322,11 +322,11 @@ namespace Azure.Storage.Blobs
             }
             if (ifModifiedSince != null)
             {
-                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "R");
+                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "O");
             }
             if (ifUnmodifiedSince != null)
             {
-                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "R");
+                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "O");
             }
             if (ifMatch != null)
             {
@@ -342,11 +342,11 @@ namespace Azure.Storage.Blobs
             }
             if (sourceIfModifiedSince != null)
             {
-                request.Headers.Add("x-ms-source-if-modified-since", sourceIfModifiedSince.Value, "R");
+                request.Headers.Add("x-ms-source-if-modified-since", sourceIfModifiedSince.Value, "O");
             }
             if (sourceIfUnmodifiedSince != null)
             {
-                request.Headers.Add("x-ms-source-if-unmodified-since", sourceIfUnmodifiedSince.Value, "R");
+                request.Headers.Add("x-ms-source-if-unmodified-since", sourceIfUnmodifiedSince.Value, "O");
             }
             if (sourceIfMatch != null)
             {
@@ -667,11 +667,11 @@ namespace Azure.Storage.Blobs
             }
             if (sourceIfModifiedSince != null)
             {
-                request.Headers.Add("x-ms-source-if-modified-since", sourceIfModifiedSince.Value, "R");
+                request.Headers.Add("x-ms-source-if-modified-since", sourceIfModifiedSince.Value, "O");
             }
             if (sourceIfUnmodifiedSince != null)
             {
-                request.Headers.Add("x-ms-source-if-unmodified-since", sourceIfUnmodifiedSince.Value, "R");
+                request.Headers.Add("x-ms-source-if-unmodified-since", sourceIfUnmodifiedSince.Value, "O");
             }
             if (sourceIfMatch != null)
             {
@@ -847,11 +847,11 @@ namespace Azure.Storage.Blobs
             }
             if (ifModifiedSince != null)
             {
-                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "R");
+                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "O");
             }
             if (ifUnmodifiedSince != null)
             {
-                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "R");
+                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "O");
             }
             if (ifMatch != null)
             {
@@ -872,7 +872,7 @@ namespace Azure.Storage.Blobs
             }
             if (immutabilityPolicyExpiry != null)
             {
-                request.Headers.Add("x-ms-immutability-policy-until-date", immutabilityPolicyExpiry.Value, "R");
+                request.Headers.Add("x-ms-immutability-policy-until-date", immutabilityPolicyExpiry.Value, "O");
             }
             if (immutabilityPolicyMode != null)
             {

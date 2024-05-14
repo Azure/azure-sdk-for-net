@@ -91,11 +91,11 @@ namespace Azure.Storage.Blobs
             }
             if (ifModifiedSince != null)
             {
-                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "R");
+                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "O");
             }
             if (ifUnmodifiedSince != null)
             {
-                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "R");
+                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "O");
             }
             if (ifMatch != null)
             {
@@ -226,11 +226,11 @@ namespace Azure.Storage.Blobs
             }
             if (ifModifiedSince != null)
             {
-                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "R");
+                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "O");
             }
             if (ifUnmodifiedSince != null)
             {
-                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "R");
+                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "O");
             }
             if (ifMatch != null)
             {
@@ -349,7 +349,7 @@ namespace Azure.Storage.Blobs
             }
             if (requestConditions != null)
             {
-                request.Headers.Add(requestConditions, "R");
+                request.Headers.Add(requestConditions, "O");
             }
             return message;
         }
@@ -464,11 +464,11 @@ namespace Azure.Storage.Blobs
             }
             if (ifModifiedSince != null)
             {
-                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "R");
+                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "O");
             }
             if (ifUnmodifiedSince != null)
             {
-                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "R");
+                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "O");
             }
             if (ifMatch != null)
             {
@@ -693,11 +693,11 @@ namespace Azure.Storage.Blobs
             }
             if (ifModifiedSince != null)
             {
-                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "R");
+                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "O");
             }
             if (ifUnmodifiedSince != null)
             {
-                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "R");
+                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "O");
             }
             if (ifMatch != null)
             {
@@ -794,11 +794,11 @@ namespace Azure.Storage.Blobs
             request.Headers.Add("x-ms-version", _version);
             if (ifUnmodifiedSince != null)
             {
-                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "R");
+                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "O");
             }
             if (immutabilityPolicyExpiry != null)
             {
-                request.Headers.Add("x-ms-immutability-policy-until-date", immutabilityPolicyExpiry.Value, "R");
+                request.Headers.Add("x-ms-immutability-policy-until-date", immutabilityPolicyExpiry.Value, "O");
             }
             if (immutabilityPolicyMode != null)
             {
@@ -994,11 +994,11 @@ namespace Azure.Storage.Blobs
             }
             if (ifModifiedSince != null)
             {
-                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "R");
+                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "O");
             }
             if (ifUnmodifiedSince != null)
             {
-                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "R");
+                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "O");
             }
             if (ifMatch != null)
             {
@@ -1097,11 +1097,11 @@ namespace Azure.Storage.Blobs
             }
             if (ifModifiedSince != null)
             {
-                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "R");
+                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "O");
             }
             if (ifUnmodifiedSince != null)
             {
-                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "R");
+                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "O");
             }
             if (ifMatch != null)
             {
@@ -1198,7 +1198,7 @@ namespace Azure.Storage.Blobs
             }
             if (requestConditions != null)
             {
-                request.Headers.Add(requestConditions, "R");
+                request.Headers.Add(requestConditions, "O");
             }
             return message;
         }
@@ -1288,11 +1288,11 @@ namespace Azure.Storage.Blobs
             request.Headers.Add("x-ms-lease-id", leaseId);
             if (ifModifiedSince != null)
             {
-                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "R");
+                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "O");
             }
             if (ifUnmodifiedSince != null)
             {
-                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "R");
+                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "O");
             }
             if (ifMatch != null)
             {
@@ -1386,11 +1386,11 @@ namespace Azure.Storage.Blobs
             request.Headers.Add("x-ms-lease-id", leaseId);
             if (ifModifiedSince != null)
             {
-                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "R");
+                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "O");
             }
             if (ifUnmodifiedSince != null)
             {
-                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "R");
+                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "O");
             }
             if (ifMatch != null)
             {
@@ -1485,11 +1485,11 @@ namespace Azure.Storage.Blobs
             request.Headers.Add("x-ms-proposed-lease-id", proposedLeaseId);
             if (ifModifiedSince != null)
             {
-                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "R");
+                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "O");
             }
             if (ifUnmodifiedSince != null)
             {
-                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "R");
+                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "O");
             }
             if (ifMatch != null)
             {
@@ -1596,11 +1596,11 @@ namespace Azure.Storage.Blobs
             }
             if (ifModifiedSince != null)
             {
-                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "R");
+                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "O");
             }
             if (ifUnmodifiedSince != null)
             {
-                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "R");
+                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "O");
             }
             if (ifMatch != null)
             {
@@ -1700,11 +1700,11 @@ namespace Azure.Storage.Blobs
             }
             if (ifModifiedSince != null)
             {
-                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "R");
+                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "O");
             }
             if (ifUnmodifiedSince != null)
             {
-                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "R");
+                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "O");
             }
             if (ifMatch != null)
             {
@@ -1809,11 +1809,11 @@ namespace Azure.Storage.Blobs
             }
             if (sourceIfModifiedSince != null)
             {
-                request.Headers.Add("x-ms-source-if-modified-since", sourceIfModifiedSince.Value, "R");
+                request.Headers.Add("x-ms-source-if-modified-since", sourceIfModifiedSince.Value, "O");
             }
             if (sourceIfUnmodifiedSince != null)
             {
-                request.Headers.Add("x-ms-source-if-unmodified-since", sourceIfUnmodifiedSince.Value, "R");
+                request.Headers.Add("x-ms-source-if-unmodified-since", sourceIfUnmodifiedSince.Value, "O");
             }
             if (sourceIfMatch != null)
             {
@@ -1829,11 +1829,11 @@ namespace Azure.Storage.Blobs
             }
             if (ifModifiedSince != null)
             {
-                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "R");
+                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "O");
             }
             if (ifUnmodifiedSince != null)
             {
-                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "R");
+                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "O");
             }
             if (ifMatch != null)
             {
@@ -1863,7 +1863,7 @@ namespace Azure.Storage.Blobs
             }
             if (immutabilityPolicyExpiry != null)
             {
-                request.Headers.Add("x-ms-immutability-policy-until-date", immutabilityPolicyExpiry.Value, "R");
+                request.Headers.Add("x-ms-immutability-policy-until-date", immutabilityPolicyExpiry.Value, "O");
             }
             if (immutabilityPolicyMode != null)
             {
@@ -1986,11 +1986,11 @@ namespace Azure.Storage.Blobs
             }
             if (sourceIfModifiedSince != null)
             {
-                request.Headers.Add("x-ms-source-if-modified-since", sourceIfModifiedSince.Value, "R");
+                request.Headers.Add("x-ms-source-if-modified-since", sourceIfModifiedSince.Value, "O");
             }
             if (sourceIfUnmodifiedSince != null)
             {
-                request.Headers.Add("x-ms-source-if-unmodified-since", sourceIfUnmodifiedSince.Value, "R");
+                request.Headers.Add("x-ms-source-if-unmodified-since", sourceIfUnmodifiedSince.Value, "O");
             }
             if (sourceIfMatch != null)
             {
@@ -2002,11 +2002,11 @@ namespace Azure.Storage.Blobs
             }
             if (ifModifiedSince != null)
             {
-                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "R");
+                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "O");
             }
             if (ifUnmodifiedSince != null)
             {
-                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "R");
+                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "O");
             }
             if (ifMatch != null)
             {
@@ -2036,7 +2036,7 @@ namespace Azure.Storage.Blobs
             }
             if (immutabilityPolicyExpiry != null)
             {
-                request.Headers.Add("x-ms-immutability-policy-until-date", immutabilityPolicyExpiry.Value, "R");
+                request.Headers.Add("x-ms-immutability-policy-until-date", immutabilityPolicyExpiry.Value, "O");
             }
             if (immutabilityPolicyMode != null)
             {
@@ -2347,11 +2347,11 @@ namespace Azure.Storage.Blobs
             }
             if (ifModifiedSince != null)
             {
-                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "R");
+                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "O");
             }
             if (ifUnmodifiedSince != null)
             {
-                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "R");
+                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "O");
             }
             if (ifMatch != null)
             {

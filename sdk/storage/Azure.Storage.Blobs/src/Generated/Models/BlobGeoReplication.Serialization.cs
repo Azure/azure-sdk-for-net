@@ -23,7 +23,7 @@ namespace Azure.Storage.Blobs.Models
             }
             if (element.Element("LastSyncTime") is XElement lastSyncTimeElement)
             {
-                lastSyncedOn = lastSyncTimeElement.GetDateTimeOffsetValue("R");
+                lastSyncedOn = lastSyncTimeElement.GetDateTimeOffsetValue("O");
             }
             return new BlobGeoReplication(status, lastSyncedOn);
         }

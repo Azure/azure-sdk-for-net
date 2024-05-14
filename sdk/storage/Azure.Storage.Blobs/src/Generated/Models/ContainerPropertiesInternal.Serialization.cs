@@ -30,7 +30,7 @@ namespace Azure.Storage.Blobs.Models
             bool? isImmutableStorageWithVersioningEnabled = default;
             if (element.Element("Last-Modified") is XElement lastModifiedElement)
             {
-                lastModified = lastModifiedElement.GetDateTimeOffsetValue("R");
+                lastModified = lastModifiedElement.GetDateTimeOffsetValue("O");
             }
             if (element.Element("Etag") is XElement etagElement)
             {
@@ -70,7 +70,7 @@ namespace Azure.Storage.Blobs.Models
             }
             if (element.Element("DeletedTime") is XElement deletedTimeElement)
             {
-                deletedTime = deletedTimeElement.GetDateTimeOffsetValue("R");
+                deletedTime = deletedTimeElement.GetDateTimeOffsetValue("O");
             }
             if (element.Element("RemainingRetentionDays") is XElement remainingRetentionDaysElement)
             {

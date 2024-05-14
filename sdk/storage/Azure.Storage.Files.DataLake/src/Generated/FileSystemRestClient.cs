@@ -124,11 +124,11 @@ namespace Azure.Storage.Files.DataLake
             }
             if (ifModifiedSince != null)
             {
-                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "R");
+                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "O");
             }
             if (ifUnmodifiedSince != null)
             {
-                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "R");
+                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "O");
             }
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -246,11 +246,11 @@ namespace Azure.Storage.Files.DataLake
             request.Headers.Add("x-ms-version", _version);
             if (ifModifiedSince != null)
             {
-                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "R");
+                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "O");
             }
             if (ifUnmodifiedSince != null)
             {
-                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "R");
+                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "O");
             }
             request.Headers.Add("Accept", "application/json");
             return message;

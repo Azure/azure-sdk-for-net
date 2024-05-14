@@ -35,7 +35,7 @@ namespace Azure.Storage.Files.Shares.Models
             ShareRootSquash? rootSquash = default;
             if (element.Element("Last-Modified") is XElement lastModifiedElement)
             {
-                lastModified = lastModifiedElement.GetDateTimeOffsetValue("R");
+                lastModified = lastModifiedElement.GetDateTimeOffsetValue("O");
             }
             if (element.Element("Etag") is XElement etagElement)
             {
@@ -63,11 +63,11 @@ namespace Azure.Storage.Files.Shares.Models
             }
             if (element.Element("NextAllowedQuotaDowngradeTime") is XElement nextAllowedQuotaDowngradeTimeElement)
             {
-                nextAllowedQuotaDowngradeTime = nextAllowedQuotaDowngradeTimeElement.GetDateTimeOffsetValue("R");
+                nextAllowedQuotaDowngradeTime = nextAllowedQuotaDowngradeTimeElement.GetDateTimeOffsetValue("O");
             }
             if (element.Element("DeletedTime") is XElement deletedTimeElement)
             {
-                deletedTime = deletedTimeElement.GetDateTimeOffsetValue("R");
+                deletedTime = deletedTimeElement.GetDateTimeOffsetValue("O");
             }
             if (element.Element("RemainingRetentionDays") is XElement remainingRetentionDaysElement)
             {
@@ -79,7 +79,7 @@ namespace Azure.Storage.Files.Shares.Models
             }
             if (element.Element("AccessTierChangeTime") is XElement accessTierChangeTimeElement)
             {
-                accessTierChangeTime = accessTierChangeTimeElement.GetDateTimeOffsetValue("R");
+                accessTierChangeTime = accessTierChangeTimeElement.GetDateTimeOffsetValue("O");
             }
             if (element.Element("AccessTierTransitionState") is XElement accessTierTransitionStateElement)
             {

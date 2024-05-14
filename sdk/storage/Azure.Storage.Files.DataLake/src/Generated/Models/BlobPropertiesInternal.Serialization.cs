@@ -47,11 +47,11 @@ namespace Azure.Storage.Files.DataLake.Models
             DateTimeOffset? deleteTime = default;
             if (element.Element("Creation-Time") is XElement creationTimeElement)
             {
-                creationTime = creationTimeElement.GetDateTimeOffsetValue("R");
+                creationTime = creationTimeElement.GetDateTimeOffsetValue("O");
             }
             if (element.Element("Last-Modified") is XElement lastModifiedElement)
             {
-                lastModified = lastModifiedElement.GetDateTimeOffsetValue("R");
+                lastModified = lastModifiedElement.GetDateTimeOffsetValue("O");
             }
             if (element.Element("Etag") is XElement etagElement)
             {
@@ -103,7 +103,7 @@ namespace Azure.Storage.Files.DataLake.Models
             }
             if (element.Element("CopyCompletionTime") is XElement copyCompletionTimeElement)
             {
-                copyCompletionTime = copyCompletionTimeElement.GetDateTimeOffsetValue("R");
+                copyCompletionTime = copyCompletionTimeElement.GetDateTimeOffsetValue("O");
             }
             if (element.Element("CopyStatusDescription") is XElement copyStatusDescriptionElement)
             {
@@ -123,7 +123,7 @@ namespace Azure.Storage.Files.DataLake.Models
             }
             if (element.Element("DeletedTime") is XElement deletedTimeElement)
             {
-                deletedTime = deletedTimeElement.GetDateTimeOffsetValue("R");
+                deletedTime = deletedTimeElement.GetDateTimeOffsetValue("O");
             }
             if (element.Element("RemainingRetentionDays") is XElement remainingRetentionDaysElement)
             {
@@ -143,7 +143,7 @@ namespace Azure.Storage.Files.DataLake.Models
             }
             if (element.Element("AccessTierChangeTime") is XElement accessTierChangeTimeElement)
             {
-                accessTierChangeTime = accessTierChangeTimeElement.GetDateTimeOffsetValue("R");
+                accessTierChangeTime = accessTierChangeTimeElement.GetDateTimeOffsetValue("O");
             }
             if (element.Element("TagCount") is XElement tagCountElement)
             {
@@ -151,7 +151,7 @@ namespace Azure.Storage.Files.DataLake.Models
             }
             if (element.Element("Expiry-Time") is XElement expiryTimeElement)
             {
-                expiresOn = expiryTimeElement.GetDateTimeOffsetValue("R");
+                expiresOn = expiryTimeElement.GetDateTimeOffsetValue("O");
             }
             if (element.Element("Sealed") is XElement sealedElement)
             {
@@ -159,11 +159,11 @@ namespace Azure.Storage.Files.DataLake.Models
             }
             if (element.Element("LastAccessTime") is XElement lastAccessTimeElement)
             {
-                lastAccessedOn = lastAccessTimeElement.GetDateTimeOffsetValue("R");
+                lastAccessedOn = lastAccessTimeElement.GetDateTimeOffsetValue("O");
             }
             if (element.Element("DeleteTime") is XElement deleteTimeElement)
             {
-                deleteTime = deleteTimeElement.GetDateTimeOffsetValue("R");
+                deleteTime = deleteTimeElement.GetDateTimeOffsetValue("O");
             }
             return new BlobPropertiesInternal(
                 creationTime,

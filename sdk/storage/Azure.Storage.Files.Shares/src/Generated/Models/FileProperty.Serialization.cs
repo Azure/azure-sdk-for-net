@@ -44,7 +44,7 @@ namespace Azure.Storage.Files.Shares.Models
             }
             if (element.Element("Last-Modified") is XElement lastModifiedElement)
             {
-                lastModified = lastModifiedElement.GetDateTimeOffsetValue("R");
+                lastModified = lastModifiedElement.GetDateTimeOffsetValue("O");
             }
             if (element.Element("Etag") is XElement etagElement)
             {

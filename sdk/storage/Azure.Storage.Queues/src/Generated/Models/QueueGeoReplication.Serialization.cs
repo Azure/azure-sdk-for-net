@@ -23,7 +23,7 @@ namespace Azure.Storage.Queues.Models
             }
             if (element.Element("LastSyncTime") is XElement lastSyncTimeElement)
             {
-                lastSyncedOn = lastSyncTimeElement.GetDateTimeOffsetValue("R");
+                lastSyncedOn = lastSyncTimeElement.GetDateTimeOffsetValue("O");
             }
             return new QueueGeoReplication(status, lastSyncedOn);
         }

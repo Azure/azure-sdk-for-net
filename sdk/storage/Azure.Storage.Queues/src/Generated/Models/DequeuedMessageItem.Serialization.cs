@@ -28,11 +28,11 @@ namespace Azure.Storage.Queues.Models
             }
             if (element.Element("InsertionTime") is XElement insertionTimeElement)
             {
-                insertionTime = insertionTimeElement.GetDateTimeOffsetValue("R");
+                insertionTime = insertionTimeElement.GetDateTimeOffsetValue("O");
             }
             if (element.Element("ExpirationTime") is XElement expirationTimeElement)
             {
-                expirationTime = expirationTimeElement.GetDateTimeOffsetValue("R");
+                expirationTime = expirationTimeElement.GetDateTimeOffsetValue("O");
             }
             if (element.Element("PopReceipt") is XElement popReceiptElement)
             {
@@ -40,7 +40,7 @@ namespace Azure.Storage.Queues.Models
             }
             if (element.Element("TimeNextVisible") is XElement timeNextVisibleElement)
             {
-                timeNextVisible = timeNextVisibleElement.GetDateTimeOffsetValue("R");
+                timeNextVisible = timeNextVisibleElement.GetDateTimeOffsetValue("O");
             }
             if (element.Element("DequeueCount") is XElement dequeueCountElement)
             {

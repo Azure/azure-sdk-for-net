@@ -56,11 +56,11 @@ namespace Azure.Storage.Files.Shares.Models
             }
             if (element.Element("OpenTime") is XElement openTimeElement)
             {
-                openTime = openTimeElement.GetDateTimeOffsetValue("R");
+                openTime = openTimeElement.GetDateTimeOffsetValue("O");
             }
             if (element.Element("LastReconnectTime") is XElement lastReconnectTimeElement)
             {
-                lastReconnectTime = lastReconnectTimeElement.GetDateTimeOffsetValue("R");
+                lastReconnectTime = lastReconnectTimeElement.GetDateTimeOffsetValue("O");
             }
             if (element.Element("AccessRightList") is XElement accessRightListElement)
             {

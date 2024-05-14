@@ -44,7 +44,7 @@ namespace Azure.Storage.Files.DataLake.Models
                     {
                         continue;
                     }
-                    lastModified = property.Value.GetDateTimeOffset("R");
+                    lastModified = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("owner"u8))

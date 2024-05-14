@@ -191,11 +191,11 @@ namespace Azure.Storage.Blobs.Batch
             }
             if (ifModifiedSince != null)
             {
-                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "R");
+                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "O");
             }
             if (ifUnmodifiedSince != null)
             {
-                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "R");
+                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "O");
             }
             if (ifMatch != null)
             {
