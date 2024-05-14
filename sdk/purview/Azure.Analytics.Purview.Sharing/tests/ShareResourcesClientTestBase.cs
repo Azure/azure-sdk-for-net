@@ -16,13 +16,13 @@ namespace Azure.Analytics.Purview.Sharing.Tests
             this.AddPurviewSanitizers();
             this.BodyKeySanitizers.Add(new BodyKeySanitizer("properties.sink.storeReference.referenceName") { Value = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testResourceGroup/providers/Microsoft.Storage/storageAccounts/consumerTestStorageAccount" });
             this.UriRegexSanitizers.Add(new UriRegexSanitizer(@"[A-Za-z0-9-\-]*.purview.azure.com") { Value = "myaccountname.purview.azure.com" });
-            this.HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("Operation-Location") 
-            { 
+            this.HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("Operation-Location")
+            {
                 Regex = @"[A-Za-z0-9-\-]*.purview.azure.com",
                 Value = "myaccountname.purview.azure.com"
             });
-            this.HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("Operation-Id") 
-            { 
+            this.HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("Operation-Id")
+            {
                 Regex = @"[A-Za-z0-9-\-]*.purview.azure.com",
                 Value = "myaccountname.purview.azure.com"
             });

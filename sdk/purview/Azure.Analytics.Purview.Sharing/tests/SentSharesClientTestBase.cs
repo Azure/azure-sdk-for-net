@@ -20,13 +20,13 @@ namespace Azure.Analytics.Purview.Sharing.Tests
             this.BodyKeySanitizers.Add(new BodyKeySanitizer("value[0].properties.targetActiveDirectoryId") { Value = "9299795a-3979-4c95-a2fa-2431ea9171f2" });
 
             this.UriRegexSanitizers.Add(new UriRegexSanitizer(@"[A-Za-z0-9-\-]*.purview.azure.com") { Value = "myaccountname.purview.azure.com" });
-            this.HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("Operation-Location") 
-            { 
+            this.HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("Operation-Location")
+            {
                 Regex = @"[A-Za-z0-9-\-]*.purview.azure.com",
                 Value = "myaccountname.purview.azure.com"
             });
-            this.HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("Operation-Id") 
-            { 
+            this.HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("Operation-Id")
+            {
                 Regex = @"[A-Za-z0-9-\-]*.purview.azure.com",
                 Value = "myaccountname.purview.azure.com"
             });

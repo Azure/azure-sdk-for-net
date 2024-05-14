@@ -32,7 +32,8 @@ namespace Azure.Storage.Blobs.Test
             CompareBodies = false;
             BodyRegexSanitizers.Add(new BodyRegexSanitizer(@"sig=(?<group>.*?)(?=\s+)")
             {
-                GroupForReplace = "group"
+                GroupForReplace = "group",
+                Value = SanitizeValue
             });
         }
 
