@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             {
                 return null;
             }
-            string storageAccountResourceId = default;
+            ResourceIdentifier storageAccountResourceId = default;
             string blobContainerName = default;
             EndpointType endpointType = default;
             string description = default;
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             {
                 if (property.NameEquals("storageAccountResourceId"u8))
                 {
-                    storageAccountResourceId = property.Value.GetString();
+                    storageAccountResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("blobContainerName"u8))

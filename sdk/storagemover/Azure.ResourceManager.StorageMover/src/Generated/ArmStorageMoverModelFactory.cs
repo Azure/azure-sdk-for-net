@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <param name="storageAccountResourceId"> The Azure Resource ID of the storage account that is the target destination. </param>
         /// <param name="blobContainerName"> The name of the Storage blob container that is the target destination. </param>
         /// <returns> A new <see cref="Models.AzureStorageBlobContainerEndpointProperties"/> instance for mocking. </returns>
-        public static AzureStorageBlobContainerEndpointProperties AzureStorageBlobContainerEndpointProperties(string description = null, StorageMoverProvisioningState? provisioningState = null, string storageAccountResourceId = null, string blobContainerName = null)
+        public static AzureStorageBlobContainerEndpointProperties AzureStorageBlobContainerEndpointProperties(string description = null, StorageMoverProvisioningState? provisioningState = null, ResourceIdentifier storageAccountResourceId = null, string blobContainerName = null)
         {
             return new AzureStorageBlobContainerEndpointProperties(
                 EndpointType.AzureStorageBlobContainer,
