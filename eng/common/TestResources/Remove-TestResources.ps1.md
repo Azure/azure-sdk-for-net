@@ -15,7 +15,7 @@ Deletes the resource group deployed for a service directory from Azure.
 ### Default (Default)
 ```
 Remove-TestResources.ps1 [-BaseName <String>] [-SubscriptionId <String>] [[-ServiceDirectory] <String>]
- [-Environment <String>] [-ResourceType <String>] [-FederatedAuth] [-Force]
+ [-Environment <String>] [-ResourceType <String>] [-ServicePrincipalAuth] [-Force]
  [-RemoveTestResourcesRemainingArguments <Object>] [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm]
  [<CommonParameters>]
 ```
@@ -24,7 +24,7 @@ Remove-TestResources.ps1 [-BaseName <String>] [-SubscriptionId <String>] [[-Serv
 ```
 Remove-TestResources.ps1 -BaseName <String> -TenantId <String> [-SubscriptionId <String>]
  -ProvisionerApplicationId <String> -ProvisionerApplicationSecret <String> [[-ServiceDirectory] <String>]
- [-Environment <String>] [-ResourceType <String>] [-FederatedAuth] [-Force]
+ [-Environment <String>] [-ResourceType <String>] [-ServicePrincipalAuth] [-Force]
  [-RemoveTestResourcesRemainingArguments <Object>] [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm]
  [<CommonParameters>]
 ```
@@ -33,7 +33,7 @@ Remove-TestResources.ps1 -BaseName <String> -TenantId <String> [-SubscriptionId 
 ```
 Remove-TestResources.ps1 [-ResourceGroupName <String>] -TenantId <String> [-SubscriptionId <String>]
  -ProvisionerApplicationId <String> -ProvisionerApplicationSecret <String> [[-ServiceDirectory] <String>]
- [-Environment <String>] [-CI] [-ResourceType <String>] [-FederatedAuth] [-Force]
+ [-Environment <String>] [-CI] [-ResourceType <String>] [-ServicePrincipalAuth] [-Force]
  [-RemoveTestResourcesRemainingArguments <Object>] [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm]
  [<CommonParameters>]
 ```
@@ -41,7 +41,7 @@ Remove-TestResources.ps1 [-ResourceGroupName <String>] -TenantId <String> [-Subs
 ### ResourceGroup
 ```
 Remove-TestResources.ps1 [-ResourceGroupName <String>] [-SubscriptionId <String>]
- [[-ServiceDirectory] <String>] [-Environment <String>] [-CI] [-ResourceType <String>] [-FederatedAuth]
+ [[-ServiceDirectory] <String>] [-Environment <String>] [-CI] [-ResourceType <String>] [-ServicePrincipalAuth]
  [-Force] [-RemoveTestResourcesRemainingArguments <Object>] [-ProgressAction <ActionPreference>] [-WhatIf]
  [-Confirm] [<CommonParameters>]
 ```
@@ -255,10 +255,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -FederatedAuth
-Use signed in user's credentials for provisioninig.
-This is used in CI where
-the execution context already has a signed in user.
+### -ServicePrincipalAuth
+Log in with provided Provisioner application credentials.
 
 ```yaml
 Type: SwitchParameter

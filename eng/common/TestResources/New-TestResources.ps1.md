@@ -19,7 +19,7 @@ New-TestResources.ps1 [-BaseName <String>] [-ResourceGroupName <String>] [-Servi
  [-TestApplicationOid <String>] [-SubscriptionId <String>] [-DeleteAfterHours <Int32>] [-Location <String>]
  [-Environment <String>] [-ResourceType <String>] [-ArmTemplateParameters <Hashtable>]
  [-AdditionalParameters <Hashtable>] [-EnvironmentVariables <Hashtable>] [-CI] [-Force] [-OutFile]
- [-SuppressVsoCommands] [-ServicePrincipalAuth] [-FederatedAuth] [-NewTestResourcesRemainingArguments <Object>]
+ [-SuppressVsoCommands] [-ServicePrincipalAuth] [-NewTestResourcesRemainingArguments <Object>]
  [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
@@ -32,7 +32,7 @@ New-TestResources.ps1 [-BaseName <String>] [-ResourceGroupName <String>] [-Servi
  -ProvisionerApplicationSecret <String> [-DeleteAfterHours <Int32>] [-Location <String>]
  [-Environment <String>] [-ResourceType <String>] [-ArmTemplateParameters <Hashtable>]
  [-AdditionalParameters <Hashtable>] [-EnvironmentVariables <Hashtable>] [-CI] [-Force] [-OutFile]
- [-SuppressVsoCommands] [-ServicePrincipalAuth] [-FederatedAuth] [-NewTestResourcesRemainingArguments <Object>]
+ [-SuppressVsoCommands] [-ServicePrincipalAuth] [-NewTestResourcesRemainingArguments <Object>]
  [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
@@ -630,31 +630,10 @@ Accept wildcard characters: False
 ```
 
 ### -ServicePrincipalAuth
-Use the signed in user's credentials to create a service principal for
-provisioning.
-This is useful for some local development scenarios.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -FederatedAuth
-Use signed in user's credentials for provisioninig.
-No service principal will be
-created.
-This is used in CI where the execution context already has a signed in
-user.
-
-In cases where provisioner or test applications are specified, secrets for those
-apps will not be exported or made available to pre- or post- scripts.
+Use the provisioner SP credentials to deploy, and pass the test SP credentials
+to tests.
+If provisioner and test SP are not set, provision an SP with user
+credentials and pass the new SP to tests.
 
 ```yaml
 Type: SwitchParameter
