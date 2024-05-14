@@ -4,7 +4,7 @@
 
 ### Features Added
 
-- Added `BufferResponse` property to `RequestOptions` so protocol method callers can override the client value for response content buffering.
+- Added `BufferResponse` property to `RequestOptions` so protocol method callers can turn off response buffering if desired.
 
 ### Breaking Changes
 

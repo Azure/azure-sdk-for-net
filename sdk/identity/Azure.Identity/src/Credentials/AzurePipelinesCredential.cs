@@ -25,7 +25,7 @@ namespace Azure.Identity
         private const string OIDC_API_VERSION = "7.1";
 
         /// <summary>
-        /// Protected constructor for mocking.
+        /// Protected constructor for <see href="https://aka.ms/azsdk/net/mocking">mocking</see>.
         /// </summary>
         protected AzurePipelinesCredential()
         { }
