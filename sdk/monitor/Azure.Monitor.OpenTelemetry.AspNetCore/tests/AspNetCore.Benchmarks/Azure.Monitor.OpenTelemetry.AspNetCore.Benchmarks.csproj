@@ -12,7 +12,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="BenchmarkDotNet" Version="$(BenchmarkDotNetPkgVer)" />
+    <PackageReference Include="BenchmarkDotNet" VersionOverride="0.13.12" />
   </ItemGroup>
 
 </Project>

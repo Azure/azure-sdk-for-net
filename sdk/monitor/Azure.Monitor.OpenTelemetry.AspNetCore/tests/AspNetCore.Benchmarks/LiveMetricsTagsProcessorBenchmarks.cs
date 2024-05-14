@@ -2,24 +2,21 @@
 // Licensed under the MIT License.
 
 using System.Diagnostics;
-using Azure.Monitor.OpenTelemetry.AspNetCore.Internals;
 using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection;
-using Azure.Monitor.OpenTelemetry.AspNetCore.Models;
-using Azure.Monitor.OpenTelemetry.Exporter.Internals;
-
 using BenchmarkDotNet.Attributes;
 
 /*
-BenchmarkDotNet=v0.13.4, OS=Windows 11 (10.0.22621.1702)
-Intel Core i7-8850H CPU 2.60GHz (Coffee Lake), 1 CPU, 12 logical and 6 physical cores
-.NET SDK=7.0.203
-  [Host]     : .NET 7.0.5 (7.0.523.17405), X64 RyuJIT AVX2
-  DefaultJob : .NET 7.0.5 (7.0.523.17405), X64 RyuJIT AVX2
+BenchmarkDotNet v0.13.12, Windows 11 (10.0.22631.3447/23H2/2023Update/SunValley3) (Hyper-V)
+AMD EPYC 7763, 1 CPU, 16 logical and 8 physical cores
+.NET SDK 7.0.408
+  [Host]     : .NET 7.0.18 (7.0.1824.16914), X64 RyuJIT AVX2
+  DefaultJob : .NET 7.0.18 (7.0.1824.16914), X64 RyuJIT AVX2
 
 
-|                          Method |     Mean |   Error |  StdDev | Allocated |
-|-------------------------------- |---------:|--------:|--------:|----------:|
-| Benchmark_ActivityTagsProcessor | 262.0 ns | 2.51 ns | 2.10 ns |         - |
+| Method                          | Mean     | Error   | StdDev  | Gen0   | Allocated |
+|-------------------------------- |---------:|--------:|--------:|-------:|----------:|
+| Benchmark_DependencyOldDocument | 771.7 ns | 6.94 ns | 6.16 ns | 0.0505 |     856 B |
+| Benchmark_DependencyDocument    | 598.2 ns | 1.93 ns | 1.50 ns | 0.0505 |     856 B |
 */
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
@@ -28,7 +25,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
     public class LiveMetricsTagsProcessorBenchmarks
     {
         private Activity? _activity;
-        private RemoteDependency? remoteDependencyDocument;
 
         static LiveMetricsTagsProcessorBenchmarks()
         {
@@ -47,7 +43,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
         [GlobalSetup]
         public void Setup()
         {
-            remoteDependencyDocument = new();
             IEnumerable<KeyValuePair<string, object?>> tagObjects = new Dictionary<string, object?>
             {
                 ["http.request.method"] = "value1",
@@ -66,28 +61,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
             };
 
             _activity = CreateTestActivity(tagObjects!);
-        }
-
-        [Benchmark]
-        public void Benchmark_ActivityTagsProcessor()
-        {
-            var activityTagsProcessor = new ActivityTagsProcessor();
-            activityTagsProcessor.CategorizeTags(_activity!);
-            activityTagsProcessor.Return();
-        }
-
-        [Benchmark]
-        public void Benchmark_LiveMetricsTagsProcessor()
-        {
-            var liveMetricsTagsProcessor = new LiveMetricsTagsProcessor();
-            liveMetricsTagsProcessor.CategorizeTagsAndAddProperties(_activity!, remoteDependencyDocument!);
-            liveMetricsTagsProcessor.Return();
-        }
-
-        [Benchmark]
-        public void Benchmark_DependencyOldDocument()
-        {
-            DocumentHelper.ConvertToOldDependencyDocument(_activity!);
         }
 
         [Benchmark]

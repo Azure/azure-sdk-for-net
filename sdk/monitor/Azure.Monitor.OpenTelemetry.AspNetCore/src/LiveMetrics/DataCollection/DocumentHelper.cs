@@ -103,75 +103,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
         }
         #endregion
 
-        internal static RemoteDependency ConvertToOldDependencyDocument(Activity activity)
-        {
-            // TODO: Investigate if we can have a minimal/optimized version of ActivityTagsProcessor for LiveMetric.
-            var activityTagsProcessor = new ActivityTagsProcessor();
-            activityTagsProcessor.CategorizeTags(activity);
-
-            RemoteDependency remoteDependencyDocumentIngress = new()
-            {
-                DocumentType = DocumentType.RemoteDependency,
-
-                // The following "EXTENSION" properties are used to calculate metrics. These are not serialized.
-                Extension_Duration = activity.Duration.TotalMilliseconds,
-            };
-
-            SetProperties(remoteDependencyDocumentIngress, activityTagsProcessor);
-
-            // HACK: Remove the V2 for now. This Enum should be removed in the future.
-            if (activityTagsProcessor.activityType.HasFlag(OperationType.V2))
-            {
-                activityTagsProcessor.activityType &= ~OperationType.V2;
-            }
-
-            switch (activityTagsProcessor.activityType)
-            {
-                case OperationType.Http:
-                    remoteDependencyDocumentIngress.Name = activity.DisplayName;
-                    remoteDependencyDocumentIngress.CommandName = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeUrlFull)?.ToString();
-                    var httpResponseStatusCode = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeHttpResponseStatusCode)?.ToString();
-                    remoteDependencyDocumentIngress.ResultCode = httpResponseStatusCode;
-                    remoteDependencyDocumentIngress.Duration = activity.Duration < SchemaConstants.RequestData_Duration_LessThanDays
-                                                ? activity.Duration.ToString("c", CultureInfo.InvariantCulture)
-                                                                : SchemaConstants.Duration_MaxValue;
-
-                    // The following "EXTENSION" properties are used to calculate metrics. These are not serialized.
-                    remoteDependencyDocumentIngress.Extension_IsSuccess = IsHttpSuccess(activity, httpResponseStatusCode);
-                    break;
-                case OperationType.Db:
-                    // Note: The Exception details are recorded in Activity.Events only if the configuration has opt-ed into this (SqlClientInstrumentationOptions.RecordException).
-
-                    var (_, dbTarget) = activityTagsProcessor.MappedTags.GetDbDependencyTargetAndName();
-
-                    remoteDependencyDocumentIngress.Name = dbTarget;
-                    remoteDependencyDocumentIngress.CommandName = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeDbStatement)?.ToString();
-                    remoteDependencyDocumentIngress.Duration = activity.Duration.ToString("c", CultureInfo.InvariantCulture);
-
-                    // TODO: remoteDependencyDocumentIngress.ResultCode = "";
-                    // AI SDK reads a Number property from Connection or Command objects.
-                    // As of Feb 2024, OpenTelemetry doesn't record this. This may change in the future when the semantic convention stabalizes.
-
-                    // The following "EXTENSION" properties are used to calculate metrics. These are not serialized.
-                    remoteDependencyDocumentIngress.Extension_IsSuccess = activity.Status != ActivityStatusCode.Error;
-                    break;
-                case OperationType.Rpc:
-                    // TODO RPC
-                    break;
-                case OperationType.Messaging:
-                    // TODO MESSAGING
-                    break;
-                default:
-                    // Unknown or Unexpected Dependency Type
-                    remoteDependencyDocumentIngress.Name = activityTagsProcessor.activityType.ToString();
-                    break;
-            }
-
-            activityTagsProcessor.Return();
-
-            return remoteDependencyDocumentIngress;
-        }
-
         internal static RemoteDependency ConvertToDependencyDocument(Activity activity)
         {
             RemoteDependency remoteDependencyDocument = new()
@@ -441,18 +372,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
             else
             {
                 return activity.Status != ActivityStatusCode.Error;
-            }
-        }
-
-        private static void SetProperties(DocumentIngress documentIngress, ActivityTagsProcessor atp)
-        {
-            for (int i = 0; i < atp.UnMappedTags.Length && i < MaxPropertiesCount; i++)
-            {
-                var tag = atp.UnMappedTags[i];
-                if (tag.Value != null)
-                {
-                    documentIngress.Properties.Add(new KeyValuePairString(tag.Key, tag.Value.ToString()));
-                }
             }
         }
     }
