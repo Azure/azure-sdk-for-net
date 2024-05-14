@@ -17,7 +17,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         ///
         /// Applies to copy and upload transfers.
         /// </summary>
-        public string FilePermissions { get; set; }
+        public DataTransferProperty<string> FilePermissions { get; set; }
 
         /// <summary>
         /// Optional. See <see cref="ShareFileRequestConditions"/>.
@@ -102,7 +102,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// <summary>
         /// The key of the file permission.
         /// </summary>
-        public string FilePermissionKey { get; set; }
+        public DataTransferProperty FilePermissionKey { get; set; }
 
         /// <summary>
         /// The creation time of the file.

@@ -103,6 +103,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             DataTransferProperty<string> contentDisposition,
             DataTransferProperty<string> cacheControl,
             DataTransferProperty<NtfsFileAttributes?> fileAttributes,
+            string filePermission,
             string filePermissionKey,
             DataTransferProperty<DateTimeOffset?> fileCreatedOn,
             DataTransferProperty<DateTimeOffset?> fileLastWrittenOn,
