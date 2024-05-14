@@ -4,6 +4,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 
 namespace System.ClientModel.Internal;
 
@@ -16,12 +17,21 @@ internal class ServerSentEventEnumerable : IEnumerable<ServerSentEvent>
 
     public ServerSentEventEnumerable(Stream contentStream)
     {
+        Argument.AssertNotNull(contentStream, nameof(contentStream));
+
         _contentStream = contentStream;
+
+        LastEventId = string.Empty;
+        ReconnectionInterval = Timeout.InfiniteTimeSpan;
     }
+
+    public string LastEventId { get; private set; }
+
+    public TimeSpan ReconnectionInterval { get; private set; }
 
     public IEnumerator<ServerSentEvent> GetEnumerator()
     {
-        return new ServerSentEventEnumerator(_contentStream);
+        return new ServerSentEventEnumerator(_contentStream, this);
     }
 
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
@@ -29,10 +39,12 @@ internal class ServerSentEventEnumerable : IEnumerable<ServerSentEvent>
     private sealed class ServerSentEventEnumerator : IEnumerator<ServerSentEvent>
     {
         private readonly ServerSentEventReader _reader;
+        private readonly ServerSentEventEnumerable _enumerable;
 
-        public ServerSentEventEnumerator(Stream contentStream)
+        public ServerSentEventEnumerator(Stream contentStream, ServerSentEventEnumerable enumerable)
         {
             _reader = new(contentStream);
+            _enumerable = enumerable;
         }
 
         public ServerSentEvent Current { get; private set; }
@@ -42,6 +54,8 @@ internal class ServerSentEventEnumerable : IEnumerable<ServerSentEvent>
         public bool MoveNext()
         {
             ServerSentEvent? nextEvent = _reader.TryGetNextEvent();
+            _enumerable.LastEventId = _reader.LastEventId;
+            _enumerable.ReconnectionInterval= _reader.ReconnectionInterval;
 
             if (nextEvent.HasValue)
             {

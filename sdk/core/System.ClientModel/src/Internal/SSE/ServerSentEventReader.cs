@@ -20,10 +20,19 @@ internal sealed class ServerSentEventReader
 
     public ServerSentEventReader(Stream stream)
     {
+        Argument.AssertNotNull(stream, nameof(stream));
+
         // The creator of the reader has responsibility for disposing the
         // stream passed to the reader's constructor.
         _reader = new StreamReader(stream);
+
+        LastEventId = string.Empty;
+        ReconnectionInterval = Timeout.InfiniteTimeSpan;
     }
+
+    public string LastEventId { get; private set; }
+
+    public TimeSpan ReconnectionInterval { get; private set; }
 
     /// <summary>
     /// Synchronously retrieves the next server-sent event from the underlying stream, blocking until a new event is
@@ -93,7 +102,7 @@ internal sealed class ServerSentEventReader
         }
     }
 
-    private static void ProcessLine(string line, ref PendingEvent pending, out bool dispatch)
+    private void ProcessLine(string line, ref PendingEvent pending, out bool dispatch)
     {
         dispatch = false;
 
@@ -126,10 +135,13 @@ internal sealed class ServerSentEventReader
                     pending.DataFields.Add(field);
                     break;
                 case ServerSentEventFieldKind.Id:
-                    pending.IdField = field;
+                    LastEventId = field.Value.ToString();
                     break;
                 case ServerSentEventFieldKind.Retry:
-                    pending.RetryField = field;
+                    if (field.Value.Length > 0 && int.TryParse(field.Value.ToString(), out int retry))
+                    {
+                        ReconnectionInterval = TimeSpan.FromMilliseconds(retry);
+                    }
                     break;
                 default:
                     // Ignore
@@ -147,8 +159,6 @@ internal sealed class ServerSentEventReader
         public int DataLength { get; set; }
         public List<ServerSentEventField> DataFields => _dataFields ??= new();
         public ServerSentEventField? EventTypeField { get; set; }
-        public ServerSentEventField? IdField { get; set; }
-        public ServerSentEventField? RetryField { get; set; }
 
         public ServerSentEvent ToEvent()
         {
@@ -158,12 +168,6 @@ internal sealed class ServerSentEventReader
             string type = EventTypeField.HasValue ?
                 EventTypeField.Value.Value.ToString() :
                 "message";
-
-            string? id = IdField.HasValue && IdField.Value.Value.Length > 0 ?
-                IdField.Value.Value.ToString() : default;
-
-            string? retry = RetryField.HasValue && RetryField.Value.Value.Length > 0 ?
-                RetryField.Value.Value.ToString() : default;
 
             Memory<char> buffer = new(new char[DataLength]);
 
@@ -182,7 +186,7 @@ internal sealed class ServerSentEventReader
             // Per spec, remove trailing LF from concatenated data fields.
             string data = buffer.Slice(0, buffer.Length - 1).ToString();
 
-            return new ServerSentEvent(type, data, id, retry);
+            return new ServerSentEvent(type, data);
         }
     }
 }

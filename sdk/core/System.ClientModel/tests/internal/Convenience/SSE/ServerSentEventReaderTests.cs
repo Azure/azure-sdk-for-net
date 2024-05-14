@@ -89,10 +89,12 @@ public class ServerSentEventReaderTests : SyncAsyncTestBase
         ServerSentEvent? sse = await reader.TryGetNextEventSyncOrAsync(IsAsync);
 
         Assert.IsNotNull(sse);
+
         Assert.AreEqual("stop", sse.Value.EventType);
         Assert.AreEqual("~stop~", sse.Value.Data);
-        Assert.IsNull(sse.Value.Id);
-        Assert.IsNull(sse.Value.ReconnectionTime);
+
+        Assert.AreEqual(string.Empty, reader.LastEventId);
+        Assert.AreEqual(Timeout.InfiniteTimeSpan, reader.ReconnectionInterval);
     }
 
     [Test]
@@ -110,9 +112,11 @@ public class ServerSentEventReaderTests : SyncAsyncTestBase
         ServerSentEvent? sse = await reader.TryGetNextEventSyncOrAsync(IsAsync);
 
         Assert.IsNotNull(sse);
+
         Assert.AreEqual("YHOO\n+2\n10", sse.Value.Data);
-        Assert.IsNull(sse.Value.Id);
-        Assert.IsNull(sse.Value.ReconnectionTime);
+
+        Assert.AreEqual(string.Empty, reader.LastEventId);
+        Assert.AreEqual(Timeout.InfiniteTimeSpan, reader.ReconnectionInterval);
     }
 
     [Test]
@@ -128,10 +132,9 @@ public class ServerSentEventReaderTests : SyncAsyncTestBase
         ServerSentEvent? sse = await reader.TryGetNextEventSyncOrAsync(IsAsync);
 
         Assert.IsNotNull(sse);
+
         Assert.AreEqual("message", sse.Value.EventType);
         Assert.AreEqual("data", sse.Value.Data);
-        Assert.IsNull(sse.Value.Id);
-        Assert.IsNull(sse.Value.ReconnectionTime);
     }
 
     [Test]
@@ -154,24 +157,27 @@ public class ServerSentEventReaderTests : SyncAsyncTestBase
         ServerSentEventReader reader = new(contentStream);
 
         List<ServerSentEvent> events = new();
+        List<string> ids = new();
 
         ServerSentEvent? sse = await reader.TryGetNextEventSyncOrAsync(IsAsync);
         while (sse is not null)
         {
             events.Add(sse.Value);
+            ids.Add(reader.LastEventId.ToString());
+
             sse = await reader.TryGetNextEventSyncOrAsync(IsAsync);
         }
 
         Assert.AreEqual(3, events.Count);
 
         Assert.AreEqual("first event", events[0].Data);
-        Assert.AreEqual("1", events[0].Id);
+        Assert.AreEqual("1", ids[0]);
 
         Assert.AreEqual("second event", events[1].Data);
-        Assert.IsNull(events[1].Id);
+        Assert.AreEqual(string.Empty, ids[1]);
 
         Assert.AreEqual(" third event", events[2].Data);
-        Assert.IsNull(events[2].Id);
+        Assert.AreEqual(string.Empty, ids[2]);
     }
 
     [Test]
@@ -226,6 +232,48 @@ public class ServerSentEventReaderTests : SyncAsyncTestBase
 
         Assert.AreEqual(2, events.Count);
         Assert.AreEqual(events[0].Data, events[1].Data);
+    }
+
+    [Test]
+    public async Task SetsReconnectionInterval()
+    {
+        Stream contentStream = BinaryData.FromString("""
+            data: test
+
+            data: test
+            retry: 2500
+
+            data: test
+            retry:
+
+
+            """).ToStream();
+        ServerSentEventReader reader = new(contentStream);
+
+        List<ServerSentEvent> events = new();
+        List<TimeSpan> retryValues = new();
+
+        ServerSentEvent? sse = await reader.TryGetNextEventSyncOrAsync(IsAsync);
+        while (sse is not null)
+        {
+            events.Add(sse.Value);
+            retryValues.Add(reader.ReconnectionInterval);
+
+            sse = await reader.TryGetNextEventSyncOrAsync(IsAsync);
+        }
+
+        Assert.AreEqual(3, events.Count);
+
+        // Defaults to infinite timespan
+        Assert.AreEqual("test", events[0].Data);
+        Assert.AreEqual(Timeout.InfiniteTimeSpan, retryValues[0]);
+
+        Assert.AreEqual("test", events[1].Data);
+        Assert.AreEqual(new TimeSpan(0, 0, 0, 2, 500), retryValues[1]);
+
+        // Ignores invalid values
+        Assert.AreEqual("test", events[2].Data);
+        Assert.AreEqual(new TimeSpan(0, 0, 0, 2, 500), retryValues[2]);
     }
 
     [Test]
