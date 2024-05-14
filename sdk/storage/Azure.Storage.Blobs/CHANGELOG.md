@@ -1,5 +1,15 @@
 # Release History
 
+## 12.21.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 12.20.0 (2024-05-13)
 - Includes all features from 12.20.0-beta.1 and 12.20.0-beta.2.
 - Fixed bug where `BlobContainerClient` and `BlobBaseClient` did not throw an exception on empty/null container names and blob names, respectively, when constructing a client. 

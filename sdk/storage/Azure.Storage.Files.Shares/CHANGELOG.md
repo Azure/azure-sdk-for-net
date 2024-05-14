@@ -1,5 +1,15 @@
 # Release History
 
+## 12.19.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 12.18.0 (2024-05-13)
 - Includes all features from 12.18.0-beta.1 and 12.18.0-beta.2.
 - Fixed bug where `ShareClient` and `ShareFileClient` did not throw an exception on empty/null share container names and file names, respectively, when constructing a client.
