@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Dns
             {
                 writer.WritePropertyName("NaptrRecords");
                 writer.WriteStartArray();
-                foreach (var item in DnsNaptrRecorNaptr)
+                foreach (var item in DnsNaptrRecords)
                 {
                     writer.WriteObjectValue(item);
                 }
