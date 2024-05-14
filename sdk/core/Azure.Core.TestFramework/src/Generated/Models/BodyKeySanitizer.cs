@@ -25,8 +25,8 @@ namespace Azure.Core.TestFramework.Models
 
         /// <summary> Gets the json path. </summary>
         public string JsonPath { get; }
-        /// <summary> Gets or sets the sanitized value. </summary>
-        public string SanitizedValue { get; set; }
+        /// <summary> Gets or sets the value. </summary>
+        public string Value { get; set; }
         /// <summary> Gets or sets the regex. </summary>
         public string Regex { get; set; }
         /// <summary> Gets or sets the group for replace. </summary>

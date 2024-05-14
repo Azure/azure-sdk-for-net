@@ -692,7 +692,7 @@
         "key": {
           "type": "string"
         },
-        "sanitizedValue": {
+        "value": {
           "type": "string"
         },
         "condition": {
@@ -710,7 +710,7 @@
         "jsonPath": {
           "type": "string"
         },
-        "sanitizedValue": {
+        "value": {
           "type": "string"
         },
         "regex": {
@@ -731,7 +731,7 @@
         "regex": {
           "type": "string"
         },
-        "sanitizedValue": {
+        "value": {
           "type": "string"
         },
         "groupForReplace": {
@@ -752,7 +752,7 @@
         "key": {
           "type": "string"
         },
-        "sanitizedValue": {
+        "value": {
           "type": "string"
         },
         "regex": {
@@ -773,7 +773,7 @@
         "regex": {
           "type": "string"
         },
-        "sanitizedValue": {
+        "value": {
           "type": "string"
         },
         "groupForReplace": {

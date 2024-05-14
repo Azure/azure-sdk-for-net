@@ -40,7 +40,7 @@ namespace Azure.Identity.Tests
             BodyRegexSanitizers.Add(new BodyRegexSanitizer(@"=[^&|}|""]+")
             {
                 Condition = new Condition { UriRegex = ".*/token([?].*)?$" },
-                SanitizedValue = "=" + SanitizeValue
+                Value = "=" + SanitizeValue
             });
             HeaderTransforms.Add(new HeaderTransform(
                 "WWW-Authenticate",

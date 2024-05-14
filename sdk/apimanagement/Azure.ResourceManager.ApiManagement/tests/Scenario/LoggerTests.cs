@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
                 @"/providers/Microsoft.EventHub/namespaces/([\S]+)?pi-version=(?<group>[a-z0-9-]+)")
             {
                 GroupForReplace = "group",
-                SanitizedValue = "**"
+                Value = "**"
             });
         }
 

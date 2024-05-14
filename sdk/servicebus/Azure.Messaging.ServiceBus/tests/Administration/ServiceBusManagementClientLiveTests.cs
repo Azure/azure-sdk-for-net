@@ -35,20 +35,20 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                 new BodyRegexSanitizer(
                     "\\u003CPrimaryKey\\u003E.*\\u003C/PrimaryKey\\u003E")
                     {
-                        SanitizedValue = $"\u003CPrimaryKey\u003E{SanitizedKeyValue}\u003C/PrimaryKey\u003E"
+                        Value = $"\u003CPrimaryKey\u003E{SanitizedKeyValue}\u003C/PrimaryKey\u003E"
                     });
             BodyRegexSanitizers.Add(
                 new BodyRegexSanitizer(
                     "\\u003CSecondaryKey\\u003E.*\\u003C/SecondaryKey\\u003E")
                     {
-                        SanitizedValue = $"\u003CSecondaryKey\u003E{SanitizedKeyValue}\u003C/SecondaryKey\u003E"
+                        Value = $"\u003CSecondaryKey\u003E{SanitizedKeyValue}\u003C/SecondaryKey\u003E"
                     });
             BodyRegexSanitizers.Add(
                 new BodyRegexSanitizer(
                     "[^\\r](?<break>\\n)")
                 {
                     GroupForReplace = "break",
-                    SanitizedValue = "\r\n"
+                    Value = "\r\n"
                 });
             _serviceVersion = serviceVersion;
         }

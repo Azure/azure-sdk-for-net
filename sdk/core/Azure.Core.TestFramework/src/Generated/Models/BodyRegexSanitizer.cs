@@ -25,8 +25,8 @@ namespace Azure.Core.TestFramework.Models
 
         /// <summary> Gets the regex. </summary>
         public string Regex { get; }
-        /// <summary> Gets or sets the sanitized value. </summary>
-        public string SanitizedValue { get; set; }
+        /// <summary> Gets or sets the value. </summary>
+        public string Value { get; set; }
         /// <summary> Gets or sets the group for replace. </summary>
         public string GroupForReplace { get; set; }
         /// <summary> Condition to apply for the sanitization or transform. If the condition is not met, sanitization/transform is not performed. </summary>

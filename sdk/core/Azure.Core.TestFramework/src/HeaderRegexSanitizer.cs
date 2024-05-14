@@ -11,7 +11,7 @@ namespace Azure.Core.TestFramework.Models
                 // match the value of the query parameter up until the next ampersand or the end of the string
                 Regex = $@"([\x0026|&|?]{queryParameter}=)(?<group>[^&]+)",
                 GroupForReplace = "group",
-                SanitizedValue = sanitizedValue
+                Value = sanitizedValue
             };
     }
 }

@@ -17,10 +17,10 @@ namespace Azure.Core.TestFramework.Models
             writer.WriteStartObject();
             writer.WritePropertyName("jsonPath"u8);
             writer.WriteStringValue(JsonPath);
-            if (Optional.IsDefined(SanitizedValue))
+            if (Optional.IsDefined(Value))
             {
-                writer.WritePropertyName("sanitizedValue"u8);
-                writer.WriteStringValue(SanitizedValue);
+                writer.WritePropertyName("value"u8);
+                writer.WriteStringValue(Value);
             }
             if (Optional.IsDefined(Regex))
             {

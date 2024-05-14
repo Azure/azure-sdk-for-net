@@ -180,7 +180,7 @@ namespace Azure.Core.TestFramework
                     new UriRegexSanitizer(@"https://(?<host>[^/]+)/")
                     {
                         GroupForReplace = "host",
-                        SanitizedValue = _replacementHost
+                        Value = _replacementHost
                     });
             }
         }

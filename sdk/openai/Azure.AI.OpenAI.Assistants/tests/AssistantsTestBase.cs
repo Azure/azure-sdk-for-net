@@ -45,13 +45,13 @@ public abstract partial class AssistantsTestBase : RecordedTestBase<OpenAITestEn
 
     protected AssistantsTestBase(bool isAsync, RecordedTestMode? mode = null) : base(isAsync, mode)
     {
-        BodyRegexSanitizers.Add(new BodyRegexSanitizer(TestMetadataValue) { SanitizedValue = "RecordedMetadataValue" });
-        BodyRegexSanitizers.Add(new BodyRegexSanitizer("sig=[^\"]*") { SanitizedValue = "sig=Sanitized" });
-        BodyRegexSanitizers.Add(new BodyRegexSanitizer("(\"key\" *: *\")[^ \n\"]*(\")") { SanitizedValue = "$1placeholder$2" });
-        HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("api-key") { SanitizedValue = "***********" });
-        UriRegexSanitizers.Add(new UriRegexSanitizer("sig=[^\"]*") { SanitizedValue = "sig=Sanitized" });
-        UriRegexSanitizers.Add(new(TestEnvironment.AzureOpenAIResourceUri ?? s_placeholderAzureResourceUrl) { SanitizedValue = s_placeholderAzureResourceUrl });
-        UriRegexSanitizers.Add(new("files/[^/\\?]*") { SanitizedValue = "files/placeholder-file-id" });
+        BodyRegexSanitizers.Add(new BodyRegexSanitizer(TestMetadataValue) { Value = "RecordedMetadataValue" });
+        BodyRegexSanitizers.Add(new BodyRegexSanitizer("sig=[^\"]*") { Value = "sig=Sanitized" });
+        BodyRegexSanitizers.Add(new BodyRegexSanitizer("(\"key\" *: *\")[^ \n\"]*(\")") { Value = "$1placeholder$2" });
+        HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("api-key") { Value = "***********" });
+        UriRegexSanitizers.Add(new UriRegexSanitizer("sig=[^\"]*") { Value = "sig=Sanitized" });
+        UriRegexSanitizers.Add(new(TestEnvironment.AzureOpenAIResourceUri ?? s_placeholderAzureResourceUrl) { Value = s_placeholderAzureResourceUrl });
+        UriRegexSanitizers.Add(new("files/[^/\\?]*") { Value = "files/placeholder-file-id" });
         SanitizedQueryParameters.Add("sig");
     }
 

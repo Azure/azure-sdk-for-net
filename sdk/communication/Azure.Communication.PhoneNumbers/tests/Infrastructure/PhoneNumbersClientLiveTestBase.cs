@@ -26,7 +26,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             });
             BodyRegexSanitizers.Add(new BodyRegexSanitizer(PhoneNumberRegEx));
             UriRegexSanitizers.Add(new UriRegexSanitizer(PhoneNumberRegEx));
-            UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainNameReplacerRegEx) { SanitizedValue = "https://sanitized.communication.azure.com" });
+            UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainNameReplacerRegEx) { Value = "https://sanitized.communication.azure.com" });
             SanitizedHeaders.Add("x-ms-content-sha256");
         }
 

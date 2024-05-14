@@ -49,16 +49,16 @@ namespace Azure.Storage.Test.Shared
 #if NETFRAMEWORK
             // Uri uses different escaping for some special characters between .NET Framework and Core. Because the Test Proxy runs on .NET
             // Core, we need to normalize to the .NET Core escaping when matching and storing the recordings when running tests on NetFramework.
-            UriRegexSanitizers.Add(new UriRegexSanitizer("\\("){ SanitizedValue = "%28" });
-            UriRegexSanitizers.Add(new UriRegexSanitizer("\\)"){ SanitizedValue = "%29" });
-            UriRegexSanitizers.Add(new UriRegexSanitizer("\\!"){ SanitizedValue = "%21" });
-            UriRegexSanitizers.Add(new UriRegexSanitizer("\\'"){ SanitizedValue = "%27" });
-            UriRegexSanitizers.Add(new UriRegexSanitizer("\\*"){ SanitizedValue = "%2A" });
+            UriRegexSanitizers.Add(new UriRegexSanitizer("\\("){ Value = "%28" });
+            UriRegexSanitizers.Add(new UriRegexSanitizer("\\)"){ Value = "%29" });
+            UriRegexSanitizers.Add(new UriRegexSanitizer("\\!"){ Value = "%21" });
+            UriRegexSanitizers.Add(new UriRegexSanitizer("\\'"){ Value = "%27" });
+            UriRegexSanitizers.Add(new UriRegexSanitizer("\\*"){ Value = "%2A" });
             // Encode any colons in the Uri except for the one in the scheme
             UriRegexSanitizers.Add(new UriRegexSanitizer("(?<group>:)[^//]")
             {
                 GroupForReplace = "group",
-                SanitizedValue = "%3A"
+                Value = "%3A"
             });
 #endif
 
@@ -73,7 +73,7 @@ namespace Azure.Storage.Test.Shared
             BodyRegexSanitizers.Add(new BodyRegexSanitizer(@"client_secret=(?<group>.*?)(?=&|$)")
             {
                 GroupForReplace = "group",
-                SanitizedValue = SanitizeValue
+                Value = SanitizeValue
             });
 
             Tenants = new TenantConfigurationBuilder(this);

@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
             UriRegexSanitizers.Add(new UriRegexSanitizer(@"/Microsoft.EventHub/namespaces/[^/]+api-version=(?<group>[a-z0-9-]+)") 
             { 
                 GroupForReplace = "group",
-                SanitizedValue = "**"
+                Value = "**"
             });
             UriRegexSanitizers.Add(new UriRegexSanitizer(@"/Microsoft.EventHub/namespaces/[^/]+/eventhubs/[^/]+api-version=(?<group>[a-z0-9-]+)") 
             { 
                 GroupForReplace = "group",
-                SanitizedValue = "**"
+                Value = "**"
             });
         }
 
@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
             UriRegexSanitizers.Add(new UriRegexSanitizer(@"/Microsoft.EventHub/namespaces/[^/]+api-version=(?<group>[a-z0-9-]+)") 
             { 
                 GroupForReplace = "group",
-                SanitizedValue = "**"
+                Value = "**"
             });
             UriRegexSanitizers.Add(new UriRegexSanitizer(@"/Microsoft.EventHub/namespaces/[^/]+/eventhubs/[^/]+api-version=(?<group>[a-z0-9-]+)") 
             { 
                 GroupForReplace = "group",
-                SanitizedValue = "**"
+                Value = "**"
             });
         }
 

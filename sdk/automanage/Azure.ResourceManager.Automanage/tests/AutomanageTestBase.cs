@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Automanage.Tests
                 @"/providers/Microsoft.Resources/deployments/[^/]+(/operationStatuses/[^/]+)?pi-version=(?<group>[a-z0-9-]+)")
             {
                 GroupForReplace = "group",
-                SanitizedValue = "**"
+                Value = "**"
             });
         }
     }

@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.Subscription.Tests
                 @"/subscriptions/[^/]+/tagNames[/]?[^/]*api-version=(?<group>[a-z0-9-]+)")
             {
                 GroupForReplace = "group",
-                SanitizedValue = "**"
+                Value = "**"
             });
             // Ignore the api-version of tagValues operations
             UriRegexSanitizers.Add(new UriRegexSanitizer(
                 @"/subscriptions/[^/]+/tagNames/[^/]+/tagValues/[^/]+api-version=(?<group>[a-z0-9-]+)")
             {
                 GroupForReplace = "group",
-                SanitizedValue = "**"
+                Value = "**"
             });
         }
     }

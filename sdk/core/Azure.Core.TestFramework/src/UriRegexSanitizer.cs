@@ -9,7 +9,7 @@ namespace Azure.Core.TestFramework.Models
             new($@"([\x0026|&|?]{queryParameter}=)(?<group>[^&]+)")
             {
                 GroupForReplace = "group",
-                SanitizedValue = sanitizedValue
+                Value = sanitizedValue
             };
     }
 }

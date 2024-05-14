@@ -28,7 +28,7 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
                 new HeaderRegexSanitizer("apc-gateway-id")
                 {
                     Regex = @"[A-Za-z0-9-\-]+/resourceGroups",
-                    SanitizedValue = "**********/resourceGroups"
+                    Value = "**********/resourceGroups"
                 });
             credential = TestEnvironment.Credential;
         }
