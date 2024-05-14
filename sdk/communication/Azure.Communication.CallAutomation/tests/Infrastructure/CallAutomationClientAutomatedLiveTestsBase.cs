@@ -52,9 +52,9 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
             JsonPathSanitizers.Add("$..botAppId");
             JsonPathSanitizers.Add("$..ivrContext");
             JsonPathSanitizers.Add("$..dialog.botAppId");
-            BodyKeySanitizers.Add(new BodyKeySanitizer("..callbackUri") { SanitizedValue = @"https://sanitized.skype.com/api/servicebuscallback/events?q=SanitizedSanitized"});
-            BodyRegexSanitizers.Add(new BodyRegexSanitizer(TestDispatcherRegEx) { SanitizedValue = "https://sanitized.skype.com" });
-            UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainRegEx) { SanitizedValue = "https://sanitized.skype.com" });
+            BodyKeySanitizers.Add(new BodyKeySanitizer("..callbackUri") { Value = @"https://sanitized.skype.com/api/servicebuscallback/events?q=SanitizedSanitized"});
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer(TestDispatcherRegEx) { Value = "https://sanitized.skype.com" });
+            UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainRegEx) { Value = "https://sanitized.skype.com" });
             UriRegexSanitizers.Add(new UriRegexSanitizer(TestDispatcherQNameRegEx));
         }
 

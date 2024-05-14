@@ -20,7 +20,7 @@ namespace Azure.Communication.Sms.Tests
             JsonPathSanitizers.Add("$..repeatabilityRequestId");
             JsonPathSanitizers.Add("$..repeatabilityFirstSent");
             SanitizedHeaders.Add("x-ms-content-sha256");
-            UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainNameReplacerRegEx) { SanitizedValue = "https://sanitized.communication.azure.com" });
+            UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainNameReplacerRegEx) { Value = "https://sanitized.communication.azure.com" });
         }
 
         [OneTimeSetUp]

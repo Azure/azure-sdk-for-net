@@ -27,9 +27,9 @@ namespace Azure.Communication.Rooms.Tests
             JsonPathSanitizers.Add("$..appId");
             JsonPathSanitizers.Add("$..userId");
             BodyRegexSanitizers.Add(new BodyRegexSanitizer(DateTimeStampRegEx));
-            UriRegexSanitizers.Add(new UriRegexSanitizer(URIIdentityReplacerRegEx) { SanitizedValue = "/identities/Sanitized" });
-            UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainNameReplacerRegEx) { SanitizedValue = "https://sanitized.communication.azure.com" });
-            UriRegexSanitizers.Add(new UriRegexSanitizer(URIRoomsIdReplacerRegEx) { SanitizedValue = "/rooms/Sanitized" });
+            UriRegexSanitizers.Add(new UriRegexSanitizer(URIIdentityReplacerRegEx) { Value = "/identities/Sanitized" });
+            UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainNameReplacerRegEx) { Value = "https://sanitized.communication.azure.com" });
+            UriRegexSanitizers.Add(new UriRegexSanitizer(URIRoomsIdReplacerRegEx) { Value = "/rooms/Sanitized" });
         }
 
         /// <summary>
