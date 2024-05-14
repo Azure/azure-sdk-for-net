@@ -900,8 +900,8 @@ namespace Azure.Analytics.Purview.Scanning.Samples
                     {
                         frequency = "Week",
                         interval = 1234,
-                        startTime = "2022-05-10T18:57:31.2311892Z",
-                        endTime = "2022-05-10T18:57:31.2311892Z",
+                        startTime = "2022-05-10T14:57:31.2311892-04:00",
+                        endTime = "2022-05-10T14:57:31.2311892-04:00",
                         schedule = new
                         {
                             additionalProperties = new
@@ -941,7 +941,7 @@ occurrence = 1234,
                     },
                     recurrenceInterval = "<recurrenceInterval>",
                     scanLevel = "Full",
-                    incrementalScanStartTime = "2022-05-10T18:57:31.2311892Z",
+                    incrementalScanStartTime = "2022-05-10T14:57:31.2311892-04:00",
                 },
             });
             Response response = client.CreateOrUpdateTrigger(content);
@@ -986,8 +986,8 @@ occurrence = 1234,
                     {
                         frequency = "Week",
                         interval = 1234,
-                        startTime = "2022-05-10T18:57:31.2311892Z",
-                        endTime = "2022-05-10T18:57:31.2311892Z",
+                        startTime = "2022-05-10T14:57:31.2311892-04:00",
+                        endTime = "2022-05-10T14:57:31.2311892-04:00",
                         schedule = new
                         {
                             additionalProperties = new
@@ -1027,7 +1027,7 @@ occurrence = 1234,
                     },
                     recurrenceInterval = "<recurrenceInterval>",
                     scanLevel = "Full",
-                    incrementalScanStartTime = "2022-05-10T18:57:31.2311892Z",
+                    incrementalScanStartTime = "2022-05-10T14:57:31.2311892-04:00",
                 },
             });
             Response response = await client.CreateOrUpdateTriggerAsync(content);

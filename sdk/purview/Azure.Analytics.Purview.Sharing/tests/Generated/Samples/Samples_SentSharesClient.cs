@@ -194,7 +194,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             {
                 properties = new
                 {
-                    expirationDate = "2022-05-10T18:57:31.2311892Z",
+                    expirationDate = "2022-05-10T14:57:31.2311892-04:00",
                     shareStatus = "Detached",
                     targetActiveDirectoryId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
                     targetObjectId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
@@ -221,7 +221,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             {
                 properties = new
                 {
-                    expirationDate = "2022-05-10T18:57:31.2311892Z",
+                    expirationDate = "2022-05-10T14:57:31.2311892-04:00",
                     shareStatus = "Detached",
                     targetActiveDirectoryId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
                     targetObjectId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",

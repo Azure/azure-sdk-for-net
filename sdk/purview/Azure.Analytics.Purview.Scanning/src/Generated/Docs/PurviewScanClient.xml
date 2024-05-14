@@ -819,8 +819,8 @@ using RequestContent content = RequestContent.Create(new
         {
             frequency = "Week",
             interval = 1234,
-            startTime = "2022-05-10T18:57:31.2311892Z",
-            endTime = "2022-05-10T18:57:31.2311892Z",
+            startTime = "2022-05-10T14:57:31.2311892-04:00",
+            endTime = "2022-05-10T14:57:31.2311892-04:00",
             schedule = new
             {
                 additionalProperties = new
@@ -860,7 +860,7 @@ using RequestContent content = RequestContent.Create(new
         },
         recurrenceInterval = "<recurrenceInterval>",
         scanLevel = "Full",
-        incrementalScanStartTime = "2022-05-10T18:57:31.2311892Z",
+        incrementalScanStartTime = "2022-05-10T14:57:31.2311892-04:00",
     },
 });
 Response response = await client.CreateOrUpdateTriggerAsync(content);
@@ -917,8 +917,8 @@ using RequestContent content = RequestContent.Create(new
         {
             frequency = "Week",
             interval = 1234,
-            startTime = "2022-05-10T18:57:31.2311892Z",
-            endTime = "2022-05-10T18:57:31.2311892Z",
+            startTime = "2022-05-10T14:57:31.2311892-04:00",
+            endTime = "2022-05-10T14:57:31.2311892-04:00",
             schedule = new
             {
                 additionalProperties = new
@@ -958,7 +958,7 @@ using RequestContent content = RequestContent.Create(new
         },
         recurrenceInterval = "<recurrenceInterval>",
         scanLevel = "Full",
-        incrementalScanStartTime = "2022-05-10T18:57:31.2311892Z",
+        incrementalScanStartTime = "2022-05-10T14:57:31.2311892-04:00",
     },
 });
 Response response = client.CreateOrUpdateTrigger(content);
