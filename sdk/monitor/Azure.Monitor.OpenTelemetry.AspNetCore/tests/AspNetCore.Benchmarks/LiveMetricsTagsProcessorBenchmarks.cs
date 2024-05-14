@@ -15,7 +15,6 @@ AMD EPYC 7763, 1 CPU, 16 logical and 8 physical cores
 
 | Method                          | Mean     | Error   | StdDev  | Gen0   | Allocated |
 |-------------------------------- |---------:|--------:|--------:|-------:|----------:|
-| Benchmark_DependencyOldDocument | 771.7 ns | 6.94 ns | 6.16 ns | 0.0505 |     856 B |
 | Benchmark_DependencyDocument    | 598.2 ns | 1.93 ns | 1.50 ns | 0.0505 |     856 B |
 */
 

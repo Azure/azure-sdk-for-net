@@ -13,6 +13,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals
         {
             SemanticConventions.AttributeDbStatement,
             SemanticConventions.AttributeDbSystem,
+            SemanticConventions.AttributeDbName,
+            SemanticConventions.AttributePeerService,
 
             // required - HTTP V2
             SemanticConventions.AttributeHttpRequestMethod,
