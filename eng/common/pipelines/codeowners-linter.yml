@@ -46,7 +46,7 @@ stages:
           arguments: 'install --global --add-source "$(DotNetDevOpsFeed)" --version "$(CodeownersLinterVersion)" "Azure.Sdk.Tools.CodeownersLinter"'
           workingDirectory: '$(Build.SourcesDirectory)/eng/common'
 
-      - ${{if eq(variables['Build.Reason'], 'PullRequest') }}:
+      - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
         - pwsh: |
             Write-Host "git checkout $ENV:SYSTEM_PULLREQUEST_TARGETBRANCH"
             git checkout $ENV:SYSTEM_PULLREQUEST_TARGETBRANCH
