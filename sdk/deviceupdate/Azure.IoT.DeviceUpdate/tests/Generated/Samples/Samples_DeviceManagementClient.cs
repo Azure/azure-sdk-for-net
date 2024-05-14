@@ -843,7 +843,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             using RequestContent content = RequestContent.Create(new
             {
                 deploymentId = "<deploymentId>",
-                startDateTime = "2022-05-10T18:57:31.2311892Z",
+                startDateTime = "2022-05-10T14:57:31.2311892-04:00",
                 update = new
                 {
                     updateId = new
@@ -877,7 +877,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             using RequestContent content = RequestContent.Create(new
             {
                 deploymentId = "<deploymentId>",
-                startDateTime = "2022-05-10T18:57:31.2311892Z",
+                startDateTime = "2022-05-10T14:57:31.2311892-04:00",
                 update = new
                 {
                     updateId = new
@@ -911,7 +911,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             using RequestContent content = RequestContent.Create(new
             {
                 deploymentId = "<deploymentId>",
-                startDateTime = "2022-05-10T18:57:31.2311892Z",
+                startDateTime = "2022-05-10T14:57:31.2311892-04:00",
                 update = new
                 {
                     updateId = new
@@ -973,7 +973,7 @@ namespace Azure.IoT.DeviceUpdate.Samples
             using RequestContent content = RequestContent.Create(new
             {
                 deploymentId = "<deploymentId>",
-                startDateTime = "2022-05-10T18:57:31.2311892Z",
+                startDateTime = "2022-05-10T14:57:31.2311892-04:00",
                 update = new
                 {
                     updateId = new
