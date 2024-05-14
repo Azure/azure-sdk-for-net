@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.IotHub.Models
             if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTimeUtc"u8);
-                writer.WriteStringValue(StartOn.Value, "R");
+                writer.WriteStringValue(StartOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTimeUtc"u8);
-                writer.WriteStringValue(EndOn.Value, "R");
+                writer.WriteStringValue(EndOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(JobType))
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    startTimeUtc = property.Value.GetDateTimeOffset("R");
+                    startTimeUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("endTimeUtc"u8))
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    endTimeUtc = property.Value.GetDateTimeOffset("R");
+                    endTimeUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("type"u8))

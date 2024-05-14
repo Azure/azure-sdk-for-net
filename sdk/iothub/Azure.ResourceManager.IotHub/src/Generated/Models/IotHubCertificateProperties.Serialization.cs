@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.IotHub.Models
             if (options.Format != "W" && Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expiry"u8);
-                writer.WriteStringValue(ExpireOn.Value, "R");
+                writer.WriteStringValue(ExpireOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(ThumbprintString))
             {
@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.IotHub.Models
             if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("created"u8);
-                writer.WriteStringValue(CreatedOn.Value, "R");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updated"u8);
-                writer.WriteStringValue(UpdatedOn.Value, "R");
+                writer.WriteStringValue(UpdatedOn.Value, "O");
             }
             if (Optional.IsDefined(Certificate))
             {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    expiry = property.Value.GetDateTimeOffset("R");
+                    expiry = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("thumbprint"u8))
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    created = property.Value.GetDateTimeOffset("R");
+                    created = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("updated"u8))
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    updated = property.Value.GetDateTimeOffset("R");
+                    updated = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("certificate"u8))

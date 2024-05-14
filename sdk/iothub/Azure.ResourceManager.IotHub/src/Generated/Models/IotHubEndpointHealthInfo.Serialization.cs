@@ -44,17 +44,17 @@ namespace Azure.ResourceManager.IotHub.Models
             if (Optional.IsDefined(LastKnownErrorOn))
             {
                 writer.WritePropertyName("lastKnownErrorTime"u8);
-                writer.WriteStringValue(LastKnownErrorOn.Value, "R");
+                writer.WriteStringValue(LastKnownErrorOn.Value, "O");
             }
             if (Optional.IsDefined(LastSuccessfulSendAttemptOn))
             {
                 writer.WritePropertyName("lastSuccessfulSendAttemptTime"u8);
-                writer.WriteStringValue(LastSuccessfulSendAttemptOn.Value, "R");
+                writer.WriteStringValue(LastSuccessfulSendAttemptOn.Value, "O");
             }
             if (Optional.IsDefined(LastSendAttemptOn))
             {
                 writer.WritePropertyName("lastSendAttemptTime"u8);
-                writer.WriteStringValue(LastSendAttemptOn.Value, "R");
+                writer.WriteStringValue(LastSendAttemptOn.Value, "O");
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    lastKnownErrorTime = property.Value.GetDateTimeOffset("R");
+                    lastKnownErrorTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("lastSuccessfulSendAttemptTime"u8))
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    lastSuccessfulSendAttemptTime = property.Value.GetDateTimeOffset("R");
+                    lastSuccessfulSendAttemptTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("lastSendAttemptTime"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    lastSendAttemptTime = property.Value.GetDateTimeOffset("R");
+                    lastSendAttemptTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
