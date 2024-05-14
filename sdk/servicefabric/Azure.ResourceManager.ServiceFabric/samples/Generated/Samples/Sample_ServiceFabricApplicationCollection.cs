@@ -7,6 +7,7 @@
 
 using System;
 using System.Threading.Tasks;
+using System.Xml;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ServiceFabric.Models;
@@ -159,16 +160,16 @@ namespace Azure.ResourceManager.ServiceFabric.Samples
 },
                 UpgradePolicy = new ApplicationUpgradePolicy()
                 {
-                    UpgradeReplicaSetCheckTimeout = TimeSpan.Parse("01:00:00"),
+                    UpgradeReplicaSetCheckTimeout = XmlConvert.ToTimeSpan("01:00:00"),
                     ForceRestart = false,
                     RollingUpgradeMonitoringPolicy = new ArmRollingUpgradeMonitoringPolicy()
                     {
                         FailureAction = ArmUpgradeFailureAction.Rollback,
-                        HealthCheckWaitDuration = TimeSpan.Parse("00:02:00"),
-                        HealthCheckStableDuration = TimeSpan.Parse("00:05:00"),
-                        HealthCheckRetryTimeout = TimeSpan.Parse("00:10:00"),
-                        UpgradeTimeout = TimeSpan.Parse("01:00:00"),
-                        UpgradeDomainTimeout = TimeSpan.Parse("1.06:00:00"),
+                        HealthCheckWaitDuration = XmlConvert.ToTimeSpan("00:02:00"),
+                        HealthCheckStableDuration = XmlConvert.ToTimeSpan("00:05:00"),
+                        HealthCheckRetryTimeout = XmlConvert.ToTimeSpan("00:10:00"),
+                        UpgradeTimeout = XmlConvert.ToTimeSpan("01:00:00"),
+                        UpgradeDomainTimeout = XmlConvert.ToTimeSpan("1.06:00:00"),
                     },
                     ApplicationHealthPolicy = new ArmApplicationHealthPolicy()
                     {
